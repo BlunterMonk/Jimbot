@@ -11,6 +11,7 @@ const wikiClient = new wiki({
 var mainChannelID;
 const pinkHexCode = 0xffd1dc;
 const overviewRegexp = /\|(.*)=\s*(.*)/g;
+const valueRegexp = /(.*)=\s*(.*)/g;
 const cheerio = require('cheerio');
 const botPrefix = "!";
 const unitQueryPrefix = `${botPrefix}unit`;
@@ -90,24 +91,47 @@ client.on('ready', () => {
                 console.log(err);
                 return;
             }
-            var regex = /(?:.*)\|(.*)/g;
             console.log(content);
             console.log("\n\n-----\n\n");
-            console.log(redirect);
+
+            wikiClient.parse( content, 'search', function ( err, html, images ) {
+                if ( err ) {
+                    console.error( err );
+                    return;
+                }
             
-            var match = overviewRegexp.exec(content);
+                log( 'HTML');
+                log( html );
+                log( 'Images');
+                log( images );
+            });
+            
+            var regex = /\|(.*?)\n/g;
+            var match = regex.exec(content);
+            //var matched = match[1];
+            console.log(match);
+            //console.log(matched);
+            
             var ind = 0;
             var nodes = [];
             while (match != null) {
+
+                if (match[1][match[1].length - 1] === "=") {
+                    console.log("No Value for: " + match[1]);
+                }
+                
                 nodes[nodes.length] = {
                     name: match[1].replace("\t", ""),
                     value: match[2]
                 }
                 
+                //console.log(match)
                 match = overviewRegexp.exec(content);
                 ind++;
             }
+            
             console.log(nodes);
+            
 
             wikiClient.getImageInfo(`Icon-${search}.png`, function (err, info) {
                 if (err) {
