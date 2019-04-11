@@ -12,7 +12,9 @@ var mainChannelID;
 const pinkHexCode = 0xffd1dc;
 const overviewRegexp = /\|(.*)=\s*(.*)/g;
 const cheerio = require('cheerio');
-
+const botPrefix = "!";
+const unitQueryPrefix = `${botPrefix}unit`;
+const equipQueryPrefix = `${botPrefix}equip`;
 
 function log(data) {
     console.log(data);
@@ -72,7 +74,50 @@ client.on('ready', () => {
         console.log(body.explanation);
     });
     */
-    
+    /*wikiClient.getCategories(function (err, cats) {
+        console.log('All categories:');
+        console.log(JSON.stringify(cats));
+    });*/
+    var search = "Beastlord";
+    getEquipmentPageID(search, function (id) {
+        if (!id) {
+            console.log("Could not find page: " + search);
+            return;
+        }
+
+        wikiClient.getArticle(id, function (err, content, redirect) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            var regex = /(?:.*)\|(.*)/g;
+            console.log(content);
+            console.log("\n\n-----\n\n");
+            console.log(redirect);
+            
+            var match = overviewRegexp.exec(content);
+            var ind = 0;
+            var nodes = [];
+            while (match != null) {
+                nodes[nodes.length] = {
+                    name: match[1].replace("\t", ""),
+                    value: match[2]
+                }
+                
+                match = overviewRegexp.exec(content);
+                ind++;
+            }
+            console.log(nodes);
+
+            wikiClient.getImageInfo(`Icon-${search}.png`, function (err, info) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log(info);
+            });
+        });
+    });
     /*
     wikiClient.search( '2b', (err, results) => {
         console.log( 'Search results:')
@@ -83,10 +128,48 @@ client.on('ready', () => {
     */
 })
 
+function getEquipmentPageID(search, callback) {
+    wikiClient.getPagesInCategory( `Equipment`, function ( err, redirect, content ) {
+		if (err) {
+			console.log(err);
+			return;
+        }
+ 
+		console.log(redirect);
+		console.log(content);
+       
+        var id = null;
+        for (var i = 0; i < redirect.length; i++) {
+            var page = redirect[i];
+            if (page.title === search) {
+                id = page.pageid;
+                break;
+            }
+        }
+        
+        callback(id);
+	});
+}
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+function toTitleCase(text) {
+    return text.toLowerCase()
+        .split(' ')
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(' ');
+}
 function handleQueryRequest(receivedMessage) {
 
-    var search = receivedMessage.content.slice(1, receivedMessage.content.length);
+    var ind = unitQueryPrefix.length + 1;
+    var search = receivedMessage.content.slice(ind, receivedMessage.content.length);
+    search = toTitleCase(search);
+    search = search.replaceAll(" ", "_");
+ 
+    console.log("Searching for: " + search);
+
     queryWiki(search, function (info, imgurl, description) {
             
         var fields = parseUnitOverview(info);
@@ -114,33 +197,25 @@ function handleQueryRequest(receivedMessage) {
     });
 }
 
-function parseUnitOverview(overview) {
-            
-    var fields = [];
-    var match = overviewRegexp.exec(overview);
-    while (match != null) {
-
-        fields[fields.length] = {
-            name: match[1],
-            value: match[2],
-            inline: true
-        }
-
-        match = overviewRegexp.exec(overview);
-    }
-
-    return fields;
-}
-
 function queryWiki(search, callback) {
-    wikiClient.getArticle(search, function (err, content) {
+    wikiClient.getArticle(search, function (err, content, redirect) {
         if (err || !content) {
             console.error(err);
             return;
         }
-
+        if (redirect) {
+            
+            console.log("Redirect Info: ");
+            console.log(redirect);
+        }
+        
         const firstLine = content.indexOf("Unit Infobox");
         if (firstLine < 0) {
+            console.log(content);
+            const redirectRegex = /(?:.*)\[(.*)\]]/g;
+            const page = redirectRegex.exec(content);
+            console.log(page[1]);
+            //queryWiki(page, callback);
             return;
         }
 
@@ -169,19 +244,50 @@ function queryWiki(search, callback) {
         });
     });
 }
-    
+function parseUnitOverview(overview) {
+            
+    var fields = [];
+    var match = overviewRegexp.exec(overview);
+    while (match != null) {
+
+        fields[fields.length] = {
+            name: match[1],
+            value: match[2],
+            inline: true
+        }
+
+        match = overviewRegexp.exec(overview);
+    }
+
+    return fields;
+}
+
+function handleEquipQueryRequest(receivedMessage) {
+
+    var ind = equipQueryPrefix.length + 1;
+    var search = receivedMessage.content.slice(ind, receivedMessage.content.length);
+    search = toTitleCase(search);
+    search = search.replaceAll(" ", "_");
+
+    console.log(search);
+}
+function queryWikiForPageWithCategory(category, title, callback) {
+
+}
 
 client.on('message', (receivedMessage) => {
     // Prevent bot from responding to its own messages
     if (receivedMessage.author == client.user) {
         return
     }
-    
-    if (receivedMessage.content.startsWith("!")) {
+    const content = receivedMessage.content;
+    if (receivedMessage.content.startsWith("!unit")) {
         handleQueryRequest(receivedMessage);
+    } else if (content.startsWith(equipQueryPrefix)) {
+        handleEquipQueryRequest(receivedMessage);
     }
   
-    if (receivedMessage.content === "dab") {
+    if (content.toLowerCase() === "dab") {
 
         // Provide a path to a local file
         const localFileAttachment = new Discord.Attachment('dab.png')
@@ -208,4 +314,4 @@ client.on('message', (receivedMessage) => {
 bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
 bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token)
+client.login(bot_secret_token_test)
