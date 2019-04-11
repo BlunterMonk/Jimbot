@@ -160,7 +160,7 @@ function queryWiki(search, callback) {
             const $ = cheerio.load(xml);
             const imgurl = $('.big-pixelate').attr('src');
             var description = $('.mw-parser-output').children('p').first().text();
-            if (description.length > 200) {
+            if (description.length > 150) {
                 description = description.substring(0, 200);
                 description += "...";
             }
@@ -177,7 +177,7 @@ client.on('message', (receivedMessage) => {
         return
     }
     
-    if (receivedMessage.content.startsWith("~")) {
+    if (receivedMessage.content.startsWith("!")) {
         handleQueryRequest(receivedMessage);
     }
   
