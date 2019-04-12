@@ -445,30 +445,44 @@ client.on('message', (receivedMessage) => {
         return
     }
     const content = receivedMessage.content;
+    if (!content.startsWith(botPrefix)) {
+        return;
+    }
+
     if (receivedMessage.content.startsWith("!unit")) {
         handleQueryRequest(receivedMessage);
     } else if (content.startsWith(equipQueryPrefix)) {
         handleEquipQueryRequest(receivedMessage);
     }
   
-    if (content.toLowerCase() === "dab") {
+    const commandDab = `${botPrefix}dab`;
+    const commandGL = `${botPrefix}gl`;
+    const commandCyra = `${botPrefix}hi cyra`;
+    const commandJake = `${botPrefix}hi jake`;
+    switch (content.toLowerCase()) {
 
-        // Provide a path to a local file
-        const localFileAttachment = new Discord.Attachment('dab.png')
-        receivedMessage.channel.send(localFileAttachment)
-    } else if (receivedMessage.content.includes("hi cyra")) {
-
-        receivedMessage.guild.emojis.forEach(customEmoji => {
-            if (customEmoji.name === "hinayay" ||
-            customEmoji.name === "2BLewd" ||
-            customEmoji.name === "hugpweez") {
-               
-                receivedMessage.react(customEmoji)
-            }
-        })
-    } else if (receivedMessage.content.includes("hi jake")) {
-        receivedMessage.react('🌹')
-        receivedMessage.react('🛋')
+        case commandDab: 
+            receivedMessage.channel.send(new Discord.Attachment('dab.png'))
+            break;
+        case commandGL:
+            receivedMessage.channel.send(new Discord.Attachment('believe.png'))
+            break;
+        case commandCyra:
+            receivedMessage.guild.emojis.forEach(customEmoji => {
+                if (customEmoji.name === "hinayay" ||
+                customEmoji.name === "2BLewd" ||
+                customEmoji.name === "hugpweez") {
+                
+                    receivedMessage.react(customEmoji)
+                }
+            })
+            break;
+        case commandJake:
+            receivedMessage.react('🌹')
+            receivedMessage.react('🛋')
+            break;
+        default:
+            break;
     }
 })
 
