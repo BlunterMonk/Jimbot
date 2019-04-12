@@ -20,6 +20,8 @@ const unitQueryPrefix = `${botPrefix}unit`;
 const equipQueryPrefix = `${botPrefix}equip`;
 const imageEndpoint = `https://exvius.gamepedia.com/Special:FilePath/`;
 
+//console.log(equipmentCategories);
+
 function log(data) {
     console.log(data);
 }
@@ -109,6 +111,7 @@ function getEquipmentPageID(search, callback) {
         }
     });
     */
+
 
     wikiClient.getPagesInCategory( `Items`, function ( err, redirect, content ) {
 		if (err) {
