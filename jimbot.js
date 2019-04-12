@@ -18,7 +18,32 @@ const cheerio = require('cheerio');
 const botPrefix = "!";
 const unitQueryPrefix = `${botPrefix}unit`;
 const equipQueryPrefix = `${botPrefix}equip`;
+const quoteQueryPrefix = `${botPrefix}quote`;
+const searchQueryPrefix = `?search`;
 const imageEndpoint = `https://exvius.gamepedia.com/Special:FilePath/`;
+const unicodeStar = "★";
+const unicodeStarOpen = "✫";
+const descCharLimit = 128;
+const wikiEndpoint = "https://exvius.gamepedia.com/";
+
+// Lookup Tables
+const equipmentCategories = [
+    'Items', 'Ability Materia'
+]
+const equipParameters = [
+    'ATK', 'DEF', 'MAG', 'SPR', 'HP', 'MP'
+]
+const equipFields = [
+    /*'Name',*/ "Type", /*"Desc",*/ "Reward", "Resist", "Effect", 
+    "Trust", "STMR", "Element", "Ability", "Notes"
+]
+
+// Commands
+const commandDab = `${botPrefix}dab`;
+const commandGL = `${botPrefix}gl`;
+const commandCyra = `${botPrefix}hi cyra`;
+const commandJake = `${botPrefix}hi jake`;
+
 
 //console.log(equipmentCategories);
 
@@ -80,79 +105,52 @@ client.on('ready', () => {
         console.log(body.explanation);
     });
     */
-    /*wikiClient.getCategories(function (err, cats) {
-        console.log('All categories:');
-        console.log(JSON.stringify(cats));
-    });*/
 
-    /*
-    wikiClient.search( '2b', (err, results) => {
-        console.log( 'Search results:')
-        console.log(results);
-        console.log("search error:")
-        console.log(err)
-    });
-    */
+
 })
 
 function getEquipmentPageID(search, callback) {
-    /*
-    wikiClient.getArticle(search, function (err, content, redirect) {
-        if (err || !content) {
-            console.error(err);
-            return;
-        }
-        console.log("getArticle Content");
-        console.log(content);
-        if (redirect) {
+
+    // TODO: fix category search for pages
+    equipmentCategories.forEach(function (category) {
+        wikiClient.getPagesInCategory(category, function ( err, redirect, content) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            var id = null;
+            var name = search;
+            for (var i = 0; i < redirect.length; i++) {
+                if (!callback) {
+                    return;
+                }
+                
+                var page = redirect[i];
+
+                var title = page.title.toLowerCase();
+                search = search.toLowerCase();
+
+                if (!title.startsWith(search[0])) {
+                    continue;
+                }
+
+                title = title.replaceAll(" ", "_");
+
+                //console.log(`Comparing: ${title} -vs- ${search}`);
+                if (title === search) {
+                    id = page.pageid;
+                    name = page.title;
+                    break;
+                }
+            }
             
-            console.log("Redirect Info: ");
-            console.log(redirect);
-        }
+            callback(id, name);
+            if (id) {
+                callback = null;
+            }
+        });
     });
-    */
-
-
-    wikiClient.getPagesInCategory( `Items`, function ( err, redirect, content ) {
-		if (err) {
-			console.log(err);
-			return;
-        }
-
-        // TODO: fix category search for pages
- 
-		//console.log(redirect);
-		//console.log(content);
-       
-        var id = null;
-        var name = search;
-        for (var i = 0; i < redirect.length; i++) {
-            var page = redirect[i];
-
-            var title = page.title.toLowerCase();
-            search = search.toLowerCase();
-
-            if (!title.startsWith(search[0])) {
-                continue;
-            }
-
-            title = title.replaceAll(" ", "_");
-
-            //console.log(`Comparing: ${title} -vs- ${search}`);
-            /*
-            if (title.startsWith(search[0])) {
-                console.log(page);
-            }
-            */
-            if (title === search) {
-                id = page.pageid;
-                name = page.title;
-                break;
-            }
-        }
-        
-        callback(id, name);
-	});
 }
 
 String.prototype.replaceAll = function(search, replacement) {
@@ -170,6 +168,11 @@ String.prototype.limitTo = function(limit) {
 }
 String.prototype.empty = function() {
     return this.length === 0 || !/\S/.test(this);
+}
+String.prototype.indexOfAfter = function(search, start) {
+    var string = this;
+    var preIndex = string.indexOf(start);
+    return preIndex + string.substring(preIndex).indexOf(search);
 }
 
 function getSearchString(prefix, msg) {
@@ -191,7 +194,8 @@ function toTitleCase(text) {
         .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
         .join(' ');
 }
-function handleQueryRequest(receivedMessage) {
+
+function handleUnitQueryRequest(receivedMessage) {
 
     const search = getSearchString(unitQueryPrefix, receivedMessage.content);
     if (!search) {
@@ -201,7 +205,7 @@ function handleQueryRequest(receivedMessage) {
  
     console.log("Searching for: " + search);
 
-    queryWiki(search, function (info, imgurl, description) {
+    queryWikiForUnit(search, function (info, imgurl, description) {
             
         var fields = parseUnitOverview(info);
         
@@ -223,101 +227,6 @@ function handleQueryRequest(receivedMessage) {
         });
     });
 }
-
-function queryWiki(search, callback) {
-    wikiClient.getArticle(search, function (err, content, redirect) {
-        if (err || !content) {
-            console.error(err);
-            return;
-        }
-        if (redirect) {
-            
-            console.log("Redirect Info: ");
-            console.log(redirect);
-        }
-        
-        const firstLine = content.indexOf("Unit Infobox");
-        if (firstLine < 0) {
-            console.log(content);
-            const redirectRegex = /(?:.*)\[(.*)\]]/g;
-            const page = redirectRegex.exec(content);
-            console.log(page[1]);
-            queryWiki(page, callback);
-            return;
-        }
-
-
-        var preString = "Unit Infobox";
-        var searchString = "}}";
-        var preIndex = content.indexOf(preString);
-        var searchIndex = preIndex + content.substring(preIndex).indexOf(searchString);
-        const overview = content.substring(firstLine, searchIndex);
-
-        wikiClient.parse(content, search, function (err, xml, images) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-
-            const $ = cheerio.load(xml);
-            const imgurl = $('.big-pixelate').attr('src');
-            var description = $('.mw-parser-output').children('p').first().text();
-            if (description.length > 150) {
-                description = description.substring(0, 200);
-                description += "...";
-            }
-
-            callback(overview, imgurl, description);
-        });
-    });
-}
-function parseUnitOverview(overview) {
-            
-    var fields = [];
-    var parameters = [
-        'Name', "Limited", "Exclusive", "Job", "Role", "Origin", 
-        "Gender", "STMR", "Trust", "Race", "Number"
-    ]
-    var match = overviewRegexp.exec(overview);
-    var minR = null;
-    var maxR = null;
-
-
-    while (match != null) {
-
-        var name = match[1].replaceAll(" ", "").capitalize();
-        var value = match[2];
-        if (name.includes("Min-rarity")) {
-            minR = value;
-            match = overviewRegexp.exec(overview);
-            continue;
-        } else if (name.includes("Max-rarity")) {
-            maxR = value;
-            match = overviewRegexp.exec(overview);
-            continue;
-        }
-        
-        if (parameters.includes(name)) {
-
-            fields[fields.length] = {
-                name: name,
-                value: value,
-                inline: (name !== "Name")
-            }
-        }
-
-        match = overviewRegexp.exec(overview);
-    }
-
-    fields[fields.length] = {
-        name: "Rarity",
-        value: `${minR} / ${maxR}`,
-        inline: true
-    }
-
-    return fields;
-}
-
 function handleEquipQueryRequest(receivedMessage) {
 
     const search = getSearchString(equipQueryPrefix, receivedMessage.content);
@@ -327,7 +236,7 @@ function handleEquipQueryRequest(receivedMessage) {
     }
 
     console.log(`Searching for: ${search}...`);
-    queryWikiForPageWithCategory(search, function(imgurl, pageName, nodes) {
+    queryWikiForEquipment(search, function(imgurl, pageName, nodes) {
         pageName = pageName.replaceAll(" ", "_");
         console.log(`Page Found: ${pageName}`);
 
@@ -348,7 +257,152 @@ function handleEquipQueryRequest(receivedMessage) {
         });
     })
 }
-function queryWikiForPageWithCategory(search, callback) {
+function handleReactions(receivedMessage) {
+
+    const content = receivedMessage.content.toLowerCase();
+    switch (content) {
+        case commandCyra:
+            receivedMessage.guild.emojis.forEach(customEmoji => {
+                if (customEmoji.name === "hinayay" ||
+                customEmoji.name === "2BLewd" ||
+                customEmoji.name === "hugpweez") {
+                
+                    receivedMessage.react(customEmoji)
+                }
+            })
+            break;
+        case commandJake:
+            receivedMessage.react('🌹')
+            receivedMessage.react('🛋')
+            break;
+        default:
+            break;
+    }
+}
+function handleSearch(receivedMessage) {
+    
+    const search = getSearchString(searchQueryPrefix, receivedMessage.content);
+    if (!search) {
+        console.log("Empty Search");
+        return;
+    }
+
+    queryWikiWithSearch(search, function (batch){
+        receivedMessage.channel.send(mainChannelID, {
+            embed: {
+                color: pinkHexCode,
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL
+                },
+                fields: batch
+            }
+        });
+    })
+}
+
+
+function parseUnitOverview(overview) {
+            
+    var fields = [];
+    var parameters = [
+        /*'Name', */"Limited", "Exclusive", "Job", "Role", "Origin", 
+        "Gender", "STMR", "Trust", "Race", "Number"
+    ]
+    var match = overviewRegexp.exec(overview);
+    var minR = null;
+    var maxR = null;
+    // ★★★★★✫✫
+
+    while (match != null) {
+
+        var name = match[1].replaceAll(" ", "").capitalize();
+        var value = match[2];
+        if (name.includes("Min-rarity")) {
+            minR = value;
+            match = overviewRegexp.exec(overview);
+            continue;
+        } else if (name.includes("Max-rarity")) {
+            maxR = value;
+            match = overviewRegexp.exec(overview);
+            continue;
+        }
+        
+        if (parameters.includes(name)) {
+            fields[fields.length] = {
+                name: name,
+                value: value,
+                inline: (name !== "Name")
+            }
+        }
+
+        match = overviewRegexp.exec(overview);
+    }
+
+    if (minR) {
+        fields[fields.length] = {
+            name: "Rarity",
+            value: getRarityString(minR, maxR),
+            inline: true
+        }
+    }
+
+    return fields;
+}
+function getRarityString(min, max) {
+    min = parseInt(min);
+    max = parseInt(max);
+    var rarityString = "";
+    for (var i = 0; i < max; i++) {
+        rarityString += (i < min) ? unicodeStar : unicodeStarOpen;
+    }
+    return rarityString;
+}
+
+
+function queryWikiForUnit(search, callback) {
+    wikiClient.getArticle(search, function (err, content, redirect) {
+        if (err || !content) {
+            console.error(err);
+            return;
+        }
+        if (redirect) {
+            console.log("Redirect Info: ");
+            console.log(redirect);
+        }
+        
+        const firstLine = content.indexOf("Unit Infobox");
+        if (firstLine < 0) {
+            console.log(content);
+            const redirectRegex = /(?:.*)\[(.*)\]]/g;
+            const page = redirectRegex.exec(content);
+            console.log(page[1]);
+            queryWikiForUnit(page, callback);
+            return;
+        }
+
+        var preString = "Unit Infobox";
+        var searchString = "}}";
+        var preIndex = content.indexOf(preString);
+        var searchIndex = preIndex + content.substring(preIndex).indexOf(searchString);
+        const overview = content.substring(firstLine, searchIndex);
+
+        wikiClient.parse(content, search, function (err, xml, images) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            const $ = cheerio.load(xml);
+            const imgurl = $('.big-pixelate').attr('src');
+            var description = $('.mw-parser-output').children('p').first().text();
+            description = description.limitTo(descCharLimit);
+
+            callback(overview, imgurl, description);
+        });
+    });
+}
+function queryWikiForEquipment(search, callback) {
 
     getEquipmentPageID(search, function (id, pageName) {
         if (!id) {
@@ -386,13 +440,8 @@ function queryWikiForPageWithCategory(search, callback) {
                 var match = regex.exec(content);
                 //console.log(match);
                 
-                var parameters = [
-                    'ATK', 'DEF', 'MAG', 'SPR', 'HP', 'MP'
-                ]
-                var fields = [
-                    'Name', "Type", "Desc", "Reward", "Resist", "Effect", 
-                    "Trust", "STMR", "Element", "Ability", "Notes"
-                ]
+                // TODO: parse item ability description.
+
                 var ignore = "<!";
                 var nodes = [];
                 while (match != null) {
@@ -406,18 +455,25 @@ function queryWikiForPageWithCategory(search, callback) {
                     var value = match[2];
 
                     console.log(`${name} = '${value}' isParam: ${isParam}`);
+                    if (value && value.includes(ignore)) {
+                        var open = value.indexOf("<!");
+                        var close = value.indexOf(">");
+                        value = value.substring(0, open) + value.substring(close + 1, value.length);
+                        console.log("New Value: " + value);
+                    }
+                    if (value && value.includes("[[")) {
+                        var open = value.indexOf("[[");
+                        var close = value.indexOfAfter("]]", open);
+                        value = value.substring(0, open) + value.substring(close + 3, value.length);
+                        console.log("New Value: " + value);
+                    }
 
-                    var isParam = parameters.includes(name)
+                    var isParam = equipParameters.includes(name)
+                    var isParsable = equipFields.includes(name);
                     if (value && !value.includes(ignore) &&
-                        (isParam || fields.includes(name))) {
+                        (isParam || isParsable)) {
                         
                         var notEmpty = /\S/.test(value);
-                        console.log(` ValueLength: ${value.length}`);
-                        /*if (isParam && value.empty()) {
-                            console.log("Empty Parameter");
-                            value = "0";
-                            notEmpty = true;
-                        }*/
                         
                         if (notEmpty) {
 
@@ -427,7 +483,6 @@ function queryWikiForPageWithCategory(search, callback) {
                                 inline: true
                             }
                         }
-                        
                     }
                     
                     match = valueRegexp.exec(content);
@@ -441,6 +496,37 @@ function queryWikiForPageWithCategory(search, callback) {
         });
     });
 }
+function queryWikiWithSearch(search, callback) {
+    wikiClient.search(search, (err, results) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        
+        var batch = results.slice(0, 5);
+        var fields = [{
+            name: "Results For " + search,
+            value: "Nothing Found" 
+        }];
+        var value = "";
+        batch.forEach(function (page) {
+            page.title = page.title.replaceAll(" ", "_");
+            /*
+            wikiClient.getArticle(page.pageid, function(err, redirect, content) {
+                console.log(page.title)
+            })
+            */
+           var title = page.title.replaceAll(" ", "_")
+           value += wikiEndpoint + title + "\n";
+           fields[0] = {
+               name: "Results For " + search,
+               value: value 
+           }
+        })
+
+        callback(fields);
+    });
+}
 
 client.on('message', (receivedMessage) => {
     // Prevent bot from responding to its own messages
@@ -449,19 +535,29 @@ client.on('message', (receivedMessage) => {
     }
     const content = receivedMessage.content;
     if (!content.startsWith(botPrefix)) {
+        handleReactions(receivedMessage);
         return;
     }
 
-    if (receivedMessage.content.startsWith("!unit")) {
-        handleQueryRequest(receivedMessage);
+    if (content.startsWith(unitQueryPrefix)) {
+        handleUnitQueryRequest(receivedMessage);
     } else if (content.startsWith(equipQueryPrefix)) {
         handleEquipQueryRequest(receivedMessage);
-    }
-  
-    const commandDab = `${botPrefix}dab`;
-    const commandGL = `${botPrefix}gl`;
-    const commandCyra = `${botPrefix}hi cyra`;
-    const commandJake = `${botPrefix}hi jake`;
+    } else if (content.startsWith(searchQueryPrefix)) {
+        handleSearch(receivedMessage);
+    } else if (content.startsWith(quoteQueryPrefix)) {
+        var s = getSearchString(quoteQueryPrefix, content).toLowerCase();
+        console.log(s);
+        switch (s)
+        {
+            case "morrow":
+                receivedMessage.channel.send(new Discord.Attachment('morrow0.png'))
+                break;
+            default:
+                break;
+        }
+    } 
+
     switch (content.toLowerCase()) {
 
         case commandDab: 
@@ -496,3 +592,50 @@ bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
 bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
 client.login(bot_secret_token)
+
+/**
+    { "name": "Name",		"value": "9S" 			,	"inline": true },
+    { "name": "Limited",	"value": "Yes" 			,	"inline": true },
+    { "name": "Exclusive", 	"value": "No" 			,	"inline": true },
+    { "name": "Job",		"value": "YoRHa Troop" 	,	"inline": true },
+    { "name": "Role",		"value": "Debuffer" 	,	"inline": true },
+    { "name": "Origin",		"value": "NieR:Automata",	"inline": true },
+    { "name": "Gender",		"value": "Male" 		,	"inline": true },
+    { "name": "Race",		"value": "Machina" 		,	"inline": true },
+    { "name": "Number",		"value": "776, 777, 778",	"inline": true },
+    { "name": "Trust",		"value": "Pod 153" 		,	"inline": true },
+    { "name": "Rarity",		"value": "★★★★✫✫" 		,	"inline": true }
+
+
+
+{
+  "content": "this `supports` __a__ **subset** *of* ~~markdown~~ 😃 ```js\nfunction foo(bar) {\n  console.log(bar);\n}\n\nfoo(1);```",
+  "embed": {
+    "title": "title ~~(did you know you can have markdown here too?)~~",
+    "description": "this supports [named links](https://discordapp.com) on top of the previously shown subset of markdown. ```\nyes, even code blocks```",
+    "url": "https://discordapp.com",
+    "color": 16765404,
+    "thumbnail": {
+      "url": "https://cdn.discordapp.com/embed/avatars/0.png"
+    },
+    "author": {
+      "name": "Jimbot",
+      "url": "https://discordapp.com",
+      "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+    },
+    "fields": [
+		{ "name": "Name",		"value": "9S" 			,	"inline": true },
+		{ "name": "Limited",	"value": "Yes" 			,	"inline": true },
+		{ "name": "Exclusive", 	"value": "No" 			,	"inline": true },
+		{ "name": "Job",		"value": "YoRHa Troop" 	,	"inline": true },
+		{ "name": "Role",		"value": "Debuffer" 	,	"inline": true },
+		{ "name": "Origin",		"value": "NieR:Automata",	"inline": true },
+		{ "name": "Gender",		"value": "Male" 		,	"inline": true },
+		{ "name": "Race",		"value": "Machina" 		,	"inline": true },
+		{ "name": "Number",		"value": "776, 777, 778",	"inline": true },
+		{ "name": "Trust",		"value": "Pod 153" 		,	"inline": true },
+		{ "name": "Rarity",		"value": "★★★★✫✫" 		,	"inline": true }
+    ]
+  }
+}
+ */
