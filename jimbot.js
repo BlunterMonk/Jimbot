@@ -441,9 +441,24 @@ function queryWikiForEquipment(search, callback) {
                             value = value.substring(0, open) + value.substring(close + 1, value.length);
                         }
                         if (value.includes("[[")) {
+
                             var open = value.indexOf("[[");
-                            var close = value.indexOfAfter("]]", open);
-                            value = value.substring(0, open) + value.substring(close + 3, value.length);
+                            while (open > 0) {
+
+                                var close = value.indexOfAfter("]]", open);
+                                var link = value.substring(open + 2, close+1);
+                                link = link.replaceAll(" ", "_");
+
+                                value = value.substring(0, open) + value.substring(close + 3, value.length);
+                                
+                                // Skip category links                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                                if (!link.includes("|Trial")) {
+                                    console.log("Link: " + link);
+                                    value += wikiEndpoint + link;
+                                }
+                                
+                                open = value.indexOf("[[");
+                            }
                         }
                         if (value.includes("Unstackable")) {
                             value = "Unstackable Materia";
@@ -554,7 +569,7 @@ client.on('message', (receivedMessage) => {
 bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
 bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token)
+client.login(bot_secret_token_test)
 
 /**
     { "name": "Name",		"value": "9S" 			,	"inline": true },
