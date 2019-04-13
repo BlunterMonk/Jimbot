@@ -1,3 +1,3 @@
-const equipmentCategories = [
+export const equipmentCategories = [
     'Items', 'Ability Materia'
 ]

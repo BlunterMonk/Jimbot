@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const client = new Discord.Client()
 const request = require('request');
 const wiki = require('nodemw');
+const fs = require('fs');
 const wikiClient = new wiki({
     protocol: 'https',           // Wikipedia now enforces HTTPS
     server: 'exvius.gamepedia.com',  // host name of MediaWiki-powered site
@@ -12,6 +13,7 @@ var mainChannelID;
 const pinkHexCode = 0xffd1dc;
 const overviewRegexp = /\|(.*)=\s*(.*)/g;
 const valueRegexp = /\|(.*)(?:=)(.*)/g;
+const valueMultiLineRegexp = /\|(.*)(?:=)(.*[^|]+)/g;
 // (?:\<.*\>) for commented elements
 ////(.*)=\s*(.*)/g;
 const cheerio = require('cheerio');
@@ -25,11 +27,11 @@ const unicodeStar = "★";
 const unicodeStarOpen = "✫";
 const descCharLimit = 128;
 const wikiEndpoint = "https://exvius.gamepedia.com/";
+const config = require('./config.ts');
+console.log(config.equipmentCategories);
 
 // Lookup Tables
-const equipmentCategories = [
-    'Items', 'Ability Materia'
-]
+
 const equipParameters = [
     'ATK', 'DEF', 'MAG', 'SPR', 'HP', 'MP'
 ]
@@ -79,21 +81,6 @@ function sendToChannel(id, msg) {
     channel.send(msg)  
 }
 
-let imageArray = [];
-
-function getBatch( start ) {
-    wikiClient.getImagesFromArticle( start, function ( err, data, next ) {
-        imageArray = imageArray.concat( data );
-        if ( next ) {
-            console.log( `Getting next batch (starting from ${next})...` );
-            getBatch( next );
-        } else {
-            console.log( JSON.stringify( imageArray, null, '\t' ) );
-            console.log( `Image count: ${imageArray.length}` );
-        }
-    } );
-}
-
 client.on('ready', () => {
     console.log("Connected as " + client.user.tag)
     getMainChannelID()
@@ -106,13 +93,12 @@ client.on('ready', () => {
     });
     */
 
-
 })
 
 function getEquipmentPageID(search, callback) {
 
     // TODO: fix category search for pages
-    equipmentCategories.forEach(function (category) {
+    config.equipmentCategories.forEach(function (category) {
         wikiClient.getPagesInCategory(category, function ( err, redirect, content) {
             if (err) {
                 console.log(err);
@@ -136,8 +122,6 @@ function getEquipmentPageID(search, callback) {
                 }
 
                 title = title.replaceAll(" ", "_");
-
-                //console.log(`Comparing: ${title} -vs- ${search}`);
                 if (title === search) {
                     id = page.pageid;
                     name = page.title;
@@ -203,8 +187,7 @@ function handleUnitQueryRequest(receivedMessage) {
         return;
     }
  
-    console.log("Searching for: " + search);
-
+    console.log("Searching Units For: " + search);
     queryWikiForUnit(search, function (info, imgurl, description) {
             
         var fields = parseUnitOverview(info);
@@ -235,10 +218,9 @@ function handleEquipQueryRequest(receivedMessage) {
         return;
     }
 
-    console.log(`Searching for: ${search}...`);
+    console.log(`Searching Equipment For: ${search}...`);
     queryWikiForEquipment(search, function(imgurl, pageName, nodes) {
         pageName = pageName.replaceAll(" ", "_");
-        console.log(`Page Found: ${pageName}`);
 
         receivedMessage.channel.send(mainChannelID, {
             embed: {
@@ -250,7 +232,7 @@ function handleEquipQueryRequest(receivedMessage) {
                 thumbnail: {
                     url: imgurl,
                 },
-                title: search,
+                title: search.replaceAll("_", " "),
                 fields: nodes,
                 url: "https://exvius.gamepedia.com/"+pageName
             }
@@ -359,7 +341,6 @@ function getRarityString(min, max) {
     return rarityString;
 }
 
-
 function queryWikiForUnit(search, callback) {
     wikiClient.getArticle(search, function (err, content, redirect) {
         if (err || !content) {
@@ -373,10 +354,9 @@ function queryWikiForUnit(search, callback) {
         
         const firstLine = content.indexOf("Unit Infobox");
         if (firstLine < 0) {
-            console.log(content);
             const redirectRegex = /(?:.*)\[(.*)\]]/g;
             const page = redirectRegex.exec(content);
-            console.log(page[1]);
+            console.log("Redirect To: " + page[1]);
             queryWikiForUnit(page, callback);
             return;
         }
@@ -415,6 +395,8 @@ function queryWikiForEquipment(search, callback) {
                 console.log(err);
                 return;
             }
+            
+            //console.log("QUERY CONTENT:\n");
             //console.log(content);
             //console.log("\n\n-----\n\n");
 
@@ -424,12 +406,6 @@ function queryWikiForEquipment(search, callback) {
                     return;
                 }
             
-                //log( 'HTML');
-                //log( html );
-                log( 'Images');
-                log( images );
-
-                
                 const $ = cheerio.load(xml);
                 const imgurl = $('.mw-parser-output').find('img').attr('src');
                 const links = $('.mw-parser-output').children('a');
@@ -454,18 +430,24 @@ function queryWikiForEquipment(search, callback) {
                     name = name.replaceAll(" ", "");
                     var value = match[2];
 
-                    console.log(`${name} = '${value}' isParam: ${isParam}`);
-                    if (value && value.includes(ignore)) {
-                        var open = value.indexOf("<!");
-                        var close = value.indexOf(">");
-                        value = value.substring(0, open) + value.substring(close + 1, value.length);
-                        console.log("New Value: " + value);
-                    }
-                    if (value && value.includes("[[")) {
-                        var open = value.indexOf("[[");
-                        var close = value.indexOfAfter("]]", open);
-                        value = value.substring(0, open) + value.substring(close + 3, value.length);
-                        console.log("New Value: " + value);
+                    //console.log(`${name} = '${value}' isParam: ${isParam}`);
+
+                    // Fix string to remove any unecessary information
+                    if (value) {
+
+                        if (value.includes(ignore)) {
+                            var open = value.indexOf("<!");
+                            var close = value.indexOf(">");
+                            value = value.substring(0, open) + value.substring(close + 1, value.length);
+                        }
+                        if (value.includes("[[")) {
+                            var open = value.indexOf("[[");
+                            var close = value.indexOfAfter("]]", open);
+                            value = value.substring(0, open) + value.substring(close + 3, value.length);
+                        }
+                        if (value.includes("Unstackable")) {
+                            value = "Unstackable Materia";
+                        }
                     }
 
                     var isParam = equipParameters.includes(name)
@@ -479,17 +461,16 @@ function queryWikiForEquipment(search, callback) {
 
                             nodes[nodes.length] = {
                                 name: name,
-                                value: value.limitTo(128),
-                                inline: true
+                                value: value,
+                                inline: (name !== "Effect")
                             }
                         }
                     }
                     
-                    match = valueRegexp.exec(content);
+                    match = valueMultiLineRegexp.exec(content);
                 }
                 
                 console.log(nodes);
-                //console.log(imgurl);
 
                 callback(imgurl, pageName, nodes);
             });
@@ -510,18 +491,12 @@ function queryWikiWithSearch(search, callback) {
         }];
         var value = "";
         batch.forEach(function (page) {
-            page.title = page.title.replaceAll(" ", "_");
-            /*
-            wikiClient.getArticle(page.pageid, function(err, redirect, content) {
-                console.log(page.title)
-            })
-            */
-           var title = page.title.replaceAll(" ", "_")
-           value += wikiEndpoint + title + "\n";
-           fields[0] = {
-               name: "Results For " + search,
-               value: value 
-           }
+            var title = page.title.replaceAll(" ", "_")
+            value += wikiEndpoint + title + "\n";
+            fields[0] = {
+                name: "Results For " + search,
+                value: value 
+            }
         })
 
         callback(fields);
@@ -533,8 +508,12 @@ client.on('message', (receivedMessage) => {
     if (receivedMessage.author == client.user) {
         return
     }
+
     const content = receivedMessage.content;
-    if (!content.startsWith(botPrefix)) {
+    if (content.startsWith(searchQueryPrefix)) {
+        handleSearch(receivedMessage);
+        return;
+    } else if (!content.startsWith(botPrefix)) {
         handleReactions(receivedMessage);
         return;
     }
@@ -543,8 +522,6 @@ client.on('message', (receivedMessage) => {
         handleUnitQueryRequest(receivedMessage);
     } else if (content.startsWith(equipQueryPrefix)) {
         handleEquipQueryRequest(receivedMessage);
-    } else if (content.startsWith(searchQueryPrefix)) {
-        handleSearch(receivedMessage);
     } else if (content.startsWith(quoteQueryPrefix)) {
         var s = getSearchString(quoteQueryPrefix, content).toLowerCase();
         console.log(s);
@@ -556,32 +533,18 @@ client.on('message', (receivedMessage) => {
             default:
                 break;
         }
-    } 
+    } else {
 
-    switch (content.toLowerCase()) {
-
-        case commandDab: 
-            receivedMessage.channel.send(new Discord.Attachment('dab.png'))
-            break;
-        case commandGL:
-            receivedMessage.channel.send(new Discord.Attachment('believe.png'))
-            break;
-        case commandCyra:
-            receivedMessage.guild.emojis.forEach(customEmoji => {
-                if (customEmoji.name === "hinayay" ||
-                customEmoji.name === "2BLewd" ||
-                customEmoji.name === "hugpweez") {
-                
-                    receivedMessage.react(customEmoji)
-                }
-            })
-            break;
-        case commandJake:
-            receivedMessage.react('🌹')
-            receivedMessage.react('🛋')
-            break;
-        default:
-            break;
+        var img = content.toLowerCase().replace(botPrefix, "");
+        var filename = `${img}.png`;
+        if (fs.existsSync(filename)) {
+            var Attachment = new Discord.Attachment(filename);
+            if (Attachment) {
+                receivedMessage.channel.send(Attachment)
+            }
+        } else {
+            console.log(filename + " doesn't exist");
+        }
     }
 })
 
