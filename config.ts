@@ -10,6 +10,7 @@ module.exports = {
         'Special Abilities (Active)'
     ],
     configuration: null,
+    serverSettings: null,
     init() {
         var data = fs.readFileSync(filename);
     
@@ -64,12 +65,33 @@ module.exports = {
             return null;
         }
     },
-    setPrefix(prefix) {
-        this.configuration.prefix = prefix;
+    setPrefix(serverId, prefix) {
+        if (!this.configuration.servers[serverId]) {
+            this.configuration.servers[serverId] = {
+                prefix: prefix,
+                successEmote: this.configuration.defaultSuccessEmote,
+                failureEmote: this.configuration.defaultFailureEmote
+            }
+        }
+        this.configuration.servers[serverId].prefix = prefix;
     },
-    getPrefix() {
-        return this.configuration.prefix;
+    getPrefix(serverId) {
+        if (!this.configuration.servers[serverId]) {
+            return this.configuration.defaultPrefix;
+        }
+        return this.configuration.servers[serverId].prefix;
+    },
+    getSuccess(serverId) {
+        if (!this.configuration.servers[serverId]) {
+            return this.configuration.defaultSuccessEmote;
+        }
+        return this.configuration.servers[serverId].successEmote;
+    },
+    getFailure(serverId) {
+        if (!this.configuration.servers[serverId]) {
+            return this.configuration.defaultFailureEmote;
+        }
+        return this.configuration.servers[serverId].failureEmote;
     }
-
 };
   

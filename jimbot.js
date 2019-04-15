@@ -33,6 +33,9 @@ const equipFields = [
     /*'Name',*/ "Type", /*"Desc",*/ "Reward", "Resist", "Effect", 
     "Trust", "STMR", "Element", "Ability", "Notes"
 ]
+const unicodeNumbers = [
+    "0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"
+]
 
 // Commands
 const commandCyra = `hi cyra`;
@@ -61,7 +64,7 @@ function getMainChannelID() {
     // List servers the bot is connected to
     console.log("Servers:")
     client.guilds.forEach((guild) => {
-        console.log(" - " + guild.name)
+        console.log(` - ${guild.name} - ${guild.id}`)
 
         // List all channels
         for(var i = 0; i < guild.channels.length; i++){
@@ -107,7 +110,6 @@ client.on('ready', () => {
 
 function getPageID(search, categories, callback) {
 
-    // TODO: fix category search for pages
     var count = categories.length;
     var similar = [];
     var queryEnd = function(id, name) {
@@ -273,10 +275,10 @@ function getSearchString(prefix, msg) {
     search = search.replaceAll(" ", "_");
     return search;
 }
-function getCommandString(msg) {
+function getCommandString(msg, prefix) {
 
     var split = msg.split(" ")[0];
-    split = toTitleCase(split.replace(config.getPrefix(), ""));
+    split = toTitleCase(split.replace(prefix, ""));
 
     if (split.empty()) {
         return null;
@@ -304,35 +306,42 @@ function handleUnit(receivedMessage, search, parameters) {
     console.log("Searching Units For: " + search);
     queryWikiForUnit(search, function (pageName, info, imgurl, description, tips) {
         pageName = pageName.replaceAll("_", " ");
-        var fields = parseUnitOverview(info, tips, parameters);
+        parseUnitOverview(info, tips, parameters, 
+            (fields, limited, rarity) => {
 
-        var embed = {
-            color: pinkHexCode,
-            author: {
-                name: client.user.username,
-                icon_url: client.user.avatarURL
-            },
-            thumbnail: {
-                url: imgurl,
-            },
-            title: pageName,
-            url: "https://exvius.gamepedia.com/"+search,
-            fields: fields
-        };
-
-        // TODO: Create a function to better wrap this since it will be common
-        if (parameters.length == 0 || 
-            (parameters.length > 0 && parameters.includes("Description"))) {
-            embed.description = description;
-        }
+                var embed = {
+                    color: pinkHexCode,
+                    author: {
+                        name: client.user.username,
+                        icon_url: client.user.avatarURL
+                    },
+                    thumbnail: {
+                        url: imgurl,
+                    },
+                    title: pageName,
+                    url: "https://exvius.gamepedia.com/"+search,
+                    fields: fields
+                };
         
-        receivedMessage.channel.send({
-            embed: embed
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
+                // TODO: Create a function to better wrap this since it will be common
+                if (parameters.length == 0 || 
+                    (parameters.length > 0 && parameters.includes("Description"))) {
+                    embed.description = description;
+                }
+                if (limited) {
+                    embed.footer = {
+                        "text": "Unit Is Limited"
+                    };
+                }
+                
+                receivedMessage.channel.send({
+                    embed: embed
+                })
+                .then(message => {
+                    cacheBotMessage(receivedMessage.id, message.id);
+                })
+                .catch(console.error);
+            });
     });
 }
 function handleEquip(receivedMessage, search) {
@@ -484,9 +493,9 @@ function handleAddemo(receivedMessage) {
         config.save();
     }
 }
-function handleEmote(receivedMessage) {
+function handleEmote(receivedMessage, prefix) {
     var img = receivedMessage.content.split(" ")[0];
-    img = img.toLowerCase().replace(config.getPrefix(), "");
+    img = img.toLowerCase().replace(prefix, "");
 
     const types = config.filetypes();
     for (var i = 0; i < types.length; i++) {
@@ -548,8 +557,9 @@ function handlePrefix(receivedMessage) {
             return;
         }
 
-        config.setPrefix(s[1]);
+        config.setPrefix(receivedMessage.guild.id, s[1]);
         config.save();
+        config.init();
 
         respondSuccess(receivedMessage);
     }
@@ -557,10 +567,10 @@ function handlePrefix(receivedMessage) {
 // COMMANDS END
 
 const defaultUnitParameters = [
-    /*'Name', */"Limited", /*"Exclusive", */"Job", "Role", "Origin", 
-    "Gender", "STMR", "Trust", "Race", /*"Number"*/, "Chain", "Rarity"
+    /*'Name', */"Limited", /*"Exclusive", *//*"Job", */"Role", "Origin", 
+    /*"Gender", */"STMR", "Trust", /*"Race", *//*"Number"*/, "Chain", "Rarity"
 ];
-function parseUnitOverview(overview, tips, params) {
+function parseUnitOverview(overview, tips, params, callback) {
             
     var parameters = defaultUnitParameters;
     if (params.length > 0) {
@@ -573,6 +583,7 @@ function parseUnitOverview(overview, tips, params) {
     var match = overviewRegexp.exec(overview);
     var minR = null;
     var maxR = null;
+    var limited = false;
     // ★★★★★✫✫
 
     while (match != null) {
@@ -587,6 +598,12 @@ function parseUnitOverview(overview, tips, params) {
         } else if (name.includes("Max-rarity")) {
             maxR = value;
             match = overviewRegexp.exec(overview);
+            continue;
+        }
+
+        if (name === "Limited") {
+            match = overviewRegexp.exec(overview);
+            limited = value === "Yes";
             continue;
         }
         
@@ -616,10 +633,12 @@ function parseUnitOverview(overview, tips, params) {
         }
     }
 
+    var rarity = null;
     if (minR && parameters.includes("Rarity")) {
+        rarity = getRarityString(minR, maxR);
         fields[fields.length] = {
             name: "Rarity",
-            value: getRarityString(minR, maxR),
+            value: rarity,
             inline: true
         }
     }
@@ -627,6 +646,9 @@ function parseUnitOverview(overview, tips, params) {
     console.log("Unit Fields");
     console.log(fields);
 
+    if (callback) {
+        callback(fields, limited, rarity);
+    }
     return fields;
 }
 function getRarityString(min, max) {
@@ -637,6 +659,28 @@ function getRarityString(min, max) {
         rarityString += (i < min) ? unicodeStar : unicodeStarOpen;
     }
     return rarityString;
+}
+
+function getCollectedTipText(tooltip, collected) {
+    var firstDiv = tooltip.find('div').first();
+   
+    while (firstDiv && firstDiv.length > 0) {
+        var text = firstDiv.text();
+        console.log("\nDiv Text: " + text);
+
+        var child = firstDiv.find('.tip.module-tooltip');
+        if (child && child.length > 0) {
+            collected = getCollectedTipText(child, collected);
+        } else {
+            collected += text + "\n";
+        }  
+
+        firstDiv = firstDiv.next();
+    }
+
+    console.log("\nCurrent Collected Text: ");
+    console.log(collected);
+    return collected;
 }
 
 function queryWikiForUnit(search, callback) {
@@ -703,19 +747,22 @@ function queryWikiForUnit(search, callback) {
             $('.tip.module-tooltip').each(function (tip) {
 
                 var tipTitle = $(this).find('img').attr('title');
-                var tipInfo = $(this).find('div').text();
-                //console.log("Tooltip: " + tipTitle);
+                var tipInfo = $(this).find('div').first().text();
+                var collected = getCollectedTipText($(this), "");
 
-                // TODO: Create lookup table for common effect words.
-                tipInfo = tipInfo.replaceAll("Increase", "\nIncrease");
-                tipInfo = tipInfo.replaceAll("Enable", "\nEnable");
-  
-                //console.log(tipInfo);
-                tips[tips.length] = {
-                    title: tipTitle,
-                    value: tipInfo
+                if (!tips.find((t) => {return t.value === tipInfo})) {
+                    console.log("Adding Tip");
+                    console.log(tipInfo);
+                    console.log("\n");
+                    tips[tips.length] = {
+                        title: tipTitle,
+                        value: collected
+                    }
                 }
             });
+
+            console.log("Tips:");
+            console.log(tips);
 
             if (family) {
 
@@ -1004,15 +1051,19 @@ function validatePage(search, callback) {
 
 // Response
 function respondSuccess(receivedMessage) {
+    const serverId = receivedMessage.guild.id;
+
     receivedMessage.guild.emojis.forEach(customEmoji => {
-        if (customEmoji.name === config.configuration.successEmote) {
+        if (customEmoji.name === config.getSuccess(serverId)) {
             receivedMessage.react(customEmoji)
         }
     });
 }
 function respondFailure(receivedMessage) {
+    const serverId = receivedMessage.guild.id;
+
     receivedMessage.guild.emojis.forEach(customEmoji => {
-        if (customEmoji.name === config.configuration.failureEmote) {
+        if (customEmoji.name === config.getFailure(serverId)) {
             receivedMessage.react(customEmoji)
         }
     });
@@ -1025,7 +1076,10 @@ client.on('message', (receivedMessage) => {
     }
 
     const content = receivedMessage.content;
-    if (!content.startsWith(config.getPrefix())) {
+    const serverId = receivedMessage.guild.id;
+    const prefix = config.getPrefix(serverId);
+
+    if (!content.startsWith(prefix)) {
         handleReactions(receivedMessage);
         return;
     }
@@ -1034,26 +1088,25 @@ client.on('message', (receivedMessage) => {
         
         var copy = content;
         var parameters = [];
-        if (content.startsWith("!unit")) {
+        if (content.startsWith(`${prefix}unit`)) {
 
             var loaded = getQuotedWord(copy);
             while (loaded) {
-                //console.log("Loaded Word");
-                //console.log(loaded);
+                console.log("Loaded Word");
+                console.log(loaded);
                 copy = copy.replace(`\"${loaded}\"`, "");
                 parameters[parameters.length] = loaded;
                 loaded = getQuotedWord(copy);
             }
-            //console.log("Loaded Parameters");
-            //console.log(parameters);
+            console.log("Loaded Parameters");
+            console.log(parameters);
             
             copy = copy.trim();
-            //console.log("Copy: " + copy);
+            console.log("Copy: " + copy);
         }
 
-
-        var split = getCommandString(copy);
-        const search = getSearchString(`${config.getPrefix()}${split}`, copy);
+        var split = getCommandString(copy, prefix);
+        const search = getSearchString(`${prefix}${split}`, copy);
         if (!search) {
             throw split;
         }
@@ -1072,7 +1125,7 @@ client.on('message', (receivedMessage) => {
         }
         catch (f) {
             console.log(f + "doesn't exist");
-            handleEmote(receivedMessage);
+            handleEmote(receivedMessage, prefix);
         }
     }
 })

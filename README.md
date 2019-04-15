@@ -1,26 +1,27 @@
 ## Bot Commands ##
+(replace ! with your servers prefix)
 
 Search
-    - **!search** [term]
+    - **!search** *[term]*
 
 Emotes, just the name of the emote with bot prefix
     - **![name]**
 
 Get Unit Information
-    - **!unit** [name] [optional | parameter]
+    - **!unit** *[name] [optional | parameter]*
     - optional: Add parameters to shorten the results for only desired information **contained in quotes**
-    - example: !unit Malphasie "STMR"  | this will only return malphasie's STMR
+    - example: **!unit Malphasie "STMR"**  | this will only return malphasie's STMR
     - parameters: "Name", "Limited", "Exclusive", "Job", "Role", "Origin", 
-                "Gender", "STMR", "Trust", "Race", "Number", "Chain", "Rarity"
+                    "Gender", "STMR", "Trust", "Race", "Number", "Chain", "Rarity"
 
 Get Skill Information
-    - **!skill** [name]
+    - **!skill** *[name]*
 
 Get Equipment Information
-    - **!equip** [name]
+    - **!equip** *[name]*
 
 Add unit alias, quotations are **required**
-    - **!addalias** "[alias]" "[unit name]"
+    - **!addalias** *"[alias]" "[unit name]"*
 
 Add emotes
-    - **!addemo** [name] [URL]
+    - **!addemo** *[name] [URL]*
