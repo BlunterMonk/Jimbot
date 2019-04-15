@@ -3,6 +3,8 @@ const client = new Discord.Client()
 const request = require('request');
 const wiki = require('nodemw');
 const fs = require('fs');
+const cheerio = require('cheerio');
+const config = require('./config.ts');
 const wikiClient = new wiki({
     protocol: 'https',           // Wikipedia now enforces HTTPS
     server: 'exvius.gamepedia.com',  // host name of MediaWiki-powered site
@@ -16,19 +18,11 @@ const valueRegexp = /\|(.*)(?:=)(.*)/g;
 const valueMultiLineRegexp = /\|(.*)(?:=)(.*[^|]+)/g;
 // (?:\<.*\>) for commented elements
 ////(.*)=\s*(.*)/g;
-const cheerio = require('cheerio');
-const botPrefix = "!";
-const unitQueryPrefix = `${botPrefix}unit`;
-const equipQueryPrefix = `${botPrefix}equip`;
-const quoteQueryPrefix = `${botPrefix}quote`;
-const searchQueryPrefix = `?search`;
-const imageEndpoint = `https://exvius.gamepedia.com/Special:FilePath/`;
 const unicodeStar = "★";
 const unicodeStarOpen = "✫";
 const descCharLimit = 128;
 const wikiEndpoint = "https://exvius.gamepedia.com/";
-const config = require('./config.ts');
-console.log(config.equipmentCategories);
+const similarityTreshold = 0.5;
 
 // Lookup Tables
 
@@ -41,13 +35,20 @@ const equipFields = [
 ]
 
 // Commands
-const commandDab = `${botPrefix}dab`;
-const commandGL = `${botPrefix}gl`;
-const commandCyra = `${botPrefix}hi cyra`;
-const commandJake = `${botPrefix}hi jake`;
+const commandCyra = `hi cyra`;
+const commandJake = `hi jake`;
 
-
-//console.log(equipmentCategories);
+// Keep track of added messages
+const botMessages = [];
+function cacheBotMessage(received, sent) {
+    botMessages[botMessages.length] = {
+        received: received,
+        sent: sent,
+        time: new Date()
+    };
+    console.log("Cached Message");
+    console.log(botMessages[botMessages.length-1]);
+}
 
 function log(data) {
     console.log(data);
@@ -81,6 +82,7 @@ function sendToChannel(id, msg) {
     channel.send(msg)  
 }
 
+const http = require('https');
 client.on('ready', () => {
     console.log("Connected as " + client.user.tag)
     getMainChannelID()
@@ -93,12 +95,51 @@ client.on('ready', () => {
     });
     */
 
+
+
+    // Synchronous read
+    config.init();
+    //config.addAlias("turtle","ryunan");
+    //config.addEmote("tifamad", "https://cdn.discordapp.com/attachments/566737026762932224/566749975933878275/angry_tifa.png");
+
+    //config.save();
 })
 
-function getEquipmentPageID(search, callback) {
+function getPageID(search, categories, callback) {
 
     // TODO: fix category search for pages
-    config.equipmentCategories.forEach(function (category) {
+    var count = categories.length;
+    var similar = [];
+    var queryEnd = function(id, name) {
+        count -= 1;
+        
+        if (id) {
+            callback(id, name);
+            callback = null;
+            count = 0;
+        } else if (!id && count <= 0) {
+            if (callback && similar.length > 0) {
+        
+                var highest = similar.sort((a, b) => {
+                    return b.similarity - a.similarity;
+                })[0];
+        
+                console.log("Highest");
+                console.log(highest);
+        
+                id = highest.id;
+                name = highest.title;
+        
+                var other = convertTitlesToLinks(similar);
+        
+                callback(id, name, other);
+                callback = null;
+            }
+        } 
+    };
+
+
+    categories.forEach(function (category) {
         wikiClient.getPagesInCategory(category, function ( err, redirect, content) {
             if (err) {
                 console.log(err);
@@ -121,6 +162,18 @@ function getEquipmentPageID(search, callback) {
                     continue;
                 }
 
+                var match = similarity(title, search);
+                if (match >= similarityTreshold) {
+                    //console.log(`Very Similar ${title} -vs- ${search} (${match})`)
+                    similar[similar.length] = {
+                        id: page.pageid,
+                        title: page.title,
+                        similarity: match
+                    }
+                }/* else if (match >= similarityTreshold * 0.5) {
+                    console.log(`Kinda Similar ${title} -vs- ${search}`)
+                }*/
+
                 title = title.replaceAll(" ", "_");
                 if (title === search) {
                     id = page.pageid;
@@ -128,11 +181,8 @@ function getEquipmentPageID(search, callback) {
                     break;
                 }
             }
-            
-            callback(id, name);
-            if (id) {
-                callback = null;
-            }
+
+            queryEnd(id, name);
         });
     });
 }
@@ -158,7 +208,51 @@ String.prototype.indexOfAfter = function(search, start) {
     var preIndex = string.indexOf(start);
     return preIndex + string.substring(preIndex).indexOf(search);
 }
+String.prototype.indexOfAfterIndex = function(search, start) {
+    return start + this.substring(start).indexOf(search);
+}
+String.prototype.matches = function(other) {
+    return this === other;
+}
+function similarity(s1, s2) {
+    var longer = s1;
+    var shorter = s2;
+    if (s1.length < s2.length) {
+        longer = s2;
+        shorter = s1;
+    }
+    var longerLength = longer.length;
+    if (longerLength == 0) {
+        return 1.0;
+    }
+    return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+}
+function editDistance(s1, s2) {
+    s1 = s1.toLowerCase();
+    s2 = s2.toLowerCase();
 
+    var costs = new Array();
+    for (var i = 0; i <= s1.length; i++) {
+        var lastValue = i;
+        for (var j = 0; j <= s2.length; j++) {
+            if (i == 0)
+                costs[j] = j;
+            else {
+                if (j > 0) {
+                var newValue = costs[j - 1];
+                if (s1.charAt(i - 1) != s2.charAt(j - 1))
+                    newValue = Math.min(Math.min(newValue, lastValue),
+                    costs[j]) + 1;
+                    costs[j - 1] = lastValue;
+                    lastValue = newValue;
+                }
+            }
+        }
+        if (i > 0)
+        costs[s2.length] = lastValue;
+    }
+    return costs[s2.length];
+}
 function getSearchString(prefix, msg) {
 
     var ind = prefix.length + 1;
@@ -167,10 +261,28 @@ function getSearchString(prefix, msg) {
     if (search.empty()) {
         return null;
     }
-    
+
+    var s = search
+    var alias = config.getAlias(s.replaceAll(" ", "_"));
+    if (alias) {
+        console.log("Found Alias: " + alias);
+        return alias.replaceAll(" ", "_");
+    }
+
     search = toTitleCase(search);
     search = search.replaceAll(" ", "_");
     return search;
+}
+function getCommandString(msg) {
+
+    var split = msg.split(" ")[0];
+    split = toTitleCase(split.replace(config.getPrefix(), ""));
+
+    if (split.empty()) {
+        return null;
+    }
+
+    return split;
 }
 function toTitleCase(text) {
     return text.toLowerCase()
@@ -179,47 +291,55 @@ function toTitleCase(text) {
         .join(' ');
 }
 
-function handleUnitQueryRequest(receivedMessage) {
+/*
+const reactionFilter = (reaction, user) => {
+    return true;// ['👎'].includes(reaction.emoji.name) && user.id === message.author.id;
+};
+    const filter = (reaction, user) => reaction.emoji.name === '👌'
+*/
 
-    const search = getSearchString(unitQueryPrefix, receivedMessage.content);
-    if (!search) {
-        console.log("Empty Search");
-        return;
-    }
- 
+// COMMANDS
+function handleUnit(receivedMessage, search, parameters) {
+
     console.log("Searching Units For: " + search);
-    queryWikiForUnit(search, function (info, imgurl, description) {
-            
-        var fields = parseUnitOverview(info);
+    queryWikiForUnit(search, function (pageName, info, imgurl, description, tips) {
+        pageName = pageName.replaceAll("_", " ");
+        var fields = parseUnitOverview(info, tips, parameters);
+
+        var embed = {
+            color: pinkHexCode,
+            author: {
+                name: client.user.username,
+                icon_url: client.user.avatarURL
+            },
+            thumbnail: {
+                url: imgurl,
+            },
+            title: pageName,
+            url: "https://exvius.gamepedia.com/"+search,
+            fields: fields
+        };
+
+        // TODO: Create a function to better wrap this since it will be common
+        if (parameters.length == 0 || 
+            (parameters.length > 0 && parameters.includes("Description"))) {
+            embed.description = description;
+        }
         
         receivedMessage.channel.send({
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                thumbnail: {
-                    url: imgurl,
-                },
-                title: search,
-                url: "https://exvius.gamepedia.com/"+search,
-                description: description,
-                fields: fields
-            }
-        });
+            embed: embed
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
     });
 }
-function handleEquipQueryRequest(receivedMessage) {
-
-    const search = getSearchString(equipQueryPrefix, receivedMessage.content);
-    if (!search) {
-        console.log("Empty Search");
-        return;
-    }
+function handleEquip(receivedMessage, search) {
 
     console.log(`Searching Equipment For: ${search}...`);
     queryWikiForEquipment(search, function(imgurl, pageName, nodes) {
+        var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
 
         receivedMessage.channel.send(mainChannelID, {
@@ -232,11 +352,43 @@ function handleEquipQueryRequest(receivedMessage) {
                 thumbnail: {
                     url: imgurl,
                 },
-                title: search.replaceAll("_", " "),
+                title: title,
                 fields: nodes,
                 url: "https://exvius.gamepedia.com/"+pageName
             }
-        });
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+    })
+}
+function handleSkill(receivedMessage, search) {
+
+    console.log(`Searching Skills For: ${search}...`);
+    queryWikiForAbility(search, function(imgurl, pageName, nodes) {
+        var title = pageName;
+        pageName = pageName.replaceAll(" ", "_");
+
+        receivedMessage.channel.send(mainChannelID, {
+            embed: {
+                color: pinkHexCode,
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL
+                },
+                thumbnail: {
+                    url: imgurl,
+                },
+                title: title,
+                fields: nodes,
+                url: "https://exvius.gamepedia.com/"+pageName
+            }
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
     })
 }
 function handleReactions(receivedMessage) {
@@ -261,14 +413,9 @@ function handleReactions(receivedMessage) {
             break;
     }
 }
-function handleSearch(receivedMessage) {
-    
-    const search = getSearchString(searchQueryPrefix, receivedMessage.content);
-    if (!search) {
-        console.log("Empty Search");
-        return;
-    }
+function handleSearch(receivedMessage, search) {
 
+    console.log(`Searching For: ${search}...`);
     queryWikiWithSearch(search, function (batch){
         receivedMessage.channel.send(mainChannelID, {
             embed: {
@@ -279,18 +426,150 @@ function handleSearch(receivedMessage) {
                 },
                 fields: batch
             }
-        });
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
     })
 }
+function handleAddalias(receivedMessage) {
+    if (receivedMessage.content.replace(/[^"]/g, "").length < 4) {
+        console.log("Invalid Alias");
+        return;
+    }
 
+    var copy = receivedMessage.content;
+    var w1 = getQuotedWord(copy);
+    if (!w1) {
+        console.log("Invalid Alias");
+        return;
+    }
+    copy = copy.replace(`\"${w1}\"`, "");
+    var w2 = getQuotedWord(copy);
+    if (!w2) {
+        console.log("Invalid Alias");
+        return;
+    }
+    copy = copy.replace(`\"${w2}\"`, "");
 
-function parseUnitOverview(overview) {
+    validatePage(w2, (valid) => {
+        if (valid) {
+
+            console.log("Unit is valid");
             
+            w1 = w1.replaceAll(" ", "_");
+            config.addAlias(w1, w2);
+            config.save();
+            
+            respondSuccess(receivedMessage);
+        } else {
+            respondFailure(receivedMessage);
+        }
+    });
+}
+function handleAddemo(receivedMessage) {
+    var s = receivedMessage.content.split(" ");
+    if (s) {
+        if (!s[1] || !s[2]) {
+            return;
+        }
+
+        downloadFile(s[1], s[2], (result) => {
+            console.log(result);
+            respondSuccess(receivedMessage);
+        });
+
+        config.addEmote(s[1], s[2]);
+        config.save();
+    }
+}
+function handleEmote(receivedMessage) {
+    var img = receivedMessage.content.split(" ")[0];
+    img = img.toLowerCase().replace(config.getPrefix(), "");
+
+    const types = config.filetypes();
+    for (var i = 0; i < types.length; i++) {
+        
+        var filename = "emotes/" + img + types[i];
+        if (fs.existsSync(filename)) {
+            var Attachment = new Discord.Attachment(filename);
+            if (Attachment) {
+                receivedMessage.channel.send(Attachment)
+                    .then(message => {
+                        cacheBotMessage(receivedMessage.id, message.id);
+                    })
+                    .catch(console.error);
+                return;
+            }
+        }
+    }
+    
+    console.log(filename + " doesn't exist");
+}
+function handleQuote(receivedMessage, search) {
+    //var s = getSearchString(quoteQueryPrefix, content).toLowerCase();
+    switch (search)
+    {
+        case "morrow":
+            receivedMessage.channel.send(new Discord.Attachment('morrow0.png'))
+            break;
+        default:
+            break;
+    }
+}
+function handleHelp(receivedMessage) {
+    var data = fs.readFileSync('readme.md', "ASCII");
+    receivedMessage.channel.send(mainChannelID, {
+        embed: {
+            color: pinkHexCode,
+            author: {
+                name: client.user.username,
+                icon_url: client.user.avatarURL
+            },
+            description: data,
+        }
+    })
+    .then(message => {
+        cacheBotMessage(receivedMessage.id, message.id);
+    })
+    .catch(console.error);
+}
+function handlePrefix(receivedMessage) {
+    if(receivedMessage.member.roles.find(r => r.name === "Admin") || 
+        receivedMessage.member.roles.find(r => r.name === "Mod")) {
+        
+        // TODO: Add logic to change prefix to a valid character.
+        console.log("User Is Admin");
+        var s = receivedMessage.content.split(" ");
+        if (!s[1] || s[1].length !== 1) {
+            console.log("Invalid Prefix");
+            respondFailure(receivedMessage);
+            return;
+        }
+
+        config.setPrefix(s[1]);
+        config.save();
+
+        respondSuccess(receivedMessage);
+    }
+}
+// COMMANDS END
+
+const defaultUnitParameters = [
+    /*'Name', */"Limited", /*"Exclusive", */"Job", "Role", "Origin", 
+    "Gender", "STMR", "Trust", "Race", /*"Number"*/, "Chain", "Rarity"
+];
+function parseUnitOverview(overview, tips, params) {
+            
+    var parameters = defaultUnitParameters;
+    if (params.length > 0) {
+        console.log("Found Parameters");
+        console.log(params);
+        parameters = params;
+    }
+
     var fields = [];
-    var parameters = [
-        /*'Name', */"Limited", "Exclusive", "Job", "Role", "Origin", 
-        "Gender", "STMR", "Trust", "Race", "Number"
-    ]
     var match = overviewRegexp.exec(overview);
     var minR = null;
     var maxR = null;
@@ -298,6 +577,7 @@ function parseUnitOverview(overview) {
 
     while (match != null) {
 
+        var inline = true;
         var name = match[1].replaceAll(" ", "").capitalize();
         var value = match[2];
         if (name.includes("Min-rarity")) {
@@ -310,24 +590,42 @@ function parseUnitOverview(overview) {
             continue;
         }
         
-        if (parameters.includes(name)) {
+        if (parameters.includes(name) && !value.empty()) {
+            var tip = tips.find((t) => {return t.title === value;});
+            if (tip) {
+                name += " - " + value;
+                value = tip.value;
+                inline = false;
+            }
+
             fields[fields.length] = {
                 name: name,
                 value: value,
-                inline: (name !== "Name")
+                inline: inline
             }
         }
 
         match = overviewRegexp.exec(overview);
     }
 
-    if (minR) {
+    var tip = tips.find((t) => {return t.title === "Chain Families";});
+    if (tip && parameters.includes("Chain")) {
+        fields[fields.length] = {
+            name: "Chain Families",
+            value: tip.value,
+        }
+    }
+
+    if (minR && parameters.includes("Rarity")) {
         fields[fields.length] = {
             name: "Rarity",
             value: getRarityString(minR, maxR),
             inline: true
         }
     }
+
+    console.log("Unit Fields");
+    console.log(fields);
 
     return fields;
 }
@@ -357,7 +655,7 @@ function queryWikiForUnit(search, callback) {
             const redirectRegex = /(?:.*)\[(.*)\]]/g;
             const page = redirectRegex.exec(content);
             console.log("Redirect To: " + page[1]);
-            queryWikiForUnit(page, callback);
+            queryWikiForUnit(page[1], callback);
             return;
         }
 
@@ -373,18 +671,69 @@ function queryWikiForUnit(search, callback) {
                 return;
             }
 
+            var match = xml.match(/\"\/Chaining\/(.*)\"\s/g)
+            var unique = [];
+            var family = null;
+            if (match) {
+
+                family = "";
+                match.forEach((m) => {
+                    if (!unique.includes(m)) {
+                        unique[unique.length] = m;
+                    }
+                });
+                console.log("Parsed Family:\n\n");
+                unique.forEach((m) => {
+                    m = m.replace("/", "").replaceAll("\"","").replaceAll(" ", "");
+                    var name = m.replace("Chaining/", "").replaceAll("_", " ");
+                    var link = `[${name}](${wikiEndpoint}${m})`;
+                    console.log(name);
+                    console.log(link);
+                    family += link + "\n";
+                });
+                console.log(family);
+            }
+
             const $ = cheerio.load(xml);
             const imgurl = $('.big-pixelate').attr('src');
             var description = $('.mw-parser-output').children('p').first().text();
             description = description.limitTo(descCharLimit);
 
-            callback(overview, imgurl, description);
+            var tips = [];
+            $('.tip.module-tooltip').each(function (tip) {
+
+                var tipTitle = $(this).find('img').attr('title');
+                var tipInfo = $(this).find('div').text();
+                //console.log("Tooltip: " + tipTitle);
+
+                // TODO: Create lookup table for common effect words.
+                tipInfo = tipInfo.replaceAll("Increase", "\nIncrease");
+                tipInfo = tipInfo.replaceAll("Enable", "\nEnable");
+  
+                //console.log(tipInfo);
+                tips[tips.length] = {
+                    title: tipTitle,
+                    value: tipInfo
+                }
+            });
+
+            if (family) {
+
+                tips[tips.length] = {
+                    title: "Chain Families",
+                    value: family
+                }
+            }
+
+            console.log(search)
+            console.log(typeof search)
+            callback(search, overview, imgurl, description, tips);
         });
     });
 }
 function queryWikiForEquipment(search, callback) {
 
-    getEquipmentPageID(search, function (id, pageName) {
+    getPageID(search, config.equipmentCategories, function (id, pageName, other) {
         if (!id) {
             console.log("Could not find page: " + pageName);
             return;
@@ -395,10 +744,6 @@ function queryWikiForEquipment(search, callback) {
                 console.log(err);
                 return;
             }
-            
-            //console.log("QUERY CONTENT:\n");
-            //console.log(content);
-            //console.log("\n\n-----\n\n");
 
             wikiClient.parse( content, 'search', function ( err, xml, images ) {
                 if ( err ) {
@@ -422,10 +767,6 @@ function queryWikiForEquipment(search, callback) {
                 var nodes = [];
                 while (match != null) {
                     
-                    if (match[1][match[1].length - 1] === "=") {
-                        console.log("No Value for: " + match[1]);
-                    }
-
                     var name = match[1].replace("\t", "").capitalize();
                     name = name.replaceAll(" ", "");
                     var value = match[2];
@@ -446,15 +787,17 @@ function queryWikiForEquipment(search, callback) {
                             while (open > 0) {
 
                                 var close = value.indexOfAfter("]]", open);
-                                var link = value.substring(open + 2, close+1);
+                                var link = value.substring(open + 3, close+1);
                                 link = link.replaceAll(" ", "_");
 
+                                value = value.replace("(", "");
+                                value = value.replace(")", "");
                                 value = value.substring(0, open) + value.substring(close + 3, value.length);
-                                
-                                // Skip category links                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-                                if (!link.includes("|Trial")) {
-                                    console.log("Link: " + link);
-                                    value += wikiEndpoint + link;
+
+                                // Skip category links
+                                var linkFilter = [ "|Trial", "|Event", "|Quest" ];
+                                if (!linkFilter.find((f) => { return link.includes(f)})) {
+                                    value += wikiEndpoint + link + "\n";
                                 }
                                 
                                 open = value.indexOf("[[");
@@ -484,6 +827,118 @@ function queryWikiForEquipment(search, callback) {
                     
                     match = valueMultiLineRegexp.exec(content);
                 }
+
+                if (other) {
+                    nodes[nodes.length] = {
+                        name: "Similar Results",
+                        value: other,
+                    }
+                }
+                
+                console.log(nodes);
+
+                callback(imgurl, pageName, nodes);
+            });
+        });
+    });
+}
+function queryWikiForAbility(search, callback) {
+
+    getPageID(search, config.abilityCategories, function (id, pageName, other) {
+        wikiClient.getArticle(id, function (err, content, redirect) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            wikiClient.parse( content, 'search', function ( err, xml, images ) {
+                if ( err ) {
+                    console.error( err );
+                    return;
+                }
+
+                const $ = cheerio.load(xml);
+                const imgurl = $('.mw-parser-output').find('img').attr('src');
+                const links = $('.mw-parser-output').children('a');
+                //console.log("Links on Page");
+                //console.log(links.length);
+                
+                var regex = /\|(.*?)\n/g;
+                var match = regex.exec(content);
+                console.log(match);
+                
+                // TODO: parse item ability description.
+
+                var ignore = "<!";
+                var nodes = [];
+                while (match != null) {
+                    
+                    var name = match[1].replace("\t", "").capitalize();
+                    name = name.replaceAll(" ", "");
+                    var value = match[2];
+
+                    //console.log(`${name} = '${value}' isParam: ${isParam}`);
+
+                    // Fix string to remove any unecessary information
+                    if (value) {
+
+                        if (value.includes(ignore)) {
+                            var open = value.indexOf("<!");
+                            var close = value.indexOf(">");
+                            value = value.substring(0, open) + value.substring(close + 1, value.length);
+                        }
+                        if (value.includes("[[")) {
+
+                            var open = value.indexOf("[[");
+                            while (open > 0) {
+
+                                var close = value.indexOfAfter("]]", open);
+                                var link = value.substring(open + 3, close+1);
+                                link = link.replaceAll(" ", "_");
+
+                                value = value.replace("(", "");
+                                value = value.replace(")", "");
+                                value = value.substring(0, open) + value.substring(close + 3, value.length);
+
+                                // Skip category links
+                                var linkFilter = [ "|Trial", "|Event", ];
+                                if (!linkFilter.find((f) => { return link.includes(f)})) {
+                                    value += wikiEndpoint + link + "\n";
+                                }
+                                
+                                open = value.indexOf("[[");
+                            }
+                        }
+                        if (value.includes("Unstackable")) {
+                            value = "Unstackable Materia";
+                        }
+                    }
+
+                    var isParam = equipParameters.includes(name)
+                    var isParsable = equipFields.includes(name);
+                    if (value && !value.includes(ignore) &&
+                        (isParam || isParsable)) {
+                        
+                        var notEmpty = /\S/.test(value);
+                        
+                        if (notEmpty) {
+
+                            nodes[nodes.length] = {
+                                name: name,
+                                value: value,
+                                inline: (name !== "Effect")
+                            }
+                        }
+                    }
+                    
+                    match = valueMultiLineRegexp.exec(content);
+                }
+
+                if (other) {
+                    nodes[nodes.length] = {
+                        name: "Similar Results",
+                        value: other,
+                    }
+                }
                 
                 console.log(nodes);
 
@@ -504,17 +959,62 @@ function queryWikiWithSearch(search, callback) {
             name: "Results For " + search,
             value: "Nothing Found" 
         }];
-        var value = "";
-        batch.forEach(function (page) {
-            var title = page.title.replaceAll(" ", "_")
-            value += wikiEndpoint + title + "\n";
-            fields[0] = {
-                name: "Results For " + search,
-                value: value 
-            }
-        })
+        fields[0].value = convertTitlesToLinks(batch);
 
         callback(fields);
+    });
+}
+
+function convertTitlesToLinks(batch) {
+
+    var value = "";
+    batch.forEach(function (page) {
+        console.log("converTitle: " + page.title);
+        var title = page.title.replaceAll(" ", "_")
+        value += wikiEndpoint + title + "\n";
+    })
+
+    return value;
+}
+
+function validatePage(search, callback) {
+    wikiClient.getArticle(search, function (err, content, redirect) {
+        if (err || !content) {
+            console.error(err);
+            callback(false);
+            return;
+        }
+        if (redirect) {
+            console.log("Redirect Info: ");
+            console.log(redirect);
+        }
+        
+        const firstLine = content.indexOf("Unit Infobox");
+        if (firstLine < 0) {
+            const redirectRegex = /(?:.*)\[(.*)\]]/g;
+            const page = redirectRegex.exec(content);
+            console.log("Redirect To: " + page[1]);
+            validatePage(page, callback);
+            return;
+        }
+
+        callback(true);
+    });
+}
+
+// Response
+function respondSuccess(receivedMessage) {
+    receivedMessage.guild.emojis.forEach(customEmoji => {
+        if (customEmoji.name === config.configuration.successEmote) {
+            receivedMessage.react(customEmoji)
+        }
+    });
+}
+function respondFailure(receivedMessage) {
+    receivedMessage.guild.emojis.forEach(customEmoji => {
+        if (customEmoji.name === config.configuration.failureEmote) {
+            receivedMessage.react(customEmoji)
+        }
     });
 }
 
@@ -525,43 +1025,118 @@ client.on('message', (receivedMessage) => {
     }
 
     const content = receivedMessage.content;
-    if (content.startsWith(searchQueryPrefix)) {
-        handleSearch(receivedMessage);
-        return;
-    } else if (!content.startsWith(botPrefix)) {
+    if (!content.startsWith(config.getPrefix())) {
         handleReactions(receivedMessage);
         return;
     }
 
-    if (content.startsWith(unitQueryPrefix)) {
-        handleUnitQueryRequest(receivedMessage);
-    } else if (content.startsWith(equipQueryPrefix)) {
-        handleEquipQueryRequest(receivedMessage);
-    } else if (content.startsWith(quoteQueryPrefix)) {
-        var s = getSearchString(quoteQueryPrefix, content).toLowerCase();
-        console.log(s);
-        switch (s)
-        {
-            case "morrow":
-                receivedMessage.channel.send(new Discord.Attachment('morrow0.png'))
-                break;
-            default:
-                break;
-        }
-    } else {
+    try {
+        
+        var copy = content;
+        var parameters = [];
+        if (content.startsWith("!unit")) {
 
-        var img = content.toLowerCase().replace(botPrefix, "");
-        var filename = `${img}.png`;
-        if (fs.existsSync(filename)) {
-            var Attachment = new Discord.Attachment(filename);
-            if (Attachment) {
-                receivedMessage.channel.send(Attachment)
+            var loaded = getQuotedWord(copy);
+            while (loaded) {
+                //console.log("Loaded Word");
+                //console.log(loaded);
+                copy = copy.replace(`\"${loaded}\"`, "");
+                parameters[parameters.length] = loaded;
+                loaded = getQuotedWord(copy);
             }
-        } else {
-            console.log(filename + " doesn't exist");
+            //console.log("Loaded Parameters");
+            //console.log(parameters);
+            
+            copy = copy.trim();
+            //console.log("Copy: " + copy);
+        }
+
+
+        var split = getCommandString(copy);
+        const search = getSearchString(`${config.getPrefix()}${split}`, copy);
+        if (!search) {
+            throw split;
+        }
+
+        //console.log("getCommandString: " + split);
+        //console.log("getSearchString: " + search);
+        var command = "handle" + split + "(receivedMessage, search, parameters)";
+
+        console.log("Running Command: " + command);
+        eval(command);
+    } catch(e) {
+        console.log(e);
+        console.log(`No search terms found for "${e}", run other commands: `);
+        try{
+            eval("handle" + e + "(receivedMessage)");
+        }
+        catch (f) {
+            console.log(f + "doesn't exist");
+            handleEmote(receivedMessage);
         }
     }
 })
+
+client.on('messageDelete', (deletedMessage) => {
+    console.log("Message Deleted");
+    console.log(deletedMessage.id);
+
+    for(var i = 0; i < botMessages.length; i++) {
+        var msg = botMessages[i];
+
+        if (msg.received === deletedMessage.id) {
+            var sent = deletedMessage.channel.fetchMessage(msg.sent)
+                .then(sent => {
+                    if (sent) {
+                        console.log("Deleted Message");
+                        sent.delete();
+        
+                        botMessages.splice(i, 1);
+                    }
+                })
+                .catch(console.error);
+            break;
+        }
+    }
+});
+
+function getQuotedWord(str) {
+                
+    if (str.replace(/[^\""]/g, "").length < 2) {
+        return null;
+    }
+
+    var start = str.indexOf("\"");
+    var end = str.indexOfAfterIndex("\"", start+1);
+    var word = str.substring(start+1, end);
+    console.log(start)
+    console.log(end);
+    console.log("Quoted Word: " + word);
+
+    if (word.empty()) {
+        return null;
+    }
+
+    return word;
+}
+function downloadFile(name, link, callback) {
+    var ext = link.substring(link.lastIndexOf("."), link.length);
+    if (!config.filetypes().includes(ext)) {
+        console.log("Invalid img URL");
+        return;
+    }
+
+    const file = fs.createWriteStream("emotes/" + name + ext);
+    const request = http.get(link, function(response) {
+        response.pipe(file);
+        callback("success");
+    });
+}
+
+process.on('unhandledRejection', (reason, p) => {
+    console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+    // application specific logging, throwing an error, or other logic here
+});
 
 // Get your bot's secret token from:
 // https://discordapp.com/developers/applications/
@@ -569,7 +1144,7 @@ client.on('message', (receivedMessage) => {
 bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
 bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token_test)
+client.login(bot_secret_token)
 
 /**
     { "name": "Name",		"value": "9S" 			,	"inline": true },
