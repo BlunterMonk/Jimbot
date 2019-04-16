@@ -7,7 +7,7 @@ module.exports = {
         'Items', 'Ability Materia'
     ],
     abilityCategories: [
-        'Special Abilities (Active)'
+        'Special Abilities (Active)', 'Special Abilities (Passive)'
     ],
     configuration: null,
     serverSettings: null,
