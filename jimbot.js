@@ -23,6 +23,8 @@ const unicodeStarOpen = "✫";
 const descCharLimit = 128;
 const wikiEndpoint = "https://exvius.gamepedia.com/";
 const similarityTreshold = 0.5;
+const okEmoji = '🆗';
+const cancelEmoji = '❌';
 
 // Lookup Tables
 
@@ -132,9 +134,8 @@ function loadRankingsList() {
             //const table = $('table#wikitable.sortable.jquery-tablesorter').first();
             //console.log(table);
             var table = $('.wikitable.sortable');
-            fs.writeFileSync('rankingsdump.txt', table.html());
+            fs.writeFileSync('rankingsdump.txt', xml);
 
-            
             if(!table.is('table')) {
                 console.log("Not Table");
                 return;
@@ -152,68 +153,83 @@ function loadRankingsList() {
                 }
             });
 
-            var count = 1;
-            table.find('tbody').children('tr').each(function(indx, obj ) {
-                var row = {};
-                var tds = $(this).children('td');
-                if (count > 0) {
-                    console.log("tr: " + indx);
-                }
+            table.each((tableIndex, element) => {
+                console.log("Started Table: " + tableIndex);
+                //console.log($(element).html());
 
-                tds.each(function(ind) {
-                    var value = $(this).text();
-                    value = value.replaceAll("\n", "");
-                    value = value.replaceAll(" ", "_");
+                var count = 1;
+                $(element).find('tbody').children('tr').each(function(indx, obj ) {
+                    var row = {};
+                    var tds = $(this).children('td');
                     if (count > 0) {
-                        console.log("td: " + value);
+                        console.log("tr: " + indx);
                     }
 
-                    if (ind == 0) {
-                        var img = $(this).find('img').attr('src');
-                        row["imgurl"] = img;
-                        //console.log("Imgurl: " + img);
-                    }
-
-                    var links = $(this).children('img');
-                    links.each(function(i) {
+                    tds.each(function(ind) {
+                        var value = $(this).text();
+                        value = value.replaceAll("\n", "");
+                        value = value.replaceAll(" ", "_");
                         if (count > 0) {
-                            console.log("img: " + $(this).attr('alt'));
+                            console.log("td: " + value);
                         }
-                        value += $(this).attr('alt') + "\n";
+
+                        if (ind == 0) {
+                            var img = $(this).find('img').attr('src');
+                            row["imgurl"] = img;
+                            //console.log("Imgurl: " + img);
+                        }
+
+                        var links = $(this).children('img');
+                        links.each(function(i) {
+                            if (count > 0) {
+                                console.log("img: " + $(this).attr('alt'));
+                            }
+                            value += $(this).attr('alt') + "\n";
+                        });
+
+                        var key = headings[ind];
+                        if (ind < 4) {
+                            //console.log(`Add (${value}) To: ${key}`);
+                            row[key] = value;
+                        }
                     });
 
-                    var key = headings[ind];
-                    if (ind < 4) {
-                        //console.log(`Add (${value}) To: ${key}`);
-                        row[key] = value;
-                    }
-                });
-                
-                if (row["Unit"]) {
+                    var unitName = row["Unit"];
                     
-                    try {
-                        var notes = $(`#${row["Unit"]}_2`);
-                        if (notes && notes.length > 0) {
-                            row["notes"] = notes.parent().next().text();
-                        }
-                    } catch(e) {
+                    if (row["Unit"]) {
+                        var escpaedName = row["Unit"].replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&");
+                        
                         try {
-                            var notes = $(`#${row["Unit"]}`);
+                            var notes = $(`#${escpaedName}_2`);
                             if (notes && notes.length > 0) {
                                 row["notes"] = notes.parent().next().text();
-                            }
-                        } catch (f) {
-                            console.log("Could not get notes for: " + row["Unit"]);
-                        }
-                    }
-                    
-                    if (count > 0) {
-                        console.log(row);
-                    }
+                            } else {
+                                //console.log(`Could not find '${escpaedName}_2', trying '${escpaedName}'.`);
 
-                    count--;
-                    results.push(row);
-                }
+                                try {
+                                    var notes = $(`#${escpaedName}`);
+                                    if (notes && notes.length > 0) {
+                                        row["notes"] = notes.parent().next().text();
+                                    } else {
+                                        console.log(`Found '${escpaedName}', could not find notes.`);
+                                    }
+                                } catch (f) {
+                                    console.log("Could not get notes for: " + escpaedName);
+                                }
+                            }
+                        } catch(e) {
+                            console.log("Big Error: " + e);
+                            console.log("Could not get notes for: " + escpaedName);
+                        }
+                        
+                        if (count > 0) {
+                            console.log(row);
+                        }
+
+                        count--;
+                        results.push(row);
+                    }
+                });
             });
         
             //console.log("Results:");
@@ -656,21 +672,16 @@ function handleAddemo(receivedMessage) {
                 receivedMessage.channel.send({ embed: embed })
                     .then(message => {
                         cacheBotMessage(receivedMessage.id, message.id);
-                        message.react('🆗');
-                        //message.react('👎');
+                        message.react(okEmoji);
+                        message.react(cancelEmoji);
 
-                        /*
-                        const filter = (reaction, user) => {
-                            ['👍', '👎'].includes(reaction.emoji.name) && user.id !== message.author.id;
-                        };*/
-                        const filter = (reaction, user) => (reaction.emoji.name === '🆗' && user.id !== message.author.id);
+                        const filter = (reaction, user) => (reaction.emoji.name === okEmoji || reaction.emoji.name === cancelEmoji) && user.id !== message.author.id;
                         message.awaitReactions(filter, { max: 1, time: 60000 })
                                 .then(collected => {
-                                    const reaction = collected.first();
+                                    const reaction = collected.first().emoji.name;
                                     const count = collected.size;
-                                    console.log(count);
-                                    
-                                    if (count === 1) {
+
+                                    if (count === 1 && reaction === okEmoji) {
                                         fs.unlink(existing, (err) => {
                                             if (err) {
                                                 console.log(err);
@@ -683,33 +694,34 @@ function handleAddemo(receivedMessage) {
                                                 const serverId = receivedMessage.guild.id;
                                                 receivedMessage.guild.emojis.forEach(customEmoji => {
                                                     if (customEmoji.name === config.getSuccess(serverId)) {
-                                                        receivedMessage.reply(`Emote has been replaced. :${customEmoji}:`);
+                                                        message.delete();
+                                                        //receivedMessage.reply(`Emote has been replaced. :${customEmoji}:`);
+                                                        respondSuccess(receivedMessage);
                                                     }
                                                 });
                                             });                                            
                                         });
+                                    } else if(count === 0 || reaction === cancelEmoji) {
+                                        console.log("AddEmo - no response");
+                                        message.delete();
+                                        respondFailure(receivedMessage);
                                     }
                                 })
                                 .catch(collected => {
                                     console.log("AddEmo - no response");
+                                    message.delete();
+                                    respondFailure(receivedMessage);
                                 });
                     })
                     .catch(console.error);
             }
                 
         } else {
-
             downloadFile(name, url, (result) => {
                 console.log(result);
                 respondSuccess(receivedMessage);
             });
-    
-            //config.addEmote(s[1], s[2]);
-            //config.save();
         }
-
-
-
     }
 }
 function handleEmote(receivedMessage, prefix, replace) {
@@ -1506,7 +1518,7 @@ process.on('unhandledRejection', (reason, p) => {
 bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
 bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token_test)
+client.login(bot_secret_token)
 
 /**
     { "name": "Name",		"value": "9S" 			,	"inline": true },
