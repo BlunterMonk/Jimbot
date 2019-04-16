@@ -1,20 +1,29 @@
 
 const fs = require('fs');
 const filename = 'config.json';
+const rankingFile = 'rankings.json';
+const rankingDump = 'rankingsdump.json';
 
 module.exports = {
     equipmentCategories: [
         'Items', 'Ability Materia'
     ],
     abilityCategories: [
-        'Special Abilities (Active)', 'Special Abilities (Passive)'
+        'Special Abilities (Active)', 'Special Abilities (Passive)', 'Magic'
     ],
     configuration: null,
+    rankings: null,
+    fullRankings: null,
     serverSettings: null,
     init() {
         var data = fs.readFileSync(filename);
-    
         this.configuration = JSON.parse(data);
+
+        var rank = fs.readFileSync(rankingFile);
+        this.rankings = JSON.parse(rank);
+        
+        var dump = fs.readFileSync(rankingDump);
+        this.fullRankings = JSON.parse(dump);
     },
     save() {
         var newData = JSON.stringify(this.configuration);
@@ -92,6 +101,14 @@ module.exports = {
             return this.configuration.defaultFailureEmote;
         }
         return this.configuration.servers[serverId].failureEmote;
+    },
+    getRankings(category) {
+        return this.rankings[category.toLowerCase()];
+    },
+    getUnitRank(name) {
+        return this.fullRankings.find((r) => {
+            return r["Unit"] === name;
+        });
     }
 };
   

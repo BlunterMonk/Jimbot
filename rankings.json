@@ -1,0 +1,35 @@
+{
+    "physical_chainer": [
+        {
+            "name": "Crimson",
+            "pageurl": "https://exvius.gamepedia.com/Crimson",    
+            "imgurl": "https://gamepedia.cursecdn.com/exvius_gamepedia_en/6/63/Unit-Crimson-7.png",
+            "comparison": "Top Damage",
+            "reason": "5,000,000,000", 
+            "chain": "(Divine Ruination)[https://exvius.gamepedia.com/Chaining/Divine_Ruination]\n(Quick Hit)[https://exvius.gamepedia.com/Chaining/Quick_Hit]\n"
+        },
+        {
+            "name": "Dark Fina",
+            "pageurl": "https://exvius.gamepedia.com/Dark_Fina",    
+            "imgurl": "https://gamepedia.cursecdn.com/exvius_gamepedia_en/2/21/Unit-Dark_Fina-7.png",
+            "comparison": "Top Damage",
+            "reason": "500,000,000,000"
+      }
+    ],
+    "magical_chainer": [
+        {
+            "name": "Barbariccia",
+            "pageurl": "https://exvius.gamepedia.com/Barbariccia",    
+            "imgurl": "https://gamepedia.cursecdn.com/exvius_gamepedia_en/b/b8/Unit-Barbariccia-7.png",
+            "comparison": "Hair",
+            "reason": "Best in game"
+        },
+        {
+            "name": "Sephiroth",
+            "pageurl": "https://exvius.gamepedia.com/Sephiroth",    
+            "imgurl": "https://gamepedia.cursecdn.com/exvius_gamepedia_en/d/dc/Unit-Sephiroth-7.png",
+            "comparison": "Hidden Skill",
+            "reason": "Assassination"
+        }
+    ]
+}

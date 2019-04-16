@@ -97,8 +97,7 @@ client.on('ready', () => {
         console.log(body.explanation);
     });
     */
-
-
+   loadRankingsList();
 
     // Synchronous read
     config.init();
@@ -107,6 +106,151 @@ client.on('ready', () => {
 
     //config.save();
 })
+
+function loadRankingsList() {
+    
+    var search = "Unit_Rankings";
+    wikiClient.getArticle(search, function (err, content, redirect) {
+        if (err || !content) {
+            console.error(err);
+            return;
+        }
+        if (redirect) {
+            console.log("Redirect Info: ");
+            console.log(redirect);
+        }
+
+        wikiClient.parse(content, search, function (err, xml, images) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            console.log("Parsing Page");
+            //console.log(xml);
+
+            const $ = cheerio.load(xml);
+            //const table = $('table#wikitable.sortable.jquery-tablesorter').first();
+            //console.log(table);
+            var table = $('.wikitable.sortable');
+            fs.writeFileSync('rankingsdump.txt', table.html());
+
+            
+            if(!table.is('table')) {
+                console.log("Not Table");
+                return;
+            }
+            console.log("Is Table");
+            var results = [],
+                headings = [];
+        
+            table.first().find('th').each(function(index, value) {
+                var head = $(value).text();
+                if (!head.empty() && index > 0) {
+                    head = head.replaceAll("\n", "");
+                    //console.log("thead tr th: " + head);
+                    headings.push(head);
+                }
+            });
+
+            var count = 1;
+            table.find('tbody').children('tr').each(function(indx, obj ) {
+                var row = {};
+                var tds = $(this).children('td');
+                if (count > 0) {
+                    console.log("tr: " + indx);
+                }
+
+                tds.each(function(ind) {
+                    var value = $(this).text();
+                    value = value.replaceAll("\n", "");
+                    value = value.replaceAll(" ", "_");
+                    if (count > 0) {
+                        console.log("td: " + value);
+                    }
+
+                    if (ind == 0) {
+                        var img = $(this).find('img').attr('src');
+                        row["imgurl"] = img;
+                        //console.log("Imgurl: " + img);
+                    }
+
+                    var links = $(this).children('img');
+                    links.each(function(i) {
+                        if (count > 0) {
+                            console.log("img: " + $(this).attr('alt'));
+                        }
+                        value += $(this).attr('alt') + "\n";
+                    });
+
+                    var key = headings[ind];
+                    if (ind < 4) {
+                        //console.log(`Add (${value}) To: ${key}`);
+                        row[key] = value;
+                    }
+                });
+                
+                if (row["Unit"]) {
+                    
+                    try {
+                        var notes = $(`#${row["Unit"]}_2`);
+                        if (notes && notes.length > 0) {
+                            row["notes"] = notes.parent().next().text();
+                        }
+                    } catch(e) {
+                        try {
+                            var notes = $(`#${row["Unit"]}`);
+                            if (notes && notes.length > 0) {
+                                row["notes"] = notes.parent().next().text();
+                            }
+                        } catch (f) {
+                            console.log("Could not get notes for: " + row["Unit"]);
+                        }
+                    }
+                    
+                    if (count > 0) {
+                        console.log(row);
+                    }
+
+                    count--;
+                    results.push(row);
+                }
+            });
+        
+            //console.log("Results:");
+            //console.log(results)
+            var j = JSON.stringify(results);
+            //console.log(j);
+            fs.writeFileSync('rankingsdump.json', j);
+            console.log("Unit Rankings Updated");
+        });
+    });
+}
+function toJson(table) {
+  
+    if(!table.is('table')) {
+        return;
+    }
+
+    var results = [],
+        headings = [];
+
+    table.find('thead tr th').each(function(index, value) { 
+        headings.push($(value).text());
+    });
+
+
+    table.find('tbody tr').each(function(indx, obj ){
+        var row = { };
+        var tds = $(obj).children('td');
+        headings.forEach(function(key, index){
+            var value = tds.eq(index).text();
+            row[key] = value;
+        });
+        results.push(row);
+    });
+
+    return results;
+}
 
 function getPageID(search, categories, callback) {
 
@@ -462,18 +606,24 @@ function handleAddalias(receivedMessage) {
     }
     copy = copy.replace(`\"${w2}\"`, "");
 
-    validatePage(w2, (valid) => {
+    validatePage(w1, (valid) => {
         if (valid) {
-
-            console.log("Unit is valid");
-            
-            w1 = w1.replaceAll(" ", "_");
-            config.addAlias(w1, w2);
-            config.save();
-            
-            respondSuccess(receivedMessage);
-        } else {
             respondFailure(receivedMessage);
+        } else {
+            validatePage(w2, (valid) => {
+                if (valid) {
+        
+                    console.log("Unit is valid");
+                    
+                    w1 = w1.replaceAll(" ", "_");
+                    config.addAlias(w1, w2);
+                    config.save();
+                    
+                    respondSuccess(receivedMessage);
+                } else {
+                    respondFailure(receivedMessage);
+                }
+            });
         }
     });
 }
@@ -563,6 +713,82 @@ function handlePrefix(receivedMessage) {
 
         respondSuccess(receivedMessage);
     }
+}
+function handleRank(receivedMessage, search, parameters) {
+
+    console.log("\nSearching Rankings for: " + search);
+    if (search) {
+        console.log("Unit Rank FOr: " + search);
+        
+        const unit = config.getUnitRank(search);
+        console.log(unit);
+       
+        var embed = {
+            title: unit.Unit,
+            url: wikiEndpoint + unit.Unit.replaceAll(" ", "_"),
+            color: pinkHexCode,
+            fields: [
+                {
+                    name: "Rank",
+                    value: `${unit.Base} - ${unit.TDH}`
+                }
+            ],
+            thumbnail: {
+                url: unit.imgurl
+            }
+        };
+
+        if (unit.notes) {
+            embed.fields[embed.fields.length] = {
+                name: "Notes",
+                value: unit.notes
+            }
+        }
+
+
+        receivedMessage.channel.send({
+            embed: embed
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+        return;
+    }
+
+    var embeds = [];
+    var rankings = config.getRankings(search);
+    console.log("\nRankings");
+    console.log(rankings);
+    rankings.forEach((rank) => {
+        embeds[embeds.length] = {
+            title: rank.name,
+            url : rank.pageurl,
+            color: pinkHexCode,
+            fields: [
+              {
+                name: rank.comparison,
+                value: rank.reason
+              }
+            ],
+            thumbnail: {
+              url: rank.imgurl
+            }
+        };
+    });
+
+    console.log("\nEmbeds");
+    console.log(embeds);
+    embeds.forEach((embed) => {
+
+        receivedMessage.channel.send({
+            embed: embed
+        })
+        .then(message => {
+            //cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+    });
 }
 // COMMANDS END
 
@@ -1031,6 +1257,7 @@ function validatePage(search, callback) {
             callback(false);
             return;
         }
+
         if (redirect) {
             console.log("Redirect Info: ");
             console.log(redirect);
@@ -1095,6 +1322,7 @@ client.on('message', (receivedMessage) => {
                 console.log("Loaded Word");
                 console.log(loaded);
                 copy = copy.replace(`\"${loaded}\"`, "");
+                loaded = toTitleCase(loaded.toLowerCase());
                 parameters[parameters.length] = loaded;
                 loaded = getQuotedWord(copy);
             }
@@ -1121,10 +1349,11 @@ client.on('message', (receivedMessage) => {
         console.log(e);
         console.log(`No search terms found for "${e}", run other commands: `);
         try{
+            console.log("\nTrying Backup Command: " + "handle" + e + "(receivedMessage)");
             eval("handle" + e + "(receivedMessage)");
         }
         catch (f) {
-            console.log(f + "doesn't exist");
+            console.log(f + " (doesn't exist)");
             handleEmote(receivedMessage, prefix);
         }
     }
