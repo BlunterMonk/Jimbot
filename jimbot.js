@@ -680,6 +680,9 @@ function handleAddemo(receivedMessage) {
 
                                             downloadFile(name, url, (result) => {
                                                 console.log(result);
+                                                if (customEmoji.name === config.getSuccess(serverId)) {
+                                                    receivedMessage.react(customEmoji)
+                                                }
                                                 respondSuccess(receivedMessage);
                                             });                                            
                                         });
