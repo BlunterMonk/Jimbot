@@ -444,6 +444,7 @@ const reactionFilter = (reaction, user) => {
     const filter = (reaction, user) => reaction.emoji.name === '👌'
 */
 
+
 // COMMANDS
 function handleUnit(receivedMessage, search, parameters) {
 
@@ -634,16 +635,79 @@ function handleAddemo(receivedMessage) {
             return;
         }
 
-        downloadFile(s[1], s[2], (result) => {
-            console.log(result);
-            respondSuccess(receivedMessage);
-        });
+        var name = s[1];
+        var url = s[2];
 
-        config.addEmote(s[1], s[2]);
-        config.save();
+        var existing = validateEmote(name);
+        if (existing) {
+
+            var Attachment = new Discord.Attachment(existing);
+            if (Attachment) {
+                var embed = {
+                    title: "Conflict",
+                    description: "This emote already exists with this name, do you want to overwrite it?",
+                    color: pinkHexCode,
+                    image: {
+                        url: `attachment://${existing}`
+                    },
+                    files: [{ attachment: `${existing}`, name: existing }] 
+                };
+
+                receivedMessage.channel.send({ embed: embed })
+                    .then(message => {
+                        cacheBotMessage(receivedMessage.id, message.id);
+                        message.react('👍');
+                        message.react('👎');
+
+                        /*
+                        const filter = (reaction, user) => {
+                            ['👍', '👎'].includes(reaction.emoji.name) && user.id !== message.author.id;
+                        };*/
+                        const filter = (reaction, user) => (reaction.emoji.name === '🆗') && user.id !== message.author.id;
+                        message.awaitReactions(filter, { max: 1, time: 30000 })
+                                .then(collected => {
+                                    const reaction = collected.first();
+                                    const count = collected.size;
+                                    console.log(count);
+                                    
+                                    if (count === 1) {
+                                        receivedMessage.reply('Emote has been replaced.');
+                                        fs.unlink(existing, (err) => {
+                                            if (err) {
+                                                console.log(err);
+                                                return;
+                                            }
+
+                                            downloadFile(name, url, (result) => {
+                                                console.log(result);
+                                                respondSuccess(receivedMessage);
+                                            });                                            
+                                        });
+                                    }
+                                })
+                                .catch(collected => {
+                                    console.log("AddEmo - no response");
+                                });
+                    })
+                    .catch(console.error);
+            }
+                
+        } else {
+
+            downloadFile(name, url, (result) => {
+                console.log(result);
+                respondSuccess(receivedMessage);
+            });
+    
+            //config.addEmote(s[1], s[2]);
+            //config.save();
+        }
+
+
+
     }
 }
-function handleEmote(receivedMessage, prefix) {
+function handleEmote(receivedMessage, prefix, replace) {
     var img = receivedMessage.content.split(" ")[0];
     img = img.toLowerCase().replace(prefix, "");
 
@@ -656,11 +720,11 @@ function handleEmote(receivedMessage, prefix) {
                     cacheBotMessage(receivedMessage.id, message.id);
                 })
                 .catch(console.error);
-            return;
         }
     }
     
     console.log(filename + " doesn't exist");
+    return null;
 }
 function handleQuote(receivedMessage, search) {
     //var s = getSearchString(quoteQueryPrefix, content).toLowerCase();
@@ -1277,7 +1341,7 @@ function validateEmote(emote) {
     const types = config.filetypes();
     for (var i = 0; i < types.length; i++) {
         
-        var filename = "emotes/" + img + types[i];
+        var filename = "emotes/" + emote + types[i];
         if (fs.existsSync(filename)) {
             file = filename
             break;
