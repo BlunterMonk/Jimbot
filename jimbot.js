@@ -656,22 +656,21 @@ function handleAddemo(receivedMessage) {
                 receivedMessage.channel.send({ embed: embed })
                     .then(message => {
                         cacheBotMessage(receivedMessage.id, message.id);
-                        message.react('👍');
-                        message.react('👎');
+                        message.react('🆗');
+                        //message.react('👎');
 
                         /*
                         const filter = (reaction, user) => {
                             ['👍', '👎'].includes(reaction.emoji.name) && user.id !== message.author.id;
                         };*/
-                        const filter = (reaction, user) => (reaction.emoji.name === '🆗') && user.id !== message.author.id;
-                        message.awaitReactions(filter, { max: 1, time: 30000 })
+                        const filter = (reaction, user) => (reaction.emoji.name === '🆗' && user.id !== message.author.id);
+                        message.awaitReactions(filter, { max: 1, time: 60000 })
                                 .then(collected => {
                                     const reaction = collected.first();
                                     const count = collected.size;
                                     console.log(count);
                                     
                                     if (count === 1) {
-                                        receivedMessage.reply('Emote has been replaced.');
                                         fs.unlink(existing, (err) => {
                                             if (err) {
                                                 console.log(err);
@@ -680,10 +679,13 @@ function handleAddemo(receivedMessage) {
 
                                             downloadFile(name, url, (result) => {
                                                 console.log(result);
-                                                if (customEmoji.name === config.getSuccess(serverId)) {
-                                                    receivedMessage.react(customEmoji)
-                                                }
-                                                respondSuccess(receivedMessage);
+
+                                                const serverId = receivedMessage.guild.id;
+                                                receivedMessage.guild.emojis.forEach(customEmoji => {
+                                                    if (customEmoji.name === config.getSuccess(serverId)) {
+                                                        receivedMessage.reply(`Emote has been replaced. :${customEmoji}:`);
+                                                    }
+                                                });
                                             });                                            
                                         });
                                     }
@@ -1504,7 +1506,7 @@ process.on('unhandledRejection', (reason, p) => {
 bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
 bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token)
+client.login(bot_secret_token_test)
 
 /**
     { "name": "Name",		"value": "9S" 			,	"inline": true },
