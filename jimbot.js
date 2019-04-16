@@ -647,20 +647,16 @@ function handleEmote(receivedMessage, prefix) {
     var img = receivedMessage.content.split(" ")[0];
     img = img.toLowerCase().replace(prefix, "");
 
-    const types = config.filetypes();
-    for (var i = 0; i < types.length; i++) {
-        
-        var filename = "emotes/" + img + types[i];
-        if (fs.existsSync(filename)) {
-            var Attachment = new Discord.Attachment(filename);
-            if (Attachment) {
-                receivedMessage.channel.send(Attachment)
-                    .then(message => {
-                        cacheBotMessage(receivedMessage.id, message.id);
-                    })
-                    .catch(console.error);
-                return;
-            }
+    var filename = validateEmote(img);
+    if (filename) {
+        var Attachment = new Discord.Attachment(filename);
+        if (Attachment) {
+            receivedMessage.channel.send(Attachment)
+                .then(message => {
+                    cacheBotMessage(receivedMessage.id, message.id);
+                })
+                .catch(console.error);
+            return;
         }
     }
     
@@ -1274,6 +1270,21 @@ function validatePage(search, callback) {
 
         callback(true);
     });
+}
+function validateEmote(emote) {
+
+    var file = null;
+    const types = config.filetypes();
+    for (var i = 0; i < types.length; i++) {
+        
+        var filename = "emotes/" + img + types[i];
+        if (fs.existsSync(filename)) {
+            file = filename
+            break;
+        }
+    }
+
+    return file;
 }
 
 // Response
