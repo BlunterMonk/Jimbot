@@ -17,6 +17,9 @@ const pinkHexCode = 0xffd1dc;
 const overviewRegexp = /\|(.*)=\s*(.*)/g;
 const valueRegexp = /\|(.*)(?:=)(.*)/g;
 const valueMultiLineRegexp = /\|(.*)(?:=)(.*[^|]+)/g;
+const linkRegexp = /(\(.*Events.*\))|(\(.*Trial.*\))\s*|(\(.*Quest.*\))\s*|\[\[(.*)\]\]/g;
+const linkRegexp2 = /\(\[\[(.*Events)(?:\|.*)\]\]\)|\(.*(Trial).*\)|(\(.*Quest.*\))|\[\[(.*)\]\]/g;
+const linkFilter = [ /\|Trial/, /\|Event/, /\|Quest/, /\]\]/, /\[\[/, /\(/, /\)/  ];
 // (?:\<.*\>) for commented elements
 ////(.*)=\s*(.*)/g;
 const unicodeStar = "★";
@@ -339,109 +342,7 @@ function getPageID(search, categories, callback) {
     });
 }
 
-String.prototype.replaceAll = function(search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
-};
-String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1)
-}
-String.prototype.limitTo = function(limit) {
-    if (this.length <= limit) {
-        return this;
-    }
-    return this.substring(0, limit) + "...";
-}
-String.prototype.empty = function() {
-    return this.length === 0 || !/\S/.test(this);
-}
-String.prototype.indexOfAfter = function(search, start) {
-    var string = this;
-    var preIndex = string.indexOf(start);
-    return preIndex + string.substring(preIndex).indexOf(search);
-}
-String.prototype.indexOfAfterIndex = function(search, start) {
-    return start + this.substring(start).indexOf(search);
-}
-String.prototype.matches = function(other) {
-    return this === other;
-}
-function similarity(s1, s2) {
-    var longer = s1;
-    var shorter = s2;
-    if (s1.length < s2.length) {
-        longer = s2;
-        shorter = s1;
-    }
-    var longerLength = longer.length;
-    if (longerLength == 0) {
-        return 1.0;
-    }
-    return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
-}
-function editDistance(s1, s2) {
-    s1 = s1.toLowerCase();
-    s2 = s2.toLowerCase();
 
-    var costs = new Array();
-    for (var i = 0; i <= s1.length; i++) {
-        var lastValue = i;
-        for (var j = 0; j <= s2.length; j++) {
-            if (i == 0)
-                costs[j] = j;
-            else {
-                if (j > 0) {
-                var newValue = costs[j - 1];
-                if (s1.charAt(i - 1) != s2.charAt(j - 1))
-                    newValue = Math.min(Math.min(newValue, lastValue),
-                    costs[j]) + 1;
-                    costs[j - 1] = lastValue;
-                    lastValue = newValue;
-                }
-            }
-        }
-        if (i > 0)
-        costs[s2.length] = lastValue;
-    }
-    return costs[s2.length];
-}
-function getSearchString(prefix, msg) {
-
-    var ind = prefix.length + 1;
-    var search = msg.slice(ind, msg.length);
-
-    if (search.empty()) {
-        return null;
-    }
-
-    var s = search
-    var alias = config.getAlias(s.replaceAll(" ", "_"));
-    if (alias) {
-        console.log("Found Alias: " + alias);
-        return alias.replaceAll(" ", "_");
-    }
-
-    search = search.toLowerCase();
-    search = search.replaceAll(" ", "_");
-    return search;
-}
-function getCommandString(msg, prefix) {
-
-    var split = msg.split(" ")[0];
-    split = toTitleCase(split.replace(prefix, ""));
-
-    if (split.empty()) {
-        return null;
-    }
-
-    return split;
-}
-function toTitleCase(text) {
-    return text.toLowerCase()
-        .split(' ')
-        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(' ');
-}
 
 /*
 const reactionFilter = (reaction, user) => {
@@ -454,7 +355,7 @@ const reactionFilter = (reaction, user) => {
 // COMMANDS
 function handleUnit(receivedMessage, search, parameters) {
 
-    search = toTitleCase(search);
+    search = toTitleCase(search, '_');
     console.log("Searching Units For: " + search);
     queryWikiForUnit(search, function (pageName, info, imgurl, description, tips) {
         pageName = pageName.replaceAll("_", " ");
@@ -498,7 +399,7 @@ function handleUnit(receivedMessage, search, parameters) {
 }
 function handleEquip(receivedMessage, search) {
 
-    search = toTitleCase(search);
+    search = toTitleCase(search, '_');
     console.log(`Searching Equipment For: ${search}...`);
     queryWikiForEquipment(search, function(imgurl, pageName, nodes) {
         var title = pageName;
@@ -527,7 +428,7 @@ function handleEquip(receivedMessage, search) {
 }
 function handleSkill(receivedMessage, search) {
 
-    search = toTitleCase(search);
+    search = toTitleCase(search, '_');
     console.log(`Searching Skills For: ${search}...`);
     queryWikiForAbility(search, function(imgurl, pageName, nodes) {
         var title = pageName;
@@ -1152,32 +1053,11 @@ function queryWikiForEquipment(search, callback) {
                     // Fix string to remove any unecessary information
                     if (value) {
 
-                        if (value.includes(ignore)) {
-                            var open = value.indexOf("<!");
-                            var close = value.indexOf(">");
-                            value = value.substring(0, open) + value.substring(close + 1, value.length);
-                        }
-                        if (value.includes("[[")) {
+                        value = removeHTMLComments(value);
 
-                            var open = value.indexOf("[[");
-                            while (open > 0) {
-
-                                var close = value.indexOfAfter("]]", open);
-                                var link = value.substring(open + 3, close+1);
-                                link = link.replaceAll(" ", "_");
-
-                                value = value.replace("(", "");
-                                value = value.replace(")", "");
-                                value = value.substring(0, open) + value.substring(close + 3, value.length);
-
-                                // Skip category links
-                                var linkFilter = [ "|Trial", "|Event", "|Quest" ];
-                                if (!linkFilter.find((f) => { return link.includes(f)})) {
-                                    value += wikiEndpoint + link + "\n";
-                                }
-                                
-                                open = value.indexOf("[[");
-                            }
+                        var m = value.match(linkRegexp2);
+                        if (m) {
+                            convertValueToLinks
                         }
                         if (value.includes("Unstackable")) {
                             value = "Unstackable Materia";
@@ -1257,32 +1137,10 @@ function queryWikiForAbility(search, callback) {
                     // Fix string to remove any unecessary information
                     if (value) {
 
-                        if (value.includes(ignore)) {
-                            var open = value.indexOf("<!");
-                            var close = value.indexOf(">");
-                            value = value.substring(0, open) + value.substring(close + 1, value.length);
-                        }
-                        if (value.includes("[[")) {
-
-                            var open = value.indexOf("[[");
-                            while (open > 0) {
-
-                                var close = value.indexOfAfter("]]", open);
-                                var link = value.substring(open + 3, close+1);
-                                link = link.replaceAll(" ", "_");
-
-                                value = value.replace("(", "");
-                                value = value.replace(")", "");
-                                value = value.substring(0, open) + value.substring(close + 3, value.length);
-
-                                // Skip category links
-                                var linkFilter = [ "|Trial", "|Event", ];
-                                if (!linkFilter.find((f) => { return link.includes(f)})) {
-                                    value += wikiEndpoint + link + "\n";
-                                }
-                                
-                                open = value.indexOf("[[");
-                            }
+                        value = removeHTMLComments(value);
+                        var m = value.match(linkRegexp2);
+                        if (m) {
+                            convertValueToLinks
                         }
                         if (value.includes("Unstackable")) {
                             value = "Unstackable Materia";
@@ -1341,6 +1199,34 @@ function queryWikiWithSearch(search, callback) {
     });
 }
 
+function removeHTMLComments(value) {
+    
+    if (/<!.*>/g.test(value)) {
+        value = value.replace(/<!.*>/g, "");
+    }
+    
+    log(value);
+    return value;
+}
+function convertValueToLinks(batch) {
+    log("Matching Links");
+    log(batch);
+    var value = "";
+    batch.forEach((link) => {
+        log("Transforming: " + link);
+
+        linkFilter.forEach((filter) => {
+            link = link.replace(filter, "");
+        });
+
+        log("Link: " + link);
+        link = `[${link}](${wikiEndpoint + link.replaceAll(" ", "_")}) `;
+        log("Full Link: " + link);
+        value += link;
+    });
+
+    return value;
+}
 function convertTitlesToLinks(batch) {
 
     var value = "";
@@ -1464,62 +1350,57 @@ client.on('message', (receivedMessage) => {
         
         var copy = content;
         var parameters = [];
-        //if (content.startsWith(`${prefix}unit`)) {
+        var params = copy.match(/"[^"]+"/g);
+        if (params) {
+            parameters = params;
 
-            var loaded = getQuotedWord(copy);
-            while (loaded) {
-                console.log("Loaded Word");
-                console.log(loaded);
-                copy = copy.replace(`\"${loaded}\"`, "");
-                loaded = toTitleCase(loaded.toLowerCase());
-                parameters[parameters.length] = loaded;
-                loaded = getQuotedWord(copy);
-            }
-            console.log("Loaded Parameters");
-            console.log(parameters);
-            
+            parameters.forEach((p, ind) => {
+                copy = copy.replace(p, "");
+                parameters[ind] = p.replaceAll("\"", "");
+            });
             copy = copy.trim();
-            console.log("Copy: " + copy);
-        //}
+        }
 
         // the command name
-        var split = getCommandString(copy, prefix);
+        var split = getCommandString(content, prefix);
         if (!validateCommand(receivedMessage, split)) {
-            console.log("Could not validate permissions for: " + receivedMessage.member.displayName);
+            log("Could not validate permissions for: " + receivedMessage.member.displayName);
             respondFailure(receivedMessage);
             throw split;
         }
         const search = getSearchString(`${prefix}${split}`, copy);
         if (!search && parameters.length === 0) {
-            console.log("Could not parse search string");
+            log("Could not parse search string");
             throw split;
         }
 
-        console.log("getCommandString: " + split);
-        console.log("getSearchString: " + search);
-        console.log("Parameters:");
-        console.log(parameters);
+        /*
+        log("getCommandString: " + split);
+        log("getSearchString: " + search);
+        log("Parameters:");
+        log(parameters);
+        */
         if (split.toLowerCase() === `addemo` && parameters.length === 0) {
-            console.log("Addemo but no parameters.");
+            //log("Addemo but no parameters.");
             if (attachment) {
-                console.log("Message Has Attachments");
-                console.log(attachment.url);
+                //log("Message Has Attachments");
+                //log(attachment.url);
                 parameters[0] = attachment.url;
             }
         }
         var command = "handle" + split + "(receivedMessage, search, parameters)";
 
-        console.log("Running Command: " + command);
+        //log("Running Command: " + command);
         eval(command);
     } catch(e) {
-        console.log(e);
-        console.log(`No search terms found for "${e}", run other commands: `);
+        //log(e);
+        //log(`No search terms found for "${e}", run other commands: `);
         try{
-            console.log("\nTrying Backup Command: " + "handle" + e + "(receivedMessage)");
+            //log("\nTrying Backup Command: " + "handle" + e + "(receivedMessage)");
             eval("handle" + e + "(receivedMessage)");
         }
         catch (f) {
-            console.log(f + " (doesn't exist)");
+            //log(f + " (doesn't exist)");
             handleEmote(receivedMessage, prefix);
         }
     }
@@ -1593,3 +1474,119 @@ bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
 bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
 client.login(bot_secret_token)
+
+
+// PARSING HELPERS
+function getSearchString(prefix, msg) {
+
+    var ind = prefix.length + 1;
+    var search = msg.slice(ind, msg.length);
+
+    if (search.empty()) {
+        return null;
+    }
+
+    var s = search
+    var alias = config.getAlias(s.replaceAll(" ", "_"));
+    if (alias) {
+        log("Found Alias: " + alias);
+        return alias.replaceAll(" ", "_");
+    }
+
+    search = search.toLowerCase();
+    search = search.replaceAll(" ", "_");
+    return search;
+}
+function getCommandString(msg, prefix) {
+
+    var split = msg.split(" ")[0];
+    split = toTitleCase(split.replace(prefix, ""));
+
+    if (split.empty()) {
+        return null;
+    }
+
+    return split;
+}
+
+
+// STRING HELPERS
+
+
+
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1)
+}
+String.prototype.limitTo = function(limit) {
+    if (this.length <= limit) {
+        return this;
+    }
+    return this.substring(0, limit) + "...";
+}
+String.prototype.empty = function() {
+    return this.length === 0 || !/\S/.test(this);
+}
+String.prototype.indexOfAfter = function(search, start) {
+    var string = this;
+    var preIndex = string.indexOf(start);
+    return preIndex + string.substring(preIndex).indexOf(search);
+}
+String.prototype.indexOfAfterIndex = function(search, start) {
+    return start + this.substring(start).indexOf(search);
+}
+String.prototype.matches = function(other) {
+    return this === other;
+}
+function similarity(s1, s2) {
+    var longer = s1;
+    var shorter = s2;
+    if (s1.length < s2.length) {
+        longer = s2;
+        shorter = s1;
+    }
+    var longerLength = longer.length;
+    if (longerLength == 0) {
+        return 1.0;
+    }
+    return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+}
+function editDistance(s1, s2) {
+    s1 = s1.toLowerCase();
+    s2 = s2.toLowerCase();
+
+    var costs = new Array();
+    for (var i = 0; i <= s1.length; i++) {
+        var lastValue = i;
+        for (var j = 0; j <= s2.length; j++) {
+            if (i == 0)
+                costs[j] = j;
+            else {
+                if (j > 0) {
+                var newValue = costs[j - 1];
+                if (s1.charAt(i - 1) != s2.charAt(j - 1))
+                    newValue = Math.min(Math.min(newValue, lastValue),
+                    costs[j]) + 1;
+                    costs[j - 1] = lastValue;
+                    lastValue = newValue;
+                }
+            }
+        }
+        if (i > 0)
+        costs[s2.length] = lastValue;
+    }
+    return costs[s2.length];
+}
+
+function toTitleCase(text, splitter) {
+    if (!splitter) {
+        splitter = ' ';
+    }
+    return text.toLowerCase()
+        .split(splitter)
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(splitter);
+}
