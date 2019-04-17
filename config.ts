@@ -49,7 +49,11 @@ class GuildSettings {
         return this.settings.failureEmote;
     }
 
-    getSettings() {
+    getSettings(name) {
+        if (name) {
+            return this.settings[name];
+        }
+
         return this.settings;
     }
 
@@ -197,6 +201,9 @@ module.exports = {
         return this.fullRankings.find((r) => {
             return r["Unit"] === name;
         });
+    },
+    getSettings(guildId, name) {
+        return this.guilds[guildId].getSettings(name);
     },
     validateCommand(guildId, userRole, command) {
         //console.log(`Config Validate Command (${guildId})` + this.guilds[guildId]);

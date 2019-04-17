@@ -215,6 +215,7 @@ function loadRankingsList(callback) {
                             console.log("Could not get notes for: " + escpaedName);
                         }
                         
+                        row["Unit"] = row["Unit"].toLowerCase();
                         results.push(row);
                     }
                 });
@@ -420,7 +421,7 @@ function getSearchString(prefix, msg) {
         return alias.replaceAll(" ", "_");
     }
 
-    search = toTitleCase(search);
+    search = search.toLowerCase();
     search = search.replaceAll(" ", "_");
     return search;
 }
@@ -453,6 +454,7 @@ const reactionFilter = (reaction, user) => {
 // COMMANDS
 function handleUnit(receivedMessage, search, parameters) {
 
+    search = toTitleCase(search);
     console.log("Searching Units For: " + search);
     queryWikiForUnit(search, function (pageName, info, imgurl, description, tips) {
         pageName = pageName.replaceAll("_", " ");
@@ -496,6 +498,7 @@ function handleUnit(receivedMessage, search, parameters) {
 }
 function handleEquip(receivedMessage, search) {
 
+    search = toTitleCase(search);
     console.log(`Searching Equipment For: ${search}...`);
     queryWikiForEquipment(search, function(imgurl, pageName, nodes) {
         var title = pageName;
@@ -524,6 +527,7 @@ function handleEquip(receivedMessage, search) {
 }
 function handleSkill(receivedMessage, search) {
 
+    search = toTitleCase(search);
     console.log(`Searching Skills For: ${search}...`);
     queryWikiForAbility(search, function(imgurl, pageName, nodes) {
         var title = pageName;
@@ -803,10 +807,12 @@ function handleRank(receivedMessage, search, parameters) {
 
     console.log("\nSearching Rankings for: " + search);
     if (search) {
-        console.log("Unit Rank FOr: " + search);
         
-        const unit = config.getUnitRank(search);
-        console.log(unit);
+        const unit = config.getUnitRank(search.toLowerCase());
+        if (!unit) {
+            console.log("Could not find unit");
+            return;
+        }
        
         var embed = {
             title: unit.Unit,
@@ -874,6 +880,18 @@ function handleRank(receivedMessage, search, parameters) {
         })
         .catch(console.error);
     });
+}
+function handleSet(receivedMessage, search, parameters) {
+    if (!search || parameters.length === 0) {
+        return;
+    }
+    const guildId = receivedMessage.guild.id;
+    const setting = config.getSettings(guildId, search);
+
+    var reply = `Settings for '${search}':`;
+    console.log(reply);
+    receivedMessage.channel.send(reply)
+    receivedMessage.channel.send(JSON.stringify(setting));
 }
 // COMMANDS END
 
@@ -1575,50 +1593,3 @@ bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
 bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
 client.login(bot_secret_token)
-
-/**
-    { "name": "Name",		"value": "9S" 			,	"inline": true },
-    { "name": "Limited",	"value": "Yes" 			,	"inline": true },
-    { "name": "Exclusive", 	"value": "No" 			,	"inline": true },
-    { "name": "Job",		"value": "YoRHa Troop" 	,	"inline": true },
-    { "name": "Role",		"value": "Debuffer" 	,	"inline": true },
-    { "name": "Origin",		"value": "NieR:Automata",	"inline": true },
-    { "name": "Gender",		"value": "Male" 		,	"inline": true },
-    { "name": "Race",		"value": "Machina" 		,	"inline": true },
-    { "name": "Number",		"value": "776, 777, 778",	"inline": true },
-    { "name": "Trust",		"value": "Pod 153" 		,	"inline": true },
-    { "name": "Rarity",		"value": "★★★★✫✫" 		,	"inline": true }
-
-
-
-{
-  "content": "this `supports` __a__ **subset** *of* ~~markdown~~ 😃 ```js\nfunction foo(bar) {\n  console.log(bar);\n}\n\nfoo(1);```",
-  "embed": {
-    "title": "title ~~(did you know you can have markdown here too?)~~",
-    "description": "this supports [named links](https://discordapp.com) on top of the previously shown subset of markdown. ```\nyes, even code blocks```",
-    "url": "https://discordapp.com",
-    "color": 16765404,
-    "thumbnail": {
-      "url": "https://cdn.discordapp.com/embed/avatars/0.png"
-    },
-    "author": {
-      "name": "Jimbot",
-      "url": "https://discordapp.com",
-      "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png"
-    },
-    "fields": [
-		{ "name": "Name",		"value": "9S" 			,	"inline": true },
-		{ "name": "Limited",	"value": "Yes" 			,	"inline": true },
-		{ "name": "Exclusive", 	"value": "No" 			,	"inline": true },
-		{ "name": "Job",		"value": "YoRHa Troop" 	,	"inline": true },
-		{ "name": "Role",		"value": "Debuffer" 	,	"inline": true },
-		{ "name": "Origin",		"value": "NieR:Automata",	"inline": true },
-		{ "name": "Gender",		"value": "Male" 		,	"inline": true },
-		{ "name": "Race",		"value": "Machina" 		,	"inline": true },
-		{ "name": "Number",		"value": "776, 777, 778",	"inline": true },
-		{ "name": "Trust",		"value": "Pod 153" 		,	"inline": true },
-		{ "name": "Rarity",		"value": "★★★★✫✫" 		,	"inline": true }
-    ]
-  }
-}
- */
