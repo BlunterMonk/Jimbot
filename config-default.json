@@ -1,0 +1,15 @@
+{
+    "name": "",
+    "prefix": "?",
+    "successEmote": "✅",
+    "failureEmote": "❌",
+    "adminRoles": [
+        "admin", "mod"
+    ],
+    "adminOnlyCommands": [
+        "prefix"
+    ],
+    "disabledCommands": [
+        "addemo", "addalias"
+    ]
+}

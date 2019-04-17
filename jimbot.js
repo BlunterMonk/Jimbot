@@ -4,6 +4,7 @@ const request = require('request');
 const wiki = require('nodemw');
 const fs = require('fs');
 const cheerio = require('cheerio');
+const http = require('https');
 const config = require('./config.ts');
 const wikiClient = new wiki({
     protocol: 'https',           // Wikipedia now enforces HTTPS
@@ -62,35 +63,38 @@ function logData(data) {
     console.log(JSON.stringify(data))
 }
 
-function getMainChannelID() {
+function LoadGuilds(callback) {
     // List servers the bot is connected to
-    console.log("Servers:")
+    console.log("Loading Guilds:")
     client.guilds.forEach((guild) => {
         console.log(` - ${guild.name} - ${guild.id}`)
-
-        // List all channels
-        for(var i = 0; i < guild.channels.length; i++){
-            var channel = guild.channels[i];
-            console.log(` -- ${channel.name} (${channel.type}) - ${channel.id}`)
-
-            if (channel.type === "text") {
-                mainChannelID = channel.id;
-                console.log("Main Channel ID: " + channel.id);
-                break;
-            }
-        }
+        const guildId = guild.id;
+        config.loadGuild(guild.name, guild.id);
     });
 }
+
 
 function sendToChannel(id, msg) {
     var channel = client.channels.get(id) // Replace with known channel ID
     channel.send(msg)  
 }
 
-const http = require('https');
+//joined a server
+client.on("guildCreate", guild => {
+    console.log("Joined a new guild: " + guild.name);
+    //Your other stuff like adding to guildArray
+    config.loadGuild(guild.name, guild.id);
+})
+//removed from a server
+client.on("guildDelete", guild => {
+    console.log("Left a guild: " + guild.name);
+    //remove from guildArray
+    config.unloadGuild(guild.name, guild.id);
+})
+var loading = true;
 client.on('ready', () => {
     console.log("Connected as " + client.user.tag)
-    getMainChannelID()
+    
 
     /*
     request('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', { json: true }, (err, res, body) => {
@@ -99,17 +103,24 @@ client.on('ready', () => {
         console.log(body.explanation);
     });
     */
-   loadRankingsList();
-
-    // Synchronous read
+    
+    loadRankingsList(() => {
+    });
     config.init();
+    LoadGuilds();
+    
+    console.log("Configuration Loaded");
+    loading = false;
+    
+    // Synchronous read
+    //config.init();
     //config.addAlias("turtle","ryunan");
     //config.addEmote("tifamad", "https://cdn.discordapp.com/attachments/566737026762932224/566749975933878275/angry_tifa.png");
 
     //config.save();
 })
 
-function loadRankingsList() {
+function loadRankingsList(callback) {
     
     var search = "Unit_Rankings";
     wikiClient.getArticle(search, function (err, content, redirect) {
@@ -131,8 +142,6 @@ function loadRankingsList() {
             //console.log(xml);
 
             const $ = cheerio.load(xml);
-            //const table = $('table#wikitable.sortable.jquery-tablesorter').first();
-            //console.log(table);
             var table = $('.wikitable.sortable');
             fs.writeFileSync('rankingsdump.txt', xml);
 
@@ -140,7 +149,6 @@ function loadRankingsList() {
                 console.log("Not Table");
                 return;
             }
-            console.log("Is Table");
             var results = [],
                 headings = [];
         
@@ -148,48 +156,33 @@ function loadRankingsList() {
                 var head = $(value).text();
                 if (!head.empty() && index > 0) {
                     head = head.replaceAll("\n", "");
-                    //console.log("thead tr th: " + head);
                     headings.push(head);
                 }
             });
 
             table.each((tableIndex, element) => {
-                console.log("Started Table: " + tableIndex);
-                //console.log($(element).html());
 
-                var count = 1;
                 $(element).find('tbody').children('tr').each(function(indx, obj ) {
                     var row = {};
                     var tds = $(this).children('td');
-                    if (count > 0) {
-                        console.log("tr: " + indx);
-                    }
 
                     tds.each(function(ind) {
                         var value = $(this).text();
                         value = value.replaceAll("\n", "");
                         value = value.replaceAll(" ", "_");
-                        if (count > 0) {
-                            console.log("td: " + value);
-                        }
 
                         if (ind == 0) {
                             var img = $(this).find('img').attr('src');
                             row["imgurl"] = img;
-                            //console.log("Imgurl: " + img);
                         }
 
                         var links = $(this).children('img');
                         links.each(function(i) {
-                            if (count > 0) {
-                                console.log("img: " + $(this).attr('alt'));
-                            }
                             value += $(this).attr('alt') + "\n";
                         });
 
                         var key = headings[ind];
                         if (ind < 4) {
-                            //console.log(`Add (${value}) To: ${key}`);
                             row[key] = value;
                         }
                     });
@@ -222,11 +215,6 @@ function loadRankingsList() {
                             console.log("Could not get notes for: " + escpaedName);
                         }
                         
-                        if (count > 0) {
-                            console.log(row);
-                        }
-
-                        count--;
                         results.push(row);
                     }
                 });
@@ -238,6 +226,7 @@ function loadRankingsList() {
             //console.log(j);
             fs.writeFileSync('rankingsdump.json', j);
             console.log("Unit Rankings Updated");
+            callback();
         });
     });
 }
@@ -691,9 +680,9 @@ function handleAddemo(receivedMessage) {
                                             downloadFile(name, url, (result) => {
                                                 console.log(result);
 
-                                                const serverId = receivedMessage.guild.id;
+                                                const guildId = receivedMessage.guild.id;
                                                 receivedMessage.guild.emojis.forEach(customEmoji => {
-                                                    if (customEmoji.name === config.getSuccess(serverId)) {
+                                                    if (customEmoji.name === config.getSuccess(guildId)) {
                                                         message.delete();
                                                         //receivedMessage.reply(`Emote has been replaced. :${customEmoji}:`);
                                                         respondSuccess(receivedMessage);
@@ -764,6 +753,12 @@ function handleHelp(receivedMessage) {
                 icon_url: client.user.avatarURL
             },
             description: data,
+            fields: [
+                {
+                    name: "settings",
+                    value: JSON.stringify(config.guilds[receivedMessage.channel.guild.id].getSettings(), null, '\t')
+                }
+            ]
         }
     })
     .then(message => {
@@ -1367,22 +1362,32 @@ function validateEmote(emote) {
 
     return file;
 }
+function validateCommand(receivedMessage, command) {
+    var roles = receivedMessage.member.roles;
+    for (var i = 0; i < roles.length; i++) {
+        if (config.validateCommand(roles[i].name, command)) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 // Response
 function respondSuccess(receivedMessage) {
-    const serverId = receivedMessage.guild.id;
+    const guildId = receivedMessage.guild.id;
 
     receivedMessage.guild.emojis.forEach(customEmoji => {
-        if (customEmoji.name === config.getSuccess(serverId)) {
+        if (customEmoji.name === config.getSuccess(guildId)) {
             receivedMessage.react(customEmoji)
         }
     });
 }
 function respondFailure(receivedMessage) {
-    const serverId = receivedMessage.guild.id;
+    const guildId = receivedMessage.guild.id;
 
     receivedMessage.guild.emojis.forEach(customEmoji => {
-        if (customEmoji.name === config.getFailure(serverId)) {
+        if (customEmoji.name === config.getFailure(guildId)) {
             receivedMessage.react(customEmoji)
         }
     });
@@ -1390,14 +1395,13 @@ function respondFailure(receivedMessage) {
 
 client.on('message', (receivedMessage) => {
     // Prevent bot from responding to its own messages
-    if (receivedMessage.author == client.user) {
+    if (receivedMessage.author == client.user || loading) {
         return
     }
 
     const content = receivedMessage.content;
-    const serverId = receivedMessage.guild.id;
-    const prefix = config.getPrefix(serverId);
-
+    const guildId = receivedMessage.guild.id;
+    const prefix = config.getPrefix(guildId);
     if (!content.startsWith(prefix)) {
         handleReactions(receivedMessage);
         return;
@@ -1426,6 +1430,11 @@ client.on('message', (receivedMessage) => {
         }
 
         var split = getCommandString(copy, prefix);
+        if (!validateCommand(receivedMessage.u)) {
+            console.log("Could not validate permissions for: " + receivedMessage.member.nickname);
+            respondFailure();
+            throw split;
+        }
         const search = getSearchString(`${prefix}${split}`, copy);
         if (!search) {
             throw split;
@@ -1518,7 +1527,7 @@ process.on('unhandledRejection', (reason, p) => {
 bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
 bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token)
+client.login(bot_secret_token_test)
 
 /**
     { "name": "Name",		"value": "9S" 			,	"inline": true },
