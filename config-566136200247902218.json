@@ -1,0 +1,16 @@
+{
+	"name": "Jimbot-Env",
+	"prefix": "?",
+	"successEmote": "gucci",
+	"failureEmote": "fail",
+	"adminRoles": [
+		"admin",
+		"mod"
+	],
+	"adminOnlyCommands": [
+		"prefix"
+	],
+	"disabledCommands": [
+		"addemo"
+	]
+}

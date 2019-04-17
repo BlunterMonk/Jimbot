@@ -4,6 +4,73 @@ const filename = 'config.json';
 const rankingFile = 'rankings.json';
 const rankingDump = 'rankingsdump.json';
 
+class GuildSettings {
+    constructor(name, guildId) {
+        this.guildName = name;
+        this.guildId = guildId;
+        this.settings = {};
+
+        this.load();
+
+        this.settings.name = name;
+        this.save();
+    }
+
+    load() {
+        var filename = `config-${this.guildId}.json`;
+        if (fs.existsSync(filename)) {
+            var data = fs.readFileSync(filename);
+            this.settings = JSON.parse(data);
+        } else {
+            var data = fs.readFileSync(`config-default.json`);
+            this.settings = JSON.parse(data);
+        }
+    }
+    save() {
+        var newData = JSON.stringify(this.settings, null, '\t');
+        fs.writeFileSync(this.getFilename(), newData);
+    }
+
+    getFilename() {
+        return `config-${this.guildId}.json`;
+    }
+    getPrefix() {
+        return this.settings.prefix;
+    }
+    setPrefix(prefix) {
+        this.settings.prefix = prefix;
+        this.save();
+    }
+
+    getSuccessEmote() {
+        return this.settings.successEmote;
+    }
+    getFailureEmote() {
+        return this.settings.failureEmote;
+    }
+
+    getSettings() {
+        return this.settings;
+    }
+
+
+    validateAdminRole(role) {
+        console.log("Role is Admin");
+        return this.settings.adminRoles.find(r => role.toLowerCase() === r.toLowerCase());
+    }
+    validateCommand(userRole, command) {
+        if (this.settings.adminOnlyCommands.find(r => r.toLowerCase() === command.toLowerCase())) {
+            console.log("Command is Admin only");
+            return this.validateAdminRole(userRole);
+        }
+        return true;
+    }
+    validateConfig(guildId) {
+        return fs.existsSync(`config-${guildId}.json`);
+    }
+
+};
+
 module.exports = {
     equipmentCategories: [
         'Items', 'Ability Materia'
@@ -15,6 +82,7 @@ module.exports = {
     rankings: null,
     fullRankings: null,
     serverSettings: null,
+    guilds: {},
     init() {
         var data = fs.readFileSync(filename);
         this.configuration = JSON.parse(data);
@@ -27,8 +95,19 @@ module.exports = {
     },
     save() {
         var newData = JSON.stringify(this.configuration);
-    
         fs.writeFileSync(filename, newData);
+    },
+    loadGuild(name, guildId) {
+        this.guilds[guildId] = new GuildSettings(name, guildId);
+        //console.log("Loaded Guild");
+        //console.log(this.guilds[guildId]);
+    },
+    unloadGuild(guildId) {
+        if (this.guilds[guildId]) {
+            //console.log("Unloaded Guild");
+            //console.log(this.guilds[guildId]);
+            delete this.guilds[guildId];
+        }
     },
     alias() {
         return this.configuration.unitAliases;
@@ -74,33 +153,29 @@ module.exports = {
             return null;
         }
     },
-    setPrefix(serverId, prefix) {
-        if (!this.configuration.servers[serverId]) {
-            this.configuration.servers[serverId] = {
-                prefix: prefix,
-                successEmote: this.configuration.defaultSuccessEmote,
-                failureEmote: this.configuration.defaultFailureEmote
-            }
+    setPrefix(guildId, prefix) {
+        if (!this.guilds[guildId]) {
+            return;
         }
-        this.configuration.servers[serverId].prefix = prefix;
+        this.guilds[guildId].setPrefix(prefix);
     },
-    getPrefix(serverId) {
-        if (!this.configuration.servers[serverId]) {
+    getPrefix(guildId) {
+        if (!this.guilds[guildId]) {
             return this.configuration.defaultPrefix;
         }
-        return this.configuration.servers[serverId].prefix;
+        return this.guilds[guildId].getPrefix();
     },
-    getSuccess(serverId) {
-        if (!this.configuration.servers[serverId]) {
+    getSuccess(guildId) {
+        if (!this.guilds[guildId]) {
             return this.configuration.defaultSuccessEmote;
         }
-        return this.configuration.servers[serverId].successEmote;
+        return this.guilds[guildId].getSuccessEmote();
     },
-    getFailure(serverId) {
-        if (!this.configuration.servers[serverId]) {
+    getFailure(guildId) {
+        if (!this.guilds[guildId]) {
             return this.configuration.defaultFailureEmote;
         }
-        return this.configuration.servers[serverId].failureEmote;
+        return this.guilds[guildId].getFailureEmote();
     },
     getRankings(category) {
         return this.rankings[category.toLowerCase()];
@@ -109,6 +184,13 @@ module.exports = {
         return this.fullRankings.find((r) => {
             return r["Unit"] === name;
         });
+    },
+    validateCommand(guildId, command) {
+        if (!this.guilds[guildId]) {
+            console.log("Unknown guild, allow");
+            return true;
+        }
+        return this.guilds[guildId].validateCommand(command);
     }
 };
   
