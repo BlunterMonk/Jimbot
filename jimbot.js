@@ -138,7 +138,7 @@ function loadRankingsList(callback) {
                 console.log(err);
                 return;
             }
-            console.log("Parsing Page");
+            console.log("Parsing Unit Rankings Page");
             //console.log(xml);
 
             const $ = cheerio.load(xml);
@@ -592,12 +592,15 @@ function handleSearch(receivedMessage, search) {
         .catch(console.error);
     })
 }
-function handleAddalias(receivedMessage) {
+function handleAddalias(receivedMessage, search, parameters) {
     if (receivedMessage.content.replace(/[^"]/g, "").length < 4) {
         console.log("Invalid Alias");
         return;
     }
 
+    var w1 = parameters[0];
+    var w2 = parameters[1];
+    /*
     var copy = receivedMessage.content;
     var w1 = getQuotedWord(copy);
     if (!w1) {
@@ -611,6 +614,7 @@ function handleAddalias(receivedMessage) {
         return;
     }
     copy = copy.replace(`\"${w2}\"`, "");
+    */
 
     validatePage(w1, (valid) => {
         if (valid) {
@@ -633,84 +637,93 @@ function handleAddalias(receivedMessage) {
         }
     });
 }
-function handleAddemo(receivedMessage) {
+function handleAddemo(receivedMessage, search, parameters) {
     var s = receivedMessage.content.split(" ");
-    if (s) {
+
+    var name = "";
+    var url = "";
+    if (parameters && parameters.length > 0) {
+        name = search;
+        url = parameters[0];
+    } else if (s) {
         if (!s[1] || !s[2]) {
             return;
         }
+        
+        name = s[1];
+        url = s[2];
+    } else {
+        console.log("Error with command, emote could not be added.");
+        return;
+    }
 
-        var name = s[1];
-        var url = s[2];
+    var existing = validateEmote(name);
+    if (existing) {
 
-        var existing = validateEmote(name);
-        if (existing) {
+        var Attachment = new Discord.Attachment(existing);
+        if (Attachment) {
+            var embed = {
+                title: "Conflict",
+                description: "This emote already exists with this name, do you want to overwrite it?",
+                color: pinkHexCode,
+                image: {
+                    url: `attachment://${existing}`
+                },
+                files: [{ attachment: `${existing}`, name: existing }] 
+            };
 
-            var Attachment = new Discord.Attachment(existing);
-            if (Attachment) {
-                var embed = {
-                    title: "Conflict",
-                    description: "This emote already exists with this name, do you want to overwrite it?",
-                    color: pinkHexCode,
-                    image: {
-                        url: `attachment://${existing}`
-                    },
-                    files: [{ attachment: `${existing}`, name: existing }] 
-                };
+            receivedMessage.channel.send({ embed: embed })
+                .then(message => {
+                    cacheBotMessage(receivedMessage.id, message.id);
+                    message.react(okEmoji);
+                    message.react(cancelEmoji);
 
-                receivedMessage.channel.send({ embed: embed })
-                    .then(message => {
-                        cacheBotMessage(receivedMessage.id, message.id);
-                        message.react(okEmoji);
-                        message.react(cancelEmoji);
+                    const filter = (reaction, user) => (reaction.emoji.name === okEmoji || reaction.emoji.name === cancelEmoji) && user.id !== message.author.id;
+                    message.awaitReactions(filter, { max: 1, time: 60000 })
+                            .then(collected => {
+                                const reaction = collected.first().emoji.name;
+                                const count = collected.size;
 
-                        const filter = (reaction, user) => (reaction.emoji.name === okEmoji || reaction.emoji.name === cancelEmoji) && user.id !== message.author.id;
-                        message.awaitReactions(filter, { max: 1, time: 60000 })
-                                .then(collected => {
-                                    const reaction = collected.first().emoji.name;
-                                    const count = collected.size;
+                                if (count === 1 && reaction === okEmoji) {
+                                    fs.unlink(existing, (err) => {
+                                        if (err) {
+                                            console.log(err);
+                                            return;
+                                        }
 
-                                    if (count === 1 && reaction === okEmoji) {
-                                        fs.unlink(existing, (err) => {
-                                            if (err) {
-                                                console.log(err);
-                                                return;
-                                            }
+                                        downloadFile(name, url, (result) => {
+                                            console.log(result);
 
-                                            downloadFile(name, url, (result) => {
-                                                console.log(result);
-
-                                                const guildId = receivedMessage.guild.id;
-                                                receivedMessage.guild.emojis.forEach(customEmoji => {
-                                                    if (customEmoji.name === config.getSuccess(guildId)) {
-                                                        message.delete();
-                                                        //receivedMessage.reply(`Emote has been replaced. :${customEmoji}:`);
-                                                        respondSuccess(receivedMessage);
-                                                    }
-                                                });
-                                            });                                            
-                                        });
-                                    } else if(count === 0 || reaction === cancelEmoji) {
-                                        console.log("AddEmo - no response");
-                                        message.delete();
-                                        respondFailure(receivedMessage);
-                                    }
-                                })
-                                .catch(collected => {
+                                            const guildId = receivedMessage.guild.id;
+                                            receivedMessage.guild.emojis.forEach(customEmoji => {
+                                                if (customEmoji.name === config.getSuccess(guildId)) {
+                                                    message.delete();
+                                                    //receivedMessage.reply(`Emote has been replaced. :${customEmoji}:`);
+                                                    respondSuccess(receivedMessage);
+                                                }
+                                            });
+                                        });                                            
+                                    });
+                                } else if(count === 0 || reaction === cancelEmoji) {
                                     console.log("AddEmo - no response");
                                     message.delete();
                                     respondFailure(receivedMessage);
-                                });
-                    })
-                    .catch(console.error);
-            }
-                
-        } else {
-            downloadFile(name, url, (result) => {
-                console.log(result);
-                respondSuccess(receivedMessage);
-            });
+                                }
+                            })
+                            .catch(collected => {
+                                console.log("AddEmo - no response");
+                                message.delete();
+                                respondFailure(receivedMessage);
+                            });
+                })
+                .catch(console.error);
         }
+            
+    } else {
+        downloadFile(name, url, (result) => {
+            console.log(result);
+            respondSuccess(receivedMessage);
+        });
     }
 }
 function handleEmote(receivedMessage, prefix, replace) {
@@ -1363,9 +1376,13 @@ function validateEmote(emote) {
     return file;
 }
 function validateCommand(receivedMessage, command) {
-    var roles = receivedMessage.member.roles;
+    var roles = receivedMessage.member.roles.array();
+    var guildId = receivedMessage.channel.guild.id;
+
     for (var i = 0; i < roles.length; i++) {
-        if (config.validateCommand(roles[i].name, command)) {
+        console.log("Attempt to validate: " + roles[i].name);
+        if (config.validateCommand(guildId, roles[i].name, command)) {
+            console.log("Role Validated");
             return true;
         }
     }
@@ -1376,21 +1393,33 @@ function validateCommand(receivedMessage, command) {
 // Response
 function respondSuccess(receivedMessage) {
     const guildId = receivedMessage.guild.id;
+    const emojis = receivedMessage.guild.emojis.array();
 
-    receivedMessage.guild.emojis.forEach(customEmoji => {
-        if (customEmoji.name === config.getSuccess(guildId)) {
-            receivedMessage.react(customEmoji)
-        }
+    var customEmoji = emojis.find((e) => {
+        return e.name === config.getSuccess(guildId);
     });
+
+    if (customEmoji) {
+        receivedMessage.react(customEmoji)
+    } else {
+        // If none of the servers custom emojis matches the saved one, then the server is set to use a unicode emoji
+        receivedMessage.react(config.getSuccess(guildId))
+    }
 }
 function respondFailure(receivedMessage) {
     const guildId = receivedMessage.guild.id;
+    const emojis = receivedMessage.guild.emojis.array();
 
-    receivedMessage.guild.emojis.forEach(customEmoji => {
-        if (customEmoji.name === config.getFailure(guildId)) {
-            receivedMessage.react(customEmoji)
-        }
+    var customEmoji = emojis.find((e) => {
+        return e.name === config.getFailure(guildId);
     });
+
+    if (customEmoji) {
+        receivedMessage.react(customEmoji)
+    } else {
+        // If none of the servers custom emojis matches the saved one, then the server is set to use a unicode emoji
+        receivedMessage.react(config.getFailure(guildId))
+    }
 }
 
 client.on('message', (receivedMessage) => {
@@ -1407,11 +1436,17 @@ client.on('message', (receivedMessage) => {
         return;
     }
 
+    const attachment = receivedMessage.attachments.first();
+    if (attachment) {
+        console.log("Message Attachments");
+        console.log(attachment.url);
+    }
+
     try {
         
         var copy = content;
         var parameters = [];
-        if (content.startsWith(`${prefix}unit`)) {
+        //if (content.startsWith(`${prefix}unit`)) {
 
             var loaded = getQuotedWord(copy);
             while (loaded) {
@@ -1427,21 +1462,33 @@ client.on('message', (receivedMessage) => {
             
             copy = copy.trim();
             console.log("Copy: " + copy);
-        }
+        //}
 
+        // the command name
         var split = getCommandString(copy, prefix);
-        if (!validateCommand(receivedMessage.u)) {
-            console.log("Could not validate permissions for: " + receivedMessage.member.nickname);
-            respondFailure();
+        if (!validateCommand(receivedMessage, split)) {
+            console.log("Could not validate permissions for: " + receivedMessage.member.displayName);
+            respondFailure(receivedMessage);
             throw split;
         }
         const search = getSearchString(`${prefix}${split}`, copy);
-        if (!search) {
+        if (!search && parameters.length === 0) {
+            console.log("Could not parse search string");
             throw split;
         }
 
-        //console.log("getCommandString: " + split);
-        //console.log("getSearchString: " + search);
+        console.log("getCommandString: " + split);
+        console.log("getSearchString: " + search);
+        console.log("Parameters:");
+        console.log(parameters);
+        if (split.toLowerCase() === `addemo` && parameters.length === 0) {
+            console.log("Addemo but no parameters.");
+            if (attachment) {
+                console.log("Message Has Attachments");
+                console.log(attachment.url);
+                parameters[0] = attachment.url;
+            }
+        }
         var command = "handle" + split + "(receivedMessage, search, parameters)";
 
         console.log("Running Command: " + command);
@@ -1527,7 +1574,7 @@ process.on('unhandledRejection', (reason, p) => {
 bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
 bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token_test)
+client.login(bot_secret_token)
 
 /**
     { "name": "Name",		"value": "9S" 			,	"inline": true },

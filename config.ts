@@ -55,11 +55,24 @@ class GuildSettings {
 
 
     validateAdminRole(role) {
-        console.log("Role is Admin");
         return this.settings.adminRoles.find(r => role.toLowerCase() === r.toLowerCase());
     }
     validateCommand(userRole, command) {
-        if (this.settings.adminOnlyCommands.find(r => r.toLowerCase() === command.toLowerCase())) {
+        command = command.toLowerCase();
+        
+        console.log(`this.settings.adminOnlyCommands`);
+        console.log(this.settings.adminOnlyCommands);
+        console.log(`this.settings.disabledCommands`);
+        console.log(this.settings.disabledCommands);
+        console.log(`Role: ${userRole}, Command: ${command}`);
+
+        var filtered = this.settings.adminOnlyCommands.filter(r => r.toLowerCase() === command);
+        var includes = this.settings.disabledCommands.includes(command);
+        console.log(`Includes: ${includes}`);
+        console.log(`Filtered Commands`);
+        console.log(filtered);
+
+        if (filtered.length > 0 || includes) {
             console.log("Command is Admin only");
             return this.validateAdminRole(userRole);
         }
@@ -185,12 +198,15 @@ module.exports = {
             return r["Unit"] === name;
         });
     },
-    validateCommand(guildId, command) {
+    validateCommand(guildId, userRole, command) {
+        //console.log(`Config Validate Command (${guildId})` + this.guilds[guildId]);
         if (!this.guilds[guildId]) {
             console.log("Unknown guild, allow");
             return true;
         }
-        return this.guilds[guildId].validateCommand(command);
+        //console.log("Validate Command Guild: " + guildId);
+        //console.log(this.guilds[guildId]);
+        return this.guilds[guildId].validateCommand(userRole, command);
     }
 };
   

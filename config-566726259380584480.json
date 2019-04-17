@@ -1,0 +1,14 @@
+{
+	"name": "Nuke Proof Avalonia",
+	"prefix": "!",
+	"successEmote": "kthumbsup",
+	"failureEmote": "❌",
+	"adminRoles": [
+		"admin",
+		"mod"
+	],
+	"adminOnlyCommands": [
+		"prefix"
+	],
+	"disabledCommands": []
+}
