@@ -59,7 +59,15 @@ const abilityParameters = [
 const abilityAliases = {
     "Atk_frm": "Attack Frames",
     "MP_cost": "MP Cost",
-    "Learn": "Learned By"
+    "Learn": "Learned By",
+    "Trust": "tmr",
+    "trust": "tmr"
+}
+const parameterAliases = {
+    "frames": "Attack Frames",
+    "learned": "Learned By",
+    "trust": "tmr",
+    "tm": "tmr"
 }
 const unicodeNumbers = [
     "0️⃣",
@@ -887,6 +895,13 @@ function parseUnitOverview(overview, tips, params, callback) {
         }
     };
 
+    parameters.forEach((n, i) => {
+        if (parameterAliases[n]) {
+            log(`'${parameters[i]}' changed to '${parameterAliases[n]}'`)
+            parameters[i] = parameterAliases[n];
+        }  
+    })
+
     while (match != null) {
         var inline = true;
         var name = match[1].replaceAll(" ", "").toLowerCase();
@@ -907,10 +922,14 @@ function parseUnitOverview(overview, tips, params, callback) {
             continue;
         }
 
-        if (parameters.includes(name) && !value.empty()) {
-            if (name == "trust" || name == "stmr") {
+        if (abilityAliases[name]) {
+            name = abilityAliases[name];
+        }
 
-                name = name.replace("trust", "tmr");
+
+        if (parameters.includes(name) && !value.empty()) {
+            if (name == "tmr" || name == "stmr") {
+
                 name = name.toUpperCase();
 
                 var tip = tips.find(t => {
@@ -1098,7 +1117,11 @@ function queryPage(id, paramName, callback) {
                     });
                 }
 
-                totalValue += nodes[i].value + " " + nodes[i].name;
+                totalValue += nodes[i].value;
+                if (equipParameters.includes(nodes[i].name)) {
+                    totalValue += "-";
+                }
+                totalValue += nodes[i].name;
             }
 
             //log(nodes);
