@@ -371,12 +371,6 @@ function getPageID(search, categories, callback) {
     });
 }
 
-/*
-const reactionFilter = (reaction, user) => {
-    return true;// ['👎'].includes(reaction.emoji.name) && user.id === message.author.id;
-};
-    const filter = (reaction, user) => reaction.emoji.name === '👌'
-*/
 
 // COMMANDS
 function handleUnit(receivedMessage, search, parameters) {
@@ -1498,7 +1492,7 @@ bot_secret_token =
 bot_secret_token_test =
     "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token_test);
+client.login(bot_secret_token);
 
 // HELPERS
 function getQuotedWord(str) {
