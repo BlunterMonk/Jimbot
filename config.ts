@@ -63,19 +63,9 @@ class GuildSettings {
     }
     validateCommand(userRole, command) {
         command = command.toLowerCase();
-        
-        console.log(`this.settings.adminOnlyCommands`);
-        console.log(this.settings.adminOnlyCommands);
-        console.log(`this.settings.disabledCommands`);
-        console.log(this.settings.disabledCommands);
-        console.log(`Role: ${userRole}, Command: ${command}`);
 
         var filtered = this.settings.adminOnlyCommands.filter(r => r.toLowerCase() === command);
         var includes = this.settings.disabledCommands.includes(command);
-        console.log(`Includes: ${includes}`);
-        console.log(`Filtered Commands`);
-        console.log(filtered);
-
         if (filtered.length > 0 || includes) {
             console.log("Command is Admin only");
             return this.validateAdminRole(userRole);
