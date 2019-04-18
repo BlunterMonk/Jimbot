@@ -25,6 +25,7 @@ const linkFilter = [
     /\|Quest/,
     /\]\]/,
     /\[\[/,
+    /\[\[.*\]\]/,
     /\(/,
     /\)/
 ];
@@ -906,6 +907,31 @@ function parseUnitOverview(overview, tips, params, callback) {
     var limited = false;
     // ★★★★★✫✫
 
+    var count = 1;
+    var queryEnd = function (name, value) {
+        count -= 1;
+
+        if (name && value) {
+            for (let i = 0; i < fields.length; i++) {
+                //log(`Finished Query: ${fields[i].name} -vs- ${name}`);
+                if (fields[i].name === name) {
+                    //log("Found Queried field");
+                    fields[i].name = name;
+                    fields[i].value = value;
+                }
+            }
+        }
+
+        if (count <= 0) {
+            log("Unit Fields");
+            log(fields);
+        
+            if (callback) {
+                callback(fields, limited, rarity);
+            }
+        }
+    };
+
     while (match != null) {
         var inline = true;
         var name = match[1].replaceAll(" ", "").toLowerCase();
@@ -927,12 +953,25 @@ function parseUnitOverview(overview, tips, params, callback) {
         }
 
         if (parameters.includes(name) && !value.empty()) {
-            var tip = tips.find(t => {
-                return t.title === value;
-            });
-            if (tip) {
-                name += " - " + value;
-                value = tip.value;
+            if (name == "trust" || name == "stmr") {
+
+                name = name.replace("trust", "tmr");
+                name = name.toUpperCase();
+
+                var tip = tips.find(t => {
+                    return t.title === value;
+                });
+                if (tip) {
+                    name += " - " + value;
+                    value = tip.value;
+                } else {
+                    log("Attempting to query for: " + value);
+                    count++;
+                    queryPage(value, name, (n, v) => {
+                        queryEnd(n, v);
+                    });
+                }
+
                 inline = false;
             }
 
@@ -966,12 +1005,7 @@ function parseUnitOverview(overview, tips, params, callback) {
         };
     }
 
-    log("Unit Fields");
-    log(fields);
-
-    if (callback) {
-        callback(fields, limited, rarity);
-    }
+    queryEnd();
     return fields;
 }
 function getRarityString(min, max) {
@@ -1005,6 +1039,124 @@ function getCollectedTipText(tooltip, collected) {
     //log(collected);
     return collected;
 }
+
+function parsePage(match, params, callback) {
+}
+function queryPage(id, paramName, callback) {
+    wikiClient.getArticle(id, function (err, content, redirect) {
+        if (err) {
+            log(err);
+            return;
+        }
+
+        wikiClient.parse(content, "search", function (err, xml, images) {
+            if (err) {
+                console.error(err);
+                return;
+            }
+
+            const $ = cheerio.load(xml);
+
+            var regex = /\|(.*?)\n/g;
+            var match = regex.exec(content);
+            //log(match);
+
+            // TODO: parse item ability description.
+
+            var ignore = "<!";
+            var nodes = [];
+            while (match != null) {
+                var name = match[1].replace("\t", "").capitalize();
+                name = name.replaceAll(" ", "");
+                var value = match[2];
+
+                //log(`${name} = '${value}' isParam: ${isParam}`);
+
+                // Fix string to remove any unecessary information
+                if (value) {
+                    value = removeHTMLComments(value);
+
+                    var m = value.match(linkRegexp2);
+                    if (m) {
+                        value = convertBatchToLinks(m);
+                    }
+                    if (value.includes("Unstackable")) {
+                        value = "Unstackable Materia";
+                    }
+                }
+
+                const infoFields = [
+                    "Resist",
+                    "Effect",
+                    "Element",
+                    "Ability",
+                ]
+                var isParam = equipParameters.includes(name);
+                var isParsable = infoFields.includes(name);
+                if (value && !value.includes(ignore) && (isParam || isParsable)) {
+                    var notEmpty = /\S/.test(value);
+
+                    if (abilityAliases[name]) {
+                        name = abilityAliases[name];
+                    }
+
+                    value = value.replaceAll("\n", "");
+                    value = value.replace("[", "\n\[");
+                    if (notEmpty) {
+                        nodes[nodes.length] = {
+                            name: name,
+                            value: value,
+                            inline: name !== "Effect"
+                        };
+                    }
+                }
+
+                match = valueMultiLineRegexp.exec(content);
+            }
+
+            var tips = [];
+            $(".tip.module-tooltip").each(function (tip) {
+                var tipTitle = $(this).find("img").attr("title");
+                var collected = getCollectedTipText($(this), "");
+                //log(`Collected Tip Text: ${tipTitle} (${tip})`);
+                //log(collected);
+                if (!tips.find(t => {return t.value === collected;})) {
+                    //log("Adding Tip");
+                    //log(collected);
+                    //log("\n");
+                    tips[tips.length] = {
+                        title: tipTitle,
+                        value: collected
+                    };
+                }
+            });
+
+            //log("Tips:");
+            //log(tips);
+
+            var totalValue = "";
+            for(var i = 0; i < nodes.length; i++ ) {
+                if (nodes[i].name === "Effect") {
+                    //log("Adding tips to effect");
+                    tips.forEach((n) => {
+                        nodes[i].value += "\n" + n.value;
+                    });
+                }
+
+                totalValue += nodes[i].value + " " + nodes[i].name;
+            }
+
+            //log(nodes);
+
+            totalValue = totalValue.replace("Effect", "");
+            //log("Parsed Total Value: " + name);
+            //log(totalValue);
+
+            callback(paramName, totalValue);
+        });
+    });
+}
+
 
 function queryWikiForUnit(search, callback) {
     wikiClient.getArticle(search, function (err, content, redirect) {
@@ -1074,11 +1226,12 @@ function queryWikiForUnit(search, callback) {
                 var tipTitle = $(this).find("img").attr("title");
                 var tipInfo = $(this).find("div").first().text();
                 var collected = getCollectedTipText($(this), "");
-
-                if (!tips.find(t => {return t.value === tipInfo;})) {
-                    //log("Adding Tip");
-                    //log(tipInfo);
-                    //log("\n");
+                log(`Collected Tip Text: ${tipTitle} (${tip})`);
+                log(collected);
+                if (!tips.find(t => {return t.value === collected;})) {
+                    log("Adding Tip");
+                    log(collected);
+                    log("\n");
                     tips[tips.length] = {
                         title: tipTitle,
                         value: collected
@@ -1086,8 +1239,8 @@ function queryWikiForUnit(search, callback) {
                 }
             });
 
-            //log("Tips:");
-            //log(tips);
+            log("Tips:");
+            log(tips);
 
             if (family) {
                 tips[tips.length] = {
@@ -1233,7 +1386,6 @@ function queryWikiForAbility(search, callback) {
                         }
                     }
 
-                    var isParam = equipParameters.includes(name);
                     var isParsable = abilityParameters.includes(name);
                     if (value && !value.includes(ignore) && isParsable) {
                         var notEmpty = /\S/.test(value);
@@ -1546,7 +1698,7 @@ bot_secret_token =
 bot_secret_token_test =
     "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 
 // HELPERS
 function getQuotedWord(str) {
