@@ -11,6 +11,5 @@
 		"prefix",
 		"getsettings"
 	],
-	"disabledCommands": [
-	]
+	"disabledCommands": []
 }
