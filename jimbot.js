@@ -555,7 +555,7 @@ function handleSkill(receivedMessage, search) {
     })
 }
 function handleReactions(receivedMessage) {
-
+    return;
     const content = receivedMessage.content.toLowerCase();
     switch (content) {
         case commandCyra:
@@ -597,6 +597,7 @@ function handleSearch(receivedMessage, search) {
     })
 }
 function handleAddalias(receivedMessage, search, parameters) {
+    return;
     if (receivedMessage.content.replace(/[^"]/g, "").length < 4) {
         console.log("Invalid Alias");
         return;
@@ -642,6 +643,7 @@ function handleAddalias(receivedMessage, search, parameters) {
     });
 }
 function handleAddemo(receivedMessage, search, parameters) {
+    return;
     var s = receivedMessage.content.split(" ");
 
     var name = "";
@@ -731,6 +733,7 @@ function handleAddemo(receivedMessage, search, parameters) {
     }
 }
 function handleEmote(receivedMessage, prefix, replace) {
+    return;
     var img = receivedMessage.content.split(" ")[0];
     img = img.toLowerCase().replace(prefix, "");
 
@@ -761,6 +764,7 @@ function handleQuote(receivedMessage, search) {
     }
 }
 function handleHelp(receivedMessage) {
+    return;
     var data = fs.readFileSync('readme.md', "ASCII");
     receivedMessage.channel.send(mainChannelID, {
         embed: {
@@ -1450,7 +1454,7 @@ client.on('message', (receivedMessage) => {
     const guildId = receivedMessage.guild.id;
     const prefix = config.getPrefix(guildId);
     if (!content.startsWith(prefix)) {
-        handleReactions(receivedMessage);
+        ///handleReactions(receivedMessage);
         return;
     }
 
@@ -1486,7 +1490,7 @@ client.on('message', (receivedMessage) => {
         var split = getCommandString(copy, prefix);
         if (!validateCommand(receivedMessage, split)) {
             console.log("Could not validate permissions for: " + receivedMessage.member.displayName);
-            respondFailure(receivedMessage);
+            //respondFailure(receivedMessage);
             throw split;
         }
         const search = getSearchString(`${prefix}${split}`, copy);
@@ -1520,7 +1524,7 @@ client.on('message', (receivedMessage) => {
         }
         catch (f) {
             console.log(f + " (doesn't exist)");
-            handleEmote(receivedMessage, prefix);
+            //handleEmote(receivedMessage, prefix);
         }
     }
 })
@@ -1592,4 +1596,4 @@ process.on('unhandledRejection', (reason, p) => {
 bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
 bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token_test)
+client.login(bot_secret_token)
