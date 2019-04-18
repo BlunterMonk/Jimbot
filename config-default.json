@@ -7,9 +7,9 @@
         "admin", "mod"
     ],
     "adminOnlyCommands": [
-        "prefix"
+        "prefix", "getsettings"
     ],
     "disabledCommands": [
-        "addemo", "addalias"
+        "addemo", "addalias", "emote"
     ]
 }

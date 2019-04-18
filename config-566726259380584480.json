@@ -8,7 +8,7 @@
 		"mod"
 	],
 	"adminOnlyCommands": [
-		"prefix"
+		"prefix", "getsettings"
 	],
 	"disabledCommands": []
 }
