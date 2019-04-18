@@ -12,6 +12,7 @@
 	],
 	"disabledCommands": [
 		"addemo",
-		"addalias"
+		"addalias",
+		"emotes"
 	]
 }

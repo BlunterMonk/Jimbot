@@ -55,8 +55,8 @@ function cacheBotMessage(received, sent) {
         sent: sent,
         time: new Date()
     };
-    console.log("Cached Message");
-    console.log(botMessages[botMessages.length-1]);
+    log("Cached Message");
+    log(botMessages[botMessages.length-1]);
 }
 
 function log(data) {
@@ -68,9 +68,9 @@ function logData(data) {
 
 function LoadGuilds(callback) {
     // List servers the bot is connected to
-    console.log("Loading Guilds:")
+    log("Loading Guilds:")
     client.guilds.forEach((guild) => {
-        console.log(` - ${guild.name} - ${guild.id}`)
+        log(` - ${guild.name} - ${guild.id}`)
         const guildId = guild.id;
         config.loadGuild(guild.name, guild.id);
     });
@@ -84,26 +84,26 @@ function sendToChannel(id, msg) {
 
 //joined a server
 client.on("guildCreate", guild => {
-    console.log("Joined a new guild: " + guild.name);
+    log("Joined a new guild: " + guild.name);
     //Your other stuff like adding to guildArray
     config.loadGuild(guild.name, guild.id);
 })
 //removed from a server
 client.on("guildDelete", guild => {
-    console.log("Left a guild: " + guild.name);
+    log("Left a guild: " + guild.name);
     //remove from guildArray
     config.unloadGuild(guild.name, guild.id);
 })
 var loading = true;
 client.on('ready', () => {
-    console.log("Connected as " + client.user.tag)
+    log("Connected as " + client.user.tag)
     
 
     /*
     request('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', { json: true }, (err, res, body) => {
-    if (err) { return console.log(err); }
-        console.log(body.url);
-        console.log(body.explanation);
+    if (err) { return log(err); }
+        log(body.url);
+        log(body.explanation);
     });
     */
     
@@ -112,7 +112,7 @@ client.on('ready', () => {
     config.init();
     LoadGuilds();
     
-    console.log("Configuration Loaded");
+    log("Configuration Loaded");
     loading = false;
     
     // Synchronous read
@@ -132,24 +132,24 @@ function loadRankingsList(callback) {
             return;
         }
         if (redirect) {
-            console.log("Redirect Info: ");
-            console.log(redirect);
+            log("Redirect Info: ");
+            log(redirect);
         }
 
         wikiClient.parse(content, search, function (err, xml, images) {
             if (err) {
-                console.log(err);
+                log(err);
                 return;
             }
-            console.log("Parsing Unit Rankings Page");
-            //console.log(xml);
+            log("Parsing Unit Rankings Page");
+            //log(xml);
 
             const $ = cheerio.load(xml);
             var table = $('.wikitable.sortable');
             fs.writeFileSync('rankingsdump.txt', xml);
 
             if(!table.is('table')) {
-                console.log("Not Table");
+                log("Not Table");
                 return;
             }
             var results = [],
@@ -200,22 +200,22 @@ function loadRankingsList(callback) {
                             if (notes && notes.length > 0) {
                                 row["notes"] = notes.parent().next().text();
                             } else {
-                                //console.log(`Could not find '${escpaedName}_2', trying '${escpaedName}'.`);
+                                //log(`Could not find '${escpaedName}_2', trying '${escpaedName}'.`);
 
                                 try {
                                     var notes = $(`#${escpaedName}`);
                                     if (notes && notes.length > 0) {
                                         row["notes"] = notes.parent().next().text();
                                     } else {
-                                        console.log(`Found '${escpaedName}', could not find notes.`);
+                                        log(`Found '${escpaedName}', could not find notes.`);
                                     }
                                 } catch (f) {
-                                    console.log("Could not get notes for: " + escpaedName);
+                                    log("Could not get notes for: " + escpaedName);
                                 }
                             }
                         } catch(e) {
-                            console.log("Big Error: " + e);
-                            console.log("Could not get notes for: " + escpaedName);
+                            log("Big Error: " + e);
+                            log("Could not get notes for: " + escpaedName);
                         }
                         
                         row["Unit"] = row["Unit"].toLowerCase();
@@ -224,12 +224,12 @@ function loadRankingsList(callback) {
                 });
             });
         
-            //console.log("Results:");
-            //console.log(results)
+            //log("Results:");
+            //log(results)
             var j = JSON.stringify(results);
-            //console.log(j);
+            //log(j);
             fs.writeFileSync('rankingsdump.json', j);
-            console.log("Unit Rankings Updated");
+            log("Unit Rankings Updated");
             callback();
         });
     });
@@ -279,8 +279,8 @@ function getPageID(search, categories, callback) {
                     return b.similarity - a.similarity;
                 })[0];
         
-                console.log("Highest");
-                console.log(highest);
+                log("Highest");
+                log(highest);
         
                 id = highest.id;
                 name = highest.title;
@@ -297,7 +297,7 @@ function getPageID(search, categories, callback) {
     categories.forEach(function (category) {
         wikiClient.getPagesInCategory(category, function ( err, redirect, content) {
             if (err) {
-                console.log(err);
+                log(err);
                 return;
             }
 
@@ -319,14 +319,14 @@ function getPageID(search, categories, callback) {
 
                 var match = similarity(title, search);
                 if (match >= similarityTreshold) {
-                    //console.log(`Very Similar ${title} -vs- ${search} (${match})`)
+                    //log(`Very Similar ${title} -vs- ${search} (${match})`)
                     similar[similar.length] = {
                         id: page.pageid,
                         title: page.title,
                         similarity: match
                     }
                 }/* else if (match >= similarityTreshold * 0.5) {
-                    console.log(`Kinda Similar ${title} -vs- ${search}`)
+                    log(`Kinda Similar ${title} -vs- ${search}`)
                 }*/
 
                 title = title.replaceAll(" ", "_");
@@ -356,7 +356,7 @@ const reactionFilter = (reaction, user) => {
 function handleUnit(receivedMessage, search, parameters) {
 
     search = toTitleCase(search, '_');
-    console.log("Searching Units For: " + search);
+    log("Searching Units For: " + search);
     queryWikiForUnit(search, function (pageName, info, imgurl, description, tips) {
         pageName = pageName.replaceAll("_", " ");
         parseUnitOverview(info, tips, parameters, 
@@ -400,7 +400,7 @@ function handleUnit(receivedMessage, search, parameters) {
 function handleEquip(receivedMessage, search) {
 
     search = toTitleCase(search, '_');
-    console.log(`Searching Equipment For: ${search}...`);
+    log(`Searching Equipment For: ${search}...`);
     queryWikiForEquipment(search, function(imgurl, pageName, nodes) {
         var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
@@ -429,7 +429,7 @@ function handleEquip(receivedMessage, search) {
 function handleSkill(receivedMessage, search) {
 
     search = toTitleCase(search, '_');
-    console.log(`Searching Skills For: ${search}...`);
+    log(`Searching Skills For: ${search}...`);
     queryWikiForAbility(search, function(imgurl, pageName, nodes) {
         var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
@@ -479,7 +479,7 @@ function handleReactions(receivedMessage) {
 }
 function handleSearch(receivedMessage, search) {
 
-    console.log(`Searching For: ${search}...`);
+    log(`Searching For: ${search}...`);
     queryWikiWithSearch(search, function (batch){
         receivedMessage.channel.send(mainChannelID, {
             embed: {
@@ -499,7 +499,7 @@ function handleSearch(receivedMessage, search) {
 }
 function handleAddalias(receivedMessage, search, parameters) {
     if (receivedMessage.content.replace(/[^"]/g, "").length < 4) {
-        console.log("Invalid Alias");
+        log("Invalid Alias");
         return;
     }
 
@@ -509,13 +509,13 @@ function handleAddalias(receivedMessage, search, parameters) {
     var copy = receivedMessage.content;
     var w1 = getQuotedWord(copy);
     if (!w1) {
-        console.log("Invalid Alias");
+        log("Invalid Alias");
         return;
     }
     copy = copy.replace(`\"${w1}\"`, "");
     var w2 = getQuotedWord(copy);
     if (!w2) {
-        console.log("Invalid Alias");
+        log("Invalid Alias");
         return;
     }
     copy = copy.replace(`\"${w2}\"`, "");
@@ -528,7 +528,7 @@ function handleAddalias(receivedMessage, search, parameters) {
             validatePage(w2, (valid) => {
                 if (valid) {
         
-                    console.log("Unit is valid");
+                    log("Unit is valid");
                     
                     w1 = w1.replaceAll(" ", "_");
                     config.addAlias(w1, w2);
@@ -558,7 +558,7 @@ function handleAddemo(receivedMessage, search, parameters) {
         name = s[1];
         url = s[2];
     } else {
-        console.log("Error with command, emote could not be added.");
+        log("Error with command, emote could not be added.");
         return;
     }
 
@@ -592,12 +592,12 @@ function handleAddemo(receivedMessage, search, parameters) {
                                 if (count === 1 && reaction === okEmoji) {
                                     fs.unlink(existing, (err) => {
                                         if (err) {
-                                            console.log(err);
+                                            log(err);
                                             return;
                                         }
 
                                         downloadFile(name, url, (result) => {
-                                            console.log(result);
+                                            log(result);
 
                                             const guildId = receivedMessage.guild.id;
                                             receivedMessage.guild.emojis.forEach(customEmoji => {
@@ -610,13 +610,13 @@ function handleAddemo(receivedMessage, search, parameters) {
                                         });                                            
                                     });
                                 } else if(count === 0 || reaction === cancelEmoji) {
-                                    console.log("AddEmo - no response");
+                                    log("AddEmo - no response");
                                     message.delete();
                                     respondFailure(receivedMessage);
                                 }
                             })
                             .catch(collected => {
-                                console.log("AddEmo - no response");
+                                log("AddEmo - no response");
                                 message.delete();
                                 respondFailure(receivedMessage);
                             });
@@ -626,7 +626,7 @@ function handleAddemo(receivedMessage, search, parameters) {
             
     } else {
         downloadFile(name, url, (result) => {
-            console.log(result);
+            log(result);
             respondSuccess(receivedMessage);
         });
     }
@@ -647,7 +647,7 @@ function handleEmote(receivedMessage, prefix, replace) {
         }
     }
     
-    console.log(filename + " doesn't exist");
+    log(filename + " doesn't exist");
     return null;
 }
 function handleQuote(receivedMessage, search) {
@@ -689,10 +689,10 @@ function handlePrefix(receivedMessage) {
         receivedMessage.member.roles.find(r => r.name === "Mod")) {
         
         // TODO: Add logic to change prefix to a valid character.
-        console.log("User Is Admin");
+        log("User Is Admin");
         var s = receivedMessage.content.split(" ");
         if (!s[1] || s[1].length !== 1) {
-            console.log("Invalid Prefix");
+            log("Invalid Prefix");
             respondFailure(receivedMessage);
             return;
         }
@@ -706,12 +706,12 @@ function handlePrefix(receivedMessage) {
 }
 function handleRank(receivedMessage, search, parameters) {
 
-    console.log("\nSearching Rankings for: " + search);
+    log("\nSearching Rankings for: " + search);
     if (search) {
         
         const unit = config.getUnitRank(search.toLowerCase());
         if (!unit) {
-            console.log("Could not find unit");
+            log("Could not find unit");
             return;
         }
        
@@ -750,8 +750,8 @@ function handleRank(receivedMessage, search, parameters) {
 
     var embeds = [];
     var rankings = config.getRankings(search);
-    console.log("\nRankings");
-    console.log(rankings);
+    log("\nRankings");
+    log(rankings);
     rankings.forEach((rank) => {
         embeds[embeds.length] = {
             title: rank.name,
@@ -769,8 +769,8 @@ function handleRank(receivedMessage, search, parameters) {
         };
     });
 
-    console.log("\nEmbeds");
-    console.log(embeds);
+    log("\nEmbeds");
+    log(embeds);
     embeds.forEach((embed) => {
 
         receivedMessage.channel.send({
@@ -790,22 +790,19 @@ function handleSet(receivedMessage, search, parameters) {
     const setting = config.getSettings(guildId, search);
 
     var reply = `Settings for '${search}':`;
-    console.log(reply);
+    log(reply);
     receivedMessage.channel.send(reply)
     receivedMessage.channel.send(JSON.stringify(setting));
 }
 // COMMANDS END
 
-const defaultUnitParameters = [
-    /*'Name', */"Limited", /*"Exclusive", *//*"Job", */"Role", "Origin", 
-    /*"Gender", */"STMR", "Trust", /*"Race", *//*"Number"*/, "Chain", "Rarity"
-];
+
 function parseUnitOverview(overview, tips, params, callback) {
             
     var parameters = defaultUnitParameters;
     if (params.length > 0) {
-        console.log("Found Parameters");
-        console.log(params);
+        log("Found Parameters");
+        log(params);
         parameters = params;
     }
 
@@ -873,8 +870,8 @@ function parseUnitOverview(overview, tips, params, callback) {
         }
     }
 
-    console.log("Unit Fields");
-    console.log(fields);
+    log("Unit Fields");
+    log(fields);
 
     if (callback) {
         callback(fields, limited, rarity);
@@ -896,7 +893,7 @@ function getCollectedTipText(tooltip, collected) {
    
     while (firstDiv && firstDiv.length > 0) {
         var text = firstDiv.text();
-        console.log("\nDiv Text: " + text);
+        log("\nDiv Text: " + text);
 
         var child = firstDiv.find('.tip.module-tooltip');
         if (child && child.length > 0) {
@@ -908,8 +905,8 @@ function getCollectedTipText(tooltip, collected) {
         firstDiv = firstDiv.next();
     }
 
-    console.log("\nCurrent Collected Text: ");
-    console.log(collected);
+    log("\nCurrent Collected Text: ");
+    log(collected);
     return collected;
 }
 
@@ -920,15 +917,15 @@ function queryWikiForUnit(search, callback) {
             return;
         }
         if (redirect) {
-            console.log("Redirect Info: ");
-            console.log(redirect);
+            log("Redirect Info: ");
+            log(redirect);
         }
         
         const firstLine = content.indexOf("Unit Infobox");
         if (firstLine < 0) {
             const redirectRegex = /(?:.*)\[(.*)\]]/g;
             const page = redirectRegex.exec(content);
-            console.log("Redirect To: " + page[1]);
+            log("Redirect To: " + page[1]);
             queryWikiForUnit(page[1], callback);
             return;
         }
@@ -941,7 +938,7 @@ function queryWikiForUnit(search, callback) {
 
         wikiClient.parse(content, search, function (err, xml, images) {
             if (err) {
-                console.log(err);
+                log(err);
                 return;
             }
 
@@ -956,16 +953,16 @@ function queryWikiForUnit(search, callback) {
                         unique[unique.length] = m;
                     }
                 });
-                console.log("Parsed Family:\n\n");
+                log("Parsed Family:\n\n");
                 unique.forEach((m) => {
                     m = m.replace("/", "").replaceAll("\"","").replaceAll(" ", "");
                     var name = m.replace("Chaining/", "").replaceAll("_", " ");
                     var link = `[${name}](${wikiEndpoint}${m})`;
-                    console.log(name);
-                    console.log(link);
+                    log(name);
+                    log(link);
                     family += link + "\n";
                 });
-                console.log(family);
+                log(family);
             }
 
             const $ = cheerio.load(xml);
@@ -981,9 +978,9 @@ function queryWikiForUnit(search, callback) {
                 var collected = getCollectedTipText($(this), "");
 
                 if (!tips.find((t) => {return t.value === tipInfo})) {
-                    console.log("Adding Tip");
-                    console.log(tipInfo);
-                    console.log("\n");
+                    log("Adding Tip");
+                    log(tipInfo);
+                    log("\n");
                     tips[tips.length] = {
                         title: tipTitle,
                         value: collected
@@ -991,8 +988,8 @@ function queryWikiForUnit(search, callback) {
                 }
             });
 
-            console.log("Tips:");
-            console.log(tips);
+            log("Tips:");
+            log(tips);
 
             if (family) {
 
@@ -1002,8 +999,8 @@ function queryWikiForUnit(search, callback) {
                 }
             }
 
-            console.log(search)
-            console.log(typeof search)
+            log(search)
+            log(typeof search)
             callback(search, overview, imgurl, description, tips);
         });
     });
@@ -1012,13 +1009,13 @@ function queryWikiForEquipment(search, callback) {
 
     getPageID(search, config.equipmentCategories, function (id, pageName, other) {
         if (!id) {
-            console.log("Could not find page: " + pageName);
+            log("Could not find page: " + pageName);
             return;
         }
 
         wikiClient.getArticle(id, function (err, content, redirect) {
             if (err) {
-                console.log(err);
+                log(err);
                 return;
             }
 
@@ -1031,12 +1028,12 @@ function queryWikiForEquipment(search, callback) {
                 const $ = cheerio.load(xml);
                 const imgurl = $('.mw-parser-output').find('img').attr('src');
                 const links = $('.mw-parser-output').children('a');
-                //console.log("Links on Page");
-                //console.log(links.length);
+                //log("Links on Page");
+                //log(links.length);
                 
                 var regex = /\|(.*?)\n/g;
                 var match = regex.exec(content);
-                //console.log(match);
+                //log(match);
                 
                 // TODO: parse item ability description.
 
@@ -1048,7 +1045,7 @@ function queryWikiForEquipment(search, callback) {
                     name = name.replaceAll(" ", "");
                     var value = match[2];
 
-                    //console.log(`${name} = '${value}' isParam: ${isParam}`);
+                    //log(`${name} = '${value}' isParam: ${isParam}`);
 
                     // Fix string to remove any unecessary information
                     if (value) {
@@ -1091,7 +1088,7 @@ function queryWikiForEquipment(search, callback) {
                     }
                 }
                 
-                console.log(nodes);
+                log(nodes);
 
                 callback(imgurl, pageName, nodes);
             });
@@ -1103,7 +1100,7 @@ function queryWikiForAbility(search, callback) {
     getPageID(search, config.abilityCategories, function (id, pageName, other) {
         wikiClient.getArticle(id, function (err, content, redirect) {
             if (err) {
-                console.log(err);
+                log(err);
                 return;
             }
             wikiClient.parse( content, 'search', function ( err, xml, images ) {
@@ -1115,12 +1112,12 @@ function queryWikiForAbility(search, callback) {
                 const $ = cheerio.load(xml);
                 const imgurl = $('.mw-parser-output').find('img').attr('src');
                 const links = $('.mw-parser-output').children('a');
-                //console.log("Links on Page");
-                //console.log(links.length);
+                //log("Links on Page");
+                //log(links.length);
                 
                 var regex = /\|(.*?)\n/g;
                 var match = regex.exec(content);
-                console.log(match);
+                log(match);
                 
                 // TODO: parse item ability description.
 
@@ -1132,7 +1129,7 @@ function queryWikiForAbility(search, callback) {
                     name = name.replaceAll(" ", "");
                     var value = match[2];
 
-                    //console.log(`${name} = '${value}' isParam: ${isParam}`);
+                    //log(`${name} = '${value}' isParam: ${isParam}`);
 
                     // Fix string to remove any unecessary information
                     if (value) {
@@ -1174,7 +1171,7 @@ function queryWikiForAbility(search, callback) {
                     }
                 }
                 
-                console.log(nodes);
+                log(nodes);
 
                 callback(imgurl, pageName, nodes);
             });
@@ -1184,7 +1181,7 @@ function queryWikiForAbility(search, callback) {
 function queryWikiWithSearch(search, callback) {
     wikiClient.search(search, (err, results) => {
         if (err) {
-            console.log(err);
+            log(err);
             return;
         }
         
@@ -1231,7 +1228,7 @@ function convertTitlesToLinks(batch) {
 
     var value = "";
     batch.forEach(function (page) {
-        console.log("converTitle: " + page.title);
+        log("converTitle: " + page.title);
         var title = page.title.replaceAll(" ", "_")
         value += wikiEndpoint + title + "\n";
     })
@@ -1239,6 +1236,7 @@ function convertTitlesToLinks(batch) {
     return value;
 }
 
+// Validation
 function validatePage(search, callback) {
     wikiClient.getArticle(search, function (err, content, redirect) {
         if (err || !content) {
@@ -1248,15 +1246,15 @@ function validatePage(search, callback) {
         }
 
         if (redirect) {
-            console.log("Redirect Info: ");
-            console.log(redirect);
+            log("Redirect Info: ");
+            log(redirect);
         }
         
         const firstLine = content.indexOf("Unit Infobox");
         if (firstLine < 0) {
             const redirectRegex = /(?:.*)\[(.*)\]]/g;
             const page = redirectRegex.exec(content);
-            console.log("Redirect To: " + page[1]);
+            log("Redirect To: " + page[1]);
             validatePage(page, callback);
             return;
         }
@@ -1284,9 +1282,9 @@ function validateCommand(receivedMessage, command) {
     var guildId = receivedMessage.channel.guild.id;
 
     for (var i = 0; i < roles.length; i++) {
-        console.log("Attempt to validate: " + roles[i].name);
+        log("Attempt to validate: " + roles[i].name);
         if (config.validateCommand(guildId, roles[i].name, command)) {
-            console.log("Role Validated");
+            log("Role Validated");
             return true;
         }
     }
@@ -1342,8 +1340,8 @@ client.on('message', (receivedMessage) => {
 
     const attachment = receivedMessage.attachments.first();
     if (attachment) {
-        console.log("Message Attachments");
-        console.log(attachment.url);
+        log("Message Attachments");
+        log(attachment.url);
     }
 
     try {
@@ -1401,14 +1399,17 @@ client.on('message', (receivedMessage) => {
         }
         catch (f) {
             //log(f + " (doesn't exist)");
-            handleEmote(receivedMessage, prefix);
+            if (validateCommand(receivedMessage, "emotes")) {
+                log("Emotes are disabled for this user");
+                handleEmote(receivedMessage, prefix);
+            }
         }
     }
 })
 
 client.on('messageDelete', (deletedMessage) => {
-    console.log("Message Deleted");
-    console.log(deletedMessage.id);
+    log("Message Deleted");
+    log(deletedMessage.id);
 
     for(var i = 0; i < botMessages.length; i++) {
         var msg = botMessages[i];
@@ -1417,7 +1418,7 @@ client.on('messageDelete', (deletedMessage) => {
             var sent = deletedMessage.channel.fetchMessage(msg.sent)
                 .then(sent => {
                     if (sent) {
-                        console.log("Deleted Message");
+                        log("Deleted Message");
                         sent.delete();
         
                         botMessages.splice(i, 1);
@@ -1429,6 +1430,21 @@ client.on('messageDelete', (deletedMessage) => {
     }
 });
 
+
+process.on('unhandledRejection', (reason, p) => {
+    log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+    // application specific logging, throwing an error, or other logic here
+});
+
+// Get your bot's secret token from:
+// https://discordapp.com/developers/applications/
+// Click on your application -> Bot -> Token -> "Click to Reveal Token"
+bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
+bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
+
+client.login(bot_secret_token_test)
+
+// HELPERS
 function getQuotedWord(str) {
                 
     if (str.replace(/[^\""]/g, "").length < 2) {
@@ -1438,9 +1454,9 @@ function getQuotedWord(str) {
     var start = str.indexOf("\"");
     var end = str.indexOfAfterIndex("\"", start+1);
     var word = str.substring(start+1, end);
-    console.log(start)
-    console.log(end);
-    console.log("Quoted Word: " + word);
+    log(start)
+    log(end);
+    log("Quoted Word: " + word);
 
     if (word.empty()) {
         return null;
@@ -1451,7 +1467,7 @@ function getQuotedWord(str) {
 function downloadFile(name, link, callback) {
     var ext = link.substring(link.lastIndexOf("."), link.length);
     if (!config.filetypes().includes(ext)) {
-        console.log("Invalid img URL");
+        log("Invalid img URL");
         return;
     }
 
@@ -1461,21 +1477,6 @@ function downloadFile(name, link, callback) {
         callback("success");
     });
 }
-
-process.on('unhandledRejection', (reason, p) => {
-    console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
-    // application specific logging, throwing an error, or other logic here
-});
-
-// Get your bot's secret token from:
-// https://discordapp.com/developers/applications/
-// Click on your application -> Bot -> Token -> "Click to Reveal Token"
-bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"
-bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
-
-client.login(bot_secret_token)
-
-
 // PARSING HELPERS
 function getSearchString(prefix, msg) {
 
