@@ -1286,6 +1286,8 @@ function parseAbilityPage(match, content, params) {
             }
         }
 
+        //log("Expected Value: " + name);
+        //log(value);
         var isParsable = parameters.includes(name);
         if (value && !value.includes(ignore) && isParsable) {
             var notEmpty = /\S/.test(value);
