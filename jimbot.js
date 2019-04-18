@@ -25,7 +25,6 @@ const linkFilter = [
     /\|Quest/,
     /\]\]/,
     /\[\[/,
-    /\[\[.*\]\]/,
     /\(/,
     /\)/
 ];
@@ -41,36 +40,25 @@ const cancelEmoji = "❌";
 
 // Lookup Tables
 
-const statParameters = [ "ATK", "DEF", "MAG", "SPR", "HP", "MP" ];
-const defaultEquipParameters = [
-  /*'name',*/ "type",
-  /*"desc",*/ "reward",
-    "resist",
-    "effect",
-    "trust",
-    "stmr",
-    "element",
-    "ability",
-    "notes"
+const equipParameters = ["ATK", "DEF", "MAG", "SPR", "HP", "MP"];
+const equipFields = [
+  /*'Name',*/ "Type",
+  /*"Desc",*/ "Reward",
+    "Resist",
+    "Effect",
+    "Trust",
+    "STMR",
+    "Element",
+    "Ability",
+    "Notes"
 ];
-const defaultAbilityParameters = [
-    "name", "type", "effect", "chain", "hits", "atk_frm", "mp_cost", "learn"
+const abilityParameters = [
+    "Name", "Type", "Effect", "Chain", "Hits", "Atk_frm", "MP_cost", "Learn"
 ]
-// this is used to better display results with more accurate names
 const abilityAliases = {
-    "atk_frm": "Attack Frames",
-    "mp_cost": "MP Cost",
-    "learn": "Learned By",
-    "trust": "tmr"
-}
-// Parameter aliases need to match the original parameter name from the wiki
-const parameterAliases = {
-    "frames": "atk_frm",
-    "family": "chain",
-    "learned": "learn",
-    "owner": "learn",
-    "trust": "tmr",
-    "tm": "tmr"
+    "Atk_frm": "Attack Frames",
+    "MP_cost": "MP Cost",
+    "Learn": "Learned By"
 }
 const unicodeNumbers = [
     "0️⃣",
@@ -383,6 +371,12 @@ function getPageID(search, categories, callback) {
     });
 }
 
+/*
+const reactionFilter = (reaction, user) => {
+    return true;// ['👎'].includes(reaction.emoji.name) && user.id === message.author.id;
+};
+    const filter = (reaction, user) => reaction.emoji.name === '👌'
+*/
 
 // COMMANDS
 function handleUnit(receivedMessage, search, parameters) {
@@ -429,10 +423,10 @@ function handleUnit(receivedMessage, search, parameters) {
         });
     });
 }
-function handleEquip(receivedMessage, search, parameters) {
+function handleEquip(receivedMessage, search) {
     search = toTitleCase(search, "_");
     log(`Searching Equipment For: ${search}...`);
-    queryWikiForEquipment(search, parameters, function (imgurl, pageName, nodes) {
+    queryWikiForEquipment(search, function (imgurl, pageName, nodes) {
         var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
 
@@ -458,10 +452,10 @@ function handleEquip(receivedMessage, search, parameters) {
             .catch(console.error);
     });
 }
-function handleSkill(receivedMessage, search, parameters) {
+function handleSkill(receivedMessage, search) {
     search = toTitleCase(search, "_");
     log(`Searching Skills For: ${search}...`);
-    queryWikiForAbility(search, parameters, function (imgurl, pageName, nodes) {
+    queryWikiForAbility(search, function (imgurl, pageName, nodes) {
         var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
 
@@ -856,6 +850,47 @@ function handleGetsettings(receivedMessage) {
         })
         .catch(console.error);
 }
+function handleBestunits(receivedMessage, search, parameters) {
+
+    const guildId = receivedMessage.guild.id;
+    const settings = config.getRankings("bestunits");
+
+    var list = "";
+    Object.keys(settings).forEach((v) => {
+
+        var units = settings[v].split(" / ");
+        var links = `**${v}:** `;
+        units.forEach((u, ind) => {
+            u = convertSearchTerm(u);
+            u = convertValueToLink(u);
+            links += u;
+            if (ind < 2) {
+                links += " / ";
+            }
+        });
+
+        list += "\n" + links;
+    });
+
+    log(list);
+
+    receivedMessage.channel
+        .send(mainChannelID, {
+            embed: {
+                color: pinkHexCode,
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL
+                },
+                description: `Global Best 7★ Units (random order, limited units __excluded__)\n${list}`,
+            }
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+}
+
 // COMMANDS END
 
 function parseUnitOverview(overview, tips, params, callback) {
@@ -872,38 +907,6 @@ function parseUnitOverview(overview, tips, params, callback) {
     var maxR = null;
     var limited = false;
     // ★★★★★✫✫
-
-    var count = 1;
-    var queryEnd = function (name, value) {
-        count -= 1;
-
-        if (name && value) {
-            for (let i = 0; i < fields.length; i++) {
-                //log(`Finished Query: ${fields[i].name} -vs- ${name}`);
-                if (fields[i].name === name) {
-                    //log("Found Queried field");
-                    fields[i].name = name;
-                    fields[i].value = value;
-                }
-            }
-        }
-
-        if (count <= 0) {
-            log("Unit Fields");
-            log(fields);
-        
-            if (callback) {
-                callback(fields, limited, rarity);
-            }
-        }
-    };
-
-    parameters.forEach((n, i) => {
-        if (parameterAliases[n]) {
-            log(`'${parameters[i]}' changed to '${parameterAliases[n]}'`)
-            parameters[i] = parameterAliases[n];
-        }  
-    })
 
     while (match != null) {
         var inline = true;
@@ -925,29 +928,13 @@ function parseUnitOverview(overview, tips, params, callback) {
             continue;
         }
 
-        if (abilityAliases[name]) {
-            name = abilityAliases[name];
-        }
-
         if (parameters.includes(name) && !value.empty()) {
-            if (name == "tmr" || name == "stmr") {
-
-                name = name.toUpperCase();
-
-                var tip = tips.find(t => {
-                    return t.title === value;
-                });
-                if (tip) {
-                    name += " - " + value;
-                    value = tip.value;
-                } else {
-                    log("Attempting to query for: " + value);
-                    count++;
-                    queryPage(value, name, (n, v) => {
-                        queryEnd(n, v);
-                    });
-                }
-
+            var tip = tips.find(t => {
+                return t.title === value;
+            });
+            if (tip) {
+                name += " - " + value;
+                value = tip.value;
                 inline = false;
             }
 
@@ -981,7 +968,12 @@ function parseUnitOverview(overview, tips, params, callback) {
         };
     }
 
-    queryEnd();
+    log("Unit Fields");
+    log(fields);
+
+    if (callback) {
+        callback(fields, limited, rarity);
+    }
     return fields;
 }
 function getRarityString(min, max) {
@@ -1014,254 +1006,6 @@ function getCollectedTipText(tooltip, collected) {
     //log("\nCurrent Collected Text: ");
     //log(collected);
     return collected;
-}
-
-function parsePage(match, params, callback) {
-}
-function queryPage(id, paramName, callback) {
-    wikiClient.getArticle(id, function (err, content, redirect) {
-        if (err) {
-            log(err);
-            return;
-        }
-
-        wikiClient.parse(content, "search", function (err, xml, images) {
-            if (err) {
-                console.error(err);
-                return;
-            }
-
-            const $ = cheerio.load(xml);
-
-            var regex = /\|(.*?)\n/g;
-            var match = regex.exec(content);
-            //log(match);
-
-            // TODO: parse item ability description.
-
-            var ignore = "<!";
-            var nodes = [];
-            while (match != null) {
-                var name = match[1].replace("\t", "").capitalize();
-                name = name.replaceAll(" ", "");
-                var value = match[2];
-
-                //log(`${name} = '${value}' isParam: ${isParam}`);
-
-                // Fix string to remove any unecessary information
-                if (value) {
-                    value = removeHTMLComments(value);
-
-                    var m = value.match(linkRegexp2);
-                    if (m) {
-                        value = convertBatchToLinks(m);
-                    }
-                    if (value.includes("Unstackable")) {
-                        value = "Unstackable Materia";
-                    }
-                }
-
-                const infoFields = [
-                    "Resist",
-                    "Effect",
-                    "Element",
-                    "Ability",
-                ]
-                var isParam = statParameters.includes(name);
-                var isParsable = infoFields.includes(name);
-                if (value && !value.includes(ignore) && (isParam || isParsable)) {
-                    var notEmpty = /\S/.test(value);
-
-                    if (abilityAliases[name]) {
-                        name = abilityAliases[name];
-                    }
-
-                    value = value.replaceAll("\n", "");
-                    value = value.replace("[", "\n\[");
-                    if (notEmpty) {
-                        nodes[nodes.length] = {
-                            name: name,
-                            value: value,
-                            inline: name !== "Effect"
-                        };
-                    }
-                }
-
-                match = valueMultiLineRegexp.exec(content);
-            }
-
-            var tips = [];
-            $(".tip.module-tooltip").each(function (tip) {
-                var tipTitle = $(this).find("img").attr("title");
-                var collected = getCollectedTipText($(this), "");
-                //log(`Collected Tip Text: ${tipTitle} (${tip})`);
-                //log(collected);
-                if (!tips.find(t => {return t.value === collected;})) {
-                    //log("Adding Tip");
-                    //log(collected);
-                    //log("\n");
-                    tips[tips.length] = {
-                        title: tipTitle,
-                        value: collected
-                    };
-                }
-            });
-
-            //log("Tips:");
-            //log(tips);
-
-            var totalValue = "";
-            for(var i = 0; i < nodes.length; i++ ) {
-                if (nodes[i].name === "Effect") {
-                    //log("Adding tips to effect");
-                    tips.forEach((n) => {
-                        nodes[i].value += "\n" + n.value;
-                    });
-                }
-
-                totalValue += nodes[i].value;
-                if (statParameters.includes(nodes[i].name)) {
-                    totalValue += "-";
-                }
-                totalValue += nodes[i].name;
-            }
-
-            //log(nodes);
-
-            totalValue = totalValue.replace("Effect", "");
-            //log("Parsed Total Value: " + name);
-            //log(totalValue);
-
-            callback(paramName, totalValue);
-        });
-    });
-}
-
-function parseEquipmentPage(match, content, params) {
-
-    var parameters = defaultEquipParameters;
-    if (params.length > 0) {
-        log("Found Parameters");
-        log(params);
-        parameters = params;
-    }
-
-    parameters.forEach((n, i) => {
-        if (parameterAliases[n]) {
-            log(`'${parameters[i]}' changed to '${parameterAliases[n]}'`)
-            parameters[i] = parameterAliases[n];
-        }  
-    })
-
-    var ignore = "<!";
-    var nodes = [];
-    while (match != null) {
-        var name = match[1].replace("\t", "");
-        var isParam = statParameters.includes(name);
-        if (!isParam) {
-            name = name.toLowerCase();
-        }
-        name = name.replaceAll(" ", "");
-        var value = match[2];
-
-        //log(`${name} = '${value}' isParam: ${isParam}`);
-
-        // Fix string to remove any unecessary information
-        if (value) {
-            value = removeHTMLComments(value);
-
-            var m = value.match(linkRegexp2);
-            if (m) {
-                value = convertBatchToLinks(m);
-            }
-            if (value.includes("Unstackable")) {
-                value = "Unstackable Materia";
-            }
-        }
-
-        var isParsable = parameters.includes(name);
-        if (value && !value.includes(ignore) && (isParam || isParsable)) {
-            var notEmpty = /\S/.test(value);
-
-            if (notEmpty) {
-                nodes[nodes.length] = {
-                    name: name.capitalize(),
-                    value: value,
-                    inline: name !== "Effect"
-                };
-            }
-        }
-
-        match = valueMultiLineRegexp.exec(content);
-    }
-
-    return nodes;
-}
-function parseAbilityPage(match, content, params) {
-
-    var parameters = defaultAbilityParameters;
-    if (params.length > 0) {
-        log("Found Parameters");
-        log(params);
-        parameters = params;
-    }
-
-    parameters.forEach((n, i) => {
-        if (parameterAliases[n]) {
-            log(`'${parameters[i]}' changed to '${parameterAliases[n]}'`)
-            parameters[i] = parameterAliases[n];
-        }  
-    })
-
-    var ignore = "<!";
-    var nodes = [];
-    while (match != null) {
-        var name = match[1].replace("\t", "");
-        var isParam = statParameters.includes(name);
-        if (!isParam) {
-            name = name.toLowerCase();
-        }
-        name = name.replaceAll(" ", "");
-        var value = match[2];
-
-        //log(`${name} = '${value}' isParam: ${isParam}`);
-
-        // Fix string to remove any unecessary information
-        if (value) {
-            value = removeHTMLComments(value);
-            var m = value.match(linkRegexp2);
-            if (m) {
-                value = convertBatchToLinks(m);
-            }
-            if (name === "Chain") {
-                value = convertValueToLink(value);
-            }
-            if (value.includes("Unstackable")) {
-                value = "Unstackable Materia";
-            }
-        }
-
-        var isParsable = parameters.includes(name);
-        if (value && !value.includes(ignore) && isParsable) {
-            var notEmpty = /\S/.test(value);
-
-            if (abilityAliases[name]) {
-                name = abilityAliases[name];
-            }
-
-            if (notEmpty) {
-                nodes[nodes.length] = {
-                    name: name.capitalize(),
-                    value: value,
-                    inline: name !== "Effect"
-                };
-            }
-        }
-
-        match = valueMultiLineRegexp.exec(content);
-    }
-    
-    return nodes;
 }
 
 function queryWikiForUnit(search, callback) {
@@ -1328,12 +1072,11 @@ function queryWikiForUnit(search, callback) {
                 var tipTitle = $(this).find("img").attr("title");
                 var tipInfo = $(this).find("div").first().text();
                 var collected = getCollectedTipText($(this), "");
-                log(`Collected Tip Text: ${tipTitle} (${tip})`);
-                log(collected);
-                if (!tips.find(t => {return t.value === collected;})) {
-                    log("Adding Tip");
-                    log(collected);
-                    log("\n");
+
+                if (!tips.find(t => {return t.value === tipInfo;})) {
+                    //log("Adding Tip");
+                    //log(tipInfo);
+                    //log("\n");
                     tips[tips.length] = {
                         title: tipTitle,
                         value: collected
@@ -1341,8 +1084,8 @@ function queryWikiForUnit(search, callback) {
                 }
             });
 
-            log("Tips:");
-            log(tips);
+            //log("Tips:");
+            //log(tips);
 
             if (family) {
                 tips[tips.length] = {
@@ -1357,7 +1100,7 @@ function queryWikiForUnit(search, callback) {
         });
     });
 }
-function queryWikiForEquipment(search, params, callback) {
+function queryWikiForEquipment(search, callback) {
     getPageID(search, config.equipmentCategories, function (id, pageName, other) {
         if (!id) {
             log("Could not find page: " + pageName);
@@ -1386,7 +1129,46 @@ function queryWikiForEquipment(search, params, callback) {
                 var match = regex.exec(content);
                 //log(match);
 
-                var nodes = parseEquipmentPage(match, content, params);
+                // TODO: parse item ability description.
+
+                var ignore = "<!";
+                var nodes = [];
+                while (match != null) {
+                    var name = match[1].replace("\t", "").capitalize();
+                    name = name.replaceAll(" ", "");
+                    var value = match[2];
+
+                    //log(`${name} = '${value}' isParam: ${isParam}`);
+
+                    // Fix string to remove any unecessary information
+                    if (value) {
+                        value = removeHTMLComments(value);
+
+                        var m = value.match(linkRegexp2);
+                        if (m) {
+                            value = convertBatchToLinks(m);
+                        }
+                        if (value.includes("Unstackable")) {
+                            value = "Unstackable Materia";
+                        }
+                    }
+
+                    var isParam = equipParameters.includes(name);
+                    var isParsable = equipFields.includes(name);
+                    if (value && !value.includes(ignore) && (isParam || isParsable)) {
+                        var notEmpty = /\S/.test(value);
+
+                        if (notEmpty) {
+                            nodes[nodes.length] = {
+                                name: name,
+                                value: value,
+                                inline: name !== "Effect"
+                            };
+                        }
+                    }
+
+                    match = valueMultiLineRegexp.exec(content);
+                }
 
                 if (other) {
                     nodes[nodes.length] = {
@@ -1402,7 +1184,7 @@ function queryWikiForEquipment(search, params, callback) {
         });
     });
 }
-function queryWikiForAbility(search, params, callback) {
+function queryWikiForAbility(search, callback) {
     getPageID(search, config.abilityCategories, function (id, pageName, other) {
         wikiClient.getArticle(id, function (err, content, redirect) {
             if (err) {
@@ -1425,7 +1207,50 @@ function queryWikiForAbility(search, params, callback) {
                 var match = regex.exec(content);
                 //log(match);
 
-                var nodes = parseAbilityPage(match, content, params);
+                var ignore = "<!";
+                var nodes = [];
+                while (match != null) {
+                    var name = match[1].replace("\t", "").capitalize();
+                    name = name.replaceAll(" ", "");
+                    var value = match[2];
+
+                    //log(`${name} = '${value}' isParam: ${isParam}`);
+
+                    // Fix string to remove any unecessary information
+                    if (value) {
+                        value = removeHTMLComments(value);
+                        var m = value.match(linkRegexp2);
+                        if (m) {
+                            value = convertBatchToLinks(m);
+                        }
+                        if (name === "Chain") {
+                            value = convertValueToLink(value);
+                        }
+                        if (value.includes("Unstackable")) {
+                            value = "Unstackable Materia";
+                        }
+                    }
+
+                    var isParam = equipParameters.includes(name);
+                    var isParsable = abilityParameters.includes(name);
+                    if (value && !value.includes(ignore) && isParsable) {
+                        var notEmpty = /\S/.test(value);
+
+                        if (abilityAliases[name]) {
+                            name = abilityAliases[name];
+                        }
+
+                        if (notEmpty) {
+                            nodes[nodes.length] = {
+                                name: name,
+                                value: value,
+                                inline: name !== "Effect"
+                            };
+                        }
+                    }
+
+                    match = valueMultiLineRegexp.exec(content);
+                }
 
                 if (other) {
                     nodes[nodes.length] = {
@@ -1472,8 +1297,13 @@ function convertValueToLink(value) {
     linkFilter.forEach(filter => {
         link = link.replace(filter, "");
     });
+    
+    var title = toTitleCase(link, "_");
+    title = title.replace("Ss_", "SS_");
+    title = title.replace("Cg_", "CG_");
+    title = title.replaceAll("_", " ");
 
-    link = `[${link}](${wikiEndpoint + link.replaceAll(" ", "_")}) `;
+    link = `[${title}](${wikiEndpoint + link.replaceAll(" ", "_")}) `;
     log("Converted Link: " + link);
     return link;
 }
@@ -1601,7 +1431,7 @@ client.on("message", receivedMessage => {
     const guildId = receivedMessage.guild.id;
     const prefix = config.getPrefix(guildId);
     if (!content.startsWith(prefix)) {
-        ///handleReactions(receivedMessage);
+        handleReactions(receivedMessage);
         return;
     }
 
@@ -1714,7 +1544,7 @@ bot_secret_token =
 bot_secret_token_test =
     "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 
 // HELPERS
 function getQuotedWord(str) {
@@ -1749,6 +1579,18 @@ function downloadFile(name, link, callback) {
     });
 }
 // PARSING HELPERS
+function convertSearchTerm(search) {
+    var s = search;
+    var alias = config.getAlias(s.replaceAll(" ", "_"));
+    if (alias) {
+        log("Found Alias: " + alias);
+        return alias.replaceAll(" ", "_");
+    }
+
+    search = search.toLowerCase();
+    search = search.replaceAll(" ", "_");
+    return search;
+}
 function getSearchString(prefix, msg) {
     var ind = prefix.length + 1;
     var search = msg.slice(ind, msg.length);

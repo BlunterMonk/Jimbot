@@ -1,4 +1,17 @@
 {
+    "bestunits": {
+        "[Physical Chainer]": "Esther / Crimson / Jecht",
+        "[Physical Finisher]": "Balthier / CG Cid / Flame Veritas",
+        "[Magical Chainer]": "High Seraph Ultima / Mediena / Trance Terra",
+        "[Magical Finisher]": "Emperor / CG Sakura / Mediena",
+        "[Hybrid Chainer]": "Karlette / Aurora Fryevia / Kurasame",
+        "[Physical Tank]": "CG Sieghard / Wilhelm / Merc Ramza ",
+        "[Magical Tank]": "Awakened Rain / Basch / Beryl",
+        "[Healer]": "Myra / CG Folka / CG Fina",
+        "[Breaker]": "Beowulf / Auron / Loren",
+        "[Buffer]": "Sylvie / Yuraisha / CG Nichol",
+        "[Support/Misc]": "Zargabaath / SS Nichol / Eiko"
+    },
     "physical_chainer": [
         {
             "name": "Crimson",
