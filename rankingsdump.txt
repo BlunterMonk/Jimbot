@@ -6458,11 +6458,11 @@
 
 <!-- 
 NewPP limit report
-Cached time: 20190418004743
+Cached time: 20190418005036
 Cache expiry: 86400
 Dynamic content: false
-CPU time usage: 2.565 seconds
-Real time usage: 4.591 seconds
+CPU time usage: 2.588 seconds
+Real time usage: 4.562 seconds
 Preprocessor visited node count: 26569/1000000
 Preprocessor generated node count: 25564/1000000
 Post‐expand include size: 684574/2097152 bytes
@@ -6474,13 +6474,13 @@ Unstrip post‐expand size: 0/5000000 bytes
 -->
 <!--
 Transclusion expansion time report (%,ms,calls,template)
-100.00%  504.895      1 -total
- 66.07%  333.588      1 Unit_Ratings_(6★_Units)
- 60.82%  307.094    226 Template:Unit_Ratings_(6★)
- 31.46%  158.835      1 Unit_Ratings_(7★_Units)
- 28.01%  141.410    133 Template:Unit_Ratings_(7★)
-  7.99%   40.329    229 Template:Rarity
-  1.51%    7.607      1 Unit_Summaries_(6★_Units)
-  0.89%    4.506      1 Unit_Summaries_(7★_Units)
+100.00%  515.596      1 -total
+ 65.32%  336.778      1 Unit_Ratings_(6★_Units)
+ 60.05%  309.622    226 Template:Unit_Ratings_(6★)
+ 32.11%  165.545      1 Unit_Ratings_(7★_Units)
+ 28.53%  147.106    133 Template:Unit_Ratings_(7★)
+  7.92%   40.823    229 Template:Rarity
+  1.48%    7.625      1 Unit_Summaries_(6★_Units)
+  1.01%    5.212      1 Unit_Summaries_(7★_Units)
 -->
 </div>
