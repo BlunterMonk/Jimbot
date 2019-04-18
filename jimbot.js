@@ -493,6 +493,32 @@ function handleSkill(receivedMessage, search, parameters) {
             .catch(console.error);
     });
 }
+function handleSprite(receivedMessage, search, parameters) {
+    search = toTitleCase(search, "_");
+
+    log("Searching Unit Sprite For: " + search);
+    validatePage(search, function (valid, imgurl) {
+        search = search.replaceAll("_", " ");
+
+        var embed = {
+            color: pinkHexCode,
+            image: {
+                url: imgurl
+            },
+            title: search,
+            url: "https://exvius.gamepedia.com/" + search,
+        };
+
+        receivedMessage.channel
+            .send({
+                embed: embed
+            })
+            .then(message => {
+                cacheBotMessage(receivedMessage.id, message.id);
+            })
+            .catch(console.error);
+    });
+}
 function handleReactions(receivedMessage) {
     const content = receivedMessage.content.toLowerCase();
     switch (content) {
@@ -1584,7 +1610,16 @@ function validatePage(search, callback) {
             return;
         }
 
-        callback(true);
+        wikiClient.parse(content, search, function (err, xml, images) {
+            if (err) {
+                log(err);
+                return;
+            }
+
+            const $ = cheerio.load(xml);
+            const imgurl = $(".big-pixelate").attr("src");
+            callback(true, imgurl);
+        });
     });
 }
 function validateEmote(emote) {
@@ -1770,7 +1805,7 @@ bot_secret_token =
 bot_secret_token_test =
     "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 
 // HELPERS
 function getQuotedWord(str) {
