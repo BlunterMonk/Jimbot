@@ -872,8 +872,6 @@ function handleBestunits(receivedMessage, search, parameters) {
         list += "\n" + links;
     });
 
-    log(list);
-
     receivedMessage.channel
         .send(mainChannelID, {
             embed: {
@@ -1050,16 +1048,20 @@ function queryWikiForUnit(search, callback) {
                         unique[unique.length] = m;
                     }
                 });
-                //log("Parsed Family:\n\n");
+                log("Parsed Family:\n\n");
                 unique.forEach(m => {
                     m = m.replace("/", "").replaceAll('"', "").replaceAll(" ", "");
                     var name = m.replace("Chaining/", "").replaceAll("_", " ");
                     var link = `[${name}](${wikiEndpoint}${m})`;
-                    //log(name);
-                    //log(link);
+                    log(name);
+                    log(link);
+                    if (link.length > 200) {
+                        return;
+                    }
                     family += link + "\n";
+                    log("--------------");
                 });
-                //log(family);
+                log(family);
             }
 
             const $ = cheerio.load(xml);
