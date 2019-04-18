@@ -101,7 +101,7 @@ module.exports = {
         this.fullRankings = JSON.parse(dump);
     },
     save() {
-        var newData = JSON.stringify(this.configuration);
+        var newData = JSON.stringify(this.configuration, null, "\t");
         fs.writeFileSync(filename, newData);
     },
     loadGuild(name, guildId) {
