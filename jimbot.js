@@ -43,7 +43,7 @@ const ffbegifEndpoint = "http://www.ffbegif.com/";
 
 // Lookup Tables
 
-const statParameters = [ "ATK", "DEF", "MAG", "SPR", "HP", "MP" ];
+const statParameters = [ "atk", "def", "mag", "spr", "hp", "mp" ];
 const defaultEquipParameters = [
   /*'name',*/ "type",
   /*"desc",*/ "reward",
@@ -63,7 +63,8 @@ const abilityAliases = {
     "atk_frm": "Attack Frames",
     "mp_cost": "MP Cost",
     "learn": "Learned By",
-    "trust": "tmr"
+    "trust": "tmr",
+    "stmr": "STMR"
 }
 // Parameter aliases need to match the original parameter name from the wiki
 const parameterAliases = {
@@ -95,6 +96,10 @@ const gifAliases = {
     "lb": "limit",
     "limit burst": "limit",
     "victory": "win before"
+}
+
+function isStat(name) {
+    return statParameters.includes(name.toLowerCase().trim());
 }
 
 // Commands
@@ -1182,7 +1187,7 @@ function queryPage(id, paramName, callback) {
                     "Element",
                     "Ability",
                 ]
-                var isParam = statParameters.includes(name);
+                var isParam = isStat(name);
                 var isParsable = infoFields.includes(name);
                 if (value && !value.includes(ignore) && (isParam || isParsable)) {
                     var notEmpty = /\S/.test(value);
@@ -1235,7 +1240,7 @@ function queryPage(id, paramName, callback) {
                 }
 
                 totalValue += nodes[i].value;
-                if (statParameters.includes(nodes[i].name)) {
+                if (isStat(nodes[i].name)) {
                     totalValue += "-";
                 }
                 totalValue += nodes[i].name;
@@ -1252,12 +1257,10 @@ function queryPage(id, paramName, callback) {
     });
 }
 
-function parseEquipmentPage(match, content, params) {
+function parseEquipmentPage(match, content, params, tips) {
 
     var parameters = defaultEquipParameters;
     if (params.length > 0) {
-        log("Found Parameters");
-        log(params);
         parameters = params;
     }
 
@@ -1271,14 +1274,11 @@ function parseEquipmentPage(match, content, params) {
     var ignore = "<!";
     var nodes = [];
     while (match != null) {
-        var name = match[1].replace("\t", "");
-        var isParam = statParameters.includes(name);
-        if (!isParam) {
-            name = name.toLowerCase();
-        }
-        name = name.replaceAll(" ", "");
+        var name = match[1].replace("\t", "").toLowerCase();
+        name = name.trim();
+        var isParam = isStat(name);
         var value = match[2];
-
+        
         //log(`${name} = '${value}' isParam: ${isParam}`);
 
         // Fix string to remove any unecessary information
@@ -1298,6 +1298,10 @@ function parseEquipmentPage(match, content, params) {
         if (value && !value.includes(ignore) && (isParam || isParsable)) {
             var notEmpty = /\S/.test(value);
 
+            if (isParam || name === "stmr") {
+                name = name.toUpperCase();
+            }
+
             if (notEmpty) {
                 nodes[nodes.length] = {
                     name: name.capitalize(),
@@ -1310,14 +1314,20 @@ function parseEquipmentPage(match, content, params) {
         match = valueMultiLineRegexp.exec(content);
     }
 
+    tips.forEach((t, i) => {
+        nodes[nodes.length] = {
+            name: t.title,
+            value: t.value
+        }    
+    });
+
+    log(nodes);
     return nodes;
 }
-function parseAbilityPage(match, content, params) {
+function parseAbilityPage(match, content, params, tips) {
 
     var parameters = defaultAbilityParameters;
     if (params.length > 0) {
-        log("Found Parameters");
-        log(params);
         parameters = params;
     }
 
@@ -1331,12 +1341,9 @@ function parseAbilityPage(match, content, params) {
     var ignore = "<!";
     var nodes = [];
     while (match != null) {
-        var name = match[1].replace("\t", "");
-        var isParam = statParameters.includes(name);
-        if (!isParam) {
-            name = name.toLowerCase();
-        }
-        name = name.replaceAll(" ", "");
+        var name = match[1].replace("\t", "").toLowerCase();
+        name = name.trim();
+        var isParam = isStat(name);
         var value = match[2];
 
         //log(`${name} = '${value}' isParam: ${isParam}`);
@@ -1365,6 +1372,9 @@ function parseAbilityPage(match, content, params) {
             if (abilityAliases[name]) {
                 name = abilityAliases[name];
             }
+            if (isParam || name === "stmr") {
+                name = name.toUpperCase();
+            }
 
             if (notEmpty) {
                 nodes[nodes.length] = {
@@ -1378,6 +1388,14 @@ function parseAbilityPage(match, content, params) {
         match = valueMultiLineRegexp.exec(content);
     }
     
+    tips.forEach((t, i) => {
+        nodes[nodes.length] = {
+            name: t.title,
+            value: t.value
+        }    
+    });
+
+    log(nodes);
     return nodes;
 }
 
@@ -1507,7 +1525,8 @@ function queryWikiForEquipment(search, params, callback) {
                 var match = regex.exec(content);
                 //log(match);
 
-                var nodes = parseEquipmentPage(match, content, params);
+                var tips = parseTipsFromPage($);
+                var nodes = parseEquipmentPage(match, content, params, tips);
 
                 if (other) {
                     nodes[nodes.length] = {
@@ -1546,7 +1565,8 @@ function queryWikiForAbility(search, params, callback) {
                 var match = regex.exec(content);
                 //log(match);
 
-                var nodes = parseAbilityPage(match, content, params);
+                var tips = parseTipsFromPage($);
+                var nodes = parseAbilityPage(match, content, params, tips);
 
                 if (other) {
                     nodes[nodes.length] = {
@@ -1629,6 +1649,29 @@ function convertTitlesToLinks(batch) {
     });
 
     return value;
+}
+
+function parseTipsFromPage($) {
+    var tips = [];
+    $(".tip.module-tooltip").each(function (tip) {
+        var tipTitle = $(this).find("img").attr("title");
+        var collected = getCollectedTipText($(this), "");
+        log(`Collected Tip Text: ${tipTitle} (${tip})`);
+        log(collected);
+        if (!tips.find(t => {return t.value === collected;})) {
+            log("Adding Tip");
+            log(collected);
+            log("\n");
+            tips[tips.length] = {
+                title: tipTitle,
+                value: collected
+            };
+        }
+    });
+
+    log("Tips:");
+    log(tips);
+    return tips;
 }
 
 // GIFS
