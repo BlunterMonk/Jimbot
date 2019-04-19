@@ -740,7 +740,7 @@ function handleQuote(receivedMessage, search) {
     }
 }
 function handleHelp(receivedMessage) {
-    var data = fs.readFileSync("readme.md", "ASCII");
+    var data = fs.readFileSync("README.md", "ASCII");
     receivedMessage.author
         .send(mainChannelID, {
             embed: {
