@@ -92,7 +92,7 @@ const defaultUnitParameters = [
     "stmr", "trust", "chain", "rarity" 
 ]
 const gifAliases = {
-    "LB": "limit",
+    "lb": "limit",
     "limit burst": "limit",
     "victory": "win before"
 }
@@ -934,6 +934,11 @@ function handleBestunits(receivedMessage, search, parameters) {
 }
 function handleGif(receivedMessage, search, parameters) {
     log("Searching gifs for: " + search);
+
+    var bot = /^\d/.test(search)
+    if (bot)
+        search = search.toUpperCase();
+
     var title = toTitleCase(search, "_");
 
     var param = parameters[0];
@@ -943,25 +948,26 @@ function handleGif(receivedMessage, search, parameters) {
 
     getGif(search, param, (filename) => {
         log("success");
-
+        /*
         var embed = {
             color: pinkHexCode,
             image: {
                 url: `attachment://${filename}`
             },
-            files: [{ attachment: `${filename}`, name: filename }],
-            title: title.replaceAll("_", " "),
-            url: "https://exvius.gamepedia.com/" + title,
+            files: [{ attachment: `${filename}`, name: filename }]
+            //title: title.replaceAll("_", " "),
+            //url: "https://exvius.gamepedia.com/" + title,
         };
-
-        receivedMessage.channel
-            .send({
-                embed: embed
-            })
-            .then(message => {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
-            .catch(console.error);
+        */
+        var Attachment = new Discord.Attachment(filename);
+        if (Attachment) {
+            receivedMessage.channel
+                .send(Attachment)
+                .then(message => {
+                    cacheBotMessage(receivedMessage.id, message.id);
+                })
+                .catch(console.error);
+        }
     });
 }
 
@@ -1628,10 +1634,12 @@ function convertTitlesToLinks(batch) {
 // GIFS
 
 function getGif(search, param, callback) {
+    log("getGif: " + search + `(${param})`);
     
     var unit = search.replaceAll("_", " ");
     var unitL = search.replaceAll("_", "+");
     var gifs = [];
+    var bot = /^\d/.test(search)
 
     const filename = `tempgifs/${search}/${param}.gif`;
     if (fs.existsSync(filename)) {
@@ -1646,11 +1654,19 @@ function getGif(search, param, callback) {
 
         if (count <= 0) {
 
+            log(gifs);
+
             var img = gifs.find((n) => n.includes(`7 ${param}`));
             if (!img)
                 img = gifs.find((n) => n.includes(param));
             if (img) {
+                
                 img = toTitleCase(img);
+                if (bot) {
+                    img = img.replace("2b/", "2B/");
+                    img = img.replace("9s/", "9S/");
+                }
+                    
                 var title = img.replaceAll(" ", "_");
                 img = img.replaceAll(" ", "%20");
                 img = ffbegifEndpoint + img;
@@ -1688,7 +1704,16 @@ function getGif(search, param, callback) {
                     if (src === undefined)
                         return;
 
-                    src = src.toLowerCase();
+                    var pieces = src.split("/");
+                    if (!pieces[1])
+                        return;
+                    log(pieces);
+                    var owner = pieces[0];
+                    var file = pieces[1].toLowerCase();
+                    if (!bot)
+                        owner = owner.toLowerCase();
+                    src = owner + "/" + file;
+                    log(src);
                     if (!src.includes(unit))
                         return;
 
