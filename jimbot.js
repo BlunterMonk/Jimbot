@@ -5,6 +5,7 @@ const wiki = require("nodemw");
 const fs = require("fs");
 const cheerio = require("cheerio");
 const http = require("https");
+const htt = require("http");
 const config = require("./config.ts");
 const wikiClient = new wiki({
     protocol: "https", // Wikipedia now enforces HTTPS
@@ -38,6 +39,7 @@ const wikiEndpoint = "https://exvius.gamepedia.com/";
 const similarityTreshold = 0.5;
 const okEmoji = "🆗";
 const cancelEmoji = "❌";
+const ffbegifEndpoint = "http://www.ffbegif.com/";
 
 // Lookup Tables
 
@@ -89,7 +91,11 @@ const defaultUnitParameters = [
     "name", "role", "origin", 
     "stmr", "trust", "chain", "rarity" 
 ]
-
+const gifAliases = {
+    "LB": "limit",
+    "limit burst": "limit",
+    "victory": "win before"
+}
 
 // Commands
 const commandCyra = `hi cyra`;
@@ -926,6 +932,38 @@ function handleBestunits(receivedMessage, search, parameters) {
         })
         .catch(console.error);
 }
+function handleGif(receivedMessage, search, parameters) {
+    log("Searching gifs for: " + search);
+    var title = toTitleCase(search, "_");
+
+    var param = parameters[0];
+    if (gifAliases[param]) {
+        param = gifAliases[param];
+    }
+
+    getGif(search, param, (filename) => {
+        log("success");
+
+        var embed = {
+            color: pinkHexCode,
+            image: {
+                url: `attachment://${filename}`
+            },
+            files: [{ attachment: `${filename}`, name: filename }],
+            title: title.replaceAll("_", " "),
+            url: "https://exvius.gamepedia.com/" + title,
+        };
+
+        receivedMessage.channel
+            .send({
+                embed: embed
+            })
+            .then(message => {
+                cacheBotMessage(receivedMessage.id, message.id);
+            })
+            .catch(console.error);
+    });
+}
 
 // COMMANDS END
 
@@ -1587,6 +1625,85 @@ function convertTitlesToLinks(batch) {
     return value;
 }
 
+// GIFS
+
+function getGif(search, param, callback) {
+    
+    var unit = search.replaceAll("_", " ");
+    var unitL = search.replaceAll("_", "+");
+    var gifs = [];
+
+    const filename = `tempgifs/${search}/${param}.gif`;
+    if (fs.existsSync(filename)) {
+        callback(filename);
+        log("Returning cached gif");
+        return;
+    }
+
+    var count = 2; // most units only have 2 pages
+    var queryEnd = function () {
+        count -= 1;
+
+        if (count <= 0) {
+
+            var img = gifs.find((n) => n.includes(`7 ${param}`));
+            if (!img)
+                img = gifs.find((n) => n.includes(param));
+            if (img) {
+                img = toTitleCase(img);
+                var title = img.replaceAll(" ", "_");
+                img = img.replaceAll(" ", "%20");
+                img = ffbegifEndpoint + img;
+
+                log("Found Requested Gif");
+                log(img);
+                
+                if (!fs.existsSync(`tempgifs/${search}/`))
+                    fs.mkdirSync( `tempgifs/${search}/`, { recursive: true}, (err) => {
+                        if (err) throw err;
+                    });
+
+                const file = fs.createWriteStream(filename);
+
+                var source = img.slice(0, 5) === 'https' ? http : htt;
+                source.get(img, function(response) {
+                    return response.pipe(file);
+                });
+
+                file.on('finish', function() {
+                    callback(filename);
+                });
+            }
+        }
+    };
+
+    for(var i = 1; i <= 2; i++) {
+        request(
+            { uri: `${ffbegifEndpoint}?page=${i}&name=${unitL}` },
+            function(error, response, body) {
+               //console.log(body);
+                const $ = cheerio.load(body);
+                $('img').each((ind, el) => {
+                    var src = $(el).attr('src');
+                    if (src === undefined)
+                        return;
+
+                    src = src.toLowerCase();
+                    if (!src.includes(unit))
+                        return;
+
+                    var ext = getFileExtension(src);
+                    if (ext === ".gif") {
+                        gifs.push(src);
+                    }
+                });
+
+                queryEnd();
+            }
+        );
+    }
+}
+
 // Validation
 function validatePage(search, callback) {
     wikiClient.getArticle(search, function (err, content, redirect) {
@@ -1805,7 +1922,7 @@ bot_secret_token =
 bot_secret_token_test =
     "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 
 // HELPERS
 function getQuotedWord(str) {
@@ -1825,6 +1942,9 @@ function getQuotedWord(str) {
     }
 
     return word;
+}
+function getFileExtension(link) {
+    return link.substring(link.lastIndexOf("."), link.length);
 }
 function downloadFile(name, link, callback) {
     var ext = link.substring(link.lastIndexOf("."), link.length);
