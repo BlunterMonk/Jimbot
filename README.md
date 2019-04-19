@@ -22,3 +22,13 @@ Get Equipment Information
 
 Get Best Units
     - **?bestunits**
+
+Get Unit Sprite
+    - **?sprite** *[name]*
+
+Get Unit GIFs
+    - **?gif** *[name]* "[parameter]"
+    - parameters: 'attack.gif',  'dead.gif',  
+                  'dying.gif', 'idle.gif',  'jump.gif',  'limit.gif',
+                  'magic attack.gif',  'magic standby.gif',  'move.gif',  
+                  'standby.gif',  'win.gif',  'win before.gif' 
