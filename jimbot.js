@@ -2013,6 +2013,8 @@ client.on("message", receivedMessage => {
         log("Before");
         log(command);
         log(copy);
+
+        // If the command has a shortcut convert it.
         var newCommand = convertCommand(command, copy);
         if (newCommand) {
             command = newCommand.command;
@@ -2020,8 +2022,7 @@ client.on("message", receivedMessage => {
             log("After");
             log(command);
             log(copy);
-        }     
-
+        }
 
         // Get any parameters from the final comand string
         var params = getParameters(copy);
@@ -2031,8 +2032,6 @@ client.on("message", receivedMessage => {
         // Get search string for command.
         const search = getSearchString(`${prefix}${command}`, copy);
         
-        // If the command has a shortcut convert it.
-
 
         // Validate the user
         if (!validateCommand(receivedMessage, command)) {
