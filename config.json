@@ -70,7 +70,9 @@
         "cg_sieghard": "sieghard",
         "cg_folka": "folka",
         "ss_nichol": "Seaside Nichol",
-        "cg_charlotte": "Holy Shield Knight Charlotte"
+        "cg_charlotte": "Holy Shield Knight Charlotte", 
+        "bignachos": "ignacio",
+		"dapper_dragoon": "duke"
     },
     "filetypes": [
         ".jpg",
