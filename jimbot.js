@@ -1930,6 +1930,23 @@ function respondFailure(receivedMessage, toUser) {
     }
 }
 
+function convertCommand(command, content) {
+
+    log("Convert Command");
+    log(command);
+    log("\n");
+
+    // TODO: make this more robust.
+    if (command === "Family") {
+        return {
+            command: "Unit",
+            parameters: ["chain" ],
+            content: content.replace("family", "unit") + ` "chain"`
+        };
+    }
+
+    return null;
+}
 function runCommand(receivedMessage) {
     
 }
@@ -1991,12 +2008,32 @@ client.on("message", receivedMessage => {
     }
 
     try {
+         // the command name
+        var command = getCommandString(content, prefix);
+        log("Before");
+        log(command);
+        log(copy);
+
+        // If the command has a shortcut convert it.
+        var newCommand = convertCommand(command, copy);
+        if (newCommand) {
+            command = newCommand.command;
+            copy = newCommand.content;
+            log("After");
+            log(command);
+            log(copy);
+        }
+
+        // Get any parameters from the final comand string
         var params = getParameters(copy);
         var parameters = params.parameters;
         copy = params.msg;
+        
+        // Get search string for command.
+        const search = getSearchString(`${prefix}${command}`, copy);
+        
 
-        // the command name
-        var command = getCommandString(content, prefix);
+        // Validate the user
         if (!validateCommand(receivedMessage, command)) {
             log(
                 "Could not validate permissions for: " +
@@ -2005,18 +2042,19 @@ client.on("message", receivedMessage => {
             //respondFailure(receivedMessage);
             throw command;
         }
-        const search = getSearchString(`${prefix}${command}`, copy);
+
+        // If no parameters or search provided exit.
         if (!search && parameters.length === 0) {
             log("Could not parse search string");
             throw command;
         }
 
-        /*
+        /**/
         log("getCommandString: " + command);
         log("getSearchString: " + search);
         log("Parameters:");
         log(parameters);
-        */
+        
         if (command.toLowerCase() === `addemo` && parameters.length === 0) {
             //log("Addemo but no parameters.");
             if (attachment) {
