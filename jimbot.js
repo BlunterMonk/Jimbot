@@ -903,7 +903,7 @@ function handleGetsettings(receivedMessage) {
         })
         .catch(console.error);
 }
-function handleBestunits(receivedMessage, search, parameters) {
+function handleGlbestunits(receivedMessage, search, parameters) {
 
     const guildId = receivedMessage.guild.id;
     const settings = config.getRankings("bestunits");
@@ -918,28 +918,33 @@ function handleBestunits(receivedMessage, search, parameters) {
             u = convertValueToLink(u);
             links += u;
             if (ind < 2) {
-                links += " / ";
+                links += "/ ";
             }
         });
 
         list += "\n" + links;
     });
 
-    receivedMessage.channel
-        .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                description: `Global Best 7★ Units (random order, limited units __excluded__)\n${list}`,
+    client.fetchUser("159846139124908032")
+        .then(general => {
+
+            receivedMessage.channel
+            .send(mainChannelID, {
+                embed: {
+                    color: pinkHexCode,
+                    author: {
+                        name: general.username,
+                        icon_url: general.avatarURL
+                    },
+                title: `Global Best 7★ Units (random order, limited units __excluded__)`,
+                description: list,
             }
         })
         .then(message => {
             cacheBotMessage(receivedMessage.id, message.id);
         })
         .catch(console.error);
+    });
 }
 function handleGif(receivedMessage, search, parameters) {
     log("Searching gifs for: " + search);
