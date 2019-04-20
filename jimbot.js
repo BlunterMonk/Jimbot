@@ -41,6 +41,8 @@ const okEmoji = "🆗";
 const cancelEmoji = "❌";
 const ffbegifEndpoint = "http://www.ffbegif.com/";
 const exviusdbEndpoint = "https://exvius.gg/gl/units/205000805/animations/";
+const renaulteUserID = "159846139124908032";
+const jimooriUserID = "131139508421918721";
 
 const aniGL = (n) => `https://exvius.gg/gl/units/${n}/animations/`;
 const aniJP = (n) => `https://exvius.gg/jp/units/${n}/animations/`;
@@ -974,6 +976,23 @@ function handleGif(receivedMessage, search, parameters) {
         }
     });
 }
+function handleSetrankings(receivedMessage, search, parameters) {
+    var value = parameters[0];
+    search = search.replaceAll("_", " ");
+    search = toTitleCase(search);
+    search = `[${search}]`;
+    
+    log("Set Rankings");
+    log(`Catergory: ${search}`);
+    log(`Value: ${value}`);
+
+    if (config.setRankings(search, value)) {
+        respondSuccess(receivedMessage, true);
+    } else {
+        respondFailure(receivedMessage, true);
+    }
+}
+
 
 // COMMANDS END
 
@@ -1868,7 +1887,13 @@ function validateCommand(receivedMessage, command) {
 }
 
 // Response
-function respondSuccess(receivedMessage) {
+function respondSuccess(receivedMessage, toUser) {
+
+    if (toUser) {
+        receivedMessage.react(config.getSuccess());
+        return;
+    }
+
     const guildId = receivedMessage.guild.id;
     const emojis = receivedMessage.guild.emojis.array();
 
@@ -1883,7 +1908,13 @@ function respondSuccess(receivedMessage) {
         receivedMessage.react(config.getSuccess(guildId));
     }
 }
-function respondFailure(receivedMessage) {
+function respondFailure(receivedMessage, toUser) {
+
+    if (toUser) {
+        receivedMessage.react(config.getFailure());
+        return;
+    }
+
     const guildId = receivedMessage.guild.id;
     const emojis = receivedMessage.guild.emojis.array();
 
@@ -1899,6 +1930,10 @@ function respondFailure(receivedMessage) {
     }
 }
 
+function runCommand(receivedMessage) {
+    
+}
+
 client.on("message", receivedMessage => {
     // Prevent bot from responding to its own messages
     if (receivedMessage.author == client.user || loading) {
@@ -1906,6 +1941,42 @@ client.on("message", receivedMessage => {
     }
 
     const content = receivedMessage.content;
+    var copy = content.toLowerCase();
+    if (!receivedMessage.guild) {
+        var id = receivedMessage.author.id;
+        log("Private Message From: " + id);
+        log(content)
+        if (id != renaulteUserID && id != jimooriUserID) {
+            return;
+        }
+
+        log("Settings Change Allowed");
+
+        try {
+
+            var params = getParameters(copy);
+            var parameters = params.parameters;
+            copy = params.msg;
+
+            var command = getCommandString(content, "?");
+            const search = getSearchString(`?${command}`, copy);
+            if (!search && parameters.length === 0) {
+                log("Could not parse search string");
+                //respondFailure(receivedMessage, true);
+                throw command;
+            }
+
+            if (content.startsWith("?setrank")) {
+                handleSetrankings(receivedMessage, search, parameters);
+            }
+        } catch(e) {
+            log("Failed: " + e);
+            respondFailure(receivedMessage, true);
+        }
+
+        return;
+    }
+
     const guildId = receivedMessage.guild.id;
     const prefix = config.getPrefix(guildId);
     if (!content.startsWith(prefix)) {
@@ -1920,42 +1991,33 @@ client.on("message", receivedMessage => {
     }
 
     try {
-        var copy = content.toLowerCase();
-        var parameters = [];
-        var params = copy.match(/"[^"]+"/g);
-        if (params) {
-            parameters = params;
-
-            parameters.forEach((p, ind) => {
-                copy = copy.replace(p, "");
-                parameters[ind] = p.replaceAll('"', "");
-            });
-            copy = copy.trim();
-        }
+        var params = getParameters(copy);
+        var parameters = params.parameters;
+        copy = params.msg;
 
         // the command name
-        var split = getCommandString(content, prefix);
-        if (!validateCommand(receivedMessage, split)) {
+        var command = getCommandString(content, prefix);
+        if (!validateCommand(receivedMessage, command)) {
             log(
                 "Could not validate permissions for: " +
                 receivedMessage.member.displayName
             );
             //respondFailure(receivedMessage);
-            throw split;
+            throw command;
         }
-        const search = getSearchString(`${prefix}${split}`, copy);
+        const search = getSearchString(`${prefix}${command}`, copy);
         if (!search && parameters.length === 0) {
             log("Could not parse search string");
-            throw split;
+            throw command;
         }
 
         /*
-        log("getCommandString: " + split);
+        log("getCommandString: " + command);
         log("getSearchString: " + search);
         log("Parameters:");
         log(parameters);
         */
-        if (split.toLowerCase() === `addemo` && parameters.length === 0) {
+        if (command.toLowerCase() === `addemo` && parameters.length === 0) {
             //log("Addemo but no parameters.");
             if (attachment) {
                 //log("Message Has Attachments");
@@ -1963,10 +2025,10 @@ client.on("message", receivedMessage => {
                 parameters[0] = attachment.url;
             }
         }
-        var command = "handle" + split + "(receivedMessage, search, parameters)";
+        var run = "handle" + command + "(receivedMessage, search, parameters)";
 
         //log("Running Command: " + command);
-        eval(command);
+        eval(run);
     } catch (e) {
         //log(e);
         //log(`No search terms found for "${e}", run other commands: `);
@@ -2100,6 +2162,22 @@ function getCommandString(msg, prefix) {
     }
 
     return split;
+}
+function getParameters(msg) {
+
+    var parameters = [];
+    var params = msg.match(/"[^"]+"/g);
+    if (params) {
+        parameters = params;
+
+        parameters.forEach((p, ind) => {
+            msg = msg.replace(p, "");
+            parameters[ind] = p.replaceAll('"', "");
+        });
+        msg = msg.trim();
+    }
+
+    return { msg: msg, parameters: parameters };
 }
 
 // STRING HELPERS

@@ -104,6 +104,10 @@ module.exports = {
         var newData = JSON.stringify(this.configuration, null, "\t");
         fs.writeFileSync(filename, newData);
     },
+    saveRankings() {
+        var newData = JSON.stringify(this.rankings, null, "\t");
+        fs.writeFileSync(rankingFile, newData);
+    },
     loadGuild(name, guildId) {
         this.guilds[guildId] = new GuildSettings(name, guildId);
         //console.log("Loaded Guild");
@@ -183,6 +187,16 @@ module.exports = {
             return this.configuration.defaultFailureEmote;
         }
         return this.guilds[guildId].getFailureEmote();
+    },
+    setRankings(category, data) {
+        console.log(`setRankings: category(${category}), data(${data})`);
+        if (this.rankings.bestunits[category]) {
+            console.log(this.rankings.bestunits[category]);
+            this.rankings.bestunits[category] = data;
+            this.saveRankings();
+            return true;
+        }
+        return false;
     },
     getRankings(category) {
         return this.rankings[category.toLowerCase()];
