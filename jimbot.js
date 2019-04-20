@@ -40,6 +40,10 @@ const similarityTreshold = 0.5;
 const okEmoji = "🆗";
 const cancelEmoji = "❌";
 const ffbegifEndpoint = "http://www.ffbegif.com/";
+const exviusdbEndpoint = "https://exvius.gg/gl/units/205000805/animations/";
+
+const aniGL = (n) => `https://exvius.gg/gl/units/${n}/animations/`;
+const aniJP = (n) => `https://exvius.gg/jp/units/${n}/animations/`;
 
 // Lookup Tables
 
@@ -953,17 +957,7 @@ function handleGif(receivedMessage, search, parameters) {
 
     getGif(search, param, (filename) => {
         log("success");
-        /*
-        var embed = {
-            color: pinkHexCode,
-            image: {
-                url: `attachment://${filename}`
-            },
-            files: [{ attachment: `${filename}`, name: filename }]
-            //title: title.replaceAll("_", " "),
-            //url: "https://exvius.gamepedia.com/" + title,
-        };
-        */
+
         var Attachment = new Discord.Attachment(filename);
         if (Attachment) {
             receivedMessage.channel
@@ -1676,14 +1670,22 @@ function parseTipsFromPage($) {
 
 // GIFS
 
+function getUnitKey(search) {
+    var data = fs.readFileSync("unitkeys.json");
+    const dump = JSON.parse(data);
+    if (!dump[search]) {
+        return null
+    }
+
+    return dump[search];
+}
+function isLetter(str) {
+    return str.length === 1 && str.match(/[a-z]/i);
+}
+
 function getGif(search, param, callback) {
     log("getGif: " + search + `(${param})`);
     
-    var unit = search.replaceAll("_", " ");
-    var unitL = search.replaceAll("_", "+");
-    var gifs = [];
-    var bot = /^\d/.test(search)
-
     const filename = `tempgifs/${search}/${param}.gif`;
     if (fs.existsSync(filename)) {
         callback(filename);
@@ -1691,29 +1693,34 @@ function getGif(search, param, callback) {
         return;
     }
 
-    var count = 2; // most units only have 2 pages
-    var queryEnd = function () {
-        count -= 1;
+    var unit = getUnitKey(search);
+    if (!unit)
+        unit = search;
+
+    var rarity = unit[unit.length-1];
+    var id = unit.substring(0, unit.length-1);
+    log("Unit ID: " + unit);
+    
+    var unitL = null; // ignore using othet source if JP
+    if (isLetter(search[0])) {
+        unitL = search.replaceAll("_", "+");
+    }
+    
+    var gifs = [];
+    var count = 5; // most units only have 2 pages
+    var queryEnd = function (c) {
+        count--;
 
         if (count <= 0) {
 
-            log(gifs);
+            //log(gifs);
 
-            var img = gifs.find((n) => n.includes(`7 ${param}`));
-            if (!img)
-                img = gifs.find((n) => n.includes(param));
+            img = gifs.find((n) => {
+                return n.toLowerCase().includes(param);
+            });
             if (img) {
                 
-                img = toTitleCase(img);
-                if (bot) {
-                    img = img.replace("2b/", "2B/");
-                    img = img.replace("9s/", "9S/");
-                }
-                    
-                var title = img.replaceAll(" ", "_");
                 img = img.replaceAll(" ", "%20");
-                img = ffbegifEndpoint + img;
-
                 log("Found Requested Gif");
                 log(img);
                 
@@ -1736,28 +1743,15 @@ function getGif(search, param, callback) {
         }
     };
 
-    for(var i = 1; i <= 2; i++) {
+    var uri = [ aniGL(unit), aniJP(unit) ];
+    for(var i = 0; i < 2; i++) {
         request(
-            { uri: `${ffbegifEndpoint}?page=${i}&name=${unitL}` },
+            { uri: uri[i] },
             function(error, response, body) {
-               //console.log(body);
                 const $ = cheerio.load(body);
                 $('img').each((ind, el) => {
                     var src = $(el).attr('src');
                     if (src === undefined)
-                        return;
-
-                    var pieces = src.split("/");
-                    if (!pieces[1])
-                        return;
-                    log(pieces);
-                    var owner = pieces[0];
-                    var file = pieces[1].toLowerCase();
-                    if (!bot)
-                        owner = owner.toLowerCase();
-                    src = owner + "/" + file;
-                    log(src);
-                    if (!src.includes(unit))
                         return;
 
                     var ext = getFileExtension(src);
@@ -1766,10 +1760,43 @@ function getGif(search, param, callback) {
                     }
                 });
 
-                queryEnd();
+                queryEnd(count);
             }
         );
     }
+
+    if (unitL) {
+        for(var i = 0; i < 2; i++) {
+            request(
+                { uri: `${ffbegifEndpoint}?page=${i}&name=${unitL}` },
+                function(error, response, body) {
+                    const $ = cheerio.load(body);
+                    $('img').each((ind, el) => {
+                        var src = $(el).attr('src');
+                        if (src === undefined)
+                            return;
+
+                        if (rarity === "5") {
+                            if (!src.includes(id + "6")){
+                                return;
+                            }
+                        }
+
+                        var ext = getFileExtension(src);
+                        if (ext === ".gif") {
+                            gifs.push(ffbegifEndpoint+src);
+                        }
+                    });
+
+                    queryEnd(count);
+                }
+            );
+        }
+    } else {
+        count -= 2;
+    }
+
+    queryEnd(count);
 }
 
 // Validation
