@@ -225,9 +225,7 @@ module.exports = {
 
                 Object.keys(category).forEach((key) => {
                     var unit = category[key];
-
                     var name = unit.name.toLowerCase();
-                    console.log(name);
                     
                     if (name.includes(search.toLowerCase())) {
                         found[unit.name] = unit;

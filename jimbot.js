@@ -122,8 +122,8 @@ function cacheBotMessage(received, sent) {
         sent: sent,
         time: new Date()
     };
-    log("Cached Message");
-    log(botMessages[botMessages.length - 1]);
+    //log("Cached Message");
+    //log(botMessages[botMessages.length - 1]);
 }
 
 function log(data) {
@@ -969,7 +969,7 @@ function handleSetrankings(receivedMessage, search, parameters) {
         respondFailure(receivedMessage, true);
     }
 }
-function handleCalc(receivedMessage, search, parameters) {
+function handleDpt(receivedMessage, search, parameters) {
 
     var calc = config.getCalculations(search);
     if (!calc) {
@@ -1953,11 +1953,11 @@ function respondFailure(receivedMessage, toUser) {
     }
 }
 
-function convertCommand(command, content) {
+function convertCommand(command, content, prefix) {
 
-    log("Convert Command");
-    log(command);
-    log("\n");
+    //log("Convert Command");
+    //log(command);
+    //log("\n");
 
     // TODO: make this more robust.
     if (command === "Family") {
@@ -1965,6 +1965,12 @@ function convertCommand(command, content) {
             command: "Unit",
             parameters: ["chain" ],
             content: content.replace("family", "unit") + ` "chain"`
+        };
+    } else if (command === "Damage") {
+        return {
+            command: "Dpt",
+            parameters: ["chain" ],
+            content: content.replace(`${prefix}damage`, `${prefix}dpt`)
         };
     }
 
@@ -2033,18 +2039,18 @@ client.on("message", receivedMessage => {
     try {
          // the command name
         var command = getCommandString(content, prefix);
-        log("Before");
-        log(command);
-        log(copy);
+        //log("Before");
+        //log(command);
+        //log(copy);
 
         // If the command has a shortcut convert it.
-        var newCommand = convertCommand(command, copy);
+        var newCommand = convertCommand(command, copy, prefix);
         if (newCommand) {
             command = newCommand.command;
             copy = newCommand.content;
-            log("After");
-            log(command);
-            log(copy);
+            //log("After");
+            //log(command);
+            //log(copy);
         }
 
         // Get any parameters from the final comand string
@@ -2072,12 +2078,12 @@ client.on("message", receivedMessage => {
             throw command;
         }
 
-        /**/
-        log("getCommandString: " + command);
+        /*
+        log("\ngetCommandString: " + command);
         log("getSearchString: " + search);
-        log("Parameters:");
+        log("getParameters:");
         log(parameters);
-        
+        */
         if (command.toLowerCase() === `addemo` && parameters.length === 0) {
             //log("Addemo but no parameters.");
             if (attachment) {

@@ -1,56 +1,4 @@
 {
-	"hybrid": {
-		"Kurasame (no element w/ external imperil)": {
-			"name": "Kurasame (no element w/ external imperil)",
-			"damage": "2,885,653,006",
-			"turns": 11
-		},
-		"Felix": {
-			"name": "Felix",
-			"damage": "2,457,303,755",
-			"turns": 10
-		},
-		"Kurasame (ice w/ external imperil)": {
-			"name": "Kurasame (ice w/ external imperil)",
-			"damage": "2,158,088,948",
-			"turns": 11
-		},
-		"Aurora Fryevia": {
-			"name": "Aurora Fryevia",
-			"damage": "2,014,664,075",
-			"turns": 11
-		},
-		"Kurasame (no element w/ no external imperil)": {
-			"name": "Kurasame (no element w/ no external imperil)",
-			"damage": "1,963,085,122",
-			"turns": 11
-		},
-		"Kurasame (ice w/ no external imperil)": {
-			"name": "Kurasame (ice w/ no external imperil)",
-			"damage": "1,899,180,164",
-			"turns": 11
-		},
-		"Karlette": {
-			"name": "Karlette",
-			"damage": "1,693,927,590",
-			"turns": 7
-		},
-		"Kunshira (spark chain, w/ single element external imperil)": {
-			"name": "Kunshira (spark chain, w/ single element external imperil)",
-			"damage": "1,412,709,491",
-			"turns": 5
-		},
-		"Fryevia": {
-			"name": "Fryevia",
-			"damage": "1,335,445,683",
-			"turns": 7
-		},
-		"Kunshira (spark chain, no external imperil)": {
-			"name": "Kunshira (spark chain, no external imperil)",
-			"damage": "1,088,590,887",
-			"turns": 6
-		}
-	},
 	"physical": {
 		"Regina (Ideal)": {
 			"name": "Regina (Ideal)",
@@ -196,11 +144,6 @@
 			"name": "Cloud (KH) (no element)",
 			"damage": "1,006,560,103",
 			"turns": 1
-		},
-		"Wikami": {
-			"name": "Wikami",
-			"damage": "Weeb for life",
-			"turns": 1
 		}
 	},
 	"magical": {
@@ -278,6 +221,58 @@
 			"name": "Trance Terra (no external imperil)",
 			"damage": "550,861,214",
 			"turns": 7
+		}
+	},
+	"hybrid": {
+		"Kurasame (no element w/ external imperil)": {
+			"name": "Kurasame (no element w/ external imperil)",
+			"damage": "2,885,653,006",
+			"turns": 11
+		},
+		"Felix": {
+			"name": "Felix",
+			"damage": "2,457,303,755",
+			"turns": 10
+		},
+		"Kurasame (ice w/ external imperil)": {
+			"name": "Kurasame (ice w/ external imperil)",
+			"damage": "2,158,088,948",
+			"turns": 11
+		},
+		"Aurora Fryevia": {
+			"name": "Aurora Fryevia",
+			"damage": "2,014,664,075",
+			"turns": 11
+		},
+		"Kurasame (no element w/ no external imperil)": {
+			"name": "Kurasame (no element w/ no external imperil)",
+			"damage": "1,963,085,122",
+			"turns": 11
+		},
+		"Kurasame (ice w/ no external imperil)": {
+			"name": "Kurasame (ice w/ no external imperil)",
+			"damage": "1,899,180,164",
+			"turns": 11
+		},
+		"Karlette": {
+			"name": "Karlette",
+			"damage": "1,693,927,590",
+			"turns": 7
+		},
+		"Kunshira (spark chain, w/ single element external imperil)": {
+			"name": "Kunshira (spark chain, w/ single element external imperil)",
+			"damage": "1,412,709,491",
+			"turns": 5
+		},
+		"Fryevia": {
+			"name": "Fryevia",
+			"damage": "1,335,445,683",
+			"turns": 7
+		},
+		"Kunshira (spark chain, no external imperil)": {
+			"name": "Kunshira (spark chain, no external imperil)",
+			"damage": "1,088,590,887",
+			"turns": 6
 		}
 	}
 }
