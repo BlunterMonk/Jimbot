@@ -70,7 +70,7 @@ const abilityAliases = {
     "mp_cost": "MP Cost",
     "learn": "Learned By",
     "trust": "tmr",
-    "stmr": "STMR"
+    "stmr": "stmr"
 }
 // Parameter aliases need to match the original parameter name from the wiki
 const parameterAliases = {
@@ -1068,7 +1068,7 @@ function parseUnitOverview(overview, tips, params, callback) {
         }
 
         if (parameters.includes(name) && !value.empty()) {
-            if (name == "tmr" || name == "stmr") {
+            if (name == "tmr" || name == "stmr" || name == "STMR") {
 
                 name = name.toUpperCase();
 
