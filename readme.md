@@ -32,3 +32,8 @@ Get Unit GIFs
                   'dying.gif', 'idle.gif',  'jump.gif',  'limit.gif',
                   'magic attack.gif',  'magic standby.gif',  'move.gif',  
                   'standby.gif',  'win.gif',  'win before.gif' 
+
+Get Unit Calculations
+    - **?calc** *[unit name -or- category]* "[optional | limit]"
+    - optional: the amount of results to return, default is 5.
+    - categories: "physical", "magical", "hybrid"
