@@ -43,6 +43,7 @@ const ffbegifEndpoint = "http://www.ffbegif.com/";
 const exviusdbEndpoint = "https://exvius.gg/gl/units/205000805/animations/";
 const renaulteUserID = "159846139124908032";
 const jimooriUserID = "131139508421918721";
+const furculaUserID = "344500120827723777";
 
 const aniGL = (n) => `https://exvius.gg/gl/units/${n}/animations/`;
 const aniJP = (n) => `https://exvius.gg/jp/units/${n}/animations/`;
@@ -163,7 +164,7 @@ client.on("guildDelete", guild => {
 client.on("ready", () => {
     log("Connected as " + client.user.tag);
 
-    loadRankingsList(() => { });
+    //loadRankingsList(() => { });
     config.init();
     LoadGuilds();
 
@@ -296,30 +297,6 @@ function loadRankingsList(callback) {
             callback();
         });
     });
-}
-function toJson(table) {
-    if (!table.is("table")) {
-        return;
-    }
-
-    var results = [],
-        headings = [];
-
-    table.find("thead tr th").each(function (index, value) {
-        headings.push($(value).text());
-    });
-
-    table.find("tbody tr").each(function (indx, obj) {
-        var row = {};
-        var tds = $(obj).children("td");
-        headings.forEach(function (key, index) {
-            var value = tds.eq(index).text();
-            row[key] = value;
-        });
-        results.push(row);
-    });
-
-    return results;
 }
 
 function getPageID(search, categories, callback) {
@@ -928,16 +905,16 @@ function handleGlbestunits(receivedMessage, search, parameters) {
     });
 
     client.fetchUser("159846139124908032")
-        .then(general => {
+    .then(general => {
 
-            receivedMessage.channel
-            .send(mainChannelID, {
-                embed: {
-                    color: pinkHexCode,
-                    author: {
-                        name: general.username,
-                        icon_url: general.avatarURL
-                    },
+        receivedMessage.channel
+        .send(mainChannelID, {
+            embed: {
+                color: pinkHexCode,
+                author: {
+                    name: general.username,
+                    icon_url: general.avatarURL
+                },
                 title: `Global Best 7★ Units (random order, limited units __excluded__)`,
                 description: list,
             }
@@ -992,7 +969,53 @@ function handleSetrankings(receivedMessage, search, parameters) {
         respondFailure(receivedMessage, true);
     }
 }
+function handleCalc(receivedMessage, search, parameters) {
 
+    var calc = config.getCalculations(search);
+    if (!calc) {
+        log("Could not find calculations for: " + search);
+        return;
+    }
+    
+    var text = "";
+    var limit = 5;
+    if (parameters && parameters[0])
+        limit = parameters[0];
+        
+    const keys = Object.keys(calc);
+    const cap = Math.min(limit, keys.length);
+    for (let ind = 0; ind < cap; ind++) {
+        const key = keys[ind];
+        const element = calc[key];
+
+        text += `**${element.name}:** ${element.damage} / ${element.turns}t\n`;
+    }
+    
+    client.fetchUser(furculaUserID)
+    .then(calculator => {
+
+        receivedMessage.channel
+        .send(mainChannelID, {
+            embed: {
+                color: pinkHexCode,
+                author: {
+                    name: calculator.username,
+                    icon_url: calculator.avatarURL
+                },
+                title: `Unit calculations For ${search}. (damage / turns)`,
+                url: "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0/edit#gid=0",
+                description: text,
+                footer: {
+                    text: "visit the link provided for more calculations"
+                },
+            }
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+    });
+}
 
 // COMMANDS END
 

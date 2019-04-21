@@ -3,6 +3,7 @@ const fs = require('fs');
 const filename = 'config.json';
 const rankingFile = 'rankings.json';
 const rankingDump = 'rankingsdump.json';
+const unitCalc = 'unitcalculations.json';
 
 class GuildSettings {
     constructor(name, guildId) {
@@ -89,6 +90,7 @@ module.exports = {
     rankings: null,
     fullRankings: null,
     serverSettings: null,
+    calculations: null,
     guilds: {},
     init() {
         var data = fs.readFileSync(filename);
@@ -99,6 +101,9 @@ module.exports = {
         
         var dump = fs.readFileSync(rankingDump);
         this.fullRankings = JSON.parse(dump);
+                
+        var calcs = fs.readFileSync(unitCalc);
+        this.calculations = JSON.parse(calcs);
     },
     save() {
         var newData = JSON.stringify(this.configuration, null, "\t");
@@ -208,6 +213,32 @@ module.exports = {
     },
     getSettings(guildId, name) {
         return this.guilds[guildId].getSettings(name);
+    },
+    getCalculations(search) {
+        var category = this.calculations[search];
+
+        if (!category) {
+            var found = {};
+
+            Object.keys(this.calculations).forEach((cat) => {
+                var category = this.calculations[cat];
+
+                Object.keys(category).forEach((key) => {
+                    var unit = category[key];
+
+                    var name = unit.name.toLowerCase();
+                    console.log(name);
+                    
+                    if (name.includes(search.toLowerCase())) {
+                        found[unit.name] = unit;
+                    }
+                });
+            });
+
+            return found;
+        } else {
+            return category;
+        }
     },
     validateCommand(guildId, userRole, command) {
         //console.log(`Config Validate Command (${guildId})` + this.guilds[guildId]);

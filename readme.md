@@ -28,7 +28,7 @@ Get Unit Sprite
 
 Get Unit GIFs
     - **?gif** *[name]* "[parameter]"
-    - parameters: 'attack',  'dead',  
-                  'dying', 'idle',  'jump',  'limit',
-                  'magic attack',  'magic standby',  'move',  
-                  'standby',  'win',  'win before' 
+    - parameters: 'attack.gif',  'dead.gif',  
+                  'dying.gif', 'idle.gif',  'jump.gif',  'limit.gif',
+                  'magic attack.gif',  'magic standby.gif',  'move.gif',  
+                  'standby.gif',  'win.gif',  'win before.gif' 
