@@ -102,7 +102,8 @@ const defaultUnitParameters = [
 const gifAliases = {
     "lb": "limit",
     "limit burst": "limit",
-    "victory": "win before"
+    "victory": "win before",
+    "victory": "win_before"
 }
 
 function isStat(name) {
@@ -1717,14 +1718,20 @@ function parseTipsFromPage($) {
 
 // GIFS
 
+var unitsDump = null;
 function getUnitKey(search) {
-    var data = fs.readFileSync("unitkeys.json");
-    const dump = JSON.parse(data);
-    if (!dump[search]) {
+    if (unitsDump === null) {
+        log("loading units list")
+        var data = fs.readFileSync("unitkeys.json");
+        unitsDump = JSON.parse(data);
+
+    }
+
+    if (!unitsDump[search]) {
         return null
     }
 
-    return dump[search];
+    return unitsDump[search];
 }
 function isLetter(str) {
     return str.length === 1 && str.match(/[a-z]/i);
@@ -1848,6 +1855,7 @@ function getGif(search, param, callback) {
 
 // Validation
 function validatePage(search, callback) {
+    /*
     wikiClient.getArticle(search, function (err, content, redirect) {
         if (err || !content) {
             console.error(err);
@@ -1879,7 +1887,12 @@ function validatePage(search, callback) {
             const imgurl = $(".big-pixelate").attr("src");
             callback(true, imgurl);
         });
-    });
+    });*/
+
+    log(search)
+    var unit = getUnitKey(search);
+    log(unit)
+    callback(unit != null)
 }
 function validateEmote(emote) {
     var file = null;
