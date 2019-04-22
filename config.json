@@ -1,188 +1,189 @@
 {
-    "Name": "Jimbot",
-    "servers": {
-        "566136200247902218": {
-            "prefix": "?",
-            "successEmote": "gucci",
-            "failureEmote": "fail"
-        },
-        "566726259380584480": {
-            "prefix": "!",
-            "successEmote": "kthumbsup",
-            "failureEmote": "nuked"
-        }
-    },
-    "defaultPrefix": "!",
-    "defaultSuccessEmote": "✅",
-    "defaultFailureEmote": "❌",
-    "unitAliases": {
-        "hot_gay_dad": "ignacio",
-        "turtle": "ryunan",
-        "Assworm": "Aloha Lasswell",
-        "Asswell": "Aloha Lasswell",
-        "best_waifu": "Sieghard",
-        "best_husbando": "Malphasie",
-        "sky_mermaid": "barbariccia",
-        "call_me_dear_one_more_time": "CG Sakura",
-        "hottest_daddest_dad": "Cid",
-        "best_tank": "Liquid Metal Slime",
-        "deadbeat_dad": "Raegen",
-        "best_protagonist": "Pyro Glacial Lasswell",
-        "rimuru": "slime",
-        "best_dragoon": "Duke",
-        "mom_of_dads": "Yuraisha",
-        "flamelord": "Veritas of the Flame",
-        "darklord": "Veritas of the Dark",
-        "lightlord": "Veritas of the Light",
-        "waterlord": "Veritas of the Waters",
-        "earthlord": "Veritas of the Earth",
-        "windlord": "Veritas of the Heavens",
-        "heavenlord": "Veritas of the Heavens",
-        "assworm": "Aloha Lasswell",
-        "loli": "Blossom Sage Sakura",
-        "floorboardlord": "Rain",
-        "worst_protagonist": "Hyoh",
-        "soul_sucker": "Kryla",
-        "magnificentone": "Sieghard",
-        "the_beautiful": "Sieghard",
-        "magnificent_one": "Sieghard",
-        "main_character": "Sieghard",
-        "leading_man": "Sieghard",
-        "sieghart": "Sieghard",
-        "marshal_glove": "Elfreeda",
-        "fodder": "Cloud",
-        "jake's_waifu": "Sieghard",
-        "shitstar": "crimson",
-        "laveria's_waifu": "Tifa",
-        "duke's_waifu": "Leah",
-        "2booty": "2b",
-        "best_birb": "Malphasie",
-        "dancer": "construct 8",
-        "seraph": "High Seraph Ultima",
-        "baizuri": "Bai Hu & Zhu Que",
-        "bazuka": "Bai Hu & Zhu Que",
-        "cg_nichol": "Maritime Strategist Nichol",
-        "cg_lid": "Heavenly Technician Lid",
-        "cg_fina": "Lotus Mage Fina",
-        "cg_jake": "Nameless Gunner Jake",
-        "cg_sakura": "Blossom Sage Sakura",
-        "flame_veritas": "Veritas of the Flame",
-        "cg_sieghard": "sieghard",
-        "cg_folka": "folka",
-        "ss_nichol": "Seaside Nichol",
-        "cg_charlotte": "Holy Shield Knight Charlotte", 
-        "bignachos": "ignacio",
-		"dapper_dragoon": "duke"
-    },
-    "filetypes": [
-        ".jpg",
-        ".png",
-        ".gif"
-    ],
-    "emotes": [
-        {
-            "name": "bigreach",
-            "value": "https://cdn.discordapp.com/attachments/566737026762932224/566748774668435508/reach.png"
-        },
-        {
-            "name": "tifamad",
-            "value": "https://cdn.discordapp.com/attachments/566737026762932224/566749975933878275/angry_tifa.png"
-        },
-        {
-            "name": "tifamad",
-            "value": "https://cdn.discordapp.com/attachments/566737026762932224/566749975933878275/angry_tifa.png"
-        },
-        {
-            "name": "pumped",
-            "value": "https://cdn.discordapp.com/attachments/566735967679938703/566756393047031819/arisafuku.gif"
-        },
-        {
-            "name": "shake",
-            "value": "https://cdn.discordapp.com/attachments/566737026762932224/566752405660893184/Entydance.gif"
-        },
-        {
-            "name": "pumped",
-            "value": "https://cdn.discordapp.com/attachments/566735967679938703/566756393047031819/arisafuku.gif"
-        },
-        {
-            "name": "missy",
-            "value": "https://danbooru.donmai.us/data/__atalanta_fate_apocrypha_and_etc_drawn_by_mushiro_nijie728995__e8ceb06c1fdd39d9d04bf120ccd80912.gif"
-        },
-        {
-            "name": "Rain",
-            "value": "https://cdn.discordapp.com/attachments/566730427000422401/566789319105183784/bSL1uhef.jpg"
-        },
-        {
-            "name": "whalenexus",
-            "value": "https://i.imgur.com/sJpfasV.png"
-        },
-        {
-            "name": "hello",
-            "value": "https://i.imgur.com/2ItGei2.gif"
-        },
-        {
-            "name": "pum",
-            "value": "https://cdn.discordapp.com/attachments/566735967679938703/566756393047031819/arisaf"
-        },
-        {
-            "name": "Eollow",
-            "value": "https://cdn.discordapp.com/attachments/566733061446828059/566799908452171796/unknown.png"
-        },
-        {
-            "name": "Eollow",
-            "value": "https://cdn.discordapp.com/attachments/566733061446828059/566823871446253578/Trance_Eolo.png"
-        },
-        {
-            "name": "smile",
-            "value": "https://cdn.discordapp.com/attachments/566136200818196482/567011130833240064/MinaSmile.png"
-        },
-        {
-            "name": "bunnygirl",
-            "value": "https://cdn.discordapp.com/attachments/566736882227216394/567267697147248641/unit.png"
-        },
-        {
-            "name": "pyon",
-            "value": "https://cdn.discordapp.com/attachments/566736882227216394/567267697147248641/unit.png"
-        },
-        {
-            "name": "nuke",
-            "value": "https://cdn.discordapp.com/attachments/566736882227216394/567334880250298401/unknown.png"
-        },
-        {
-            "name": "booli",
-            "value": "https://cdn.discordapp.com/attachments/566730427000422401/567379656106442753/Screenshot_20190415-130346_Discord.jpg"
-        },
-        {
-            "name": "laveria0",
-            "value": "https://cdn.discordapp.com/attachments/566136200818196482/567457700414488586/Screen_Shot_2019-04-15_at_5.13.51_PM.png"
-        },
-        {
-            "name": "laveria1",
-            "value": "https://cdn.discordapp.com/attachments/566136200818196482/567457688431230980/Screen_Shot_2019-04-15_at_5.08.45_PM.png"
-        },
-        {
-            "name": "whalenexus1",
-            "value": "https://cdn.discordapp.com/attachments/566730427000422401/567637805446987806/unknown.png"
-        },
-        {
-            "name": "whalemajin",
-            "value": "https://cdn.discordapp.com/attachments/551373124944527367/567639041256980507/unknown.png"
-        },
-        {
-            "name": "ignis0",
-            "value": "https://cdn.discordapp.com/attachments/566736882227216394/567658213650989066/unknown.png"
-        },
-        {
-            "name": "salute",
-            "value": "https://cdn.discordapp.com/attachments/566730453181136941/567663071317983253/blobsalute.gif"
-        },
-        {
-            "name": "mlerp",
-            "value": "https://cdn.discordapp.com/attachments/566136200818196482/567699288499552288/aQz88PS.png"
-        },
-        {
-            "name": "mlerp",
-            "value": "https://cdn.discordapp.com/attachments/566136200818196482/567699516786999297/2jlykmh14bp01.gif"
-        }
-    ]
+	"Name": "Jimbot",
+	"servers": {
+		"566136200247902218": {
+			"prefix": "?",
+			"successEmote": "gucci",
+			"failureEmote": "fail"
+		},
+		"566726259380584480": {
+			"prefix": "!",
+			"successEmote": "kthumbsup",
+			"failureEmote": "nuked"
+		}
+	},
+	"defaultPrefix": "!",
+	"defaultSuccessEmote": "✅",
+	"defaultFailureEmote": "❌",
+	"unitAliases": {
+		"hot_gay_dad": "ignacio",
+		"turtle": "ryunan",
+		"Assworm": "Aloha Lasswell",
+		"Asswell": "Aloha Lasswell",
+		"best_waifu": "Sieghard",
+		"best_husbando": "Malphasie",
+		"sky_mermaid": "barbariccia",
+		"call_me_dear_one_more_time": "CG Sakura",
+		"hottest_daddest_dad": "Cid",
+		"best_tank": "Liquid Metal Slime",
+		"deadbeat_dad": "Raegen",
+		"best_protagonist": "Pyro Glacial Lasswell",
+		"rimuru": "slime",
+		"best_dragoon": "Duke",
+		"mom_of_dads": "Yuraisha",
+		"flamelord": "Veritas of the Flame",
+		"darklord": "Veritas of the Dark",
+		"lightlord": "Veritas of the Light",
+		"waterlord": "Veritas of the Waters",
+		"earthlord": "Veritas of the Earth",
+		"windlord": "Veritas of the Heavens",
+		"heavenlord": "Veritas of the Heavens",
+		"assworm": "Aloha Lasswell",
+		"loli": "Blossom Sage Sakura",
+		"floorboardlord": "Rain",
+		"worst_protagonist": "Hyoh",
+		"soul_sucker": "Kryla",
+		"magnificentone": "Sieghard",
+		"the_beautiful": "Sieghard",
+		"magnificent_one": "Sieghard",
+		"main_character": "Sieghard",
+		"leading_man": "Sieghard",
+		"sieghart": "Sieghard",
+		"marshal_glove": "Elfreeda",
+		"fodder": "Cloud",
+		"jake's_waifu": "Sieghard",
+		"shitstar": "crimson",
+		"laveria's_waifu": "Tifa",
+		"duke's_waifu": "Leah",
+		"2booty": "2b",
+		"best_birb": "Malphasie",
+		"dancer": "construct 8",
+		"seraph": "High Seraph Ultima",
+		"baizuri": "Bai Hu & Zhu Que",
+		"bazuka": "Bai Hu & Zhu Que",
+		"cg_nichol": "Maritime Strategist Nichol",
+		"cg_lid": "Heavenly Technician Lid",
+		"cg_fina": "Lotus Mage Fina",
+		"cg_jake": "Nameless Gunner Jake",
+		"cg_sakura": "Blossom Sage Sakura",
+		"flame_veritas": "Veritas of the Flame",
+		"cg_sieghard": "sieghard",
+		"cg_folka": "folka",
+		"ss_nichol": "Seaside Nichol",
+		"cg_charlotte": "Holy Shield Knight Charlotte",
+		"bignachos": "ignacio",
+		"dapper_dragoon": "duke",
+		"padoru": "tiana"
+	},
+	"filetypes": [
+		".jpg",
+		".png",
+		".gif"
+	],
+	"emotes": [
+		{
+			"name": "bigreach",
+			"value": "https://cdn.discordapp.com/attachments/566737026762932224/566748774668435508/reach.png"
+		},
+		{
+			"name": "tifamad",
+			"value": "https://cdn.discordapp.com/attachments/566737026762932224/566749975933878275/angry_tifa.png"
+		},
+		{
+			"name": "tifamad",
+			"value": "https://cdn.discordapp.com/attachments/566737026762932224/566749975933878275/angry_tifa.png"
+		},
+		{
+			"name": "pumped",
+			"value": "https://cdn.discordapp.com/attachments/566735967679938703/566756393047031819/arisafuku.gif"
+		},
+		{
+			"name": "shake",
+			"value": "https://cdn.discordapp.com/attachments/566737026762932224/566752405660893184/Entydance.gif"
+		},
+		{
+			"name": "pumped",
+			"value": "https://cdn.discordapp.com/attachments/566735967679938703/566756393047031819/arisafuku.gif"
+		},
+		{
+			"name": "missy",
+			"value": "https://danbooru.donmai.us/data/__atalanta_fate_apocrypha_and_etc_drawn_by_mushiro_nijie728995__e8ceb06c1fdd39d9d04bf120ccd80912.gif"
+		},
+		{
+			"name": "Rain",
+			"value": "https://cdn.discordapp.com/attachments/566730427000422401/566789319105183784/bSL1uhef.jpg"
+		},
+		{
+			"name": "whalenexus",
+			"value": "https://i.imgur.com/sJpfasV.png"
+		},
+		{
+			"name": "hello",
+			"value": "https://i.imgur.com/2ItGei2.gif"
+		},
+		{
+			"name": "pum",
+			"value": "https://cdn.discordapp.com/attachments/566735967679938703/566756393047031819/arisaf"
+		},
+		{
+			"name": "Eollow",
+			"value": "https://cdn.discordapp.com/attachments/566733061446828059/566799908452171796/unknown.png"
+		},
+		{
+			"name": "Eollow",
+			"value": "https://cdn.discordapp.com/attachments/566733061446828059/566823871446253578/Trance_Eolo.png"
+		},
+		{
+			"name": "smile",
+			"value": "https://cdn.discordapp.com/attachments/566136200818196482/567011130833240064/MinaSmile.png"
+		},
+		{
+			"name": "bunnygirl",
+			"value": "https://cdn.discordapp.com/attachments/566736882227216394/567267697147248641/unit.png"
+		},
+		{
+			"name": "pyon",
+			"value": "https://cdn.discordapp.com/attachments/566736882227216394/567267697147248641/unit.png"
+		},
+		{
+			"name": "nuke",
+			"value": "https://cdn.discordapp.com/attachments/566736882227216394/567334880250298401/unknown.png"
+		},
+		{
+			"name": "booli",
+			"value": "https://cdn.discordapp.com/attachments/566730427000422401/567379656106442753/Screenshot_20190415-130346_Discord.jpg"
+		},
+		{
+			"name": "laveria0",
+			"value": "https://cdn.discordapp.com/attachments/566136200818196482/567457700414488586/Screen_Shot_2019-04-15_at_5.13.51_PM.png"
+		},
+		{
+			"name": "laveria1",
+			"value": "https://cdn.discordapp.com/attachments/566136200818196482/567457688431230980/Screen_Shot_2019-04-15_at_5.08.45_PM.png"
+		},
+		{
+			"name": "whalenexus1",
+			"value": "https://cdn.discordapp.com/attachments/566730427000422401/567637805446987806/unknown.png"
+		},
+		{
+			"name": "whalemajin",
+			"value": "https://cdn.discordapp.com/attachments/551373124944527367/567639041256980507/unknown.png"
+		},
+		{
+			"name": "ignis0",
+			"value": "https://cdn.discordapp.com/attachments/566736882227216394/567658213650989066/unknown.png"
+		},
+		{
+			"name": "salute",
+			"value": "https://cdn.discordapp.com/attachments/566730453181136941/567663071317983253/blobsalute.gif"
+		},
+		{
+			"name": "mlerp",
+			"value": "https://cdn.discordapp.com/attachments/566136200818196482/567699288499552288/aQz88PS.png"
+		},
+		{
+			"name": "mlerp",
+			"value": "https://cdn.discordapp.com/attachments/566136200818196482/567699516786999297/2jlykmh14bp01.gif"
+		}
+	]
 }
