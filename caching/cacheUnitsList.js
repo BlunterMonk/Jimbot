@@ -21,6 +21,8 @@ function main() {
     var units = Object.assign({}, glUnits, jpUnits/*, translated*/);
     var save = JSON.stringify(units, null, "\t");
     fs.writeFileSync("unitkeys.json", save);
+
+    console.log("Units Cached");
 }
 
 function getUnitsList(source) {
