@@ -6,6 +6,7 @@ const {google} = require('googleapis');
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const calcSheet = "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0/edit#gid=0";
 const sheetName = "Damage comparison";
+const sheetID = "1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0";
 
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
@@ -17,7 +18,7 @@ fs.readFile('credentials.json', (err, content) => {
     if (err) 
         return console.log('Error loading client secret file:', err);
     // Authorize a client with credentials, then call the Google Sheets API.
-    authorize(JSON.parse(content), listMajors);
+    authorize(JSON.parse(content), GetUnitComparison);
 });
 
 
@@ -45,30 +46,56 @@ function authorize(credentials, callback) {
         { name: "hybrid", range: `${sheetName}!L3:N` }
     ]
     
+    var totalUnits = 0;
+    var queryEnd2 = function (url, index) {
+        console.log(url)
+        
+        if (units[0][index]) {
+            units[0][index].url = url;
+        } else if (units[1][index]) {
+            units[1][index].url = url;
+        } else if (units[2][index]) {
+            units[2][index].url = url;
+        } else {
+            console.log("Could not find unit to add link to")
+        }
+
+        if (totalUnits <= 0) {
+            var save = JSON.stringify(units, null, "\t");
+            fs.writeFileSync("unitcalculations.json", save);
+        }
+    };
+
     var units = {};
     var count = 3;
     var queryEnd = function (list, index) {
         count -= 1;
 
         units[index] = list;
+        totalUnits += list.length;
 
         if (count <= 0) {
             console.log("Unit Fields");
             console.log(units);
 
-            var save = JSON.stringify(units, null, "\t");
-            fs.writeFileSync("unitcalculations.json", save);
+            //var save = JSON.stringify(units, null, "\t");
+            //fs.writeFileSync("unitcalculations.json", save);
 
             /*if (callback) {
                 callback(fields, limited, rarity);
             }*/
+            var keys = Object.keys(units[0]);
+            for (let ind = 0; ind < keys.length; ind++) {
+                var range = `${keys[ind]}!A1:B1`
+                GetUnitComparison(oAuth2Client, keys[ind], range, queryEnd2);
+            }
         }
     };
 
     for (let ind = 0; ind < ranges.length; ind++) {
         const range = ranges[ind];
         
-        listMajors(oAuth2Client, range.name, range.range, queryEnd);
+        GetUnitComparison(oAuth2Client, range.name, range.range, queryEnd);
     }
 }
 
@@ -124,16 +151,18 @@ function bySortedValue(obj, callback, context) {
  * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
-function listMajors(auth, index, range, callback) {
+function GetUnitComparison(auth, index, range, callback) {
     const sheets = google.sheets({version: 'v4', auth});
+
     sheets.spreadsheets.values.get({
-    spreadsheetId: '1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0',
+    spreadsheetId: sheetID,
     range: range
     }, (err, res) => {
+
         if (err) 
             return console.log('The API returned an error: ' + err);
+
         const rows = res.data.values;
-        //console.log(res);
         if (rows.length) {
             var units = {};
 
@@ -149,15 +178,43 @@ function listMajors(auth, index, range, callback) {
                 }
             });
 
+            /*
             var sorted = [];
             bySortedValue(units, function(key, value) {
                 console.log(`${key}: ${value}`);
                 sorted[sorted.length] = value;
-            });
+            });*/
 
             console.log(units);
             callback(units, index);
-            //console.log(sorted);
+        } else {
+            console.log('No data found.');
+            callback(null, index);
+        }
+    });
+}
+
+function GetBuildLink(auth, index, range, callback) {
+    const sheets = google.sheets({version: 'v4', auth});
+    sheets.spreadsheets.values.get({
+    spreadsheetId: sheetID,
+    range: range
+    }, (err, res) => {
+        if (err) 
+            return console.log('The API returned an error: ' + err);
+
+        const rows = res.data.values;
+        if (rows.length) {
+            var units = {};
+
+            console.log('Build:');
+
+            rows.map((row) => {
+                console.log(`${row[1]}`);
+            });
+
+
+            callback(units, index);
         } else {
             console.log('No data found.');
         }
