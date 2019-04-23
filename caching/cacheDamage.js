@@ -45,19 +45,39 @@ function authorize(credentials, callback) {
         { name: "magical", range: `${sheetName}!G3:I` },
         { name: "hybrid", range: `${sheetName}!L3:N` }
     ]
-    
+
+    var units = {};
+    var count = 3;
     var totalUnits = 0;
     var queryEnd2 = function (url, index) {
-        console.log(url)
-        
-        if (units[0][index]) {
-            units[0][index].url = url;
-        } else if (units[1][index]) {
-            units[1][index].url = url;
-        } else if (units[2][index]) {
-            units[2][index].url = url;
+        console.log(`[${totalUnits}]${index}: ${url}`)
+        totalUnits--;
+
+        /*
+        var cats = Object.keys(units);
+        cats.forEach((cat) => {
+            var keys = Object.keys(units[cat]);
+            keys.forEach((key, ind) => {
+                if (!key.includes("(KH)")) {
+                    key = key.replace(/\(.*\)/, "").trim();
+                } else {
+                    var i = key.lastIndexOf("(");
+                    key = key.substring(i, key.length);
+                }
+
+                var range = `${key}!A1:B1`
+                console.log("Saving To: " + range)
+            });
+        });*/
+
+        if (units["physical"][index]) {
+            units["physical"][index].url = url;
+        } else if (units["magical"][index]) {
+            units["magical"][index].url = url;
+        } else if (units["hybrid"][index]) {
+            units["hybrid"][index].url = url;
         } else {
-            console.log("Could not find unit to add link to")
+            console.log("Could not find unit to add link to, " + index)
         }
 
         if (totalUnits <= 0) {
@@ -66,17 +86,16 @@ function authorize(credentials, callback) {
         }
     };
 
-    var units = {};
-    var count = 3;
     var queryEnd = function (list, index) {
         count -= 1;
 
         units[index] = list;
-        totalUnits += list.length;
+        totalUnits += Object.keys(list).length;
 
         if (count <= 0) {
             console.log("Unit Fields");
-            console.log(units);
+            console.log("Total: " + totalUnits);
+            //console.log(units);
 
             //var save = JSON.stringify(units, null, "\t");
             //fs.writeFileSync("unitcalculations.json", save);
@@ -84,11 +103,27 @@ function authorize(credentials, callback) {
             /*if (callback) {
                 callback(fields, limited, rarity);
             }*/
-            var keys = Object.keys(units[0]);
-            for (let ind = 0; ind < keys.length; ind++) {
-                var range = `${keys[ind]}!A1:B1`
-                GetUnitComparison(oAuth2Client, keys[ind], range, queryEnd2);
-            }
+            var cats = Object.keys(units);
+            cats.forEach((cat) => {
+                console.log("Category: " + cat);
+                var keys = Object.keys(units[cat]);
+                keys.forEach((key, ind) => {
+                    var index = key;
+
+                    if (!key.includes("(KH)")) {
+                        key = key.replace(/\(.*\)/, "").trim();
+                    } else {
+                        var i = key.lastIndexOf("(");
+                        key = key.substring(i, key.length);
+                    }
+
+                    var range = `${key}!A1:B1`
+                    console.log("Looking For: " + range)
+                    setTimeout(() => {
+                        GetBuildLink(oAuth2Client, index, range, queryEnd2)
+                    }, 1000 * ind);
+                });
+            });
         }
     };
 
@@ -166,7 +201,7 @@ function GetUnitComparison(auth, index, range, callback) {
         if (rows.length) {
             var units = {};
 
-            console.log('Name, DPT:');
+            //console.log('Name, DPT:');
 
             // Print columns A and E, which correspond to indices 0 and 4.
             rows.map((row) => {
@@ -185,7 +220,7 @@ function GetUnitComparison(auth, index, range, callback) {
                 sorted[sorted.length] = value;
             });*/
 
-            console.log(units);
+            //console.log(units);
             callback(units, index);
         } else {
             console.log('No data found.');
@@ -200,23 +235,25 @@ function GetBuildLink(auth, index, range, callback) {
     spreadsheetId: sheetID,
     range: range
     }, (err, res) => {
-        if (err) 
-            return console.log('The API returned an error: ' + err);
+        if (err) {
+            callback(null, index);
+            console.log('The API returned an error: ' + err);
+            return 
+        }
 
         const rows = res.data.values;
         if (rows.length) {
             var units = {};
 
-            console.log('Build:');
-
+            var b = "";
             rows.map((row) => {
-                console.log(`${row[1]}`);
+                b = row[1];
             });
 
-
-            callback(units, index);
+            callback(b, index);
         } else {
             console.log('No data found.');
+            callback(null, index);
         }
     });
 }
