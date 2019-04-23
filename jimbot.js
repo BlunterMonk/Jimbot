@@ -171,6 +171,54 @@ client.on("ready", () => {
 
     log("Configuration Loaded");
     loading = false;
+
+    wikiClient.getArticle("Final_Fantasy_Brave_Exvius_Wiki", (err, content, redirect) => {
+        if(err) {
+            log(err);
+            return;
+        }
+
+        const firstLine = content.indexOf("Recent");
+        content = content.substring(firstLine, content.length);
+
+        log(content);
+        log("---------------");
+
+        var unitsRegex = /\|unit.*=\s(.*)\|/g
+        var match = unitsRegex.exec(content);
+        while (match != null) {
+            
+            log(convertValueToLink(match[1]));
+        
+            match = unitsRegex.exec(content);
+        }
+
+        log("---------------");
+
+        var m = content.match(linkRegexp2);
+        if (m) {
+            var value = convertBatchToLinks(m);
+            log(value)
+        }
+
+
+    });
+
+    wikiClient.getArticle("Category:Events", (err, content, redirect) => {
+
+        if(err) {
+            log(err);
+            return;
+        }
+
+        //const firstLine = content.indexOf("Recent");
+        //content = content.substring(firstLine, content.length);
+
+        log(content);
+        log("---------------");
+
+        
+    });
 });
 
 function loadRankingsList(callback) {
@@ -2175,7 +2223,7 @@ bot_secret_token =
 bot_secret_token_test =
     "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 
 // HELPERS
 function getQuotedWord(str) {
