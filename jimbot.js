@@ -103,7 +103,7 @@ const gifAliases = {
     "lb": "limit",
     "limit burst": "limit",
     "victory": "win before",
-    "victory": "win_before"
+    "win_before": "win before"
 }
 
 function isStat(name) {
@@ -729,7 +729,7 @@ function handleQuote(receivedMessage, search) {
     }
 }
 function handleHelp(receivedMessage) {
-    var data = fs.readFileSync("README.md", "ASCII");
+    var data = fs.readFileSync("readme.md", "ASCII");
     receivedMessage.author
         .send(mainChannelID, {
             embed: {
@@ -1767,11 +1767,22 @@ function getGif(search, param, callback) {
 
         if (count <= 0) {
 
-            //log(gifs);
-
+            gifs.sort((a, b) => {
+                if(a.includes("ffbegif"))
+                    return -1;
+                else 
+                    return 1;
+            });
+            log(gifs);
+            
             img = gifs.find((n) => {
                 return n.toLowerCase().includes(param);
             });
+            if (!img) {
+                img = gifs.find((n) => {
+                    return n.toLowerCase().replaceAll(" ", "_").includes(param.replaceAll(" ", "_"));
+                });
+            }
             if (img) {
                 
                 img = img.replaceAll(" ", "%20");
