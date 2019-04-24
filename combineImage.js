@@ -8,12 +8,13 @@ const ctx = canvas.getContext('2d')
 
 // Write "Awesome!"
 ctx.font = '30px Impact'
-ctx.rotate(0.1)
-//ctx.fillText('Awesome!', 50, 100)
+ctx.fillStyle = 'rgba(255,255,255,1)'
+ctx.strokeStyle = 'rgba(255,255,255,0.5)'
+ctx.strokeText('3000', 50, 100)
+ctx.fillText('3000', 50, 100)
 
 // Draw line under text
-var text = ctx.measureText('Awesome!')
-ctx.strokeStyle = 'rgba(0,0,0,0.5)'
+var text = ctx.measureText('AWESOME!')
 ctx.beginPath()
 ctx.lineTo(50, 102)
 ctx.lineTo(50 + text.width, 102)
@@ -22,9 +23,15 @@ ctx.stroke()
 // Draw cat with lime helmet
 
 Canvas.loadImage('tempimg/Unit-Esther-7.png').then((image) => {
-    ctx.drawImage(image, 50, 0, 70, 70)
-
-    fs.writeFileSync("imageL.txt", canvas.toDataURL());
+    var fs = require('fs');
+    var string = canvas.toDataURL();
+    var regex = /^data:.+\/(.+);base64,(.*)$/;
+    
+    var matches = string.match(regex);
+    var ext = matches[1];
+    var data = matches[2];
+    var buffer = new Buffer(data, 'base64');
+    fs.writeFileSync('textimage.' + ext, buffer);
 }).catch(console.error);
 
 /*
@@ -50,7 +57,7 @@ function buildImage(images, unit) {
     console.log("Unit Image")
     console.log(unit)
     var load = [{
-        src: "template.png",
+        src: "template3.png",
         x: 0,
         y: 9
     }, 
@@ -61,18 +68,18 @@ function buildImage(images, unit) {
         w: unit.w * 2.5,
         h: unit.h * 2.5
     }];
-    var sx = 15;
-    var sy = 360;
-    var xspace = 345;
-    var yspace = 120;
+    var sx = 85;
+    var sy = 510;
+    var xspace = 390;
+    var yspace = 132;
     var y = sy;
     images.forEach((image, index) => {
         console.log(imgDir + image)
         
         load[load.length] = {
             src: imgDir + image,
-            x: sx + (xspace * (index % 2)),
-            y: y
+            x: (sx + (xspace * (index % 2))) - 56,
+            y: y - 56
         }
 
         if (index % 2) {
@@ -82,8 +89,8 @@ function buildImage(images, unit) {
 
     mergeImages(load, 
         {
-            width: 717,
-            height: 1000,
+            width: 810,
+            height: 1450,
             Canvas: Canvas
         })
     .then(b64 => {
@@ -96,8 +103,6 @@ function buildImage(images, unit) {
         var data = matches[2];
         var buffer = new Buffer(data, 'base64');
         fs.writeFileSync('build.' + ext, buffer);
-
-        fs.writeFileSync("image.txt", b64);
     }).catch(console.error);
 
 }
