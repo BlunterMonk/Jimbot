@@ -63,15 +63,15 @@ function buildImage(images, unit) {
     }, 
     {
         src: imgDir + unit.name,
-        x: 125 - ((unit.w * 2.5) / 2),
-        y: 225 - ((unit.h * 2.5)),
+        x: 0,//150 - ((unit.w * 2.5) / 2),
+        y: 0,//150 + ((unit.h * 2.5)),
         w: unit.w * 2.5,
         h: unit.h * 2.5
     }];
     var sx = 85;
-    var sy = 510;
+    var sy = 500;
     var xspace = 390;
-    var yspace = 132;
+    var yspace = 140;
     var y = sy;
     images.forEach((image, index) => {
         console.log(imgDir + image)
@@ -79,7 +79,9 @@ function buildImage(images, unit) {
         load[load.length] = {
             src: imgDir + image,
             x: (sx + (xspace * (index % 2))) - 56,
-            y: y - 56
+            y: 405,
+            w: 112,
+            h: 112
         }
 
         if (index % 2) {
