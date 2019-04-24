@@ -1,12 +1,13 @@
 
 const fs = require('fs');
-const filename = 'config.json';
-const rankingFile = 'rankings.json';
-const rankingDump = 'rankingsdump.json';
-const unitCalc = 'unitcalculations.json';
+const filename = 'config/config.json';
+const rankingFile = 'data/rankings.json';
+const rankingDump = 'data/rankingsdump.json';
+const unitCalc = 'data/unitcalculations.json';
 
 class GuildSettings {
     constructor(name, guildId) {
+
         this.guildName = name;
         this.guildId = guildId;
         this.settings = {};
@@ -17,13 +18,14 @@ class GuildSettings {
         this.save();
     }
 
+
     load() {
-        var filename = `config-${this.guildId}.json`;
+        var filename = `config/config-${this.guildId}.json`;
         if (fs.existsSync(filename)) {
             var data = fs.readFileSync(filename);
             this.settings = JSON.parse(data);
         } else {
-            var data = fs.readFileSync(`config-default.json`);
+            var data = fs.readFileSync(`config/config-default.json`);
             this.settings = JSON.parse(data);
         }
     }
@@ -33,7 +35,7 @@ class GuildSettings {
     }
 
     getFilename() {
-        return `config-${this.guildId}.json`;
+        return `config/config-${this.guildId}.json`;
     }
     getPrefix() {
         return this.settings.prefix;
@@ -74,7 +76,7 @@ class GuildSettings {
         return true;
     }
     validateConfig(guildId) {
-        return fs.existsSync(`config-${guildId}.json`);
+        return fs.existsSync(`config/config-${guildId}.json`);
     }
 
 };

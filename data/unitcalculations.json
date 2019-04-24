@@ -1,0 +1,344 @@
+{
+	"hybrid": {
+		"Kurasame (no element w/ external imperil)": {
+			"name": "Kurasame (no element w/ external imperil)",
+			"damage": "2,885,653,006",
+			"turns": 11,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#e15730c0-4cda-11e9-9e10-93b8df10f245"
+		},
+		"Felix": {
+			"name": "Felix",
+			"damage": "2,457,303,755",
+			"turns": 10,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#792c0a90-4df0-11e9-9e10-93b8df10f245"
+		},
+		"Kurasame (ice w/ external imperil)": {
+			"name": "Kurasame (ice w/ external imperil)",
+			"damage": "2,158,088,948",
+			"turns": 11,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#e15730c0-4cda-11e9-9e10-93b8df10f245"
+		},
+		"Aurora Fryevia": {
+			"name": "Aurora Fryevia",
+			"damage": "2,014,664,075",
+			"turns": 11,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#628ce590-4cea-11e9-9e10-93b8df10f245"
+		},
+		"Kurasame (no element w/ no external imperil)": {
+			"name": "Kurasame (no element w/ no external imperil)",
+			"damage": "1,963,085,122",
+			"turns": 11,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#e15730c0-4cda-11e9-9e10-93b8df10f245"
+		},
+		"Kurasame (ice w/ no external imperil)": {
+			"name": "Kurasame (ice w/ no external imperil)",
+			"damage": "1,899,180,164",
+			"turns": 11,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#e15730c0-4cda-11e9-9e10-93b8df10f245"
+		},
+		"Karlette": {
+			"name": "Karlette",
+			"damage": "1,693,927,590",
+			"turns": 7,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#1d4b7c80-4cc7-11e9-9e10-93b8df10f245"
+		},
+		"Kunshira (spark chain, w/ single element external imperil)": {
+			"name": "Kunshira (spark chain, w/ single element external imperil)",
+			"damage": "1,412,709,491",
+			"turns": 5,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#b6cacd90-4e82-11e9-9e10-93b8df10f245"
+		},
+		"Fryevia": {
+			"name": "Fryevia",
+			"damage": "1,335,445,683",
+			"turns": 7,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#7bb8fa10-4d0b-11e9-9e10-93b8df10f245"
+		},
+		"Kunshira (spark chain, no external imperil)": {
+			"name": "Kunshira (spark chain, no external imperil)",
+			"damage": "1,088,590,887",
+			"turns": 6,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#b6cacd90-4e82-11e9-9e10-93b8df10f245"
+		}
+	},
+	"magical": {
+		"Elly": {
+			"name": "Elly",
+			"damage": "3,204,337,299",
+			"turns": 10,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#08a1f700-5406-11e9-9e10-93b8df10f245"
+		},
+		"Ultima (spark chain)": {
+			"name": "Ultima (spark chain)",
+			"damage": "3,120,679,118",
+			"turns": 9,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#f88f4380-55b9-11e9-9e10-93b8df10f245"
+		},
+		"Sophia": {
+			"name": "Sophia",
+			"damage": "2,600,841,004",
+			"turns": 9,
+			"url": null
+		},
+		"Ultima": {
+			"name": "Ultima",
+			"damage": "2,492,124,075",
+			"turns": 9,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#f88f4380-55b9-11e9-9e10-93b8df10f245"
+		},
+		"Lulu": {
+			"name": "Lulu",
+			"damage": "2,155,750,083",
+			"turns": 10,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#d3fb4d40-4fa9-11e9-9e10-93b8df10f245"
+		},
+		"Tiana": {
+			"name": "Tiana",
+			"damage": "1,966,324,641",
+			"turns": 11,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#4d69d460-656e-11e9-81cb-5b37b297a731"
+		},
+		"Christine (w/ external imperil)": {
+			"name": "Christine (w/ external imperil)",
+			"damage": "1,802,243,665",
+			"turns": 7,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#d4d3a980-656e-11e9-81cb-5b37b297a731"
+		},
+		"Christine (no external imperil)": {
+			"name": "Christine (no external imperil)",
+			"damage": "1,245,745,193",
+			"turns": 7,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#d4d3a980-656e-11e9-81cb-5b37b297a731"
+		},
+		"Grim Lord Sakura": {
+			"name": "Grim Lord Sakura",
+			"damage": "1,239,972,977",
+			"turns": 10,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#8644d030-6570-11e9-81cb-5b37b297a731"
+		},
+		"Barbariccia (spark chain w/ raging wind, no TMR)": {
+			"name": "Barbariccia (spark chain w/ raging wind, no TMR)",
+			"damage": "972,806,948",
+			"turns": 12,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#dc8dd000-4ed6-11e9-9e10-93b8df10f245"
+		},
+		"Mediena": {
+			"name": "Mediena",
+			"damage": "1,091,256,102",
+			"turns": 8,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#4e6e32c0-6573-11e9-81cb-5b37b297a731"
+		},
+		"Trance Terra (w/ external imperil)": {
+			"name": "Trance Terra (w/ external imperil)",
+			"damage": "989,663,987",
+			"turns": 7,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#3cbd6e50-6574-11e9-81cb-5b37b297a731"
+		},
+		"Circe": {
+			"name": "Circe",
+			"damage": "816,075,420",
+			"turns": 9,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#f6d0bc30-6573-11e9-81cb-5b37b297a731"
+		},
+		"Barbariccia (w/ aeroja & TMR)": {
+			"name": "Barbariccia (w/ aeroja & TMR)",
+			"damage": "697,788,334",
+			"turns": 12,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#dc8dd000-4ed6-11e9-9e10-93b8df10f245"
+		},
+		"Barbariccia (w/ raging wind, no TMR)": {
+			"name": "Barbariccia (w/ raging wind, no TMR)",
+			"damage": "682,628,667",
+			"turns": 12,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#dc8dd000-4ed6-11e9-9e10-93b8df10f245"
+		},
+		"Trance Terra (no external imperil)": {
+			"name": "Trance Terra (no external imperil)",
+			"damage": "565,522,278",
+			"turns": 7,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#3cbd6e50-6574-11e9-81cb-5b37b297a731"
+		}
+	},
+	"physical": {
+		"Regina (Ideal)": {
+			"name": "Regina (Ideal)",
+			"damage": "12,205,431,823",
+			"turns": 4,
+			"url": "http://ffbeEquip.com/builder.html?server=JP#86652ab0-4c5c-11e9-9e10-93b8df10f245"
+		},
+		"Regina (only LB chain)": {
+			"name": "Regina (only LB chain)",
+			"damage": "8,265,156,492",
+			"turns": 4,
+			"url": "http://ffbeEquip.com/builder.html?server=JP#86652ab0-4c5c-11e9-9e10-93b8df10f245"
+		},
+		"Esther": {
+			"name": "Esther",
+			"damage": "7,313,434,972",
+			"turns": 10,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#0d43cb70-6285-11e9-81cb-5b37b297a731"
+		},
+		"Regina (elemental weapon, only LB chain)": {
+			"name": "Regina (elemental weapon, only LB chain)",
+			"damage": "7,224,383,739",
+			"turns": 4,
+			"url": "http://ffbeEquip.com/builder.html?server=JP#86652ab0-4c5c-11e9-9e10-93b8df10f245"
+		},
+		"Akstar (w/ his STMR)": {
+			"name": "Akstar (w/ his STMR)",
+			"damage": "5,863,796,854",
+			"turns": 12,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#ee48acd0-4b83-11e9-9e10-93b8df10f245"
+		},
+		"Balthier (TDW, max roll, with a dupe)": {
+			"name": "Balthier (TDW, max roll, with a dupe)",
+			"damage": "4,778,025,112",
+			"turns": 9,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#f8b9c100-4c18-11e9-9e10-93b8df10f245"
+		},
+		"Akstar": {
+			"name": "Akstar",
+			"damage": "4,385,485,895",
+			"turns": 12,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#ee48acd0-4b83-11e9-9e10-93b8df10f245"
+		},
+		"Cid (Ideal)": {
+			"name": "Cid (Ideal)",
+			"damage": "3,467,367,252",
+			"turns": 4,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#1a66e480-4c56-11e9-9e10-93b8df10f245"
+		},
+		"Regina (No chain mod)": {
+			"name": "Regina (No chain mod)",
+			"damage": "3,239,808,505",
+			"turns": 4,
+			"url": "http://ffbeEquip.com/builder.html?server=JP#86652ab0-4c5c-11e9-9e10-93b8df10f245"
+		},
+		"Crimson (revive every 3 turns)": {
+			"name": "Crimson (revive every 3 turns)",
+			"damage": "3,199,629,466",
+			"turns": 9,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#d2bb93f0-5c23-11e9-9e10-93b8df10f245"
+		},
+		"Cid (Only jump capping)": {
+			"name": "Cid (Only jump capping)",
+			"damage": "3,068,362,358",
+			"turns": 8,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#1a66e480-4c56-11e9-9e10-93b8df10f245"
+		},
+		"Crimson": {
+			"name": "Crimson",
+			"damage": "2,962,498,706",
+			"turns": 12,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#d2bb93f0-5c23-11e9-9e10-93b8df10f245"
+		},
+		"Jecht (w/ external imperil)": {
+			"name": "Jecht (w/ external imperil)",
+			"damage": "2,445,215,407",
+			"turns": 12,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#734a3d10-4b9b-11e9-9e10-93b8df10f245"
+		},
+		"Jecht": {
+			"name": "Jecht",
+			"damage": "2,329,073,041",
+			"turns": 12,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#734a3d10-4b9b-11e9-9e10-93b8df10f245"
+		},
+		"Balthier (TDH, capping chains, average roll)": {
+			"name": "Balthier (TDH, capping chains, average roll)",
+			"damage": "2,280,577,528",
+			"turns": 9,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#f8b9c100-4c18-11e9-9e10-93b8df10f245"
+		},
+		"Sora (element weapon, w/ external imperil, AT)": {
+			"name": "Sora (element weapon, w/ external imperil, AT)",
+			"damage": "2,200,194,379",
+			"turns": 12,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#91125650-4f8a-11e9-9e10-93b8df10f245"
+		},
+		"Fei": {
+			"name": "Fei",
+			"damage": "2,143,217,566",
+			"turns": 10,
+			"url": "https://ffbeequip.com/builder.html?server=GL#b11cd610-5498-11e9-9e10-93b8df10f245"
+		},
+		"2B": {
+			"name": "2B",
+			"damage": "1,977,734,365",
+			"turns": 7,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#beffeb70-4ba9-11e9-9e10-93b8df10f245"
+		},
+		"Cloud (KH) (elemental weapon, w/ external imperil)": {
+			"name": "Cloud (KH) (elemental weapon, w/ external imperil)",
+			"damage": "1,859,198,939",
+			"turns": 1,
+			"url": null
+		},
+		"Balthier (TDW, average roll, with a dupe)": {
+			"name": "Balthier (TDW, average roll, with a dupe)",
+			"damage": "1,625,771,956",
+			"turns": 9,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#f8b9c100-4c18-11e9-9e10-93b8df10f245"
+		},
+		"Tifa": {
+			"name": "Tifa",
+			"damage": "1,563,643,570",
+			"turns": 10,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#5e498a00-4cff-11e9-9e10-93b8df10f245"
+		},
+		"Beatrix": {
+			"name": "Beatrix",
+			"damage": "1,479,425,282",
+			"turns": 10,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#b4b96d80-4fa5-11e9-9e10-93b8df10f245"
+		},
+		"Sephiroth": {
+			"name": "Sephiroth",
+			"damage": "1,452,315,389",
+			"turns": 10,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#600a86d0-4cf2-11e9-9e10-93b8df10f245"
+		},
+		"Sora (no element, AT)": {
+			"name": "Sora (no element, AT)",
+			"damage": "1,434,724,928",
+			"turns": 12,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#91125650-4f8a-11e9-9e10-93b8df10f245"
+		},
+		"Sora (no element, DR)": {
+			"name": "Sora (no element, DR)",
+			"damage": "1,336,411,750",
+			"turns": 8,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#91125650-4f8a-11e9-9e10-93b8df10f245"
+		},
+		"Hyoh (alternating Phantom Blade)": {
+			"name": "Hyoh (alternating Phantom Blade)",
+			"damage": "1,234,188,060",
+			"turns": 11,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#68f9f5c0-4d13-11e9-9e10-93b8df10f245"
+		},
+		"Hyoh": {
+			"name": "Hyoh",
+			"damage": "1,179,871,672",
+			"turns": 11,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#68f9f5c0-4d13-11e9-9e10-93b8df10f245"
+		},
+		"Auron (100% breaks uptime)": {
+			"name": "Auron (100% breaks uptime)",
+			"damage": "1,030,163,443",
+			"turns": 9,
+			"url": "http://ffbeEquip.com/builder.html?server=GL#97a2d630-4d04-11e9-9e10-93b8df10f245"
+		},
+		"Cloud (KH) (no element)": {
+			"name": "Cloud (KH) (no element)",
+			"damage": "1,006,560,103",
+			"turns": 1,
+			"url": null
+		},
+		"Wikami": {
+			"name": "Wikami",
+			"damage": "Weeb for life",
+			"turns": 1,
+			"url": null
+		}
+	}
+}

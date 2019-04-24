@@ -1,15 +1,22 @@
 const wiki = require("nodemw");
 const fs = require("fs");
 const cheerio = require("cheerio");
+const String = require('../string/string-extension.ts');
 const wikiClient = new wiki({
     protocol: "https", // Wikipedia now enforces HTTPS
     server: "exvius.gamepedia.com", // host name of MediaWiki-powered site
     path: "/", // path to api.php script
     debug: false // is more verbose when set to true
 });
+const dumpLocation = "data/rankingsdump.txt";
+const saveLocation = "data/rankingsdump.json";
 
 
 loadRankingsList(() => { });
+
+function log(data) {
+    console.log(data);
+}
 
 function loadRankingsList(callback) {
     var search = "Unit_Rankings";
@@ -33,7 +40,7 @@ function loadRankingsList(callback) {
 
             const $ = cheerio.load(xml);
             var table = $(".wikitable.sortable");
-            fs.writeFileSync("rankingsdump.txt", xml);
+            fs.writeFileSync(dumpLocation, xml);
 
             if (!table.is("table")) {
                 log("Not Table");
@@ -131,7 +138,7 @@ function loadRankingsList(callback) {
             //log(results)
             var j = JSON.stringify(results);
             //log(j);
-            fs.writeFileSync("rankingsdump.json", j);
+            fs.writeFileSync(saveLocation, j);
             log("Unit Rankings Updated");
             callback();
         });

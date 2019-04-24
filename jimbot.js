@@ -6,7 +6,7 @@ const fs = require("fs");
 const cheerio = require("cheerio");
 const http = require("https");
 const htt = require("http");
-const config = require("./config.ts");
+const config = require("./config/config.ts");
 const wikiClient = new wiki({
     protocol: "https", // Wikipedia now enforces HTTPS
     server: "exvius.gamepedia.com", // host name of MediaWiki-powered site
@@ -171,54 +171,6 @@ client.on("ready", () => {
 
     log("Configuration Loaded");
     loading = false;
-
-    wikiClient.getArticle("Final_Fantasy_Brave_Exvius_Wiki", (err, content, redirect) => {
-        if(err) {
-            log(err);
-            return;
-        }
-
-        const firstLine = content.indexOf("Recent");
-        content = content.substring(firstLine, content.length);
-
-        log(content);
-        log("---------------");
-
-        var unitsRegex = /\|unit.*=\s(.*)\|/g
-        var match = unitsRegex.exec(content);
-        while (match != null) {
-            
-            log(convertValueToLink(match[1]));
-        
-            match = unitsRegex.exec(content);
-        }
-
-        log("---------------");
-
-        var m = content.match(linkRegexp2);
-        if (m) {
-            var value = convertBatchToLinks(m);
-            log(value)
-        }
-
-
-    });
-
-    wikiClient.getArticle("Category:Events", (err, content, redirect) => {
-
-        if(err) {
-            log(err);
-            return;
-        }
-
-        //const firstLine = content.indexOf("Recent");
-        //content = content.substring(firstLine, content.length);
-
-        log(content);
-        log("---------------");
-
-        
-    });
 });
 
 function loadRankingsList(callback) {
@@ -1065,6 +1017,28 @@ function handleDpt(receivedMessage, search, parameters) {
         .catch(console.error);
     });
 }
+function handleRecentunits(receivedMessage, search, parameters) {
+
+    queryWikiFrontPage((links) => {
+        receivedMessage.channel
+        .send(mainChannelID, {
+            embed: {
+                color: pinkHexCode,
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL
+                },
+                title: "Recently Released Units",
+                description: links,
+                url: "https://exvius.gamepedia.com/Unit_List"
+            }
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+    })
+}
 
 // COMMANDS END
 
@@ -1687,6 +1661,44 @@ function queryWikiWithSearch(search, callback) {
         fields[0].value = convertTitlesToLinks(batch);
 
         callback(fields);
+    });
+}
+function queryWikiFrontPage(callback) {
+    wikiClient.getArticle("Final_Fantasy_Brave_Exvius_Wiki", (err, content, redirect) => {
+        if(err) {
+            log(err);
+            return;
+        }
+
+        const firstLine = content.indexOf("Recent");
+        content = content.substring(firstLine, content.length);
+
+        var units = "";
+        var unitsRegex = /\|unit.*=\s(.*)\|/g
+        var match = unitsRegex.exec(content);
+        while (match != null) {
+            
+            units += convertValueToLink(match[1]) + "\n";
+        
+            match = unitsRegex.exec(content);
+        }
+
+        wikiClient.parse(content, "Final_Fantasy_Brave_Exvius_Wiki", function (err, xml, images) {
+            if(err) {
+                log(err);
+                return;
+            }
+
+            log(images);
+        });
+
+        var m = content.match(linkRegexp2);
+        if (m) {
+            var value = convertBatchToLinks(m);
+            log(value)
+        }
+
+        callback(units)
     });
 }
 

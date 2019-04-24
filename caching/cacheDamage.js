@@ -7,6 +7,7 @@ const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const calcSheet = "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0/edit#gid=0";
 const sheetName = "Damage comparison";
 const sheetID = "1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0";
+const saveLocation = "data/unitcalculations.json";
 
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
@@ -53,23 +54,6 @@ function authorize(credentials, callback) {
         console.log(`[${totalUnits}]${index}: ${url}`)
         totalUnits--;
 
-        /*
-        var cats = Object.keys(units);
-        cats.forEach((cat) => {
-            var keys = Object.keys(units[cat]);
-            keys.forEach((key, ind) => {
-                if (!key.includes("(KH)")) {
-                    key = key.replace(/\(.*\)/, "").trim();
-                } else {
-                    var i = key.lastIndexOf("(");
-                    key = key.substring(i, key.length);
-                }
-
-                var range = `${key}!A1:B1`
-                console.log("Saving To: " + range)
-            });
-        });*/
-
         if (units["physical"][index]) {
             units["physical"][index].url = url;
         } else if (units["magical"][index]) {
@@ -82,7 +66,7 @@ function authorize(credentials, callback) {
 
         if (totalUnits <= 0) {
             var save = JSON.stringify(units, null, "\t");
-            fs.writeFileSync("unitcalculations.json", save);
+            fs.writeFileSync(saveLocation, save);
         }
     };
 
@@ -95,14 +79,7 @@ function authorize(credentials, callback) {
         if (count <= 0) {
             console.log("Unit Fields");
             console.log("Total: " + totalUnits);
-            //console.log(units);
-
-            //var save = JSON.stringify(units, null, "\t");
-            //fs.writeFileSync("unitcalculations.json", save);
-
-            /*if (callback) {
-                callback(fields, limited, rarity);
-            }*/
+ 
             var cats = Object.keys(units);
             cats.forEach((cat) => {
                 console.log("Category: " + cat);
@@ -141,28 +118,31 @@ function authorize(credentials, callback) {
  * @param {getEventsCallback} callback The callback for the authorized client.
  */
 function getNewToken(oAuth2Client, callback) {
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: SCOPES,
-  });
-  console.log('Authorize this app by visiting this url:', authUrl);
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-  rl.question('Enter the code from that page here: ', (code) => {
-    rl.close();
-    oAuth2Client.getToken(code, (err, token) => {
-      if (err) return console.error('Error while trying to retrieve access token', err);
-      oAuth2Client.setCredentials(token);
-      // Store the token to disk for later program executions
-      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-        if (err) return console.error(err);
-        console.log('Token stored to', TOKEN_PATH);
-      });
-      callback(oAuth2Client);
+    const authUrl = oAuth2Client.generateAuthUrl({
+        access_type: 'offline',
+        scope: SCOPES,
     });
-  });
+    console.log('Authorize this app by visiting this url:', authUrl);
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+    });
+    rl.question('Enter the code from that page here: ', (code) => {
+        rl.close();
+        oAuth2Client.getToken(code, (err, token) => {
+            if (err) 
+                return console.error('Error while trying to retrieve access token', err);
+            
+            oAuth2Client.setCredentials(token);
+            // Store the token to disk for later program executions
+            fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+                if (err) 
+                    return console.error(err);
+                console.log('Token stored to', TOKEN_PATH);
+            });
+            callback(oAuth2Client);
+        });
+    });
 }
 
 function bySortedValue(obj, callback, context) {

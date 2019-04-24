@@ -1,4 +1,5 @@
 const fs = require("fs");
+const saveLocation = "data/unitkeys.json";
 
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
@@ -15,12 +16,9 @@ function main() {
     var glUnits = getUnitsList("../ffbe/units.json");
     var jpUnits = getUnitsList("../ffbe-jp/units.json");
 
-    //var ut = fs.readFileSync("unittranslations.json");
-    //const translated = JSON.parse(ut);
-
-    var units = Object.assign({}, glUnits, jpUnits/*, translated*/);
+    var units = Object.assign({}, glUnits, jpUnits);
     var save = JSON.stringify(units, null, "\t");
-    fs.writeFileSync("unitkeys.json", save);
+    fs.writeFileSync(saveLocation, save);
 
     console.log("Units Cached");
 }

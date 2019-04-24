@@ -16,7 +16,8 @@ function requestBuild(url, callback) {
         { uri: `https://firebasestorage.googleapis.com/v0/b/ffbeequip.appspot.com/o/PartyBuilds%2F${buildId}.json?alt=media` },
         function(error, response, body) {
             const $ = cheerio.load(body);
-            console.log(body)
+            console.log(JSON.parse(body));
+            //var save = JSON.stringify(units, null, "\t");
         }
     );
 

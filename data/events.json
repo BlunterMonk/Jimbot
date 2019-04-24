@@ -1,0 +1,5486 @@
+{
+	"0": {
+		"Date": "Change",
+		"Type": "Change",
+		"Title": "Change",
+		"Url": "Change"
+	},
+	"1": {
+		"Date": "20190423",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190425maintenance.html"
+	},
+	"2": {
+		"Date": "20190423",
+		"Type": "Other",
+		"Title": "Parameter Quests Added!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190423parameterquests.html"
+	},
+	"3": {
+		"Date": "20190423",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/storyunlock272.png"
+	},
+	"4": {
+		"Date": "20190423",
+		"Type": "Event",
+		"Title": "Armeggeddon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/eastertrialarmeggeddon.jpg"
+	},
+	"5": {
+		"Date": "20190423",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius X Xenogears",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190423xenogears2collaboration.jpg"
+	},
+	"6": {
+		"Date": "20190423",
+		"Type": "Event",
+		"Title": "First And Last",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/firstandlast.jpg"
+	},
+	"7": {
+		"Date": "20190423",
+		"Type": "Other",
+		"Title": "Xenogears Login Bonus: Round 2",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190423xenogearsloginbonusround2.html"
+	},
+	"8": {
+		"Date": "20190423",
+		"Type": "Other",
+		"Title": "Introducing The Xenogears Limited Exchange Ticket (f/e/b/c/m) Banner",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190423xenogearsexchangeticketfebcm.html"
+	},
+	"9": {
+		"Date": "20190423",
+		"Type": "Other",
+		"Title": "Xenogears Collaboration Free Lapis Daily Summon Campaign",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190423lapisgachasummon.html"
+	},
+	"10": {
+		"Date": "20190418",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190418postmaintenance.html"
+	},
+	"11": {
+		"Date": "20190418",
+		"Type": "Other",
+		"Title": "Final Fantasy Portal App Event!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190418ffportalapppart2.html"
+	},
+	"12": {
+		"Date": "20190417",
+		"Type": "Event",
+		"Title": "Steel Castle Melfikya",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190416weaponenhancement.html"
+	},
+	"13": {
+		"Date": "20190417",
+		"Type": "Other",
+		"Title": "5★ Guaranteed 10+1 Summon Ticket (au Tmr) Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201904165starguaranteed10plus1ticketau.html"
+	},
+	"14": {
+		"Date": "20190417",
+		"Type": "Other",
+		"Title": "5★ Guaranteed 10+1 Summon Ticket (er Tmr) Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201904165starguaranteed10plus1ticketer.html"
+	},
+	"15": {
+		"Date": "20190417",
+		"Type": "Other",
+		"Title": "(ffbe Live) Spring Special!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190417livestreamfreesummon.html"
+	},
+	"16": {
+		"Date": "20190416",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190418maintenance.html"
+	},
+	"17": {
+		"Date": "20190416",
+		"Type": "Other",
+		"Title": "Introducing The 5★ Guaranteed (30% Featured) Ticket (spring 2019) Summon Banner",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190412spring305starguaranteedticket.html"
+	},
+	"18": {
+		"Date": "20190416",
+		"Type": "Event",
+		"Title": "The Battle Of Judecca",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/battleofjudecca.jpg"
+	},
+	"19": {
+		"Date": "20190416",
+		"Type": "Event",
+		"Title": "The Day The Spark Was Lit Extra Stage",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/thedaythesparkwaslitextrastage.png"
+	},
+	"20": {
+		"Date": "20190416",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190416awakeningabilities27.jpg"
+	},
+	"21": {
+		"Date": "20190416",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/2019eastergacha.jpg"
+	},
+	"22": {
+		"Date": "20190416",
+		"Type": "Event",
+		"Title": "Eggstinction",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/2019easterevent.jpg"
+	},
+	"23": {
+		"Date": "20190412",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190412marchontiamatissuereport.html"
+	},
+	"24": {
+		"Date": "20190412",
+		"Type": "Other",
+		"Title": "Spring Celebration 5★ Guaranteed Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190412springcelebrationgacharerun.html"
+	},
+	"25": {
+		"Date": "20190411",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190411postmaintenance.html"
+	},
+	"26": {
+		"Date": "20190409",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ffbecrimsonfeaturesummon.jpg"
+	},
+	"27": {
+		"Date": "20190409",
+		"Type": "Event",
+		"Title": "The Day The Spark Was Lit",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/thedaythesparkwaslit.jpg"
+	},
+	"28": {
+		"Date": "20190409",
+		"Type": "Event",
+		"Title": "Vault Of Hidden Treasures",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190409vaultofhiddentreasures.html"
+	},
+	"29": {
+		"Date": "20190409",
+		"Type": "Event",
+		"Title": "March On Tiamat",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_fftmarchontiamat.jpg"
+	},
+	"30": {
+		"Date": "20190409",
+		"Type": "Trial",
+		"Title": "Scorn Of The Beasts Of The Dark (updated!)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/beastsofthedark.jpg"
+	},
+	"31": {
+		"Date": "20190409",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190411maintenance.html"
+	},
+	"32": {
+		"Date": "20190409",
+		"Type": "Other",
+		"Title": "Spring 2019 Free Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190409spring2019freesummon.html"
+	},
+	"33": {
+		"Date": "20190409",
+		"Type": "Other",
+		"Title": "Introducing The Spring 2019 Summon Ticket Banner",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/spring2019summonticket.html"
+	},
+	"34": {
+		"Date": "20190409",
+		"Type": "Other",
+		"Title": "Spring 2019 Login Bonus",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190409springloginbonus.html"
+	},
+	"35": {
+		"Date": "20190409",
+		"Type": "Other",
+		"Title": "Introducing The Special 5★ Batch Ticket (b. L. 2019) Banner",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190409special5starticketbol.html"
+	},
+	"36": {
+		"Date": "20190405",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190405ultimauntruesaintissuereport.html"
+	},
+	"37": {
+		"Date": "20190404",
+		"Type": "Other",
+		"Title": "Final Fantasy Portal App Event!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190404ffportalappevent.html"
+	},
+	"38": {
+		"Date": "20190404",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190404myraissuereport.html"
+	},
+	"39": {
+		"Date": "20190404",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190404communityrewardsissuereport.html"
+	},
+	"40": {
+		"Date": "20190404",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190404postmaintenanceextended.html"
+	},
+	"41": {
+		"Date": "20190402",
+		"Type": "Event",
+		"Title": "Nelveska Temple",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_fft_nelveskatemple.jpg"
+	},
+	"42": {
+		"Date": "20190402",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Tactics: The War Of The Lions (updated!)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ff3twotlultimagacha3.jpg"
+	},
+	"43": {
+		"Date": "20190402",
+		"Type": "Event",
+		"Title": "Desert Despair",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_xenogearstrial.jpg"
+	},
+	"44": {
+		"Date": "20190402",
+		"Type": "Other",
+		"Title": "5★ Guaranteed (30% Featured) Ticket (fft) Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190402fft305starguaranteedticket.html"
+	},
+	"45": {
+		"Date": "20190402",
+		"Type": "Trial",
+		"Title": "Beasts Of The Dark Ii",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190402thefallenbeastsofthedarkii.jpg"
+	},
+	"46": {
+		"Date": "20190402",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190404maintenance.html"
+	},
+	"47": {
+		"Date": "20190401",
+		"Type": "Other",
+		"Title": "Chances To Get 5★ Select Summon Tickets This Month!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190401aprilfreeselectsummonticket.html"
+	},
+	"48": {
+		"Date": "20190401",
+		"Type": "Other",
+		"Title": "Guaranteed 5★ Special Summon Tickets",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190401guaranteed5starsummonticket.html"
+	},
+	"49": {
+		"Date": "20190329",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/ver350fixedissues.html"
+	},
+	"50": {
+		"Date": "20190328",
+		"Type": "Issue",
+		"Title": "Version 3.5.0",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190328gl350patchnotes.html"
+	},
+	"51": {
+		"Date": "20190328",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190328postmaintenanceextended.html"
+	},
+	"52": {
+		"Date": "20190327",
+		"Type": "Other",
+		"Title": "Wooden Training Dummy Limit Increase",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190326towerofwinddummyupdate.html"
+	},
+	"53": {
+		"Date": "20190327",
+		"Type": "Unit",
+		"Title": "Featured Summon Xenogears",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190328xenogearsgachabanner.jpg"
+	},
+	"54": {
+		"Date": "20190327",
+		"Type": "Event",
+		"Title": "Elements' Formation",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190328xenogearsraid.jpg"
+	},
+	"55": {
+		"Date": "20190327",
+		"Type": "Other",
+		"Title": "Introducing The Xenogears Limited Exchange Ticket (f/e/b) Banner",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190326xenogearsexchangeticket.html"
+	},
+	"56": {
+		"Date": "20190327",
+		"Type": "Other",
+		"Title": "Xenogears Login Bonus",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190326xenogearsloginbonus.html"
+	},
+	"57": {
+		"Date": "20190327",
+		"Type": "Other",
+		"Title": "Xenogears Collaboration Free Lapis Daily Summon Campaign",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190326lapisgachasummon.html"
+	},
+	"58": {
+		"Date": "20190326",
+		"Type": "Other",
+		"Title": "Final Fantasy Brave Exvius Arena Improvements",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190326arenatweakupdate.html"
+	},
+	"59": {
+		"Date": "20190326",
+		"Type": "Other",
+		"Title": "Half Energy",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190401halfenergycampaign.html"
+	},
+	"60": {
+		"Date": "20190326",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_unlockcontinent_arc2_7-1.jpg"
+	},
+	"61": {
+		"Date": "20190326",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190328maintenance.html"
+	},
+	"62": {
+		"Date": "20190325",
+		"Type": "Other",
+		"Title": "Final Fantasy Brave Exvius Original Soundtrack Vol.2 Is Now On Sale!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190322ffbesoundtrackvol2.html"
+	},
+	"63": {
+		"Date": "20190325",
+		"Type": "Other",
+		"Title": "Spring Celebration 5★ Guaranteed Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190322springcelebrationgacha.html"
+	},
+	"64": {
+		"Date": "20190321",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190322arenaweeklynews.html"
+	},
+	"65": {
+		"Date": "20190321",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190321postmaintenance.html"
+	},
+	"66": {
+		"Date": "20190320",
+		"Type": "Other",
+		"Title": "Friend Point Trust Moogle Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190319fpsummon.html"
+	},
+	"67": {
+		"Date": "20190320",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190320abilityawakening26.jpg"
+	},
+	"68": {
+		"Date": "20190320",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_news_yuraisha_compilation.jpg"
+	},
+	"69": {
+		"Date": "20190320",
+		"Type": "Event",
+		"Title": "Steel Castle Melfikya",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190319weaponenhancement.html"
+	},
+	"70": {
+		"Date": "20190319",
+		"Type": "Event",
+		"Title": "Taking To The Skies Extra Stage",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_ffbetakingtotheskies_part2.jpg"
+	},
+	"71": {
+		"Date": "20190319",
+		"Type": "Event",
+		"Title": "The Auracite Chosen",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ff0_akademeia_rerun.jpg"
+	},
+	"72": {
+		"Date": "20190319",
+		"Type": "Trial",
+		"Title": "Welter The Beholder Warden Welter",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/chamberofarmswardenwelter.jpg"
+	},
+	"73": {
+		"Date": "20190319",
+		"Type": "Trial",
+		"Title": "Scorn Of Gilgamesh",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190319scornofgilgamesh.jpg"
+	},
+	"74": {
+		"Date": "20190319",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190321maintenance.html"
+	},
+	"75": {
+		"Date": "20190315",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190315falmaissue.html"
+	},
+	"76": {
+		"Date": "20190314",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190315arenaweeklynews.html"
+	},
+	"77": {
+		"Date": "20190314",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190314postmaintenance.html"
+	},
+	"78": {
+		"Date": "20190314",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190314incbundlecontentissuereport.html"
+	},
+	"79": {
+		"Date": "20190312",
+		"Type": "Event",
+		"Title": "Cid",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/cidtrialquest3.jpg"
+	},
+	"80": {
+		"Date": "20190312",
+		"Type": "Event",
+		"Title": "Taking To The Skies",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/takingtotheskies.jpg"
+	},
+	"81": {
+		"Date": "20190312",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/cidgacha.jpg"
+	},
+	"82": {
+		"Date": "20190312",
+		"Type": "Event",
+		"Title": "Doga's Grotto - Exploration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ff3exploration.jpg"
+	},
+	"83": {
+		"Date": "20190312",
+		"Type": "Other",
+		"Title": "Rewards Wheel Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190311springrewardswheel.html"
+	},
+	"84": {
+		"Date": "20190312",
+		"Type": "Other",
+		"Title": "Dissidia Final Fantasy Nt Release Celebration Free Daily Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190313dissidiacampaign.html"
+	},
+	"85": {
+		"Date": "20190312",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190312issuereportff3.html"
+	},
+	"86": {
+		"Date": "20190312",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190313maintenance.html"
+	},
+	"87": {
+		"Date": "20190312",
+		"Type": "Other",
+		"Title": "Spring Login Bonus",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190313marchsploginbonus.html"
+	},
+	"88": {
+		"Date": "20190308",
+		"Type": "Unit",
+		"Title": "Celebrating 7★ Awakenings: Group B",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190301starawakeningcompletecampaignpart2.html"
+	},
+	"89": {
+		"Date": "20190307",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190308arenaweeklynews.html"
+	},
+	"90": {
+		"Date": "20190307",
+		"Type": "Issue",
+		"Title": "Issue Report (updated!)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190307variousissuereportsfixes2.html"
+	},
+	"91": {
+		"Date": "20190307",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190307postmaintenance.html"
+	},
+	"92": {
+		"Date": "20190306",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190307ffbevideonews.html"
+	},
+	"93": {
+		"Date": "20190306",
+		"Type": "Event",
+		"Title": "Cave Of Shadows",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ff3caveofshadows.jpg"
+	},
+	"94": {
+		"Date": "20190306",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Iii",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ff3gacha.jpg"
+	},
+	"95": {
+		"Date": "20190306",
+		"Type": "Other",
+		"Title": "5★ Guaranteed (30% Featured) Ticket Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190305ff3305starguaranteedticket.html"
+	},
+	"96": {
+		"Date": "20190306",
+		"Type": "Other",
+		"Title": "Final Fantasy Iii Free Daily Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190305ff3freedailysummon.html"
+	},
+	"97": {
+		"Date": "20190306",
+		"Type": "Other",
+		"Title": "Final Fantasy Brave Exvius: Arena Improvements",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190307arenatweak.html"
+	},
+	"98": {
+		"Date": "20190305",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190305maintenance.html"
+	},
+	"99": {
+		"Date": "20190305",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190305abilityawakening25.jpg"
+	},
+	"100": {
+		"Date": "20190305",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190305variousissuefixreports.html"
+	},
+	"101": {
+		"Date": "20190305",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190305variousissuereportsv2.html"
+	},
+	"102": {
+		"Date": "20190303",
+		"Type": "Other",
+		"Title": "Account Unbinding For Facebook And Google",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190305unbindoption.html"
+	},
+	"103": {
+		"Date": "20190301",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190301marchloginrewardsissuereport.html"
+	},
+	"104": {
+		"Date": "20190301",
+		"Type": "Issue",
+		"Title": "Version 3.4.5",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190301gl345patchnotes.html"
+	},
+	"105": {
+		"Date": "20190301",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190301postmaintenance.html"
+	},
+	"106": {
+		"Date": "20190228",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190301arenaweeklynews.html"
+	},
+	"107": {
+		"Date": "20190228",
+		"Type": "Other",
+		"Title": "Guaranteed 5★ Special Summon Tickets",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190301guaranteed5starsummonticket.html"
+	},
+	"108": {
+		"Date": "20190228",
+		"Type": "Other",
+		"Title": "Chances To Get 5★ Select Summon Tickets This Month!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190228marchfreeselectsummonticket2.html"
+	},
+	"109": {
+		"Date": "20190228",
+		"Type": "Vortex",
+		"Title": "Enchanted Maze",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190226enchantedmazererun.html"
+	},
+	"110": {
+		"Date": "20190228",
+		"Type": "Event",
+		"Title": "Vault Of Hidden Treasures",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190301vaultofhiddentreasures.html"
+	},
+	"111": {
+		"Date": "20190228",
+		"Type": "Unit",
+		"Title": "Featured Global Line-up (updated!)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190226ffbefeaturedgloballineup2.html"
+	},
+	"112": {
+		"Date": "20190228",
+		"Type": "Other",
+		"Title": "Half Energy",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190301halfenergycampaign.html"
+	},
+	"113": {
+		"Date": "20190227",
+		"Type": "Maintenance",
+		"Title": "Maintenance (updated!)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190228maintenance.html"
+	},
+	"114": {
+		"Date": "20190226",
+		"Type": "Event",
+		"Title": "Shadows Of Ruination",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/shadowsofruination.jpg"
+	},
+	"115": {
+		"Date": "20190226",
+		"Type": "Trial",
+		"Title": "Guardian Of Shadow And Despair Alpherg",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/chamberofarmsalpherg.jpg"
+	},
+	"116": {
+		"Date": "20190226",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/abilityawakeningbatch24.jpg"
+	},
+	"117": {
+		"Date": "20190226",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/story263.jpg"
+	},
+	"118": {
+		"Date": "20190226",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190227maintenance.html"
+	},
+	"119": {
+		"Date": "20190226",
+		"Type": "Other",
+		"Title": "Fan Festa Choice Collection Bundle (part 2)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190226fanfestachoicecollectionbundlepart2.html"
+	},
+	"120": {
+		"Date": "20190225",
+		"Type": "Issue",
+		"Title": "Status Update From The Operations Team",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190225messagefromtheopsteam2.html"
+	},
+	"121": {
+		"Date": "20190225",
+		"Type": "Other",
+		"Title": "Fan Festa Choice Collection Bundle",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190221fanfestachoicecollectionbundle.html"
+	},
+	"122": {
+		"Date": "20190225",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190225googleidissuereport2.html"
+	},
+	"123": {
+		"Date": "20190221",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190222arenaweeklynews.html"
+	},
+	"124": {
+		"Date": "20190221",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190221postmaintenance.html"
+	},
+	"125": {
+		"Date": "20190221",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190221generalissuereport.html"
+	},
+	"126": {
+		"Date": "20190220",
+		"Type": "Event",
+		"Title": "Blacksmith Of The Flame Extra Stage",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ignacioextrastage.jpg"
+	},
+	"127": {
+		"Date": "20190220",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190220issuereportstoryevent.html"
+	},
+	"128": {
+		"Date": "20190220",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/fanfestamyragachasummon.jpg"
+	},
+	"129": {
+		"Date": "20190220",
+		"Type": "Other",
+		"Title": "Fan Festa Exchange Campaign",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190219fanfestaexchange.html"
+	},
+	"130": {
+		"Date": "20190220",
+		"Type": "Event",
+		"Title": "Darkness Apocalypse",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/fanfestadarknessapocalypse.jpg"
+	},
+	"131": {
+		"Date": "20190220",
+		"Type": "Other",
+		"Title": "Fan Festa Commemoration Login Bonus",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190219fanfestacommemorationloginbonus.html"
+	},
+	"132": {
+		"Date": "20190220",
+		"Type": "Other",
+		"Title": "Introducing The Free 10+1 Summon Featuring Fan Festa Units",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190219fanfesta10plus1.html"
+	},
+	"133": {
+		"Date": "20190220",
+		"Type": "Other",
+		"Title": "Introducing The Special 5★ Batch Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190219special5starticket.html"
+	},
+	"134": {
+		"Date": "20190220",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/fanfestagachererunberyl.jpg"
+	},
+	"135": {
+		"Date": "20190220",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/fanfestamalphgachasummonrerun.jpg"
+	},
+	"136": {
+		"Date": "20190220",
+		"Type": "Event",
+		"Title": "Limited-time Quests King Mog's Lost Maps (updated!)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190219updatedkingmogslostmaps.html"
+	},
+	"137": {
+		"Date": "20190219",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190221maintenance.html"
+	},
+	"138": {
+		"Date": "20190214",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190215arenaweeklynews.html"
+	},
+	"139": {
+		"Date": "20190214",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190214postmaintenance.html"
+	},
+	"140": {
+		"Date": "20190214",
+		"Type": "Event",
+		"Title": "Lord Of The Beasts",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/cnytrialboss.jpg"
+	},
+	"141": {
+		"Date": "20190213",
+		"Type": "Event",
+		"Title": "Ignacio",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/cgignacio.jpg"
+	},
+	"142": {
+		"Date": "20190213",
+		"Type": "Event",
+		"Title": "Blacksmith Of The Flame",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/blacksmithoftheflame.jpg"
+	},
+	"143": {
+		"Date": "20190213",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_news_ffbeignacio.jpg"
+	},
+	"144": {
+		"Date": "20190212",
+		"Type": "Event",
+		"Title": "Steel Castle Melfikya",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190214weaponenhancement.html"
+	},
+	"145": {
+		"Date": "20190212",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190214maintenance.jpg"
+	},
+	"146": {
+		"Date": "20190208",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/feb8-ffbe-updates-video.jpg"
+	},
+	"147": {
+		"Date": "20190208",
+		"Type": "Unit",
+		"Title": "Units Featured For A 7★ Awakening",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190208starawakeningbatch7.jpg"
+	},
+	"148": {
+		"Date": "20190208",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190208postmaintenance.jpg"
+	},
+	"149": {
+		"Date": "20190208",
+		"Type": "Event",
+		"Title": "Yearning For Peace (updated!)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190208cnywavebattle2.jpg"
+	},
+	"150": {
+		"Date": "20190208",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190208cnynewunitsgachabanner.jpg"
+	},
+	"151": {
+		"Date": "20190208",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190208cnyrerungachabanner.jpg"
+	},
+	"152": {
+		"Date": "20190207",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190208arenaweeklynews.jpg"
+	},
+	"153": {
+		"Date": "20190207",
+		"Type": "Event",
+		"Title": "Dome - Exploration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190207ffxexploration.jpg"
+	},
+	"154": {
+		"Date": "20190207",
+		"Type": "Other",
+		"Title": "Lunar New Year Login Bonus",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/feb7lunar_new_year_login_bonus.jpg"
+	},
+	"155": {
+		"Date": "20190206",
+		"Type": "Event",
+		"Title": "The Vault Of Hidden Treasures",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190207vaultofhiddentreasure.jpg"
+	},
+	"156": {
+		"Date": "20190206",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/maintenance.jpg"
+	},
+	"157": {
+		"Date": "20190204",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/342issuereport.jpg"
+	},
+	"158": {
+		"Date": "20190201",
+		"Type": "Unit",
+		"Title": "Celebrating 7★ Awakenings: Group A",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/7starawakening.jpg"
+	},
+	"159": {
+		"Date": "20190131",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190201arenaweeklynews.html"
+	},
+	"160": {
+		"Date": "20190131",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190131knownissuesreport.jpg"
+	},
+	"161": {
+		"Date": "20190131",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/postmaintenance.jpg"
+	},
+	"162": {
+		"Date": "20190131",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy X",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190131ffxgachabanner.jpg"
+	},
+	"163": {
+		"Date": "20190131",
+		"Type": "Event",
+		"Title": "Zanarkand Ruins",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190131ffxzanarkandruins.jpg"
+	},
+	"164": {
+		"Date": "20190130",
+		"Type": "Other",
+		"Title": "Google Account Login",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190129googleidnews.html"
+	},
+	"165": {
+		"Date": "20190130",
+		"Type": "Other",
+		"Title": "Trust Coins",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190129trustcoinnews.html"
+	},
+	"166": {
+		"Date": "20190130",
+		"Type": "Other",
+		"Title": "Moogle Cave Expeditions",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190129tmexpedition.html"
+	},
+	"167": {
+		"Date": "20190130",
+		"Type": "Event",
+		"Title": "Limited-time Quests King Mog's Lost Maps",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190129kingmogslostmaps.html"
+	},
+	"168": {
+		"Date": "20190129",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/awakeningabilities23.jpg"
+	},
+	"169": {
+		"Date": "20190129",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/story262unlock.jpg"
+	},
+	"170": {
+		"Date": "20190129",
+		"Type": "Other",
+		"Title": "Guaranteed 5★ Special Summon Tickets",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190129guaranteed5starsummonticket.html"
+	},
+	"171": {
+		"Date": "20190129",
+		"Type": "Other",
+		"Title": "Monthly 5★ Select Summon Tickets",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190131februaryfreeselectsummonticket.html"
+	},
+	"172": {
+		"Date": "20190129",
+		"Type": "Trial",
+		"Title": "Champion Of Freedom And Equality Sadalsuud",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/chamberofarmssadalsuud.jpg"
+	},
+	"173": {
+		"Date": "20190129",
+		"Type": "Other",
+		"Title": "3★ Esper Unlocked!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190129alexander3stars.jpg"
+	},
+	"174": {
+		"Date": "20190129",
+		"Type": "Event",
+		"Title": "Defeat Jie Revorse - God",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190128staroceantrial.jpg"
+	},
+	"175": {
+		"Date": "20190129",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190130maintenance8hours.html"
+	},
+	"176": {
+		"Date": "20190128",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190128soaraidsummonissuereport.html"
+	},
+	"177": {
+		"Date": "20190124",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190125renaabilityissuereport.html"
+	},
+	"178": {
+		"Date": "20190124",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190125arenaweeklynews.html"
+	},
+	"179": {
+		"Date": "20190124",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190124postmaintenance.html"
+	},
+	"180": {
+		"Date": "20190124",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 7★ Release Special Part 12",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/7stargachapart12.jpg"
+	},
+	"181": {
+		"Date": "20190124",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 7★ Release Special Part 11",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/7stargachapart11.jpg"
+	},
+	"182": {
+		"Date": "20190124",
+		"Type": "Unit",
+		"Title": "Units Featured For A 7★ Awakening",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201901237starawakeningbatch64.html"
+	},
+	"183": {
+		"Date": "20190123",
+		"Type": "Event",
+		"Title": "Operation Ma Demolition",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190123fft0rerun.png"
+	},
+	"184": {
+		"Date": "20190122",
+		"Type": "Unit",
+		"Title": "Featured Summon Star Ocean -anamnesis- 2019",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190122soagachabanner2.jpg"
+	},
+	"185": {
+		"Date": "20190122",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190124maintenance.html"
+	},
+	"186": {
+		"Date": "20190122",
+		"Type": "Unit",
+		"Title": "Units Featured For A 7★ Awakening",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201901237starawakeningbatch63.html"
+	},
+	"187": {
+		"Date": "20190122",
+		"Type": "Event",
+		"Title": "Star Ocean -anamnesis- Vanquish Jie Revorse!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/staroceanraidrerun.jpg"
+	},
+	"188": {
+		"Date": "20190122",
+		"Type": "Other",
+		"Title": "Introducing The Star Ocean",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190123soaticketsummon.html"
+	},
+	"189": {
+		"Date": "20190122",
+		"Type": "Other",
+		"Title": "Star Ocean: Anamnesis Login Bonus",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190123soaloginbonus2.html"
+	},
+	"190": {
+		"Date": "20190122",
+		"Type": "Other",
+		"Title": "Countdown To Lunar New Year! Free Lapis Daily Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190123cnycountdownlapissummon.html"
+	},
+	"191": {
+		"Date": "20190122",
+		"Type": "Event",
+		"Title": "Priestess Of The Crystalline Waters Extra Stage",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/maidenofamirrorextrastage.jpg"
+	},
+	"192": {
+		"Date": "20190121",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190121ffbevideonews2.html"
+	},
+	"193": {
+		"Date": "20190117",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190118arenaweeklynews.html"
+	},
+	"194": {
+		"Date": "20190117",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190117postmaintenance.html"
+	},
+	"195": {
+		"Date": "20190115",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ffbefolkagachabanner.jpg"
+	},
+	"196": {
+		"Date": "20190115",
+		"Type": "Event",
+		"Title": "Folka",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/folkatrialquest.jpg"
+	},
+	"197": {
+		"Date": "20190115",
+		"Type": "Event",
+		"Title": "Priestess Of The Crystalline Waters",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190115maidenofamirror.jpg"
+	},
+	"198": {
+		"Date": "20190115",
+		"Type": "Event",
+		"Title": "Gaea's Cliff - Exploration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190115ff7gaeascliffexploration.jpg"
+	},
+	"199": {
+		"Date": "20190115",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190117maintenance.html"
+	},
+	"200": {
+		"Date": "20190111",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190111postmaintenance.html"
+	},
+	"201": {
+		"Date": "20190110",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190111arenaweeklynews.html"
+	},
+	"202": {
+		"Date": "20190109",
+		"Type": "Unit",
+		"Title": "Units Featured For A 7★ Awakening",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190108starawakeningbatch6b1.html"
+	},
+	"203": {
+		"Date": "20190109",
+		"Type": "Unit",
+		"Title": "Featured Step-up Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190109cloudsephysummonbanner.jpg"
+	},
+	"204": {
+		"Date": "20190109",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Vii",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190109tifavincentsummonbanner.jpg"
+	},
+	"205": {
+		"Date": "20190109",
+		"Type": "Event",
+		"Title": "Gaea's Cliff",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190108ffvii_gaeascliff.jpg"
+	},
+	"206": {
+		"Date": "20190108",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190111maintenance.html"
+	},
+	"207": {
+		"Date": "20190108",
+		"Type": "Event",
+		"Title": "Fan Festa: Vault Of Hidden Treasures",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190108vaultofhiddentreasures.html"
+	},
+	"208": {
+		"Date": "20190104",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190104khoblivionreport2.html"
+	},
+	"209": {
+		"Date": "20190104",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190104arenaweeklynews.html"
+	},
+	"210": {
+		"Date": "20190103",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190103postmaintenance.html"
+	},
+	"211": {
+		"Date": "20190102",
+		"Type": "Event",
+		"Title": "Steel Castle Melfikya",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190103weaponenhancement.html"
+	},
+	"212": {
+		"Date": "20190102",
+		"Type": "Other",
+		"Title": "New Year Login Bonus",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190101newyearsploginbonus.html"
+	},
+	"213": {
+		"Date": "20190102",
+		"Type": "Other",
+		"Title": "Half Energy",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190103halfenergycampaign.html"
+	},
+	"214": {
+		"Date": "20190102",
+		"Type": "Vortex",
+		"Title": "Enchanted Maze",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190104enchantedmaze.html"
+	},
+	"215": {
+		"Date": "20190102",
+		"Type": "Event",
+		"Title": "Heartless: Darkside (updated!)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190104khtrialboss3.jpg"
+	},
+	"216": {
+		"Date": "20190102",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190103maintenance.html"
+	},
+	"217": {
+		"Date": "20190101",
+		"Type": "Other",
+		"Title": "Chances To Get 5★ Select Summon Tickets This Month!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181231januaryfreeselectsummonticket.html"
+	},
+	"218": {
+		"Date": "20181228",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181228serverstatusissuereport.html"
+	},
+	"219": {
+		"Date": "20181228",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181228mamachocoboissuereport.html"
+	},
+	"220": {
+		"Date": "20181228",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181228wintertrialbossissuereport.html"
+	},
+	"221": {
+		"Date": "20181227",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181228arenaweeklynews3.html"
+	},
+	"222": {
+		"Date": "20181227",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181227postmaintenanceextension2.html"
+	},
+	"223": {
+		"Date": "20181227",
+		"Type": "Other",
+		"Title": "Kingdom Hearts Collaboration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181221khadvisory8.html"
+	},
+	"224": {
+		"Date": "20181227",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181227khissuereport.html"
+	},
+	"225": {
+		"Date": "20181226",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/abilityawakening22.jpg"
+	},
+	"226": {
+		"Date": "20181226",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius X Kingdom Hearts",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181226khfeaturedsummon2.jpg"
+	},
+	"227": {
+		"Date": "20181226",
+		"Type": "Event",
+		"Title": "Heartless: Guard Armor",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181226khraid.jpg"
+	},
+	"228": {
+		"Date": "20181226",
+		"Type": "Other",
+		"Title": "Introducing The Free 10+1 Summon Featuring Kingdom Hearts Units",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181226kh11freesummon.html"
+	},
+	"229": {
+		"Date": "20181226",
+		"Type": "Other",
+		"Title": "Welcoming 2019 Login Bonus (updated!)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/newsbanner_bundle_yearendrewards_20181227a.jpg"
+	},
+	"230": {
+		"Date": "20181225",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181227maintenance.html"
+	},
+	"231": {
+		"Date": "20181225",
+		"Type": "Event",
+		"Title": "Season Of Mayhem",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/seasonofmayhem.jpg"
+	},
+	"232": {
+		"Date": "20181225",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/story261.jpg"
+	},
+	"233": {
+		"Date": "20181220",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181221arenaweeklynews.html"
+	},
+	"234": {
+		"Date": "20181220",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181221katyperryissuereport.html"
+	},
+	"235": {
+		"Date": "20181220",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181220postmaintenance.html"
+	},
+	"236": {
+		"Date": "20181219",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181219christmasnewunitgacha.jpg"
+	},
+	"237": {
+		"Date": "20181219",
+		"Type": "Unit",
+		"Title": "Units Featured For A 7★ Awakening",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201812207starawakeningbatch5-2.html"
+	},
+	"238": {
+		"Date": "20181219",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181220christmasrerunsummon.jpg"
+	},
+	"239": {
+		"Date": "20181219",
+		"Type": "Event",
+		"Title": "Winter Mayhem",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/wintermayhem.jpg"
+	},
+	"240": {
+		"Date": "20181218",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181220maintenance.html"
+	},
+	"241": {
+		"Date": "20181218",
+		"Type": "Trial",
+		"Title": "The Ambulant Patriotic Hero",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/chamberofarmsdabih.jpg"
+	},
+	"242": {
+		"Date": "20181218",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181218ffbevideonews.html"
+	},
+	"243": {
+		"Date": "20181213",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181214arenaweeklynews.html"
+	},
+	"244": {
+		"Date": "20181213",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181213issuereportvaultofhiddentreasures1.html"
+	},
+	"245": {
+		"Date": "20181212",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181211postmaintenance.html"
+	},
+	"246": {
+		"Date": "20181212",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181212cannonissuereport2.html"
+	},
+	"247": {
+		"Date": "20181212",
+		"Type": "Other",
+		"Title": "35 Million Downloads: Sweepstakes!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181212_35mdlsweepstakes.html"
+	},
+	"248": {
+		"Date": "20181211",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 7★ Release Special Part 10",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/7starbatch10.jpg"
+	},
+	"249": {
+		"Date": "20181211",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 7★ Release Special Part 9",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/7starbatch9.jpg"
+	},
+	"250": {
+		"Date": "20181211",
+		"Type": "Unit",
+		"Title": "Units Featured For A 7★ Awakening",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201812127starawakeningbatch5-1.html"
+	},
+	"251": {
+		"Date": "20181211",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181212maintenance.html"
+	},
+	"252": {
+		"Date": "20181211",
+		"Type": "Other",
+		"Title": "Fan Festa 2018 Login Bonus",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181212fanfesta2018loginbonus.html"
+	},
+	"253": {
+		"Date": "20181211",
+		"Type": "Other",
+		"Title": "Fan Festa 2018 Select Ticket Giveaway",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181211fanfesta2018selectticketgiveaway.html"
+	},
+	"254": {
+		"Date": "20181211",
+		"Type": "Event",
+		"Title": "Fan Festa - Vault Of Hidden Treasures",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181212vaultofhiddentreasures3.html"
+	},
+	"255": {
+		"Date": "20181211",
+		"Type": "Event",
+		"Title": "Steel Castle Melfikya",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181212weaponenhancement.html"
+	},
+	"256": {
+		"Date": "20181211",
+		"Type": "Unit",
+		"Title": "Featured Summon Fan Festa Selection Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181212fanfestaselectsummon.html"
+	},
+	"257": {
+		"Date": "20181210",
+		"Type": "Event",
+		"Title": "Sieghard, The Magnificent Extra Stage",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/sieghardextrastage.jpg"
+	},
+	"258": {
+		"Date": "20181210",
+		"Type": "Event",
+		"Title": "Red Hot Music",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/redhotmusic.jpg"
+	},
+	"259": {
+		"Date": "20181210",
+		"Type": "Other",
+		"Title": "Katy Perry Collaboration Event",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181210kpcollab.png"
+	},
+	"260": {
+		"Date": "20181208",
+		"Type": "Event",
+		"Title": "Fan Festa 2018 Raid Rewards",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181208fanfesta2018raidpart2.html"
+	},
+	"261": {
+		"Date": "20181206",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181207arenaweeklynews.html"
+	},
+	"262": {
+		"Date": "20181206",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181206berylissuereport2.html"
+	},
+	"263": {
+		"Date": "20181206",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181206postmaintenance.html"
+	},
+	"264": {
+		"Date": "20181205",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180720issuereportludmille.html"
+	},
+	"265": {
+		"Date": "20181204",
+		"Type": "Event",
+		"Title": "Fan Festa 2018 Raid",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181204fanfestaraid2018.jpg"
+	},
+	"266": {
+		"Date": "20181204",
+		"Type": "Other",
+		"Title": "Final Fantasy Brave Exvius Fan Festa Daily Giveaway",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181203ffcelebratorysummonb.html"
+	},
+	"267": {
+		"Date": "20181204",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181204sieghardfeaturedsummon.jpg"
+	},
+	"268": {
+		"Date": "20181204",
+		"Type": "Event",
+		"Title": "Sieghard, The Magnificent",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181204sieghardthemagnificent.jpg"
+	},
+	"269": {
+		"Date": "20181204",
+		"Type": "Event",
+		"Title": "Sieghard",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/cgsieghard.jpg"
+	},
+	"270": {
+		"Date": "20181204",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181205maintenance.html"
+	},
+	"271": {
+		"Date": "20181201",
+		"Type": "Other",
+		"Title": "Chances To Get 5★ Select Summon Tickets This Month!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181130decemberfreeselectsummonticket.html"
+	},
+	"272": {
+		"Date": "20181130",
+		"Type": "Other",
+		"Title": "Fan Festa 2018 – Streaming Announcement!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181130fanfestastreaming.html"
+	},
+	"273": {
+		"Date": "20181129",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181130arenaweeklynews2.html"
+	},
+	"274": {
+		"Date": "20181129",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181129postmaintenance.html"
+	},
+	"275": {
+		"Date": "20181128",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181128akademiaissuereport.html"
+	},
+	"276": {
+		"Date": "20181127",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181128abilityawakeningbatch21.jpg"
+	},
+	"277": {
+		"Date": "20181127",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181128maintenance.html"
+	},
+	"278": {
+		"Date": "20181127",
+		"Type": "Other",
+		"Title": "3★ Espers Unlocked!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/esperleviathan.jpg"
+	},
+	"279": {
+		"Date": "20181127",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/newsbannerunlockcontinentarc52a.jpg"
+	},
+	"280": {
+		"Date": "20181127",
+		"Type": "Unit",
+		"Title": "Featured Step-up Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181127jobtypesummons.jpg"
+	},
+	"281": {
+		"Date": "20181127",
+		"Type": "Event",
+		"Title": "Akademeia",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181126akademeiarerun4.png"
+	},
+	"282": {
+		"Date": "20181127",
+		"Type": "Event",
+		"Title": "The Formidable Engels",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181126nierautomatatrial.jpg"
+	},
+	"283": {
+		"Date": "20181127",
+		"Type": "Other",
+		"Title": "Half Energy",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181127halfenergycampaign.html"
+	},
+	"284": {
+		"Date": "20181127",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181127issuereportdailyquest.html"
+	},
+	"285": {
+		"Date": "20181123",
+		"Type": "Other",
+		"Title": "Nier:automata Game Sale!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181123nierdiscountnews2.html"
+	},
+	"286": {
+		"Date": "20181122",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181123arenaweeklynews.html"
+	},
+	"287": {
+		"Date": "20181122",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181123postmaintenanceontime.html"
+	},
+	"288": {
+		"Date": "20181122",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181122maintenance2.html"
+	},
+	"289": {
+		"Date": "20181122",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181122postmaintenanceontime2.html"
+	},
+	"290": {
+		"Date": "20181121",
+		"Type": "Other",
+		"Title": "35 Million Downloads Celebration! Part 3",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181123_35mildlpart3a.html"
+	},
+	"291": {
+		"Date": "20181120",
+		"Type": "Trial",
+		"Title": "The Dragon Of Concealed Affection",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181119chamberofarmsnunki.jpg"
+	},
+	"292": {
+		"Date": "20181120",
+		"Type": "Event",
+		"Title": "Trial Of Vengeance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181119trialofvengeance.jpg"
+	},
+	"293": {
+		"Date": "20181120",
+		"Type": "Event",
+		"Title": "Destroy The Machine Lifeform",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181120nierautomataraidrerun.jpg"
+	},
+	"294": {
+		"Date": "20181120",
+		"Type": "Unit",
+		"Title": "Featured Summon Nier:automata",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181120nierautomatagachabanner.jpg"
+	},
+	"295": {
+		"Date": "20181120",
+		"Type": "Unit",
+		"Title": "Units Featured For A 7★ Awakening",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201811227starawakeningbatch4-2_ver2.html"
+	},
+	"296": {
+		"Date": "20181120",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181121maintenance.html"
+	},
+	"297": {
+		"Date": "20181116",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181116arenaweeklynews.html"
+	},
+	"298": {
+		"Date": "20181115",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181115berylissuereport.html"
+	},
+	"299": {
+		"Date": "20181115",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181115postmaintenanceontime.html"
+	},
+	"300": {
+		"Date": "20181114",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181122ffbevideonews.html"
+	},
+	"301": {
+		"Date": "20181114",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 7★ Release Special Part 8",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/201811137starbatch8.jpg"
+	},
+	"302": {
+		"Date": "20181114",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 7★ Release Special Part 7",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/201811137starbatch7.jpg"
+	},
+	"303": {
+		"Date": "20181114",
+		"Type": "Unit",
+		"Title": "Units Featured For A 7★ Awakening",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201811157starawakeningbatch4-1.html"
+	},
+	"304": {
+		"Date": "20181113",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181114maintenance2.html"
+	},
+	"305": {
+		"Date": "20181113",
+		"Type": "Event",
+		"Title": "Lion Of The Mysterious Woods Extra Stage",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_lionofthemysteriouswoods_part2.jpg"
+	},
+	"306": {
+		"Date": "20181113",
+		"Type": "Event",
+		"Title": "Wave Battle Event - Revelations Of Darkness",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181113fanfestawavebattle.jpg"
+	},
+	"307": {
+		"Date": "20181113",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181113fanfestaberylellesperisgacha.jpg"
+	},
+	"308": {
+		"Date": "20181113",
+		"Type": "Other",
+		"Title": "Introducing The Free 10+1 Summon Featuring Fan Festa Units",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181116fanfesta10plus1.html"
+	},
+	"309": {
+		"Date": "20181109",
+		"Type": "Other",
+		"Title": "Fan Festa 2018 – In-game Rewards Round Up And More!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181109fanfestaingamerewards.html"
+	},
+	"310": {
+		"Date": "20181108",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181109arenaweeklynews.html"
+	},
+	"311": {
+		"Date": "20181108",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181108postmaintenance.html"
+	},
+	"312": {
+		"Date": "20181108",
+		"Type": "Other",
+		"Title": "Ffbe Fan Festa 2018 Celebration!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181107fanfestadailyfreesummon.html"
+	},
+	"313": {
+		"Date": "20181107",
+		"Type": "Event",
+		"Title": "Steel Castle Melfikya",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181108weaponenhancement4.html"
+	},
+	"314": {
+		"Date": "20181107",
+		"Type": "Other",
+		"Title": "Advance Quests Added!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/advancequests.html"
+	},
+	"315": {
+		"Date": "20181107",
+		"Type": "Other",
+		"Title": "35 Million Downloads Celebration! Part 2",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181107_35mildlpart2ver.html"
+	},
+	"316": {
+		"Date": "20181106",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181106ffbeelephim_compilation.jpg"
+	},
+	"317": {
+		"Date": "20181106",
+		"Type": "Event",
+		"Title": "Lion Of The Mysterious Woods",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181106lionofthemysteriouswoods.jpg"
+	},
+	"318": {
+		"Date": "20181106",
+		"Type": "Event",
+		"Title": "Big Bridge - Exploration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181106fftype0_exploration.jpg"
+	},
+	"319": {
+		"Date": "20181106",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181107maintenance.html"
+	},
+	"320": {
+		"Date": "20181102",
+		"Type": "Issue",
+		"Title": "An Important Notice For All Players Residing In Belgium",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2018112belgiumadvisory.html"
+	},
+	"321": {
+		"Date": "20181102",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181102arenaweeklynews.html"
+	},
+	"322": {
+		"Date": "20181101",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181101postmaintenance.html"
+	},
+	"323": {
+		"Date": "20181101",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2018110135miltrustmoogleissue.html"
+	},
+	"324": {
+		"Date": "20181031",
+		"Type": "Other",
+		"Title": "Chances To Get 5★ Select Summon Tickets This Month!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201811novemberfreeselectsummonticket.html"
+	},
+	"325": {
+		"Date": "20181031",
+		"Type": "Other",
+		"Title": "35 Million Downloads Celebration! Part 1",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181030_35mildl.html"
+	},
+	"326": {
+		"Date": "20181031",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181031weeklyarenanewsissuereport.html"
+	},
+	"327": {
+		"Date": "20181030",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181031maintenance.html"
+	},
+	"328": {
+		"Date": "20181030",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Type-0",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181030fft0gacha.jpg"
+	},
+	"329": {
+		"Date": "20181030",
+		"Type": "Event",
+		"Title": "The Clash On Big Bridge",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/fftype0_theclashonbigbridge.jpg"
+	},
+	"330": {
+		"Date": "20181030",
+		"Type": "Event",
+		"Title": "Tower Of Lezard Valeth",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181029valkyrieprofiletrial.jpg"
+	},
+	"331": {
+		"Date": "20181026",
+		"Type": "Other",
+		"Title": "Fan Festa 2018 – Goodie Bag Reveal And Developer Panel Details!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181026ffbefanfesta2018goodiebagdevpanel.html"
+	},
+	"332": {
+		"Date": "20181026",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181026arenaweeklynews1.html"
+	},
+	"333": {
+		"Date": "20181026",
+		"Type": "Other",
+		"Title": "Valkyrie Profile -lenneth- Game Will Be On Sale",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181026valkyrieprofilelennethsale.html"
+	},
+	"334": {
+		"Date": "20181025",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181025weeklyarenanewsissuereport.html"
+	},
+	"335": {
+		"Date": "20181025",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181025compensationissuereport.html"
+	},
+	"336": {
+		"Date": "20181025",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181025postmaintenance.html"
+	},
+	"337": {
+		"Date": "20181025",
+		"Type": "Event",
+		"Title": "Return To The Halloween Castle",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/returntothehalloweencastle_v2.jpg"
+	},
+	"338": {
+		"Date": "20181024",
+		"Type": "Event",
+		"Title": "Lost City Of Dipan",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/valkyrieprofileraidevent.jpg"
+	},
+	"339": {
+		"Date": "20181024",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius X Valkyrie Profile -lenneth-",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/valkyrieprofilefeaturesummon.jpg"
+	},
+	"340": {
+		"Date": "20181024",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_awakeningabilities20.jpg"
+	},
+	"341": {
+		"Date": "20181024",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181024maintenance.html"
+	},
+	"342": {
+		"Date": "20181022",
+		"Type": "Other",
+		"Title": "Chamber Of Awakening - Drop Rate Increased!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181023chamberofawakening2.html"
+	},
+	"343": {
+		"Date": "20181022",
+		"Type": "Event",
+		"Title": "Challenge The Great Count",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/halloween2018greatcounttrial.jpg"
+	},
+	"344": {
+		"Date": "20181022",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/unlockcontinent_arc2_5-1.jpg"
+	},
+	"345": {
+		"Date": "20181022",
+		"Type": "Other",
+		"Title": "3★ Espers Unlocked!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/odinphoenix.jpg"
+	},
+	"346": {
+		"Date": "20181020",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181020issuereport.html"
+	},
+	"347": {
+		"Date": "20181019",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181019version330issuereportpart2.html"
+	},
+	"348": {
+		"Date": "20181019",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181019expansionticketspentlapis.html"
+	},
+	"349": {
+		"Date": "20181019",
+		"Type": "Other",
+		"Title": "Survey For Fan Festa 2018 - Community Panel",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181019fanfesta2018survey.html"
+	},
+	"350": {
+		"Date": "20181019",
+		"Type": "Other",
+		"Title": "Final Fantasy Portal App Event! (updated!)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181019ffportalappeventpart4.html"
+	},
+	"351": {
+		"Date": "20181019",
+		"Type": "Other",
+		"Title": "Arena Weekly Ranking Rewards News",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181019arenaweeklynews.html"
+	},
+	"352": {
+		"Date": "20181018",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181018version330issuereport3.html"
+	},
+	"353": {
+		"Date": "20181018",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181018postmaintenance.html"
+	},
+	"354": {
+		"Date": "20181018",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181018duplicatenewsissuereport.html"
+	},
+	"355": {
+		"Date": "20181018",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181018dhadvisory2.html"
+	},
+	"356": {
+		"Date": "20181018",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181018updates.html"
+	},
+	"357": {
+		"Date": "20181017",
+		"Type": "Other",
+		"Title": "Halloween 2018 Special Daily Login",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/halloween%202018%20login%20bonus.html"
+	},
+	"358": {
+		"Date": "20181017",
+		"Type": "Event",
+		"Title": "An Eerie Invitation",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/aneerieinvitation.jpg"
+	},
+	"359": {
+		"Date": "20181017",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/halloweennewunitsgacha.jpg"
+	},
+	"360": {
+		"Date": "20181017",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/halloweenoldunitsgacha.jpg"
+	},
+	"361": {
+		"Date": "20181017",
+		"Type": "Other",
+		"Title": "Introducing The Halloween 2018 Summon!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181019halloween2018summonevent.html"
+	},
+	"362": {
+		"Date": "20181016",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201810107starawakeningbatch3-2v1.html"
+	},
+	"363": {
+		"Date": "20181016",
+		"Type": "Trial",
+		"Title": "The Insects Of Guile And Deceit",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_trial_boss_chamberofarms_shaula.jpg"
+	},
+	"364": {
+		"Date": "20181016",
+		"Type": "Event",
+		"Title": "Piercing Light Extra Stage",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_fragilelightstory_part2.jpg"
+	},
+	"365": {
+		"Date": "20181016",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181017maintenance1.html"
+	},
+	"366": {
+		"Date": "20181012",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181012weaponenhancementadvisory1.html"
+	},
+	"367": {
+		"Date": "20181012",
+		"Type": "Other",
+		"Title": "Ffbe Fan Festa 2018 Special Unit",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181012ffbefanfesta2018unitannouncement2.html"
+	},
+	"368": {
+		"Date": "20181011",
+		"Type": "Unit",
+		"Title": "New Unit To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201810117starawakeningbatch3-1.html"
+	},
+	"369": {
+		"Date": "20181011",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 7★ Release Special Part 6",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/7starawakeninggachapart6.jpg"
+	},
+	"370": {
+		"Date": "20181011",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 7★ Release Special Part 5",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/7starawakeninggachapart5.jpg"
+	},
+	"371": {
+		"Date": "20181011",
+		"Type": "Other",
+		"Title": "Arena Improvements",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/arenaupdatenews1.html"
+	},
+	"372": {
+		"Date": "20181011",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181011postmaintenanceearlyend.html"
+	},
+	"373": {
+		"Date": "20181010",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_news_citra_compilation.jpg"
+	},
+	"374": {
+		"Date": "20181010",
+		"Type": "Event",
+		"Title": "Piercing Light",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_piercinglight.jpg"
+	},
+	"375": {
+		"Date": "20181010",
+		"Type": "Event",
+		"Title": "Citra",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_cgcitra.jpg"
+	},
+	"376": {
+		"Date": "20181010",
+		"Type": "Event",
+		"Title": "Steel Castle Melfikya",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181011weaponenhancement.html"
+	},
+	"377": {
+		"Date": "20181009",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181010maintenance.html"
+	},
+	"378": {
+		"Date": "20181009",
+		"Type": "Event",
+		"Title": "Fodina Caestino - Exploration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_fondinacaestino_exploration.jpg"
+	},
+	"379": {
+		"Date": "20181004",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181004postmaintenance2.html"
+	},
+	"380": {
+		"Date": "20181004",
+		"Type": "Other",
+		"Title": "Special Ffxv Ticket Summon!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181002ffxvspecialticketsummon3.html"
+	},
+	"381": {
+		"Date": "20181003",
+		"Type": "Event",
+		"Title": "The Heart Of A King",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_ff15_heartofaking.jpg"
+	},
+	"382": {
+		"Date": "20181003",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Xv",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20181003ignisgacha.jpg"
+	},
+	"383": {
+		"Date": "20181003",
+		"Type": "Unit",
+		"Title": "New Unit To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_newawakeningunits_libertus.jpg"
+	},
+	"384": {
+		"Date": "20181003",
+		"Type": "Other",
+		"Title": "Daily Free Rare Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/ffxvdailyfreesummon3.html"
+	},
+	"385": {
+		"Date": "20181002",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181003maintenance.html"
+	},
+	"386": {
+		"Date": "20181001",
+		"Type": "Event",
+		"Title": "Hasiko's Revenge",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_hasikosrevenge.jpg"
+	},
+	"387": {
+		"Date": "20181001",
+		"Type": "Trial",
+		"Title": "Scorn Of The Beasts - Updated!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/scornofthemarchingbeastsupdate.jpg"
+	},
+	"388": {
+		"Date": "20181001",
+		"Type": "Trial",
+		"Title": "The Mad Doll",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_trial_boss_themaddoll.jpg"
+	},
+	"389": {
+		"Date": "20181001",
+		"Type": "Other",
+		"Title": "Chances To Get 5★ Select Summon Tickets This Month!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181001octoberfreeselectsummonticket.html"
+	},
+	"390": {
+		"Date": "20180928",
+		"Type": "Other",
+		"Title": "Fan Festa 2018 – Mc And Goodie Bag Reveal!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180928ffbefanfesta2018update.html"
+	},
+	"391": {
+		"Date": "20180928",
+		"Type": "Other",
+		"Title": "Elt Level Unlocked!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180928ffbechambers.html"
+	},
+	"392": {
+		"Date": "20180927",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180927postmaintenance2.html"
+	},
+	"393": {
+		"Date": "20180926",
+		"Type": "Other",
+		"Title": "Free 10+1 Summon Featuring Fan Festa Units",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180927fanfesta11freesummon5.html"
+	},
+	"394": {
+		"Date": "20180926",
+		"Type": "Event",
+		"Title": "Darkness Awakens",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180927raid_fanfestaunitcontest.jpg"
+	},
+	"395": {
+		"Date": "20180926",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_20180927fanfesta_compilation.jpg"
+	},
+	"396": {
+		"Date": "20180926",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_awakeningabilities19.jpg"
+	},
+	"397": {
+		"Date": "20180925",
+		"Type": "Other",
+		"Title": "Rewards Wheel",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180927rewardswheel3.html"
+	},
+	"398": {
+		"Date": "20180925",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180927maintenance.html"
+	},
+	"399": {
+		"Date": "20180925",
+		"Type": "Other",
+		"Title": "Information Regarding The 5★ Select Summon Tickets",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180925sqexuocnews2.html"
+	},
+	"400": {
+		"Date": "20180925",
+		"Type": "Trial",
+		"Title": "The Demonic Assassin Of Judgment",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_trial_boss_chamberofarms_brachium.jpg"
+	},
+	"401": {
+		"Date": "20180925",
+		"Type": "Other",
+		"Title": "3★ Espers Unlocked!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_fenrir.jpg"
+	},
+	"402": {
+		"Date": "20180925",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_unlockcontinent_arc4_3.jpg"
+	},
+	"403": {
+		"Date": "20180922",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180922iostncissue.html"
+	},
+	"404": {
+		"Date": "20180921",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180921tdwissuereport.html"
+	},
+	"405": {
+		"Date": "20180920",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180920hyohissuereport3.html"
+	},
+	"406": {
+		"Date": "20180920",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180920postmaintenanceextension2.html"
+	},
+	"407": {
+		"Date": "20180920",
+		"Type": "Event",
+		"Title": "Steel Castle Melfikya",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180920weaponenhancement10.html"
+	},
+	"408": {
+		"Date": "20180919",
+		"Type": "Other",
+		"Title": "Summer 2018 Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180921summereventsummon4.html"
+	},
+	"409": {
+		"Date": "20180919",
+		"Type": "Event",
+		"Title": "Sun, Sand, And Sea",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_sunsandandsea.jpg"
+	},
+	"410": {
+		"Date": "20180919",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_news_summerlasswell_compilation.jpg"
+	},
+	"411": {
+		"Date": "20180919",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 7★ Release Special Part 4",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/7starfeaturepart4_news_compilation.jpg"
+	},
+	"412": {
+		"Date": "20180919",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 7★ Release Special Part 3",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_7starfeaturepart3_compilation.jpg"
+	},
+	"413": {
+		"Date": "20180919",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201809207starawakeningbatch2v3.html"
+	},
+	"414": {
+		"Date": "20180918",
+		"Type": "Event",
+		"Title": "The Color Of Heartlessness Extra Stage",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_thecolourofheartlessness_part2.jpg"
+	},
+	"415": {
+		"Date": "20180918",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180919maintenance.html"
+	},
+	"416": {
+		"Date": "20180917",
+		"Type": "Other",
+		"Title": "Player Voice Campaign (part 3 Of 4)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180830playervotecampaign2updatewk3_1.html"
+	},
+	"417": {
+		"Date": "20180914",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180913issuereportffxiextension.html"
+	},
+	"418": {
+		"Date": "20180913",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180913issuereportiosmaintenance.html"
+	},
+	"419": {
+		"Date": "20180913",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180913postmaintenance.html"
+	},
+	"420": {
+		"Date": "20180913",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180913updates2.html"
+	},
+	"421": {
+		"Date": "20180912",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/hyohfeaturesummon.jpg"
+	},
+	"422": {
+		"Date": "20180912",
+		"Type": "Unit",
+		"Title": "Featured Step-up Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/hyohstepup.jpg"
+	},
+	"423": {
+		"Date": "20180912",
+		"Type": "Event",
+		"Title": "The Color Of Heartlessness",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_colorofheartlessness.jpg"
+	},
+	"424": {
+		"Date": "20180912",
+		"Type": "Event",
+		"Title": "Hyoh",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_cghyoh.jpg"
+	},
+	"425": {
+		"Date": "20180912",
+		"Type": "Other",
+		"Title": "5+1 Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_5_1summon.jpg"
+	},
+	"426": {
+		"Date": "20180912",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180913awakendrain7star3.html"
+	},
+	"427": {
+		"Date": "20180911",
+		"Type": "Other",
+		"Title": "Monthly 5★ Select Summon Tickets",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180911monthlyfreeselectsummonticket.html"
+	},
+	"428": {
+		"Date": "20180911",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180913maintenance.html"
+	},
+	"429": {
+		"Date": "20180911",
+		"Type": "Trial",
+		"Title": "Scorn Of The 2-headed Dragon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/2headeddragon.jpg"
+	},
+	"430": {
+		"Date": "20180911",
+		"Type": "Trial",
+		"Title": "Venomous Vines Of Death",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/venomousvinesofdeath.jpg"
+	},
+	"431": {
+		"Date": "20180910",
+		"Type": "Event",
+		"Title": "March On The Lord Of The Underworld",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_dqtrial.jpg"
+	},
+	"432": {
+		"Date": "20180910",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180907specialreturnticketupdate5.html"
+	},
+	"433": {
+		"Date": "20180910",
+		"Type": "Other",
+		"Title": "Player Voice Campaign (part 2 Of 4)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180830playervotecampaign2updatewk2_1.html"
+	},
+	"434": {
+		"Date": "20180906",
+		"Type": "Maintenance",
+		"Title": "Maintenance - Extended",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180906postem2.html"
+	},
+	"435": {
+		"Date": "20180906",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180906postmaintenance.html"
+	},
+	"436": {
+		"Date": "20180905",
+		"Type": "Event",
+		"Title": "Vault Of Hidden Treasures",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180907vaultofhiddentreasures.html"
+	},
+	"437": {
+		"Date": "20180905",
+		"Type": "Event",
+		"Title": "Estark's Challenge",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/raid_estarkschallenge.jpg"
+	},
+	"438": {
+		"Date": "20180905",
+		"Type": "Unit",
+		"Title": "Featured Summon Dragon Quest",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_news_dragonquest_compilation_disclaimerfix.jpg"
+	},
+	"439": {
+		"Date": "20180905",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/newawakeningunits_dragonlord.jpg"
+	},
+	"440": {
+		"Date": "20180905",
+		"Type": "Event",
+		"Title": "Monster Carnival",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/dragonquest_dragonlord_rerun.jpg"
+	},
+	"441": {
+		"Date": "20180905",
+		"Type": "Event",
+		"Title": "Dragonlord's Challenge",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/dragonlords_challenge.jpg"
+	},
+	"442": {
+		"Date": "20180905",
+		"Type": "Unit",
+		"Title": "Featured Summon Dragon Quest",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_news_dragonquestmonsterssuperlight_compilation.jpg"
+	},
+	"443": {
+		"Date": "20180904",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180906maintenance.html"
+	},
+	"444": {
+		"Date": "20180904",
+		"Type": "Event",
+		"Title": "Shrine Of Ru'avitau - Exploration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/shrineofruavitau_exploration.jpg"
+	},
+	"445": {
+		"Date": "20180903",
+		"Type": "Other",
+		"Title": "Player Voice Campaign (part 1 Of 4)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180830playervotecampaign2updatewk1_1.html"
+	},
+	"446": {
+		"Date": "20180831",
+		"Type": "Other",
+		"Title": "Ffbe Fan Festa 2018 - In-game Rewards And Exciting Developer Panels Await You!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180831ffbefanfestaticketsales.html"
+	},
+	"447": {
+		"Date": "20180831",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180831issuereportshrineofruavitau.html"
+	},
+	"448": {
+		"Date": "20180830",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180830issuereportadamjensen.html"
+	},
+	"449": {
+		"Date": "20180829",
+		"Type": "Maintenance",
+		"Title": "Maintenance - Extended",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180830pmaintenanceextend2.html"
+	},
+	"450": {
+		"Date": "20180829",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180830issuereportlapisreturnticket.html"
+	},
+	"451": {
+		"Date": "20180828",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Xi",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_news_ffxi_compilation.jpg"
+	},
+	"452": {
+		"Date": "20180828",
+		"Type": "Other",
+		"Title": "Player Voice Campaign Part 2",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180830playervotecampaign2update2.html"
+	},
+	"453": {
+		"Date": "20180828",
+		"Type": "Other",
+		"Title": "Here Are More Details Regarding The 5★ Select Tickets",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201808305starselectsummonticketupdate.html"
+	},
+	"454": {
+		"Date": "20180828",
+		"Type": "Other",
+		"Title": "50% Trust Moogle (all) For Completing Main Story",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180831storyseasonbonus2.html"
+	},
+	"455": {
+		"Date": "20180828",
+		"Type": "Event",
+		"Title": "Shrine Of Ru'avitau",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/templeofleabitau.jpg"
+	},
+	"456": {
+		"Date": "20180828",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/unlockcontinent_arc4_2.jpg"
+	},
+	"457": {
+		"Date": "20180828",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/newawakeningunits_kupipi.jpg"
+	},
+	"458": {
+		"Date": "20180828",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/awakeningabilities18.jpg"
+	},
+	"459": {
+		"Date": "20180828",
+		"Type": "Event",
+		"Title": "Stopping Marchenko",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/deusextrial.jpg"
+	},
+	"460": {
+		"Date": "20180828",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180830maintenance.html"
+	},
+	"461": {
+		"Date": "20180827",
+		"Type": "Trial",
+		"Title": "Vindemiatrix",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180827chamberofarmsvindemiatrix.jpg"
+	},
+	"462": {
+		"Date": "20180823",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180823postmaintenance.html"
+	},
+	"463": {
+		"Date": "20180823",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180823issuereportandroid9issue2.html"
+	},
+	"464": {
+		"Date": "20180821",
+		"Type": "Trial",
+		"Title": "Scorn Of Antenolla",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180821antenolla.jpg"
+	},
+	"465": {
+		"Date": "20180821",
+		"Type": "Trial",
+		"Title": "Ancient Hellbringer",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180821ancienthellbringer.jpg"
+	},
+	"466": {
+		"Date": "20180821",
+		"Type": "Unit",
+		"Title": "Featured Summon Deus Ex: Mankind Divided",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180821deuxexcompilation.jpg"
+	},
+	"467": {
+		"Date": "20180821",
+		"Type": "Event",
+		"Title": "Deus Ex Mankind Divided",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180821raiddeusex2.jpg"
+	},
+	"468": {
+		"Date": "20180821",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180822maintenance.html"
+	},
+	"469": {
+		"Date": "20180816",
+		"Type": "Event",
+		"Title": "The Hanging Edge",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_hangingedge_rerun.jpg"
+	},
+	"470": {
+		"Date": "20180816",
+		"Type": "Maintenance",
+		"Title": "Maintenance - Extended",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180816pmaintenanceextend2.html"
+	},
+	"471": {
+		"Date": "20180816",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 7★ Release Special Part 2",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gachapart2_compilation.jpg"
+	},
+	"472": {
+		"Date": "20180816",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 7★ Release Special Part 1",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gachapart1_compilation.jpg"
+	},
+	"473": {
+		"Date": "20180816",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180816unlockcontinent_arc4_1.png"
+	},
+	"474": {
+		"Date": "20180816",
+		"Type": "Other",
+		"Title": "Introducing The 5★ Select Summon Ticket",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/5starsselectsummonticket6.html"
+	},
+	"475": {
+		"Date": "20180816",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2018016issuereport2.html"
+	},
+	"476": {
+		"Date": "20180816",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2018016issuereport1.html"
+	},
+	"477": {
+		"Date": "20180815",
+		"Type": "Event",
+		"Title": "Steel Castle Melfikya",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180817weaponenhancementimage.html"
+	},
+	"478": {
+		"Date": "20180815",
+		"Type": "Event",
+		"Title": "Domain For Two Extra Stage",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180815domainfortwopart2.png"
+	},
+	"479": {
+		"Date": "20180815",
+		"Type": "Other",
+		"Title": "3★ Espers Unlocked!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180815diabolostetrasylphid.jpg"
+	},
+	"480": {
+		"Date": "20180815",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181508maintenance2.html"
+	},
+	"481": {
+		"Date": "20180810",
+		"Type": "Other",
+		"Title": "Player's Voice Campaign (part 2) Final Voting Results",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180810finalvotingresults2.html"
+	},
+	"482": {
+		"Date": "20180808",
+		"Type": "Other",
+		"Title": "Ffbe Fan Festa 2018 - Tickets On Sale Now!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180808ffbefanfestaticketsales.html"
+	},
+	"483": {
+		"Date": "20180808",
+		"Type": "Unit",
+		"Title": "Introducing A New Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180807narulgacharainbow5rateup9.html"
+	},
+	"484": {
+		"Date": "20180808",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180808gachanewsffbnalu.jpg"
+	},
+	"485": {
+		"Date": "20180808",
+		"Type": "Event",
+		"Title": "Domain For Two",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180808domainfortwo.jpg"
+	},
+	"486": {
+		"Date": "20180808",
+		"Type": "Vortex",
+		"Title": "Event Dungeon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180807gillsnapperscactuar.html"
+	},
+	"487": {
+		"Date": "20180807",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180806maintenance4.html"
+	},
+	"488": {
+		"Date": "20180807",
+		"Type": "Event",
+		"Title": "Dollet - Exploration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ff8seedexploration.jpg"
+	},
+	"489": {
+		"Date": "20180803",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180803issuereportolive.html"
+	},
+	"490": {
+		"Date": "20180802",
+		"Type": "Issue",
+		"Title": "Known Issues",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180803knownbugs.html"
+	},
+	"491": {
+		"Date": "20180802",
+		"Type": "Issue",
+		"Title": "A Message From The Ffbe Team",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180802storydelay2.html"
+	},
+	"492": {
+		"Date": "20180802",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180802pmaintenance.html"
+	},
+	"493": {
+		"Date": "20180802",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180802espers_2.html"
+	},
+	"494": {
+		"Date": "20180802",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180802updates_3.html"
+	},
+	"495": {
+		"Date": "20180802",
+		"Type": "Other",
+		"Title": "5% Rainbow Rate Free Daily Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180731rateupsummonvote4.html"
+	},
+	"496": {
+		"Date": "20180802",
+		"Type": "Vortex",
+		"Title": "Event Dungeon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180803gillsnapperscactuar.html"
+	},
+	"497": {
+		"Date": "20180801",
+		"Type": "Unit",
+		"Title": "Featured Summon Squall Arrives",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180801squall.jpg"
+	},
+	"498": {
+		"Date": "20180801",
+		"Type": "Event",
+		"Title": "Seed Field Exam",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180801ff8seed.jpg"
+	},
+	"499": {
+		"Date": "20180801",
+		"Type": "Unit",
+		"Title": "Units Featured For A 7★ Awakening",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201807307starbatch14.html"
+	},
+	"500": {
+		"Date": "20180801",
+		"Type": "Other",
+		"Title": "New Super Trust Masters!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201807307supertrustmaster10.html"
+	},
+	"501": {
+		"Date": "20180801",
+		"Type": "Other",
+		"Title": "7★ Awakenings Unlocked!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201807307intro7star9.html"
+	},
+	"502": {
+		"Date": "20180801",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180731maintenance.html"
+	},
+	"503": {
+		"Date": "20180731",
+		"Type": "Event",
+		"Title": "Defeat Jie Revorse - God",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/banner20180731staroceantrial2.jpg"
+	},
+	"504": {
+		"Date": "20180730",
+		"Type": "Other",
+		"Title": "Ffbe Fan Festa 2018 – Ticket Sales Begin 8/3/18!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180731ffbefanfesta2018ticketsales.html"
+	},
+	"505": {
+		"Date": "20180730",
+		"Type": "Other",
+		"Title": "Official Youtube Milestone Reward",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171208_30k_2.html"
+	},
+	"506": {
+		"Date": "20180727",
+		"Type": "Event",
+		"Title": "Steel Castle Melfikya",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171027weaponenhancementimage.html"
+	},
+	"507": {
+		"Date": "20180729",
+		"Type": "Unit",
+		"Title": "Featured Summon - Ability Awakening Special",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/summonaaveritas.jpg"
+	},
+	"508": {
+		"Date": "20180727",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180727issuereportchainingso2.html"
+	},
+	"509": {
+		"Date": "20180726",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180726issuereportchaining2.html"
+	},
+	"510": {
+		"Date": "20180726",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180726awakeningabilities.jpg"
+	},
+	"511": {
+		"Date": "20180724",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180724maintenance2.html"
+	},
+	"512": {
+		"Date": "20180724",
+		"Type": "Other",
+		"Title": "2nd Anniversary Special Return Ticket Campaign",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180724specialreturnticket2.html"
+	},
+	"513": {
+		"Date": "20180724",
+		"Type": "Unit",
+		"Title": "Updated - Featured Summon Star Ocean -anamnesis- 2018",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180721staroceangacha2.jpg"
+	},
+	"514": {
+		"Date": "20180724",
+		"Type": "Event",
+		"Title": "Star Ocean -anamnesis- Vanquish Jie Revorse!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180724staroceanraid.png"
+	},
+	"515": {
+		"Date": "20180724",
+		"Type": "Other",
+		"Title": "Expeditions - Supercite - Mission Schedule",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180724expeditiontimetable.png"
+	},
+	"516": {
+		"Date": "20180724",
+		"Type": "Other",
+		"Title": "3★ Espers Unlocked!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180724titanlakshimi.jpg"
+	},
+	"517": {
+		"Date": "20180724",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180727cactuardunes.html"
+	},
+	"518": {
+		"Date": "20180720",
+		"Type": "Other",
+		"Title": "Player's Voice Campaign (part 1)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180720finalresult5.html"
+	},
+	"519": {
+		"Date": "20180720",
+		"Type": "Other",
+		"Title": "Final Fantasy Portal App Event!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180720ffportaladar.html"
+	},
+	"520": {
+		"Date": "20180719",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180426pmaintenance.html"
+	},
+	"521": {
+		"Date": "20180719",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180719awakenedrain.jpg"
+	},
+	"522": {
+		"Date": "20180719",
+		"Type": "Event",
+		"Title": "Orbonne Monastery Vaults",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180719fftrerun.jpg"
+	},
+	"523": {
+		"Date": "20180719",
+		"Type": "Trial",
+		"Title": "Scorn Of The Surging Menace",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180719surgingmenace.jpg"
+	},
+	"524": {
+		"Date": "20180719",
+		"Type": "Trial",
+		"Title": "Great Explosion Festival",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180719bombfamily2.jpg"
+	},
+	"525": {
+		"Date": "20180719",
+		"Type": "Issue",
+		"Title": "Issue Report - Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180718issuemixc3.html"
+	},
+	"526": {
+		"Date": "20180719",
+		"Type": "Issue",
+		"Title": "Issue Report - Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180718textstarcompensation.html"
+	},
+	"527": {
+		"Date": "20180719",
+		"Type": "Issue",
+		"Title": "Issue Report - Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180719issuerepotratecomp.html"
+	},
+	"528": {
+		"Date": "20180719",
+		"Type": "Issue",
+		"Title": "Issue Report - Limit Burst Experience Calculation Adjustment",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180719issuelbexprince.html"
+	},
+	"529": {
+		"Date": "20180719",
+		"Type": "Issue",
+		"Title": "Issue Report - Wrong Description In Quest Mission For Spanish Language",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180720issuereportesmission.html"
+	},
+	"530": {
+		"Date": "20180718",
+		"Type": "Event",
+		"Title": "The Ballad Of Grandshelt Extra Stage",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/grancheltbishoppoetrpart2.jpg"
+	},
+	"531": {
+		"Date": "20180718",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180718issueloginreward2.html"
+	},
+	"532": {
+		"Date": "20180718",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180720gillsnappers.html"
+	},
+	"533": {
+		"Date": "20180718",
+		"Type": "Maintenance",
+		"Title": "Maintenance - Extended",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180712pmaintenanceextend3.html"
+	},
+	"534": {
+		"Date": "20180712",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180717maintenance2.html"
+	},
+	"535": {
+		"Date": "20180712",
+		"Type": "Issue",
+		"Title": "Daily Login Bonus Image Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180712issuedailylogin5.html"
+	},
+	"536": {
+		"Date": "20180712",
+		"Type": "Other",
+		"Title": "Final Fantasy Portal App Event!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180711ffportalad.html"
+	},
+	"537": {
+		"Date": "20180712",
+		"Type": "Other",
+		"Title": "2nd Anniversary Final Fantasy Brave Exvius - Part 2",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180712anniupdate16.html"
+	},
+	"538": {
+		"Date": "20180712",
+		"Type": "Unit",
+		"Title": "Introducing A New Summon Step Up Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180712stepup7.html"
+	},
+	"539": {
+		"Date": "20180712",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180712raegencompilation.jpg"
+	},
+	"540": {
+		"Date": "20180712",
+		"Type": "Unit",
+		"Title": "Ffbe Heroes Summon - Part 2",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180112cgsummon.jpg"
+	},
+	"541": {
+		"Date": "20180712",
+		"Type": "Event",
+		"Title": "Raegen",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180712cgraegen.png"
+	},
+	"542": {
+		"Date": "20180712",
+		"Type": "Event",
+		"Title": "The Ballad Of Grandshelt",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180712grancheltbishoppoetry.jpg"
+	},
+	"543": {
+		"Date": "20180712",
+		"Type": "Event",
+		"Title": "Latius Woods - Past",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180711latiuswoods.jpg"
+	},
+	"544": {
+		"Date": "20180712",
+		"Type": "Trial",
+		"Title": "The Torturous Trio",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180712trialbossthetorturoustrio.jpg"
+	},
+	"545": {
+		"Date": "20180712",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180712updates.html"
+	},
+	"546": {
+		"Date": "20180711",
+		"Type": "Trial",
+		"Title": "The Starving Wicked Beast",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180711chamberofarms.jpg"
+	},
+	"547": {
+		"Date": "20180706",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180707issuerepotimage11.html"
+	},
+	"548": {
+		"Date": "20180706",
+		"Type": "Other",
+		"Title": "Player's Voice Campaign (part 1) Intermediary Voting Results",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/intermediary_coting_results.html"
+	},
+	"549": {
+		"Date": "20180705",
+		"Type": "Unit",
+		"Title": "Ffbe Heroes Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180705summoncgunitscompilation.jpg"
+	},
+	"550": {
+		"Date": "20180705",
+		"Type": "Unit",
+		"Title": "Featured Summon Ffbe Heroes Coin Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180705heroscoinsummon.jpg"
+	},
+	"551": {
+		"Date": "20180705",
+		"Type": "Vortex",
+		"Title": "Short Stories",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180705shortstories.png"
+	},
+	"552": {
+		"Date": "20180705",
+		"Type": "Event",
+		"Title": "Join The Grandshelt Knights!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180705jointhegrandsheltknights.png"
+	},
+	"553": {
+		"Date": "20180705",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180705pmaintenanceextend2.html"
+	},
+	"554": {
+		"Date": "20180704",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180704issuerepotrate3.html"
+	},
+	"555": {
+		"Date": "20180703",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180706bannergillsnappers.html"
+	},
+	"556": {
+		"Date": "20180703",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180702maintenance.html"
+	},
+	"557": {
+		"Date": "20180703",
+		"Type": "Other",
+		"Title": "Expeditions - Supercite - Mission Schedule",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180702expeditiontimetable3.png"
+	},
+	"558": {
+		"Date": "20180628",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180628postmaintenance3.html"
+	},
+	"559": {
+		"Date": "20180628",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180628awakeningabilities162.jpg"
+	},
+	"560": {
+		"Date": "20180628",
+		"Type": "Story",
+		"Title": "Madam's Manor",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180628madamsmanor.png"
+	},
+	"561": {
+		"Date": "20180628",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180628letsplay_2.html"
+	},
+	"562": {
+		"Date": "20180627",
+		"Type": "Other",
+		"Title": "2nd Anniversary Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180625anni14.html"
+	},
+	"563": {
+		"Date": "20180627",
+		"Type": "Other",
+		"Title": "2nd Anniversary Login Bonus",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180626sploginbonus2.html"
+	},
+	"564": {
+		"Date": "20180627",
+		"Type": "Unit",
+		"Title": "Update - Featured Summon 2nd Anniversary 5★ Type Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180627typegacha2.jpg"
+	},
+	"565": {
+		"Date": "20180627",
+		"Type": "Event",
+		"Title": "Strike Of The Urga Mstitel",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180627strikeoftheurgamstitel.png"
+	},
+	"566": {
+		"Date": "20180627",
+		"Type": "Other",
+		"Title": "3★ Espers Unlocked!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180627espergolemcabuncle.jpg"
+	},
+	"567": {
+		"Date": "20180627",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180629cactuardunes.html"
+	},
+	"568": {
+		"Date": "20180627",
+		"Type": "Vortex",
+		"Title": "Enchanted Maze",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180627enchantedmaze.html"
+	},
+	"569": {
+		"Date": "20180627",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180627nlockcontinentarc.jpg"
+	},
+	"570": {
+		"Date": "20180627",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180627maintenance2.html"
+	},
+	"571": {
+		"Date": "20180621",
+		"Type": "Other",
+		"Title": "Clarification On Mario Frigo's Trust Master",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/content_20180621_mario_4.html"
+	},
+	"572": {
+		"Date": "20180621",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180621issuereportesmission4.html"
+	},
+	"573": {
+		"Date": "20180621",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180621postmaintenance2.html"
+	},
+	"574": {
+		"Date": "20180620",
+		"Type": "Unit",
+		"Title": "Update - Featured Summon Just Cause 3",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180620justcause2.jpg"
+	},
+	"575": {
+		"Date": "20180620",
+		"Type": "Event",
+		"Title": "Just Cause 3 - The Son Of Medici",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180620raidjustcause.jpg"
+	},
+	"576": {
+		"Date": "20180620",
+		"Type": "Trial",
+		"Title": "Intangir",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180620trialbossintangir.jpg"
+	},
+	"577": {
+		"Date": "20180620",
+		"Type": "Trial",
+		"Title": "The Iron Giant",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180620trialbosstheirongiant.jpg"
+	},
+	"578": {
+		"Date": "20180620",
+		"Type": "Event",
+		"Title": "Where Destinies Intersect Extra Stage",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180620wheredestiniesintersectpart2.png"
+	},
+	"579": {
+		"Date": "20180620",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180622gillsnapperscave.html"
+	},
+	"580": {
+		"Date": "20180620",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180620maintenance.html"
+	},
+	"581": {
+		"Date": "20180615",
+		"Type": "Other",
+		"Title": "New Video Released! (with Captions For Each Language!)",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180615_updates.html"
+	},
+	"582": {
+		"Date": "20180614",
+		"Type": "Other",
+		"Title": "Countdown Login Bonus!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysanniversarycountdown2018.jpg"
+	},
+	"583": {
+		"Date": "20180614",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180614postmaintenance2.html"
+	},
+	"584": {
+		"Date": "20180613",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180613nicholcompilation.jpg"
+	},
+	"585": {
+		"Date": "20180613",
+		"Type": "Event",
+		"Title": "Maritime Strategist Nichol",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180613cgnichol.jpg"
+	},
+	"586": {
+		"Date": "20180613",
+		"Type": "Event",
+		"Title": "Where Destinies Intersect",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180613wheredestiniesintersect.jpg"
+	},
+	"587": {
+		"Date": "20180613",
+		"Type": "Event",
+		"Title": "Crystal Chamber - Battle With Kain",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180613crystalroom.jpg"
+	},
+	"588": {
+		"Date": "20180613",
+		"Type": "Trial",
+		"Title": "Tegmine",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/chamberofarmstegmine.jpg"
+	},
+	"589": {
+		"Date": "20180613",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/awakeningabilities16kk.jpg"
+	},
+	"590": {
+		"Date": "20180613",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180613newawakeningunitscharie.png"
+	},
+	"591": {
+		"Date": "20180613",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180615cactuardunes.html"
+	},
+	"592": {
+		"Date": "20180613",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180612maintenance.html"
+	},
+	"593": {
+		"Date": "20180608",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180608abilityawakening.jpg"
+	},
+	"594": {
+		"Date": "20180607",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201800608textraidtime.html"
+	},
+	"595": {
+		"Date": "20180607",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180607pmaintenanceextend10.html"
+	},
+	"596": {
+		"Date": "20180607",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180529play_3.html"
+	},
+	"597": {
+		"Date": "20180606",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Iv",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ffivgacha201806064.jpg"
+	},
+	"598": {
+		"Date": "20180606",
+		"Type": "Unit",
+		"Title": "Featured Summon King's Knight",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/kingsknight20180606.jpg"
+	},
+	"599": {
+		"Date": "20180606",
+		"Type": "Event",
+		"Title": "Fabul Castle Guard",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ffivevent20180606.png"
+	},
+	"600": {
+		"Date": "20180606",
+		"Type": "Event",
+		"Title": "Updated Conqueror Of Izander",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/raidkingsknight20180607.jpg"
+	},
+	"601": {
+		"Date": "20180606",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/newawakeningunitsrosa.png"
+	},
+	"602": {
+		"Date": "20180606",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180608gillsnapperscave.html"
+	},
+	"603": {
+		"Date": "20180606",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180607maintenance.html"
+	},
+	"604": {
+		"Date": "20180531",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180531issuerepot3.html"
+	},
+	"605": {
+		"Date": "20180531",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180531awakeningabilities15.jpg"
+	},
+	"606": {
+		"Date": "20180531",
+		"Type": "Maintenance",
+		"Title": "Maintenance - Extended",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180531pmaintenanceextend3.html"
+	},
+	"607": {
+		"Date": "20180530",
+		"Type": "Event",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ffbe5starsts.jpg"
+	},
+	"608": {
+		"Date": "20180530",
+		"Type": "Event",
+		"Title": "Rats From The Gutters",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180530ratsfromthegutters.jpg"
+	},
+	"609": {
+		"Date": "20180530",
+		"Type": "Event",
+		"Title": "Destroy The Reactor",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/bannerff7destroyreactorrerun.jpg"
+	},
+	"610": {
+		"Date": "20180530",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180530cactuardunes.html"
+	},
+	"611": {
+		"Date": "20180530",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180530maintenance4.html"
+	},
+	"612": {
+		"Date": "20180529",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180529play.html"
+	},
+	"613": {
+		"Date": "20180524",
+		"Type": "Maintenance",
+		"Title": "Maintenance - Extended",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180524pmaintenanceextend3.html"
+	},
+	"614": {
+		"Date": "20180524",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180524postmaintenance.html"
+	},
+	"615": {
+		"Date": "20180524",
+		"Type": "Unit",
+		"Title": "Raid Summon - Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/dracotaurlancerunit.jpg"
+	},
+	"616": {
+		"Date": "20180524",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180524issuereportbanned4.html"
+	},
+	"617": {
+		"Date": "20180523",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180525gill_snapperscave.html"
+	},
+	"618": {
+		"Date": "20180523",
+		"Type": "Unit",
+		"Title": "Featured Summon Cloud Special!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180523newsff7compilationrerun.jpg"
+	},
+	"619": {
+		"Date": "20180523",
+		"Type": "Unit",
+		"Title": "Step Up Summon - Cloud Special!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180523stepupcloud2.html"
+	},
+	"620": {
+		"Date": "20180523",
+		"Type": "Event",
+		"Title": "Dracotaur Lancer",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/raid2ndjporiginalsukiyo.jpg"
+	},
+	"621": {
+		"Date": "20180523",
+		"Type": "Event",
+		"Title": "Destroy The Reactor",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180523destroythereactor.png"
+	},
+	"622": {
+		"Date": "20180523",
+		"Type": "Trial",
+		"Title": "Brachiosaur",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180523trialbossbrachiosaur2.jpg"
+	},
+	"623": {
+		"Date": "20180523",
+		"Type": "Trial",
+		"Title": "Demon Chimera",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180523trialbossdemonchimera.jpg"
+	},
+	"624": {
+		"Date": "20180523",
+		"Type": "Other",
+		"Title": "3★ Espers Unlocked!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/shivaramuh.jpg"
+	},
+	"625": {
+		"Date": "20180523",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/unlockcontinentarc232.jpg"
+	},
+	"626": {
+		"Date": "20180523",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180523maintenance.html"
+	},
+	"627": {
+		"Date": "20180522",
+		"Type": "Other",
+		"Title": "Temporary Closure Of Supercite Expeditions",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180522issuereportcloseexpedearly2.html"
+	},
+	"628": {
+		"Date": "20180518",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180518issuereportarena.html"
+	},
+	"629": {
+		"Date": "20180517",
+		"Type": "Trial",
+		"Title": "Chamber Of Arms A New Foe Awaits!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/chamberofarmsalhena.jpg"
+	},
+	"630": {
+		"Date": "20180516",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180517pmaintenanceex3.html"
+	},
+	"631": {
+		"Date": "20180516",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180517talk.html"
+	},
+	"632": {
+		"Date": "20180516",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180516heavenlytechnicianlid.jpg"
+	},
+	"633": {
+		"Date": "20180516",
+		"Type": "Event",
+		"Title": "The Phantom Blueprint",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180516phantomblueprint.jpg"
+	},
+	"634": {
+		"Date": "20180516",
+		"Type": "Event",
+		"Title": "Heavenly Technician Lid",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180515cglid.jpg"
+	},
+	"635": {
+		"Date": "20180516",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/newawakeningunitsheltichulrica.jpg"
+	},
+	"636": {
+		"Date": "20180516",
+		"Type": "Other",
+		"Title": "Fountain Of Lapis Returns!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180515fol2.html"
+	},
+	"637": {
+		"Date": "20180516",
+		"Type": "Other",
+		"Title": "Final Fantasy Portal App Event!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180516ffportalad3.html"
+	},
+	"638": {
+		"Date": "20180516",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180515maintenance2.html"
+	},
+	"639": {
+		"Date": "20180515",
+		"Type": "Event",
+		"Title": "Mt. Nibel - Exploration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180515ff7mtnibel.jpg"
+	},
+	"640": {
+		"Date": "20180515",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180518cactuardunes.html"
+	},
+	"641": {
+		"Date": "20180515",
+		"Type": "Other",
+		"Title": "Celebrating Sephiroth's Arrival! Ffvii Merchandise Giveaway Campaign",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180515sephirotharrival.html"
+	},
+	"642": {
+		"Date": "20180515",
+		"Type": "Other",
+		"Title": "Sephiroth's Arrival Celebration Amazon Coin Back Campaign",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180514sephirothamazon.html"
+	},
+	"643": {
+		"Date": "20180515",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180515issuerepotwarncheaters.html"
+	},
+	"644": {
+		"Date": "20180511",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/issuereportsephtextfixed.html"
+	},
+	"645": {
+		"Date": "20180511",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/issuereportsephtextbefore.html"
+	},
+	"646": {
+		"Date": "20180510",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/issuereportstep20180511.html"
+	},
+	"647": {
+		"Date": "20180510",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/issuereportstepup.html"
+	},
+	"648": {
+		"Date": "20180510",
+		"Type": "Unit",
+		"Title": "Introducing A New Summon Step Up Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180508stepup5.html"
+	},
+	"649": {
+		"Date": "20180510",
+		"Type": "Other",
+		"Title": "Sephiroth's Arrival Special",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180508sephispecial.html"
+	},
+	"650": {
+		"Date": "20180510",
+		"Type": "Event",
+		"Title": "Vision Of Bahamut - Trial",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180510bahamuttrial.jpg"
+	},
+	"651": {
+		"Date": "20180510",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180510postmaintenance.html"
+	},
+	"652": {
+		"Date": "20180509",
+		"Type": "Unit",
+		"Title": "Featured Summon Sephiroth Arrives",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/fviicompilationseph2.jpg"
+	},
+	"653": {
+		"Date": "20180509",
+		"Type": "Event",
+		"Title": "Nibelheim",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180509nibelheim.jpg"
+	},
+	"654": {
+		"Date": "20180509",
+		"Type": "Other",
+		"Title": "Sephiroth's Arrival Celebration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180508sas2.html"
+	},
+	"655": {
+		"Date": "20180509",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180508issuereporttextupdate3.html"
+	},
+	"656": {
+		"Date": "20180509",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180509gillsnappers.html"
+	},
+	"657": {
+		"Date": "20180509",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180508maintenance2.html"
+	},
+	"658": {
+		"Date": "20180508",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180508updates.html"
+	},
+	"659": {
+		"Date": "20180503",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180503postmaintenance.html"
+	},
+	"660": {
+		"Date": "20180502",
+		"Type": "Event",
+		"Title": "Vision Of Bahamut",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180502raidbahamut.jpg"
+	},
+	"661": {
+		"Date": "20180502",
+		"Type": "Event",
+		"Title": "Dragonlord's Challenge",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180502dragonlordschallenge.jpg"
+	},
+	"662": {
+		"Date": "20180502",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius 5★ Type Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/5startypesummon.jpg"
+	},
+	"663": {
+		"Date": "20180502",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/awakeningabilities14.jpg"
+	},
+	"664": {
+		"Date": "20180502",
+		"Type": "Unit",
+		"Title": "Free Daily Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180502freesummon3.html"
+	},
+	"665": {
+		"Date": "20180502",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180504cactuardunes.html"
+	},
+	"666": {
+		"Date": "20180502",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180502maintenance.html"
+	},
+	"667": {
+		"Date": "20180426",
+		"Type": "Other",
+		"Title": "Updated - Collaboration Campaign",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180420dqxffbe7.html"
+	},
+	"668": {
+		"Date": "20180426",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180426pmaintenance.html"
+	},
+	"669": {
+		"Date": "20180425",
+		"Type": "Unit",
+		"Title": "Featured Summon Dragon Quest",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/dqcompilation.jpg"
+	},
+	"670": {
+		"Date": "20180425",
+		"Type": "Event",
+		"Title": "Dragon Quest Monster Carnival",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/dragonquestcarnival.jpg"
+	},
+	"671": {
+		"Date": "20180425",
+		"Type": "Event",
+		"Title": "The True Garuda",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/thetruegaruda.jpg"
+	},
+	"672": {
+		"Date": "20180425",
+		"Type": "Trial",
+		"Title": "White Dragon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/whitedragontrue.jpg"
+	},
+	"673": {
+		"Date": "20180425",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180427gillsnappers.html"
+	},
+	"674": {
+		"Date": "20180425",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180425maintenance2.html"
+	},
+	"675": {
+		"Date": "20180425",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/issuereportraiditemscompen2.html"
+	},
+	"676": {
+		"Date": "20180424",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180424_letstalk.html"
+	},
+	"677": {
+		"Date": "20180422",
+		"Type": "Other",
+		"Title": "Collaboration Campaign",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180420dqxffbe6.html"
+	},
+	"678": {
+		"Date": "20180421",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/issuereportraiditemsfixed2.html"
+	},
+	"679": {
+		"Date": "20180420",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/issuereportraiditems.html"
+	},
+	"680": {
+		"Date": "20180419",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180419issuereportyda.html"
+	},
+	"681": {
+		"Date": "20180419",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/issuereportffx.html"
+	},
+	"682": {
+		"Date": "20180419",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180419pmaintenanceex2.html"
+	},
+	"683": {
+		"Date": "20180418",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/issuereportdemission2.html"
+	},
+	"684": {
+		"Date": "20180418",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gachatypesummon2.jpg"
+	},
+	"685": {
+		"Date": "20180418",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180418awakeningabilities13.jpg"
+	},
+	"686": {
+		"Date": "20180418",
+		"Type": "Event",
+		"Title": "March On Garuda",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180418marchongaruda.jpg"
+	},
+	"687": {
+		"Date": "20180418",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/unlockcontinentarc231.png"
+	},
+	"688": {
+		"Date": "20180418",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180420cactuardunes.html"
+	},
+	"689": {
+		"Date": "20180418",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180417maintenance2.html"
+	},
+	"690": {
+		"Date": "20180416",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180416_elafi.html"
+	},
+	"691": {
+		"Date": "20180413",
+		"Type": "Event",
+		"Title": "Vault Of Hidden Treasures",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/vaultofhiddentreasures20180413.html"
+	},
+	"692": {
+		"Date": "20180413",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/issuereportfblog.html"
+	},
+	"693": {
+		"Date": "20180412",
+		"Type": "Other",
+		"Title": "30 Million Downloads Raffle Rewards",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180413rafflerewards.html"
+	},
+	"694": {
+		"Date": "20180412",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/issuereportamaandr2.html"
+	},
+	"695": {
+		"Date": "20180412",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180412postmaintenance_6.html"
+	},
+	"696": {
+		"Date": "20180411",
+		"Type": "Unit",
+		"Title": "Updated - Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ffbe16compilation2.jpg"
+	},
+	"697": {
+		"Date": "20180411",
+		"Type": "Event",
+		"Title": "Nameless Gunner Jake",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/bannercgjake.jpg"
+	},
+	"698": {
+		"Date": "20180411",
+		"Type": "Event",
+		"Title": "Conspiracy To The Throne",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/conspiracytothethrone.jpg"
+	},
+	"699": {
+		"Date": "20180411",
+		"Type": "Event",
+		"Title": "Mt. Gagazet - Exploration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gagzetexploration.jpg"
+	},
+	"700": {
+		"Date": "20180411",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/camille6star.jpg"
+	},
+	"701": {
+		"Date": "20180411",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/gillsnapperscave20180413.html"
+	},
+	"702": {
+		"Date": "20180411",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180411maintenance2.html"
+	},
+	"703": {
+		"Date": "20180409",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180409_letstalk.html"
+	},
+	"704": {
+		"Date": "20180406",
+		"Type": "Event",
+		"Title": "Cherry Blossom Campaign",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180406_cherryblossom.html"
+	},
+	"705": {
+		"Date": "20180405",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180405_postmaintenance_2.html"
+	},
+	"706": {
+		"Date": "20180405",
+		"Type": "Unit",
+		"Title": "Free Daily Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180405_freesummon_4.html"
+	},
+	"707": {
+		"Date": "20180405",
+		"Type": "Other",
+		"Title": "Updated - 3★ Espers Unlocked!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180405_news_banner_siren_ifrit_2.jpg"
+	},
+	"708": {
+		"Date": "20180405",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180405_aigaion.html"
+	},
+	"709": {
+		"Date": "20180404",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180404_issuereportserverissue_2.html"
+	},
+	"710": {
+		"Date": "20180403",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy X",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180403_gacha_news_ffx_2_compilation.jpg"
+	},
+	"711": {
+		"Date": "20180403",
+		"Type": "Event",
+		"Title": "Gagazet",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180403_news_banner_gagazet.jpg"
+	},
+	"712": {
+		"Date": "20180403",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180403_news_banner_newawakeningunits_wakka.jpg"
+	},
+	"713": {
+		"Date": "20180403",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180406_news_banner_cactuar_dunes.html"
+	},
+	"714": {
+		"Date": "20180403",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180403_maintenance.html"
+	},
+	"715": {
+		"Date": "20180402",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180402_updates.html"
+	},
+	"716": {
+		"Date": "20180401",
+		"Type": "Other",
+		"Title": "Updated - Wave Battles Incoming!?",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180329_featurenewspart2.html"
+	},
+	"717": {
+		"Date": "20180401",
+		"Type": "Other",
+		"Title": "Wave Battles Incoming!?",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180329_featurenews.html"
+	},
+	"718": {
+		"Date": "20180329",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180329_issuerepot_textupdate.html"
+	},
+	"719": {
+		"Date": "20180329",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180329_post_maintenance.html"
+	},
+	"720": {
+		"Date": "20180328",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180328_termsandcondition_2.html"
+	},
+	"721": {
+		"Date": "20180327",
+		"Type": "Other",
+		"Title": "Friend Points Giveaway",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180228_friendptsga_2.html"
+	},
+	"722": {
+		"Date": "20180327",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy X",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180327_gacha_news_ffx_2.jpg"
+	},
+	"723": {
+		"Date": "20180327",
+		"Type": "Event",
+		"Title": "Macalania Woods",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180327_news_banner_ffx_rerun_2.jpg"
+	},
+	"724": {
+		"Date": "20180327",
+		"Type": "Trial",
+		"Title": "A New Quest Awaits!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_trial_boss_thelegendarystud.jpg"
+	},
+	"725": {
+		"Date": "20180327",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180327_letstalk4.html"
+	},
+	"726": {
+		"Date": "20180327",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180330_news_banner_gill_snappers_cave.html"
+	},
+	"727": {
+		"Date": "20180327",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180327_maintenance_3.html"
+	},
+	"728": {
+		"Date": "20180323",
+		"Type": "Other",
+		"Title": "Updated - 30 Million Download Celebration!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180228_30mildl_env_12.html"
+	},
+	"729": {
+		"Date": "20180323",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180323_issuereportlevi_2.html"
+	},
+	"730": {
+		"Date": "20180322",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180322_post_maintenance.html"
+	},
+	"731": {
+		"Date": "20180320",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180320_gacha_news_ffbe15_compilation.jpg"
+	},
+	"732": {
+		"Date": "20180320",
+		"Type": "Event",
+		"Title": "Lotus Mage Fina",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180320_news_banner_cgfinafeature.jpg"
+	},
+	"733": {
+		"Date": "20180320",
+		"Type": "Event",
+		"Title": "Pride Of Gungan",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180320_news_banner_gungan.jpg"
+	},
+	"734": {
+		"Date": "20180320",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180320_news_banner_unlockcontinent_arc222_3.jpg"
+	},
+	"735": {
+		"Date": "20180320",
+		"Type": "Vortex",
+		"Title": "Chamber Of Crystals",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180323_news_banner_chamber_of_crystals.html"
+	},
+	"736": {
+		"Date": "20180320",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180320_maintenance.html"
+	},
+	"737": {
+		"Date": "20180315",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171213_post_maintenance.html"
+	},
+	"738": {
+		"Date": "20180315",
+		"Type": "Unit",
+		"Title": "Featured Summon International Women's Day",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180315_gacha_news_internationalwomand.jpg"
+	},
+	"739": {
+		"Date": "20180315",
+		"Type": "Unit",
+		"Title": "Get A 5* Lightning",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180315_lightningnews.html"
+	},
+	"740": {
+		"Date": "20180314",
+		"Type": "Event",
+		"Title": "Updated - Fort Vaullerey - Battle With Aranea",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180314_araneaex1.html"
+	},
+	"741": {
+		"Date": "20180314",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180314_issuereportbundle.html"
+	},
+	"742": {
+		"Date": "20180313",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180313_maintenance1.html"
+	},
+	"743": {
+		"Date": "20180313",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180316_news_banner_cactuar_dunes.html"
+	},
+	"744": {
+		"Date": "20180313",
+		"Type": "Event",
+		"Title": "God Of Chaos",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_laracroftandthe-templeofosiris.jpg"
+	},
+	"745": {
+		"Date": "20180313",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_awakeningabilities12new1.jpg"
+	},
+	"746": {
+		"Date": "20180312",
+		"Type": "Other",
+		"Title": "Compensation",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180312_compensation4.html"
+	},
+	"747": {
+		"Date": "20180309",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180309_issuereportiosresolved.html"
+	},
+	"748": {
+		"Date": "20180308",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180308_issuereportios.html"
+	},
+	"749": {
+		"Date": "20180307",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180305_trvideo.html"
+	},
+	"750": {
+		"Date": "20180307",
+		"Type": "Other",
+		"Title": "Updated - Welcome Wagon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180306_welcomewagon_9.html"
+	},
+	"751": {
+		"Date": "20180308",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180308_post_maintenance.html"
+	},
+	"752": {
+		"Date": "20180307",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180307_issuereportbundle_2.html"
+	},
+	"753": {
+		"Date": "20180307",
+		"Type": "Other",
+		"Title": "Collaboration Campaign",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180306_laracroftgiveaway_7.html"
+	},
+	"754": {
+		"Date": "20180307",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_news_tombraiderraid_compilation.jpg"
+	},
+	"755": {
+		"Date": "20180307",
+		"Type": "Event",
+		"Title": "Tomb Of The Silversmith",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_raid_tombraider.jpg"
+	},
+	"756": {
+		"Date": "20180307",
+		"Type": "Event",
+		"Title": "Escape From Alexandria Castle",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_escapefromalexandriacastle.jpg"
+	},
+	"757": {
+		"Date": "20180307",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180309_news_banner_gill_snappers_cave.html"
+	},
+	"758": {
+		"Date": "20180307",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180307_maintenance.html"
+	},
+	"759": {
+		"Date": "20180304",
+		"Type": "Other",
+		"Title": "Fountain Of Lapis Returns!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180302_fountainoflapisreturns_3.html"
+	},
+	"760": {
+		"Date": "20180302",
+		"Type": "Other",
+		"Title": "Final Fantasy Ix - Ticket Giveaway",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180302_ffixgiveaway_4.html"
+	},
+	"761": {
+		"Date": "20180301",
+		"Type": "Other",
+		"Title": "30 Million Download Celebration!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180228_30mildl_env_7.html"
+	},
+	"762": {
+		"Date": "20180301",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180301_post_maintenance.html"
+	},
+	"763": {
+		"Date": "20180228",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180228_news_banner_newawakeningunits_garnet_zidane_kuja_vivi_compiled.jpg"
+	},
+	"764": {
+		"Date": "20180228",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Ix",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180228_gacha_news_ffix_compilation.jpg"
+	},
+	"765": {
+		"Date": "20180228",
+		"Type": "Event",
+		"Title": "Alexandria Castle",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180228_news_banner_alexandriacastle.jpg"
+	},
+	"766": {
+		"Date": "20180228",
+		"Type": "Event",
+		"Title": "Fort Vaullerey - Battle With Aranea",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180228_news_banner_ffxv_challengearanea.jpg"
+	},
+	"767": {
+		"Date": "20180228",
+		"Type": "Vortex",
+		"Title": "Chamber Of Crystals",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180302_news_banner_chamber_of_crystals.html"
+	},
+	"768": {
+		"Date": "20180228",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180229_maintenance.html"
+	},
+	"769": {
+		"Date": "20180301",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 14",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day14.png"
+	},
+	"770": {
+		"Date": "20180228",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 13",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day13.png"
+	},
+	"771": {
+		"Date": "20180227",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 12",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day12.png"
+	},
+	"772": {
+		"Date": "20180226",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 11",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day11.png"
+	},
+	"773": {
+		"Date": "20180225",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 10",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day10.png"
+	},
+	"774": {
+		"Date": "20180224",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 9",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day9.png"
+	},
+	"775": {
+		"Date": "20180223",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 8",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day8.png"
+	},
+	"776": {
+		"Date": "20180222",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 7",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day7.png"
+	},
+	"777": {
+		"Date": "20180221",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 6",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day6.png"
+	},
+	"778": {
+		"Date": "20180220",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 5",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day5.png"
+	},
+	"779": {
+		"Date": "20180219",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 4",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day4.png"
+	},
+	"780": {
+		"Date": "20180218",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 3",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day3.png"
+	},
+	"781": {
+		"Date": "20180217",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 2",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day2.png"
+	},
+	"782": {
+		"Date": "20180216",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway - Day 1",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/14daysoflunarnewyeargiveaway_day1.png"
+	},
+	"783": {
+		"Date": "20180222",
+		"Type": "Other",
+		"Title": "Updated - Patch Notes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180222_patchnotes261_new_2.html"
+	},
+	"784": {
+		"Date": "20180222",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180222_festivalofloveissue_2.html"
+	},
+	"785": {
+		"Date": "20180222",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180222_post_maintenance_2.html"
+	},
+	"786": {
+		"Date": "20180221",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Xv",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180221_gacha_news_ffxv3_compilation_3.jpg"
+	},
+	"787": {
+		"Date": "20180221",
+		"Type": "Event",
+		"Title": "Imperial Infiltration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180221_news_banner_raid_ffxv_2.png"
+	},
+	"788": {
+		"Date": "20180221",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180221_maintenance.html"
+	},
+	"789": {
+		"Date": "20180221",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180221_news_banner_newawakeningunits_iris.png"
+	},
+	"790": {
+		"Date": "20180220",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_unlockcontinent_arc221.png"
+	},
+	"791": {
+		"Date": "20180220",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180223_news_banner_cactuar_dunes.html"
+	},
+	"792": {
+		"Date": "20180220",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180219_glletstalk3.html"
+	},
+	"793": {
+		"Date": "20180214",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180214_issuereportchowandtreasurechest_5.html"
+	},
+	"794": {
+		"Date": "20180213",
+		"Type": "Other",
+		"Title": "5★ Guaranteed Cash Summon",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180213_cashgacha_2.html"
+	},
+	"795": {
+		"Date": "20180213",
+		"Type": "Other",
+		"Title": "Updated - A Valentine From Fina",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180213_valendayfinachoco_2.html"
+	},
+	"796": {
+		"Date": "20180213",
+		"Type": "Other",
+		"Title": "Lunar New Year Giveaway",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180213_newsbanner_bundle_14daysoflunarnewyeargiveaway.jpg"
+	},
+	"797": {
+		"Date": "20180213",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180213_gacha_news_ffbe14_compilation_2.jpg"
+	},
+	"798": {
+		"Date": "20180213",
+		"Type": "Event",
+		"Title": "Kanshou & Bakuya",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180213_news_banner_kanshouandbakuya.png"
+	},
+	"799": {
+		"Date": "20180213",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180216_news_banner_gill_snappers_cave.html"
+	},
+	"800": {
+		"Date": "20180213",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180207_glfeb_2.html"
+	},
+	"801": {
+		"Date": "20180212",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180212_issuereportserver.html"
+	},
+	"802": {
+		"Date": "20180208",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180208_post_maintenance_2.html"
+	},
+	"803": {
+		"Date": "20180207",
+		"Type": "Other",
+		"Title": "Expeditions",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180207_expeditionhalfprice_2.html"
+	},
+	"804": {
+		"Date": "20180207",
+		"Type": "Unit",
+		"Title": "Featured Summon Festival Of Love",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180207_gacha_news_festivaloflove_compilation_2.jpg"
+	},
+	"805": {
+		"Date": "20180207",
+		"Type": "Event",
+		"Title": "Festival Of Love",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180207_news_banner_festivaloflove.png"
+	},
+	"806": {
+		"Date": "20180207",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180207_news_banner_awakeningabilities11_3.png"
+	},
+	"807": {
+		"Date": "20180207",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_newawakeningunits_yuri.png"
+	},
+	"808": {
+		"Date": "20180207",
+		"Type": "Vortex",
+		"Title": "Chamber Of Crystals",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180209_news_banner_chamber_of_crystals.html"
+	},
+	"809": {
+		"Date": "20180207",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180208_maintenance.html"
+	},
+	"810": {
+		"Date": "20180202",
+		"Type": "Other",
+		"Title": "14 Days Of Free Summons",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180130_freegacha14days_2.html"
+	},
+	"811": {
+		"Date": "20180202",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180202_issuerepot_ingamebanner.html"
+	},
+	"812": {
+		"Date": "20180201",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180201_issuerepot_cheating_users.html"
+	},
+	"813": {
+		"Date": "20180201",
+		"Type": "Event",
+		"Title": "Blossom Sage Sakura",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180201_news_banner_cgsagesakura.png"
+	},
+	"814": {
+		"Date": "20180131",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_news_ffbe13_compilation_2.jpg"
+	},
+	"815": {
+		"Date": "20180131",
+		"Type": "Event",
+		"Title": "The White Sage And The Magic Cane",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180131_news_banner_whitsagemagiccane.png"
+	},
+	"816": {
+		"Date": "20180131",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180131_news_banner_newawakeningunits_roselia_ruggles.png"
+	},
+	"817": {
+		"Date": "20180131",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180202_news_banner_cactuar_dunes.html"
+	},
+	"818": {
+		"Date": "20180131",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180131_maintenance_2.html"
+	},
+	"819": {
+		"Date": "20180130",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180129_gljanletsplay.html"
+	},
+	"820": {
+		"Date": "20180125",
+		"Type": "Issue",
+		"Title": "Updated - Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180126_issuerepotgachatiming.html"
+	},
+	"821": {
+		"Date": "20180125",
+		"Type": "Issue",
+		"Title": "Updated - Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180126_issuerepotresolvedfinal.html"
+	},
+	"822": {
+		"Date": "20180126",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171226_issuereporthq.html"
+	},
+	"823": {
+		"Date": "20180126",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180126_issuerepotbanners_2.html"
+	},
+	"824": {
+		"Date": "20180125",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180125_issuerepotgeneral_7.html"
+	},
+	"825": {
+		"Date": "20180125",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180125_post_maintenance.html"
+	},
+	"826": {
+		"Date": "20180125",
+		"Type": "Other",
+		"Title": "Updated - Final Fantasy Portal App Event!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/ffportalad_20180126.html"
+	},
+	"827": {
+		"Date": "20180124",
+		"Type": "Unit",
+		"Title": "Featured Summon Developer's Choice",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180124_gacha_news_developer's_choice2_compilation.jpg"
+	},
+	"828": {
+		"Date": "20180124",
+		"Type": "Event",
+		"Title": "Nam-yensa Sandsea - Exploration",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180124_news_banner_urutaneater.png"
+	},
+	"829": {
+		"Date": "20180124",
+		"Type": "Trial",
+		"Title": "Chamber Of Arms - Mech Of Fury",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180124_news_trial_boss_chamberofarms_mechoffury.jpg"
+	},
+	"830": {
+		"Date": "20180124",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_unlockcontinent_arc2_1-3.png"
+	},
+	"831": {
+		"Date": "20180124",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180126_news_banner_gill_snappers_cave.png"
+	},
+	"832": {
+		"Date": "20180124",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180115_gljanletstalk.html"
+	},
+	"833": {
+		"Date": "20180124",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180124_maintenance_4.html"
+	},
+	"834": {
+		"Date": "20180118",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180118_post_maintenance.html"
+	},
+	"835": {
+		"Date": "20180117",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Xii",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_news_ffxii-2_gacha_compilation.jpg"
+	},
+	"836": {
+		"Date": "20180117",
+		"Type": "Event",
+		"Title": "Yensa Sandsea",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180117_news_banner_yensasandsea.jpg"
+	},
+	"837": {
+		"Date": "20180117",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180117_news_banner_awakeningabilities10.png"
+	},
+	"838": {
+		"Date": "20180117",
+		"Type": "Vortex",
+		"Title": "Chamber Of Crystals",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180119_news_banner_chamber_of_crystals.png"
+	},
+	"839": {
+		"Date": "20180117",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180117_maintenance.html"
+	},
+	"840": {
+		"Date": "20180116",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180115_glvideojannews.html"
+	},
+	"841": {
+		"Date": "20180112",
+		"Type": "Maintenance",
+		"Title": "Emergency Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180112_emergencymaintenancend_2.html"
+	},
+	"842": {
+		"Date": "20180111",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180111_issuerepot.html"
+	},
+	"843": {
+		"Date": "20180111",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180111_post_maintenance.html"
+	},
+	"844": {
+		"Date": "20180110",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180110_gacha_news_ffbe12_compilation_3.jpg"
+	},
+	"845": {
+		"Date": "20180110",
+		"Type": "Event",
+		"Title": "Way Of The Warrior",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180110_news_banner_wayofthewarrior_2.png"
+	},
+	"846": {
+		"Date": "20180110",
+		"Type": "Event",
+		"Title": "Pyro Glacial Lasswell",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180110_news_banner_cglasswell.png"
+	},
+	"847": {
+		"Date": "20180110",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180110_news_banner_newawakeningunits_miyuki.jpg"
+	},
+	"848": {
+		"Date": "20180110",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180112_news_banner_cactuar_dunes.png"
+	},
+	"849": {
+		"Date": "20180110",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180110_maintenance_2.html"
+	},
+	"850": {
+		"Date": "20180109",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180109_issuerepot_expeditionfixed_3.html"
+	},
+	"851": {
+		"Date": "20180109",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180108_glvideomininews.html"
+	},
+	"852": {
+		"Date": "20180105",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180105_issuerepot_expedition_2.html"
+	},
+	"853": {
+		"Date": "20180105",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180105_issuerepot.html"
+	},
+	"854": {
+		"Date": "20180104",
+		"Type": "Maintenance",
+		"Title": "Emergency Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180104_emergencymaintenancend_4.html"
+	},
+	"855": {
+		"Date": "20180104",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180104_issuerepot.html"
+	},
+	"856": {
+		"Date": "20180104",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180104_post_maintenance_2.html"
+	},
+	"857": {
+		"Date": "20180102",
+		"Type": "Unit",
+		"Title": "Updated - Featured Summon King's Knight",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181202_kingsknightgacha_3.html"
+	},
+	"858": {
+		"Date": "20180102",
+		"Type": "Event",
+		"Title": "-wrath Of The Dark Dragon-",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20181202_kingsknighteventraid.html"
+	},
+	"859": {
+		"Date": "20180102",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20180105_news_banner_gill_snappers_cave.png"
+	},
+	"860": {
+		"Date": "20180102",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20180102_maintenance_2.html"
+	},
+	"861": {
+		"Date": "20171229",
+		"Type": "Other",
+		"Title": "New 'let's Play Ffbe' Livestream!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171229_gvingcandy.html"
+	},
+	"862": {
+		"Date": "20171228",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171228_issuerepot_4.html"
+	},
+	"863": {
+		"Date": "20180105",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway! - Day 12",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_day12.png"
+	},
+	"864": {
+		"Date": "20180104",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway! - Day 11",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_day11.png"
+	},
+	"865": {
+		"Date": "20180103",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway! - Day 10",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_day10.png"
+	},
+	"866": {
+		"Date": "20180102",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway! - Day 9",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_day9.png"
+	},
+	"867": {
+		"Date": "20180101",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway! - Day 8",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_day8.png"
+	},
+	"868": {
+		"Date": "20171231",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway! - Day 7",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_day7.png"
+	},
+	"869": {
+		"Date": "20171230",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway! - Day 6",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_day6.png"
+	},
+	"870": {
+		"Date": "20171229",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway! - Day 5",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_day5.png"
+	},
+	"871": {
+		"Date": "20171228",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway! - Day 4",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_day4.png"
+	},
+	"872": {
+		"Date": "20171227",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway! - Day 3",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_day3.png"
+	},
+	"873": {
+		"Date": "20171226",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway! - Day 2",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_day2.png"
+	},
+	"874": {
+		"Date": "20171225",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway! - Day 1",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_day1.png"
+	},
+	"875": {
+		"Date": "20171226",
+		"Type": "Unit",
+		"Title": "Featured Summon Holiday Special",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20171226_christmasgacha2_2017_compilation.jpg"
+	},
+	"876": {
+		"Date": "20171226",
+		"Type": "Event",
+		"Title": "The Giant Gingerbread Man",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20171225_news_banner_giantgingerbreadman.png"
+	},
+	"877": {
+		"Date": "20171226",
+		"Type": "Vortex",
+		"Title": "Enchanted Maze",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20171226_news_banner_enchantedmaze.png"
+	},
+	"878": {
+		"Date": "20171226",
+		"Type": "Vortex",
+		"Title": "Chamber Of Crystals",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20171229_news_banner_chamber_of_crystals.png"
+	},
+	"879": {
+		"Date": "20171226",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171226_glvideomalboro.html"
+	},
+	"880": {
+		"Date": "20171225",
+		"Type": "Other",
+		"Title": "The Limited Bundles Are Going To Be Reset!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171225_resetbundle.html"
+	},
+	"881": {
+		"Date": "20171224",
+		"Type": "Other",
+		"Title": "12 Days Of Joy Giveaway!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/12daysofchristmasgiveaway_2017.jpg"
+	},
+	"882": {
+		"Date": "20171224",
+		"Type": "Other",
+		"Title": "New 'let's Play Ffbe' Livestream!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171222_glvideoholidaystream.html"
+	},
+	"883": {
+		"Date": "20171222",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171222_post_maintenance_3.html"
+	},
+	"884": {
+		"Date": "20171221",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171222_issuereport_arena_5.html"
+	},
+	"885": {
+		"Date": "20171221",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171221_maintenance.html"
+	},
+	"886": {
+		"Date": "20171221",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171221_post_maintenance.html"
+	},
+	"887": {
+		"Date": "20171221",
+		"Type": "Other",
+		"Title": "Retro Zone Campaign",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171221_retrozone_en.html"
+	},
+	"888": {
+		"Date": "20171220",
+		"Type": "Unit",
+		"Title": "Featured Summon Eternal Winter",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_news_christmasgacha1_2017_compilation_2.jpg"
+	},
+	"889": {
+		"Date": "20171220",
+		"Type": "Unit",
+		"Title": "Ability Awakening Update",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_awakeningabilities9.png"
+	},
+	"890": {
+		"Date": "20171220",
+		"Type": "Event",
+		"Title": "Eternal Winter",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20171220_news_banner_eternalchristmas_3.jpg"
+	},
+	"891": {
+		"Date": "20171220",
+		"Type": "Unit",
+		"Title": "New Units To Awaken!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_newawakeningunits_gilbert.png"
+	},
+	"892": {
+		"Date": "20171220",
+		"Type": "Trial",
+		"Title": "A New Quest Awaits!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191220_news_trial_boss_icebird.png"
+	},
+	"893": {
+		"Date": "20171220",
+		"Type": "Vortex",
+		"Title": "Cactuar Dunes",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20171222_news_banner_cactuar_dunes.png"
+	},
+	"894": {
+		"Date": "20171220",
+		"Type": "Event",
+		"Title": "New Highly Difficult Quest Destroy The Reactor",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20171220_news_banner_ff7trial.png"
+	},
+	"895": {
+		"Date": "20171220",
+		"Type": "Other",
+		"Title": "Ffbe Fan Festa Reward!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171212_fanfestala_4.html"
+	},
+	"896": {
+		"Date": "20171220",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171219_maintenance_2.html"
+	},
+	"897": {
+		"Date": "20171214",
+		"Type": "Vortex",
+		"Title": "Gil Snapper's Cave",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20171215_news_banner_gill_snappers_cave.png"
+	},
+	"898": {
+		"Date": "20171213",
+		"Type": "Other",
+		"Title": "Lapis Grand Sale!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171213_lapisgrandsales_3.html"
+	},
+	"899": {
+		"Date": "20171213",
+		"Type": "Maintenance",
+		"Title": "Post Maintenance Note",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171213_post_maintenance.html"
+	},
+	"900": {
+		"Date": "20171212",
+		"Type": "Unit",
+		"Title": "Featured Summon Cloud Arrives!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20171212_gacha_news_ff7_compilation.jpg"
+	},
+	"901": {
+		"Date": "20171212",
+		"Type": "Event",
+		"Title": "Destroy The Reactor",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20171212_news_banner_destroythereactor_2.png"
+	},
+	"902": {
+		"Date": "20171212",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171208_glvideocloudnews.html"
+	},
+	"903": {
+		"Date": "20171212",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171212_maintenance_2.html"
+	},
+	"904": {
+		"Date": "20171211",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171208_issuereportbigbanner_4.html"
+	},
+	"905": {
+		"Date": "20171211",
+		"Type": "Other",
+		"Title": "Youtube Channel 30k Subs Gift",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171208_30k_2.html"
+	},
+	"906": {
+		"Date": "20171211",
+		"Type": "Other",
+		"Title": "New Video Released!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171208_glvideoburningsoul_4.html"
+	},
+	"907": {
+		"Date": "20171206",
+		"Type": "Unit",
+		"Title": "Featured Summon Final Fantasy Brave Exvius",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_news_ffbestory11_compilation.jpg"
+	},
+	"908": {
+		"Date": "20171206",
+		"Type": "Unit",
+		"Title": "Raid Summon News Banner",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171207_gacha_update2.html"
+	},
+	"909": {
+		"Date": "20171206",
+		"Type": "Event",
+		"Title": "Ffbe Raid - King Of Darkness",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_raid_jporiginals_2017.png"
+	},
+	"910": {
+		"Date": "20171206",
+		"Type": "Story",
+		"Title": "The Story Continues!",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_unlockcontinent_arc2_1-2.png"
+	},
+	"911": {
+		"Date": "20171206",
+		"Type": "Vortex",
+		"Title": "Chamber Of Crystals",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20171208_news_banner_chamber_of_crystals.png"
+	},
+	"912": {
+		"Date": "20171206",
+		"Type": "Maintenance",
+		"Title": "Maintenance",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171206_maintenance_2.html"
+	},
+	"913": {
+		"Date": "20171205",
+		"Type": "Issue",
+		"Title": "Issue Report",
+		"Url": "Https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20171205_issuereport.html"
+	}
+}
