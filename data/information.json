@@ -7,7 +7,7 @@
 		"newbie": "new_player"
 	},
 	"elemental_tetris": {
-		"title": "What is Elmental Tetris?",
+		"title": "What is Elemental Tetris?",
 		"description": "Element Tetris is a term used for trials that require extensive use of elemental resists (usually across multiple elements to reach a total of X% resists). Usually you will take zero damage if you meet the required value of resistance, or else your party simply dies.\nExamples include Scorn of the Dark Espers and Dark Golem/Shiva trial where you would need a lot of elemental resistance to survive some thresholds/nuke turns."
 	},
 	"new_player": {
