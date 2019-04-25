@@ -34,6 +34,7 @@ Get Unit GIFs
                   'standby.gif',  'win.gif',  'win before.gif' 
 
 Get Unit Calculations
-    - **?calc** *[unit name -or- category]* "[optional | limit]"
+    - **?dpt** *[unit name -or- category]* "[optional | limit]"
+    - **?burst** *[unit name -or- category]* "[optional | limit]"
     - optional: the amount of results to return, default is 5.
     - categories: "physical", "magical", "hybrid"

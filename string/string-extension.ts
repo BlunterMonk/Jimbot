@@ -1,5 +1,5 @@
 
-String.prototype.similarity = function (s1, s2) {
+String.similarity = function (s1, s2) {
     var longer = s1;
     var shorter = s2;
     if (s1.length < s2.length) {
@@ -14,7 +14,7 @@ String.prototype.similarity = function (s1, s2) {
         (longerLength - String.editDistance(longer, shorter)) / parseFloat(longerLength)
     );
 }
-String.prototype.editDistance = function (s1, s2) {
+String.editDistance = function (s1, s2) {
     s1 = s1.toLowerCase();
     s2 = s2.toLowerCase();
 

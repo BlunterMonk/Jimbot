@@ -7,6 +7,7 @@ const cheerio = require("cheerio");
 const http = require("https");
 const htt = require("http");
 const config = require("./config/config.ts");
+const String = require("./string/string-extension.ts")
 const wikiClient = new wiki({
     protocol: "https", // Wikipedia now enforces HTTPS
     server: "exvius.gamepedia.com", // host name of MediaWiki-powered site
@@ -225,7 +226,7 @@ function getPageID(search, categories, callback) {
                     continue;
                 }
 
-                var match = similarity(title, search);
+                var match = String.similarity(title, search);
                 if (match >= similarityTreshold) {
                     //log(`Very Similar ${title} -vs- ${search} (${match})`)
                     similar[similar.length] = {
@@ -252,7 +253,7 @@ function getPageID(search, categories, callback) {
 
 // COMMANDS
 function handleUnit(receivedMessage, search, parameters) {
-    search = toTitleCase(search, "_");
+    search = search.toTitleCase("_");
     log("Searching Units For: " + search);
     queryWikiForUnit(search, function (pageName, info, imgurl, description, tips) {
         pageName = pageName.replaceAll("_", " ");
@@ -296,7 +297,7 @@ function handleUnit(receivedMessage, search, parameters) {
     });
 }
 function handleEquip(receivedMessage, search, parameters) {
-    search = toTitleCase(search, "_");
+    search = search.toTitleCase("_");
     log(`Searching Equipment For: ${search}...`);
     queryWikiForEquipment(search, parameters, function (imgurl, pageName, nodes) {
         var title = pageName;
@@ -325,7 +326,7 @@ function handleEquip(receivedMessage, search, parameters) {
     });
 }
 function handleSkill(receivedMessage, search, parameters) {
-    search = toTitleCase(search, "_");
+    search = search.toTitleCase("_");
     log(`Searching Skills For: ${search}...`);
     queryWikiForAbility(search, parameters, function (imgurl, pageName, nodes) {
         var title = pageName;
@@ -354,7 +355,7 @@ function handleSkill(receivedMessage, search, parameters) {
     });
 }
 function handleSprite(receivedMessage, search, parameters) {
-    search = toTitleCase(search, "_");
+    search = search.toTitleCase("_");
 
     log("Searching Unit Sprite For: " + search);
     validatePage(search, function (valid, imgurl) {
@@ -798,7 +799,7 @@ function handleGif(receivedMessage, search, parameters) {
     if (bot)
         search = search.toUpperCase();
 
-    var title = toTitleCase(search, "_");
+    var title = search.toTitleCase("_");
 
     var param = parameters[0];
     if (gifAliases[param]) {
@@ -822,7 +823,7 @@ function handleGif(receivedMessage, search, parameters) {
 function handleSetrankings(receivedMessage, search, parameters) {
     var value = parameters[0];
     search = search.replaceAll("_", " ");
-    search = toTitleCase(search);
+    search = search.toTitleCase();
     search = `[${search}]`;
     
     log("Set Rankings");
@@ -835,7 +836,7 @@ function handleSetrankings(receivedMessage, search, parameters) {
         respondFailure(receivedMessage, true);
     }
 }
-function handleDpt(receivedMessage, search, parameters) {
+function handleDpt(receivedMessage, search, parameters, isBurst) {
 
     var calc = config.getCalculations(search);
     if (!calc) {
@@ -854,8 +855,21 @@ function handleDpt(receivedMessage, search, parameters) {
         const key = keys[ind];
         const element = calc[key];
 
-        text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
+        if (isBurst) {
+            text += `**${element.name}:** ${element.damage} on turn ${element.turns}\n`;
+        } else {
+            text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
+        }
     }
+
+    var title = "";
+    var s = search.replaceAll("_", " ").toTitleCase();
+    if (isBurst) {
+        title = `Unit calculations For ${s}. (bust damage on turn)`;
+    } else {
+        title = `Unit calculations For ${s}. (dpt - turns for rotation)`
+    }
+
     
     client.fetchUser(furculaUserID)
     .then(calculator => {
@@ -868,12 +882,12 @@ function handleDpt(receivedMessage, search, parameters) {
                     name: calculator.username,
                     icon_url: calculator.avatarURL
                 },
-                title: `Unit calculations For ${search}. (damage - turns)`,
+                title: title,
                 url: "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0/edit#gid=0",
                 description: text,
                 footer: {
                     text: "visit the link provided for more calculations"
-                },
+                },  
             }
         })
         .then(message => {
@@ -883,7 +897,7 @@ function handleDpt(receivedMessage, search, parameters) {
     });
 }
 function handleBurst(receivedMessage, search, parameters) {
-    handleDpt(receivedMessage, `burst_${search}`, parameters);
+    handleDpt(receivedMessage, `burst_${search}`, parameters, true);
 }
 function handleRecentunits(receivedMessage, search, parameters) {
 
@@ -1584,7 +1598,7 @@ function convertValueToLink(value) {
         link = link.replace(filter, "");
     });
     
-    var title = toTitleCase(link, "_");
+    var title = link.toTitleCase("_");
     title = title.replace("Ss_", "SS_");
     title = title.replace("Cg_", "CG_");
     title = title.replaceAll("_", " ");
@@ -2103,7 +2117,7 @@ bot_secret_token =
 bot_secret_token_test =
     "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 
 // HELPERS
 function getQuotedWord(str) {
@@ -2174,7 +2188,7 @@ function getSearchString(prefix, msg) {
 }
 function getCommandString(msg, prefix) {
     var split = msg.split(" ")[0];
-    split = toTitleCase(split.replace(prefix, ""));
+    split = split.replace(prefix, "").toTitleCase();
 
     if (split.empty()) {
         return null;
@@ -2197,83 +2211,4 @@ function getParameters(msg) {
     }
 
     return { msg: msg, parameters: parameters };
-}
-
-// STRING HELPERS
-
-String.prototype.replaceAll = function (search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, "g"), replacement);
-};
-String.prototype.capitalize = function () {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-};
-String.prototype.limitTo = function (limit) {
-    if (this.length <= limit) {
-        return this;
-    }
-    return this.substring(0, limit) + "...";
-};
-String.prototype.empty = function () {
-    return this.length === 0 || !/\S/.test(this);
-};
-String.prototype.indexOfAfter = function (search, start) {
-    var string = this;
-    var preIndex = string.indexOf(start);
-    return preIndex + string.substring(preIndex).indexOf(search);
-};
-String.prototype.indexOfAfterIndex = function (search, start) {
-    return start + this.substring(start).indexOf(search);
-};
-String.prototype.matches = function (other) {
-    return this === other;
-};
-function similarity(s1, s2) {
-    var longer = s1;
-    var shorter = s2;
-    if (s1.length < s2.length) {
-        longer = s2;
-        shorter = s1;
-    }
-    var longerLength = longer.length;
-    if (longerLength == 0) {
-        return 1.0;
-    }
-    return (
-        (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength)
-    );
-}
-function editDistance(s1, s2) {
-    s1 = s1.toLowerCase();
-    s2 = s2.toLowerCase();
-
-    var costs = new Array();
-    for (var i = 0; i <= s1.length; i++) {
-        var lastValue = i;
-        for (var j = 0; j <= s2.length; j++) {
-            if (i == 0) costs[j] = j;
-            else {
-                if (j > 0) {
-                    var newValue = costs[j - 1];
-                    if (s1.charAt(i - 1) != s2.charAt(j - 1))
-                        newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
-                    costs[j - 1] = lastValue;
-                    lastValue = newValue;
-                }
-            }
-        }
-        if (i > 0) costs[s2.length] = lastValue;
-    }
-    return costs[s2.length];
-}
-
-function toTitleCase(text, splitter) {
-    if (!splitter) {
-        splitter = " ";
-    }
-    return text
-        .toLowerCase()
-        .split(splitter)
-        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(splitter);
 }
