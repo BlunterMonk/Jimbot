@@ -38,3 +38,7 @@ Get Unit Calculations
     - **?burst** *[unit name -or- category]* "[optional | limit]"
     - optional: the amount of results to return, default is 5.
     - categories: "physical", "magical", "hybrid"
+
+Get Information
+    - **?whatis** *[search]*
+    - example: **?whatis elemental tetris**
