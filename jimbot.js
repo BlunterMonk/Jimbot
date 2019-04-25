@@ -836,6 +836,20 @@ function handleSetrankings(receivedMessage, search, parameters) {
         respondFailure(receivedMessage, true);
     }
 }
+function handleSetinfo(receivedMessage, search, parameters) {
+    var title = parameters[0];
+    var desc = parameters[1];
+    
+    log("Set Information");
+    log(`Title: ${title}`);
+    log(`Desc: ${desc}`);
+
+    if (config.setInformation(search, title, desc)) {
+        respondSuccess(receivedMessage, true);
+    } else {
+        respondFailure(receivedMessage, true);
+    }
+}
 function handleDpt(receivedMessage, search, parameters, isBurst) {
 
     var calc = config.getCalculations(search);
@@ -920,6 +934,37 @@ function handleRecentunits(receivedMessage, search, parameters) {
         })
         .catch(console.error);
     })
+}
+function handleWhatis(receivedMessage, search, parameters) {
+
+    var info = config.getInformation(search)
+    if (!info) {
+        return;
+    }
+        
+    client.fetchUser(renaulteUserID)
+    .then(calculator => {
+
+        receivedMessage.channel
+        .send(mainChannelID, {
+            embed: {
+                color: pinkHexCode,
+                author: {
+                    name: calculator.username,
+                    icon_url: calculator.avatarURL
+                },
+                title: info.title,
+                description: info.description
+            }
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+    });
+}
+function handleNoob(receivedMessage, search, parameters) {
+    handleWhatis(receivedMessage, "new_player", parameters);
 }
 
 // COMMANDS END
@@ -1974,18 +2019,19 @@ client.on("message", receivedMessage => {
             const search = getSearchString(`?${command}`, copy);
             if (!search && parameters.length === 0) {
                 log("Could not parse search string");
-                //respondFailure(receivedMessage, true);
+                respondFailure(receivedMessage, true);
                 throw command;
             }
 
             if (content.startsWith("?setrank")) {
                 handleSetrankings(receivedMessage, search, parameters);
+            } else if (content.startsWith("?setrank")) {
+                handleSetinfo(receivedMessage, search, parameters);
             }
         } catch(e) {
             log("Failed: " + e);
             respondFailure(receivedMessage, true);
         }
-
         return;
     }
 

@@ -4,6 +4,7 @@ const filename = 'config/config.json';
 const rankingFile = 'data/rankings.json';
 const rankingDump = 'data/rankingsdump.json';
 const unitCalc = 'data/unitcalculations.json';
+const infoJson = 'data/information.json';
 
 class GuildSettings {
     constructor(name, guildId) {
@@ -93,6 +94,7 @@ module.exports = {
     fullRankings: null,
     serverSettings: null,
     calculations: null,
+    information: null,
     guilds: {},
     init() {
         var data = fs.readFileSync(filename);
@@ -106,6 +108,9 @@ module.exports = {
                 
         var calcs = fs.readFileSync(unitCalc);
         this.calculations = JSON.parse(calcs);
+
+        var info = fs.readFileSync(infoJson);
+        this.information = JSON.parse(info);
     },
     save() {
         var newData = JSON.stringify(this.configuration, null, "\t");
@@ -114,6 +119,10 @@ module.exports = {
     saveRankings() {
         var newData = JSON.stringify(this.rankings, null, "\t");
         fs.writeFileSync(rankingFile, newData);
+    },
+    saveInformation() {
+        var newData = JSON.stringify(this.information, null, "\t");
+        fs.writeFileSync(infoJson, newData);
     },
     loadGuild(name, guildId) {
         this.guilds[guildId] = new GuildSettings(name, guildId);
@@ -247,6 +256,28 @@ module.exports = {
         } else {
             return category;
         }
+    },
+    setInformation(name, title, data) {
+        if (this.information.aliases[name]) {
+            name = this.information.aliases[name];
+        }
+
+        this.information[name] = {
+            title: title,
+            description: data
+        } 
+        this.saveInformation();
+        return true;
+    },
+    getInformation(name)  {
+        if (this.information.aliases[name]) {
+            name = this.information.aliases[name];
+        }
+
+        if (this.information[name]) {
+            return this.information[name];
+        }
+        return null;
     },
     validateCommand(guildId, userRole, command) {
         //console.log(`Config Validate Command (${guildId})` + this.guilds[guildId]);
