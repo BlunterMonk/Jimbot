@@ -165,140 +165,12 @@ client.on("guildDelete", guild => {
 client.on("ready", () => {
     log("Connected as " + client.user.tag);
 
-    //loadRankingsList(() => { });
     config.init();
     LoadGuilds();
 
     log("Configuration Loaded");
     loading = false;
 });
-
-function loadRankingsList(callback) {
-    var search = "Unit_Rankings";
-    wikiClient.getArticle(search, function (err, content, redirect) {
-        if (err || !content) {
-            console.error(err);
-            return;
-        }
-        if (redirect) {
-            log("Redirect Info: ");
-            log(redirect);
-        }
-
-        wikiClient.parse(content, search, function (err, xml, images) {
-            if (err) {
-                log(err);
-                return;
-            }
-            log("Parsing Unit Rankings Page");
-            //log(xml);
-
-            const $ = cheerio.load(xml);
-            var table = $(".wikitable.sortable");
-            fs.writeFileSync("rankingsdump.txt", xml);
-
-            if (!table.is("table")) {
-                log("Not Table");
-                return;
-            }
-            var results = [],
-                headings = [];
-
-            table
-                .first()
-                .find("th")
-                .each(function (index, value) {
-                    var head = $(value).text();
-                    if (!head.empty() && index > 0) {
-                        head = head.replaceAll("\n", "");
-                        headings.push(head);
-                    }
-                });
-
-            table.each((tableIndex, element) => {
-                $(element)
-                    .find("tbody")
-                    .children("tr")
-                    .each(function (indx, obj) {
-                        var row = {};
-                        var tds = $(this).children("td");
-
-                        tds.each(function (ind) {
-                            var value = $(this).text();
-                            value = value.replaceAll("\n", "");
-                            value = value.replaceAll(" ", "_");
-
-                            if (ind == 0) {
-                                var img = $(this)
-                                    .find("img")
-                                    .attr("src");
-                                row["imgurl"] = img;
-                            }
-
-                            var links = $(this).children("img");
-                            links.each(function (i) {
-                                value += $(this).attr("alt") + "\n";
-                            });
-
-                            var key = headings[ind];
-                            if (ind < 4) {
-                                row[key] = value;
-                            }
-                        });
-
-                        var unitName = row["Unit"];
-
-                        if (row["Unit"]) {
-                            var escpaedName = row["Unit"].replace(
-                                /[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g,
-                                "\\$&"
-                            );
-
-                            try {
-                                var notes = $(`#${escpaedName}_2`);
-                                if (notes && notes.length > 0) {
-                                    row["notes"] = notes
-                                        .parent()
-                                        .next()
-                                        .text();
-                                } else {
-                                    //log(`Could not find '${escpaedName}_2', trying '${escpaedName}'.`);
-
-                                    try {
-                                        var notes = $(`#${escpaedName}`);
-                                        if (notes && notes.length > 0) {
-                                            row["notes"] = notes
-                                                .parent()
-                                                .next()
-                                                .text();
-                                        } else {
-                                            log(`Found '${escpaedName}', could not find notes.`);
-                                        }
-                                    } catch (f) {
-                                        log("Could not get notes for: " + escpaedName);
-                                    }
-                                }
-                            } catch (e) {
-                                log("Big Error: " + e);
-                                log("Could not get notes for: " + escpaedName);
-                            }
-
-                            row["Unit"] = row["Unit"].toLowerCase();
-                            results.push(row);
-                        }
-                    });
-            });
-
-            //log("Results:");
-            //log(results)
-            var j = JSON.stringify(results);
-            //log(j);
-            fs.writeFileSync("rankingsdump.json", j);
-            log("Unit Rankings Updated");
-            callback();
-        });
-    });
-}
 
 function getPageID(search, categories, callback) {
     var count = categories.length;
@@ -377,13 +249,6 @@ function getPageID(search, categories, callback) {
         });
     });
 }
-
-/*
-const reactionFilter = (reaction, user) => {
-    return true;// ['👎'].includes(reaction.emoji.name) && user.id === message.author.id;
-};
-    const filter = (reaction, user) => reaction.emoji.name === '👌'
-*/
 
 // COMMANDS
 function handleUnit(receivedMessage, search, parameters) {
@@ -989,7 +854,7 @@ function handleDpt(receivedMessage, search, parameters) {
         const key = keys[ind];
         const element = calc[key];
 
-        text += `**${element.name}:** ${element.damage} / ${element.turns}t\n`;
+        text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
     }
     
     client.fetchUser(furculaUserID)
@@ -1003,7 +868,7 @@ function handleDpt(receivedMessage, search, parameters) {
                     name: calculator.username,
                     icon_url: calculator.avatarURL
                 },
-                title: `Unit calculations For ${search}. (damage / turns)`,
+                title: `Unit calculations For ${search}. (damage - turns)`,
                 url: "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0/edit#gid=0",
                 description: text,
                 footer: {
@@ -1016,6 +881,9 @@ function handleDpt(receivedMessage, search, parameters) {
         })
         .catch(console.error);
     });
+}
+function handleBurst(receivedMessage, search, parameters) {
+    handleDpt(receivedMessage, `burst_${search}`, parameters);
 }
 function handleRecentunits(receivedMessage, search, parameters) {
 
@@ -2235,7 +2103,7 @@ bot_secret_token =
 bot_secret_token_test =
     "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token_test);
+client.login(bot_secret_token);
 
 // HELPERS
 function getQuotedWord(str) {

@@ -221,13 +221,21 @@ module.exports = {
 
         if (!category) {
             var found = {};
+            var burst = search.includes("burst_");
+            search = search.replace("burst_", "");
 
             Object.keys(this.calculations).forEach((cat) => {
                 var category = this.calculations[cat];
 
+                if (burst && !cat.includes("burst_")) {
+                    return;
+                } else if (!burst && cat.includes("burst_")) {
+                    return;
+                }
+
                 Object.keys(category).forEach((key) => {
                     var unit = category[key];
-                    var name = unit.name.toLowerCase();
+                    var name = unit.name.toLowerCase().replaceAll(" ", "_");
                     
                     if (name.includes(search.toLowerCase())) {
                         found[unit.name] = unit;

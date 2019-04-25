@@ -6,6 +6,7 @@ const {google} = require('googleapis');
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const calcSheet = "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0/edit#gid=0";
 const sheetName = "Damage comparison";
+const burstSheetName = "Burst comparison";
 const sheetID = "1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0";
 const saveLocation = "data/unitcalculations.json";
 
@@ -44,11 +45,14 @@ function authorize(credentials, callback) {
     var ranges = [
         { name: "physical", range: `${sheetName}!B3:D` },
         { name: "magical", range: `${sheetName}!G3:I` },
-        { name: "hybrid", range: `${sheetName}!L3:N` }
+        { name: "hybrid", range: `${sheetName}!L3:N` },
+        { name: "burst_physical", range: `${burstSheetName}!B3:D` },
+        { name: "burst_magical", range: `${burstSheetName}!G3:I` },
+        { name: "burst_hybrid", range: `${burstSheetName}!L3:N` }
     ]
 
     var units = {};
-    var count = 3;
+    var count = 6;
     var totalUnits = 0;
     var queryEnd2 = function (url, index) {
         console.log(`[${totalUnits}]${index}: ${url}`)
@@ -79,7 +83,11 @@ function authorize(credentials, callback) {
         if (count <= 0) {
             console.log("Unit Fields");
             console.log("Total: " + totalUnits);
- 
+
+            var save = JSON.stringify(units, null, "\t");
+            fs.writeFileSync(saveLocation, save);
+
+            /*
             var cats = Object.keys(units);
             cats.forEach((cat) => {
                 console.log("Category: " + cat);
@@ -101,13 +109,16 @@ function authorize(credentials, callback) {
                     }, 1000 * ind);
                 });
             });
+            */
         }
     };
 
     for (let ind = 0; ind < ranges.length; ind++) {
         const range = ranges[ind];
         
-        GetUnitComparison(oAuth2Client, range.name, range.range, queryEnd);
+        setTimeout(() => {
+            GetUnitComparison(oAuth2Client, range.name, range.range, queryEnd);
+        }, 10000 * ind);
     }
 }
 
