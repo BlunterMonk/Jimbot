@@ -1,7 +1,8 @@
-const mergeImages = require('merge-images');
+const mergeImages = require('./merge-images');
 const fs = require("fs");
 const https = require("https");
 const sizeOf = require('image-size');
+const builder = require('./builder/builder.js');
 const Canvas = require('canvas')
 const canvas = Canvas.createCanvas(600, 600)
 const ctx = canvas.getContext('2d')
@@ -69,7 +70,7 @@ function buildImage(images, unit) {
         h: unit.h * 2.5
     }];
     var sx = 85;
-    var sy = 500;
+    var sy = 505;
     var xspace = 390;
     var yspace = 140;
     var y = sy;
@@ -79,7 +80,7 @@ function buildImage(images, unit) {
         load[load.length] = {
             src: imgDir + image,
             x: (sx + (xspace * (index % 2))) - 56,
-            y: 405,
+            y: y - 56,
             w: 112,
             h: 112
         }
@@ -112,6 +113,14 @@ function buildImage(images, unit) {
 
 var dump = fs.readFileSync("testequip.json");
 var build = JSON.parse(dump);
+/*
+dump = fs.readFileSync("../ffbe/units.json");
+var unitslist = JSON.parse(dump);
+*/
+
+var b = builder.loadStateHashAndBuild(build);
+console.log("Unit Build");
+console.log(builder.getBuildStatsAsText(b));
 
 dump = fs.readFileSync("../ffbe/equipment.json");
 var equipment = JSON.parse(dump);
@@ -177,7 +186,7 @@ function getUnitImage(id, callback) {
     const url = `https://exvius.gg/static/img/assets/unit/unit_ills_${id}.png`;
     const name = `${id}.png`;
 
-    downloadFile(name, url, result => {
+    downloadFile(imgDir + name, url, result => {
         //console.log(result);
         callback(name);
     });
@@ -186,7 +195,7 @@ function getUnitImage(id, callback) {
 function getItemImage(name, callback) {
     const url = `https://exvius.gg/static/img/assets/item/${name}`;
 
-    downloadFile(name, url, result => {
+    downloadFile(imgDir + name, url, result => {
         //console.log(result);
         callback(name);
     });
@@ -194,11 +203,11 @@ function getItemImage(name, callback) {
 
 function downloadFile(name, link, callback) {
 
-    if (fs.existsSync(imgDir + name)) {
+    if (fs.existsSync(name)) {
         callback("success");
         return;
     }
-    const file = fs.createWriteStream(imgDir + name);
+    const file = fs.createWriteStream(name);
     const request = https.get(link, function (response) {
         response.pipe(file);
         callback("success");
