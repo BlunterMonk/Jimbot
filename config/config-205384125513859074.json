@@ -14,6 +14,16 @@
 	"disabledCommands": [
 		"addemo",
 		"addalias",
+		"addshortcut",
 		"emote"
-	]
+	],
+	"editors": [
+		"159846139124908032",
+		"131139508421918721",
+		"344500120827723777"
+	],
+	"shortcuts": {
+		"eletetris": "?whatis elemental tetris",
+		"noob": "?whatis new player info"
+	}
 }

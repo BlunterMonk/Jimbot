@@ -16,28 +16,34 @@ Get Unit Information
 
 Get Skill Information
     - **?skill** *[name]*
+    - example: **?skill Bolting Strike**
 
 Get Equipment Information
     - **?equip** *[name]*
-
-Get Best Units
-    - **?bestunits**
+    - example: **?equip Asterisk**
 
 Get Unit Sprite
     - **?sprite** *[name]*
+    - example: **?sprite Esther**
 
-Get Unit GIFs
+Get Unit GIFs, quotations are required
     - **?gif** *[name]* "[parameter]"
-    - parameters: 'attack.gif',  'dead.gif',  
-                  'dying.gif', 'idle.gif',  'jump.gif',  'limit.gif',
-                  'magic attack.gif',  'magic standby.gif',  'move.gif',  
-                  'standby.gif',  'win.gif',  'win before.gif' 
+    - parameters: 'attack',  'dead',  
+                  'dying', 'idle',  'jump',  'limit',
+                  'magic attack',  'magic standby',  'move',  
+                  'standby',  'win',  'win before'
+    - example: **?gif Esther "attack"**
 
 Get Unit Calculations
-    - **?dpt** *[unit name -or- category]* "[optional | limit]"
-    - **?burst** *[unit name -or- category]* "[optional | limit]"
+    - **?dpt** *[unit name -or- category]* "[limit]"
+    - **?burst** *[unit name -or- category]* "[limit]"
     - optional: the amount of results to return, default is 5.
     - categories: "physical", "magical", "hybrid"
+    - example: **?dpt Esther**
+    - example: **?burst hybrid "10"**
+
+Get Best Units
+    - **?glbestunits**
 
 Get Information
     - **?whatis** *[search]*

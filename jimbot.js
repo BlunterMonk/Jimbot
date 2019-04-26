@@ -35,6 +35,8 @@ const furculaUserID = "344500120827723777";
 
 const aniGL = (n) => `https://exvius.gg/gl/units/${n}/animations/`;
 const aniJP = (n) => `https://exvius.gg/jp/units/${n}/animations/`;
+const guildId = (msg) => msg.guild.id;
+const userId = (msg) => msg.author.id;
 
 // Lookup Tables
 
@@ -483,6 +485,12 @@ function handleWhatis(receivedMessage, search, parameters) {
         .catch(console.error);
     });
 }
+function handleGuide(receivedMessage, search, parameters) {
+    handleWhatis(receivedMessage, search, parameters);
+}
+function handleG(receivedMessage, search, parameters) {
+    handleWhatis(receivedMessage, search, parameters);
+}
 function handleNoob(receivedMessage, search, parameters) {
     handleWhatis(receivedMessage, "new_player", parameters);
 }
@@ -740,6 +748,23 @@ function handleAddemo(receivedMessage, search, parameters) {
             log(result);
             respondSuccess(receivedMessage);
         });
+    }
+}
+function handleAddshortcut(receivedMessage, search, parameters) {
+    var command = parameters[0];
+    
+    log("Set Information");
+    log(`Shortcut: ${search}`);
+    log(`Command: ${command}`);
+    if (config.validateEditor(guildId(receivedMessage), userId(receivedMessage))) {
+        log("User is not an editor");
+        return;
+    }
+
+    if (config.setShortcut(guildId(receivedMessage), search, command)) {
+        respondSuccess(receivedMessage, true);
+    } else {
+        respondFailure(receivedMessage, true);
     }
 }
 
@@ -1171,6 +1196,14 @@ client.on("message", receivedMessage => {
     try {
          // the command name
         var command = getCommandString(content, prefix);
+        var shortcut = config.getShortcut(guildId, command);
+        if (shortcut) {
+            log("Found Command Shortcut");
+            copy = shortcut;
+            command = getCommandString(copy, prefix);
+            log(`New Command: ${command}`);
+            log(`New Content: ${copy}`);
+        }
         //log("Before");
         //log(command);
         //log(copy);
