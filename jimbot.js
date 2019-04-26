@@ -8,19 +8,10 @@ const http = require("https");
 const htt = require("http");
 const config = require("./config/config.ts");
 const String = require("./string/string-extension.ts")
-const wikiClient = new wiki({
-    protocol: "https", // Wikipedia now enforces HTTPS
-    server: "exvius.gamepedia.com", // host name of MediaWiki-powered site
-    path: "/", // path to api.php script
-    debug: false // is more verbose when set to true
-});
+const FFBE = require("./ffbewiki.js");
+
 var mainChannelID;
 const pinkHexCode = 0xffd1dc;
-const overviewRegexp = /\|(.*)=\s*(.*)/g;
-const valueRegexp = /\|(.*)(?:=)(.*)/g;
-const valueMultiLineRegexp = /\|(.*)(?:=)(.*[^|]+)/g;
-const linkRegexp = /(\(.*Events.*\))|(\(.*Trial.*\))\s*|(\(.*Quest.*\))\s*|\[\[(.*)\]\]/g;
-const linkRegexp2 = /\(\[\[(.*Events)(?:\|.*)\]\]\)|\(.*(Trial).*\)|(\(.*Quest.*\))|\[\[(.*)\]\]/g;
 const linkFilter = [
     /\|Trial/,
     /\|Event/,
@@ -31,17 +22,13 @@ const linkFilter = [
     /\(/,
     /\)/
 ];
-// (?:\<.*\>) for commented elements
-////(.*)=\s*(.*)/g;
-const unicodeStar = "★";
-const unicodeStarOpen = "✫";
-const descCharLimit = 128;
-const wikiEndpoint = "https://exvius.gamepedia.com/";
-const similarityTreshold = 0.5;
 const okEmoji = "🆗";
 const cancelEmoji = "❌";
+
+const wikiEndpoint = "https://exvius.gamepedia.com/";
 const ffbegifEndpoint = "http://www.ffbegif.com/";
 const exviusdbEndpoint = "https://exvius.gg/gl/units/205000805/animations/";
+
 const renaulteUserID = "159846139124908032";
 const jimooriUserID = "131139508421918721";
 const furculaUserID = "344500120827723777";
@@ -51,38 +38,6 @@ const aniJP = (n) => `https://exvius.gg/jp/units/${n}/animations/`;
 
 // Lookup Tables
 
-const statParameters = [ "atk", "def", "mag", "spr", "hp", "mp" ];
-const defaultEquipParameters = [
-  /*'name',*/ "type",
-  /*"desc",*/ "reward",
-    "resist",
-    "effect",
-    "trust",
-    "stmr",
-    "element",
-    "ability",
-    "notes"
-];
-const defaultAbilityParameters = [
-    "name", "type", "effect", "chain", "hits", "atk_frm", "mp_cost", "learn"
-]
-// this is used to better display results with more accurate names
-const abilityAliases = {
-    "atk_frm": "Attack Frames",
-    "mp_cost": "MP Cost",
-    "learn": "Learned By",
-    "trust": "tmr",
-    "stmr": "stmr"
-}
-// Parameter aliases need to match the original parameter name from the wiki
-const parameterAliases = {
-    "frames": "atk_frm",
-    "family": "chain",
-    "learned": "learn",
-    "owner": "learn",
-    "trust": "tmr",
-    "tm": "tmr"
-}
 const unicodeNumbers = [
     "0️⃣",
     "1️⃣",
@@ -96,19 +51,12 @@ const unicodeNumbers = [
     "9️⃣",
     "🔟"
 ];
-const defaultUnitParameters = [ 
-    "name", "role", "origin", 
-    "stmr", "trust", "chain", "rarity" 
-]
+
 const gifAliases = {
     "lb": "limit",
     "limit burst": "limit",
     "victory": "win before",
     "win_before": "win before"
-}
-
-function isStat(name) {
-    return statParameters.includes(name.toLowerCase().trim());
 }
 
 // Commands
@@ -173,133 +121,57 @@ client.on("ready", () => {
     loading = false;
 });
 
-function getPageID(search, categories, callback) {
-    var count = categories.length;
-    var similar = [];
-    var queryEnd = function (id, name) {
-        count -= 1;
 
-        if (id) {
-            callback(id, name);
-            callback = null;
-            count = 0;
-        } else if (!id && count <= 0) {
-            if (callback && similar.length > 0) {
-                var highest = similar.sort((a, b) => {
-                    return b.similarity - a.similarity;
-                })[0];
-
-                log("Highest");
-                log(highest);
-
-                id = highest.id;
-                name = highest.title;
-
-                var other = convertTitlesToLinks(similar);
-
-                callback(id, name, other);
-                callback = null;
-            }
-        }
-    };
-
-    categories.forEach(function (category) {
-        wikiClient.getPagesInCategory(category, function (err, redirect, content) {
-            if (err) {
-                log(err);
-                return;
-            }
-
-            var id = null;
-            var name = search;
-            for (var i = 0; i < redirect.length; i++) {
-                if (!callback) {
-                    return;
-                }
-
-                var page = redirect[i];
-
-                var title = page.title.toLowerCase();
-                search = search.toLowerCase();
-
-                if (!title.startsWith(search[0])) {
-                    continue;
-                }
-
-                var match = String.similarity(title, search);
-                if (match >= similarityTreshold) {
-                    //log(`Very Similar ${title} -vs- ${search} (${match})`)
-                    similar[similar.length] = {
-                        id: page.pageid,
-                        title: page.title,
-                        similarity: match
-                    };
-                } /* else if (match >= similarityTreshold * 0.5) {
-                    log(`Kinda Similar ${title} -vs- ${search}`)
-                }*/
-
-                title = title.replaceAll(" ", "_");
-                if (title === search) {
-                    id = page.pageid;
-                    name = page.title;
-                    break;
-                }
-            }
-
-            queryEnd(id, name);
-        });
-    });
-}
 
 // COMMANDS
+
+// WIKI 
 function handleUnit(receivedMessage, search, parameters) {
     search = search.toTitleCase("_");
     log("Searching Units For: " + search);
-    queryWikiForUnit(search, function (pageName, info, imgurl, description, tips) {
+    FFBE.queryWikiForUnit(search, parameters, function (pageName, imgurl, description, limited, rarity, fields) {
         pageName = pageName.replaceAll("_", " ");
-        parseUnitOverview(info, tips, parameters, (fields, limited, rarity) => {
-            var embed = {
-                color: pinkHexCode,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                thumbnail: {
-                    url: imgurl
-                },
-                title: pageName,
-                url: "https://exvius.gamepedia.com/" + search,
-                fields: fields
+        var embed = {
+            color: pinkHexCode,
+            author: {
+                name: client.user.username,
+                icon_url: client.user.avatarURL
+            },
+            thumbnail: {
+                url: imgurl
+            },
+            title: pageName,
+            url: "https://exvius.gamepedia.com/" + search,
+            fields: fields
+        };
+
+        // TODO: Create a function to better wrap this since it will be common
+        if (
+            parameters.length == 0 ||
+            (parameters.length > 0 && parameters.includes("Description"))
+        ) {
+            embed.description = description;
+        }
+        if (limited) {
+            embed.footer = {
+                text: "Unit Is Limited"
             };
+        }
 
-            // TODO: Create a function to better wrap this since it will be common
-            if (
-                parameters.length == 0 ||
-                (parameters.length > 0 && parameters.includes("Description"))
-            ) {
-                embed.description = description;
-            }
-            if (limited) {
-                embed.footer = {
-                    text: "Unit Is Limited"
-                };
-            }
-
-            receivedMessage.channel
-                .send({
-                    embed: embed
-                })
-                .then(message => {
-                    cacheBotMessage(receivedMessage.id, message.id);
-                })
-                .catch(console.error);
-        });
+        receivedMessage.channel
+            .send({
+                embed: embed
+            })
+            .then(message => {
+                cacheBotMessage(receivedMessage.id, message.id);
+            })
+            .catch(console.error);
     });
 }
 function handleEquip(receivedMessage, search, parameters) {
     search = search.toTitleCase("_");
     log(`Searching Equipment For: ${search}...`);
-    queryWikiForEquipment(search, parameters, function (imgurl, pageName, nodes) {
+    FFBE.queryWikiForEquipment(search, parameters, function (imgurl, pageName, nodes) {
         var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
 
@@ -328,7 +200,7 @@ function handleEquip(receivedMessage, search, parameters) {
 function handleSkill(receivedMessage, search, parameters) {
     search = search.toTitleCase("_");
     log(`Searching Skills For: ${search}...`);
-    queryWikiForAbility(search, parameters, function (imgurl, pageName, nodes) {
+    FFBE.queryWikiForAbility(search, parameters, function (imgurl, pageName, nodes) {
         var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
 
@@ -354,11 +226,108 @@ function handleSkill(receivedMessage, search, parameters) {
             .catch(console.error);
     });
 }
-function handleSprite(receivedMessage, search, parameters) {
+function handleSearch(receivedMessage, search) {
+    log(`Searching For: ${search}...`);
+    FFBE.queryWikiWithSearch(search, function (batch) {
+        receivedMessage.channel
+            .send(mainChannelID, {
+                embed: {
+                    color: pinkHexCode,
+                    author: {
+                        name: client.user.username,
+                        icon_url: client.user.avatarURL
+                    },
+                    fields: batch
+                }
+            })
+            .then(message => {
+                cacheBotMessage(receivedMessage.id, message.id);
+            })
+            .catch(console.error);
+    });
+}
+function handleRank(receivedMessage, search, parameters) {
+    log("\nSearching Rankings for: " + search);
+    if (search) {
+        const unit = config.getUnitRank(search.toLowerCase());
+        if (!unit) {
+            log("Could not find unit");
+            return;
+        }
+
+        var embed = {
+            title: unit.Unit,
+            url: wikiEndpoint + unit.Unit.replaceAll(" ", "_"),
+            color: pinkHexCode,
+            fields: [
+                {
+                    name: "Rank",
+                    value: `${unit.Base} - ${unit.TDH}`
+                }
+            ],
+            thumbnail: {
+                url: unit.imgurl
+            }
+        };
+
+        if (unit.notes) {
+            embed.fields[embed.fields.length] = {
+                name: "Notes",
+                value: unit.notes
+            };
+        }
+
+        receivedMessage.channel
+            .send({
+                embed: embed
+            })
+            .then(message => {
+                cacheBotMessage(receivedMessage.id, message.id);
+            })
+            .catch(console.error);
+        return;
+    }
+
+    var embeds = [];
+    var rankings = config.getRankings(search);
+    log("\nRankings");
+    log(rankings);
+    rankings.forEach(rank => {
+        embeds[embeds.length] = {
+            title: rank.name,
+            url: rank.pageurl,
+            color: pinkHexCode,
+            fields: [
+                {
+                    name: rank.comparison,
+                    value: rank.reason
+                }
+            ],
+            thumbnail: {
+                url: rank.imgurl
+            }
+        };
+    });
+
+    log("\nEmbeds");
+    log(embeds);
+    embeds.forEach(embed => {
+        receivedMessage.channel
+            .send({
+                embed: embed
+            })
+            .then(message => {
+                //cacheBotMessage(receivedMessage.id, message.id);
+            })
+            .catch(console.error);
+    });
+}
+
+/*function handleSprite(receivedMessage, search, parameters) {
     search = search.toTitleCase("_");
 
     log("Searching Unit Sprite For: " + search);
-    validatePage(search, function (valid, imgurl) {
+    validateUnit(search, function (valid, imgurl) {
         search = search.replaceAll("_", " ");
 
         var embed = {
@@ -379,7 +348,9 @@ function handleSprite(receivedMessage, search, parameters) {
             })
             .catch(console.error);
     });
-}
+}*/
+
+// FLUFF
 function handleReactions(receivedMessage) {
     const content = receivedMessage.content.toLowerCase();
     switch (content) {
@@ -402,26 +373,248 @@ function handleReactions(receivedMessage) {
             break;
     }
 }
-function handleSearch(receivedMessage, search) {
-    log(`Searching For: ${search}...`);
-    queryWikiWithSearch(search, function (batch) {
-        receivedMessage.channel
-            .send(mainChannelID, {
-                embed: {
-                    color: pinkHexCode,
-                    author: {
-                        name: client.user.username,
-                        icon_url: client.user.avatarURL
-                    },
-                    fields: batch
-                }
-            })
-            .then(message => {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
-            .catch(console.error);
+function handleEmote(receivedMessage, prefix, replace) {
+    var img = receivedMessage.content.split(" ")[0];
+    img = img.toLowerCase().replace(prefix, "");
+
+    var filename = validateEmote(img);
+    if (filename) {
+        var Attachment = new Discord.Attachment(filename);
+        if (Attachment) {
+            receivedMessage.channel
+                .send(Attachment)
+                .then(message => {
+                    cacheBotMessage(receivedMessage.id, message.id);
+                })
+                .catch(console.error);
+        }
+    }
+
+    log(filename + " doesn't exist");
+    return null;
+}
+function handleQuote(receivedMessage, search) {
+    //var s = getSearchString(quoteQueryPrefix, content).toLowerCase();
+    switch (search) {
+        case "morrow":
+            receivedMessage.channel.send(new Discord.Attachment("morrow0.png"));
+            break;
+        default:
+            break;
+    }
+}
+function handleGif(receivedMessage, search, parameters) {
+    log("Searching gifs for: " + search);
+
+    var bot = /^\d/.test(search)
+    if (bot)
+        search = search.toUpperCase();
+
+    var title = search.toTitleCase("_");
+
+    var param = parameters[0];
+    if (gifAliases[param]) {
+        param = gifAliases[param];
+    }
+
+    getGif(search, param, (filename) => {
+        log("success");
+
+        var Attachment = new Discord.Attachment(filename);
+        if (Attachment) {
+            receivedMessage.channel
+                .send(Attachment)
+                .then(message => {
+                    cacheBotMessage(receivedMessage.id, message.id);
+                })
+                .catch(console.error);
+        }
     });
 }
+
+// INFORMATION
+function handleRecentunits(receivedMessage, search, parameters) {
+
+    queryWikiFrontPage((links) => {
+        receivedMessage.channel
+        .send(mainChannelID, {
+            embed: {
+                color: pinkHexCode,
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL
+                },
+                title: "Recently Released Units",
+                description: links,
+                url: "https://exvius.gamepedia.com/Unit_List"
+            }
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+    })
+}
+function handleWhatis(receivedMessage, search, parameters) {
+
+    var info = config.getInformation(search)
+    if (!info) {
+        return;
+    }
+        
+    client.fetchUser(renaulteUserID)
+    .then(calculator => {
+
+        receivedMessage.channel
+        .send(mainChannelID, {
+            embed: {
+                color: pinkHexCode,
+                author: {
+                    name: calculator.username,
+                    icon_url: calculator.avatarURL
+                },
+                title: info.title,
+                description: info.description
+            }
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+    });
+}
+function handleNoob(receivedMessage, search, parameters) {
+    handleWhatis(receivedMessage, "new_player", parameters);
+}
+function handleGlbestunits(receivedMessage, search, parameters) {
+
+    const guildId = receivedMessage.guild.id;
+    const settings = config.getRankings("bestunits");
+
+    var list = "";
+    Object.keys(settings).forEach((v) => {
+
+        var units = settings[v].split(" / ");
+        var links = `**${v}:** `;
+        units.forEach((u, ind) => {
+            u = convertSearchTerm(u);
+            u = convertValueToLink(u);
+            links += u;
+            if (ind < 2) {
+                links += "/ ";
+            }
+        });
+
+        list += "\n" + links;
+    });
+
+    client.fetchUser("159846139124908032")
+    .then(general => {
+
+        receivedMessage.channel
+        .send(mainChannelID, {
+            embed: {
+                color: pinkHexCode,
+                author: {
+                    name: general.username,
+                    icon_url: general.avatarURL
+                },
+                title: `Global Best 7★ Units (random order, limited units __excluded__)`,
+                description: list,
+            }
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+    });
+}
+function handleHelp(receivedMessage) {
+    var data = fs.readFileSync("readme.md", "ASCII");
+    receivedMessage.author
+        .send(mainChannelID, {
+            embed: {
+                color: pinkHexCode,
+                author: {
+                    name: client.user.username,
+                    icon_url: client.user.avatarURL
+                },
+                description: data
+            }
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+}
+
+// DAMAGE
+function handleDpt(receivedMessage, search, parameters, isBurst) {
+
+    var calc = config.getCalculations(search);
+    if (!calc) {
+        log("Could not find calculations for: " + search);
+        return;
+    }
+    
+    var text = "";
+    var limit = 5;
+    if (parameters && parameters[0])
+        limit = parameters[0];
+        
+    const keys = Object.keys(calc);
+    const cap = Math.min(limit, keys.length);
+    for (let ind = 0; ind < cap; ind++) {
+        const key = keys[ind];
+        const element = calc[key];
+
+        if (isBurst) {
+            text += `**${element.name}:** ${element.damage} on turn ${element.turns}\n`;
+        } else {
+            text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
+        }
+    }
+
+    var title = "";
+    var s = search.replaceAll("_", " ").toTitleCase();
+    if (isBurst) {
+        title = `Unit calculations For ${s}. (bust damage on turn)`;
+    } else {
+        title = `Unit calculations For ${s}. (dpt - turns for rotation)`
+    }
+
+    
+    client.fetchUser(furculaUserID)
+    .then(calculator => {
+
+        receivedMessage.channel
+        .send(mainChannelID, {
+            embed: {
+                color: pinkHexCode,
+                author: {
+                    name: calculator.username,
+                    icon_url: calculator.avatarURL
+                },
+                title: title,
+                url: "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0/edit#gid=0",
+                description: text,
+                footer: {
+                    text: "visit the link provided for more calculations"
+                },  
+            }
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+    });
+}
+function handleBurst(receivedMessage, search, parameters) {
+    handleDpt(receivedMessage, `burst_${search}`, parameters, true);
+}
+
+
+// ADDING RESOURCES
 function handleAddalias(receivedMessage, search, parameters) {
     if (receivedMessage.content.replace(/[^"]/g, "").length < 4) {
         log("Invalid Alias");
@@ -430,27 +623,12 @@ function handleAddalias(receivedMessage, search, parameters) {
 
     var w1 = parameters[0];
     var w2 = parameters[1];
-    /*
-      var copy = receivedMessage.content;
-      var w1 = getQuotedWord(copy);
-      if (!w1) {
-          log("Invalid Alias");
-          return;
-      }
-      copy = copy.replace(`\"${w1}\"`, "");
-      var w2 = getQuotedWord(copy);
-      if (!w2) {
-          log("Invalid Alias");
-          return;
-      }
-      copy = copy.replace(`\"${w2}\"`, "");
-      */
 
-    validatePage(w1, valid => {
+    validateUnit(w1, valid => {
         if (valid) {
             respondFailure(receivedMessage);
         } else {
-            validatePage(w2, valid => {
+            validateUnit(w2, valid => {
                 if (valid) {
                     log("Unit is valid");
 
@@ -564,151 +742,8 @@ function handleAddemo(receivedMessage, search, parameters) {
         });
     }
 }
-function handleEmote(receivedMessage, prefix, replace) {
-    var img = receivedMessage.content.split(" ")[0];
-    img = img.toLowerCase().replace(prefix, "");
 
-    var filename = validateEmote(img);
-    if (filename) {
-        var Attachment = new Discord.Attachment(filename);
-        if (Attachment) {
-            receivedMessage.channel
-                .send(Attachment)
-                .then(message => {
-                    cacheBotMessage(receivedMessage.id, message.id);
-                })
-                .catch(console.error);
-        }
-    }
-
-    log(filename + " doesn't exist");
-    return null;
-}
-function handleQuote(receivedMessage, search) {
-    //var s = getSearchString(quoteQueryPrefix, content).toLowerCase();
-    switch (search) {
-        case "morrow":
-            receivedMessage.channel.send(new Discord.Attachment("morrow0.png"));
-            break;
-        default:
-            break;
-    }
-}
-function handleHelp(receivedMessage) {
-    var data = fs.readFileSync("readme.md", "ASCII");
-    receivedMessage.author
-        .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                description: data
-            }
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
-}
-function handlePrefix(receivedMessage) {
-    if (
-        receivedMessage.member.roles.find(r => r.name === "Admin") ||
-        receivedMessage.member.roles.find(r => r.name === "Mod")
-    ) {
-        // TODO: Add logic to change prefix to a valid character.
-        log("User Is Admin");
-        var s = receivedMessage.content.split(" ");
-        if (!s[1] || s[1].length !== 1) {
-            log("Invalid Prefix");
-            respondFailure(receivedMessage);
-            return;
-        }
-
-        config.setPrefix(receivedMessage.guild.id, s[1]);
-        config.save();
-        config.init();
-
-        respondSuccess(receivedMessage);
-    }
-}
-function handleRank(receivedMessage, search, parameters) {
-    log("\nSearching Rankings for: " + search);
-    if (search) {
-        const unit = config.getUnitRank(search.toLowerCase());
-        if (!unit) {
-            log("Could not find unit");
-            return;
-        }
-
-        var embed = {
-            title: unit.Unit,
-            url: wikiEndpoint + unit.Unit.replaceAll(" ", "_"),
-            color: pinkHexCode,
-            fields: [
-                {
-                    name: "Rank",
-                    value: `${unit.Base} - ${unit.TDH}`
-                }
-            ],
-            thumbnail: {
-                url: unit.imgurl
-            }
-        };
-
-        if (unit.notes) {
-            embed.fields[embed.fields.length] = {
-                name: "Notes",
-                value: unit.notes
-            };
-        }
-
-        receivedMessage.channel
-            .send({
-                embed: embed
-            })
-            .then(message => {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
-            .catch(console.error);
-        return;
-    }
-
-    var embeds = [];
-    var rankings = config.getRankings(search);
-    log("\nRankings");
-    log(rankings);
-    rankings.forEach(rank => {
-        embeds[embeds.length] = {
-            title: rank.name,
-            url: rank.pageurl,
-            color: pinkHexCode,
-            fields: [
-                {
-                    name: rank.comparison,
-                    value: rank.reason
-                }
-            ],
-            thumbnail: {
-                url: rank.imgurl
-            }
-        };
-    });
-
-    log("\nEmbeds");
-    log(embeds);
-    embeds.forEach(embed => {
-        receivedMessage.channel
-            .send({
-                embed: embed
-            })
-            .then(message => {
-                //cacheBotMessage(receivedMessage.id, message.id);
-            })
-            .catch(console.error);
-    });
-}
+// SETTINGS
 function handleSet(receivedMessage, search, parameters) {
     if (!search || parameters.length === 0) {
         return;
@@ -720,105 +755,6 @@ function handleSet(receivedMessage, search, parameters) {
     log(reply);
     receivedMessage.channel.send(reply);
     receivedMessage.channel.send(JSON.stringify(setting));
-}
-function handleGetsettings(receivedMessage) {
-    const guildId = receivedMessage.guild.id;
-    const settings = config.getSettings(guildId);
-    const json = JSON.stringify(settings, null, "\t");
-    log(json);
-
-    receivedMessage.author
-        .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                description: "Current settings for your server",
-                fields: [
-                    {
-                        name: "settings",
-                        value: json
-                    }
-                ]
-            }
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
-}
-function handleGlbestunits(receivedMessage, search, parameters) {
-
-    const guildId = receivedMessage.guild.id;
-    const settings = config.getRankings("bestunits");
-
-    var list = "";
-    Object.keys(settings).forEach((v) => {
-
-        var units = settings[v].split(" / ");
-        var links = `**${v}:** `;
-        units.forEach((u, ind) => {
-            u = convertSearchTerm(u);
-            u = convertValueToLink(u);
-            links += u;
-            if (ind < 2) {
-                links += "/ ";
-            }
-        });
-
-        list += "\n" + links;
-    });
-
-    client.fetchUser("159846139124908032")
-    .then(general => {
-
-        receivedMessage.channel
-        .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: general.username,
-                    icon_url: general.avatarURL
-                },
-                title: `Global Best 7★ Units (random order, limited units __excluded__)`,
-                description: list,
-            }
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
-    });
-}
-function handleGif(receivedMessage, search, parameters) {
-    log("Searching gifs for: " + search);
-
-    var bot = /^\d/.test(search)
-    if (bot)
-        search = search.toUpperCase();
-
-    var title = search.toTitleCase("_");
-
-    var param = parameters[0];
-    if (gifAliases[param]) {
-        param = gifAliases[param];
-    }
-
-    getGif(search, param, (filename) => {
-        log("success");
-
-        var Attachment = new Discord.Attachment(filename);
-        if (Attachment) {
-            receivedMessage.channel
-                .send(Attachment)
-                .then(message => {
-                    cacheBotMessage(receivedMessage.id, message.id);
-                })
-                .catch(console.error);
-        }
-    });
 }
 function handleSetrankings(receivedMessage, search, parameters) {
     var value = parameters[0];
@@ -850,73 +786,35 @@ function handleSetinfo(receivedMessage, search, parameters) {
         respondFailure(receivedMessage, true);
     }
 }
-function handleDpt(receivedMessage, search, parameters, isBurst) {
-
-    var calc = config.getCalculations(search);
-    if (!calc) {
-        log("Could not find calculations for: " + search);
-        return;
-    }
-    
-    var text = "";
-    var limit = 5;
-    if (parameters && parameters[0])
-        limit = parameters[0];
-        
-    const keys = Object.keys(calc);
-    const cap = Math.min(limit, keys.length);
-    for (let ind = 0; ind < cap; ind++) {
-        const key = keys[ind];
-        const element = calc[key];
-
-        if (isBurst) {
-            text += `**${element.name}:** ${element.damage} on turn ${element.turns}\n`;
-        } else {
-            text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
+function handlePrefix(receivedMessage) {
+    if (
+        receivedMessage.member.roles.find(r => r.name === "Admin") ||
+        receivedMessage.member.roles.find(r => r.name === "Mod")
+    ) {
+        // TODO: Add logic to change prefix to a valid character.
+        log("User Is Admin");
+        var s = receivedMessage.content.split(" ");
+        if (!s[1] || s[1].length !== 1) {
+            log("Invalid Prefix");
+            respondFailure(receivedMessage);
+            return;
         }
+
+        config.setPrefix(receivedMessage.guild.id, s[1]);
+        config.save();
+        config.init();
+
+        respondSuccess(receivedMessage);
     }
-
-    var title = "";
-    var s = search.replaceAll("_", " ").toTitleCase();
-    if (isBurst) {
-        title = `Unit calculations For ${s}. (bust damage on turn)`;
-    } else {
-        title = `Unit calculations For ${s}. (dpt - turns for rotation)`
-    }
-
-    
-    client.fetchUser(furculaUserID)
-    .then(calculator => {
-
-        receivedMessage.channel
-        .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: calculator.username,
-                    icon_url: calculator.avatarURL
-                },
-                title: title,
-                url: "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0/edit#gid=0",
-                description: text,
-                footer: {
-                    text: "visit the link provided for more calculations"
-                },  
-            }
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
-    });
 }
-function handleBurst(receivedMessage, search, parameters) {
-    handleDpt(receivedMessage, `burst_${search}`, parameters, true);
-}
-function handleRecentunits(receivedMessage, search, parameters) {
 
-    queryWikiFrontPage((links) => {
-        receivedMessage.channel
+function handleGetsettings(receivedMessage) {
+    const guildId = receivedMessage.guild.id;
+    const settings = config.getSettings(guildId);
+    const json = JSON.stringify(settings, null, "\t");
+    log(json);
+
+    receivedMessage.author
         .send(mainChannelID, {
             embed: {
                 color: pinkHexCode,
@@ -924,718 +822,24 @@ function handleRecentunits(receivedMessage, search, parameters) {
                     name: client.user.username,
                     icon_url: client.user.avatarURL
                 },
-                title: "Recently Released Units",
-                description: links,
-                url: "https://exvius.gamepedia.com/Unit_List"
+                description: "Current settings for your server",
+                fields: [
+                    {
+                        name: "settings",
+                        value: json
+                    }
+                ]
             }
         })
         .then(message => {
             cacheBotMessage(receivedMessage.id, message.id);
         })
         .catch(console.error);
-    })
-}
-function handleWhatis(receivedMessage, search, parameters) {
-
-    var info = config.getInformation(search)
-    if (!info) {
-        return;
-    }
-        
-    client.fetchUser(renaulteUserID)
-    .then(calculator => {
-
-        receivedMessage.channel
-        .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: calculator.username,
-                    icon_url: calculator.avatarURL
-                },
-                title: info.title,
-                description: info.description
-            }
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
-    });
-}
-function handleNoob(receivedMessage, search, parameters) {
-    handleWhatis(receivedMessage, "new_player", parameters);
 }
 
 // COMMANDS END
 
-function parseUnitOverview(overview, tips, params, callback) {
-    var parameters = defaultUnitParameters;
-    if (params.length > 0) {
-        log("Found Parameters");
-        log(params);
-        parameters = params;
-    }
 
-    var fields = [];
-    var match = overviewRegexp.exec(overview);
-    var minR = null;
-    var maxR = null;
-    var limited = false;
-    // ★★★★★✫✫
-
-    var count = 1;
-    var queryEnd = function (name, value) {
-        count -= 1;
-
-        if (name && value) {
-            for (let i = 0; i < fields.length; i++) {
-                //log(`Finished Query: ${fields[i].name} -vs- ${name}`);
-                if (fields[i].name === name) {
-                    //log("Found Queried field");
-                    fields[i].name = name;
-                    fields[i].value = value;
-                }
-            }
-        }
-
-        if (count <= 0) {
-            log("Unit Fields");
-            log(fields);
-        
-            if (callback) {
-                callback(fields, limited, rarity);
-            }
-        }
-    };
-
-    parameters.forEach((n, i) => {
-        if (parameterAliases[n]) {
-            log(`'${parameters[i]}' changed to '${parameterAliases[n]}'`)
-            parameters[i] = parameterAliases[n];
-        }  
-    })
-
-    while (match != null) {
-        var inline = true;
-        var name = match[1].replaceAll(" ", "").toLowerCase();
-        var value = match[2];
-        if (name.includes("min-rarity")) {
-            minR = value;
-            match = overviewRegexp.exec(overview);
-            continue;
-        } else if (name.includes("max-rarity")) {
-            maxR = value;
-            match = overviewRegexp.exec(overview);
-            continue;
-        }
-
-        if (name === "limited") {
-            match = overviewRegexp.exec(overview);
-            limited = value === "Yes";
-            continue;
-        }
-
-        if (abilityAliases[name]) {
-            name = abilityAliases[name];
-        }
-
-        if (parameters.includes(name) && !value.empty()) {
-            if (name == "tmr" || name == "stmr" || name == "STMR") {
-
-                name = name.toUpperCase();
-
-                var tip = tips.find(t => {
-                    return t.title === value;
-                });
-                if (tip) {
-                    name += " - " + value;
-                    value = tip.value;
-                } else {
-                    log("Attempting to query for: " + value);
-                    count++;
-                    queryPage(value, name, (n, v) => {
-                        queryEnd(n, v);
-                    });
-                }
-
-                inline = false;
-            }
-
-            fields[fields.length] = {
-                name: name.capitalize(),
-                value: value,
-                inline: inline
-            };
-        }
-
-        match = overviewRegexp.exec(overview);
-    }
-
-    var tip = tips.find(t => {
-        return t.title === "Chain Families";
-    });
-    if (tip && parameters.includes("chain")) {
-        fields[fields.length] = {
-            name: "Chain Families",
-            value: tip.value
-        };
-    }
-
-    var rarity = null;
-    if (minR && parameters.includes("rarity")) {
-        rarity = getRarityString(minR, maxR);
-        fields[fields.length] = {
-            name: "Rarity",
-            value: rarity,
-            inline: true
-        };
-    }
-
-    queryEnd();
-    return fields;
-}
-function getRarityString(min, max) {
-    min = parseInt(min);
-    max = parseInt(max);
-    var rarityString = "";
-    for (var i = 0; i < max; i++) {
-        rarityString += i < min ? unicodeStar : unicodeStarOpen;
-    }
-    return rarityString;
-}
-
-function getCollectedTipText(tooltip, collected) {
-    var firstDiv = tooltip.find("div").first();
-
-    while (firstDiv && firstDiv.length > 0) {
-        var text = firstDiv.text();
-        //log("\nDiv Text: " + text);
-
-        var child = firstDiv.find(".tip.module-tooltip");
-        if (child && child.length > 0) {
-            collected = getCollectedTipText(child, collected);
-        } else {
-            collected += text + "\n";
-        }
-
-        firstDiv = firstDiv.next();
-    }
-
-    //log("\nCurrent Collected Text: ");
-    //log(collected);
-    return collected;
-}
-
-function parsePage(match, params, callback) {
-}
-function queryPage(id, paramName, callback) {
-    wikiClient.getArticle(id, function (err, content, redirect) {
-        if (err) {
-            log(err);
-            return;
-        }
-
-        wikiClient.parse(content, "search", function (err, xml, images) {
-            if (err) {
-                console.error(err);
-                return;
-            }
-
-            const $ = cheerio.load(xml);
-
-            var regex = /\|(.*?)\n/g;
-            var match = regex.exec(content);
-            //log(match);
-
-            // TODO: parse item ability description.
-
-            var ignore = "<!";
-            var nodes = [];
-            while (match != null) {
-                var name = match[1].replace("\t", "").capitalize();
-                name = name.replaceAll(" ", "");
-                var value = match[2];
-
-                //log(`${name} = '${value}' isParam: ${isParam}`);
-
-                // Fix string to remove any unecessary information
-                if (value) {
-                    value = removeHTMLComments(value);
-
-                    var m = value.match(linkRegexp2);
-                    if (m) {
-                        value = convertBatchToLinks(m);
-                    }
-                    if (value.includes("Unstackable")) {
-                        value = "Unstackable Materia";
-                    }
-                }
-
-                const infoFields = [
-                    "Resist",
-                    "Effect",
-                    "Element",
-                    "Ability",
-                ]
-                var isParam = isStat(name);
-                var isParsable = infoFields.includes(name);
-                if (value && !value.includes(ignore) && (isParam || isParsable)) {
-                    var notEmpty = /\S/.test(value);
-
-                    if (abilityAliases[name]) {
-                        name = abilityAliases[name];
-                    }
-
-                    value = value.replaceAll("\n", "");
-                    value = value.replace("[", "\n\[");
-                    if (notEmpty) {
-                        nodes[nodes.length] = {
-                            name: name,
-                            value: value,
-                            inline: name !== "Effect"
-                        };
-                    }
-                }
-
-                match = valueMultiLineRegexp.exec(content);
-            }
-
-            var tips = [];
-            $(".tip.module-tooltip").each(function (tip) {
-                var tipTitle = $(this).find("img").attr("title");
-                var collected = getCollectedTipText($(this), "");
-                //log(`Collected Tip Text: ${tipTitle} (${tip})`);
-                //log(collected);
-                if (!tips.find(t => {return t.value === collected;})) {
-                    //log("Adding Tip");
-                    //log(collected);
-                    //log("\n");
-                    tips[tips.length] = {
-                        title: tipTitle,
-                        value: collected
-                    };
-                }
-            });
-
-            //log("Tips:");
-            //log(tips);
-
-            var totalValue = "";
-            for(var i = 0; i < nodes.length; i++ ) {
-                if (nodes[i].name === "Effect") {
-                    //log("Adding tips to effect");
-                    tips.forEach((n) => {
-                        nodes[i].value += "\n" + n.value;
-                    });
-                }
-
-                totalValue += nodes[i].value;
-                if (isStat(nodes[i].name)) {
-                    totalValue += "-";
-                }
-                totalValue += nodes[i].name;
-            }
-
-            //log(nodes);
-
-            totalValue = totalValue.replace("Effect", "");
-            //log("Parsed Total Value: " + name);
-            //log(totalValue);
-
-            callback(paramName, totalValue);
-        });
-    });
-}
-
-function parseEquipmentPage(match, content, params, tips) {
-
-    var parameters = defaultEquipParameters;
-    if (params.length > 0) {
-        parameters = params;
-    }
-
-    parameters.forEach((n, i) => {
-        if (parameterAliases[n]) {
-            log(`'${parameters[i]}' changed to '${parameterAliases[n]}'`)
-            parameters[i] = parameterAliases[n];
-        }  
-    })
-
-    var ignore = "<!";
-    var nodes = [];
-    while (match != null) {
-        var name = match[1].replace("\t", "").toLowerCase();
-        name = name.trim();
-        var isParam = isStat(name);
-        var value = match[2];
-        
-        //log(`${name} = '${value}' isParam: ${isParam}`);
-
-        // Fix string to remove any unecessary information
-        if (value) {
-            value = removeHTMLComments(value);
-
-            var m = value.match(linkRegexp2);
-            if (m) {
-                value = convertBatchToLinks(m);
-            }
-            if (value.includes("Unstackable")) {
-                value = "Unstackable Materia";
-            }
-        }
-
-        var isParsable = parameters.includes(name);
-        if (value && !value.includes(ignore) && (isParam || isParsable)) {
-            var notEmpty = /\S/.test(value);
-
-            if (isParam || name === "stmr") {
-                name = name.toUpperCase();
-            }
-
-            if (notEmpty) {
-                nodes[nodes.length] = {
-                    name: name.capitalize(),
-                    value: value,
-                    inline: name !== "Effect"
-                };
-            }
-        }
-
-        match = valueMultiLineRegexp.exec(content);
-    }
-
-    tips.forEach((t, i) => {
-        nodes[nodes.length] = {
-            name: t.title,
-            value: t.value
-        }    
-    });
-
-    log(nodes);
-    return nodes;
-}
-function parseAbilityPage(match, content, params, tips) {
-
-    var parameters = defaultAbilityParameters;
-    if (params.length > 0) {
-        parameters = params;
-    }
-
-    parameters.forEach((n, i) => {
-        if (parameterAliases[n]) {
-            log(`'${parameters[i]}' changed to '${parameterAliases[n]}'`)
-            parameters[i] = parameterAliases[n];
-        }  
-    })
-
-    var ignore = "<!";
-    var nodes = [];
-    while (match != null) {
-        var name = match[1].replace("\t", "").toLowerCase();
-        name = name.trim();
-        var isParam = isStat(name);
-        var value = match[2];
-
-        //log(`${name} = '${value}' isParam: ${isParam}`);
-
-        // Fix string to remove any unecessary information
-        if (value) {
-            value = removeHTMLComments(value);
-            var m = value.match(linkRegexp2);
-            if (m) {
-                value = convertBatchToLinks(m);
-            }
-            if (name === "Chain") {
-                value = convertValueToLink(value);
-            }
-            if (value.includes("Unstackable")) {
-                value = "Unstackable Materia";
-            }
-        }
-
-        //log("Expected Value: " + name);
-        //log(value);
-        var isParsable = parameters.includes(name);
-        if (value && !value.includes(ignore) && isParsable) {
-            var notEmpty = /\S/.test(value);
-
-            if (abilityAliases[name]) {
-                name = abilityAliases[name];
-            }
-            if (isParam || name === "stmr") {
-                name = name.toUpperCase();
-            }
-
-            if (notEmpty) {
-                nodes[nodes.length] = {
-                    name: name.capitalize(),
-                    value: value,
-                    inline: name !== "Effect"
-                };
-            }
-        }
-
-        match = valueMultiLineRegexp.exec(content);
-    }
-    
-    tips.forEach((t, i) => {
-        nodes[nodes.length] = {
-            name: t.title,
-            value: t.value
-        }    
-    });
-
-    log(nodes);
-    return nodes;
-}
-
-function queryWikiForUnit(search, callback) {
-    wikiClient.getArticle(search, function (err, content, redirect) {
-        if (err || !content) {
-            console.error(err);
-            return;
-        }
-        if (redirect) {
-            log("Redirect Info: ");
-            log(redirect);
-        }
-
-        const firstLine = content.indexOf("Unit Infobox");
-        if (firstLine < 0) {
-            const redirectRegex = /(?:.*)\[(.*)\]]/g;
-            const page = redirectRegex.exec(content);
-            log("Redirect To: " + page[1]);
-            queryWikiForUnit(page[1], callback);
-            return;
-        }
-
-        var preString = "Unit Infobox";
-        var searchString = "}}";
-        var preIndex = content.indexOf(preString);
-        var searchIndex = preIndex + content.substring(preIndex).indexOf(searchString);
-        const overview = content.substring(firstLine, searchIndex);
-
-        wikiClient.parse(content, search, function (err, xml, images) {
-            if (err) {
-                log(err);
-                return;
-            }
-
-            var match = xml.match(/\"\/Chaining\/(.*)\"\s/g);
-            var unique = [];
-            var family = null;
-            if (match) {
-                family = "";
-                match.forEach(m => {
-                    if (!unique.includes(m)) {
-                        unique[unique.length] = m;
-                    }
-                });
-                log("Parsed Family:\n\n");
-                unique.forEach(m => {
-                    m = m.replace("/", "").replaceAll('"', "").replaceAll(" ", "");
-                    var name = m.replace("Chaining/", "").replaceAll("_", " ");
-                    var link = `[${name}](${wikiEndpoint}${m})`;
-                    log(name);
-                    log(link);
-                    if (link.length > 200) {
-                        return;
-                    }
-                    family += link + "\n";
-                    log("--------------");
-                });
-                log(family);
-            }
-
-            const $ = cheerio.load(xml);
-            const imgurl = $(".big-pixelate").attr("src");
-            var description = $(".mw-parser-output").children("p").first().text();
-            description = description.limitTo(descCharLimit);
-
-            var tips = [];
-            $(".tip.module-tooltip").each(function (tip) {
-                var tipTitle = $(this).find("img").attr("title");
-                var tipInfo = $(this).find("div").first().text();
-                var collected = getCollectedTipText($(this), "");
-                log(`Collected Tip Text: ${tipTitle} (${tip})`);
-                log(collected);
-                if (!tips.find(t => {return t.value === collected;})) {
-                    log("Adding Tip");
-                    log(collected);
-                    log("\n");
-                    tips[tips.length] = {
-                        title: tipTitle,
-                        value: collected
-                    };
-                }
-            });
-
-            log("Tips:");
-            log(tips);
-
-            if (family) {
-                tips[tips.length] = {
-                    title: "Chain Families",
-                    value: family
-                };
-            }
-
-            //log(search);
-            //log(typeof search);
-            callback(search, overview, imgurl, description, tips);
-        });
-    });
-}
-function queryWikiForEquipment(search, params, callback) {
-    getPageID(search, config.equipmentCategories, function (id, pageName, other) {
-        if (!id) {
-            log("Could not find page: " + pageName);
-            return;
-        }
-
-        wikiClient.getArticle(id, function (err, content, redirect) {
-            if (err) {
-                log(err);
-                return;
-            }
-
-            wikiClient.parse(content, "search", function (err, xml, images) {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-
-                const $ = cheerio.load(xml);
-                const imgurl = $(".mw-parser-output").find("img").attr("src");
-                const links = $(".mw-parser-output").children("a");
-                //log("Links on Page");
-                //log(links.length);
-
-                var regex = /\|(.*?)\n/g;
-                var match = regex.exec(content);
-                //log(match);
-
-                var tips = parseTipsFromPage($);
-                var nodes = parseEquipmentPage(match, content, params, tips);
-
-                if (other) {
-                    nodes[nodes.length] = {
-                        name: "Similar Results",
-                        value: other
-                    };
-                }
-
-                //log(nodes);
-
-                callback(imgurl, pageName, nodes);
-            });
-        });
-    });
-}
-function queryWikiForAbility(search, params, callback) {
-    getPageID(search, config.abilityCategories, function (id, pageName, other) {
-        wikiClient.getArticle(id, function (err, content, redirect) {
-            if (err) {
-                log(err);
-                return;
-            }
-            wikiClient.parse(content, "search", function (err, xml, images) {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-
-                const $ = cheerio.load(xml);
-                const imgurl = $(".mw-parser-output").find("img").attr("src");
-                const links = $(".mw-parser-output").children("a");
-                //log("Links on Page");
-                //log(links.length);
-
-                var regex = /\|(.*?)\n/g;
-                var match = regex.exec(content);
-                //log(match);
-
-                var tips = parseTipsFromPage($);
-                var nodes = parseAbilityPage(match, content, params, tips);
-
-                if (other) {
-                    nodes[nodes.length] = {
-                        name: "Similar Results",
-                        value: other
-                    };
-                }
-
-                callback(imgurl, pageName, nodes);
-            });
-        });
-    });
-}
-function queryWikiWithSearch(search, callback) {
-    wikiClient.search(search, (err, results) => {
-        if (err) {
-            log(err);
-            return;
-        }
-
-        var batch = results.slice(0, 5);
-        var fields = [
-            {
-                name: "Results For " + search,
-                value: "Nothing Found"
-            }
-        ];
-        fields[0].value = convertTitlesToLinks(batch);
-
-        callback(fields);
-    });
-}
-function queryWikiFrontPage(callback) {
-    wikiClient.getArticle("Final_Fantasy_Brave_Exvius_Wiki", (err, content, redirect) => {
-        if(err) {
-            log(err);
-            return;
-        }
-
-        const firstLine = content.indexOf("Recent");
-        content = content.substring(firstLine, content.length);
-
-        var units = "";
-        var unitsRegex = /\|unit.*=\s(.*)\|/g
-        var match = unitsRegex.exec(content);
-        while (match != null) {
-            
-            units += convertValueToLink(match[1]) + "\n";
-        
-            match = unitsRegex.exec(content);
-        }
-
-        wikiClient.parse(content, "Final_Fantasy_Brave_Exvius_Wiki", function (err, xml, images) {
-            if(err) {
-                log(err);
-                return;
-            }
-
-            log(images);
-        });
-
-        var m = content.match(linkRegexp2);
-        if (m) {
-            var value = convertBatchToLinks(m);
-            log(value)
-        }
-
-        callback(units)
-    });
-}
-
-function removeHTMLComments(value) {
-    if (/<!.*>/g.test(value)) {
-        value = value.replace(/<!.*>/g, "");
-    }
-
-    return value;
-}
 function convertValueToLink(value) {
     
     var link = value;
@@ -1651,56 +855,6 @@ function convertValueToLink(value) {
     link = `[${title}](${wikiEndpoint + link.replaceAll(" ", "_")}) `;
     log("Converted Link: " + link);
     return link;
-}
-function convertBatchToLinks(batch) {
-    //log("Matching Links");
-    //log(batch);
-
-    var value = "";
-    batch.forEach(link => {
-        linkFilter.forEach(filter => {
-            link = link.replace(filter, "");
-        });
-
-        link = `[${link}](${wikiEndpoint + link.replaceAll(" ", "_")}) `;
-        log("Converted Link: " + link);
-        value += link;
-    });
-
-    return value;
-}
-function convertTitlesToLinks(batch) {
-    var value = "";
-    batch.forEach(function (page) {
-        log("converTitle: " + page.title);
-        var title = page.title.replaceAll(" ", "_");
-        value += wikiEndpoint + title + "\n";
-    });
-
-    return value;
-}
-
-function parseTipsFromPage($) {
-    var tips = [];
-    $(".tip.module-tooltip").each(function (tip) {
-        var tipTitle = $(this).find("img").attr("title");
-        var collected = getCollectedTipText($(this), "");
-        log(`Collected Tip Text: ${tipTitle} (${tip})`);
-        log(collected);
-        if (!tips.find(t => {return t.value === collected;})) {
-            log("Adding Tip");
-            log(collected);
-            log("\n");
-            tips[tips.length] = {
-                title: tipTitle,
-                value: collected
-            };
-        }
-    });
-
-    log("Tips:");
-    log(tips);
-    return tips;
 }
 
 // GIFS
@@ -1852,41 +1006,7 @@ function getGif(search, param, callback) {
 }
 
 // Validation
-function validatePage(search, callback) {
-    /*
-    wikiClient.getArticle(search, function (err, content, redirect) {
-        if (err || !content) {
-            console.error(err);
-            callback(false);
-            return;
-        }
-
-        if (redirect) {
-            log("Redirect Info: ");
-            log(redirect);
-        }
-
-        const firstLine = content.indexOf("Unit Infobox");
-        if (firstLine < 0) {
-            const redirectRegex = /(?:.*)\[(.*)\]]/g;
-            const page = redirectRegex.exec(content);
-            log("Redirect To: " + page[1]);
-            validatePage(page, callback);
-            return;
-        }
-
-        wikiClient.parse(content, search, function (err, xml, images) {
-            if (err) {
-                log(err);
-                return;
-            }
-
-            const $ = cheerio.load(xml);
-            const imgurl = $(".big-pixelate").attr("src");
-            callback(true, imgurl);
-        });
-    });*/
-
+function validateUnit(search, callback) {
     log(search)
     var unit = getUnitKey(search);
     log(unit)
@@ -2163,7 +1283,7 @@ bot_secret_token =
 bot_secret_token_test =
     "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 
 // HELPERS
 function getQuotedWord(str) {
