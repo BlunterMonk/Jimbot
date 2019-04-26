@@ -121,6 +121,26 @@ client.on("ready", () => {
 
     log("Configuration Loaded");
     loading = false;
+
+    var description = `The total % across elements must add up to the specified amount to nullify damage.
+
+    Ex. Ifrit/Siren Scorn: Requires 400% Fire/Wind/Water/Dark to survive turns 5/10/15/etc.
+
+    100% Fire / 50% Wind / 50% Water / 200% Dark = 400% total, :white_check_mark:success!
+    400% Fire / 0% Wind / 0% Water / 0% Dark = 400% total, :white_check_mark:success!
+    80% Fire / 20% Wind / 20% Water / 70% Dark = 190% total, :x:fail!
+
+    :point_right:All party members need all resists.
+    :point_right:Buffs and imperils work. Buffing 70% all element resist will only require 120% Fire/Wind/Water/Dark.
+
+    :one:Ifrit/Siren Scorn: 400% Fire/Wind/Water/Dark and 420% Fire/Water/Dark
+    :two:Ultros/Typhon Scorn: 100% Lightning, 50% Fire, 20% Earth/Water/Wind
+    :three:Lich: 50+% Fire/Ice/Lightning
+    :four:Glacial Scorn: 380% Ice/Water/Wind
+
+    :point_right:[See Furcula's post for more information.](https://bit.ly/2L54eY4)`
+
+    log(JSON.stringify(description).slice(1, -1));
 });
 
 
@@ -768,6 +788,7 @@ function handleAddshortcut(receivedMessage, search, parameters) {
     }
 }
 
+
 // SETTINGS
 function handleSet(receivedMessage, search, parameters) {
     if (!search || parameters.length === 0) {
@@ -782,6 +803,10 @@ function handleSet(receivedMessage, search, parameters) {
     receivedMessage.channel.send(JSON.stringify(setting));
 }
 function handleSetrankings(receivedMessage, search, parameters) {
+    if (receivedMessage.guild) {
+        return;
+    }
+
     var value = parameters[0];
     search = search.replaceAll("_", " ");
     search = search.toTitleCase();
@@ -798,6 +823,10 @@ function handleSetrankings(receivedMessage, search, parameters) {
     }
 }
 function handleSetinfo(receivedMessage, search, parameters) {
+    if (receivedMessage.guild) {
+        return;
+    }
+
     var title = parameters[0];
     var desc = parameters[1];
     
@@ -1156,7 +1185,7 @@ client.on("message", receivedMessage => {
 
         try {
 
-            var params = getParameters(copy);
+            var params = getParameters(content, false);
             var parameters = params.parameters;
             copy = params.msg;
 
@@ -1170,7 +1199,7 @@ client.on("message", receivedMessage => {
 
             if (content.startsWith("?setrank")) {
                 handleSetrankings(receivedMessage, search, parameters);
-            } else if (content.startsWith("?setrank")) {
+            } else if (content.startsWith("?setinfo")) {
                 handleSetinfo(receivedMessage, search, parameters);
             }
         } catch(e) {

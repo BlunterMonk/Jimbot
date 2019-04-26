@@ -12,5 +12,9 @@
 		"getsettings"
 	],
 	"editors": [],
-	"disabledCommands": []
+	"disabledCommands": [],
+	"shortcuts": {
+		"tips": "?whatis new player",
+		"noob": "!whatis new player info"
+	}
 }
