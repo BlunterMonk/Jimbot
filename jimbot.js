@@ -823,6 +823,10 @@ function handleGif(receivedMessage, search, parameters) {
     });
 }
 function handleSetrankings(receivedMessage, search, parameters) {
+    if (receivedMessage.guild) {
+        return;
+    }
+    
     var value = parameters[0];
     search = search.replaceAll("_", " ");
     search = search.toTitleCase();
@@ -839,6 +843,10 @@ function handleSetrankings(receivedMessage, search, parameters) {
     }
 }
 function handleSetinfo(receivedMessage, search, parameters) {
+    if (receivedMessage.guild) {
+        return;
+    }
+
     var title = parameters[0];
     var desc = parameters[1];
     
