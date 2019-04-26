@@ -1182,23 +1182,178 @@ function newEditor(receivedMessage) {
 
     respondSettings(receivedMessage, "Information", settings);
 }
+function indexToUnicode(index) {
+    var ind = String(index);
+    log("indexToUnicode");
+    log(ind);
+    var number = "";
+    for (var i = 0; i < ind.length; i++) {
+
+        number += unicodeNumbers[parseInt(ind[i])];
+    }
+    return number;
+}
 function respondSettings(receivedMessage, key, settings) {
     var userId = receivedMessage.author.id;
 
-    var fields = {};
+    var fields = [];
     // TODO: convert settings to fields.
+    var keys =  Object.keys(settings);
+    var check = Object.keys(settings[keys[0]])[1];
+    if (check) {
+        log("Has Children");
 
-    receivedMessage.channel
-    .send({embed: {
+        log("Keys:");
+        log(keys)
+        keys.forEach((key, ind) => {
+            log("Adding Field:");
+            var name = `${indexToUnicode(ind)}. ${key}`;
+            var value = "```" + JSON.stringify(settings[key], null, "\t").limitTo(512) + "```";
+            fields[fields.length] = {
+                name: name,
+                value: value
+            }
+        })
+    }
+
+    var embed = {
         title: key,
         color: pinkHexCode,
-        description: JSON.stringify(settings, null, "\t")
-    }})
+        footer: {
+            text: "Actions: edit, add, remove"
+        }
+    };
+
+    if (fields.length == 0) {
+        embed.description = "```" + JSON.stringify(settings, null, "\t").limitTo(1018) + "```";
+    } else {
+        embed.fields = fields;
+
+        log("Fields");
+        log(fields)
+    }
+    
+    log("Check: " + check);
+
+    receivedMessage.channel
+    .send({embed: embed})
     .then(message => {
+        fields.forEach((f, i) => {
+            message.react(unicodeNumbers[i]);
+        });
         editors[userId].setState(settings);
     })
     .catch(console.error);
+}
+function respondEditorAction(receivedMessage, key) {
+    var embed = {
+        title: `Currently Editing: ${key}`,
+        color: pinkHexCode,
+        description: "Please submit the new value"
+    };
 
+    receivedMessage.channel
+    .send({embed: embed})
+    .then(message => {
+
+    })
+    .catch(console.error);
+}
+function respondEditorPreview(receivedMessage, key, old, data) {
+    receivedMessage.channel
+    .send({embed: {
+        title: `Old Data: ${key}`,
+        color: pinkHexCode,
+        description: "```" + old + "```"
+    }})
+    .then(message => {
+    })
+    .catch(console.error);
+
+    receivedMessage.channel
+    .send({embed: {
+        title: `New Data: ${key}`,
+        color: pinkHexCode,
+        description: "```" + data + "```",
+        footer: {
+            text: "Respond 'OK' to apply this new version. 'X' to cancel."
+        }
+    }})
+    .then(message => {
+        message.react(okEmoji);
+    })
+    .catch(console.error);
+}
+function editorResponse(receivedMessage) {
+    var userId = receivedMessage.author.id;
+
+    if (editors[userId].getIsEditing()) {
+        log(`Editor Is Editing: ${userId}`);
+        var state = editors[userId].getState();
+        log("\nCurrent State");
+        log(state);
+        log("\nCurrent Tree");
+        log(editors[userId].tree);
+
+        editors[userId].setData(receivedMessage.content);
+        respondEditorPreview(receivedMessage, editors[userId].getCurrentKey(), JSON.stringify(state).slice(1, -1), editors[userId].getData());
+        return;
+    }
+    log(`Editor Traversing Settings: ${userId}`);
+
+    var state = editors[userId].getState();
+    switch (receivedMessage.content) {
+        case "edit": 
+        {
+            var state = editors[userId].getState();
+            log("\nCurrent State");
+            log(state);
+            log("\nCurrent Tree");
+            log(editors[userId].tree);
+
+            editors[userId].setIsEditing(true);
+
+            respondEditorAction(receivedMessage, editors[userId].getCurrentKey(), state);
+            return;
+            //editors[userId].setInfo()
+        }
+        break;
+        default:
+            break;
+    }
+
+    var next = null;
+    var content = parseInt(receivedMessage.content);
+    if (Number.isNaN(content)) {
+        content = receivedMessage.content;
+    } else {
+        content = editors[userId].getStateKey(content);
+    }
+
+    log("Editor Response");
+    log(content);
+
+    next = editors[userId].next(content);
+    log("\nNext:")
+    log(next);
+    if (next) {
+        editors[userId].setState(next);
+
+        var state = editors[userId].getState();
+        log("\nCurrent State");
+        log(state);
+        
+        respondSettings(receivedMessage, content, state);
+
+        log("\nEditor");
+        log(editors[userId]);
+    }
+}
+function endEditorSession(userId) {
+    delete editors[userId];
+}
+function getValue(content) {
+    return JSON.stringify(content);
 }
 
 client.on("message", receivedMessage => {
@@ -1213,6 +1368,13 @@ client.on("message", receivedMessage => {
         var id = receivedMessage.author.id;
         log("Private Message From: " + id);
         log(content)
+        if (editors[id]) {
+            log("Is Editor");
+            log(parseInt(content));
+            log(Number.isNaN(parseInt(content)));
+            editorResponse(receivedMessage);
+            return;
+        }
         if (id != renaulteUserID && id != jimooriUserID) {
             return;
         }
