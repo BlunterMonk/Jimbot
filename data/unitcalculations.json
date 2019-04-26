@@ -197,6 +197,11 @@
 			"damage": "2,492,124,075",
 			"turns": 9
 		},
+		"Maria": {
+			"name": "Maria",
+			"damage": "2,248,364,297",
+			"turns": 6
+		},
 		"Lulu": {
 			"name": "Lulu",
 			"damage": "2,155,750,083",
@@ -507,6 +512,11 @@
 			"name": "Ultima",
 			"damage": "3,181,837,958",
 			"turns": 3
+		},
+		"Maria": {
+			"name": "Maria",
+			"damage": "3,098,869,978",
+			"turns": 2
 		},
 		"Circe": {
 			"name": "Circe",
