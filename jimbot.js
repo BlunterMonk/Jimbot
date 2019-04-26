@@ -2050,7 +2050,7 @@ client.on("message", receivedMessage => {
 
             if (content.startsWith("?setrank")) {
                 handleSetrankings(receivedMessage, search, parameters);
-            } else if (content.startsWith("?setrank")) {
+            } else if (content.startsWith("?setinfo")) {
                 handleSetinfo(receivedMessage, search, parameters);
             }
         } catch(e) {
