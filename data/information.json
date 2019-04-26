@@ -2,15 +2,16 @@
 	"aliases": {
 		"ele_tetris": "elemental_tetris",
 		"eletetri": "elemental_tetris",
-		"nooby": "new_player",
-		"noob": "new_player",
-		"newbie": "new_player"
+		"nooby": "new_player_info",
+		"noob": "new_player_info",
+		"newbie": "new_player_info",
+		"new player": "new_player_info"
 	},
 	"elemental_tetris": {
 		"title": "What is Elemental Tetris?",
 		"description": "Element Tetris is a term used for trials that require extensive use of elemental resists (usually across multiple elements to reach a total of X% resists). Usually you will take zero damage if you meet the required value of resistance, or else your party simply dies.\nExamples include Scorn of the Dark Espers and Dark Golem/Shiva trial where you would need a lot of elemental resistance to survive some thresholds/nuke turns."
 	},
-	"new_player": {
+	"new_player_info": {
 		"title": "New Player Info",
 		"description": "One team can't do everything, you'll need specific setups for each encounter\nStory is very easy, take any 5 units you want\nDo not sell any 3* or higher units, ever\nDo not fuse any 5* units together, ever\nDo not buy magic keys\nDo not use tickets on the \"Rare Summon\" banner at the very bottom\nAvoid lapis reviving if you die\nAvoid NRG refreshing with lapis (buy the NRG daily if you must)\nAvoid doing the 500 lapis single pull\nDo not use max-level King Metal Cactuars on non-7* units\n5* Ashe and Lightning are guaranteed, free units. They are sufficient for story content. Ashe is normally a 4* base unit.\nFriend units have a 3 hour cooldown"
 	}

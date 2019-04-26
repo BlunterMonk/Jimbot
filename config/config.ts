@@ -61,9 +61,32 @@ class GuildSettings {
         return this.settings;
     }
 
+    getShortcut(name) {
+        name = name.toLowerCase();
+        console.log(`Searching For Shortcut: ${name}`);
+        if (!this.settings.shortcuts || !this.settings.shortcuts[name])
+            return null;
+            
+        console.log(`Found Shortcut: ${this.settings.shortcuts[name]}`);
+        return this.settings.shortcuts[name];
+    }
+    setShortcut(name, command) {
+        name = name.toLowerCase();
+
+        if (!this.settings[`shortcuts`]) {
+            this.settings[`shortcuts`] = {}
+        }
+
+        this.settings.shortcuts[name] = command;
+        this.save();
+        return true;
+    }
 
     validateAdminRole(role) {
         return this.settings.adminRoles.find(r => role.toLowerCase() === r.toLowerCase());
+    }
+    validateEditor(userId) {
+        return this.settings.editors.includes(userId);
     }
     validateCommand(userRole, command) {
         command = command.toLowerCase();
@@ -279,6 +302,12 @@ module.exports = {
         }
         return null;
     },
+    getShortcut(guildId, command) {
+        return this.guilds[guildId].getShortcut(command);
+    },
+    setShortcut(guildId, name, command) {
+        return this.guilds[guildId].setShortcut(name, command);
+    },
     validateCommand(guildId, userRole, command) {
         //console.log(`Config Validate Command (${guildId})` + this.guilds[guildId]);
         if (!this.guilds[guildId]) {
@@ -288,6 +317,9 @@ module.exports = {
         //console.log("Validate Command Guild: " + guildId);
         //console.log(this.guilds[guildId]);
         return this.guilds[guildId].validateCommand(userRole, command);
+    },
+    validateEditor(guildId, userId) {
+        return this.guilds[guildId].validateEditor(userId);
     }
 };
   

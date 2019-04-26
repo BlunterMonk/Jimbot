@@ -11,5 +11,6 @@
 		"prefix",
 		"getsettings"
 	],
+	"editors": [],
 	"disabledCommands": []
 }

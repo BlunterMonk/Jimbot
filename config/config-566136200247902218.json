@@ -11,5 +11,12 @@
 		"prefix",
 		"getsettings"
 	],
-	"disabledCommands": []
+	"disabledCommands": [],
+	"editors": [],
+	"shortcuts": {
+		"eletetris": "?whatis ele tetris",
+		"tips": "?whatis new player info",
+		"new": "?whatis new player info",
+		"tops": "?whatis elemental tetris"
+	}
 }
