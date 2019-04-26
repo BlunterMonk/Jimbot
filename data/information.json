@@ -12,23 +12,7 @@
 		"description": "The total % across elements must add up to the specified amount to nullify damage.\n\nEx. Dark Espers Scorn: Requires 400% Fire/Wind/Water/Dark to survive turns 5/10/15/etc.\n\n100% Fire / 50% Wind / 50% Water / 200% Dark = 400% total, ✅success!\n400% Fire / 0% Wind / 0% Water / 0% Dark = 400% total, ✅success!\n80% Fire / 20% Wind / 20% Water / 70% Dark = 190% total, ❌fail!\n\n👉All party members need all resists.\n👉Buffs and imperils work. Buffing 70% all element resist will only require 120% Fire/Wind/Water/Dark.\n\n1⃣Dark Espers Scorn: 400% Fire/Wind/Water/Dark and 420% Fire/Water/Dark\n2⃣Ultros/Typhon Scorn: 100% Lightning, 50% Fire, 20% Earth/Water/Wind\n3⃣Lich: 50+% Fire/Ice/Lightning\n4⃣Glacial Scorn: 380% Ice/Water/Wind\n\n👉[See Furcula's post for more information.](https://bit.ly/2L54eY4)"
 	},
 	"new_player_info": {
-		"title": "New Player Info",
-		"description": "One team can't do everything, you'll need specific setups for each encounter\nStory is very easy, take any 5 units you want\nDo not sell any 3* or higher units, ever\nDo not fuse any 5* units together, ever\nDo not buy magic keys\nDo not use tickets on the \"Rare Summon\" banner at the very bottom\nAvoid lapis reviving if you die\nAvoid NRG refreshing with lapis (buy the NRG daily if you must)\nAvoid doing the 500 lapis single pull\nDo not use max-level King Metal Cactuars on non-7* units\n5* Ashe and Lightning are guaranteed, free units. They are sufficient for story content. Ashe is normally a 4* base unit.\nFriend units have a 3 hour cooldown"
-	},
-	"test": {
-		"title": "Test",
-		"description": "TEST"
-	},
-	"noob__rare_summon": {
-		"title": "❗new player info❗ ",
-		"description": "👉one team can't do everything, you'll need specific setups for each encounter\n👉story is very easy, take any 5 units you want\n👉do not sell any 3* or higher units, ever\n👉do not fuse any 5* units together, ever\n👉do not buy magic keys\n👉do not use tickets on the "
-	},
-	"noob_**note:**\n\n👉one_team_can't_do_everything,_you'll_need_specific_setups_for_each_encounter\n👉story_is_very_easy,_take_any_5_units_you_want\n👉5*_ashe_and_lightning_are_guaranteed,_free_units._they_are_sufficient_for_story_content._ashe_is_normally_a_4*_base_unit.\n👉friend_units_have_a_3_hour_cooldown\n\n**never:**\n👉do_not_sell_any_3*_or_higher_units,_ever\n👉do_not_fuse_any_5*_units_together,_ever\n👉do_not_buy_magic_keys\n👉do_not_use_tickets_on_the__banner_at_the_very_bottom\n👉do_not_use_max-level_king_metal_cactuars_on_non-7*_units\n\n**avoid:**\n👉avoid_lapis_reviving_if_you_die\n👉avoid_nrg_refreshing_with_lapis_(buy_the_nrg_daily_if_you_must)\n👉avoid_doing_the_500_lapis_single_pull\"": {
-		"title": "❗new player info❗ ",
-		"description": "rare summon"
-	},
-	"new_player_info_**note:**\n\n👉one_team_can't_do_everything,_you'll_need_specific_setups_for_each_encounter\n👉story_is_very_easy,_take_any_5_units_you_want\n👉5*_ashe_and_lightning_are_guaranteed,_free_units._they_are_sufficient_for_story_content._ashe_is_normally_a_4*_base_unit.\n👉friend_units_have_a_3_hour_cooldown\n\n**never:**\n👉do_not_sell_any_3*_or_higher_units,_ever\n👉do_not_fuse_any_5*_units_together,_ever\n👉do_not_buy_magic_keys\n👉do_not_use_tickets_on_the__banner_at_the_very_bottom\n👉do_not_use_max-level_king_metal_cactuars_on_non-7*_units\n\n**avoid:**\n👉avoid_lapis_reviving_if_you_die\n👉avoid_nrg_refreshing_with_lapis_(buy_the_nrg_daily_if_you_must)\n👉avoid_doing_the_500_lapis_single_pull\"": {
-		"title": "❗new player info❗ ",
-		"description": "rare summon"
+		"title": "**:exclamation:New Player Info:exclamation:**",
+		"description": "\n\n**Important:**\n:point_right:One team can't do everything, you'll need specific setups for each encounter\n:point_right:Story is very easy, take any 5 units you want\n:point_right:5:star: Ashe and Lightning are guaranteed, free units. They are sufficient for story content. Ashe is normally a 4:star: base unit.\n:point_right:Friend units have a 3 hour cooldown\n:point_right:Visit #global-friends to find strong friends to clear harder encounters\n:point_right:When making STMR, fuse two 7:star: together\n\n**Never:**\n:point_right:Never sell any 3:star: or higher units, ever\n:point_right:Never fuse any 5:star: units together, ever\n:point_right:Never buy magic keys\n:point_right:Never use tickets on the \"Rare Summon\" banner at the very bottom\n:point_right:Never use max-level King Metal Cactuars on non-7:star: units\n\n**Avoid:**\n:point_right:Avoid lapis reviving if you die\n:point_right:Avoid NRG refreshing with lapis (buy the NRG daily if you must)\n:point_right:Avoid doing the 500 lapis single pull\n:point_right:Avoid fusing a 5:star: into a 7:star: for the 50% moogle (wait for 4th copy, then make two 7:star:)"
 	}
 }
