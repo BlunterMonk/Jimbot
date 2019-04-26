@@ -2036,7 +2036,7 @@ client.on("message", receivedMessage => {
 
         try {
 
-            var params = getParameters(copy);
+            var params = getParameters(content, false);
             var parameters = params.parameters;
             copy = params.msg;
 
