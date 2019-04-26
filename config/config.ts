@@ -180,29 +180,6 @@ module.exports = {
     addAlias(name, value) {
         this.configuration.unitAliases[name.toLowerCase()] = value;
     },
-    addEmote(name, url) {
-        this.configuration.emotes[this.configuration.emotes.length] = {
-            name: name,
-            value: url
-        }
-    },
-    getEmote(name) {
-        //console.log("getEmote");
-        //console.log(this.configuration.emotes);
-
-        var found =  this.configuration.emotes.find((e) => {
-            //console.log("looper item");
-            //console.log(e);
-            //console.log(`${e.name} -vs- ${name}`);
-            return e.name == name;
-        });
-
-        if (found) {
-            return found.value;
-        } else {
-            return null;
-        }
-    },
     setPrefix(guildId, prefix) {
         if (!this.guilds[guildId]) {
             return;
@@ -320,6 +297,9 @@ module.exports = {
     },
     validateEditor(guildId, userId) {
         return this.guilds[guildId].validateEditor(userId);
+    },
+    getInfoSettings() {
+        return this.information;
     }
 };
   

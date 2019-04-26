@@ -8,6 +8,7 @@ const http = require("https");
 const htt = require("http");
 const config = require("./config/config.ts");
 const String = require("./string/string-extension.ts")
+const Editor = require("./Editor.js")
 const FFBE = require("./ffbewiki.js");
 
 var mainChannelID;
@@ -1165,6 +1166,41 @@ function runCommand(receivedMessage) {
     
 }
 
+var editors = {};
+function newEditor(receivedMessage) {
+    var userId = receivedMessage.author.id;
+
+    var guildId = null;
+    if (receivedMessage.guild) {
+        guildId = guildId(receivedMessage);
+    } 
+
+    var settings = config.getInfoSettings();
+    log(settings);
+
+    editors[userId] = new Editor(guildId, userId);
+
+    respondSettings(receivedMessage, "Information", settings);
+}
+function respondSettings(receivedMessage, key, settings) {
+    var userId = receivedMessage.author.id;
+
+    var fields = {};
+    // TODO: convert settings to fields.
+
+    receivedMessage.channel
+    .send({embed: {
+        title: key,
+        color: pinkHexCode,
+        description: JSON.stringify(settings, null, "\t")
+    }})
+    .then(message => {
+        editors[userId].setState(settings);
+    })
+    .catch(console.error);
+
+}
+
 client.on("message", receivedMessage => {
     // Prevent bot from responding to its own messages
     if (receivedMessage.author == client.user || loading) {
@@ -1184,6 +1220,11 @@ client.on("message", receivedMessage => {
         log("Settings Change Allowed");
 
         try {
+            if (content.startsWith("?set")) {
+                log("Settings Change")
+                newEditor(receivedMessage);
+                return;
+            }
 
             var params = getParameters(content, false);
             var parameters = params.parameters;
