@@ -2286,13 +2286,13 @@ function getCommandString(msg, prefix) {
 function getParameters(msg) {
 
     var parameters = [];
-    var params = msg.match(/"[^"]+"|“[^“]+”|'[^']'/g);
+    var params = msg.match(/"[^"]+"|“[^“]+”|'[^']+'/g);
     if (params) {
         parameters = params;
 
         parameters.forEach((p, ind) => {
             msg = msg.replace(p, "");
-            parameters[ind] = p.replaceAll('"', "");
+            parameters[ind] = p.replace(/"|“|”|'/g, "");
         });
         msg = msg.trim();
     }
