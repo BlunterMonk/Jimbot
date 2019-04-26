@@ -2286,7 +2286,7 @@ function getCommandString(msg, prefix) {
 function getParameters(msg) {
 
     var parameters = [];
-    var params = msg.match(/"[^"]+"/g);
+    var params = msg.match(/"[^"]+"|“[^“]+”|'[^']'/g);
     if (params) {
         parameters = params;
 
