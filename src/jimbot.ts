@@ -1,15 +1,22 @@
-const Discord = require("discord.js");
+
+
+import * as Discord from "discord.js";
+import * as request from "request";
+import * as fs from "fs";
+import * as cheerio from "cheerio";
+import * as https from "https";
+import * as http from "http";
+
+import "./string/string-extension.js";
+import * as Config from "./config/config.js";
+import * as Editor from "./editor/Edit.js";
+import * as FFBE from "./ffbe/ffbewiki.js";
+import * as constants from "./constants.js";
+
 const client = new Discord.Client();
-const request = require("request");
-const wiki = require("nodemw");
-const fs = require("fs");
-const cheerio = require("cheerio");
-const http = require("https");
-const htt = require("http");
-const config = require("./config/config.ts");
-const String = require("./string/string-extension.ts")
-const Editor = require("./Editor.js")
-const FFBE = require("./pkg/ffbe/ffbewiki.js");
+var config = null;
+var editor = null;
+var ffbe = null;
 
 var mainChannelID;
 const pinkHexCode = 0xffd1dc;
@@ -28,6 +35,7 @@ const cancelEmoji = "❌";
 
 const wikiEndpoint = "https://exvius.gamepedia.com/";
 const ffbegifEndpoint = "http://www.ffbegif.com/";
+const exviusdbEndpoint = "https://exvius.gg/gl/units/205000805/animations/";
 
 const renaulteUserID = "159846139124908032";
 const jimooriUserID = "131139508421918721";
@@ -39,20 +47,6 @@ const guildId = (msg) => msg.guild.id;
 const userId = (msg) => msg.author.id;
 
 // Lookup Tables
-
-const unicodeNumbers = [
-    "0️⃣",
-    "1️⃣",
-    "2️⃣",
-    "3️⃣",
-    "4️⃣",
-    "5️⃣",
-    "6️⃣",
-    "7️⃣",
-    "8️⃣",
-    "9️⃣",
-    "🔟"
-];
 
 const gifAliases = {
     "lb": "limit",
@@ -85,19 +79,14 @@ function logData(data) {
     console.log(JSON.stringify(data));
 }
 
-function LoadGuilds(callback) {
+function LoadGuilds() {
     // List servers the bot is connected to
     log("Loading Guilds:");
     client.guilds.forEach(guild => {
         log(` - ${guild.name} - ${guild.id}`);
-        const guildId = guild.id;
+        
         config.loadGuild(guild.name, guild.id);
     });
-}
-
-function sendToChannel(id, msg) {
-    var channel = client.channels.get(id); // Replace with known channel ID
-    channel.send(msg);
 }
 
 //joined a server
@@ -116,6 +105,19 @@ client.on("guildDelete", guild => {
 client.on("ready", () => {
     log("Connected as " + client.user.tag);
 
+    editor = new Editor.Edit();
+    editor.init((msg, key, file) => {
+        log("Response From Editor");
+        config.reload(file);
+        respondSuccess(msg, true);
+        handleWhatis(msg, key, null);
+    }, (msg) =>{
+        log("Response From Editor");
+        respondFailure(msg, true);
+    })
+
+    ffbe = new FFBE.FFBE();
+    config = new Config.Config();
     config.init();
     LoadGuilds();
 
@@ -131,8 +133,9 @@ client.on("ready", () => {
 function handleUnit(receivedMessage, search, parameters) {
     search = search.toTitleCase("_");
     log("Searching Units For: " + search);
-    FFBE.queryWikiForUnit(search, parameters, function (pageName, imgurl, description, limited, rarity, fields) {
+    ffbe.queryWikiForUnit(search, parameters, function (pageName, imgurl, description, limited, fields) {
         pageName = pageName.replaceAll("_", " ");
+
         var embed = {
             color: pinkHexCode,
             author: {
@@ -144,7 +147,13 @@ function handleUnit(receivedMessage, search, parameters) {
             },
             title: pageName,
             url: "https://exvius.gamepedia.com/" + search,
-            fields: fields
+            fields: fields,
+            description ():string {
+                return this.options["description"];
+            },
+            footer: {
+                text: ""
+            }
         };
 
         // TODO: Create a function to better wrap this since it will be common
@@ -173,7 +182,7 @@ function handleUnit(receivedMessage, search, parameters) {
 function handleEquip(receivedMessage, search, parameters) {
     search = search.toTitleCase("_");
     log(`Searching Equipment For: ${search}...`);
-    FFBE.queryWikiForEquipment(search, parameters, function (imgurl, pageName, nodes) {
+    ffbe.queryWikiForEquipment(search, parameters, function (imgurl, pageName, nodes) {
         var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
 
@@ -202,7 +211,7 @@ function handleEquip(receivedMessage, search, parameters) {
 function handleSkill(receivedMessage, search, parameters) {
     search = search.toTitleCase("_");
     log(`Searching Skills For: ${search}...`);
-    FFBE.queryWikiForAbility(search, parameters, function (imgurl, pageName, nodes) {
+    ffbe.queryWikiForAbility(search, parameters, function (imgurl, pageName, nodes) {
         var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
 
@@ -230,7 +239,7 @@ function handleSkill(receivedMessage, search, parameters) {
 }
 function handleSearch(receivedMessage, search) {
     log(`Searching For: ${search}...`);
-    FFBE.queryWikiWithSearch(search, function (batch) {
+    ffbe.queryWikiWithSearch(search, function (batch) {
         receivedMessage.channel
             .send(mainChannelID, {
                 embed: {
@@ -375,7 +384,7 @@ function handleReactions(receivedMessage) {
             break;
     }
 }
-function handleEmote(receivedMessage, prefix, replace) {
+function handleEmote(receivedMessage, prefix) {
     var img = receivedMessage.content.split(" ")[0];
     img = img.toLowerCase().replace(prefix, "");
 
@@ -437,7 +446,7 @@ function handleGif(receivedMessage, search, parameters) {
 // INFORMATION
 function handleRecentunits(receivedMessage, search, parameters) {
 
-    queryWikiFrontPage((links) => {
+    ffbe.queryWikiFrontPage((links) => {
         receivedMessage.channel
         .send(mainChannelID, {
             embed: {
@@ -820,6 +829,19 @@ function handleSetinfo(receivedMessage, search, parameters) {
         respondFailure(receivedMessage, true);
     }
 }
+function handleAddinfo(receivedMessage, search, parameters) {
+    if (receivedMessage.guild) {
+        return;
+    }
+
+    log(`Add Information: ${search}`);
+
+    if (config.setInformation(search, "title", "desc")) {
+        respondSuccess(receivedMessage, true);
+    } else {
+        respondFailure(receivedMessage, true);
+    }
+}
 function handlePrefix(receivedMessage) {
     if (
         receivedMessage.member.roles.find(r => r.name === "Admin") ||
@@ -840,35 +862,6 @@ function handlePrefix(receivedMessage) {
 
         respondSuccess(receivedMessage);
     }
-}
-
-function handleGetsettings(receivedMessage) {
-    const guildId = receivedMessage.guild.id;
-    const settings = config.getSettings(guildId);
-    const json = JSON.stringify(settings, null, "\t");
-    log(json);
-
-    receivedMessage.author
-        .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                description: "Current settings for your server",
-                fields: [
-                    {
-                        name: "settings",
-                        value: json
-                    }
-                ]
-            }
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
 }
 
 // COMMANDS END
@@ -898,8 +891,7 @@ function getUnitKey(search) {
     if (unitsDump === null) {
         log("loading units list")
         var data = fs.readFileSync("unitkeys.json");
-        unitsDump = JSON.parse(data);
-
+        unitsDump = JSON.parse(String(data));
     }
 
     if (!unitsDump[search]) {
@@ -950,7 +942,7 @@ function getGif(search, param, callback) {
             });
             log(gifs);
             
-            img = gifs.find((n) => {
+            var img = gifs.find((n) => {
                 return n.toLowerCase().includes(param);
             });
             if (!img) {
@@ -965,13 +957,11 @@ function getGif(search, param, callback) {
                 log(img);
                 
                 if (!fs.existsSync(`tempgifs/${search}/`))
-                    fs.mkdirSync( `tempgifs/${search}/`, { recursive: true}, (err) => {
-                        if (err) throw err;
-                    });
+                    fs.mkdirSync( `tempgifs/${search}/`, { recursive: true});
 
                 const file = fs.createWriteStream(filename);
 
-                var source = img.slice(0, 5) === 'https' ? http : htt;
+                var source = img.slice(0, 5) === 'https' ? https : http;
                 source.get(img, function(response) {
                     return response.pipe(file);
                 });
@@ -1075,7 +1065,7 @@ function validateCommand(receivedMessage, command) {
 }
 
 // Response
-function respondSuccess(receivedMessage, toUser) {
+function respondSuccess(receivedMessage, toUser = false) {
 
     if (toUser) {
         receivedMessage.react(config.getSuccess());
@@ -1096,7 +1086,7 @@ function respondSuccess(receivedMessage, toUser) {
         receivedMessage.react(config.getSuccess(guildId));
     }
 }
-function respondFailure(receivedMessage, toUser) {
+function respondFailure(receivedMessage, toUser = false) {
 
     if (toUser) {
         receivedMessage.react(config.getFailure());
@@ -1152,11 +1142,9 @@ function privateMessage(receivedMessage) {
     var id = receivedMessage.author.id;
     log("Private Message From: " + id);
     log(content)
-    if (editors[id]) {
+    if (editor.isEditing(id)) {
         log("Is Editor");
-        log(parseInt(content));
-        log(Number.isNaN(parseInt(content)));
-        editorResponse(receivedMessage);
+        editor.editorResponse(receivedMessage);
         return;
     }
     if (id != renaulteUserID && id != jimooriUserID) {
@@ -1166,13 +1154,13 @@ function privateMessage(receivedMessage) {
     log("Settings Change Allowed");
 
     try {
-        if (content.startsWith("?set")) {
+        if (content.startsWith("?setinfo")) {
             log("Settings Change")
-            newEditor(receivedMessage);
+            editor.SetInfo(client, receivedMessage);
             return;
         }
 
-        var params = getParameters(content, false);
+        var params = getParameters(content);
         var parameters = params.parameters;
         copy = params.msg;
 
@@ -1184,7 +1172,10 @@ function privateMessage(receivedMessage) {
             throw command;
         }
 
-        if (content.startsWith("?setrank")) {
+        if (content.startsWith("?addinfo")) {
+            handleAddinfo(receivedMessage, search, parameters);
+            editor.AddInfo(receivedMessage, search);
+        } else if (content.startsWith("?setrank")) {
             handleSetrankings(receivedMessage, search, parameters);
         } else if (content.startsWith("?setinfo")) {
             handleSetinfo(receivedMessage, search, parameters);
@@ -1195,26 +1186,9 @@ function privateMessage(receivedMessage) {
     }
 }
 
-client.on("message", receivedMessage => {
-    // Prevent bot from responding to its own messages
-    if (receivedMessage.author == client.user || loading) {
-        return;
-    }
+function guildMessage(receivedMessage, guildId, prefix) {
 
-    const content = receivedMessage.content;
-    var copy = content.toLowerCase();
-    if (!receivedMessage.guild) {
-        privateMessage(receivedMessage);
-        return;
-    }
-
-    const guildId = receivedMessage.guild.id;
-    const prefix = config.getPrefix(guildId);
-    if (!content.startsWith(prefix)) {
-        handleReactions(receivedMessage);
-        return;
-    }
-
+    var copy = receivedMessage.content.toLowerCase();
     const attachment = receivedMessage.attachments.first();
     if (attachment) {
         log("Message Attachments");
@@ -1223,7 +1197,7 @@ client.on("message", receivedMessage => {
 
     try {
          // the command name
-        var command = getCommandString(content, prefix);
+        var command = getCommandString(copy, prefix);
         var shortcut = config.getShortcut(guildId, command);
         if (shortcut) {
             log("Found Command Shortcut");
@@ -1305,6 +1279,28 @@ client.on("message", receivedMessage => {
             }
         }
     }
+}
+
+client.on("message", receivedMessage => {
+    // Prevent bot from responding to its own messages
+    if (receivedMessage.author == client.user || loading) {
+        return;
+    }
+
+    const content = receivedMessage.content;
+    if (!receivedMessage.guild) {
+        privateMessage(receivedMessage);
+        return;
+    }
+
+    const guildId = receivedMessage.guild.id;
+    const prefix = config.getPrefix(guildId);
+    if (!content.startsWith(prefix)) {
+        handleReactions(receivedMessage);
+        return;
+    }
+
+    guildMessage(receivedMessage, guildId, prefix);
 });
 
 client.on("messageDelete", deletedMessage => {
@@ -1332,17 +1328,15 @@ client.on("messageDelete", deletedMessage => {
 });
 
 process.on("unhandledRejection", (reason, p) => {
-    log("Unhandled Rejection at: Promise", p, "reason:", reason);
+    log(`Unhandled Rejection at: Promise(${p}), Reason: ${reason}`);
     // application specific logging, throwing an error, or other logic here
 });
 
 // Get your bot's secret token from:
 // https://discordapp.com/developers/applications/
 // Click on your application -> Bot -> Token -> "Click to Reveal Token"
-bot_secret_token =
-    "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
-bot_secret_token_test =
-    "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
+var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
+var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
 client.login(bot_secret_token_test);
 
@@ -1376,7 +1370,7 @@ function downloadFile(name, link, callback) {
     }
 
     const file = fs.createWriteStream("emotes/" + name + ext);
-    const request = http.get(link, function (response) {
+    const request = https.get(link, function (response) {
         response.pipe(file);
         callback("success");
     });

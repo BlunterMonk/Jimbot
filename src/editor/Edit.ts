@@ -1,6 +1,12 @@
 
-const Discord = require("discord.js");
-const client;
+import "discord.js";
+
+//const Discord = require("discord.js");
+const Editor = require("./Editor.js");
+const constants = require("../../bin/constants.js");
+
+var client;
+
 
 function log(data) {
     console.log(data);
@@ -36,7 +42,7 @@ function indexToUnicode(index) {
     var ind = String(index);
     var number = "";
     for (var i = 0; i < ind.length; i++) {
-        number += unicodeNumbers[parseInt(ind[i])];
+        number += constants.unicodeNumbers[parseInt(ind[i])];
     }
     return number;
 }
@@ -73,12 +79,14 @@ function respondSettings(receivedMessage, key, settings) {
 
     var embed = {
         title: key,
-        color: pinkHexCode,
+        color: constants.pinkHexCode,
         footer: {
             text: text
-        }
+        },
+        fields: [],
+        description: ""
     };
-
+    
     if (fields.length == 0) {
         embed.description = "```" + JSON.stringify(settings, null, "\t").limitTo(1018) + "```";
     } else {
@@ -89,7 +97,7 @@ function respondSettings(receivedMessage, key, settings) {
     .send({embed: embed})
     .then(message => {
         fields.forEach((f, i) => {
-            message.react(unicodeNumbers[i]);
+            message.react(constants.unicodeNumbers[i]);
         });
         editors[userId].setState(settings);
     })
@@ -98,7 +106,7 @@ function respondSettings(receivedMessage, key, settings) {
 function respondEditorAction(receivedMessage, key) {
     var embed = {
         title: `Currently Editing: ${key}`,
-        color: pinkHexCode,
+        color: constants.pinkHexCode,
         description: "Please submit the new value"
     };
 
@@ -111,7 +119,8 @@ function respondEditorAction(receivedMessage, key) {
 function respondAddAction(receivedMessage, key) {
     var embed = {
         title: `Adding New **${key.toTitleCase()}**`,
-        color: pinkHexCode,
+        color: constants.pinkHexCode,
+        description: ""
     };
 
     if (key) {
@@ -135,7 +144,7 @@ function respondEditorPreview(receivedMessage, key, data, old) {
         receivedMessage.channel
         .send({embed: {
             title: `Old Data: ${key}`,
-            color: pinkHexCode,
+            color: constants.pinkHexCode,
             description: "```" + old + "```"
         }})
         .then(message => {
@@ -147,19 +156,19 @@ function respondEditorPreview(receivedMessage, key, data, old) {
     receivedMessage.channel
     .send({embed: {
         title: `New Data: ${key}`,
-        color: pinkHexCode,
+        color: constants.pinkHexCode,
         description: "```" + JSON.stringify(data, null, '\t') + "```",
         footer: {
             text: "Respond 'OK' to apply this new version. 'X' to cancel."
         }
     }})
     .then(message => {
-        message.react(okEmoji);
-        message.react(cancelEmoji);
+        message.react(constants.okEmoji);
+        message.react(constants.cancelEmoji);
 
         const emojiResponseFilter = (reaction, user) =>
-            (reaction.emoji.name === okEmoji ||
-                reaction.emoji.name === cancelEmoji) &&
+            (reaction.emoji.name === constants.okEmoji ||
+                reaction.emoji.name === constants.cancelEmoji) &&
             user.id !== message.author.id;
         message.awaitReactions(emojiResponseFilter, { max: 1, time: 30000 })
             .then(collected => {
@@ -167,26 +176,28 @@ function respondEditorPreview(receivedMessage, key, data, old) {
                 const count = collected.size;
                 log(count);
 
-                if (count === 1 && reaction === okEmoji) {
+                if (count === 1 && reaction === constants.okEmoji) {
                     log("AddEmo - confirmed");
                     editors[userId].save();
-                    config.reload(editors[userId].file);
 
                     log(`Current Key - ${editors[userId].getEditedObjectKey()}`);
                     message.delete();
-                    respondSuccess(receivedMessage, true);
-                    handleWhatis(receivedMessage, editors[userId].getEditedObjectKey());
+
+                    log("Success Callback");
+                    log(respondSuccess);
+                    respondSuccess(receivedMessage, editors[userId].getEditedObjectKey(), editors[userId].file);
+                    log("----------------");
 
                     endEditorSession(userId);
                     if (oldMsg) oldMsg.delete();
-                } else if (count === 0 || reaction === cancelEmoji) {
+                } else if (count === 0 || reaction === constants.cancelEmoji) {
                     log("AddEmo - no response");
-                    log(editors[userId])
                     endEditorSession(userId);
-                    log(editors[userId])
+                    
                     if (oldMsg) oldMsg.delete();
                     message.delete();
-                    respondFailure(receivedMessage, true);
+
+                    respondFailure(receivedMessage);
                 }
             })
             .catch(collected => {
@@ -199,69 +210,7 @@ function respondEditorPreview(receivedMessage, key, data, old) {
     })
     .catch(console.error);
 }
-function editorResponse(receivedMessage) {
-    var userId = receivedMessage.author.id;
 
-    if (receivedMessage.content.toLowerCase() == "cancel") {
-        endEditorSession(userId);
-        log("Edit Canceled")
-        log(editors);
-        return;
-    }
-
-    if (editors[userId].getIsEditing()) {
-        editorEditMode(receivedMessage);
-        return;
-    } else if (editors[userId].getIsAdding()) {
-        editorAddMode(receivedMessage);
-        return;
-    }
-
-    log(`Editor Traversing Settings: ${userId}`);
-
-    var state = editors[userId].getState();
-    switch (receivedMessage.content) {
-        case "edit": 
-        {
-            if (!editors[userId].isStateEditable()) {
-                log("Cannot Edit State");
-                return;
-            }
-
-            var state = editors[userId].getState();
-            log("\nCurrent State");
-            log(state);
-            log("\nCurrent Tree");
-            log(editors[userId].tree);
-
-            editors[userId].setIsEditing(true);
-
-            respondEditorAction(receivedMessage, editors[userId].getCurrentKey(), state);
-            return;
-        }
-        case "add":
-        {
-            if (editors[userId].isStateEditable()) {
-                log("Cannot Add State");
-                return;
-            }
-
-            editors[userId].setIsAdding(true);
-            respondAddAction(receivedMessage/*, editors[userId].getCurrentKey()*/);
-            return;
-        }
-        case "back":
-        {
-            // TODO: maybe, implement backtracking.
-            //log("\nGoing Back");
-        }
-        break;
-        default:
-            break;
-    }
-
-    editorTraverseMode(receivedMessage);
-}
 function editorTraverseMode(receivedMessage) {
     var userId = receivedMessage.author.id;
 
@@ -352,20 +301,110 @@ function endEditorSession(userId) {
     delete editors[userId];
 }
 
-var Edit = {};
+var respondSuccess;
+var respondFailure;
 
-Edit.SetInfo = function(cli, receivedMessage) {
-    client = cli;
+export interface EditInterface {
+    respondSuccess: any;
+    respondFailure: any;
+    isEditing(userId: string);
+    SetInfo(cli, receivedMessage);
+    AddInfo(cli, receivedMessage, search: string);
+    editorResponse(receivedMessage);
+};
 
-    newEditor(receivedMessage, "information");
-    respondSettings(receivedMessage, "Information", editors[id].getState());
+export class Edit implements EditInterface {
+    respondSuccess: any;
+    respondFailure: any;
+    constructor() {
+
+    }
+
+    init = function(success, failure) {
+        respondSuccess = success;
+        respondFailure = failure;
+    }
+
+    isEditing = function(userId) {
+        return editors[userId];
+    }
+    SetInfo = function(cli, receivedMessage) {
+        client = cli;
+
+        var userId = receivedMessage.author.id;
+        newEditor(receivedMessage, "information");
+        respondSettings(receivedMessage, "Information", editors[userId].getState());
+    }
+    AddInfo = function(receivedMessage, search) {
+        var userId = receivedMessage.author.id;
+
+        newEditor(receivedMessage, "information");
+        editors[userId].setIsAdding(true);
+        editors[userId].next(search);
+        editorAddMode(receivedMessage);
+    }
+    editorResponse = function(receivedMessage) {
+        var userId = receivedMessage.author.id;
+
+        if (receivedMessage.content.toLowerCase() == "cancel") {
+            endEditorSession(userId);
+            log("Edit Canceled")
+            log(editors);
+            return;
+        }
+
+        if (editors[userId].getIsEditing()) {
+            editorEditMode(receivedMessage);
+            return;
+        } else if (editors[userId].getIsAdding()) {
+            editorAddMode(receivedMessage);
+            return;
+        }
+
+        log(`Editor Traversing Settings: ${userId}`);
+
+        var state = editors[userId].getState();
+        switch (receivedMessage.content) {
+            case "edit": 
+            {
+                if (!editors[userId].isStateEditable()) {
+                    log("Cannot Edit State");
+                    return;
+                }
+
+                var state = editors[userId].getState();
+                log("\nCurrent State");
+                log(state);
+                log("\nCurrent Tree");
+                log(editors[userId].tree);
+
+                editors[userId].setIsEditing(true);
+
+                respondEditorAction(receivedMessage, editors[userId].getCurrentKey());
+                return;
+            }
+            case "add":
+            {
+                /*if (editors[userId].isStateEditable()) {
+                    log("Cannot Add State");
+                    return;
+                }
+
+                editors[userId].setIsAdding(true);
+                respondAddAction(receivedMessage, editors[userId].getCurrentKey());*/
+                return;
+            }
+            case "back":
+            {
+                // TODO: maybe, implement backtracking.
+                //log("\nGoing Back");
+            }
+            break;
+            default:
+                break;
+        }
+
+        editorTraverseMode(receivedMessage);
+    }
+
 }
-Edit.AddInfo = function(cli, receivedMessage, search) {
-
-    newEditor(receivedMessage, "information");
-    editors[id].setIsAdding(true);
-    editors[id].next(search);
-    editorAddMode(receivedMessage, search);
-}
-
-module.exports = Edit;

@@ -1,9 +1,11 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
+require("../string/string-extension.js");
 var fs_1 = require("fs");
 // TODO: move editor functions from jimbot.js to editor.js
 var Editor = /** @class */ (function () {
     function Editor(guildId, userId, fileHandle) {
+        this.isAdding = false;
         this.userId = userId;
         this.guildId = guildId;
         this.isEditing = false;

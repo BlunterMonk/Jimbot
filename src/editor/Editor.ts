@@ -1,5 +1,5 @@
 
-import "./pkg/string/string-extension.js";
+import "../string/string-extension.js";
 import { readFileSync, writeFileSync } from "fs";
 
 // TODO: move editor functions from jimbot.js to editor.js

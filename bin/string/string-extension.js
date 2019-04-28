@@ -1,28 +1,12 @@
-
-String.similarity = function (s1, s2) {
-    var longer = s1;
-    var shorter = s2;
-    if (s1.length < s2.length) {
-        longer = s2;
-        shorter = s1;
-    }
-    var longerLength = longer.length;
-    if (longerLength == 0) {
-        return 1.0;
-    }
-    return (
-        (longerLength - String.editDistance(longer, shorter)) / parseFloat(longerLength)
-    );
-}
-String.editDistance = function (s1, s2) {
+function editDistance(s1, s2) {
     s1 = s1.toLowerCase();
     s2 = s2.toLowerCase();
-
     var costs = new Array();
     for (var i = 0; i <= s1.length; i++) {
         var lastValue = i;
         for (var j = 0; j <= s2.length; j++) {
-            if (i == 0) costs[j] = j;
+            if (i == 0)
+                costs[j] = j;
             else {
                 if (j > 0) {
                     var newValue = costs[j - 1];
@@ -33,11 +17,25 @@ String.editDistance = function (s1, s2) {
                 }
             }
         }
-        if (i > 0) costs[s2.length] = lastValue;
+        if (i > 0)
+            costs[s2.length] = lastValue;
     }
     return costs[s2.length];
 }
-    
+String.prototype.similarity = function (s2) {
+    var s1 = this;
+    var longer = s1;
+    var shorter = s2;
+    if (s1.length < s2.length) {
+        longer = s2;
+        shorter = s1;
+    }
+    var longerLength = longer.length;
+    if (longerLength == 0) {
+        return 1.0;
+    }
+    return ((longerLength - editDistance(longer, shorter)) / parseFloat(longerLength));
+};
 String.prototype.toTitleCase = function (splitter) {
     if (!splitter) {
         splitter = " ";
@@ -45,9 +43,9 @@ String.prototype.toTitleCase = function (splitter) {
     return this
         .toLowerCase()
         .split(splitter)
-        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+        .map(function (s) { return s.charAt(0).toUpperCase() + s.substring(1); })
         .join(splitter);
-}
+};
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, "g"), replacement);
@@ -75,5 +73,4 @@ String.prototype.indexOfAfterIndex = function (search, start) {
 String.prototype.matches = function (other) {
     return this === other;
 };
-
 module.exports = String;
