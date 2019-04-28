@@ -890,7 +890,7 @@ var unitsDump = null;
 function getUnitKey(search) {
     if (unitsDump === null) {
         log("loading units list")
-        var data = fs.readFileSync("unitkeys.json");
+        var data = fs.readFileSync("data/unitkeys.json");
         unitsDump = JSON.parse(String(data));
     }
 
