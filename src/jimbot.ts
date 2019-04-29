@@ -51,8 +51,9 @@ const userId = (msg) => msg.author.id;
 const gifAliases = {
     "lb": "limit",
     "limit burst": "limit",
-    "victory": "win before",
-    "win_before": "win before"
+    "victory": "before",
+    "win_before": "before",
+    "win before": "before"
 }
 
 // Commands
@@ -595,9 +596,9 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
     var title = "";
     var s = search.replaceAll("_", " ").toTitleCase();
     if (isBurst) {
-        title = `Unit calculations For ${s}. (bust damage on turn)`;
+        title = `Burt damage for: ${s}. (damage on turn)`;
     } else {
-        title = `Unit calculations For ${s}. (dpt - turns for rotation)`
+        title = `DPT for: ${s}. (dpt - turns for rotation)`;
     }
 
     
@@ -940,10 +941,16 @@ function getGif(search, param, callback) {
                 else 
                     return 1;
             });
-            log(gifs);
+            //log(gifs);
             
             var img = gifs.find((n) => {
-                return n.toLowerCase().includes(param);
+                if (param.includes("attack") || param.includes("atk")) {
+                    return n.toLowerCase().includes("attack") || n.toLowerCase().includes("atk");
+                } else if (param.includes("win")) {
+                    return n.toLowerCase().includes(param) && !n.toLowerCase().includes("before");
+                } else {
+                    return n.toLowerCase().includes(param);
+                }
             });
             if (!img) {
                 img = gifs.find((n) => {
@@ -958,16 +965,19 @@ function getGif(search, param, callback) {
                 
                 if (!fs.existsSync(`tempgifs/${search}/`))
                     fs.mkdirSync( `tempgifs/${search}/`, { recursive: true});
-
-                const file = fs.createWriteStream(filename);
-
+                    
+                var file = null;
                 var source = img.slice(0, 5) === 'https' ? https : http;
                 source.get(img, function(response) {
+                    if (response.statusCode !== 200) {
+                        log("Unit Animation not found");
+                        return;
+                    }
+                    file = fs.createWriteStream(filename);
+                    file.on('finish', function() {
+                        callback(filename);
+                    });
                     return response.pipe(file);
-                });
-
-                file.on('finish', function() {
-                    callback(filename);
                 });
             }
         }
@@ -1330,7 +1340,7 @@ client.on("messageDelete", deletedMessage => {
 process.on("unhandledRejection", (reason, p) => {
     log(`Unhandled Rejection at: Promise(${p}), Reason: ${reason}`);
     // application specific logging, throwing an error, or other logic here
-});
+});1
 
 // Get your bot's secret token from:
 // https://discordapp.com/developers/applications/
@@ -1338,7 +1348,7 @@ process.on("unhandledRejection", (reason, p) => {
 var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
 var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 
 // HELPERS
 function getQuotedWord(str) {
