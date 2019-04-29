@@ -175,8 +175,8 @@
 			"damage": "7,154,877,866",
 			"turns": 11
 		},
-		"Adventure Locke": {
-			"name": "Adventure Locke",
+		"Adventurer Locke": {
+			"name": "Adventurer Locke",
 			"damage": "6,755,725,894",
 			"turns": 7
 		},
@@ -205,6 +205,11 @@
 			"damage": "4,385,485,895",
 			"turns": 12
 		},
+		"CG Firion (w/ external imperil)": {
+			"name": "CG Firion (w/ external imperil)",
+			"damage": "3,804,997,673",
+			"turns": 10
+		},
 		"Kimono Ayaka (w/ external imperil)": {
 			"name": "Kimono Ayaka (w/ external imperil)",
 			"damage": "3,463,219,497",
@@ -214,6 +219,11 @@
 			"name": "Regina (No chain mod)",
 			"damage": "3,239,808,505",
 			"turns": 4
+		},
+		"CG Firion (no imperil)": {
+			"name": "CG Firion (no imperil)",
+			"damage": "2,186,024,941",
+			"turns": 10
 		},
 		"Kimono Ayaka (no imperil)": {
 			"name": "Kimono Ayaka (no imperil)",
@@ -311,6 +321,11 @@
 			"name": "Unreleased units",
 			"damage": "-",
 			"turns": 0
+		},
+		"CG Dark Fina": {
+			"name": "CG Dark Fina",
+			"damage": "10,377,428,109",
+			"turns": 12
 		},
 		"CG Terra": {
 			"name": "CG Terra",
@@ -526,8 +541,8 @@
 			"damage": "15,166,284,403",
 			"turns": 2
 		},
-		"Adventure Locke": {
-			"name": "Adventure Locke",
+		"Adventurer Locke": {
+			"name": "Adventurer Locke",
 			"damage": "13,720,172,528",
 			"turns": 5
 		},
@@ -556,6 +571,11 @@
 			"damage": "11,183,020,558",
 			"turns": 4
 		},
+		"CG Firion (w/ external imperil)": {
+			"name": "CG Firion (w/ external imperil)",
+			"damage": "6,554,828,632",
+			"turns": 4
+		},
 		"Chocobo Fina (no imperil)": {
 			"name": "Chocobo Fina (no imperil)",
 			"damage": "6,390,297,462",
@@ -570,6 +590,11 @@
 			"name": "Regina (No chain mod)",
 			"damage": "4,202,705,316",
 			"turns": 2
+		},
+		"CG Firion (no imperil)": {
+			"name": "CG Firion (no imperil)",
+			"damage": "3,745,616,361",
+			"turns": 4
 		},
 		"Kimono Ayaka (no imperil)": {
 			"name": "Kimono Ayaka (no imperil)",
@@ -672,6 +697,11 @@
 			"name": "CG Terra",
 			"damage": "14,424,279,916",
 			"turns": 8
+		},
+		"CG Dark Fina": {
+			"name": "CG Dark Fina",
+			"damage": "13,353,670,261",
+			"turns": 3
 		},
 		"Sol": {
 			"name": "Sol",
