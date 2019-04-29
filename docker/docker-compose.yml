@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  jimbot:
+    container_name: jimbot
+    restart: always
+    build: 
+      context: .
+      dockerfile: jimbot/dockerfile
+    volumes: &appvolumes
+      - ../:/home/pi/jimbot
+    ports:
+      - '3000:3000'
+    environment: &appenv
+      PORT: 3000
+    command: bash -c "tsc && npm start"
+
+  #jimbot_watcher:
+  #  container_name: jimbot_watcher
+  #  build: ./
+  #  depends_on:
+  #    - jimbot
+  #  restart: always
+  #  volumes: *appvolumes
+  #  environment: *appenv
+  #  command: ["pm2-runtime", "start", "ecosystem.config.js", "--only=app-watcher"]  

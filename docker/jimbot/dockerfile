@@ -1,0 +1,16 @@
+FROM node:8-slim
+
+ADD . /home/pi/jimbot
+WORKDIR /home/pi/jimbot
+
+RUN cd /home/pi/jimbot
+RUN apt-get update && apt-get install -y git
+RUN apt-get install -y libtool
+RUN apt-get install -y autoconf
+RUN apt-get install -y automake g++
+RUN npm install -g discord.js --unsafe-perm
+RUN npm install -g typescript
+RUN tsc
+
+EXPOSE 3000
+CMD [ "tsc" ]

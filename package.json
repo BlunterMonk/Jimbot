@@ -4,6 +4,7 @@
   "description": "jimbot packages",
   "main": "jimbot.js",
   "dependencies": {
+    "sodium": "^2.0.3",
     "canvas": "^2.4.1",
     "cheerio": "^1.0.0-rc.3",
     "discord.js": "^11.4.2",
@@ -11,11 +12,23 @@
     "image-size": "^0.7.4",
     "merge-images": "^1.1.0",
     "nodemw": "^0.12.2",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "bufferutil": "^3.0.3",
+    "erlpack": "discordapp/erlpack",
+    "node-opus": "^0.2.7",
+    "opusscript": "^0.0.6",
+    "libsodium-wrappers": "^0.7.3",
+    "uws": "^9.14.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "tsc -p ./src",
+    "watch": "tsc -w -p ./src",
+    "debug": "nodemon --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/index.js",
+    "docker-debug": "docker-compose up",
+    "start": "node ./bin/jimbot.js"
   },
   "repository": {
     "type": "git",
