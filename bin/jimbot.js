@@ -34,6 +34,7 @@ var exviusdbEndpoint = "https://exvius.gg/gl/units/205000805/animations/";
 var renaulteUserID = "159846139124908032";
 var jimooriUserID = "131139508421918721";
 var furculaUserID = "344500120827723777";
+var muspelUserID = "114545824989446149";
 var aniGL = function (n) { return "https://exvius.gg/gl/units/" + n + "/animations/"; };
 var aniJP = function (n) { return "https://exvius.gg/jp/units/" + n + "/animations/"; };
 var guildId = function (msg) { return msg.guild.id; };
@@ -231,39 +232,46 @@ function handleSearch(receivedMessage, search) {
 function handleRank(receivedMessage, search, parameters) {
     log("\nSearching Rankings for: " + search);
     if (search) {
-        var unit = config.getUnitRank(search.toLowerCase());
-        if (!unit) {
+        var unit_1 = config.getUnitRank(search.toLowerCase());
+        if (!unit_1) {
             log("Could not find unit");
             return;
         }
-        var embed = {
-            title: unit.Unit,
-            url: wikiEndpoint + unit.Unit.replaceAll(" ", "_"),
-            color: pinkHexCode,
-            fields: [
-                {
-                    name: "Rank",
-                    value: unit.Base + " - " + unit.TDH
+        client.fetchUser(muspelUserID)
+            .then(function (muspel) {
+            var embed = {
+                author: {
+                    name: muspel.username,
+                    icon_url: muspel.avatarURL
+                },
+                title: unit_1.Unit,
+                url: wikiEndpoint + unit_1.Unit.replaceAll(" ", "_"),
+                color: pinkHexCode,
+                fields: [
+                    {
+                        name: "Rank",
+                        value: unit_1.Base + " - " + unit_1.TDH
+                    }
+                ],
+                thumbnail: {
+                    url: unit_1.imgurl
                 }
-            ],
-            thumbnail: {
-                url: unit.imgurl
-            }
-        };
-        if (unit.notes) {
-            embed.fields[embed.fields.length] = {
-                name: "Notes",
-                value: unit.notes
             };
-        }
-        receivedMessage.channel
-            .send({
-            embed: embed
-        })
-            .then(function (message) {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-            .catch(console.error);
+            if (unit_1.notes) {
+                embed.fields[embed.fields.length] = {
+                    name: "Notes",
+                    value: unit_1.notes
+                };
+            }
+            receivedMessage.channel
+                .send({
+                embed: embed
+            })
+                .then(function (message) {
+                cacheBotMessage(receivedMessage.id, message.id);
+            })
+                .catch(console.error);
+        });
         return;
     }
     var embeds = [];
@@ -288,15 +296,18 @@ function handleRank(receivedMessage, search, parameters) {
     });
     log("\nEmbeds");
     log(embeds);
-    embeds.forEach(function (embed) {
-        receivedMessage.channel
-            .send({
-            embed: embed
-        })
-            .then(function (message) {
-            //cacheBotMessage(receivedMessage.id, message.id);
-        })
-            .catch(console.error);
+    client.fetchUser(furculaUserID)
+        .then(function (calculator) {
+        embeds.forEach(function (embed) {
+            receivedMessage.channel
+                .send({
+                embed: embed
+            })
+                .then(function (message) {
+                //cacheBotMessage(receivedMessage.id, message.id);
+            })
+                .catch(console.error);
+        });
     });
 }
 /*function handleSprite(receivedMessage, search, parameters) {
