@@ -40,6 +40,7 @@ const exviusdbEndpoint = "https://exvius.gg/gl/units/205000805/animations/";
 const renaulteUserID = "159846139124908032";
 const jimooriUserID = "131139508421918721";
 const furculaUserID = "344500120827723777";
+const muspelUserID = "114545824989446149";
 
 const aniGL = (n) => `https://exvius.gg/gl/units/${n}/animations/`;
 const aniJP = (n) => `https://exvius.gg/jp/units/${n}/animations/`;
@@ -267,29 +268,35 @@ function handleRank(receivedMessage, search, parameters) {
             return;
         }
 
-        var embed = {
-            title: unit.Unit,
-            url: wikiEndpoint + unit.Unit.replaceAll(" ", "_"),
-            color: pinkHexCode,
-            fields: [
-                {
-                    name: "Rank",
-                    value: `${unit.Base} - ${unit.TDH}`
+        client.fetchUser(muspelUserID)
+        .then(muspel => {
+            var embed = {
+                author: {
+                    name: muspel.username,
+                    icon_url: muspel.avatarURL
+                },
+                title: unit.Unit,
+                url: wikiEndpoint + unit.Unit.replaceAll(" ", "_"),
+                color: pinkHexCode,
+                fields: [
+                    {
+                        name: "Rank",
+                        value: `${unit.Base} - ${unit.TDH}`
+                    }
+                ],
+                thumbnail: {
+                    url: unit.imgurl
                 }
-            ],
-            thumbnail: {
-                url: unit.imgurl
-            }
-        };
-
-        if (unit.notes) {
-            embed.fields[embed.fields.length] = {
-                name: "Notes",
-                value: unit.notes
             };
-        }
 
-        receivedMessage.channel
+            if (unit.notes) {
+                embed.fields[embed.fields.length] = {
+                    name: "Notes",
+                    value: unit.notes
+                };
+            }
+
+            receivedMessage.channel
             .send({
                 embed: embed
             })
@@ -297,6 +304,7 @@ function handleRank(receivedMessage, search, parameters) {
                 cacheBotMessage(receivedMessage.id, message.id);
             })
             .catch(console.error);
+        });
         return;
     }
 
@@ -323,15 +331,18 @@ function handleRank(receivedMessage, search, parameters) {
 
     log("\nEmbeds");
     log(embeds);
-    embeds.forEach(embed => {
-        receivedMessage.channel
-            .send({
-                embed: embed
-            })
-            .then(message => {
-                //cacheBotMessage(receivedMessage.id, message.id);
-            })
-            .catch(console.error);
+    client.fetchUser(furculaUserID)
+    .then(calculator => {
+        embeds.forEach(embed => {
+            receivedMessage.channel
+                .send({
+                    embed: embed
+                })
+                .then(message => {
+                    //cacheBotMessage(receivedMessage.id, message.id);
+                })
+                .catch(console.error);
+        });
     });
 }
 
