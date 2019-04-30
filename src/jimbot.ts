@@ -42,6 +42,7 @@ const jimooriUserID = "131139508421918721";
 const furculaUserID = "344500120827723777";
 const muspelUserID = "114545824989446149";
 
+const sprite = (n) => `https://exvius.gg/static/img/assets/unit/unit_ills_${n}.png`;
 const aniGL = (n) => `https://exvius.gg/gl/units/${n}/animations/`;
 const aniJP = (n) => `https://exvius.gg/jp/units/${n}/animations/`;
 const guildId = (msg) => msg.guild.id;
@@ -346,8 +347,19 @@ function handleRank(receivedMessage, search, parameters) {
     });
 }
 
-/*function handleSprite(receivedMessage, search, parameters) {
-    search = search.toTitleCase("_");
+function handleSprite(receivedMessage, search, parameters) {
+
+    var unit = getUnitKey(search);
+    if (!unit) {
+        return;
+    }
+
+    var rarity = unit[unit.length-1];
+    var id = unit.substring(0, unit.length-1);
+    log("Unit ID: " + unit);
+    if (rarity === "5") {
+        unit = id + "7";
+    }
 
     log("Searching Unit Sprite For: " + search);
     validateUnit(search, function (valid, imgurl) {
@@ -356,10 +368,8 @@ function handleRank(receivedMessage, search, parameters) {
         var embed = {
             color: pinkHexCode,
             image: {
-                url: imgurl
-            },
-            title: search,
-            url: "https://exvius.gamepedia.com/" + search,
+                url: sprite(unit)
+            }
         };
 
         receivedMessage.channel
@@ -371,7 +381,7 @@ function handleRank(receivedMessage, search, parameters) {
             })
             .catch(console.error);
     });
-}*/
+}
 
 // FLUFF
 function handleReactions(receivedMessage) {
@@ -896,7 +906,7 @@ function convertValueToLink(value) {
     return link;
 }
 
-// GIFS
+// IMAGES
 
 var unitsDump = null;
 function getUnitKey(search) {

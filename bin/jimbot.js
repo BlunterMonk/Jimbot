@@ -35,6 +35,7 @@ var renaulteUserID = "159846139124908032";
 var jimooriUserID = "131139508421918721";
 var furculaUserID = "344500120827723777";
 var muspelUserID = "114545824989446149";
+var sprite = function (n) { return "https://exvius.gg/static/img/assets/unit/unit_ills_" + n + ".png"; };
 var aniGL = function (n) { return "https://exvius.gg/gl/units/" + n + "/animations/"; };
 var aniJP = function (n) { return "https://exvius.gg/jp/units/" + n + "/animations/"; };
 var guildId = function (msg) { return msg.guild.id; };
@@ -310,32 +311,36 @@ function handleRank(receivedMessage, search, parameters) {
         });
     });
 }
-/*function handleSprite(receivedMessage, search, parameters) {
-    search = search.toTitleCase("_");
-
+function handleSprite(receivedMessage, search, parameters) {
+    var unit = getUnitKey(search);
+    if (!unit) {
+        return;
+    }
+    var rarity = unit[unit.length - 1];
+    var id = unit.substring(0, unit.length - 1);
+    log("Unit ID: " + unit);
+    if (rarity === "5") {
+        unit = id + "7";
+    }
     log("Searching Unit Sprite For: " + search);
     validateUnit(search, function (valid, imgurl) {
         search = search.replaceAll("_", " ");
-
         var embed = {
             color: pinkHexCode,
             image: {
-                url: imgurl
-            },
-            title: search,
-            url: "https://exvius.gamepedia.com/" + search,
+                url: sprite(unit)
+            }
         };
-
         receivedMessage.channel
             .send({
-                embed: embed
-            })
-            .then(message => {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
+            embed: embed
+        })
+            .then(function (message) {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
             .catch(console.error);
     });
-}*/
+}
 // FLUFF
 function handleReactions(receivedMessage) {
     var content = receivedMessage.content.toLowerCase();
@@ -803,7 +808,7 @@ function convertValueToLink(value) {
     log("Converted Link: " + link);
     return link;
 }
-// GIFS
+// IMAGES
 var unitsDump = null;
 function getUnitKey(search) {
     if (unitsDump === null) {
