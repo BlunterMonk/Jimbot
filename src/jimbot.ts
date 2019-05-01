@@ -144,18 +144,20 @@ function getUnitData(id) {
         return JSON.parse(u.toString());
     }
 
-    var bigUnits = fs.readFileSync('../ffbe/units.json');
+    var cat = id[0];
+    var bigUnits = fs.readFileSync(`data/units-${cat}.json`);
     var unitsList = JSON.parse(bigUnits.toString());
 
     var unit = unitsList[id];
     
     unitsList = null;
     bigUnits = null;
-    var JP = ""; // this is to tell the skill search to use JP data.
+    //var JP = ""; // this is to tell the skill search to use JP data.
     if (!unit) {
-        log("Could not find unit data in GL");
+        log("Could not find unit data");
         unit = null;
-        
+        return null;
+        /*
         bigUnits = fs.readFileSync('../ffbe-jp/units.json');
         unitsList = JSON.parse(bigUnits.toString());
 
@@ -167,12 +169,10 @@ function getUnitData(id) {
             log("Could not find unit data in GL");
             unit = null;
             return null;
-        }
+        }*/
     }
 
-    unit.skills = getSkillsFromUnit(unit, JP);
-    log("Unit Skills");
-    log(unit.skills);
+    //unit.skills = getSkillsFromUnit(unit, JP);
     log("Caching unit");
     if (!fs.existsSync(`tempdata/`))
         fs.mkdirSync( `tempdata/`, { recursive: true});
@@ -194,17 +194,17 @@ function getSkillsFromUnit(unit, JP) {
     skills.forEach(skill => {
         skillKeys.push(skill.id);
     });
-    log(skillKeys);
+    //log(skillKeys);
 
 
     var bigSkills = fs.readFileSync(`../ffbe${JP}/skills.json`);
     var skillList = JSON.parse(bigSkills.toString());
-    log("Giant List");
+    //log("Giant List");
     bigSkills = null;
     
     var skillData = {};
     var keys = Object.keys(skillList);
-    log(keys.length);
+    //log(keys.length);
     skillKeys.forEach(key => {
         skillData[key] = skillList[key];
     });
@@ -250,8 +250,8 @@ function searchUnitSkills(skills, keyword: RegExp, active) {
         }
     });
 
-    log(`Searched Skills For: ${keyword}`);
-    log(found);
+    //log(`Searched Skills For: ${keyword}`);
+    //log(found);
 
     return found;
 }
@@ -1387,28 +1387,28 @@ function unitQuery(receivedMessage, command, search) {
     if (!search || search.empty())
         return false;
 
-    log(`${command} Doesn't Exists`);
+    //log(`${command} Doesn't Exists`);
     var s = command.toLowerCase();
-    log(`Search: ${search}`);
+    //log(`Search: ${search}`);
 
     var alias = config.getAlias(s);
     if (alias) {
-        log("Found Alias: " + alias);
+        //log("Found Alias: " + alias);
         command = alias.toLowerCase().replaceAll(" ", "_");
     }
 
     var id = getUnitKey(command.toLowerCase())
-    log(`Unit ID: ${id}`);
+    //log(`Unit ID: ${id}`);
     if (!id)
         return false;
 
-    log(`Unit ID valid`);
+    //log(`Unit ID valid`);
 
     searchAliases.forEach(regex => {
         if (checkString(search, regex.reg)) {
-            log(`Search contains a word to replace`);
+            //log(`Search contains a word to replace`);
             search = search.replace(regex.reg, regex.value);
-            log(`New Search: ${search}`);
+            //log(`New Search: ${search}`);
         }
     });
     search = search.replaceAll(" ",".*")
@@ -1436,8 +1436,8 @@ function guildMessage(receivedMessage, guildId, prefix) {
                 return;
         }
     } catch (e) {
-        log(e);
-        log("JP Unit: " + command);
+        //log(e);
+        //log("JP Unit: " + command);
         var search = getSearchString(`${prefix}${command}`, copy);
         if (unitQuery(receivedMessage, command, search))
             return;
