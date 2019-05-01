@@ -1220,9 +1220,21 @@ function privateMessage(receivedMessage) {
     }
 }
 function unitQuery(receivedMessage, command, search) {
+    if (!search || search.empty())
+        return false;
     log(command + " Doesn't Exists");
     var s = command.toLowerCase();
     log("Search: " + search);
+    var alias = config.getAlias(s);
+    if (alias) {
+        log("Found Alias: " + alias);
+        command = alias.toLowerCase().replaceAll(" ", "_");
+    }
+    var id = getUnitKey(command.toLowerCase());
+    log("Unit ID: " + id);
+    if (!id)
+        return false;
+    log("Unit ID valid");
     searchAliases.forEach(function (regex) {
         if (checkString(search, regex.reg)) {
             log("Search contains a word to replace");
@@ -1231,20 +1243,8 @@ function unitQuery(receivedMessage, command, search) {
         }
     });
     search = search.replaceAll(" ", ".*");
-    var alias = config.getAlias(s);
-    if (alias) {
-        log("Found Alias: " + alias);
-        command = alias.toLowerCase().replaceAll(" ", "_");
-    }
-    var id = getUnitKey(command.toLowerCase());
-    log("Unit ID: " + id);
-    if (id) {
-        log("Unit ID valid");
-        if (!search)
-            return;
-        handleKit(receivedMessage, search, id, command);
-        return;
-    }
+    handleKit(receivedMessage, search, id, command);
+    return true;
 }
 function guildMessage(receivedMessage, guildId, prefix) {
     var copy = receivedMessage.content.toLowerCase();
@@ -1260,16 +1260,16 @@ function guildMessage(receivedMessage, guildId, prefix) {
         log(eval("valid = (typeof handle" + command + " === 'function');"));
         if (!valid) {
             var search = getSearchString("" + prefix + command, copy);
-            unitQuery(receivedMessage, command, search);
-            return;
+            if (unitQuery(receivedMessage, command, search))
+                return;
         }
     }
     catch (e) {
         log(e);
         log("JP Unit: " + command);
         var search = getSearchString("" + prefix + command, copy);
-        unitQuery(receivedMessage, command, search);
-        return;
+        if (unitQuery(receivedMessage, command, search))
+            return;
     }
     try {
         var shortcut = config.getShortcut(guildId, command);

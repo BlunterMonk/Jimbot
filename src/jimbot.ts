@@ -1384,18 +1384,12 @@ function privateMessage(receivedMessage) {
 }
 
 function unitQuery(receivedMessage, command, search) {
+    if (!search || search.empty())
+        return false;
 
     log(`${command} Doesn't Exists`);
     var s = command.toLowerCase();
     log(`Search: ${search}`);
-    searchAliases.forEach(regex => {
-        if (checkString(search, regex.reg)) {
-            log(`Search contains a word to replace`);
-            search = search.replace(regex.reg, regex.value);
-            log(`New Search: ${search}`);
-        }
-    });
-    search = search.replaceAll(" ",".*")
 
     var alias = config.getAlias(s);
     if (alias) {
@@ -1405,12 +1399,22 @@ function unitQuery(receivedMessage, command, search) {
 
     var id = getUnitKey(command.toLowerCase())
     log(`Unit ID: ${id}`);
-    if (id) {
-        log(`Unit ID valid`);
-        if (!search) return;
-        handleKit(receivedMessage, search, id, command);
-        return;
-    }
+    if (!id)
+        return false;
+
+    log(`Unit ID valid`);
+
+    searchAliases.forEach(regex => {
+        if (checkString(search, regex.reg)) {
+            log(`Search contains a word to replace`);
+            search = search.replace(regex.reg, regex.value);
+            log(`New Search: ${search}`);
+        }
+    });
+    search = search.replaceAll(" ",".*")
+
+    handleKit(receivedMessage, search, id, command);
+    return true;
 }
 function guildMessage(receivedMessage, guildId, prefix) {
 
@@ -1428,15 +1432,15 @@ function guildMessage(receivedMessage, guildId, prefix) {
         log(eval(`valid = (typeof handle${command} === 'function');`));
         if (!valid) {
             var search = getSearchString(`${prefix}${command}`, copy);
-            unitQuery(receivedMessage, command, search);
-            return;
+            if (unitQuery(receivedMessage, command, search))
+                return;
         }
     } catch (e) {
         log(e);
         log("JP Unit: " + command);
         var search = getSearchString(`${prefix}${command}`, copy);
-        unitQuery(receivedMessage, command, search);
-        return;
+        if (unitQuery(receivedMessage, command, search))
+            return;
     }
 
     try {
