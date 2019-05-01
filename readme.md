@@ -14,6 +14,11 @@ Get Unit Information
                   "Gender", "STMR", "Trust", 
                   "Race", "Number", "Chain", "Rarity"
 
+Get Unit Skill Information
+    - **?unitname** *search*
+    - example: ?noctis fire
+    - Search a units skill set for any keywords to return the skills that match.
+
 Get Skill Information
     - **?skill** *[name]*
     - example: **?skill Bolting Strike**
