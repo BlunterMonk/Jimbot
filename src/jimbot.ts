@@ -64,8 +64,6 @@ const searchAliases = [
     { reg: /debuff/g, value: "decrease|reduce"},
     { reg: /imperil/g, value: "reduce resistance"}
 ]
-const breakreg = /break/g;
-const breakreplace = `reduce.*def|reduce.*atk|reduce.*mag|reduce.*spr`
 
 // Commands
 const commandCyra = `hi cyra`;
@@ -148,19 +146,33 @@ function getUnitData(id) {
 
     var bigUnits = fs.readFileSync('../ffbe/units.json');
     var unitsList = JSON.parse(bigUnits.toString());
-    log(unitsList);
 
     var unit = unitsList[id];
     
     unitsList = null;
     bigUnits = null;
+    var JP = ""; // this is to tell the skill search to use JP data.
     if (!unit) {
-        log("Could not find unit data");
+        log("Could not find unit data in GL");
         unit = null;
-        return null;
+        
+        bigUnits = fs.readFileSync('../ffbe-jp/units.json');
+        unitsList = JSON.parse(bigUnits.toString());
+
+        JP = "-jp";
+        unit = unitsList[id];
+        unitsList = null;
+        bigUnits = null;
+        if (!unit) {
+            log("Could not find unit data in GL");
+            unit = null;
+            return null;
+        }
     }
 
-    unit.skills = getSkillsFromUnit(unit);
+    unit.skills = getSkillsFromUnit(unit, JP);
+    log("Unit Skills");
+    log(unit.skills);
     log("Caching unit");
     if (!fs.existsSync(`tempdata/`))
         fs.mkdirSync( `tempdata/`, { recursive: true});
@@ -171,7 +183,7 @@ function getUnitData(id) {
 
     return unit;
 }
-function getSkillsFromUnit(unit) {
+function getSkillsFromUnit(unit, JP) {
 
     var skills = unit.skills;
     if (!skills) {
@@ -185,9 +197,9 @@ function getSkillsFromUnit(unit) {
     log(skillKeys);
 
 
-    var bigSkills = fs.readFileSync('../ffbe/skills.json');
+    var bigSkills = fs.readFileSync(`../ffbe${JP}/skills.json`);
     var skillList = JSON.parse(bigSkills.toString());
-    log("Gian List");
+    log("Giant List");
     bigSkills = null;
     
     var skillData = {};
@@ -226,13 +238,15 @@ function searchUnitSkills(skills, keyword: RegExp, active) {
             }
         }
 
-        var desc = skill.strings.desc_short[0];
-        if (checkString(desc, keyword)) {
-            s += `*"${desc}"*\n`;
-            found[n] = {
-                name: `${skill.name}`,
-                value: s
-            };
+        if (skill.strings.desc_short) {
+            var desc = skill.strings.desc_short[0];
+            if (checkString(desc, keyword)) {
+                s += `*"${desc}"*\n`;
+                found[n] = {
+                    name: `${skill.name}`,
+                    value: s
+                };
+            }
         }
     });
 
@@ -1369,6 +1383,35 @@ function privateMessage(receivedMessage) {
     }
 }
 
+function unitQuery(receivedMessage, command, search) {
+
+    log(`${command} Doesn't Exists`);
+    var s = command.toLowerCase();
+    log(`Search: ${search}`);
+    searchAliases.forEach(regex => {
+        if (checkString(search, regex.reg)) {
+            log(`Search contains a word to replace`);
+            search = search.replace(regex.reg, regex.value);
+            log(`New Search: ${search}`);
+        }
+    });
+    search = search.replaceAll(" ",".*")
+
+    var alias = config.getAlias(s);
+    if (alias) {
+        log("Found Alias: " + alias);
+        command = alias.toLowerCase().replaceAll(" ", "_");
+    }
+
+    var id = getUnitKey(command.toLowerCase())
+    log(`Unit ID: ${id}`);
+    if (id) {
+        log(`Unit ID valid`);
+        if (!search) return;
+        handleKit(receivedMessage, search, id, command);
+        return;
+    }
+}
 function guildMessage(receivedMessage, guildId, prefix) {
 
     var copy = receivedMessage.content.toLowerCase();
@@ -1379,36 +1422,21 @@ function guildMessage(receivedMessage, guildId, prefix) {
     }
 
     // the command name
-    var command = getCommandString(copy, prefix);
-    var valid = false;
-    log(eval(`valid = (typeof handle${command} === 'function');`));
-    if (!valid) {
-        log(`${command} Doesn't Exists`);
-        var s = command.toLowerCase();
-        var search = getSearchString(`${prefix}${command}`, copy);
-        log(`Search: ${search}`);
-        searchAliases.forEach(regex => {
-            if (checkString(search, regex.reg)) {
-                log(`Search contains a word to replace`);
-                search = search.replace(regex.reg, regex.value);
-                log(`New Search: ${search}`);
-            }
-        });
-        search = search.replaceAll(" ",".*")
-
-        var alias = config.getAlias(s);
-        if (alias) {
-            log("Found Alias: " + alias);
-            command = alias.toLowerCase().replaceAll(" ", "_");
-        }
-        var id = getUnitKey(command.toLowerCase())
-        log(`Unit ID: ${id}`);
-        if (id) {
-            log(`Unit ID valid`);
-            if (!search) return;
-            handleKit(receivedMessage, search, id, command);
+    try {
+        var command = getCommandString(copy, prefix);
+        var valid = false;
+        log(eval(`valid = (typeof handle${command} === 'function');`));
+        if (!valid) {
+            var search = getSearchString(`${prefix}${command}`, copy);
+            unitQuery(receivedMessage, command, search);
             return;
         }
+    } catch (e) {
+        log(e);
+        log("JP Unit: " + command);
+        var search = getSearchString(`${prefix}${command}`, copy);
+        unitQuery(receivedMessage, command, search);
+        return;
     }
 
     try {
