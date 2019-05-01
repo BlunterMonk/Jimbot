@@ -166,14 +166,14 @@ function getSkillsFromUnit(unit, JP) {
     skills.forEach(function (skill) {
         skillKeys.push(skill.id);
     });
-    log(skillKeys);
+    //log(skillKeys);
     var bigSkills = fs.readFileSync("../ffbe" + JP + "/skills.json");
     var skillList = JSON.parse(bigSkills.toString());
-    log("Giant List");
+    //log("Giant List");
     bigSkills = null;
     var skillData = {};
     var keys = Object.keys(skillList);
-    log(keys.length);
+    //log(keys.length);
     skillKeys.forEach(function (key) {
         skillData[key] = skillList[key];
     });
@@ -214,8 +214,8 @@ function searchUnitSkills(skills, keyword, active) {
             }
         }
     });
-    log("Searched Skills For: " + keyword);
-    log(found);
+    //log(`Searched Skills For: ${keyword}`);
+    //log(found);
     return found;
 }
 // COMMANDS
@@ -1224,24 +1224,24 @@ function privateMessage(receivedMessage) {
 function unitQuery(receivedMessage, command, search) {
     if (!search || search.empty())
         return false;
-    log(command + " Doesn't Exists");
+    //log(`${command} Doesn't Exists`);
     var s = command.toLowerCase();
-    log("Search: " + search);
+    //log(`Search: ${search}`);
     var alias = config.getAlias(s);
     if (alias) {
-        log("Found Alias: " + alias);
+        //log("Found Alias: " + alias);
         command = alias.toLowerCase().replaceAll(" ", "_");
     }
     var id = getUnitKey(command.toLowerCase());
-    log("Unit ID: " + id);
+    //log(`Unit ID: ${id}`);
     if (!id)
         return false;
-    log("Unit ID valid");
+    //log(`Unit ID valid`);
     searchAliases.forEach(function (regex) {
         if (checkString(search, regex.reg)) {
-            log("Search contains a word to replace");
+            //log(`Search contains a word to replace`);
             search = search.replace(regex.reg, regex.value);
-            log("New Search: " + search);
+            //log(`New Search: ${search}`);
         }
     });
     search = search.replaceAll(" ", ".*");
@@ -1267,8 +1267,8 @@ function guildMessage(receivedMessage, guildId, prefix) {
         }
     }
     catch (e) {
-        log(e);
-        log("JP Unit: " + command);
+        //log(e);
+        //log("JP Unit: " + command);
         var search = getSearchString("" + prefix + command, copy);
         if (unitQuery(receivedMessage, command, search))
             return;
