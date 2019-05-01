@@ -122,17 +122,21 @@ function getUnitData(id) {
         var u = fs.readFileSync(filename);
         return JSON.parse(u.toString());
     }
-    var bigUnits = fs.readFileSync('../ffbe/units.json');
+    var cat = id[0];
+    var bigUnits = fs.readFileSync("data/units-" + cat + ".json");
     var unitsList = JSON.parse(bigUnits.toString());
     var unit = unitsList[id];
     unitsList = null;
     bigUnits = null;
-    var JP = ""; // this is to tell the skill search to use JP data.
+    //var JP = ""; // this is to tell the skill search to use JP data.
     if (!unit) {
-        log("Could not find unit data in GL");
+        log("Could not find unit data");
         unit = null;
+        return null;
+        /*
         bigUnits = fs.readFileSync('../ffbe-jp/units.json');
         unitsList = JSON.parse(bigUnits.toString());
+
         JP = "-jp";
         unit = unitsList[id];
         unitsList = null;
@@ -141,11 +145,9 @@ function getUnitData(id) {
             log("Could not find unit data in GL");
             unit = null;
             return null;
-        }
+        }*/
     }
-    unit.skills = getSkillsFromUnit(unit, JP);
-    log("Unit Skills");
-    log(unit.skills);
+    //unit.skills = getSkillsFromUnit(unit, JP);
     log("Caching unit");
     if (!fs.existsSync("tempdata/"))
         fs.mkdirSync("tempdata/", { recursive: true });
