@@ -1427,23 +1427,24 @@ function guildMessage(receivedMessage, guildId, prefix) {
 
     // the command name
     try {
-        var command = getCommandString(copy, prefix);
-        var valid = false;
+        let command = getCommandString(copy, prefix);
+        let valid = false;
         log(eval(`valid = (typeof handle${command} === 'function');`));
         if (!valid) {
-            var search = getSearchString(`${prefix}${command}`, copy);
+            let search = getSearchString(`${prefix}${command}`, copy);
             if (unitQuery(receivedMessage, command, search))
                 return;
         }
     } catch (e) {
         //log(e);
         //log("JP Unit: " + command);
-        var search = getSearchString(`${prefix}${command}`, copy);
+        let search = getSearchString(`${prefix}${command}`, copy);
         if (unitQuery(receivedMessage, command, search))
             return;
     }
 
     try {
+        var command = getCommandString(copy, prefix);
         var shortcut = config.getShortcut(guildId, command);
         if (shortcut) {
             log("Found Command Shortcut");
@@ -1473,7 +1474,6 @@ function guildMessage(receivedMessage, guildId, prefix) {
         
         // Get search string for command.
         const search = getSearchString(`${prefix}${command}`, copy);
-        
 
         // Validate the user
         if (!validateCommand(receivedMessage, command)) {

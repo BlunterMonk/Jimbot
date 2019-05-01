@@ -1257,12 +1257,12 @@ function guildMessage(receivedMessage, guildId, prefix) {
     }
     // the command name
     try {
-        var command = getCommandString(copy, prefix);
+        var command_1 = getCommandString(copy, prefix);
         var valid = false;
-        log(eval("valid = (typeof handle" + command + " === 'function');"));
+        log(eval("valid = (typeof handle" + command_1 + " === 'function');"));
         if (!valid) {
-            var search = getSearchString("" + prefix + command, copy);
-            if (unitQuery(receivedMessage, command, search))
+            var search = getSearchString("" + prefix + command_1, copy);
+            if (unitQuery(receivedMessage, command_1, search))
                 return;
         }
     }
@@ -1274,6 +1274,7 @@ function guildMessage(receivedMessage, guildId, prefix) {
             return;
     }
     try {
+        var command = getCommandString(copy, prefix);
         var shortcut = config.getShortcut(guildId, command);
         if (shortcut) {
             log("Found Command Shortcut");
@@ -1299,7 +1300,7 @@ function guildMessage(receivedMessage, guildId, prefix) {
         var parameters = params.parameters;
         copy = params.msg;
         // Get search string for command.
-        var search_1 = getSearchString("" + prefix + command, copy);
+        var search = getSearchString("" + prefix + command, copy);
         // Validate the user
         if (!validateCommand(receivedMessage, command)) {
             log("Could not validate permissions for: " +
@@ -1308,7 +1309,7 @@ function guildMessage(receivedMessage, guildId, prefix) {
             throw command;
         }
         // If no parameters or search provided exit.
-        if (!search_1 && parameters.length === 0) {
+        if (!search && parameters.length === 0) {
             log("Could not parse search string");
             throw command;
         }
