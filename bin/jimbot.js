@@ -48,6 +48,15 @@ var gifAliases = {
     "win_before": "before",
     "win before": "before"
 };
+var searchAliases = [
+    { reg: /imbue/g, value: "add element" },
+    { reg: /break/g, value: "reduce def|reduce atk|reduce mag|reduce spr" },
+    { reg: /buff/g, value: "increase|increase atk|increase def|increase mag|increase spr" },
+    { reg: /debuff/g, value: "decrease|reduce" },
+    { reg: /imperil/g, value: "reduce resistance" }
+];
+var breakreg = /break/g;
+var breakreplace = "reduce.*def|reduce.*atk|reduce.*mag|reduce.*spr";
 // Commands
 var commandCyra = "hi cyra";
 var commandJake = "hi jake";
@@ -108,6 +117,93 @@ client.on("ready", function () {
     log("Configuration Loaded");
     loading = false;
 });
+function getUnitData(id) {
+    var filename = "tempdata/" + id + ".json";
+    if (fs.existsSync(filename)) {
+        log("Loading cached unit: " + id);
+        var u = fs.readFileSync(filename);
+        return JSON.parse(u.toString());
+    }
+    var bigUnits = fs.readFileSync('../ffbe/units.json');
+    var unitsList = JSON.parse(bigUnits.toString());
+    log(unitsList);
+    var unit = unitsList[id];
+    unitsList = null;
+    bigUnits = null;
+    if (!unit) {
+        log("Could not find unit data");
+        unit = null;
+        return null;
+    }
+    unit.skills = getSkillsFromUnit(unit);
+    log("Caching unit");
+    if (!fs.existsSync("tempdata/"))
+        fs.mkdirSync("tempdata/", { recursive: true });
+    if (!fs.existsSync(filename)) {
+        fs.createWriteStream(filename);
+    }
+    fs.writeFileSync(filename, JSON.stringify(unit, null, "\t"));
+    return unit;
+}
+function getSkillsFromUnit(unit) {
+    var skills = unit.skills;
+    if (!skills) {
+        return null;
+    }
+    var skillKeys = [];
+    skills.forEach(function (skill) {
+        skillKeys.push(skill.id);
+    });
+    log(skillKeys);
+    var bigSkills = fs.readFileSync('../ffbe/skills.json');
+    var skillList = JSON.parse(bigSkills.toString());
+    log("Gian List");
+    bigSkills = null;
+    var skillData = {};
+    var keys = Object.keys(skillList);
+    log(keys.length);
+    skillKeys.forEach(function (key) {
+        skillData[key] = skillList[key];
+    });
+    keys = null;
+    skillList = null;
+    return skillData;
+}
+function checkString(text, keyword) {
+    return keyword.test(text.replace(/\s*/g, ""));
+}
+function searchUnitSkills(skills, keyword, active) {
+    var found = [];
+    var keys = Object.keys(skills);
+    keys.forEach(function (key) {
+        var skill = skills[key];
+        if (skill.active != active)
+            return;
+        var n = found.length;
+        var s = "";
+        for (var ind = 0; ind < skill.effects.length; ind++) {
+            var effect = skill.effects[ind];
+            if (checkString(effect, keyword)) {
+                s += effect + "\n";
+                found[n] = {
+                    name: "" + skill.name,
+                    value: s
+                };
+            }
+        }
+        var desc = skill.strings.desc_short[0];
+        if (checkString(desc, keyword)) {
+            s += "*\"" + desc + "\"*\n";
+            found[n] = {
+                name: "" + skill.name,
+                value: s
+            };
+        }
+    });
+    log("Searched Skills For: " + keyword);
+    log(found);
+    return found;
+}
 // COMMANDS
 // WIKI 
 function handleUnit(receivedMessage, search, parameters) {
@@ -311,35 +407,41 @@ function handleRank(receivedMessage, search, parameters) {
         });
     });
 }
-function handleSprite(receivedMessage, search, parameters) {
-    var unit = getUnitKey(search);
+function handleKit(receivedMessage, search, id, name) {
+    log("handleKit(" + search + ")");
+    var unit = getUnitData(id);
     if (!unit) {
+        log("Could not find unit data");
         return;
     }
-    var rarity = unit[unit.length - 1];
-    var id = unit.substring(0, unit.length - 1);
-    log("Unit ID: " + unit);
-    if (rarity === "5") {
-        unit = id + "7";
+    var keyword = new RegExp(search.replace(/_/g, ".*"), "gi");
+    var fields = searchUnitSkills(unit.skills, keyword, true);
+    if (!fields || fields.length == 0) {
+        log("Failed to get unit skill list");
+        return;
     }
-    log("Searching Unit Sprite For: " + search);
-    validateUnit(search, function (valid, imgurl) {
-        search = search.replaceAll("_", " ");
-        var embed = {
-            color: pinkHexCode,
-            image: {
-                url: sprite(unit)
-            }
-        };
-        receivedMessage.channel
-            .send({
-            embed: embed
-        })
-            .then(function (message) {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-            .catch(console.error);
-    });
+    name = name.toTitleCase("_");
+    var embed = {
+        color: pinkHexCode,
+        author: {
+            name: client.user.username,
+            icon_url: client.user.avatarURL
+        },
+        thumbnail: {
+            url: sprite(id)
+        },
+        title: name.replaceAll("_", " "),
+        url: "https://exvius.gamepedia.com/" + name,
+        fields: fields
+    };
+    receivedMessage.channel
+        .send({
+        embed: embed
+    })
+        .then(function (message) {
+        cacheBotMessage(receivedMessage.id, message.id);
+    })
+        .catch(console.error);
 }
 // FLUFF
 function handleReactions(receivedMessage) {
@@ -824,6 +926,36 @@ function getUnitKey(search) {
 function isLetter(str) {
     return str.length === 1 && str.match(/[a-z]/i);
 }
+function handleSprite(receivedMessage, search, parameters) {
+    var unit = getUnitKey(search);
+    if (!unit) {
+        return;
+    }
+    var rarity = unit[unit.length - 1];
+    var id = unit.substring(0, unit.length - 1);
+    log("Unit ID: " + unit);
+    if (rarity === "5") {
+        unit = id + "7";
+    }
+    log("Searching Unit Sprite For: " + search);
+    validateUnit(search, function (valid, imgurl) {
+        search = search.replaceAll("_", " ");
+        var embed = {
+            color: pinkHexCode,
+            image: {
+                url: sprite(unit)
+            }
+        };
+        receivedMessage.channel
+            .send({
+            embed: embed
+        })
+            .then(function (message) {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+            .catch(console.error);
+    });
+}
 function getGif(search, param, callback) {
     log("getGif: " + search + ("(" + param + ")"));
     var filename = "tempgifs/" + search + "/" + param + ".gif";
@@ -1082,9 +1214,39 @@ function guildMessage(receivedMessage, guildId, prefix) {
         log("Message Attachments");
         log(attachment.url);
     }
+    // the command name
+    var command = getCommandString(copy, prefix);
+    var valid = false;
+    log(eval("valid = (typeof handle" + command + " === 'function');"));
+    if (!valid) {
+        log(command + " Doesn't Exists");
+        var s = command.toLowerCase();
+        var search = getSearchString("" + prefix + command, copy);
+        log("Search: " + search);
+        searchAliases.forEach(function (regex) {
+            if (checkString(search, regex.reg)) {
+                log("Search contains a word to replace");
+                search = search.replace(regex.reg, regex.value);
+                log("New Search: " + search);
+            }
+        });
+        search = search.replaceAll(" ", ".*");
+        var alias = config.getAlias(s);
+        if (alias) {
+            log("Found Alias: " + alias);
+            command = alias.toLowerCase().replaceAll(" ", "_");
+        }
+        var id = getUnitKey(command.toLowerCase());
+        log("Unit ID: " + id);
+        if (id) {
+            log("Unit ID valid");
+            if (!search)
+                return;
+            handleKit(receivedMessage, search, id, command);
+            return;
+        }
+    }
     try {
-        // the command name
-        var command = getCommandString(copy, prefix);
         var shortcut = config.getShortcut(guildId, command);
         if (shortcut) {
             log("Found Command Shortcut");
@@ -1110,7 +1272,7 @@ function guildMessage(receivedMessage, guildId, prefix) {
         var parameters = params.parameters;
         copy = params.msg;
         // Get search string for command.
-        var search = getSearchString("" + prefix + command, copy);
+        var search_1 = getSearchString("" + prefix + command, copy);
         // Validate the user
         if (!validateCommand(receivedMessage, command)) {
             log("Could not validate permissions for: " +
@@ -1119,7 +1281,7 @@ function guildMessage(receivedMessage, guildId, prefix) {
             throw command;
         }
         // If no parameters or search provided exit.
-        if (!search && parameters.length === 0) {
+        if (!search_1 && parameters.length === 0) {
             log("Could not parse search string");
             throw command;
         }
@@ -1145,7 +1307,7 @@ function guildMessage(receivedMessage, guildId, prefix) {
         //log(e);
         //log(`No search terms found for "${e}", run other commands: `);
         try {
-            log("\nTrying Backup Command: " + "handle" + e + "(receivedMessage)");
+            log("\nTrying Backup Command: " + "handle" + e);
             eval("handle" + e + "(receivedMessage)");
         }
         catch (f) {
