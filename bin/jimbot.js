@@ -1367,7 +1367,7 @@ function guildMessage(receivedMessage, guildId, prefix) {
         var parameters = params.parameters;
         copy = params.msg;
         // Get search string for command.
-        var search = getSearchString("" + prefix + command, copy);
+        var search = getSearchString("" + prefix + command, copy, (command !== "Dpt"));
         // Validate the user
         if (!validateCommand(receivedMessage, command)) {
             log("Could not validate permissions for: " +
@@ -1525,17 +1525,20 @@ function convertParametersToSkillSearch(parameters) {
     });
     return search.replaceAll(" ", ".*");
 }
-function getSearchString(prefix, msg) {
+function getSearchString(prefix, msg, replace) {
+    if (replace === void 0) { replace = true; }
     var ind = prefix.length + 1;
     var search = msg.slice(ind, msg.length);
     if (search.empty()) {
         return null;
     }
-    var s = search;
-    var alias = config.getAlias(s.replaceAll(" ", "_"));
-    if (alias) {
-        log("Found Alias: " + alias);
-        return alias.replaceAll(" ", "_");
+    if (replace == undefined || replace) {
+        var s = search;
+        var alias = config.getAlias(s.replaceAll(" ", "_"));
+        if (alias) {
+            log("Found Alias: " + alias);
+            return alias.replaceAll(" ", "_");
+        }
     }
     search = search.toLowerCase();
     search = search.replaceAll(" ", "_");
