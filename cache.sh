@@ -1,6 +1,7 @@
 #!/bin/bash
 
-nodejs caching/cacheUnitsList.js
-nodejs caching/cacheDamage.js
-nodejs caching/cacheRankingsDump.js
-nodejs caching/cacheEvents.js
+node caching/cacheUnitsList.js
+node caching/cacheDamage.js
+node caching/cacheRankingsDump.js
+node caching/cacheEvents.js
+node caching/cacheUnitSkills.js

@@ -1,7 +1,7 @@
 const wiki = require("nodemw");
 const fs = require("fs");
 const cheerio = require("cheerio");
-const String = require('../string/string-extension.ts');
+const String = require('../bin/string/string-extension.js');
 const wikiClient = new wiki({
     protocol: "https", // Wikipedia now enforces HTTPS
     server: "exvius.gamepedia.com", // host name of MediaWiki-powered site
