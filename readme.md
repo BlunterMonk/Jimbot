@@ -16,8 +16,13 @@ Get Unit Information
 
 Get Unit Skill Information
     - **?unitname** *search*
-    - example: ?noctis fire
+    - **?kit** [unit name] "[search terms]* (will return both passives and actives)
+    - **?ability** [unit name] "[search terms]" (will return only active abilities)
+    - **?passive** [unit name] "[search terms]" (will return only passive abilities)
     - Search a units skill set for any keywords to return the skills that match.
+    - example: **?noctis** fire
+    - parameters: keywords can be separated by the pipe character (|).
+        Or separated into quotes for each, "one" "two" "three"
 
 Get Skill Information
     - **?skill** *[name]*
