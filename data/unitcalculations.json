@@ -142,7 +142,7 @@
 		},
 		"Unreleased units": {
 			"name": "Unreleased units",
-			"damage": "-",
+			"damage": "0",
 			"turns": 0
 		},
 		"Regina (Ideal)": {
@@ -319,7 +319,7 @@
 		},
 		"Unreleased units": {
 			"name": "Unreleased units",
-			"damage": "-",
+			"damage": "0",
 			"turns": 0
 		},
 		"CG Dark Fina": {
@@ -518,7 +518,7 @@
 		},
 		"Unreleased units": {
 			"name": "Unreleased units",
-			"damage": "-",
+			"damage": "0",
 			"turns": 0
 		},
 		"CG Bartz": {
@@ -690,7 +690,7 @@
 		},
 		"Unreleased units": {
 			"name": "Unreleased units",
-			"damage": "-",
+			"damage": "0",
 			"turns": 0
 		},
 		"CG Terra": {
