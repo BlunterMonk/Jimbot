@@ -59,10 +59,11 @@ const gifAliases = {
 }
 const searchAliases = [
     { reg: /imbue/g, value: "add element" },
-    { reg: /break/g, value: "reduce def|reduce atk|reduce mag|reduce spr"},
+    { reg: /break/g, value: "break|reduce def|reduce atk|reduce mag|reduce spr"},
     { reg: /buff/g, value: "increase|increase atk|increase def|increase mag|increase spr"},
-    { reg: /debuff/g, value: "decrease|reduce"},
-    { reg: /imperil/g, value: "reduce resistance"}
+    { reg: /debuff/g, value: "debuff|decrease|reduce"},
+    { reg: /imperil/g, value: "reduce resistance"},
+    { reg: /mit/g, value: "mitigate|reduce damage"}
 ]
 
 // Commands
@@ -224,8 +225,10 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
     var keys = Object.keys(skills);
     keys.forEach(key => {
         var skill = skills[key];
-        if (skill.active != active)
+        if (active != undefined && skill.active != active) {
+            //log(`Skipping Skill: ${skill.name} - ${skill.active}`);
             return;
+        }
 
         var n = found.length;
         var s = "";
@@ -253,8 +256,7 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
     });
         
     // Search LB
-    log(LB);
-    if (LB) {
+    if (LB && (active === undefined || active == true)) {
         var n = found.length;
         var s = "";
 
@@ -492,19 +494,19 @@ function handleRank(receivedMessage, search, parameters) {
     });
 }
 
-function handleKit(receivedMessage, search, id, name) {
-    log(`handleKit(${search})`);
+function handleK(receivedMessage, search, id, name) {
+    //log(`handleKit(${search})`);
 
     var unit = getUnitData(id);
     if (!unit) {
-        log("Could not find unit data");
+        log(`Could not find unit data: ${unit}`);
         return;
     }
 
     var keyword = new RegExp(search.replace(/_/g,".*"), "gi");
     var fields = searchUnitSkills(unit, keyword, true);
     if (!fields || fields.length == 0) {
-        log("Failed to get unit skill list");
+        log(`Failed to get unit skill list: ${keyword}`);
         return;
     }
 
@@ -531,6 +533,61 @@ function handleKit(receivedMessage, search, id, name) {
             cacheBotMessage(receivedMessage.id, message.id);
         })
         .catch(console.error);
+}
+
+function handleKit(receivedMessage, search, parameters, active) {
+    log(`handleKit(${search})`);
+
+    var id = getUnitKey(search);
+    if (!id) {
+        log("No Unit Found");
+        return;
+    }
+
+    var unit = getUnitData(id);
+    if (!unit) {
+        log(`Could not find unit data: ${unit}`);
+        return;
+    }
+
+    var key = convertParametersToSkillSearch(parameters);
+    var keyword = new RegExp(key.replace(/_/g,".*"), "gi");
+    var fields = searchUnitSkills(unit, keyword, active);
+    if (!fields || fields.length == 0) {
+        log(`Failed to get unit skill list: ${keyword}`);
+        return;
+    }
+
+    var name = unit.name.toTitleCase()
+    log(`Unit Name: ${name}`);
+    var embed = {
+        color: pinkHexCode,
+        author: {
+            name: client.user.username,
+            icon_url: client.user.avatarURL
+        },
+        thumbnail: {
+            url: sprite(id)
+        },
+        title: name,
+        url: "https://exvius.gamepedia.com/" + name.replaceAll(" ", "_"),
+        fields: fields
+    };
+
+    receivedMessage.channel
+        .send({
+            embed: embed
+        })
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+        })
+        .catch(console.error);
+}
+function handleAbility(receivedMessage, search, parameters) {
+    handleKit(receivedMessage, search, parameters, true);
+}
+function handlePassive(receivedMessage, search, parameters) {
+    handleKit(receivedMessage, search, parameters, false);
 }
 
 // FLUFF
@@ -719,16 +776,16 @@ function handleGlbestunits(receivedMessage, search, parameters) {
     });
 }
 function handleHelp(receivedMessage) {
-    var data = fs.readFileSync("readme.md", "ASCII");
+    var data = fs.readFileSync("readme.json", "ASCII");
+    var readme = JSON.parse(data);
+
     receivedMessage.author
         .send(mainChannelID, {
             embed: {
                 color: pinkHexCode,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                description: data
+                description: readme.description,
+                fields: readme.fields,
+                title: readme.title
             }
         })
         .then(message => {
@@ -1432,7 +1489,7 @@ function unitQuery(receivedMessage, command, search) {
     });
     search = search.replaceAll(" ",".*")
 
-    handleKit(receivedMessage, search, id, command);
+    handleK(receivedMessage, search, id, command);
     return true;
 }
 function guildMessage(receivedMessage, guildId, prefix) {
@@ -1653,6 +1710,24 @@ function convertSearchTerm(search) {
     search = search.replaceAll(" ", "_");
     return search;
 }
+function convertParametersToSkillSearch(parameters) {
+    var search = "";
+    parameters.forEach((param, ind) => {
+        if (ind > 0) 
+            search += "|";
+        search += param;
+    });
+
+    searchAliases.forEach(regex => {
+        if (checkString(search, regex.reg)) {
+            //log(`Search contains a word to replace`);
+            search = search.replace(regex.reg, regex.value);
+            //log(`New Search: ${search}`);
+        }
+    });
+
+    return search.replaceAll(" ",".*")
+}
 function getSearchString(prefix, msg) {
     var ind = prefix.length + 1;
     var search = msg.slice(ind, msg.length);
@@ -1685,7 +1760,7 @@ function getCommandString(msg, prefix) {
 function getParameters(msg) {
 
     var parameters = [];
-    var params = msg.match(/"[^"]+"|‘[^‘]+‘|‘[^’]+’|“[^“]+“|”[^”]+”|“[^“^”]+”/g);
+    var params = msg.match(/"[^"]+"|‘[^‘]+‘|‘[^’]+’|“[^“]+“|”[^”]+”|“[^“^”]+”|'[^']+'/g);
     if (params) {
         parameters = params;
 

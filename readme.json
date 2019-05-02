@@ -1,0 +1,46 @@
+{
+    "title": "Jimbot Commands",
+    "description": "(replace ? with your servers prefix)\nQuotations are required around parameters",
+    "fields": [
+        {
+            "name": "Search Wiki",
+            "value": "- **?search** *[term]*"
+        },
+        {
+            "name": "Get Unit Information",
+            "value": "- **?unit** *[name] [optional | parameter]*\n- optional: Add parameters to shorten the results for only desired information **contained in quotes**\n- example: **?unit Malphasie \"STMR\"**  | this will only return malphasie's STMR\n- parameters: \"Name\", \"Limited\", \"Exclusive\", \"Job\", \"Role\", \"Origin\",\n\"Gender\", \"STMR\", \"Trust\", \"Race\", \"Number\", \"Chain\", \"Rarity\""
+        },
+        {
+            "name": "Get Unit Skill Information",
+            "value": "- **?unitname** *search*\n- **?kit** [unit name] \"[search terms]* (will return both passives and actives)\n- **?ability** [unit name] \"[search terms]\" (will return only active abilities)\n- **?passive** [unit name] \"[search terms]\" (will return only passive abilities)\n- Search a units skill set for any keywords to return the skills that match.\n- example: **?noctis fire**\n- parameters: keywords can be separated by the pipe character (|).\nOr separated into quotes for each, \"one\" \"two\" \"three\""
+        },
+        {
+            "name": "Get Skill Information",
+            "value": "- **?skill** *[name]*\n- example: **?skill Bolting Strike**"
+        },
+        {
+            "name": "Get Equipment Information",
+            "value": "- **?equip** *[name]*\n- example: **?equip Asterisk**"
+        },
+        {
+            "name": "Get Unit Sprite",
+            "value": "- **?sprite** *[name]*\n- example: **?sprite Esther**"
+        },
+        {
+            "name": "Get Unit GIFs",
+            "value": "- **?gif** *[name]* \"[parameter]\"\n- parameters: 'attack', 'dead', 'dying', 'idle', 'jump', 'limit', 'win',\n'magic attack', 'magic standby', 'move','standby', 'win before'\n- example: **?gif Esther \"attack\"**"
+        },
+        {
+            "name": "Get Unit Calculations",
+            "value": "- **?dpt** *[unit name -or- category]* \"[limit]\"\n- **?burst** *[unit name -or- category]* \"[limit]\"\n- optional: the amount of results to return, default is 5.\n- categories: \"physical\", \"magical\", \"hybrid\"\n- example: **?dpt Esther**\n- example: **?burst hybrid \"10\"**"
+        },
+        {
+            "name": "Get Best Units",
+            "value": "- **?glbestunits**"
+        },
+        {
+            "name": "Get Information",
+            "value": "- **?whatis** *[search]*\n- example: **?whatis ele tetris**"
+        }
+    ]
+}
