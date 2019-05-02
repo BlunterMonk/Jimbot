@@ -262,6 +262,11 @@
 			"damage": "2,155,750,083",
 			"turns": 10
 		},
+		"BM Golbez": {
+			"name": "BM Golbez",
+			"damage": "2,140,498,461",
+			"turns": 10
+		},
 		"Tiana": {
 			"name": "Tiana",
 			"damage": "1,966,324,641",
@@ -603,6 +608,11 @@
 		}
 	},
 	"burst_magical": {
+		"BM Golbez": {
+			"name": "BM Golbez",
+			"damage": "7,153,117,137",
+			"turns": 7
+		},
 		"Elly": {
 			"name": "Elly",
 			"damage": "6,858,739,104",
