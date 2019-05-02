@@ -71,6 +71,15 @@ const commandCyra = `hi cyra`;
 const commandJake = `hi jake`;
 var loading = true;
 
+// Get your bot's secret token from:
+// https://discordapp.com/developers/applications/
+// Click on your application -> Bot -> Token -> "Click to Reveal Token"
+var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
+var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
+
+client.login(bot_secret_token_test);
+
+
 // Keep track of added messages
 const botMessages = [];
 function cacheBotMessage(received, sent) {
@@ -135,6 +144,58 @@ client.on("ready", () => {
     log("Configuration Loaded");
     loading = false;
 });
+
+client.on("message", receivedMessage => {
+    // Prevent bot from responding to its own messages
+    if (receivedMessage.author == client.user || loading) {
+        return;
+    }
+
+    const content = receivedMessage.content;
+    if (!receivedMessage.guild) {
+        privateMessage(receivedMessage);
+        return;
+    }
+
+    const guildId = receivedMessage.guild.id;
+    const prefix = config.getPrefix(guildId);
+    if (!content.startsWith(prefix)) {
+        handleReactions(receivedMessage);
+        return;
+    }
+
+    guildMessage(receivedMessage, guildId, prefix);
+});
+
+client.on("messageDelete", deletedMessage => {
+    log("Message Deleted");
+    log(deletedMessage.id);
+
+    for (var i = 0; i < botMessages.length; i++) {
+        var msg = botMessages[i];
+
+        if (msg.received === deletedMessage.id) {
+            var sent = deletedMessage.channel
+                .fetchMessage(msg.sent)
+                .then(sent => {
+                    if (sent) {
+                        log("Deleted Message");
+                        sent.delete();
+
+                        botMessages.splice(i, 1);
+                    }
+                })
+                .catch(console.error);
+            break;
+        }
+    }
+});
+
+process.on("unhandledRejection", (reason, p) => {
+    log(`Unhandled Rejection at: Promise(${p}), Reason: ${reason}`);
+    // application specific logging, throwing an error, or other logic here
+});1
+
 
 function getUnitData(id) {
 
@@ -230,11 +291,12 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
             return;
         }
 
+        var all = checkString(skill.name, keyword);
         var n = found.length;
         var s = "";
         for (let ind = 0; ind < skill.effects.length; ind++) {
             const effect = skill.effects[ind]
-            if (checkString(effect, keyword)) {
+            if (all || checkString(effect, keyword)) {
                 s += `${effect}\n`;
                 found[n] = {
                     name: `${skill.name}`,
@@ -260,8 +322,11 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
         var n = found.length;
         var s = "";
 
+        var all = checkString(LB.name, keyword);
+        log(`LB Name: ${LB.name}, All: ${all}`);
+
         LB.max_level.forEach(effect => {
-            if (checkString(effect, keyword)) {
+            if (all || checkString(effect, keyword)) {
                 s += `*${effect}*\n`;
                 found[n] = {
                     name: `${LB.name} - MAX`,
@@ -1602,65 +1667,6 @@ function guildMessage(receivedMessage, guildId, prefix) {
         }
     }
 }
-
-client.on("message", receivedMessage => {
-    // Prevent bot from responding to its own messages
-    if (receivedMessage.author == client.user || loading) {
-        return;
-    }
-
-    const content = receivedMessage.content;
-    if (!receivedMessage.guild) {
-        privateMessage(receivedMessage);
-        return;
-    }
-
-    const guildId = receivedMessage.guild.id;
-    const prefix = config.getPrefix(guildId);
-    if (!content.startsWith(prefix)) {
-        handleReactions(receivedMessage);
-        return;
-    }
-
-    guildMessage(receivedMessage, guildId, prefix);
-});
-
-client.on("messageDelete", deletedMessage => {
-    log("Message Deleted");
-    log(deletedMessage.id);
-
-    for (var i = 0; i < botMessages.length; i++) {
-        var msg = botMessages[i];
-
-        if (msg.received === deletedMessage.id) {
-            var sent = deletedMessage.channel
-                .fetchMessage(msg.sent)
-                .then(sent => {
-                    if (sent) {
-                        log("Deleted Message");
-                        sent.delete();
-
-                        botMessages.splice(i, 1);
-                    }
-                })
-                .catch(console.error);
-            break;
-        }
-    }
-});
-
-process.on("unhandledRejection", (reason, p) => {
-    log(`Unhandled Rejection at: Promise(${p}), Reason: ${reason}`);
-    // application specific logging, throwing an error, or other logic here
-});1
-
-// Get your bot's secret token from:
-// https://discordapp.com/developers/applications/
-// Click on your application -> Bot -> Token -> "Click to Reveal Token"
-var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
-var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
-
-client.login(bot_secret_token);
 
 // HELPERS
 function getQuotedWord(str) {
