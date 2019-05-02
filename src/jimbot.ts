@@ -216,8 +216,10 @@ function getSkillsFromUnit(unit, JP) {
 function checkString(text, keyword) {
     return keyword.test(text.replace(/\s*/g,""))
 }
-function searchUnitSkills(skills, keyword: RegExp, active) {
+function searchUnitSkills(unit, keyword: RegExp, active) {
 
+    const LB = unit.LB;
+    const skills = unit.skills;
     var found = [];
     var keys = Object.keys(skills);
     keys.forEach(key => {
@@ -249,6 +251,23 @@ function searchUnitSkills(skills, keyword: RegExp, active) {
             }
         }
     });
+        
+    // Search LB
+    log(LB);
+    if (LB) {
+        var n = found.length;
+        var s = "";
+
+        LB.max_level.forEach(effect => {
+            if (checkString(effect, keyword)) {
+                s += `*${effect}*\n`;
+                found[n] = {
+                    name: `${LB.name} - MAX`,
+                    value: s
+                };
+            }
+        });
+    }
 
     //log(`Searched Skills For: ${keyword}`);
     //log(found);
@@ -483,7 +502,7 @@ function handleKit(receivedMessage, search, id, name) {
     }
 
     var keyword = new RegExp(search.replace(/_/g,".*"), "gi");
-    var fields = searchUnitSkills(unit.skills, keyword, true);
+    var fields = searchUnitSkills(unit, keyword, true);
     if (!fields || fields.length == 0) {
         log("Failed to get unit skill list");
         return;
