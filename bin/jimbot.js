@@ -41,6 +41,7 @@ var aniGL = function (n) { return "https://exvius.gg/gl/units/" + n + "/animatio
 var aniJP = function (n) { return "https://exvius.gg/jp/units/" + n + "/animations/"; };
 var guildId = function (msg) { return msg.guild.id; };
 var userId = function (msg) { return msg.author.id; };
+var chainFamilies = JSON.parse(String(fs.readFileSync("data/chainfamilies.json")));
 // Lookup Tables
 var gifAliases = {
     "lb": "limit",
@@ -63,7 +64,7 @@ var commandCyra = "hi cyra";
 var commandJake = "hi jake";
 var loading = true;
 // Get your bot's secret token from:
-// https://discordapp.com/developers/applications/
+// https://discordapp.com/developers/applicati  ons/
 // Click on your application -> Bot -> Token -> "Click to Reveal Token"
 var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
 var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
@@ -322,6 +323,50 @@ function searchUnitItems(unit, keyword) {
     log(found);
     return found;
 }
+function searchUnitFrames(unit) {
+    var LB = unit.LB;
+    var skills = unit.skills;
+    var found = [];
+    var keys = Object.keys(skills);
+    keys.forEach(function (key) {
+        var skill = skills[key];
+        if (!skill.active || !skill.attack_frames ||
+            skill.attack_frames.length == 0 || skill.attack_frames[0].length <= 1)
+            return;
+        var s = "";
+        var n = found.length;
+        var frames = [];
+        skill.attack_frames.forEach(function (element) {
+            frames = frames.concat(element);
+        });
+        frames = frames.sort(function (a, b) {
+            return a - b;
+        });
+        log(frames);
+        var str = arrayToString(frames);
+        if (!str.str.empty()) {
+            found[n] = {
+                name: "" + skill.name + str.fam,
+                value: str.str
+            };
+        }
+    });
+    // Search LB
+    if (LB && LB.attack_frames &&
+        LB.attack_frames.length > 0 && LB.attack_frames[0].length > 1) {
+        log(LB.attack_frames);
+        var str = arrayToString(LB.attack_frames[0]);
+        if (str) {
+            found[found.length] = {
+                name: "" + LB.name + str.fam,
+                value: str.str
+            };
+        }
+    }
+    //log(`Searched Skills For: ${keyword}`);
+    //log(found);
+    return found;
+}
 function loadUnitItems(JP, tmr, stmr) {
     var equipment = fs.readFileSync("../ffbe" + JP + "/equipment.json");
     var equipList = JSON.parse(equipment.toString());
@@ -398,6 +443,33 @@ function equipToString(equip) {
         name: "" + equip.name,
         value: stats + "\n" + effects
     };
+}
+function arrayToString(array) {
+    var str = "";
+    for (var index = 0; index < array.length; index++) {
+        var element = array[index];
+        var num = parseInt(element);
+        if (index > 0) {
+            var prev = parseInt(array[index - 1]);
+            num = num - prev;
+            if (num > 0) {
+                str += "-" + num;
+            }
+        }
+        else {
+            str += "" + element;
+        }
+    }
+    var fam = "";
+    var keys = Object.keys(chainFamilies);
+    for (var ind = 0; ind < keys.length; ind++) {
+        var key = keys[ind];
+        if (chainFamilies[key] === str.trim()) {
+            fam = " - " + key;
+            break;
+        }
+    }
+    return { str: str, fam: fam };
 }
 // COMMANDS
 // WIKI 
@@ -603,16 +675,22 @@ function handleRank(receivedMessage, search, parameters) {
     });
 }
 function handleK(receivedMessage, search, id, name) {
-    //log(`handleKit(${search})`);
+    log("handleKit(" + search + ")");
     var unit = getUnitData(id);
     if (!unit) {
         log("Could not find unit data: " + unit);
         return;
     }
+    var fields = null;
     var keyword = new RegExp(search.replace(/_/g, ".*"), "i");
-    var items = searchUnitItems(unit, keyword);
-    var skills = searchUnitSkills(unit, keyword, true);
-    var fields = skills.concat(items);
+    if (checkString(search, /frames|chain/i)) {
+        fields = searchUnitFrames(unit);
+    }
+    else {
+        var items = searchUnitItems(unit, keyword);
+        var skills = searchUnitSkills(unit, keyword, true);
+        fields = skills.concat(items);
+    }
     if (!fields || fields.length == 0) {
         log("Failed to get unit skill list: " + keyword);
         return;

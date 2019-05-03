@@ -24,3 +24,6 @@ exports.unicodeNumbers = [
     "0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"
 ];
 exports.statParameters = ["atk", "def", "mag", "spr", "hp", "mp"];
+exports.chainFamilies = {
+    "Bolting Strike": "42, 48, 54, 60, 66, 72, 78, 84, 90,",
+};
