@@ -1,5 +1,12 @@
 const fs = require("fs");
 
+var gldump = fs.readFileSync('../ffbe/units.json');
+var unitsListGL = JSON.parse(gldump.toString());
+var jpdump = fs.readFileSync('../ffbe-jp/units.json');
+var unitsListJP = JSON.parse(jpdump.toString());
+gldump = null;
+jpdump = null;
+
 log("loading units list")
 //cacheUnit("401006805");
 cacheAll();
@@ -21,33 +28,41 @@ function cacheAll() {
     var data = fs.readFileSync("data/unitkeys.json");
     var unitsDump = JSON.parse(String(data));
     
-    var units = Object.keys(unitsDump);
+    var units = Object.values(unitsDump);
+    units = units.sort();
+
+    let index = 1;
     var cachedUnits = {};
+    for (let i = 0; i < units.length; i++) {
+        const id = units[i];
+        const cat = parseInt(id[0]);
 
-    for (let index = 0; index <= 9; index++) {
-        log(`Loading Units: ${index}`);
-        for (let i = 0; i < units.length; i++) {
-            const key = units[i];
-            const id = unitsDump[key];
-            const cat = parseInt(id[0]);
-            log(`key(${key}), id(${id}), cat(${cat})`);
-
-            if (cat == index) {
-                var data = getUnitData(id);
-                if (data) {
-                    cachedUnits[id] = data;
-                }
+        if (!cachedUnits[id]) {
+            log(`id(${id}), cat(${cat})`);
+            var data = getUnitData(id);
+            if (data) {
+                cachedUnits[id] = data;
             }
         }
+        
+        if (cat > index) {
+            if (Object.keys(cachedUnits).length == 0) {
+                log(`Empty Buffer`);
+                index++;
+                continue;
+            }
+            
+            if (!fs.existsSync(`data/`))
+                fs.mkdirSync( `data/`, { recursive: true});
+            if (!fs.existsSync(`data/units-${index}.json`)) {
+                fs.createWriteStream(`data/units-${index}.json`);
+            }
+            
+            fs.writeFileSync(`data/units-${index}.json`, JSON.stringify(cachedUnits));
+            cachedUnits = {};
 
-        if (!fs.existsSync(`data/`))
-            fs.mkdirSync( `data/`, { recursive: true});
-        if (!fs.existsSync(`data/units-${index}.json`)) {
-            fs.createWriteStream(`data/units-${index}.json`);
+            index = cat;
         }
-
-        fs.writeFileSync(`data/units-${index}.json`, JSON.stringify(cachedUnits));
-        cachedUnits = {};
     }
 }
 
@@ -57,24 +72,20 @@ function log(data) {
 }
 function getUnitData(id) {
 
-    var bigUnits = fs.readFileSync('../ffbe/units.json');
-    var unitsList = JSON.parse(bigUnits.toString());
+    // var bigUnits = fs.readFileSync('../ffbe/units.json');
+    // var unitsList = JSON.parse(bigUnits.toString());
 
-    var unit = unitsList[id];
+    let unit = unitsListGL[id];
     
-    unitsList = null;
-    bigUnits = null;
-    var JP = ""; // this is to tell the skill search to use JP data.
+    //unitsList = null;
+    //bigUnits = null;
+    let JP = ""; // this is to tell the skill search to use JP data.
     if (!unit) {
         unit = null;
-        
-        bigUnits = fs.readFileSync('../ffbe-jp/units.json');
-        unitsList = JSON.parse(bigUnits.toString());
 
         JP = "-jp";
-        unit = unitsList[id];
-        unitsList = null;
-        bigUnits = null;
+        unit = unitsListJP[id];
+    
         if (!unit) {
             log("Could not find unit data " + id);
             unit = null;
@@ -82,36 +93,105 @@ function getUnitData(id) {
         }
     }
 
-    unit.skills = getSkillsFromUnit(unit, JP);
-    var lb = getLBFromUnit(unit, JP);
+    // load unit skills
+    let skills = getSkillsFromUnit(unit, JP);
+
+    // load unit LB
+    let lb = getLBFromUnit(unit, JP);
     if (lb) unit.LB = lb;
+
+    // load unit items
+    let tmr = -1;
+    let stmr = -1;
+    if (unit.TMR) tmr = unit.TMR[1];
+    if (unit.sTMR) stmr = unit.sTMR[1];
+    let items = getUnitItems(JP, tmr, stmr);
+    if (items.TMR) {
+        if (items.TMR.skills && items.TMR.skills.length > 0)
+            items.TMR.skills = getSkillWithIDs(items.TMR.skills, JP)
+    }
+    if (items.STMR) {
+        if (items.STMR.skills && items.STMR.skills.length > 0)
+            items.STMR.skills = getSkillWithIDs(items.STMR.skills, JP)
+    }
+
+    // load unit enhancements 
     //unit.enhancements = getEnhancements(id, JP);
 
-    log("Unit Saved");
-    return unit;
+    return {
+        rarity_min: unit.rarity_min,
+        rarity_max: unit.rarity_max,
+        name:       unit.name,
+        game:       unit.game,
+        job:        unit.job,
+        sex:        unit.sex,
+        equip:      unit.equip,
+        entries:    unit.entries,
+        skills:     skills,
+        TMR:        items.TMR,
+        STMR:       items.STMR,
+    };
 }
 function getSkillsFromUnit(unit, JP) {
 
-    var skills = unit.skills;
-    if (!skills) {
+    let skills = unit.skills;
+    if (!skills || !unit) {
         return null;
     }
 
-    var skillKeys = [];
+    let skillKeys = [];
     skills.forEach(skill => {
         skillKeys.push(skill.id);
     });
+        
+    var bigSkills = fs.readFileSync(`../ffbe${JP}/skills.json`);
+    var skillList = JSON.parse(bigSkills.toString());
+    bigSkills = null;
+    
+    let skillData = {};
+    skillKeys.forEach(key => {
+        skillData[key] = {
+            name: skillList[key].name,
+            type: skillList[key].type,
+            active: skillList[key].active,
+            cost: skillList[key].cost,
+            attack_frames: skillList[key].attack_frames,
+            attack_type: skillList[key].attack_type,
+            element_inflict: skillList[key].element_inflict,
+            effects: skillList[key].effects,
+            icon: skillList[key].icon,
+            strings: skillList[key].strings
+        }
+    });
+    skillList = null;
+
+    return skillData;
+}
+function getSkillWithIDs(skillKeys, JP) {
 
     var bigSkills = fs.readFileSync(`../ffbe${JP}/skills.json`);
     var skillList = JSON.parse(bigSkills.toString());
     bigSkills = null;
     
     var skillData = {};
-    var keys = Object.keys(skillList);
     skillKeys.forEach(key => {
-        skillData[key] = skillList[key];
+        var desc = "";
+        if (skillList[key].strings && skillList[key].strings.desc_short)
+            desc = skillList[key].strings.desc_short[0];
+
+        skillData[key] = {
+            name: skillList[key].name,
+            type: skillList[key].type,
+            active: skillList[key].active,
+            cost: skillList[key].cost,
+            attack_frames: skillList[key].attack_frames,
+            attack_type: skillList[key].attack_type,
+            element_inflict: skillList[key].element_inflict,
+            effects: skillList[key].effects,
+            icon: skillList[key].icon,
+            desc: desc
+        }
     });
-    keys = null;
     skillList = null;
 
     return skillData;
@@ -157,4 +237,39 @@ function getEnhancementsFromUnit(unit, JP) {
     var enhList = JSON.parse(bigEnh.toString());
     bigEnh = null;
 
+}
+function getUnitItems(JP, tmr, stmr) {
+    
+    var equipment = fs.readFileSync(`../ffbe${JP}/equipment.json`);
+    var equipList = JSON.parse(equipment.toString());
+    equipment = null;
+
+    var TMR = equipList[tmr];
+    var STMR = equipList[stmr];
+    equipList = null;
+
+    if (TMR) TMR.type = "EQUIP";
+    if (STMR) STMR.type = "EQUIP";
+
+    if (!TMR || !STMR) {
+        var materia = fs.readFileSync(`../ffbe${JP}/materia.json`);
+        var materiaList = JSON.parse(materia.toString());
+
+        if (materiaList[tmr]) {
+            TMR = materiaList[tmr];
+            TMR.type = "MATERIA";
+        }
+        if (materiaList[stmr]) {
+            STMR = materiaList[stmr];
+            STMR.type = "MATERIA";
+        } 
+
+        materia = null;
+        materiaList = null;
+    }
+
+    return {
+        TMR: TMR,
+        STMR: STMR
+    }
 }

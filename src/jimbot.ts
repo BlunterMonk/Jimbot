@@ -63,7 +63,8 @@ const searchAliases = [
     { reg: /buff/g, value: "increase|increase atk|increase def|increase mag|increase spr"},
     { reg: /debuff/g, value: "debuff|decrease|reduce"},
     { reg: /imperil/g, value: "reduce resistance"},
-    { reg: /mit/g, value: "mitigate|reduce damage"}
+    { reg: /mit/g, value: "mitigate|reduce damage"},
+    { reg: /evoke/g, value: "evoke|evocation"}
 ]
 
 // Commands
@@ -77,7 +78,7 @@ var loading = true;
 var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
 var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 
 
 // Keep track of added messages
@@ -275,8 +276,8 @@ function getSkillsFromUnit(unit, JP) {
 
     return skillData;
 }
-function checkString(text, keyword) {
-    return keyword.test(text.replace(/\s*/g,""))
+function checkString(text, keyword): boolean {
+    return keyword.test(text.replace(/\s*/g,""));
 }
 function searchUnitSkills(unit, keyword: RegExp, active) {
 
@@ -341,6 +342,133 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
 
     return found;
 }
+function searchUnitItems(unit, keyword: RegExp) {
+    log(`searchUnitItems(${unit.name}, ${keyword})`);
+
+    var found = [];
+
+    const LB = unit.LB;
+    if (LB && (checkString(LB.name, keyword) || checkString("lb", keyword))) {
+        var n = found.length;
+        var s = "";
+
+        log(`LB Name: ${LB.name}`);
+
+        LB.max_level.forEach(effect => {
+            s += `*${effect}*\n`;
+            found[n] = {
+                name: `${LB.name} - MAX`,
+                value: s
+            };
+        });
+    }
+
+    const TMR = unit.TMR;
+    if (TMR && checkString("tmr", keyword)) {
+        var n = found.length;
+
+        log(`TMR Name: ${TMR.name}, Type: ${TMR.type}`);
+        found[n] = equipToString(TMR);
+    }
+
+    const STMR = unit.STMR;
+    if (STMR && checkString("stmr", keyword)) {
+        var n = found.length;
+
+        log(`STMR Name: ${STMR.name}, Type: ${STMR.type}`);
+        found[n] = equipToString(STMR);
+    }
+
+    log(found);
+    return found;
+}
+function loadUnitItems(JP, tmr, stmr) {
+    
+    var equipment = fs.readFileSync(`../ffbe${JP}/equipment.json`);
+    var equipList = JSON.parse(equipment.toString());
+    equipment = null;
+
+    var TMR = equipList[tmr];
+    var STMR = equipList[stmr];
+    equipList = null;
+
+    if (!TMR || !STMR) {
+        var materia = fs.readFileSync(`../ffbe${JP}/materia.json`);
+        var materiaList = JSON.parse(materia.toString());
+
+        if (materiaList[tmr]) TMR = materiaList[tmr];
+        if (materiaList[stmr]) STMR = materiaList[stmr];
+
+        materia = null;
+        materiaList = null;
+    }
+
+    return {
+        TMR: TMR,
+        STMR: STMR
+    }
+}
+function equipToString(equip) {
+    var effects = "";
+    var stats = "";
+
+    log(`Equip Name: ${equip.name}, Type: ${equip.type}`);
+
+    if (equip.type == "EQUIP") {
+        if (equip.effects) {
+            equip.effects.forEach(effect => {
+                if (!checkString(effect, /Grants.*passive/g))
+                effects += `${effect}\n`;
+            });
+        }
+        
+        if (equip.stats) {
+            var statKeys = Object.keys(equip.stats);
+            statKeys.forEach(key => {
+                const stat = equip.stats[key];
+                if (!stat) return;
+
+                if (constants.statParameters.includes(key.toLowerCase())) {
+                    log(`${key}; ${stat}, `);
+                    stats += `${key}: ${stat}, `;
+                } else {
+                    stats += `\n${key.replaceAll("_", " ").toTitleCase(" ")}:\n`;
+                    var substatKeys = Object.keys(stat);
+                    substatKeys.forEach(subkey => {
+                        const sub = stat[subkey];
+                        if (!sub) return;
+            
+                        log(`${subkey}; ${sub}, `);
+                        stats += `${subkey}: ${sub}, `;
+                    });
+                }
+            });
+        }
+
+        if (equip.skills) {
+            var skillKeys = Object.keys(equip.skills);
+            skillKeys.forEach(key => {
+                const skill = equip.skills[key];
+                if (!skill) return;
+
+                skill.effects.forEach(eff => {
+                    log(`${key}: ${eff}`);
+                    effects += `${eff}\n`;
+                });
+            });
+        }
+    }
+    
+    if (equip.type == "MATERIA") {
+        effects += `"*${equip.strings.desc_short[0]}"*\n`;
+    }
+
+    return {
+        name: `${equip.name}`,
+        value: `${stats}\n${effects}`
+    }
+}
+
 
 // COMMANDS
 
@@ -568,8 +696,10 @@ function handleK(receivedMessage, search, id, name) {
         return;
     }
 
-    var keyword = new RegExp(search.replace(/_/g,".*"), "gi");
-    var fields = searchUnitSkills(unit, keyword, true);
+    var keyword = new RegExp(search.replace(/_/g,".*"), "i");
+    var items = searchUnitItems(unit, keyword);
+    var skills = searchUnitSkills(unit, keyword, true);
+    var fields = skills.concat(items);
     if (!fields || fields.length == 0) {
         log(`Failed to get unit skill list: ${keyword}`);
         return;
@@ -583,7 +713,7 @@ function handleK(receivedMessage, search, id, name) {
             icon_url: client.user.avatarURL
         },
         thumbnail: {
-            url: sprite(id)
+            url: sprite(getMaxRarity(id))
         },
         title: name.replaceAll("_", " "),
         url: "https://exvius.gamepedia.com/" + name,
@@ -632,7 +762,7 @@ function handleKit(receivedMessage, search, parameters, active) {
             icon_url: client.user.avatarURL
         },
         thumbnail: {
-            url: sprite(id)
+             url: sprite(getMaxRarity(id))
         },
         title: name,
         url: "https://exvius.gamepedia.com/" + name.replaceAll(" ", "_"),
@@ -1197,6 +1327,15 @@ function getUnitKey(search) {
 function isLetter(str) {
     return str.length === 1 && str.match(/[a-z]/i);
 }
+function getMaxRarity(unit) {
+    var rarity = unit[unit.length-1];
+    var id = unit.substring(0, unit.length-1);
+    log("Unit ID: " + unit);
+    if (rarity === "5") {
+        unit = id + "7";
+    }
+    return unit;
+}
 
 function handleSprite(receivedMessage, search, parameters) {
 
@@ -1205,12 +1344,7 @@ function handleSprite(receivedMessage, search, parameters) {
         return;
     }
 
-    var rarity = unit[unit.length-1];
-    var id = unit.substring(0, unit.length-1);
-    log("Unit ID: " + unit);
-    if (rarity === "5") {
-        unit = id + "7";
-    }
+    unit = getMaxRarity(unit)
 
     log("Searching Unit Sprite For: " + search);
     validateUnit(search, function (valid, imgurl) {
@@ -1369,10 +1503,10 @@ function getGif(search, param, callback) {
 
 // Validation
 function validateUnit(search, callback) {
-    log(search)
-    var unit = getUnitKey(search);
-    log(unit)
-    callback(unit != null)
+    log(`validateUnit(${search})`);
+    var unit = getUnitKey(search.replaceAll(" ", "_"));
+    log(unit);
+    callback(unit != null);
 }
 function validateEmote(emote) {
     var file = null;
@@ -1525,7 +1659,7 @@ function privateMessage(receivedMessage) {
 }
 
 function unitQuery(receivedMessage, command, search) {
-    if (!search || search.empty())
+    if (!search || !command || search.empty())
         return false;
 
     //log(`${command} Doesn't Exists`);
@@ -1567,20 +1701,20 @@ function guildMessage(receivedMessage, guildId, prefix) {
     }
 
     // the command name
+    let com = getCommandString(copy, prefix);
     try {
-        let command = getCommandString(copy, prefix);
         let valid = false;
-        log(eval(`valid = (typeof handle${command} === 'function');`));
+        log(eval(`valid = (typeof handle${com} === 'function');`));
         if (!valid) {
-            let search = getSearchString(`${prefix}${command}`, copy);
-            if (unitQuery(receivedMessage, command, search))
+            let search = getSearchString(`${prefix}${com}`, copy);
+            if (unitQuery(receivedMessage, com, search))
                 return;
         }
     } catch (e) {
         //log(e);
         //log("JP Unit: " + command);
-        let search = getSearchString(`${prefix}${command}`, copy);
-        if (unitQuery(receivedMessage, command, search))
+        let search = getSearchString(`${prefix}${com}`, copy);
+        if (unitQuery(receivedMessage, com, search))
             return;
     }
 
