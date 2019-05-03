@@ -8,8 +8,9 @@ gldump = null;
 jpdump = null;
 
 log("loading units list")
+cacheUnit("401001405");
 //cacheUnit("401006805");
-cacheAll();
+//cacheAll();
 
 function cacheUnit(id) {
     var data = getUnitData(id);
@@ -17,10 +18,8 @@ function cacheUnit(id) {
     
         if (!fs.existsSync(`tempdata/`))
             fs.mkdirSync( `tempdata/`, { recursive: true});
-        if (!fs.existsSync(`tempdata/units-54325${id}.json`)) {
-            fs.createWriteStream(`tempdata/units-54325${id}.json`);
-        }
-        fs.writeFileSync(`tempdata/units-${id}.json`, JSON.stringify(data, null, "\t"));
+
+        fs.writeFileSync(`tempdata/${id}.json`, JSON.stringify(data, null, "\t"));
     }
 }
 
@@ -94,7 +93,7 @@ function getUnitData(id) {
     }
 
     // load unit skills
-    let skills = getSkillsFromUnit(unit, JP);
+    let skills = getSkillsFromUnit(unit, JP, id);
 
     // load unit LB
     let lb = getLBFromUnit(unit, JP);
@@ -133,39 +132,68 @@ function getUnitData(id) {
         STMR:       items.STMR,
     };
 }
-function getSkillsFromUnit(unit, JP) {
+function getSkillsFromUnit(unit, JP, unitId) {
 
     let skills = unit.skills;
     if (!skills || !unit) {
         return null;
     }
 
-    let skillKeys = [];
+    let skillKeys = [];1
     skills.forEach(skill => {
         skillKeys.push(skill.id);
     });
-        
+
+
     var bigSkills = fs.readFileSync(`../ffbe${JP}/skills.json`);
     var skillList = JSON.parse(bigSkills.toString());
     bigSkills = null;
     
+    var reg = /\([^\)]+\)/g;
+    let extraKeys = [];
     let skillData = {};
     skillKeys.forEach(key => {
-        skillData[key] = {
-            name: skillList[key].name,
-            type: skillList[key].type,
-            active: skillList[key].active,
-            cost: skillList[key].cost,
-            attack_frames: skillList[key].attack_frames,
-            attack_type: skillList[key].attack_type,
-            element_inflict: skillList[key].element_inflict,
-            effects: skillList[key].effects,
-            icon: skillList[key].icon,
-            strings: skillList[key].strings
-        }
+        skillData[key] = trimSkill(skillList[key], "");
+                    
+        skillList[key].effects.forEach(effect => {
+            let match = reg.exec(effect);
+            while(match) {
+                log(match);
+                extraKeys.push(match[0].replace("(", "").replace(")", ""));
+                match = reg.exec(effect);
+            }
+        });
     });
-    skillList = null;
+    log(`\nExtra Keys`);
+    log(extraKeys);
+    extraKeys.forEach(key => {
+        if (!skillList[key] || skillData[key]) return;
 
+        log(skillList[key]);
+        skillData[key] = trimSkill(skillList[key], "");
+    });
+
+    let enhancements = getEnhancementsFromUnit(parseInt(unitId), skillList, JP);
+    if (enhancements.length > 0) {
+        //log(enhancements);
+        //skillKeys = skillKeys.concat(enhancements);
+        enhancements.forEach(enh => {
+            const key = enh.skill_id_new;
+            const old = enh.skill_id_old;
+            //log(`Enh: ${old}, ${key}, ${key - old}`);
+            if (key - old == 1) {
+                skillData[key] = trimSkill(skillList[key], "+2");
+            } else {
+                skillData[key] = trimSkill(skillList[key], "+1");
+            }
+        });
+    }
+
+
+
+    skillList = null;
+        
+    //log(skillData);
     return skillData;
 }
 function getSkillWithIDs(skillKeys, JP) {
@@ -232,12 +260,21 @@ function getLBFromUnit(unit, JP) {
         string: limit.strings
     };
 }
-function getEnhancementsFromUnit(unit, JP) {
+function getEnhancementsFromUnit(unit, skillList, JP) {
 
     var bigEnh = fs.readFileSync(`../ffbe${JP}/enhancements.json`);
     var enhList = JSON.parse(bigEnh.toString());
     bigEnh = null;
 
+    var IDs = [];
+    var enhancements = Object.values(enhList);
+    enhancements.forEach(enh => {
+        if (enh.units.includes(unit)) {
+            IDs[IDs.length] = enh;
+        }
+    });
+
+    return IDs;
 }
 function getUnitItems(JP, tmr, stmr) {
     
@@ -272,5 +309,21 @@ function getUnitItems(JP, tmr, stmr) {
     return {
         TMR: TMR,
         STMR: STMR
+    }
+}
+
+
+function trimSkill(skill, enh) {
+    return {
+        name:               `${skill.name}${enh}`,
+        type:               skill.type,
+        active:             skill.active,
+        cost:               skill.cost,
+        attack_frames:      skill.attack_frames,
+        attack_type:        skill.attack_type,
+        element_inflict:    skill.element_inflict,
+        effects:            skill.effects,
+        icon:               skill.icon,
+        strings:            skill.strings
     }
 }

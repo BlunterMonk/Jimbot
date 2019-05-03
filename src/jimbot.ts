@@ -49,7 +49,7 @@ const guildId = (msg) => msg.guild.id;
 const userId = (msg) => msg.author.id;
 
 var chainFamilies = JSON.parse(String(fs.readFileSync("data/chainfamilies.json")));
-
+var ignoreEffectRegex = /grants.*passive|unlock.*\[.*CD\]/i;
 // Lookup Tables
 
 const gifAliases = {
@@ -80,7 +80,7 @@ var loading = true;
 var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
 var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 
 
 // Keep track of added messages
@@ -217,27 +217,12 @@ function getUnitData(id) {
     
     unitsList = null;
     bigUnits = null;
-    //var JP = ""; // this is to tell the skill search to use JP data.
     if (!unit) {
         log("Could not find unit data");
         unit = null;
         return null;
-        /*
-        bigUnits = fs.readFileSync('../ffbe-jp/units.json');
-        unitsList = JSON.parse(bigUnits.toString());
-
-        JP = "-jp";
-        unit = unitsList[id];
-        unitsList = null;
-        bigUnits = null;
-        if (!unit) {
-            log("Could not find unit data in GL");
-            unit = null;
-            return null;
-        }*/
     }
 
-    //unit.skills = getSkillsFromUnit(unit, JP);
     log("Caching unit");
     if (!fs.existsSync(`tempdata/`))
         fs.mkdirSync( `tempdata/`, { recursive: true});
@@ -247,36 +232,6 @@ function getUnitData(id) {
     fs.writeFileSync(filename, JSON.stringify(unit, null, "\t")); 
 
     return unit;
-}
-function getSkillsFromUnit(unit, JP) {
-
-    var skills = unit.skills;
-    if (!skills) {
-        return null;
-    }
-
-    var skillKeys = [];
-    skills.forEach(skill => {
-        skillKeys.push(skill.id);
-    });
-    //log(skillKeys);
-
-
-    var bigSkills = fs.readFileSync(`../ffbe${JP}/skills.json`);
-    var skillList = JSON.parse(bigSkills.toString());
-    //log("Giant List");
-    bigSkills = null;
-    
-    var skillData = {};
-    var keys = Object.keys(skillList);
-    //log(keys.length);
-    skillKeys.forEach(key => {
-        skillData[key] = skillList[key];
-    });
-    keys = null;
-    skillList = null;
-
-    return skillData;
 }
 function checkString(text, keyword): boolean {
     return keyword.test(text.replace(/\s*/g,""));
@@ -295,16 +250,15 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
         }
 
         var all = checkString(skill.name, keyword);
+        //log(`Skill Name: ${skill.name}, All: ${all}`);
         var n = found.length;
         var s = "";
         for (let ind = 0; ind < skill.effects.length; ind++) {
             const effect = skill.effects[ind]
+            if (checkString(effect, ignoreEffectRegex))
+                continue;
             if (all || checkString(effect, keyword)) {
                 s += `${effect}\n`;
-                found[n] = {
-                    name: `${skill.name}`,
-                    value: s
-                };
             }
         }
 
@@ -312,13 +266,26 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
             var desc = skill.strings.desc_short[0];
             if (checkString(desc, keyword)) {
                 s += `*"${desc}"*\n`;
-                found[n] = {
-                    name: `${skill.name}`,
-                    value: s
-                };
             }
         }
+
+        for (let index = 0; index < found.length; index++) {
+            const el = found[index];
+            if (el.name == skill.name && el.value == s) {
+                log(`Found Duplicate`);
+                log(`Name: ${el.name}, Value: ${el.value}, S: ${s}`);
+                return;
+            }
+        }
+
+        if (s.empty()) return;
+
+        found[found.length] = {
+            name: skill.name,
+            value: s
+        };
     });
+    log(found);
         
     // Search LB
     if (LB && (active === undefined || active == true)) {
@@ -470,8 +437,8 @@ function equipToString(equip) {
     if (equip.type == "EQUIP") {
         if (equip.effects) {
             equip.effects.forEach(effect => {
-                if (!checkString(effect, /Grants.*passive/g))
-                effects += `${effect}\n`;
+                if (!checkString(effect, /grants.*passive/i))
+                    effects += `${effect}\n`;
             });
         }
         
@@ -781,6 +748,8 @@ function handleK(receivedMessage, search, id, name) {
     var keyword = new RegExp(search.replace(/_/g,".*"), "i");
     if (checkString(search, /frames|chain/i)) {
         fields = searchUnitFrames(unit);
+    } else if (checkString(search, /enhancement/i)) {
+        fields = searchUnitSkills(unit, /\+2$|\+1$/i, undefined);
     } else {
         var items = searchUnitItems(unit, keyword);
         var skills = searchUnitSkills(unit, keyword, true);
@@ -871,6 +840,21 @@ function handleAbility(receivedMessage, search, parameters) {
 }
 function handlePassive(receivedMessage, search, parameters) {
     handleKit(receivedMessage, search, parameters, false);
+}
+function handleEnhancements(receivedMessage, search, parameters) {
+    log(`handleKit(${search})`);
+
+    var id = getUnitKey(search);
+    if (!id) {
+        log("No Unit Found");
+        return;
+    }
+
+    var unit = getUnitData(id);
+    if (!unit) {
+        log(`Could not find unit data: ${unit}`);
+        return;
+    }
 }
 
 // FLUFF
@@ -1746,6 +1730,9 @@ function privateMessage(receivedMessage) {
     }
 }
 
+function escapeString(s) {
+    return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+};
 function unitQuery(receivedMessage, command, search) {
     if (!search || !command || search.empty())
         return false;
@@ -1766,7 +1753,9 @@ function unitQuery(receivedMessage, command, search) {
         return false;
 
     //log(`Unit ID valid`);
-
+    log(search);
+    search = escapeString(search);
+    log(search);
     searchAliases.forEach(regex => {
         if (checkString(search, regex.reg)) {
             //log(`Search contains a word to replace`);
