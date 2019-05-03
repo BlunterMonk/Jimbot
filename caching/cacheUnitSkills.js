@@ -128,6 +128,7 @@ function getUnitData(id) {
         equip:      unit.equip,
         entries:    unit.entries,
         skills:     skills,
+        LB:         lb,
         TMR:        items.TMR,
         STMR:       items.STMR,
     };

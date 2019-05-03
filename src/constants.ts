@@ -30,3 +30,7 @@ export const unicodeNumbers = [
 ];
 
 export const statParameters = [ "atk", "def", "mag", "spr", "hp", "mp" ];
+
+export const chainFamilies = {
+    "Bolting Strike": "42, 48, 54, 60, 66, 72, 78, 84, 90,",
+}
