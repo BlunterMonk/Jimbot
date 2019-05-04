@@ -280,6 +280,56 @@ function searchUnitSkills(unit, keyword, active) {
     //log(found);
     return found;
 }
+function collectSkillEffects(skill, keyword) {
+    /*
+    var all = checkString(skill.name, keyword);
+    log(`Skill Name: ${skill.name}, All: ${all}`);
+    var n = found.length;
+    var s = "";
+    for (let ind = 0; ind < skill.effects.length; ind++) {
+        const effect = skill.effects[ind]
+        if (checkString(effect, ignoreEffectRegex))
+            continue;
+        if (all || checkString(effect, keyword)) {
+
+            let match = reg.exec(effect);
+            if (!match) {
+                s += `${effect}\n`;
+                continue;
+            }
+
+            while(match) {
+                let k = match[0].replace("(", "").replace(")", "");
+                let subskill = skills[k];
+                if (subskill && subskill.name.includes(skill.name) && !checkString(subskill.effects[0], ignoreEffectRegex)) {
+                    log(match);
+                    log(`Sub Skill: ${subskill.name}, Effect: ${subskill.effects}`);
+                    s += `${subskill.effects[0]}\n`;
+                }
+
+                match = reg.exec(effect);
+            }
+        }
+    }
+
+    if (skill.strings.desc_short) {
+        var desc = skill.strings.desc_short[0];
+        log(`Description: ${desc}, keyword: ${keyword}`);
+        if (checkString(desc, keyword)) {
+            s += `*"${desc}"*\n`;
+        }
+    }
+
+    for (let index = 0; index < found.length; index++) {
+        const el = found[index];
+        if (el.name == skill.name && el.value == s) {
+            //log(`Found Duplicate`);
+            //log(`Name: ${el.name}, Value: ${el.value}, S: ${s}`);
+            return;
+        }
+    }
+    */
+}
 function searchUnitItems(unit, keyword) {
     log("searchUnitItems(" + unit.name + ", " + keyword + ")");
     var found = [];
@@ -779,11 +829,11 @@ function handleEnhancements(receivedMessage, search, parameters) {
 function handleReactions(receivedMessage) {
     var content = receivedMessage.content.toLowerCase();
     switch (content) {
-        case commandCyra:
+        case "hi majin":
             receivedMessage.guild.emojis.forEach(function (customEmoji) {
-                if (customEmoji.name === "hinayay" ||
-                    customEmoji.name === "2BLewd" ||
-                    customEmoji.name === "hugpweez") {
+                if (customEmoji.name === "nuked" ||
+                    customEmoji.name === "tifapeek" ||
+                    customEmoji.name === "think") {
                     receivedMessage.react(customEmoji);
                 }
             });
@@ -792,6 +842,14 @@ function handleReactions(receivedMessage) {
             receivedMessage.react("🌹");
             receivedMessage.react("🛋");
             break;
+        case "hi reberta":
+            receivedMessage.guild.emojis.forEach(function (customEmoji) {
+                if (customEmoji.name === "hugpweez" ||
+                    customEmoji.name === "yay" ||
+                    customEmoji.name === "praise") {
+                    receivedMessage.react(customEmoji);
+                }
+            });
         default:
             break;
     }
