@@ -27,3 +27,7 @@ exports.statParameters = ["atk", "def", "mag", "spr", "hp", "mp"];
 exports.chainFamilies = {
     "Bolting Strike": "42, 48, 54, 60, 66, 72, 78, 84, 90,",
 };
+exports.weaponList = ["dagger", "sword", "greatSword", "katana", "staff", "rod", "bow", "axe", "hammer", "spear", "harp", "whip", "throwing", "gun", "mace", "fist"];
+exports.shieldList = ["lightShield", "heavyShield"];
+exports.headList = ["hat", "helm"];
+exports.bodyList = ["clothes", "robe", "lightArmor", "heavyArmor"];

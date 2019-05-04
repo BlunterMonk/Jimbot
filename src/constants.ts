@@ -34,3 +34,8 @@ export const statParameters = [ "atk", "def", "mag", "spr", "hp", "mp" ];
 export const chainFamilies = {
     "Bolting Strike": "42, 48, 54, 60, 66, 72, 78, 84, 90,",
 }
+
+export const weaponList = ["dagger", "sword", "greatSword", "katana", "staff", "rod", "bow", "axe", "hammer", "spear", "harp", "whip", "throwing", "gun", "mace", "fist"];
+export const shieldList = ["lightShield", "heavyShield"];
+export const headList = ["hat", "helm"];
+export const bodyList = ["clothes", "robe", "lightArmor", "heavyArmor"];

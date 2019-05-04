@@ -43,6 +43,7 @@ var guildId = function (msg) { return msg.guild.id; };
 var userId = function (msg) { return msg.author.id; };
 var chainFamilies = JSON.parse(String(fs.readFileSync("data/chainfamilies.json")));
 var ignoreEffectRegex = /grants.*passive|unlock.*\[.*CD\]/i;
+var unitDefaultSearch = "tmr|stmr";
 // Lookup Tables
 var gifAliases = {
     "lb": "limit",
@@ -69,7 +70,7 @@ var loading = true;
 // Click on your application -> Bot -> Token -> "Click to Reveal Token"
 var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
 var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 // Keep track of added messages
 var botMessages = [];
 function cacheBotMessage(received, sent) {
@@ -395,6 +396,7 @@ function loadUnitItems(JP, tmr, stmr) {
 }
 function equipToString(equip) {
     var effects = "";
+    var slot = "";
     var stats = "";
     log("Equip Name: " + equip.name + ", Type: " + equip.type);
     if (equip.type == "EQUIP") {
@@ -439,12 +441,17 @@ function equipToString(equip) {
                 });
             });
         }
+        if (equip.slot === "Weapon")
+            slot = constants.weaponList[equip.type_id - 1].toTitleCase(" ");
+        else
+            slot = equip.slot;
     }
     if (equip.type == "MATERIA") {
         effects += "\"*" + equip.strings.desc_short[0] + "\"*\n";
+        slot = "Materia";
     }
     return {
-        name: "" + equip.name,
+        name: equip.name + " - " + slot,
         value: stats + "\n" + effects
     };
 }
@@ -1571,7 +1578,7 @@ function escapeString(s) {
 }
 ;
 function unitQuery(receivedMessage, command, search) {
-    if (!search || !command || search.empty())
+    if (!command)
         return false;
     //log(`${command} Doesn't Exists`);
     var s = command.toLowerCase();
@@ -1586,17 +1593,22 @@ function unitQuery(receivedMessage, command, search) {
     if (!id)
         return false;
     //log(`Unit ID valid`);
-    log(search);
-    search = escapeString(search);
-    log(search);
-    searchAliases.forEach(function (regex) {
-        if (checkString(search, regex.reg)) {
-            //log(`Search contains a word to replace`);
-            search = search.replace(regex.reg, regex.value);
-            //log(`New Search: ${search}`);
-        }
-    });
-    search = search.replaceAll(" ", ".*");
+    if (search && !search.empty()) {
+        log(search);
+        search = escapeString(search);
+        log(search);
+        searchAliases.forEach(function (regex) {
+            if (checkString(search, regex.reg)) {
+                //log(`Search contains a word to replace`);
+                search = search.replace(regex.reg, regex.value);
+                //log(`New Search: ${search}`);
+            }
+        });
+        search = search.replaceAll(" ", ".*");
+    }
+    else {
+        search = unitDefaultSearch;
+    }
     handleK(receivedMessage, search, id, command);
     return true;
 }
