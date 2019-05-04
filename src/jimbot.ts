@@ -80,7 +80,7 @@ var loading = true;
 var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
 var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token_test);
+client.login(bot_secret_token);
 
 
 // Keep track of added messages
@@ -238,6 +238,7 @@ function checkString(text, keyword): boolean {
 }
 function searchUnitSkills(unit, keyword: RegExp, active) {
 
+    var reg = /\([^\)]+\)/g;
     const LB = unit.LB;
     const skills = unit.skills;
     var found = [];
@@ -250,7 +251,7 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
         }
 
         var all = checkString(skill.name, keyword);
-        //log(`Skill Name: ${skill.name}, All: ${all}`);
+        log(`Skill Name: ${skill.name}, All: ${all}`);
         var n = found.length;
         var s = "";
         for (let ind = 0; ind < skill.effects.length; ind++) {
@@ -258,12 +259,30 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
             if (checkString(effect, ignoreEffectRegex))
                 continue;
             if (all || checkString(effect, keyword)) {
-                s += `${effect}\n`;
+
+                let match = reg.exec(effect);
+                if (!match) {
+                    s += `${effect}\n`;
+                    continue;
+                }
+
+                while(match) {
+                    let k = match[0].replace("(", "").replace(")", "");
+                    let subskill = skills[k];
+                    if (subskill && subskill.name.includes(skill.name) && !checkString(subskill.effects[0], ignoreEffectRegex)) {
+                        log(match);
+                        log(`Sub Skill: ${subskill.name}, Effect: ${subskill.effects}`);
+                        s += `${subskill.effects[0]}\n`;
+                    }
+
+                    match = reg.exec(effect);
+                }
             }
         }
 
         if (skill.strings.desc_short) {
             var desc = skill.strings.desc_short[0];
+            log(`Description: ${desc}, keyword: ${keyword}`);
             if (checkString(desc, keyword)) {
                 s += `*"${desc}"*\n`;
             }
@@ -272,8 +291,8 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
         for (let index = 0; index < found.length; index++) {
             const el = found[index];
             if (el.name == skill.name && el.value == s) {
-                log(`Found Duplicate`);
-                log(`Name: ${el.name}, Value: ${el.value}, S: ${s}`);
+                //log(`Found Duplicate`);
+                //log(`Name: ${el.name}, Value: ${el.value}, S: ${s}`);
                 return;
             }
         }
@@ -750,6 +769,9 @@ function handleK(receivedMessage, search, id, name) {
         fields = searchUnitFrames(unit);
     } else if (checkString(search, /enhancement/i)) {
         fields = searchUnitSkills(unit, /\+2$|\+1$/i, undefined);
+    } else if (checkString(search, /cd/i)) {
+        log("SEARCHING FOR CD");
+        fields = searchUnitSkills(unit, /one.*use.*every.*turns/i, undefined);
     } else {
         var items = searchUnitItems(unit, keyword);
         var skills = searchUnitSkills(unit, keyword, true);

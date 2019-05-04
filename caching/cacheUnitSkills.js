@@ -8,9 +8,9 @@ gldump = null;
 jpdump = null;
 
 log("loading units list")
-cacheUnit("401001405");
+//cacheUnit("401001405");
 //cacheUnit("401006805");
-//cacheAll();
+cacheAll();
 
 function cacheUnit(id) {
     var data = getUnitData(id);

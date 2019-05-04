@@ -69,7 +69,7 @@ var loading = true;
 // Click on your application -> Bot -> Token -> "Click to Reveal Token"
 var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
 var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
-client.login(bot_secret_token_test);
+client.login(bot_secret_token);
 // Keep track of added messages
 var botMessages = [];
 function cacheBotMessage(received, sent) {
@@ -200,6 +200,7 @@ function checkString(text, keyword) {
     return keyword.test(text.replace(/\s*/g, ""));
 }
 function searchUnitSkills(unit, keyword, active) {
+    var reg = /\([^\)]+\)/g;
     var LB = unit.LB;
     var skills = unit.skills;
     var found = [];
@@ -211,7 +212,7 @@ function searchUnitSkills(unit, keyword, active) {
             return;
         }
         var all = checkString(skill.name, keyword);
-        //log(`Skill Name: ${skill.name}, All: ${all}`);
+        log("Skill Name: " + skill.name + ", All: " + all);
         var n = found.length;
         var s = "";
         for (var ind = 0; ind < skill.effects.length; ind++) {
@@ -219,11 +220,26 @@ function searchUnitSkills(unit, keyword, active) {
             if (checkString(effect, ignoreEffectRegex))
                 continue;
             if (all || checkString(effect, keyword)) {
-                s += effect + "\n";
+                var match = reg.exec(effect);
+                if (!match) {
+                    s += effect + "\n";
+                    continue;
+                }
+                while (match) {
+                    var k = match[0].replace("(", "").replace(")", "");
+                    var subskill = skills[k];
+                    if (subskill && subskill.name.includes(skill.name) && !checkString(subskill.effects[0], ignoreEffectRegex)) {
+                        log(match);
+                        log("Sub Skill: " + subskill.name + ", Effect: " + subskill.effects);
+                        s += subskill.effects[0] + "\n";
+                    }
+                    match = reg.exec(effect);
+                }
             }
         }
         if (skill.strings.desc_short) {
             var desc = skill.strings.desc_short[0];
+            log("Description: " + desc + ", keyword: " + keyword);
             if (checkString(desc, keyword)) {
                 s += "*\"" + desc + "\"*\n";
             }
@@ -231,8 +247,8 @@ function searchUnitSkills(unit, keyword, active) {
         for (var index = 0; index < found.length; index++) {
             var el = found[index];
             if (el.name == skill.name && el.value == s) {
-                log("Found Duplicate");
-                log("Name: " + el.name + ", Value: " + el.value + ", S: " + s);
+                //log(`Found Duplicate`);
+                //log(`Name: ${el.name}, Value: ${el.value}, S: ${s}`);
                 return;
             }
         }
@@ -660,6 +676,10 @@ function handleK(receivedMessage, search, id, name) {
     }
     else if (checkString(search, /enhancement/i)) {
         fields = searchUnitSkills(unit, /\+2$|\+1$/i, undefined);
+    }
+    else if (checkString(search, /cd/i)) {
+        log("SEARCHING FOR CD");
+        fields = searchUnitSkills(unit, /one.*use.*every.*turns/i, undefined);
     }
     else {
         var items = searchUnitItems(unit, keyword);
