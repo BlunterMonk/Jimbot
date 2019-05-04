@@ -252,6 +252,11 @@
 			"damage": "2,492,124,075",
 			"turns": 9
 		},
+		"BM Golbez": {
+			"name": "BM Golbez",
+			"damage": "2,262,006,381",
+			"turns": 10
+		},
 		"Maria": {
 			"name": "Maria",
 			"damage": "2,248,364,297",
@@ -260,11 +265,6 @@
 		"Lulu": {
 			"name": "Lulu",
 			"damage": "2,155,750,083",
-			"turns": 10
-		},
-		"BM Golbez": {
-			"name": "BM Golbez",
-			"damage": "2,140,498,461",
 			"turns": 10
 		},
 		"Tiana": {
