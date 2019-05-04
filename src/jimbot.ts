@@ -250,61 +250,26 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
             return;
         }
 
-        var all = checkString(skill.name, keyword);
-        log(`Skill Name: ${skill.name}, All: ${all}`);
-        var n = found.length;
-        var s = "";
-        for (let ind = 0; ind < skill.effects.length; ind++) {
-            const effect = skill.effects[ind]
-            if (checkString(effect, ignoreEffectRegex))
-                continue;
-            if (all || checkString(effect, keyword)) {
-
-                let match = reg.exec(effect);
-                if (!match) {
-                    s += `${effect}\n`;
-                    continue;
-                }
-
-                while(match) {
-                    let k = match[0].replace("(", "").replace(")", "");
-                    let subskill = skills[k];
-                    if (subskill && subskill.name.includes(skill.name) && !checkString(subskill.effects[0], ignoreEffectRegex)) {
-                        log(match);
-                        log(`Sub Skill: ${subskill.name}, Effect: ${subskill.effects}`);
-                        s += `${subskill.effects[0]}\n`;
-                    }
-
-                    match = reg.exec(effect);
-                }
-            }
-        }
-
-        if (skill.strings.desc_short) {
-            var desc = skill.strings.desc_short[0];
-            log(`Description: ${desc}, keyword: ${keyword}`);
-            if (checkString(desc, keyword)) {
-                s += `*"${desc}"*\n`;
-            }
-        }
-
+        let total = collectSkillEffects(key, skills, keyword, "");
+        //log("\nTotal Text\n");
+        //log(total);
+        
         for (let index = 0; index < found.length; index++) {
             const el = found[index];
-            if (el.name == skill.name && el.value == s) {
+            if (el.name == skill.name && el.value == total) {
                 //log(`Found Duplicate`);
                 //log(`Name: ${el.name}, Value: ${el.value}, S: ${s}`);
                 return;
             }
         }
 
-        if (s.empty()) return;
+        if (total.empty()) return;
 
         found[found.length] = {
             name: skill.name,
-            value: s
+            value: total
         };
     });
-    log(found);
         
     // Search LB
     if (LB && (active === undefined || active == true)) {
@@ -330,56 +295,55 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
 
     return found;
 }
-function collectSkillEffects(skill, keyword) {
-
-    /*
+function collectSkillEffects(key, skills, keyword, total) {
+    var skill = skills[key];
     var all = checkString(skill.name, keyword);
-    log(`Skill Name: ${skill.name}, All: ${all}`);
-    var n = found.length;
-    var s = "";
+    //log(`Skill Name: ${skill.name}, All: ${all}`);
+
+    var reg = /\([^\)]+\)/g;
     for (let ind = 0; ind < skill.effects.length; ind++) {
         const effect = skill.effects[ind]
         if (checkString(effect, ignoreEffectRegex))
             continue;
+        
+        //log(`Skill Effect: ${effect}, Keyword: ${keyword}`);
         if (all || checkString(effect, keyword)) {
-
+            let added = false;
             let match = reg.exec(effect);
-            if (!match) {
-                s += `${effect}\n`;
-                continue;
-            }
+            do {
+                if (!match) break;
 
-            while(match) {
                 let k = match[0].replace("(", "").replace(")", "");
                 let subskill = skills[k];
-                if (subskill && subskill.name.includes(skill.name) && !checkString(subskill.effects[0], ignoreEffectRegex)) {
-                    log(match);
-                    log(`Sub Skill: ${subskill.name}, Effect: ${subskill.effects}`);
-                    s += `${subskill.effects[0]}\n`;
+                if (k != key && subskill && subskill.name.includes(skill.name) && !checkString(subskill.effects[0], ignoreEffectRegex)) {
+                    //log(match);
+                    //log(`Sub Skill: ${subskill.name}, Effect: ${subskill.effects}`);
+                    subskill.effects.forEach(sub => {
+                        total += `${sub}\n`;
+                        added = true;
+                    });
+                    //total += collectSkillEffects(k, skills, keyword, total);
                 }
 
                 match = reg.exec(effect);
-            }
+            } while(match);
+
+            if (!added)
+                total += `${effect}\n`;
         }
     }
 
     if (skill.strings.desc_short) {
         var desc = skill.strings.desc_short[0];
-        log(`Description: ${desc}, keyword: ${keyword}`);
         if (checkString(desc, keyword)) {
-            s += `*"${desc}"*\n`;
+            //log(`Description: ${desc}, keyword: ${keyword}`);
+            //log(`Effects`);
+            //log(skill.effects);
+            total += `*"${desc}"*\n`;
         }
     }
 
-    for (let index = 0; index < found.length; index++) {
-        const el = found[index];
-        if (el.name == skill.name && el.value == s) {
-            //log(`Found Duplicate`);
-            //log(`Name: ${el.name}, Value: ${el.value}, S: ${s}`);
-            return;
-        }
-    }
-    */
+    return total;
 }
 function searchUnitItems(unit, keyword: RegExp) {
     log(`searchUnitItems(${unit.name}, ${keyword})`);
