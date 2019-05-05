@@ -81,7 +81,7 @@ var loading = true;
 var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
 var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 
 
 // Keep track of added messages
@@ -1065,6 +1065,7 @@ function handleGlbestunits(receivedMessage, search, parameters) {
         var units = settings[v].split(" / ");
         var links = `**${v}:** `;
         units.forEach((u, ind) => {
+            log(u);
             u = convertSearchTerm(u);
             u = convertValueToLink(u);
             links += u;
@@ -1982,7 +1983,7 @@ function convertSearchTerm(search) {
         return alias.replaceAll(" ", "_");
     }
 
-    search = search.toLowerCase();
+    //search = search.toLowerCase();
     search = search.replaceAll(" ", "_");
     return search;
 }
