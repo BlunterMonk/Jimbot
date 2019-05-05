@@ -200,6 +200,11 @@ function getUnitData(id) {
 function checkString(text, keyword) {
     return keyword.test(text.replace(/\s*/g, ""));
 }
+function compareStrings(text, search) {
+    var keyword = new RegExp(search.replace(/_/g, ".*").replace(/ /g, ".*"), "i");
+    //log(`compareStrings(${text}, ${keyword})`);
+    return keyword.test(text.replace(/\s*/g, ""));
+}
 function searchUnitSkills(unit, keyword, active) {
     var reg = /\([^\)]+\)/g;
     var LB = unit.LB;
@@ -1352,17 +1357,31 @@ function getGif(search, param, callback) {
                 else
                     return 1;
             });
-            //log(gifs);
+            log(gifs);
             var img = gifs.find(function (n) {
-                if (param.includes("attack") || param.includes("atk")) {
-                    return n.toLowerCase().includes("attack") || n.toLowerCase().includes("atk");
+                n = n.toLowerCase();
+                if (param.includes("win")) {
+                    return n.includes(param) && !n.includes("before");
                 }
-                else if (param.includes("win")) {
-                    return n.toLowerCase().includes(param) && !n.toLowerCase().includes("before");
+                log("Compare Gifs: " + n + ", " + param);
+                // magic has priority
+                if (compareStrings(n, "limit")) {
+                    return compareStrings(param, "limit") && compareStrings(n, param);
                 }
-                else {
-                    return n.toLowerCase().includes(param);
+                else if (compareStrings(n, "mag")) {
+                    log("Found mag: param: " + compareStrings(param, "mag") + ", n to param: " + compareStrings(n, param));
+                    return compareStrings(n, param) && compareStrings(param, "mag");
                 }
+                else if (compareStrings(n, "standby")) {
+                    log("Found Standby: param: " + compareStrings(param, "magic") + ", n: " + compareStrings(n, "magic"));
+                    return compareStrings(param, "standby")
+                        && ((!compareStrings(param, "magic") && !compareStrings(n, "magic"))
+                            || (compareStrings(param, "magic") && compareStrings(n, "magic")));
+                }
+                else if (param.includes("attack") || n.includes("atk")) {
+                    return n.includes("attack") || n.includes("atk");
+                }
+                return compareStrings(n, param);
             });
             if (!img) {
                 img = gifs.find(function (n) {
@@ -1415,11 +1434,14 @@ function getGif(search, param, callback) {
                     var src = $(el).attr('src');
                     if (src === undefined)
                         return;
-                    if (rarity === "5") {
-                        if (!src.includes(id + "6")) {
+                    /*if (rarity === "5") {
+                        if (!src.includes(id + "7")){
                             return;
                         }
-                    }
+                    }*/
+                    //log(`SRC: ${src}`);
+                    if (src.includes("Move"))
+                        return;
                     var ext = getFileExtension(src);
                     if (ext === ".gif") {
                         gifs.push(ffbegifEndpoint + src);
