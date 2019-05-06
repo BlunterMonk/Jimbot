@@ -395,15 +395,13 @@ function searchUnitFrames(unit) {
 
     const LB = unit.LB;
     const skills = unit.skills;
-    var found = [];
+    var families = {};
     var keys = Object.keys(skills);
     keys.forEach(key => {
         var skill = skills[key];
         if (!skill.active || !skill.attack_frames || 
             skill.attack_frames.length == 0 || skill.attack_frames[0].length <= 1) return;
 
-        let s = "";
-        let n = found.length;
         let frames = [];
 
         skill.attack_frames.forEach(element => {
@@ -413,32 +411,50 @@ function searchUnitFrames(unit) {
         frames = frames.sort((a,b) => {
             return a - b;
         });
-        log(frames);
+        //log(frames);
         let str = arrayToString(frames);
         if (!str.str.empty()) {
-            found[n] = {
-                name: `${skill.name}${str.fam}`,
-                value: str.str
-            };
+            let fam = `${str.fam}: ${str.str}`;
+            if (!families[fam])
+                families[fam] = [];
+
+            if (families[fam].find(n => {return n == skill.name})) return;
+            families[fam].push(skill.name);
         }
     });
         
     // Search LB
     if (LB && LB.attack_frames &&
         LB.attack_frames.length > 0 && LB.attack_frames[0].length > 1) {
-        log(LB.attack_frames);
+        //log(LB.attack_frames);
 
         let str = arrayToString(LB.attack_frames[0]);
         if (str) {
-            found[found.length] = {
-                name: `${LB.name}${str.fam}`,
-                value: str.str
-            };
+            let fam = `${str.fam}: ${str.str}`;
+            if (!families[fam])
+                families[fam] = [];
+            
+            families[fam].push(`${LB.name} (LB)`);
         }
     }
 
-    //log(`Searched Skills For: ${keyword}`);
-    //log(found);
+    var found = [];
+    //log(`Searched Skill Frames`);
+    //log(families);
+    let famKeys = Object.keys(families);
+    famKeys.forEach(key => {
+        const fam = families[key];
+        let text = "";
+
+        fam.forEach(skill => {
+            text += `${skill}\n`;
+        });
+
+        found[found.length] = {
+            name: key,
+            value: text
+        }
+    });
 
     return found;
 }
@@ -552,12 +568,12 @@ function arrayToString(array) {
         }
     }
 
-    var fam = "";
+    var fam = "Orphans";
     var keys = Object.keys(chainFamilies);
     for (let ind = 0; ind < keys.length; ind++) {
         const key = keys[ind];
         if (chainFamilies[key] === str.trim()) {
-            fam = ` - ${key}`;
+            fam = `${key}`;
             break;
         }
     }
