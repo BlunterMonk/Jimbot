@@ -336,15 +336,13 @@ function searchUnitItems(unit, keyword) {
 function searchUnitFrames(unit) {
     var LB = unit.LB;
     var skills = unit.skills;
-    var found = [];
+    var families = {};
     var keys = Object.keys(skills);
     keys.forEach(function (key) {
         var skill = skills[key];
         if (!skill.active || !skill.attack_frames ||
             skill.attack_frames.length == 0 || skill.attack_frames[0].length <= 1)
             return;
-        var s = "";
-        var n = found.length;
         var frames = [];
         skill.attack_frames.forEach(function (element) {
             frames = frames.concat(element);
@@ -352,29 +350,44 @@ function searchUnitFrames(unit) {
         frames = frames.sort(function (a, b) {
             return a - b;
         });
-        log(frames);
+        //log(frames);
         var str = arrayToString(frames);
         if (!str.str.empty()) {
-            found[n] = {
-                name: "" + skill.name + str.fam,
-                value: str.str
-            };
+            var fam = str.fam + ": " + str.str;
+            if (!families[fam])
+                families[fam] = [];
+            if (families[fam].find(function (n) { return n == skill.name; }))
+                return;
+            families[fam].push(skill.name);
         }
     });
     // Search LB
     if (LB && LB.attack_frames &&
         LB.attack_frames.length > 0 && LB.attack_frames[0].length > 1) {
-        log(LB.attack_frames);
+        //log(LB.attack_frames);
         var str = arrayToString(LB.attack_frames[0]);
         if (str) {
-            found[found.length] = {
-                name: "" + LB.name + str.fam,
-                value: str.str
-            };
+            var fam = str.fam + ": " + str.str;
+            if (!families[fam])
+                families[fam] = [];
+            families[fam].push(LB.name + " (LB)");
         }
     }
-    //log(`Searched Skills For: ${keyword}`);
-    //log(found);
+    var found = [];
+    //log(`Searched Skill Frames`);
+    //log(families);
+    var famKeys = Object.keys(families);
+    famKeys.forEach(function (key) {
+        var fam = families[key];
+        var text = "";
+        fam.forEach(function (skill) {
+            text += skill + "\n";
+        });
+        found[found.length] = {
+            name: key,
+            value: text
+        };
+    });
     return found;
 }
 function loadUnitItems(JP, tmr, stmr) {
@@ -476,12 +489,12 @@ function arrayToString(array) {
             str += "" + element;
         }
     }
-    var fam = "";
+    var fam = "Orphans";
     var keys = Object.keys(chainFamilies);
     for (var ind = 0; ind < keys.length; ind++) {
         var key = keys[ind];
         if (chainFamilies[key] === str.trim()) {
-            fam = " - " + key;
+            fam = "" + key;
             break;
         }
     }
