@@ -158,7 +158,7 @@ function getSkillsFromUnit(unit, JP, unitId) {
         skillList[key].effects.forEach(effect => {
             let match = reg.exec(effect);
             while(match) {
-                log(match);
+                //log(match);
                 extraKeys.push(match[0].replace("(", "").replace(")", ""));
                 match = reg.exec(effect);
             }
