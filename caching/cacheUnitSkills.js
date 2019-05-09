@@ -164,12 +164,12 @@ function getSkillsFromUnit(unit, JP, unitId) {
             }
         });
     });
-    log(`\nExtra Keys`);
-    log(extraKeys);
+    //log(`\nExtra Keys`);
+    //log(extraKeys);
     extraKeys.forEach(key => {
         if (!skillList[key] || skillData[key]) return;
 
-        log(skillList[key]);
+        //log(skillList[key]);
         skillData[key] = trimSkill(skillList[key], "");
     });
 
