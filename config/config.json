@@ -48,7 +48,7 @@
 		"seraph": "High Seraph Ultima",
 		"baizuri": "Bai Hu & Zhu Que",
 		"bazuka": "Bai Hu & Zhu Que",
-		"cg_nichol": "Maritime Strategist Nichol",
+		"cg_nichol": "maritime strategist nichol",
 		"cg_lid": "Heavenly Technician Lid",
 		"cg_fina": "Lotus Mage Fina",
 		"cg_jake": "Nameless Gunner Jake",
@@ -73,7 +73,7 @@
 		"cg_noctis": "ノクティス王子",
 		"noctisv2": "ノクティス王子",
 		"fighter_sabin": "コルツの格闘家マッシュ",
-		"golbezv2": "black mage golbez",
+		"golbezv2": "black_mage_golbez",
 		"bm_golbez": "black mage golbez",
 		"cg_legs": "白百合の魔人フィーナ",
 		"leg": "rubicante",
@@ -86,7 +86,11 @@
 		"cg_onion_knight": "オニオンナイト",
 		"cgok": "オニオンナイト",
 		"okv2": "オニオンナイト",
-		"cafe_charlotte": "カフェシャルロット"
+		"cafe_charlotte": "カフェシャルロット",
+		"cotton": "chow",
+		"darkness": "black_mage_golbez",
+		"hazard": "knight delita",
+		"best_character_ever": "tifa"
 	},
 	"filetypes": [
 		".jpg",

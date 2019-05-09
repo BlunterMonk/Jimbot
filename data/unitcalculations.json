@@ -1,5 +1,10 @@
 {
 	"physical": {
+		"Zeno - Pending": {
+			"name": "Zeno - Pending",
+			"damage": "7,816,750,489",
+			"turns": 10
+		},
 		"Esther": {
 			"name": "Esther",
 			"damage": "7,313,434,972",
@@ -9,6 +14,11 @@
 			"name": "Balthier (TDW, max roll, with a dupe)",
 			"damage": "4,778,025,112",
 			"turns": 9
+		},
+		"Akstar": {
+			"name": "Akstar",
+			"damage": "4,385,485,895",
+			"turns": 12
 		},
 		"Citan (w/ external imperil)": {
 			"name": "Citan (w/ external imperil)",
@@ -185,11 +195,6 @@
 			"damage": "6,110,230,115",
 			"turns": 10
 		},
-		"Akstar (w/ his STMR)": {
-			"name": "Akstar (w/ his STMR)",
-			"damage": "5,863,796,854",
-			"turns": 12
-		},
 		"Physalis": {
 			"name": "Physalis",
 			"damage": "5,164,299,020",
@@ -199,11 +204,6 @@
 			"name": "Chocobo Fina (no imperil)",
 			"damage": "4,524,652,509",
 			"turns": 10
-		},
-		"Akstar": {
-			"name": "Akstar",
-			"damage": "4,385,485,895",
-			"turns": 12
 		},
 		"CG Firion (w/ external imperil)": {
 			"name": "CG Firion (w/ external imperil)",
@@ -396,6 +396,11 @@
 		}
 	},
 	"burst_physical": {
+		"Zeno - Pending": {
+			"name": "Zeno - Pending",
+			"damage": "20,577,661,701",
+			"turns": 6
+		},
 		"Balthier (TDW, max roll, with a dupe)": {
 			"name": "Balthier (TDW, max roll, with a dupe)",
 			"damage": "20,264,484,576",
@@ -410,6 +415,11 @@
 			"name": "Cid",
 			"damage": "11,984,870,247",
 			"turns": 3
+		},
+		"Akstar": {
+			"name": "Akstar",
+			"damage": "11,476,249,486",
+			"turns": 5
 		},
 		"Aranea": {
 			"name": "Aranea",
@@ -536,11 +546,6 @@
 			"damage": "17,548,855,857",
 			"turns": 6
 		},
-		"Akstar (w/ his STMR)": {
-			"name": "Akstar (w/ his STMR)",
-			"damage": "15,339,854,584",
-			"turns": 5
-		},
 		"Regina (Ideal)": {
 			"name": "Regina (Ideal)",
 			"damage": "15,166,284,403",
@@ -564,11 +569,6 @@
 		"CG Lightning": {
 			"name": "CG Lightning",
 			"damage": "11,621,131,961",
-			"turns": 5
-		},
-		"Akstar": {
-			"name": "Akstar",
-			"damage": "11,476,249,486",
 			"turns": 5
 		},
 		"Chocobo Fina (w/ external imperil)": {
