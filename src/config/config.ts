@@ -246,30 +246,36 @@ export class Config {
     getSettings(guildId: string, name: string) {
         return this.guilds[guildId].getSettings(name);
     }
-    getCalculations(search: string) {
-        var category = this.calculations[search];
+    getCalculations(searchTerm: string) {
+        var category = this.calculations[searchTerm];
 
         if (!category) {
             var found: { [key: string]: string } = {};
-            var burst = search.includes("burst_");
-            search = search.replace("burst_", "");
-
-            Object.keys(this.calculations).forEach((cat) => {
-                var category = this.calculations[cat];
-
-                if (burst && !cat.includes("burst_")) {
-                    return;
-                } else if (!burst && cat.includes("burst_")) {
-                    return;
-                }
-
-                Object.keys(category).forEach((key) => {
-                    var unit = category[key];
-                    var name = unit.name.toLowerCase().replaceAll(" ", "_");
+            var names = searchTerm.split("|");
+            console.log("Get Calculations");
+            console.log(names);
+            names.forEach((search, index) => {
+                search = search.trim();
+                var burst = search.includes("burst_");
+                search = search.replace("burst_", "");
+                
+                Object.keys(this.calculations).forEach((cat) => {
+                    var category = this.calculations[cat];
                     
-                    if (name.includes(search.toLowerCase())) {
-                        found[unit.name] = unit;
+                    if (burst && !cat.includes("burst_")) {
+                        return;
+                    } else if (!burst && cat.includes("burst_")) {
+                        return;
                     }
+                    
+                    Object.keys(category).forEach((key) => {
+                        var unit = category[key];
+                        var name = unit.name.toLowerCase().replaceAll(" ", "_");
+                        
+                        if (name.includes(search.toLowerCase())) {
+                            found[unit.name] = unit;
+                        }
+                    });
                 });
             });
 

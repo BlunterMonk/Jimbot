@@ -11,12 +11,15 @@ import "./string/string-extension.js";
 import * as Config from "./config/config.js";
 import * as Editor from "./editor/Edit.js";
 import * as FFBE from "./ffbe/ffbewiki.js";
+import * as Cache from "./cache/cache.js";
 import * as constants from "./constants.js";
+
 
 const client = new Discord.Client();
 var config = null;
 var editor = null;
 var ffbe = null;
+var cache = null;
 
 var mainChannelID;
 const pinkHexCode = 0xffd1dc;
@@ -128,6 +131,9 @@ client.on("guildDelete", guild => {
 
 client.on("ready", () => {
     log("Connected as " + client.user.tag);
+
+    cache = new Cache.Cache();
+    cache.init();
 
     editor = new Editor.Edit();
     editor.init((msg, key, file) => {
@@ -1141,12 +1147,13 @@ function handleHelp(receivedMessage) {
 // DAMAGE
 function handleDpt(receivedMessage, search, parameters, isBurst) {
 
-    var calc = config.getCalculations(search);
+    search = search.replaceAll("_", " ");
+    var calc = cache.getCalculations(search);
     if (!calc) {
         log("Could not find calculations for: " + search);
         return;
     }
-    
+
     var text = "";
     var limit = 5;
     if (parameters && parameters[0])
@@ -1166,38 +1173,24 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
     }
 
     var title = "";
-    var s = search.replaceAll("_", " ").toTitleCase();
+    var s = search.toTitleCase();
     if (isBurst) {
         title = `Burt damage for: ${s}. (damage on turn)`;
     } else {
         title = `DPT for: ${s}. (dpt - turns for rotation)`;
     }
 
+    var embed = <any>{
+        color: pinkHexCode,
+        title: title,
+        url: "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0/edit#gid=0",
+        description: text,
+        footer: {
+            text: "visit the link provided for more calculations"
+        },
+    }
     
-    client.fetchUser(furculaUserID)
-    .then(calculator => {
-
-        receivedMessage.channel
-        .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: calculator.username,
-                    icon_url: calculator.avatarURL
-                },
-                title: title,
-                url: "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0/edit#gid=0",
-                description: text,
-                footer: {
-                    text: "visit the link provided for more calculations"
-                },  
-            }
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
-    });
+    sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
 function handleBurst(receivedMessage, search, parameters) {
     handleDpt(receivedMessage, `burst_${search}`, parameters, true);
@@ -1435,6 +1428,25 @@ function handlePrefix(receivedMessage) {
 
         respondSuccess(receivedMessage);
     }
+}
+function handleUpdate(receivedMessage, search, parameters) {
+
+    var id = receivedMessage.author.id;
+    if (id != renaulteUserID && id != jimooriUserID && id != furculaUserID) {
+        return;
+    }
+
+    log("Handle Update");
+
+    try {
+        cache.updateDamage();
+    } catch(e) {
+        log(e);
+        respondFailure(receivedMessage, true);
+    }
+
+    log("Finished Updating");
+    respondSuccess(receivedMessage, true);
 }
 
 // COMMANDS END
@@ -1981,6 +1993,36 @@ function guildMessage(receivedMessage, guildId, prefix) {
             }
         }
     }
+}
+
+// SEND RESPONSE
+
+function sendMessage(receivedMessage, embed, callback) {
+    receivedMessage.channel
+    .send({embed: embed})
+    .then(message => {
+        cacheBotMessage(receivedMessage.id, message.id);
+        if (callback) callback(message);
+    })
+    .catch(console.error);
+}
+function sendMessageWithAuthor(receivedMessage, embed, authorId, callback = null) {
+    client.fetchUser(authorId)
+    .then(author => {
+
+        embed.author = {
+            name: author.username,
+            icon_url: author.avatarURL
+        };
+
+        receivedMessage.channel
+        .send({embed: embed})
+        .then(message => {
+            cacheBotMessage(receivedMessage.id, message.id);
+            if (callback) callback(message);
+        })
+        .catch(console.error);
+    });
 }
 
 // HELPERS
