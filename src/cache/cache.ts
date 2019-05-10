@@ -48,33 +48,42 @@ export class Cache {
         });
     }
 
+
     // Furcula Damage Calculations
-    getCalculations(searchTerm: string) {
+    getCalculations(searchTerm: string, isBurst: boolean) {
         var category = this.calculations[searchTerm];
+        if (category)
+            return category;
+        else if (isBurst && this.calculations["burst " + searchTerm]) {
+            return this.calculations["burst " + searchTerm];
+        }
 
         if (!category) {
             var found: { [key: string]: string } = {};
             var names = searchTerm.split("|");
+
             console.log("Get Calculations");
             console.log(names);
             names.forEach((search, index) => {
+
                 search = search.trim();
-                var burst = search.includes("burst_");
-                search = search.replace("burst_", "");
                 
                 Object.keys(this.calculations).forEach((cat) => {
                     var category = this.calculations[cat];
                     
-                    if (burst && !cat.includes("burst_")) {
+                    if (isBurst && !cat.includes("burst")) {
                         return;
-                    } else if (!burst && cat.includes("burst_")) {
+                    } else if (!isBurst && cat.includes("burst")) {
                         return;
                     }
-                    
+
+                    console.log(`Searching Category: ${cat}, for: ${search}`);
+        
                     Object.keys(category).forEach((key) => {
                         var unit = category[key];
                         var name = unit.name.toLowerCase().replaceAll(" ", "_");
                         
+                        console.log(`Found Unit: ${name}`);
                         if (name.includes(search.toLowerCase())) {
                             found[unit.name] = unit;
                         }
@@ -83,8 +92,6 @@ export class Cache {
             });
 
             return found;
-        } else {
-            return category;
         }
     }
 };
