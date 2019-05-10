@@ -38,7 +38,7 @@ function authorize(credentials, callback, finished) {
         { name: "physical", range: `${sheetName}!B3:D` },
         { name: "magic", range: `${sheetName}!G3:I` },
         { name: "hybrid", range: `${sheetName}!L3:N` },
-        { name: "burst physal", range: `${burstSheetName}!B3:D` },
+        { name: "burst physical", range: `${burstSheetName}!B3:D` },
         { name: "burst magic", range: `${burstSheetName}!G3:I` },
         { name: "burst hybrid", range: `${burstSheetName}!L3:N` }
     ]
