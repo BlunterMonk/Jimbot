@@ -1,12 +1,14 @@
 import * as fs from "fs";
 import "../string/string-extension.js";
 
+import * as furcDamage from "./cacheDamage.js";
+
 var rankingDump = 'data/rankingsdump.json';
 var unitCalc = 'data/unitcalculations.json';
 var infoJson = 'data/information.json';
 
 
-export class Config {
+export class Cache {
     configuration: any;
     rankings: any;
     fullRankings: any;
@@ -38,6 +40,9 @@ export class Config {
         this.fullRankings = JSON.parse(fs.readFileSync(rankingDump).toString());
         this.information = JSON.parse(fs.readFileSync(infoJson).toString());
         this.calculations = JSON.parse(fs.readFileSync(unitCalc).toString());
+    }
+    updateDamage() {
+        furcDamage.UpdateFurculaCalculations();
     }
 
     // Wiki Rankings

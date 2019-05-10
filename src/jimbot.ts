@@ -13,7 +13,6 @@ import * as Editor from "./editor/Edit.js";
 import * as FFBE from "./ffbe/ffbewiki.js";
 import * as constants from "./constants.js";
 
-import * as Cache from "./cache/cacheDamage.js";
 
 const client = new Discord.Client();
 var config = null;
@@ -1442,7 +1441,6 @@ function handleUpdate(receivedMessage, search, parameters) {
 
     log("Handle Update");
 
-    Cache.UpdateFurculaCalculations();
 
     log("Finished Updating");
 }
