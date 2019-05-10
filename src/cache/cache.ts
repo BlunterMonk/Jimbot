@@ -7,21 +7,14 @@ var rankingDump = 'data/rankingsdump.json';
 var unitCalc = 'data/unitcalculations.json';
 var infoJson = 'data/information.json';
 
-
 export class Cache {
-    configuration: any;
-    rankings: any;
     fullRankings: any;
-    serverSettings: any;
     calculations: any;
     information: any;
-    guilds: any;
     constructor() {
     }
 
     init() {
-        this.guilds = {};
-        
         var dump = fs.readFileSync(rankingDump);
         this.fullRankings = JSON.parse(dump.toString());
                 
@@ -42,7 +35,10 @@ export class Cache {
         this.calculations = JSON.parse(fs.readFileSync(unitCalc).toString());
     }
     updateDamage() {
-        furcDamage.UpdateFurculaCalculations();
+        furcDamage.UpdateFurculaCalculations(() =>{
+            this.calculations = JSON.parse(fs.readFileSync(unitCalc).toString());
+            console.log("Reloaded Calculations");
+        });
     }
 
     // Wiki Rankings
@@ -53,30 +49,36 @@ export class Cache {
     }
 
     // Furcula Damage Calculations
-    getCalculations(search: string) {
-        var category = this.calculations[search];
+    getCalculations(searchTerm: string) {
+        var category = this.calculations[searchTerm];
 
         if (!category) {
             var found: { [key: string]: string } = {};
-            var burst = search.includes("burst_");
-            search = search.replace("burst_", "");
-
-            Object.keys(this.calculations).forEach((cat) => {
-                var category = this.calculations[cat];
-
-                if (burst && !cat.includes("burst_")) {
-                    return;
-                } else if (!burst && cat.includes("burst_")) {
-                    return;
-                }
-
-                Object.keys(category).forEach((key) => {
-                    var unit = category[key];
-                    var name = unit.name.toLowerCase().replaceAll(" ", "_");
+            var names = searchTerm.split("|");
+            console.log("Get Calculations");
+            console.log(names);
+            names.forEach((search, index) => {
+                search = search.trim();
+                var burst = search.includes("burst_");
+                search = search.replace("burst_", "");
+                
+                Object.keys(this.calculations).forEach((cat) => {
+                    var category = this.calculations[cat];
                     
-                    if (name.includes(search.toLowerCase())) {
-                        found[unit.name] = unit;
+                    if (burst && !cat.includes("burst_")) {
+                        return;
+                    } else if (!burst && cat.includes("burst_")) {
+                        return;
                     }
+                    
+                    Object.keys(category).forEach((key) => {
+                        var unit = category[key];
+                        var name = unit.name.toLowerCase().replaceAll(" ", "_");
+                        
+                        if (name.includes(search.toLowerCase())) {
+                            found[unit.name] = unit;
+                        }
+                    });
                 });
             });
 

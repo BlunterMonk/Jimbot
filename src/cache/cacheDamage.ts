@@ -22,7 +22,7 @@ const TOKEN_PATH = 'token.json';
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials, callback) {
+function authorize(credentials, callback, finished) {
     const {client_secret, client_id, redirect_uris} = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
@@ -36,11 +36,11 @@ function authorize(credentials, callback) {
 
     var ranges = [
         { name: "physical", range: `${sheetName}!B3:D` },
-        { name: "magical", range: `${sheetName}!G3:I` },
+        { name: "magic", range: `${sheetName}!G3:I` },
         { name: "hybrid", range: `${sheetName}!L3:N` },
-        { name: "burst_physical", range: `${burstSheetName}!B3:D` },
-        { name: "burst_magical", range: `${burstSheetName}!G3:I` },
-        { name: "burst_hybrid", range: `${burstSheetName}!L3:N` }
+        { name: "burst physal", range: `${burstSheetName}!B3:D` },
+        { name: "burst magic", range: `${burstSheetName}!G3:I` },
+        { name: "burst hybrid", range: `${burstSheetName}!L3:N` }
     ]
 
     var units = {};
@@ -59,6 +59,8 @@ function authorize(credentials, callback) {
 
             var save = JSON.stringify(units, null, "\t");
             fs.writeFileSync(saveLocation, save);
+
+            finished();
         }
     };
 
@@ -156,7 +158,7 @@ function GetUnitComparison(auth, index, range, callback) {
     });
 }
 
-export var UpdateFurculaCalculations = function() {
+export var UpdateFurculaCalculations = function(callback) {
 
     console.log(TOKEN_PATH);
 
@@ -164,6 +166,6 @@ export var UpdateFurculaCalculations = function() {
         if (err) 
             return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Sheets API.
-        authorize(JSON.parse(content), GetUnitComparison);
+        authorize(JSON.parse(content), GetUnitComparison, callback);
     });
 }

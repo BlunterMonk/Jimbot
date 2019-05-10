@@ -217,27 +217,33 @@ var Config = /** @class */ (function () {
     Config.prototype.getSettings = function (guildId, name) {
         return this.guilds[guildId].getSettings(name);
     };
-    Config.prototype.getCalculations = function (search) {
+    Config.prototype.getCalculations = function (searchTerm) {
         var _this = this;
-        var category = this.calculations[search];
+        var category = this.calculations[searchTerm];
         if (!category) {
             var found = {};
-            var burst = search.includes("burst_");
-            search = search.replace("burst_", "");
-            Object.keys(this.calculations).forEach(function (cat) {
-                var category = _this.calculations[cat];
-                if (burst && !cat.includes("burst_")) {
-                    return;
-                }
-                else if (!burst && cat.includes("burst_")) {
-                    return;
-                }
-                Object.keys(category).forEach(function (key) {
-                    var unit = category[key];
-                    var name = unit.name.toLowerCase().replaceAll(" ", "_");
-                    if (name.includes(search.toLowerCase())) {
-                        found[unit.name] = unit;
+            var names = searchTerm.split("|");
+            console.log("Get Calculations");
+            console.log(names);
+            names.forEach(function (search, index) {
+                search = search.trim();
+                var burst = search.includes("burst_");
+                search = search.replace("burst_", "");
+                Object.keys(_this.calculations).forEach(function (cat) {
+                    var category = _this.calculations[cat];
+                    if (burst && !cat.includes("burst_")) {
+                        return;
                     }
+                    else if (!burst && cat.includes("burst_")) {
+                        return;
+                    }
+                    Object.keys(category).forEach(function (key) {
+                        var unit = category[key];
+                        var name = unit.name.toLowerCase().replaceAll(" ", "_");
+                        if (name.includes(search.toLowerCase())) {
+                            found[unit.name] = unit;
+                        }
+                    });
                 });
             });
             return found;

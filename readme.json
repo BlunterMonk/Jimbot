@@ -32,7 +32,7 @@
         },
         {
             "name": "Get Unit Calculations",
-            "value": "- **?dpt** *[unit name -or- category]* \"[limit]\"\n- **?burst** *[unit name -or- category]* \"[limit]\"\n- optional: the amount of results to return, default is 5.\n- categories: \"physical\", \"magical\", \"hybrid\"\n- example: **?dpt Esther**\n- example: **?burst hybrid \"10\"**"
+            "value": "- **?dpt** *[unit name -or- category]* \"[limit]\"\n- **?burst** *[unit name -or- category]* \"[limit]\"\n- optional: the amount of results to return, default is 5.\n- categories: \"physical\", \"magic\", \"hybrid\"\n- example: **?dpt Esther**\n- example: **?burst hybrid \"10\"**\nYou can search for multiple units at once by separating the names with a pipe(|) character."
         },
         {
             "name": "Get Best Units",
