@@ -1,8 +1,8 @@
 {
 	"physical": {
-		"Zeno - Pending": {
-			"name": "Zeno - Pending",
-			"damage": "7,816,750,489",
+		"Zeno": {
+			"name": "Zeno",
+			"damage": "9,572,926,490",
 			"turns": 10
 		},
 		"Esther": {
@@ -154,81 +154,6 @@
 			"name": "Unreleased units",
 			"damage": "0",
 			"turns": 0
-		},
-		"Regina (Ideal)": {
-			"name": "Regina (Ideal)",
-			"damage": "12,205,431,823",
-			"turns": 4
-		},
-		"CG Bartz": {
-			"name": "CG Bartz",
-			"damage": "9,077,309,710",
-			"turns": 12
-		},
-		"Regina (only LB chain)": {
-			"name": "Regina (only LB chain)",
-			"damage": "8,265,156,492",
-			"turns": 4
-		},
-		"Chocobo Fina (w/ external imperil)": {
-			"name": "Chocobo Fina (w/ external imperil)",
-			"damage": "7,918,141,891",
-			"turns": 10
-		},
-		"Regina (elemental weapon, only LB chain)": {
-			"name": "Regina (elemental weapon, only LB chain)",
-			"damage": "7,224,383,739",
-			"turns": 4
-		},
-		"CG Lightning": {
-			"name": "CG Lightning",
-			"damage": "7,154,877,866",
-			"turns": 11
-		},
-		"Adventurer Locke": {
-			"name": "Adventurer Locke",
-			"damage": "6,755,725,894",
-			"turns": 7
-		},
-		"Assassin Shadow": {
-			"name": "Assassin Shadow",
-			"damage": "6,110,230,115",
-			"turns": 10
-		},
-		"Physalis": {
-			"name": "Physalis",
-			"damage": "5,164,299,020",
-			"turns": 10
-		},
-		"Chocobo Fina (no imperil)": {
-			"name": "Chocobo Fina (no imperil)",
-			"damage": "4,524,652,509",
-			"turns": 10
-		},
-		"CG Firion (w/ external imperil)": {
-			"name": "CG Firion (w/ external imperil)",
-			"damage": "3,804,997,673",
-			"turns": 10
-		},
-		"Kimono Ayaka (w/ external imperil)": {
-			"name": "Kimono Ayaka (w/ external imperil)",
-			"damage": "3,463,219,497",
-			"turns": 7
-		},
-		"Regina (No chain mod)": {
-			"name": "Regina (No chain mod)",
-			"damage": "3,239,808,505",
-			"turns": 4
-		},
-		"CG Firion (no imperil)": {
-			"name": "CG Firion (no imperil)",
-			"damage": "2,186,024,941",
-			"turns": 10
-		},
-		"Kimono Ayaka (no imperil)": {
-			"name": "Kimono Ayaka (no imperil)",
-			"damage": "1,978,982,569",
-			"turns": 7
 		}
 	},
 	"magical": {
@@ -326,21 +251,6 @@
 			"name": "Unreleased units",
 			"damage": "0",
 			"turns": 0
-		},
-		"CG Dark Fina": {
-			"name": "CG Dark Fina",
-			"damage": "10,377,428,109",
-			"turns": 12
-		},
-		"CG Terra": {
-			"name": "CG Terra",
-			"damage": "6,639,825,150",
-			"turns": 10
-		},
-		"Sol": {
-			"name": "Sol",
-			"damage": "3,540,027,809",
-			"turns": 12
 		}
 	},
 	"hybrid": {
@@ -396,15 +306,15 @@
 		}
 	},
 	"burst_physical": {
-		"Zeno - Pending": {
-			"name": "Zeno - Pending",
-			"damage": "20,577,661,701",
-			"turns": 6
-		},
 		"Balthier (TDW, max roll, with a dupe)": {
 			"name": "Balthier (TDW, max roll, with a dupe)",
 			"damage": "20,264,484,576",
 			"turns": 4
+		},
+		"Zeno": {
+			"name": "Zeno",
+			"damage": "19,863,601,380",
+			"turns": 6
 		},
 		"Esther": {
 			"name": "Esther",
