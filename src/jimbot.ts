@@ -1148,7 +1148,7 @@ function handleHelp(receivedMessage) {
 function handleDpt(receivedMessage, search, parameters, isBurst) {
 
     search = search.replaceAll("_", " ");
-    var calc = cache.getCalculations(search);
+    var calc = cache.getCalculations(search, isBurst);
     if (!calc) {
         log("Could not find calculations for: " + search);
         return;
@@ -1175,7 +1175,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
     var title = "";
     var s = search.toTitleCase();
     if (isBurst) {
-        title = `Burt damage for: ${s}. (damage on turn)`;
+        title = `Burst damage for: ${s}. (damage on turn)`;
     } else {
         title = `DPT for: ${s}. (dpt - turns for rotation)`;
     }
@@ -1193,7 +1193,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
     sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
 function handleBurst(receivedMessage, search, parameters) {
-    handleDpt(receivedMessage, `burst_${search}`, parameters, true);
+    handleDpt(receivedMessage, search, parameters, true);
 }
 
 
