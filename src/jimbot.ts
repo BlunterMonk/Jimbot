@@ -13,6 +13,8 @@ import * as Editor from "./editor/Edit.js";
 import * as FFBE from "./ffbe/ffbewiki.js";
 import * as constants from "./constants.js";
 
+import * as Cache from "./cache/cacheDamage.js";
+
 const client = new Discord.Client();
 var config = null;
 var editor = null;
@@ -81,7 +83,7 @@ var loading = true;
 var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
 var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
 
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 
 
 // Keep track of added messages
@@ -1435,6 +1437,14 @@ function handlePrefix(receivedMessage) {
 
         respondSuccess(receivedMessage);
     }
+}
+function handleUpdate(receivedMessage, search, parameters) {
+
+    log("Handle Update");
+
+    Cache.UpdateFurculaCalculations();
+
+    log("Finished Updating");
 }
 
 // COMMANDS END

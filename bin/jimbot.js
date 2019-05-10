@@ -11,6 +11,7 @@ var Config = require("./config/config.js");
 var Editor = require("./editor/Edit.js");
 var FFBE = require("./ffbe/ffbewiki.js");
 var constants = require("./constants.js");
+var Cache = require("./cache/cacheDamage.js");
 var client = new Discord.Client();
 var config = null;
 var editor = null;
@@ -70,7 +71,7 @@ var loading = true;
 // Click on your application -> Bot -> Token -> "Click to Reveal Token"
 var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
 var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
-client.login(bot_secret_token);
+client.login(bot_secret_token_test);
 // Keep track of added messages
 var botMessages = [];
 function cacheBotMessage(received, sent) {
@@ -1276,6 +1277,11 @@ function handlePrefix(receivedMessage) {
         config.init();
         respondSuccess(receivedMessage);
     }
+}
+function handleUpdate(receivedMessage, search, parameters) {
+    log("Handle Update");
+    Cache.UpdateFurculaCalculations();
+    log("Finished Updating");
 }
 // COMMANDS END
 function convertValueToLink(value) {
