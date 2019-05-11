@@ -1,211 +1,101 @@
 {
-	"burst magic": {
-		"BM Golbez": {
-			"name": "BM Golbez",
-			"damage": "7,153,117,137",
-			"turns": 7
-		},
-		"Elly": {
-			"name": "Elly",
-			"damage": "6,858,739,104",
-			"turns": 7
-		},
-		"Tiana": {
-			"name": "Tiana",
-			"damage": "4,606,051,143",
-			"turns": 8
-		},
-		"Christine (w/ external imperil)": {
-			"name": "Christine (w/ external imperil)",
-			"damage": "4,287,540,131",
-			"turns": 7
-		},
-		"Ultima (spark chain)": {
-			"name": "Ultima (spark chain)",
-			"damage": "3,948,888,180",
-			"turns": 3
-		},
-		"Sophia": {
-			"name": "Sophia",
-			"damage": "3,714,298,098",
-			"turns": 5
-		},
-		"Lulu": {
-			"name": "Lulu",
-			"damage": "3,635,677,723",
-			"turns": 8
-		},
-		"Trance Terra (w/ external imperil)": {
-			"name": "Trance Terra (w/ external imperil)",
-			"damage": "3,188,292,504",
-			"turns": 3
-		},
-		"Ultima": {
-			"name": "Ultima",
-			"damage": "3,181,837,958",
-			"turns": 3
-		},
-		"Maria": {
-			"name": "Maria",
-			"damage": "3,098,869,978",
-			"turns": 2
-		},
-		"Circe": {
-			"name": "Circe",
-			"damage": "2,588,290,269",
-			"turns": 6
-		},
-		"Christine (no external imperil)": {
-			"name": "Christine (no external imperil)",
-			"damage": "2,579,964,268",
-			"turns": 3
-		},
-		"Barbariccia (spark chain w/ raging wind, no TMR)": {
-			"name": "Barbariccia (spark chain w/ raging wind, no TMR)",
-			"damage": "2,413,802,531",
-			"turns": 11
-		},
-		"Trance Terra (no external imperil)": {
-			"name": "Trance Terra (no external imperil)",
-			"damage": "1,821,881,431",
-			"turns": 3
-		},
-		"Mediena": {
-			"name": "Mediena",
-			"damage": "1,791,821,138",
-			"turns": 7
-		},
-		"Barbariccia (w/ raging wind, no TMR)": {
-			"name": "Barbariccia (w/ raging wind, no TMR)",
-			"damage": "1,580,870,672",
-			"turns": 11
-		},
-		"Grim Lord Sakura": {
-			"name": "Grim Lord Sakura",
-			"damage": "1,358,185,411",
+	"burst hybrid": {
+		"Kurasame (no element w/ no external imperil)": {
+			"name": "Kurasame (no element w/ no external imperil)",
+			"damage": "5,431,967,805",
 			"turns": 4
 		},
-		"Barbariccia (w/ aeroja & TMR)": {
-			"name": "Barbariccia (w/ aeroja & TMR)",
-			"damage": "1,214,761,573",
-			"turns": 5
-		},
-		"Unreleased units": {
-			"name": "Unreleased units",
-			"damage": "0",
-			"turns": 0
-		},
-		"CG Terra": {
-			"name": "CG Terra",
-			"damage": "14,424,279,916",
-			"turns": 8
-		},
-		"CG Dark Fina": {
-			"name": "CG Dark Fina",
-			"damage": "13,353,670,261",
+		"Kurasame (no element w/ external imperil) *": {
+			"name": "Kurasame (no element w/ external imperil) *",
+			"damage": "4,752,971,830",
 			"turns": 3
 		},
-		"Sol": {
-			"name": "Sol",
-			"damage": "6,094,258,013",
-			"turns": 8
-		}
-	},
-	"magic": {
-		"Elly": {
-			"name": "Elly",
-			"damage": "3,204,337,299",
-			"turns": 10
+		"Felix": {
+			"name": "Felix",
+			"damage": "4,155,018,238",
+			"turns": 5
 		},
-		"Ultima (spark chain)": {
-			"name": "Ultima (spark chain)",
-			"damage": "3,120,679,118",
-			"turns": 9
+		"Kurasame (ice weapon)": {
+			"name": "Kurasame (ice weapon)",
+			"damage": "4,015,107,873",
+			"turns": 7
 		},
-		"Sophia": {
-			"name": "Sophia",
-			"damage": "2,600,841,004",
-			"turns": 9
+		"Aurora Fryevia": {
+			"name": "Aurora Fryevia",
+			"damage": "2,808,413,032",
+			"turns": 3
 		},
-		"Ultima": {
-			"name": "Ultima",
-			"damage": "2,492,124,075",
-			"turns": 9
-		},
-		"BM Golbez": {
-			"name": "BM Golbez",
-			"damage": "2,262,006,381",
-			"turns": 10
-		},
-		"Maria": {
-			"name": "Maria",
-			"damage": "2,248,364,297",
+		"Karlette": {
+			"name": "Karlette",
+			"damage": "2,543,898,950",
 			"turns": 6
 		},
-		"Lulu": {
-			"name": "Lulu",
-			"damage": "2,155,750,083",
-			"turns": 10
+		"Fryevia": {
+			"name": "Fryevia",
+			"damage": "2,473,221,261",
+			"turns": 3
 		},
-		"Tiana": {
-			"name": "Tiana",
-			"damage": "1,966,324,641",
+		"Kunshira (spark chain, no external imperil)": {
+			"name": "Kunshira (spark chain, no external imperil)",
+			"damage": "1,563,891,133",
+			"turns": 2
+		},
+		"Kunshira (spark chain, w/ single element external imperil)": {
+			"name": "Kunshira (spark chain, w/ single element external imperil)",
+			"damage": "1,492,069,593",
+			"turns": 2
+		}
+	},
+	"hybrid": {
+		"Kurasame (no element w/ external imperil)": {
+			"name": "Kurasame (no element w/ external imperil)",
+			"damage": "2,885,653,006",
 			"turns": 11
 		},
-		"Christine (w/ external imperil)": {
-			"name": "Christine (w/ external imperil)",
-			"damage": "1,802,243,665",
-			"turns": 7
-		},
-		"Christine (no external imperil)": {
-			"name": "Christine (no external imperil)",
-			"damage": "1,245,745,193",
-			"turns": 7
-		},
-		"Grim Lord Sakura": {
-			"name": "Grim Lord Sakura",
-			"damage": "1,239,972,977",
+		"Felix": {
+			"name": "Felix",
+			"damage": "2,457,303,755",
 			"turns": 10
 		},
-		"Barbariccia (spark chain w/ raging wind, no TMR)": {
-			"name": "Barbariccia (spark chain w/ raging wind, no TMR)",
-			"damage": "972,806,948",
-			"turns": 12
+		"Kurasame (ice w/ external imperil)": {
+			"name": "Kurasame (ice w/ external imperil)",
+			"damage": "2,158,088,948",
+			"turns": 11
 		},
-		"Mediena": {
-			"name": "Mediena",
-			"damage": "1,091,256,102",
-			"turns": 8
+		"Aurora Fryevia": {
+			"name": "Aurora Fryevia",
+			"damage": "2,014,664,075",
+			"turns": 11
 		},
-		"Trance Terra (w/ external imperil)": {
-			"name": "Trance Terra (w/ external imperil)",
-			"damage": "989,663,987",
+		"Kurasame (no element w/ no external imperil)": {
+			"name": "Kurasame (no element w/ no external imperil)",
+			"damage": "1,963,085,122",
+			"turns": 11
+		},
+		"Kurasame (ice w/ no external imperil)": {
+			"name": "Kurasame (ice w/ no external imperil)",
+			"damage": "1,899,180,164",
+			"turns": 11
+		},
+		"Karlette": {
+			"name": "Karlette",
+			"damage": "1,693,927,590",
 			"turns": 7
 		},
-		"Circe": {
-			"name": "Circe",
-			"damage": "816,075,420",
-			"turns": 9
+		"Kunshira (spark chain, w/ single element external imperil)": {
+			"name": "Kunshira (spark chain, w/ single element external imperil)",
+			"damage": "1,412,709,491",
+			"turns": 5
 		},
-		"Barbariccia (w/ aeroja & TMR)": {
-			"name": "Barbariccia (w/ aeroja & TMR)",
-			"damage": "697,788,334",
-			"turns": 12
-		},
-		"Barbariccia (w/ raging wind, no TMR)": {
-			"name": "Barbariccia (w/ raging wind, no TMR)",
-			"damage": "682,628,667",
-			"turns": 12
-		},
-		"Trance Terra (no external imperil)": {
-			"name": "Trance Terra (no external imperil)",
-			"damage": "565,522,278",
+		"Fryevia": {
+			"name": "Fryevia",
+			"damage": "1,335,445,683",
 			"turns": 7
 		},
-		"Unreleased units": {
-			"name": "Unreleased units",
-			"damage": "0",
-			"turns": 0
+		"Kunshira (spark chain, no external imperil)": {
+			"name": "Kunshira (spark chain, no external imperil)",
+			"damage": "1,088,590,887",
+			"turns": 6
 		}
 	},
 	"physical": {
@@ -363,58 +253,6 @@
 			"name": "Unreleased units",
 			"damage": "0",
 			"turns": 0
-		}
-	},
-	"hybrid": {
-		"Kurasame (no element w/ external imperil)": {
-			"name": "Kurasame (no element w/ external imperil)",
-			"damage": "2,885,653,006",
-			"turns": 11
-		},
-		"Felix": {
-			"name": "Felix",
-			"damage": "2,457,303,755",
-			"turns": 10
-		},
-		"Kurasame (ice w/ external imperil)": {
-			"name": "Kurasame (ice w/ external imperil)",
-			"damage": "2,158,088,948",
-			"turns": 11
-		},
-		"Aurora Fryevia": {
-			"name": "Aurora Fryevia",
-			"damage": "2,014,664,075",
-			"turns": 11
-		},
-		"Kurasame (no element w/ no external imperil)": {
-			"name": "Kurasame (no element w/ no external imperil)",
-			"damage": "1,963,085,122",
-			"turns": 11
-		},
-		"Kurasame (ice w/ no external imperil)": {
-			"name": "Kurasame (ice w/ no external imperil)",
-			"damage": "1,899,180,164",
-			"turns": 11
-		},
-		"Karlette": {
-			"name": "Karlette",
-			"damage": "1,693,927,590",
-			"turns": 7
-		},
-		"Kunshira (spark chain, w/ single element external imperil)": {
-			"name": "Kunshira (spark chain, w/ single element external imperil)",
-			"damage": "1,412,709,491",
-			"turns": 5
-		},
-		"Fryevia": {
-			"name": "Fryevia",
-			"damage": "1,335,445,683",
-			"turns": 7
-		},
-		"Kunshira (spark chain, no external imperil)": {
-			"name": "Kunshira (spark chain, no external imperil)",
-			"damage": "1,088,590,887",
-			"turns": 6
 		}
 	},
 	"burst physal": {
@@ -629,51 +467,213 @@
 			"turns": 5
 		}
 	},
-	"burst hybrid": {
-		"Kurasame (no element w/ no external imperil)": {
-			"name": "Kurasame (no element w/ no external imperil)",
-			"damage": "5,431,967,805",
-			"turns": 4
-		},
-		"Kurasame (no element w/ external imperil) *": {
-			"name": "Kurasame (no element w/ external imperil) *",
-			"damage": "4,752,971,830",
-			"turns": 3
-		},
-		"Felix": {
-			"name": "Felix",
-			"damage": "4,155,018,238",
-			"turns": 5
-		},
-		"Kurasame (ice weapon)": {
-			"name": "Kurasame (ice weapon)",
-			"damage": "4,015,107,873",
+	"burst magic": {
+		"BM Golbez": {
+			"name": "BM Golbez",
+			"damage": "7,153,117,137",
 			"turns": 7
 		},
-		"Aurora Fryevia": {
-			"name": "Aurora Fryevia",
-			"damage": "2,808,413,032",
+		"Elly": {
+			"name": "Elly",
+			"damage": "6,858,739,104",
+			"turns": 7
+		},
+		"Tiana": {
+			"name": "Tiana",
+			"damage": "4,606,051,143",
+			"turns": 8
+		},
+		"Christine (w/ external imperil)": {
+			"name": "Christine (w/ external imperil)",
+			"damage": "4,287,540,131",
+			"turns": 7
+		},
+		"Ultima (spark chain)": {
+			"name": "Ultima (spark chain)",
+			"damage": "3,948,888,180",
 			"turns": 3
 		},
-		"Karlette": {
-			"name": "Karlette",
-			"damage": "2,543,898,950",
+		"Sophia": {
+			"name": "Sophia",
+			"damage": "3,714,298,098",
+			"turns": 5
+		},
+		"Lulu": {
+			"name": "Lulu",
+			"damage": "3,635,677,723",
+			"turns": 8
+		},
+		"Trance Terra (w/ external imperil)": {
+			"name": "Trance Terra (w/ external imperil)",
+			"damage": "3,188,292,504",
+			"turns": 3
+		},
+		"Ultima": {
+			"name": "Ultima",
+			"damage": "3,181,837,958",
+			"turns": 3
+		},
+		"Maria": {
+			"name": "Maria",
+			"damage": "3,098,869,978",
+			"turns": 2
+		},
+		"Circe": {
+			"name": "Circe",
+			"damage": "2,588,290,269",
 			"turns": 6
 		},
-		"Fryevia": {
-			"name": "Fryevia",
-			"damage": "2,473,221,261",
+		"Christine (no external imperil)": {
+			"name": "Christine (no external imperil)",
+			"damage": "2,579,964,268",
 			"turns": 3
 		},
-		"Kunshira (spark chain, no external imperil)": {
-			"name": "Kunshira (spark chain, no external imperil)",
-			"damage": "1,563,891,133",
-			"turns": 2
+		"Barbariccia (spark chain w/ raging wind, no TMR)": {
+			"name": "Barbariccia (spark chain w/ raging wind, no TMR)",
+			"damage": "2,413,802,531",
+			"turns": 11
 		},
-		"Kunshira (spark chain, w/ single element external imperil)": {
-			"name": "Kunshira (spark chain, w/ single element external imperil)",
-			"damage": "1,492,069,593",
-			"turns": 2
+		"Trance Terra (no external imperil)": {
+			"name": "Trance Terra (no external imperil)",
+			"damage": "1,821,881,431",
+			"turns": 3
+		},
+		"Mediena": {
+			"name": "Mediena",
+			"damage": "1,791,821,138",
+			"turns": 7
+		},
+		"Barbariccia (w/ raging wind, no TMR)": {
+			"name": "Barbariccia (w/ raging wind, no TMR)",
+			"damage": "1,580,870,672",
+			"turns": 11
+		},
+		"Grim Lord Sakura": {
+			"name": "Grim Lord Sakura",
+			"damage": "1,358,185,411",
+			"turns": 4
+		},
+		"Barbariccia (w/ aeroja & TMR)": {
+			"name": "Barbariccia (w/ aeroja & TMR)",
+			"damage": "1,214,761,573",
+			"turns": 5
+		},
+		"Unreleased units": {
+			"name": "Unreleased units",
+			"damage": "0",
+			"turns": 0
+		},
+		"CG Terra": {
+			"name": "CG Terra",
+			"damage": "14,424,279,916",
+			"turns": 8
+		},
+		"CG Dark Fina": {
+			"name": "CG Dark Fina",
+			"damage": "13,353,670,261",
+			"turns": 3
+		},
+		"Sol": {
+			"name": "Sol",
+			"damage": "6,094,258,013",
+			"turns": 8
+		}
+	},
+	"magic": {
+		"Elly": {
+			"name": "Elly",
+			"damage": "3,204,337,299",
+			"turns": 10
+		},
+		"Ultima (spark chain)": {
+			"name": "Ultima (spark chain)",
+			"damage": "3,120,679,118",
+			"turns": 9
+		},
+		"Sophia": {
+			"name": "Sophia",
+			"damage": "2,600,841,004",
+			"turns": 9
+		},
+		"Ultima": {
+			"name": "Ultima",
+			"damage": "2,492,124,075",
+			"turns": 9
+		},
+		"BM Golbez": {
+			"name": "BM Golbez",
+			"damage": "2,262,006,381",
+			"turns": 10
+		},
+		"Maria": {
+			"name": "Maria",
+			"damage": "2,248,364,297",
+			"turns": 6
+		},
+		"Lulu": {
+			"name": "Lulu",
+			"damage": "2,155,750,083",
+			"turns": 10
+		},
+		"Tiana": {
+			"name": "Tiana",
+			"damage": "1,966,324,641",
+			"turns": 11
+		},
+		"Christine (w/ external imperil)": {
+			"name": "Christine (w/ external imperil)",
+			"damage": "1,802,243,665",
+			"turns": 7
+		},
+		"Christine (no external imperil)": {
+			"name": "Christine (no external imperil)",
+			"damage": "1,245,745,193",
+			"turns": 7
+		},
+		"Grim Lord Sakura": {
+			"name": "Grim Lord Sakura",
+			"damage": "1,239,972,977",
+			"turns": 10
+		},
+		"Barbariccia (spark chain w/ raging wind, no TMR)": {
+			"name": "Barbariccia (spark chain w/ raging wind, no TMR)",
+			"damage": "972,806,948",
+			"turns": 12
+		},
+		"Mediena": {
+			"name": "Mediena",
+			"damage": "1,091,256,102",
+			"turns": 8
+		},
+		"Trance Terra (w/ external imperil)": {
+			"name": "Trance Terra (w/ external imperil)",
+			"damage": "989,663,987",
+			"turns": 7
+		},
+		"Circe": {
+			"name": "Circe",
+			"damage": "816,075,420",
+			"turns": 9
+		},
+		"Barbariccia (w/ aeroja & TMR)": {
+			"name": "Barbariccia (w/ aeroja & TMR)",
+			"damage": "697,788,334",
+			"turns": 12
+		},
+		"Barbariccia (w/ raging wind, no TMR)": {
+			"name": "Barbariccia (w/ raging wind, no TMR)",
+			"damage": "682,628,667",
+			"turns": 12
+		},
+		"Trance Terra (no external imperil)": {
+			"name": "Trance Terra (no external imperil)",
+			"damage": "565,522,278",
+			"turns": 7
+		},
+		"Unreleased units": {
+			"name": "Unreleased units",
+			"damage": "0",
+			"turns": 0
 		}
 	}
 }
