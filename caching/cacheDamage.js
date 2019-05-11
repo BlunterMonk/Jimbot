@@ -4,11 +4,13 @@ const {google} = require('googleapis');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
-const calcSheet = "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0/edit#gid=0";
+const calcSheet = "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0";
 const sheetName = "Damage comparison";
 const burstSheetName = "Burst comparison";
 const sheetID = "1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0";
 const saveLocation = "data/unitcalculations.json";
+
+var sheets = null;
 
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
@@ -41,6 +43,7 @@ function authorize(credentials, callback) {
         token = getNewToken(oAuth2Client, callback);
 
     oAuth2Client.setCredentials(JSON.parse(token));
+    sheets = google.sheets({version: 'v4', oAuth2Client});
 
     var ranges = [
         { name: "physical", range: `${sheetName}!B3:D` },
@@ -84,9 +87,8 @@ function authorize(credentials, callback) {
             console.log("Unit Fields");
             console.log("Total: " + totalUnits);
 
-            var save = JSON.stringify(units, null, "\t");
-            fs.writeFileSync(saveLocation, save);
-
+            //var save = JSON.stringify(units, null, "\t");
+            //fs.writeFileSync(saveLocation, save);
             /*
             var cats = Object.keys(units);
             cats.forEach((cat) => {
@@ -104,9 +106,9 @@ function authorize(credentials, callback) {
 
                     var range = `${key}!A1:B1`
                     console.log("Looking For: " + range)
-                    setTimeout(() => {
-                        GetBuildLink(oAuth2Client, index, range, queryEnd2)
-                    }, 1000 * ind);
+                    //setTimeout(() => {
+                        GetBuildLink(index, range, queryEnd2)
+                    //}, 1000 * ind);
                 });
             });
             */
@@ -116,9 +118,9 @@ function authorize(credentials, callback) {
     for (let ind = 0; ind < ranges.length; ind++) {
         const range = ranges[ind];
         
-        setTimeout(() => {
+        //setTimeout(() => {
             GetUnitComparison(oAuth2Client, range.name, range.range, queryEnd);
-        }, 10000 * ind);
+        //}, 10000 * ind);
     }
 }
 
@@ -172,17 +174,55 @@ function bySortedValue(obj, callback, context) {
         callback.call(context, tuples[length][0], tuples[length][1]);
 }
 
+function GetSheet(auth, index, range, callback) {
+
+    sheets.spreadsheets.values.get({
+        spreadsheetId: sheetID,
+    }, (err, res) => {
+
+        if (err) 
+            return console.log('The API returned an error: ' + err);
+
+        const rows = res.data.values;
+        if (rows.length) {
+            var units = {};
+
+            //console.log('Name, DPT:');
+
+            // Print columns A and E, which correspond to indices 0 and 4.
+            rows.map((row) => {
+                console.log(`${row}`);
+            });
+
+            /*
+            var sorted = [];
+            bySortedValue(units, function(key, value) {
+                console.log(`${key}: ${value}`);
+                sorted[sorted.length] = value;
+            });*/
+
+            //console.log(units);
+            //callback(units, index);
+        } else {
+            console.log('No data found.');
+            //callback(null, index);
+        }
+    });
+}
+
+
+
 /**
  * Prints the names and majors of students in a sample spreadsheet:
  * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
 function GetUnitComparison(auth, index, range, callback) {
-    const sheets = google.sheets({version: 'v4', auth});
+    var sheets = google.sheets({version: 'v4', auth});
 
     sheets.spreadsheets.values.get({
-    spreadsheetId: sheetID,
-    range: range
+        spreadsheetId: sheetID,
+        range: range
     }, (err, res) => {
 
         if (err) 
@@ -220,11 +260,11 @@ function GetUnitComparison(auth, index, range, callback) {
     });
 }
 
-function GetBuildLink(auth, index, range, callback) {
-    const sheets = google.sheets({version: 'v4', auth});
+function GetBuildLink(index, range, callback) {
+       
     sheets.spreadsheets.values.get({
-    spreadsheetId: sheetID,
-    range: range
+        spreadsheetId: sheetID,
+        range: range
     }, (err, res) => {
         if (err) {
             callback(null, index);

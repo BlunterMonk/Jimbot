@@ -1,4 +1,8 @@
-
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
 
 function editDistance(s1, s2) {
     s1 = s1.toLowerCase();

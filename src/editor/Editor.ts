@@ -1,3 +1,8 @@
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
 
 import "../string/string-extension.js";
 import { readFileSync, writeFileSync } from "fs";

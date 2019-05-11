@@ -1,3 +1,10 @@
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
+
+
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');

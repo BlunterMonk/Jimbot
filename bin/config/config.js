@@ -1,4 +1,9 @@
 "use strict";
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require('fs');
 require("../string/string-extension.js");
@@ -103,6 +108,7 @@ var GuildSettings = /** @class */ (function () {
     };
     return GuildSettings;
 }());
+exports.GuildSettings = GuildSettings;
 ;
 var Config = /** @class */ (function () {
     function Config() {

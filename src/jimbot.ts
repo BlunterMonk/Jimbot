@@ -1,4 +1,8 @@
-
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
 
 import * as Discord from "discord.js";
 import * as request from "request";
@@ -7,6 +11,7 @@ import * as cheerio from "cheerio";
 import * as https from "https";
 import * as http from "http";
 
+import "include";
 import "./string/string-extension.js";
 import * as Config from "./config/config.js";
 import * as Editor from "./editor/Edit.js";
@@ -97,23 +102,6 @@ function cacheBotMessage(received, sent) {
     };
     //log("Cached Message");
     //log(botMessages[botMessages.length - 1]);
-}
-
-function log(data) {
-    console.log(data);
-}
-function logData(data) {
-    console.log(JSON.stringify(data));
-}
-
-function LoadGuilds() {
-    // List servers the bot is connected to
-    log("Loading Guilds:");
-    client.guilds.forEach(guild => {
-        log(` - ${guild.name} - ${guild.id}`);
-        
-        config.loadGuild(guild.name, guild.id);
-    });
 }
 
 //joined a server

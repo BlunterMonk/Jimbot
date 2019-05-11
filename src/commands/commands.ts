@@ -1,9 +1,80 @@
+import { GuildSettings } from './../config/config';
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
+
 
 import "./string/string-extension.js";
+import "include";
 
-function log(msg) {
-    console.log(msg);
+const searchAliases = [
+    { reg: /imbue/g, value: "add element" },
+    { reg: /break/g, value: "break|reduce def|reduce atk|reduce mag|reduce spr"},
+    { reg: /buff/g, value: "increase|increase atk|increase def|increase mag|increase spr"},
+    { reg: /debuff/g, value: "debuff|decrease|reduce"},
+    { reg: /imperil/g, value: "reduce resistance"},
+    { reg: /mit/g, value: "mitigate|reduce damage"},
+    { reg: /evoke/g, value: "evoke|evocation"}
+]
+
+const regexCommand = /^[^\s]*/;
+const regexSearch = /.*?\s+(.*[^"])\s.*/;
+const regexParameter = /"[^"]+"|‘[^‘]+‘|‘[^’]+’|“[^“]+“|”[^”]+”|“[^“^”]+”|'[^']+'/g;
+
+
+function getSearchString(msg, replace = true) {
+    var match = msg.match(regexSearch);
+    if (!match) return;
+
+    var search = match[1];
+    search = search.trim();
+    
+    if (search.empty()) {
+        return null;
+    }
+
+    if (replace == undefined || replace) { 
+        var s = search;
+        var alias = config.getAlias(s.replaceAll(" ", "_"));
+        if (alias) {
+            log("Found Alias: " + alias);
+            return alias.replaceAll(" ", "_");
+        }
+    }
+
+    search = search.toLowerCase();
+    search = search.replaceAll(" ", "_");
+    return search;
 }
+function getCommandString(msg) {
+    var split = regexCommand.exec(msg);
+
+    if (!split) {
+        return null;
+    }
+
+    return split[0];
+}
+function getParameters(msg) {
+
+    var parameters = [];
+    var params = msg.match(regexParameter);
+    if (params) {
+        parameters = params;
+
+        parameters.forEach((p, ind) => {
+            msg = msg.replace(p, "");
+            parameters[ind] = p.replace(/'|"|‘|’|“|”/g, "");
+        });
+        msg = msg.trim();
+    }
+
+    return { msg: msg, parameters: parameters };
+}
+
+
 
 function convertSearchTerm(search) {
     var s = search;
@@ -35,53 +106,8 @@ function convertParametersToSkillSearch(parameters) {
 
     return search.replaceAll(" ",".*")
 }
-function getSearchString(prefix, msg, replace = true) {
-    var ind = prefix.length + 1;
-    var search = msg.slice(ind, msg.length);
 
-    if (search.empty()) {
-        return null;
-    }
 
-    if (replace == undefined || replace) { 
-        var s = search;
-        var alias = config.getAlias(s.replaceAll(" ", "_"));
-        if (alias) {
-            log("Found Alias: " + alias);
-            return alias.replaceAll(" ", "_");
-        }
-    }
-
-    search = search.toLowerCase();
-    search = search.replaceAll(" ", "_");
-    return search;
-}
-function getCommandString(msg, prefix) {
-    var split = msg.split(" ")[0];
-    split = split.replace(prefix, "").toTitleCase();
-
-    if (split.empty()) {
-        return null;
-    }
-
-    return split;
-}
-function getParameters(msg) {
-
-    var parameters = [];
-    var params = msg.match(/"[^"]+"|‘[^‘]+‘|‘[^’]+’|“[^“]+“|”[^”]+”|“[^“^”]+”|'[^']+'/g);
-    if (params) {
-        parameters = params;
-
-        parameters.forEach((p, ind) => {
-            msg = msg.replace(p, "");
-            parameters[ind] = p.replace(/'|"|‘|’|“|”/g, "");
-        });
-        msg = msg.trim();
-    }
-
-    return { msg: msg, parameters: parameters };
-}
 function convertCommand(command, content, prefix) {
 
     //log("Convert Command");
@@ -122,7 +148,7 @@ function validateCommand(receivedMessage, command) {
 
 
 export var config = null;
-export var guildMessage = function(msg, attachment, prefix): string {
+export var guildMessage = function(msg, attachment, guildSettings: GuildSettings): string {
 
     var copy = msg.toLowerCase();
     if (attachment) {
@@ -131,12 +157,12 @@ export var guildMessage = function(msg, attachment, prefix): string {
     }
 
     // the command name
-    let com = getCommandString(copy, prefix);
+    let com = getCommandString(copy);
     try {
         let valid = false;
         log(eval(`valid = (typeof handle${com} === 'function');`));
         if (!valid) {
-            let search = getSearchString(`${prefix}${com}`, copy);
+            let search = getSearchString(copy);
             if (unitQuery(receivedMessage, com, search))
                 return;
         }
@@ -149,8 +175,8 @@ export var guildMessage = function(msg, attachment, prefix): string {
     }
 
     try {
-        var command = getCommandString(copy, prefix);
-        var shortcut = config.getShortcut(guildId, command);
+        var command = getCommandString(copy);
+        var shortcut = guildSettings.getShortcut(command);
         if (shortcut) {
             log("Found Command Shortcut");
             copy = shortcut;

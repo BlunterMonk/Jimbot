@@ -1,4 +1,9 @@
 "use strict";
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.pinkHexCode = 0xffd1dc;
 exports.okEmoji = "🆗";

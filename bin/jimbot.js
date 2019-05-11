@@ -1,4 +1,9 @@
 "use strict";
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
 var request = require("request");
@@ -6,6 +11,7 @@ var fs = require("fs");
 var cheerio = require("cheerio");
 var https = require("https");
 var http = require("http");
+require("include");
 require("./string/string-extension.js");
 var Config = require("./config/config.js");
 var Editor = require("./editor/Edit.js");
@@ -83,20 +89,6 @@ function cacheBotMessage(received, sent) {
     };
     //log("Cached Message");
     //log(botMessages[botMessages.length - 1]);
-}
-function log(data) {
-    console.log(data);
-}
-function logData(data) {
-    console.log(JSON.stringify(data));
-}
-function LoadGuilds() {
-    // List servers the bot is connected to
-    log("Loading Guilds:");
-    client.guilds.forEach(function (guild) {
-        log(" - " + guild.name + " - " + guild.id);
-        config.loadGuild(guild.name, guild.id);
-    });
 }
 //joined a server
 client.on("guildCreate", function (guild) {

@@ -1,4 +1,9 @@
 "use strict";
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
 Object.defineProperty(exports, "__esModule", { value: true });
 require("discord.js");
 //const Discord = require("discord.js");

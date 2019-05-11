@@ -1,3 +1,8 @@
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
 
 export const pinkHexCode = 0xffd1dc;
 

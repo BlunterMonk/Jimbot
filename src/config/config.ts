@@ -1,3 +1,9 @@
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
+
 
 const fs = require('fs');
 import "../string/string-extension.js";
@@ -19,7 +25,7 @@ const infoJson = 'data/information.json';
     shortcuts: {};
 }*/
 
-class GuildSettings {
+export class GuildSettings {
     guildName: any;
     guildId: any;
     settings: any;
