@@ -72,7 +72,7 @@ var loading = true;
 // Click on your application -> Bot -> Token -> "Click to Reveal Token"
 var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
 var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
-client.login(bot_secret_token_test);
+client.login(bot_secret_token);
 // Keep track of added messages
 var botMessages = [];
 function cacheBotMessage(received, sent) {
