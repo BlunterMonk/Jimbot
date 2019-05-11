@@ -167,11 +167,7 @@ export var guildMessage = function(msg, attachment, guildSettings: GuildSettings
                 return;
         }
     } catch (e) {
-        //log(e);
-        //log("JP Unit: " + command);
-        let search = getSearchString(`${prefix}${com}`, copy);
-        if (unitQuery(receivedMessage, com, search))
-            return;
+        log(e);
     }
 
     try {
