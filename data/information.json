@@ -22,5 +22,13 @@
 	"ruler": {
 		"title": "Why Ruler Is Cooler",
 		"description": "Her iron will is so dummy thicc the sound of it's ass cheeks scares away enemies and make them cry."
+	},
+	"summon_fest": {
+		"title": "Summon Fest",
+		"description": "**Summon Fest** is a time limited event where certain units will have higher than normal drop rates. However, these units cannot be summoned through normal rare-summoning.\\nThe following units are exclusinve to Summon Fest:\\n**CG Rain**\\n**CG Lasswell V2**\\n**CG Onion Knight**\\n**CG Noctis**\\n**CG Dark Fina**\\n**Lunafreya**"
+	},
+	"festunits": {
+		"title": "List of Summon Fest Units",
+		"description": "**CG Rain**\n**CG Lasswell V2**\n**CG Onion Knight**\n**CG Noctis**\n**CG Dark Fina**\n**Lunafreya**"
 	}
 }
