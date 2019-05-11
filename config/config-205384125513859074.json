@@ -1,5 +1,4 @@
 {
-	"name": "/r/FFBraveExvius",
 	"prefix": "?",
 	"successEmote": "✅",
 	"failureEmote": "❌",
@@ -25,6 +24,8 @@
 	"shortcuts": {
 		"eletetris": "?whatis elemental tetris",
 		"noob": "?whatis new player info",
-		"bunnies": "?gif sylvie \"win\""
-	}
+		"bunnies": "?gif sylvie \"win\"",
+		"festunits": "?whatis festunits"
+	},
+	"name": "/r/FFBraveExvius"
 }

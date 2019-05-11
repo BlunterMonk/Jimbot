@@ -812,6 +812,48 @@ function handleEnhancements(receivedMessage, search, parameters) {
         return;
     }
 }
+function handleData(receivedMessage, search, parameters) {
+    search = search.replaceAll("_", " ");
+    var data = cache.getSkill(search);
+    if (!data) {
+        log("Could not find Data for: " + search);
+        return;
+    }
+    var defaultParameters = [
+        'attack_count',
+        'attack_damage',
+        'attack_frames',
+        'attack_type',
+        'element_inflict',
+        'effects',
+    ];
+    if (!parameters || parameters.length == 0)
+        parameters = defaultParameters;
+    var dataKeys = Object.keys(data);
+    dataKeys.forEach(function (dkey) {
+        var fields = [];
+        var obj = data[dkey];
+        var keys = Object.keys(obj);
+        for (var ind = 0; ind < keys.length; ind++) {
+            var key = keys[ind];
+            var value = "" + obj[key];
+            if (!parameters.includes(key))
+                continue;
+            if (!value || value.empty() || value === "null" || value === "None")
+                continue;
+            fields[fields.length] = {
+                name: key,
+                value: value
+            };
+        }
+        var embed = {
+            title: dkey + " - " + obj.name,
+            color: pinkHexCode,
+            fields: fields
+        };
+        sendMessage(receivedMessage, embed);
+    });
+}
 // FLUFF
 function handleReactions(receivedMessage) {
     var content = receivedMessage.content.toLowerCase();
@@ -956,7 +998,7 @@ function handleGlbestunits(receivedMessage, search, parameters) {
         var units = settings[v].split(" / ");
         var links = "**" + v + ":** ";
         units.forEach(function (u, ind) {
-            log(u);
+            //log(u);
             u = convertSearchTerm(u);
             u = convertValueToLink(u);
             links += u;
@@ -1006,7 +1048,7 @@ function handleHelp(receivedMessage) {
 // DAMAGE
 function handleDpt(receivedMessage, search, parameters, isBurst) {
     search = search.replaceAll("_", " ");
-    var calc = cache.getCalculations(search);
+    var calc = cache.getCalculations(search, isBurst);
     if (!calc) {
         log("Could not find calculations for: " + search);
         return;
@@ -1030,7 +1072,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
     var title = "";
     var s = search.toTitleCase();
     if (isBurst) {
-        title = "Burt damage for: " + s + ". (damage on turn)";
+        title = "Burst damage for: " + s + ". (damage on turn)";
     }
     else {
         title = "DPT for: " + s + ". (dpt - turns for rotation)";
@@ -1047,7 +1089,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
     sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
 function handleBurst(receivedMessage, search, parameters) {
-    handleDpt(receivedMessage, "burst_" + search, parameters, true);
+    handleDpt(receivedMessage, search, parameters, true);
 }
 // ADDING RESOURCES
 function handleAddalias(receivedMessage, search, parameters) {
@@ -1277,6 +1319,23 @@ function handleUpdate(receivedMessage, search, parameters) {
     log("Finished Updating");
     respondSuccess(receivedMessage, true);
 }
+function handleReload(receivedMessage, search, parameters) {
+    var id = receivedMessage.author.id;
+    if (id != renaulteUserID && id != jimooriUserID && id != furculaUserID) {
+        return;
+    }
+    log("Handle Reload");
+    try {
+        cache.reload();
+        config.reload(null);
+    }
+    catch (e) {
+        log(e);
+        respondFailure(receivedMessage, true);
+    }
+    log("Finished Reloading");
+    respondSuccess(receivedMessage, true);
+}
 // COMMANDS END
 function convertValueToLink(value) {
     var link = value;
@@ -1288,7 +1347,7 @@ function convertValueToLink(value) {
     title = title.replace("Cg_", "CG_");
     title = title.replaceAll("_", " ");
     link = "[" + title + "](" + (wikiEndpoint + link.replaceAll(" ", "_")) + ") ";
-    log("Converted Link: " + link);
+    //log("Converted Link: " + link);
     return link;
 }
 // IMAGES
@@ -1752,6 +1811,7 @@ function guildMessage(receivedMessage, guildId, prefix) {
 }
 // SEND RESPONSE
 function sendMessage(receivedMessage, embed, callback) {
+    if (callback === void 0) { callback = null; }
     receivedMessage.channel
         .send({ embed: embed })
         .then(function (message) {
@@ -1859,7 +1919,7 @@ function getSearchString(prefix, msg, replace) {
 }
 function getCommandString(msg, prefix) {
     var split = msg.split(" ")[0];
-    split = split.replace(prefix, "").toTitleCase();
+    split = split.replace(prefix, "").capitalize();
     if (split.empty()) {
         return null;
     }

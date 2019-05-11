@@ -45,11 +45,19 @@ String.prototype.toTitleCase = function (splitter) {
     if (!splitter) {
         splitter = " ";
     }
+    return this.toLowerCase().split(splitter).map(function (word) {
+        if (word.length > 3)
+            return (word.charAt(0).toUpperCase() + word.slice(1));
+        else
+            return word;
+    }).join(splitter);
+    /*
     return this
         .toLowerCase()
         .split(splitter)
-        .map(function (s) { return s.charAt(0).toUpperCase() + s.substring(1); })
+        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
         .join(splitter);
+        */
 };
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;

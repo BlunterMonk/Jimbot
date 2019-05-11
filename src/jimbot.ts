@@ -917,6 +917,57 @@ function handleEnhancements(receivedMessage, search, parameters) {
     }
 }
 
+function handleData(receivedMessage, search, parameters) {
+    
+    search = search.replaceAll("_", " ");
+    var data = cache.getSkill(search);
+    if (!data) {
+        log("Could not find Data for: " + search);
+        return;
+    }
+
+    const defaultParameters = [ 
+        'attack_count',
+        'attack_damage',
+        'attack_frames',
+        'attack_type',
+        'element_inflict',
+        'effects',
+    ]
+    if (!parameters || parameters.length == 0)
+        parameters = defaultParameters;
+    
+    const dataKeys = Object.keys(data);
+    dataKeys.forEach(dkey => {
+        var fields = [];
+        const obj = data[dkey];
+
+        const keys = Object.keys(obj);
+        for (let ind = 0; ind < keys.length; ind++) {
+            const key = keys[ind];
+            const value = `${obj[key]}`;
+            
+            if (!parameters.includes(key))
+                continue;
+            if (!value || value.empty() || value === "null" || value === "None")
+                continue;
+            
+            fields[fields.length] = {
+                name: key,
+                value: value
+            }
+        }
+        
+        var embed = <any>{
+            title: `${dkey} - ${obj.name}`,
+            color: pinkHexCode,
+            fields: fields
+        }
+        
+        sendMessage(receivedMessage, embed);
+    });
+}
+
 // FLUFF
 function handleReactions(receivedMessage) {
     const content = receivedMessage.content.toLowerCase();
@@ -1080,7 +1131,7 @@ function handleGlbestunits(receivedMessage, search, parameters) {
         var units = settings[v].split(" / ");
         var links = `**${v}:** `;
         units.forEach((u, ind) => {
-            log(u);
+            //log(u);
             u = convertSearchTerm(u);
             u = convertValueToLink(u);
             links += u;
@@ -1136,7 +1187,7 @@ function handleHelp(receivedMessage) {
 function handleDpt(receivedMessage, search, parameters, isBurst) {
 
     search = search.replaceAll("_", " ");
-    var calc = cache.getCalculations(search);
+    var calc = cache.getCalculations(search, isBurst);
     if (!calc) {
         log("Could not find calculations for: " + search);
         return;
@@ -1163,7 +1214,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
     var title = "";
     var s = search.toTitleCase();
     if (isBurst) {
-        title = `Burt damage for: ${s}. (damage on turn)`;
+        title = `Burst damage for: ${s}. (damage on turn)`;
     } else {
         title = `DPT for: ${s}. (dpt - turns for rotation)`;
     }
@@ -1181,7 +1232,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
     sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
 function handleBurst(receivedMessage, search, parameters) {
-    handleDpt(receivedMessage, `burst_${search}`, parameters, true);
+    handleDpt(receivedMessage, search, parameters, true);
 }
 
 
@@ -1436,6 +1487,27 @@ function handleUpdate(receivedMessage, search, parameters) {
     log("Finished Updating");
     respondSuccess(receivedMessage, true);
 }
+function handleReload(receivedMessage, search, parameters) {
+
+    var id = receivedMessage.author.id;
+    if (id != renaulteUserID && id != jimooriUserID && id != furculaUserID) {
+        return;
+    }
+
+    log("Handle Reload");
+
+    try {
+        cache.reload();
+        config.reload(null);
+    } catch(e) {
+        log(e);
+        respondFailure(receivedMessage, true);
+    }
+
+    log("Finished Reloading");
+    respondSuccess(receivedMessage, true);
+}
+
 
 // COMMANDS END
 
@@ -1453,7 +1525,7 @@ function convertValueToLink(value) {
     title = title.replaceAll("_", " ");
 
     link = `[${title}](${wikiEndpoint + link.replaceAll(" ", "_")}) `;
-    log("Converted Link: " + link);
+    //log("Converted Link: " + link);
     return link;
 }
 
@@ -1985,7 +2057,7 @@ function guildMessage(receivedMessage, guildId, prefix) {
 
 // SEND RESPONSE
 
-function sendMessage(receivedMessage, embed, callback) {
+function sendMessage(receivedMessage, embed, callback = null) {
     receivedMessage.channel
     .send({embed: embed})
     .then(message => {
@@ -2102,7 +2174,7 @@ function getSearchString(prefix, msg, replace = true) {
 }
 function getCommandString(msg, prefix) {
     var split = msg.split(" ")[0];
-    split = split.replace(prefix, "").toTitleCase();
+    split = split.replace(prefix, "").capitalize();
 
     if (split.empty()) {
         return null;
