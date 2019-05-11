@@ -929,6 +929,45 @@ function handleEnhancements(receivedMessage, search, parameters) {
     }
 }
 
+function handleData(receivedMessage, search, parameters) {
+    
+    search = search.replaceAll("_", " ");
+    var data = cache.getSkill(search);
+    if (!data) {
+        log("Could not find Data for: " + search);
+        return;
+    }
+
+    var fields = [];
+        
+    const dataKeys = Object.keys(data);
+    dataKeys.forEach(dkey => {
+        const obj = data[dkey];
+
+        const keys = Object.keys(obj);
+        for (let ind = 0; ind < keys.length; ind++) {
+            const key = keys[ind];
+            const value = `${obj[key]}`;
+            
+            if (!value || value.empty() || value === "null" || value === "None")
+                continue;
+            
+            fields[fields.length] = {
+                name: key,
+                value: value
+            }
+        }
+        
+        var embed = <any>{
+            title: `${dkey} - ${obj.name}`,
+            color: pinkHexCode,
+            fields: fields
+        }
+        
+        sendMessage(receivedMessage, embed);
+    });
+}
+
 // FLUFF
 function handleReactions(receivedMessage) {
     const content = receivedMessage.content.toLowerCase();
@@ -1997,7 +2036,7 @@ function guildMessage(receivedMessage, guildId, prefix) {
 
 // SEND RESPONSE
 
-function sendMessage(receivedMessage, embed, callback) {
+function sendMessage(receivedMessage, embed, callback = null) {
     receivedMessage.channel
     .send({embed: embed})
     .then(message => {

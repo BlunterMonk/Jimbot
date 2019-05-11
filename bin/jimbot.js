@@ -820,6 +820,36 @@ function handleEnhancements(receivedMessage, search, parameters) {
         return;
     }
 }
+function handleData(receivedMessage, search, parameters) {
+    search = search.replaceAll("_", " ");
+    var data = cache.getSkill(search);
+    if (!data) {
+        log("Could not find Data for: " + search);
+        return;
+    }
+    var fields = [];
+    var dataKeys = Object.keys(data);
+    dataKeys.forEach(function (dkey) {
+        var obj = data[dkey];
+        var keys = Object.keys(obj);
+        for (var ind = 0; ind < keys.length; ind++) {
+            var key = keys[ind];
+            var value = "" + obj[key];
+            if (!value || value.empty() || value === "null" || value === "None")
+                continue;
+            fields[fields.length] = {
+                name: key,
+                value: value
+            };
+        }
+        var embed = {
+            title: dkey + " - " + obj.name,
+            color: pinkHexCode,
+            fields: fields
+        };
+        sendMessage(receivedMessage, embed);
+    });
+}
 // FLUFF
 function handleReactions(receivedMessage) {
     var content = receivedMessage.content.toLowerCase();
@@ -1760,6 +1790,7 @@ function guildMessage(receivedMessage, guildId, prefix) {
 }
 // SEND RESPONSE
 function sendMessage(receivedMessage, embed, callback) {
+    if (callback === void 0) { callback = null; }
     receivedMessage.channel
         .send({ embed: embed })
         .then(function (message) {
