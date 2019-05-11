@@ -145,7 +145,19 @@ var Config = /** @class */ (function () {
         }
     };
     Config.prototype.reload = function (file) {
-        if (file.includes("information.json")) {
+        if (!file) {
+            var data = fs.readFileSync(filename);
+            this.configuration = JSON.parse(data);
+            var rank = fs.readFileSync(rankingFile);
+            this.rankings = JSON.parse(rank);
+            var dump = fs.readFileSync(rankingDump);
+            this.fullRankings = JSON.parse(dump);
+            var calcs = fs.readFileSync(unitCalc);
+            this.calculations = JSON.parse(calcs);
+            var info = fs.readFileSync(infoJson);
+            this.information = JSON.parse(info);
+        }
+        else if (file.includes("information.json")) {
             console.log("Reploading Information.json");
             this.information = JSON.parse(fs.readFileSync(infoJson));
         }

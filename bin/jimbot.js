@@ -1327,6 +1327,23 @@ function handleUpdate(receivedMessage, search, parameters) {
     log("Finished Updating");
     respondSuccess(receivedMessage, true);
 }
+function handleReload(receivedMessage, search, parameters) {
+    var id = receivedMessage.author.id;
+    if (id != renaulteUserID && id != jimooriUserID && id != furculaUserID) {
+        return;
+    }
+    log("Handle Reload");
+    try {
+        cache.reload();
+        config.reload(null);
+    }
+    catch (e) {
+        log(e);
+        respondFailure(receivedMessage, true);
+    }
+    log("Finished Reloading");
+    respondSuccess(receivedMessage, true);
+}
 // COMMANDS END
 function convertValueToLink(value) {
     var link = value;

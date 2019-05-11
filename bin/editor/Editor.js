@@ -94,11 +94,17 @@ var Editor = /** @class */ (function () {
         return this.editKey;
     };
     Editor.prototype.setData = function (data, key) {
+        //console.log(`Editor Set Data Raw: `);
+        //console.log(data);
+        //console.log(`Editor Set Data Stringified: `);
+        //console.log(JSON.stringify(data).slice(1, -1));
         if (!key) {
-            this.data = JSON.stringify(data).slice(1, -1);
+            this.data = data; //JSON.stringify(data).slice(1, -1);
             return;
         }
-        this.data[key] = JSON.stringify(data).slice(1, -1);
+        this.data[key] = data; //JSON.stringify(data).slice(1, -1);
+        //console.log(`Editor Set Data Final: `);
+        //console.log(this.data);
     };
     Editor.prototype.getData = function (key) {
         if (!key)
