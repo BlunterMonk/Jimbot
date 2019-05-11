@@ -938,10 +938,20 @@ function handleData(receivedMessage, search, parameters) {
         return;
     }
 
-    var fields = [];
-        
+    const defaultParameters = [ 
+        'attack_count',
+        'attack_damage',
+        'attack_frames',
+        'attack_type',
+        'element_inflict',
+        'effects',
+    ]
+    if (!parameters || parameters.length == 0)
+        parameters = defaultParameters;
+    
     const dataKeys = Object.keys(data);
     dataKeys.forEach(dkey => {
+        var fields = [];
         const obj = data[dkey];
 
         const keys = Object.keys(obj);
@@ -949,6 +959,8 @@ function handleData(receivedMessage, search, parameters) {
             const key = keys[ind];
             const value = `${obj[key]}`;
             
+            if (!parameters.includes(key))
+                continue;
             if (!value || value.empty() || value === "null" || value === "None")
                 continue;
             
