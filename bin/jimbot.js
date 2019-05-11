@@ -827,14 +827,26 @@ function handleData(receivedMessage, search, parameters) {
         log("Could not find Data for: " + search);
         return;
     }
-    var fields = [];
+    var defaultParameters = [
+        'attack_count',
+        'attack_damage',
+        'attack_frames',
+        'attack_type',
+        'element_inflict',
+        'effects',
+    ];
+    if (!parameters || parameters.length == 0)
+        parameters = defaultParameters;
     var dataKeys = Object.keys(data);
     dataKeys.forEach(function (dkey) {
+        var fields = [];
         var obj = data[dkey];
         var keys = Object.keys(obj);
         for (var ind = 0; ind < keys.length; ind++) {
             var key = keys[ind];
             var value = "" + obj[key];
+            if (!parameters.includes(key))
+                continue;
             if (!value || value.empty() || value === "null" || value === "None")
                 continue;
             fields[fields.length] = {
