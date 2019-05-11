@@ -6,23 +6,20 @@ import * as furcDamage from "./cacheDamage.js";
 var rankingDump = 'data/rankingsdump.json';
 var unitCalc = 'data/unitcalculations.json';
 var infoJson = 'data/information.json';
+var skillsJson = 'data/skills.json';
+var limitburstsJson = 'data/limitbursts.json';
 
 export class Cache {
     fullRankings: any;
     calculations: any;
     information: any;
+    skillset: any;
+    limitbursts: any;
     constructor() {
     }
 
     init() {
-        var dump = fs.readFileSync(rankingDump);
-        this.fullRankings = JSON.parse(dump.toString());
-                
-        var calcs = fs.readFileSync(unitCalc);
-        this.calculations = JSON.parse(calcs.toString());
-
-        var info = fs.readFileSync(infoJson);
-        this.information = JSON.parse(info.toString());
+        this.reload();
     }
     saveInformation() {
         var newData = JSON.stringify(this.information, null, "\t");
@@ -33,6 +30,10 @@ export class Cache {
         this.fullRankings = JSON.parse(fs.readFileSync(rankingDump).toString());
         this.information = JSON.parse(fs.readFileSync(infoJson).toString());
         this.calculations = JSON.parse(fs.readFileSync(unitCalc).toString());
+
+        var skills = JSON.parse(fs.readFileSync(skillsJson).toString());
+        var lbs = JSON.parse(fs.readFileSync(limitburstsJson).toString());
+        this.skillset = Object.assign({}, skills, lbs);
     }
     updateDamage() {
         furcDamage.UpdateFurculaCalculations(() =>{
@@ -93,5 +94,27 @@ export class Cache {
 
             return found;
         }
+    }
+
+    getSkill(searchTerm: string) {
+        var found: { [key: string]: string } = {};
+
+        if (this.skillset[searchTerm]) {
+
+            found[searchTerm] = this.skillset[searchTerm];
+            return found;
+        }
+
+        
+        var keys = Object.keys(this.skillset);
+        for (let index = 0; index < keys.length; index++) {
+            const k = keys[index]
+            const skill = this.skillset[k];
+         
+            if (skill.name.toLowerCase().includes(searchTerm))
+                found[k] = skill;
+        }
+
+        return found;
     }
 };
