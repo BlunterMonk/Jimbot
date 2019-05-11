@@ -1910,7 +1910,7 @@ function getSearchString(prefix, msg, replace) {
 }
 function getCommandString(msg, prefix) {
     var split = msg.split(" ")[0];
-    split = split.replace(prefix, "").toTitleCase();
+    split = split.replace(prefix, "").capitalize();
     if (split.empty()) {
         return null;
     }
