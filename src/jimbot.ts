@@ -1497,21 +1497,26 @@ function getGif(search, param, callback) {
                 log(`Compare Gifs: ${n}, ${param}`);
 
                 // magic has priority
-                if (compareStrings(n, "limit")) {
+                if (compareStrings(n, "limit") || compareStrings(param, "limit")) {
+                    log(`Found Limit: param: ${compareStrings(param, "limit")}, n to param: ${compareStrings(n, param)}`);
                     return compareStrings(param, "limit") && compareStrings(n, param);
-                } else if (compareStrings(n, "mag")) {
+                } else if ((compareStrings(n, "mag") && !compareStrings(n, "standby")) ||
+                            (compareStrings(param, "mag") && !compareStrings(param, "standby"))) {
                     log(`Found mag: param: ${compareStrings(param, "mag")}, n to param: ${compareStrings(n, param)}`);
-                    return compareStrings(n, param) && compareStrings(param, "mag");
+                    return compareStrings(n, param) && compareStrings(param, "mag") && !compareStrings(n, "standby");
                 } else if (compareStrings(n, "standby")) {
                     log(`Found Standby: param: ${compareStrings(param, "magic")}, n: ${compareStrings(n, "magic")}`);
 
                     return compareStrings(param, "standby") 
                             && ((!compareStrings(param, "magic") && !compareStrings(n, "magic"))
                             || (compareStrings(param, "magic") && compareStrings(n, "magic")));
-                } else if (param.includes("attack") || n.includes("atk")) {
-                    return n.includes("attack") || n.includes("atk");
+                } else if (compareStrings(n, "atk|attack") && compareStrings(param, "atk|attack")) {
+                    log(`Found Atk: param: ${compareStrings(param, "atk")}, n: ${compareStrings(n, "atk")}`);
+                    log(`Found Attack: param: ${compareStrings(param, "attack")}, n: ${compareStrings(n, "attack")}`);
+                    return true;
                 }
                 
+                log("Gif did not match any cases");
                 return compareStrings(n, param);
             });
             if (!img) {

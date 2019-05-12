@@ -50,7 +50,7 @@ String.prototype.toTitleCase = function (splitter) {
         splitter = " ";
     }
     return this.toLowerCase().split(splitter).map(function(word) {
-        if (word.length > 3)
+        if (word.length > 3 || (word.charAt(0) != "o" && word.charAt(0) != "f" && word.charAt(0) != "t"))
             return (word.charAt(0).toUpperCase() + word.slice(1));
         else 
             return word;
