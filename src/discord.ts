@@ -4,11 +4,9 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
+import { log, logData, checkString, compareStrings, escapeString } from "./global.js";
 import * as Discord from "discord.js";
 import * as gs from "./config/guild.js";
-import { log, logData,
-    checkString, compareStrings,
-    escapeString } from "./global.js";
 import {getCommandString} from "./commands/commands.js";
 
 /**
@@ -18,8 +16,8 @@ import {getCommandString} from "./commands/commands.js";
     "ready"
     "message"
  */
-const bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
-const bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
+// const bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"; // prod
+const bot_secret_token = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk"; // test
 
 class client {
     discordClient: Discord.Client;

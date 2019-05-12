@@ -6,9 +6,7 @@
 
 
 import "../string/string-extension.js";
-import { log, logData,
-    checkString, compareStrings,
-    escapeString } from "../global.js";
+import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
 import * as gs from "../config/guild.js";
 
 const searchAliases = [

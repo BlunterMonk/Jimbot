@@ -19,7 +19,6 @@ export function compareStrings(text: string, search: string): boolean {
     //log(`compareStrings(${text}, ${keyword})`);
     return keyword.test(text.replace(/\s*/g,""));
 }
-
 export function escapeString(s: string): string {
     return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }

@@ -13,6 +13,7 @@ export class Config {
     configuration: any;
     serverSettings: any;
     constructor() {
+        this.init();
     }
 
     init() {
@@ -73,3 +74,5 @@ export class Config {
     }
 
 };
+
+export const config = new Config();

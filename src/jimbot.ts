@@ -11,20 +11,18 @@ import * as cheerio from "cheerio";
 import * as https from "https";
 import * as http from "http";
 
-import { log, logData,
-    checkString, compareStrings,
-    escapeString } from "./global.js";
+//import "./global.js";
+import { log, logData, checkString, compareStrings, escapeString } from "./global.js";
 import "./string/string-extension.js";
 import { Client } from "./discord.js";
-import * as Config from "./config/config.js";
+import {unitSearch, unitSearchWithParameters} from "./ffbe/unit.js";
+import {config} from "./config/config.js";
 import * as Editor from "./editor/Edit.js";
 import * as FFBE from "./ffbe/ffbewiki.js";
 import * as Cache from "./cache/cache.js";
 import * as constants from "./constants.js";
 import * as Commands from "./commands/commands.js";
 
-
-var config = null;
 var editor = null;
 var ffbe = null;
 var cache = null;
@@ -59,8 +57,6 @@ const aniJP = (n) => `https://exvius.gg/jp/units/${n}/animations/`;
 const guildId = (msg) => msg.guild.id;
 const userId = (msg) => msg.author.id;
 
-var chainFamilies = JSON.parse(String(fs.readFileSync("data/chainfamilies.json")));
-var ignoreEffectRegex = /grants.*passive|unlock.*\[.*CD\]/i;
 var unitDefaultSearch = "tmr|stmr";
 // Lookup Tables
 
@@ -86,7 +82,7 @@ process.on("unhandledRejection", (reason, p) => {
     // application specific logging, throwing an error, or other logic here
 });
 
-
+log("Test")
 
 // Initialize Client
 
@@ -110,9 +106,6 @@ Client.init(() => {
 
     ffbe = new FFBE.FFBE();
     
-    config = new Config.Config();
-    config.init();
-
     Commands.init(config);
 
     log("Configuration Loaded");
@@ -205,381 +198,6 @@ function onMessage(receivedMessage, content) {
             log("Emotes are disabled for this user");
         }
     }
-}
-
-
-
-
-function getUnitData(id) {
-
-    var filename = `tempdata/${id}.json`;
-    if (fs.existsSync(filename)) {
-        log(`Loading cached unit: ${id}`)
-        var u = fs.readFileSync(filename);
-        return JSON.parse(u.toString());
-    }
-
-    var cat = id[0];
-    var bigUnits = fs.readFileSync(`data/units-${cat}.json`);
-    var unitsList = JSON.parse(bigUnits.toString());
-
-    var unit = unitsList[id];
-    
-    unitsList = null;
-    bigUnits = null;
-    if (!unit) {
-        log("Could not find unit data");
-        unit = null;
-        return null;
-    }
-
-    log("Caching unit");
-    if (!fs.existsSync(`tempdata/`))
-        fs.mkdirSync( `tempdata/`, { recursive: true});
-    if (!fs.existsSync(filename)) {
-        fs.createWriteStream(filename);
-    }
-    fs.writeFileSync(filename, JSON.stringify(unit, null, "\t")); 
-
-    return unit;
-}
-
-function searchUnitSkills(unit, keyword: RegExp, active) {
-
-    var reg = /\([^\)]+\)/g;
-    const LB = unit.LB;
-    const skills = unit.skills;
-    var found = [];
-    var keys = Object.keys(skills);
-    keys.forEach(key => {
-        var skill = skills[key];
-        if (active != undefined && skill.active != active) {
-            //log(`Skipping Skill: ${skill.name} - ${skill.active}`);
-            return;
-        }
-
-        let total = collectSkillEffects(key, skills, keyword, "");
-        //log("\nTotal Text\n");
-        //log(total);
-        
-        for (let index = 0; index < found.length; index++) {
-            const el = found[index];
-            if (el.name == skill.name && el.value == total) {
-                //log(`Found Duplicate`);
-                //log(`Name: ${el.name}, Value: ${el.value}, S: ${s}`);
-                return;
-            }
-        }
-
-        if (total.empty()) return;
-
-        found[found.length] = {
-            name: skill.name,
-            value: total
-        };
-    });
-        
-    // Search LB
-    if (LB && (active === undefined || active == true)) {
-        var n = found.length;
-        var s = "";
-
-        var all = checkString(LB.name, keyword);
-        log(`LB Name: ${LB.name}, All: ${all}`);
-
-        LB.max_level.forEach(effect => {
-            if (all || checkString(effect, keyword)) {
-                s += `*${effect}*\n`;
-                found[n] = {
-                    name: `${LB.name} - MAX`,
-                    value: s
-                };
-            }
-        });
-    }
-
-    //log(`Searched Skills For: ${keyword}`);
-    //log(found);
-
-    return found;
-}
-function collectSkillEffects(key, skills, keyword, total) {
-    var skill = skills[key];
-    var all = checkString(skill.name, keyword);
-    //log(`Skill Name: ${skill.name}, All: ${all}`);
-
-    var reg = /\([^\)]+\)/g;
-    for (let ind = 0; ind < skill.effects.length; ind++) {
-        const effect = skill.effects[ind]
-        if (checkString(effect, ignoreEffectRegex))
-            continue;
-        
-        //log(`Skill Effect: ${effect}, Keyword: ${keyword}`);
-        if (all || checkString(effect, keyword)) {
-            let added = false;
-            let match = reg.exec(effect);
-            do {
-                if (!match) break;
-
-                let k = match[0].replace("(", "").replace(")", "");
-                let subskill = skills[k];
-                if (k != key && subskill && subskill.name.includes(skill.name) && !checkString(subskill.effects[0], ignoreEffectRegex)) {
-                    //log(match);
-                    //log(`Sub Skill: ${subskill.name}, Effect: ${subskill.effects}`);
-                    subskill.effects.forEach(sub => {
-                        total += `${sub}\n`;
-                        added = true;
-                    });
-                    //total += collectSkillEffects(k, skills, keyword, total);
-                }
-
-                match = reg.exec(effect);
-            } while(match);
-
-            if (!added)
-                total += `${effect}\n`;
-        }
-    }
-
-    if (skill.strings.desc_short) {
-        var desc = skill.strings.desc_short[0];
-        if (checkString(desc, keyword)) {
-            //log(`Description: ${desc}, keyword: ${keyword}`);
-            //log(`Effects`);
-            //log(skill.effects);
-            total += `*"${desc}"*\n`;
-        }
-    }
-
-    return total;
-}
-function searchUnitItems(unit, keyword: RegExp) {
-    log(`searchUnitItems(${unit.name}, ${keyword})`);
-
-    var found = [];
-
-    const LB = unit.LB;
-    if (LB && (checkString(LB.name, keyword) || checkString("lb", keyword))) {
-        var n = found.length;
-        var s = "";
-
-        log(`LB Name: ${LB.name}`);
-
-        LB.max_level.forEach(effect => {
-            s += `*${effect}*\n`;
-            found[n] = {
-                name: `${LB.name} - MAX`,
-                value: s
-            };
-        });
-    }
-
-    const TMR = unit.TMR;
-    if (TMR && checkString("tmr", keyword)) {
-        var n = found.length;
-
-        log(`TMR Name: ${TMR.name}, Type: ${TMR.type}`);
-        found[n] = equipToString(TMR);
-    }
-
-    const STMR = unit.STMR;
-    if (STMR && checkString("stmr", keyword)) {
-        var n = found.length;
-
-        log(`STMR Name: ${STMR.name}, Type: ${STMR.type}`);
-        found[n] = equipToString(STMR);
-    }
-
-    log(found);
-    return found;
-}
-function searchUnitFrames(unit) {
-
-    const LB = unit.LB;
-    const skills = unit.skills;
-    var families = {};
-    var keys = Object.keys(skills);
-    keys.forEach(key => {
-        var skill = skills[key];
-        if (!skill.active || !skill.attack_frames || 
-            skill.attack_frames.length == 0 || skill.attack_frames[0].length <= 1) return;
-
-        let frames = [];
-
-        skill.attack_frames.forEach(element => {
-            frames = frames.concat(element)
-        });
-
-        frames = frames.sort((a,b) => {
-            return a - b;
-        });
-        //log(frames);
-        let str = arrayToString(frames);
-        if (!str.str.empty()) {
-            let fam = `${str.fam}: ${str.str}`;
-            if (!families[fam])
-                families[fam] = [];
-
-            if (families[fam].find(n => {return n == skill.name})) return;
-            families[fam].push(skill.name);
-        }
-    });
-        
-    // Search LB
-    if (LB && LB.attack_frames &&
-        LB.attack_frames.length > 0 && LB.attack_frames[0].length > 1) {
-        //log(LB.attack_frames);
-
-        let str = arrayToString(LB.attack_frames[0]);
-        if (str) {
-            let fam = `${str.fam}: ${str.str}`;
-            if (!families[fam])
-                families[fam] = [];
-            
-            families[fam].push(`${LB.name} (LB)`);
-        }
-    }
-
-    var found = [];
-    //log(`Searched Skill Frames`);
-    //log(families);
-    let famKeys = Object.keys(families);
-    famKeys.forEach(key => {
-        const fam = families[key];
-        let text = "";
-
-        fam.forEach(skill => {
-            text += `${skill}\n`;
-        });
-
-        found[found.length] = {
-            name: key,
-            value: text
-        }
-    });
-
-    return found;
-}
-function loadUnitItems(JP, tmr, stmr) {
-    
-    var equipment = fs.readFileSync(`../ffbe${JP}/equipment.json`);
-    var equipList = JSON.parse(equipment.toString());
-    equipment = null;
-
-    var TMR = equipList[tmr];
-    var STMR = equipList[stmr];
-    equipList = null;
-
-    if (!TMR || !STMR) {
-        var materia = fs.readFileSync(`../ffbe${JP}/materia.json`);
-        var materiaList = JSON.parse(materia.toString());
-
-        if (materiaList[tmr]) TMR = materiaList[tmr];
-        if (materiaList[stmr]) STMR = materiaList[stmr];
-
-        materia = null;
-        materiaList = null;
-    }
-
-    return {
-        TMR: TMR,
-        STMR: STMR
-    }
-}
-function equipToString(equip) {
-    var effects = "";
-    var slot = "";
-    var stats = "";
-
-    log(`Equip Name: ${equip.name}, Type: ${equip.type}`);
-
-    if (equip.type == "EQUIP") {
-        if (equip.effects) {
-            equip.effects.forEach(effect => {
-                if (!checkString(effect, /grants.*passive/i))
-                    effects += `${effect}\n`;
-            });
-        }
-        
-        if (equip.stats) {
-            var statKeys = Object.keys(equip.stats);
-            statKeys.forEach(key => {
-                const stat = equip.stats[key];
-                if (!stat) return;
-
-                if (constants.statParameters.includes(key.toLowerCase())) {
-                    log(`${key}; ${stat}, `);
-                    stats += `${key}: ${stat}, `;
-                } else {
-                    stats += `\n${key.replaceAll("_", " ").toTitleCase(" ")}:\n`;
-                    var substatKeys = Object.keys(stat);
-                    substatKeys.forEach(subkey => {
-                        const sub = stat[subkey];
-                        if (!sub) return;
-            
-                        log(`${subkey}; ${sub}, `);
-                        stats += `${subkey}: ${sub}, `;
-                    });
-                }
-            });
-        }
-
-        if (equip.skills) {
-            var skillKeys = Object.keys(equip.skills);
-            skillKeys.forEach(key => {
-                const skill = equip.skills[key];
-                if (!skill) return;
-
-                skill.effects.forEach(eff => {
-                    log(`${key}: ${eff}`);
-                    effects += `${eff}\n`;
-                });
-            });
-        }
-
-        if (equip.slot === "Weapon")
-            slot = constants.weaponList[equip.type_id-1].toTitleCase(" ");
-        else
-            slot = equip.slot;
-    }
-    
-    if (equip.type == "MATERIA") {
-        effects += `"*${equip.strings.desc_short[0]}"*\n`;
-        slot = "Materia";
-    }
-
-    return {
-        name: `${equip.name} - ${slot}`,
-        value: `${stats}\n${effects}`
-    }
-}
-function arrayToString(array) {
-    let str = "";
-    for (let index = 0; index < array.length; index++) {
-        const element = array[index];
-        let num = parseInt(element);
-
-        if (index > 0) {
-            let prev = parseInt(array[index-1]);
-            num = num - prev;
-            if (num > 0) {
-                str += `-${num}`;
-            }
-        } else {
-            str += `${element}`;
-        }
-    }
-
-    var fam = "Orphans";
-    var keys = Object.keys(chainFamilies);
-    for (let ind = 0; ind < keys.length; ind++) {
-        const key = keys[ind];
-        if (chainFamilies[key] === str.trim()) {
-            fam = `${key}`;
-            break;
-        }
-    }
-    return {str: str, fam: fam };
 }
 
 
@@ -743,45 +361,20 @@ function handleRank(receivedMessage, search, parameters) {
     */
 }
 
-function handleK(receivedMessage, search, id, name) {
+function handleK(receivedMessage, search, id) {
     log(`handleKit(${search})`);
 
-    var unit = getUnitData(id);
-    if (!unit) {
-        log(`Could not find unit data: ${unit}`);
-        return;
-    }
-    
-    var fields = null;
-    var keyword = new RegExp(search.replace(/_/g,".*"), "i");
-    if (checkString(search, /frames|chain/i)) {
-        fields = searchUnitFrames(unit);
-    } else if (checkString(search, /enhancement/i)) {
-        fields = searchUnitSkills(unit, /\+2$|\+1$/i, undefined);
-    } else if (checkString(search, /cd/i)) {
-        log("SEARCHING FOR CD");
-        fields = searchUnitSkills(unit, /one.*use.*every.*turns/i, undefined);
-    } else {
-        var items = searchUnitItems(unit, keyword);
-        var skills = searchUnitSkills(unit, keyword, true);
-        
-        fields = skills.concat(items);
-    }
+    var unit = unitSearch(id, search);
 
-    if (!fields || fields.length == 0) {
-        log(`Failed to get unit skill list: ${keyword}`);
-        return;
-    }
-
-    name = name.toTitleCase("_")
+    var name = unit.name.toTitleCase();
     var embed = {
         color: pinkHexCode,
         thumbnail: {
             url: sprite(getMaxRarity(id))
         },
-        title: name.replaceAll("_", " "),
-        url: "https://exvius.gamepedia.com/" + name,
-        fields: fields
+        title: name.toTitleCase(),
+        url: "https://exvius.gamepedia.com/" + name.replaceAll(" ", "_"),
+        fields: unit.fields
     };
 
     Client.sendMessage(receivedMessage, embed);
@@ -796,21 +389,9 @@ function handleKit(receivedMessage, search, parameters, active) {
         return;
     }
 
-    var unit = getUnitData(id);
-    if (!unit) {
-        log(`Could not find unit data: ${unit}`);
-        return;
-    }
+    var unit = unitSearchWithParameters(id, active, parameters);
 
-    var key = convertParametersToSkillSearch(parameters);
-    var keyword = new RegExp(key.replace(/_/g,".*"), "gi");
-    var fields = searchUnitSkills(unit, keyword, active);
-    if (!fields || fields.length == 0) {
-        log(`Failed to get unit skill list: ${keyword}`);
-        return;
-    }
-
-    var name = unit.name.toTitleCase()
+    var name = unit.name.toTitleCase();
     log(`Unit Name: ${name}`);
     var embed = {
         color: pinkHexCode,
@@ -819,7 +400,7 @@ function handleKit(receivedMessage, search, parameters, active) {
         },
         title: name,
         url: "https://exvius.gamepedia.com/" + name.replaceAll(" ", "_"),
-        fields: fields
+        fields: unit.fields
     };
 
     Client.sendMessage(receivedMessage, embed);
@@ -829,21 +410,6 @@ function handleAbility(receivedMessage, search, parameters) {
 }
 function handlePassive(receivedMessage, search, parameters) {
     handleKit(receivedMessage, search, parameters, false);
-}
-function handleEnhancements(receivedMessage, search, parameters) {
-    log(`handleKit(${search})`);
-
-    var id = getUnitKey(search);
-    if (!id) {
-        log("No Unit Found");
-        return;
-    }
-
-    var unit = getUnitData(id);
-    if (!unit) {
-        log(`Could not find unit data: ${unit}`);
-        return;
-    }
 }
 
 function handleData(receivedMessage, search, parameters) {
@@ -1220,7 +786,7 @@ function handleAddemo(receivedMessage, search, parameters) {
                             overwriteFile(existing, url, result => {
                                 const guildId = receivedMessage.guild.id;
                                 receivedMessage.guild.emojis.forEach(customEmoji => {
-                                    if (customEmoji.name === config.getSuccess(guildId)) {
+                                    if (customEmoji.name === Client.getSuccess(guildId)) {
                                         message.delete();
                                         //receivedMessage.reply(`Emote has been replaced. :${customEmoji}:`);
                                         respondSuccess(receivedMessage);
@@ -1254,12 +820,12 @@ function handleAddshortcut(receivedMessage, search, parameters) {
     log(`Shortcut: ${search}`);
     log(`Command: ${command}`);
 
-    if (config.validateEditor(guildId(receivedMessage), userId(receivedMessage))) {
+    if (Client.validateEditor(guildId(receivedMessage), userId(receivedMessage))) {
         log("User is not an editor");
         return;
     }
 
-    if (config.setShortcut(guildId(receivedMessage), search, command)) {
+    if (Client.setShortcut(guildId(receivedMessage), search, command)) {
         respondSuccess(receivedMessage, true);
     } else {
         respondFailure(receivedMessage, true);
@@ -1348,9 +914,7 @@ function handlePrefix(receivedMessage) {
             return;
         }
 
-        config.setPrefix(receivedMessage.guild.id, s[1]);
-        config.save();
-        config.init();
+        Client.setPrefix(receivedMessage.guild.id, s[1]);
 
         respondSuccess(receivedMessage);
     }
@@ -1702,7 +1266,7 @@ function unitQuery(receivedMessage, command, search) {
         search = unitDefaultSearch;
     }
 
-    handleK(receivedMessage, search, id, command);
+    handleK(receivedMessage, search, id);
     return true;
 }
 
@@ -1771,24 +1335,7 @@ function convertSearchTerm(search) {
     search = search.replaceAll(" ", "_");
     return search;
 }
-function convertParametersToSkillSearch(parameters) {
-    var search = "";
-    parameters.forEach((param, ind) => {
-        if (ind > 0) 
-            search += "|";
-        search += param;
-    });
 
-    searchAliases.forEach(regex => {
-        if (checkString(search, regex.reg)) {
-            //log(`Search contains a word to replace`);
-            search = search.replace(regex.reg, regex.value);
-            //log(`New Search: ${search}`);
-        }
-    });
-
-    return search.replaceAll(" ",".*")
-}
 function getSearchString(prefix, msg, replace = true) {
     var ind = prefix.length + 1;
     var search = msg.slice(ind, msg.length);
