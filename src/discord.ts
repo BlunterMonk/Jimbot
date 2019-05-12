@@ -54,7 +54,7 @@ class client {
     
     init(callback) {
         this.discordClient = new Discord.Client();
-        this.discordClient.login(bot_secret_token_test);
+        this.discordClient.login(bot_secret_token);
 
         this.on("message", this.onMessage.bind(this));
         this.on("messageDelete", this.onMessageDelete.bind(this));
