@@ -11,16 +11,19 @@ import * as cheerio from "cheerio";
 import * as https from "https";
 import * as http from "http";
 
-import "include";
+import { log, logData,
+    checkString, compareStrings,
+    escapeString } from "./global.js";
 import "./string/string-extension.js";
+import { Client } from "./discord.js";
 import * as Config from "./config/config.js";
 import * as Editor from "./editor/Edit.js";
 import * as FFBE from "./ffbe/ffbewiki.js";
 import * as Cache from "./cache/cache.js";
 import * as constants from "./constants.js";
+import * as Commands from "./commands/commands.js";
 
 
-const client = new Discord.Client();
 var config = null;
 var editor = null;
 var ffbe = null;
@@ -45,10 +48,10 @@ const wikiEndpoint = "https://exvius.gamepedia.com/";
 const ffbegifEndpoint = "http://www.ffbegif.com/";
 const exviusdbEndpoint = "https://exvius.gg/gl/units/205000805/animations/";
 
-const renaulteUserID = "159846139124908032";
-const jimooriUserID = "131139508421918721";
-const furculaUserID = "344500120827723777";
-const muspelUserID = "114545824989446149";
+const renaulteUserID    = "159846139124908032";
+const jimooriUserID     = "131139508421918721";
+const furculaUserID     = "344500120827723777";
+const muspelUserID      = "114545824989446149";
 
 const sprite = (n) => `https://exvius.gg/static/img/assets/unit/unit_ills_${n}.png`;
 const aniGL = (n) => `https://exvius.gg/gl/units/${n}/animations/`;
@@ -78,47 +81,16 @@ const searchAliases = [
     { reg: /evoke/g, value: "evoke|evocation"}
 ]
 
-// Commands
-const commandCyra = `hi cyra`;
-const commandJake = `hi jake`;
-var loading = true;
-
-// Get your bot's secret token from:
-// https://discordapp.com/developers/applicati  ons/
-// Click on your application -> Bot -> Token -> "Click to Reveal Token"
-var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
-var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
-
-client.login(bot_secret_token_test);
-
-
-// Keep track of added messages
-const botMessages = [];
-function cacheBotMessage(received, sent) {
-    botMessages[botMessages.length] = {
-        received: received,
-        sent: sent,
-        time: new Date()
-    };
-    //log("Cached Message");
-    //log(botMessages[botMessages.length - 1]);
-}
-
-//joined a server
-client.on("guildCreate", guild => {
-    log("Joined a new guild: " + guild.name);
-    //Your other stuff like adding to guildArray
-    config.loadGuild(guild.name, guild.id);
-});
-//removed from a server
-client.on("guildDelete", guild => {
-    log("Left a guild: " + guild.name);
-    //remove from guildArray
-    config.unloadGuild(guild.name, guild.id);
+process.on("unhandledRejection", (reason, p) => {
+    log(`Unhandled Rejection at: Promise(${p}), Reason: ${reason}`);
+    // application specific logging, throwing an error, or other logic here
 });
 
-client.on("ready", () => {
-    log("Connected as " + client.user.tag);
+
+
+// Initialize Client
+
+Client.init(() => {
 
     cache = new Cache.Cache();
     cache.init();
@@ -135,64 +107,119 @@ client.on("ready", () => {
     })
 
     ffbe = new FFBE.FFBE();
+    
     config = new Config.Config();
     config.init();
-    LoadGuilds();
+
+    Commands.init(config);
 
     log("Configuration Loaded");
-    loading = false;
+
+    Client.setMessageCallback(onMessage.bind(this));
+    Client.setPrivateMessageCallback(onPrivateMessage.bind(this));
 });
 
-client.on("message", receivedMessage => {
-    // Prevent bot from responding to its own messages
-    if (receivedMessage.author == client.user || loading) {
+function onPrivateMessage(receivedMessage, content) {
+
+    var copy = content.toLowerCase();
+    var id = receivedMessage.author.id;
+    
+    log("Private Message From: " + id);
+    log(content)
+
+    if (editor.isEditing(id)) {
+        log("Is Editor");
+        editor.editorResponse(receivedMessage);
         return;
     }
 
-    const content = receivedMessage.content;
-    if (!receivedMessage.guild) {
-        privateMessage(receivedMessage);
-        return;
-    }
+    log("Settings Change Allowed");
 
+    try {
+        if (content.startsWith("?setinfo")) {
+            log("Settings Change")
+
+            editor.SetInfo(Client, receivedMessage);
+            return;
+        }
+
+        var params = getParameters(content);
+        var command = getCommandString(content, "?");
+        var parameters = params.parameters;
+
+        const search = getSearchString(`?${command}`, copy);
+        if (!search && parameters.length === 0) {
+            log("Could not parse search string");
+            respondFailure(receivedMessage, true);
+            throw command;
+        }
+
+        if (content.startsWith("?addinfo")) {
+            handleAddinfo(receivedMessage, search, parameters);
+            editor.AddInfo(receivedMessage, search);
+        } else if (content.startsWith("?setrank")) {
+            handleSetrankings(receivedMessage, search, parameters);
+        } else if (content.startsWith("?setinfo")) {
+            handleSetinfo(receivedMessage, search, parameters);
+        }
+    } catch(e) {
+        log("Failed: " + e);
+        respondFailure(receivedMessage, true);
+    }
+}
+function onMessage(receivedMessage, content) {
+    
     const guildId = receivedMessage.guild.id;
-    const prefix = config.getPrefix(guildId);
-    if (!content.startsWith(prefix)) {
-        handleReactions(receivedMessage);
-        return;
+
+    var copy = receivedMessage.content.toLowerCase();
+    const attachment = receivedMessage.attachments.first();
+    if (attachment) {
+        log("Message Attachments");
+        log(attachment.url);
     }
 
-    guildMessage(receivedMessage, guildId, prefix);
-});
+    // the command name
+    /*
+    let com = getCommandString(copy, prefix);
+    try {
+        let valid = false;
+        log(eval(`valid = (typeof handle${com} === 'function');`));
+        if (!valid) {
+            let search = getSearchString(`${prefix}${com}`, copy);
+            if (unitQuery(receivedMessage, com, search))
+                return;
+        }
+    } catch (e) {
+        //log(e);
+        //log("JP Unit: " + command);
+        let search = getSearchString(`${prefix}${com}`, copy);
+        if (unitQuery(receivedMessage, com, search))
+            return;
+    }
+    */
+   
+    var com = Commands.getCommandObject(content, attachment, Client.guildSettings[guildId]);
+    log("\n Command Obect");
+    log(com);
 
-client.on("messageDelete", deletedMessage => {
-    log("Message Deleted");
-    log(deletedMessage.id);
+    try {
+        var search = com.search;
+        var parameters = com.parameters;
 
-    for (var i = 0; i < botMessages.length; i++) {
-        var msg = botMessages[i];
+        eval(com.run);
+    } catch (e) {
+        log(e);
+        log("Command doesn't exist");
 
-        if (msg.received === deletedMessage.id) {
-            var sent = deletedMessage.channel
-                .fetchMessage(msg.sent)
-                .then(sent => {
-                    if (sent) {
-                        log("Deleted Message");
-                        sent.delete();
-
-                        botMessages.splice(i, 1);
-                    }
-                })
-                .catch(console.error);
-            break;
+        if (Client.validate(receivedMessage, "emote")) {
+            handleEmote(receivedMessage);
+        } else {
+            log("Emotes are disabled for this user");
         }
     }
-});
+}
 
-process.on("unhandledRejection", (reason, p) => {
-    log(`Unhandled Rejection at: Promise(${p}), Reason: ${reason}`);
-    // application specific logging, throwing an error, or other logic here
-});1
+
 
 
 function getUnitData(id) {
@@ -228,14 +255,7 @@ function getUnitData(id) {
 
     return unit;
 }
-function checkString(text, keyword: RegExp): boolean {
-    return keyword.test(text.replace(/\s*/g,""));
-}
-function compareStrings(text, search): boolean {
-    var keyword = new RegExp(search.replace(/_/g,".*").replace(/ /g,".*"), "i");
-    //log(`compareStrings(${text}, ${keyword})`);
-    return keyword.test(text.replace(/\s*/g,""));
-}
+
 function searchUnitSkills(unit, keyword: RegExp, active) {
 
     var reg = /\([^\)]+\)/g;
@@ -586,10 +606,6 @@ function handleUnit(receivedMessage, search, parameters) {
 
         var embed = {
             color: pinkHexCode,
-            author: {
-                name: client.user.username,
-                icon_url: client.user.avatarURL
-            },
             thumbnail: {
                 url: imgurl
             },
@@ -617,14 +633,7 @@ function handleUnit(receivedMessage, search, parameters) {
             };
         }
 
-        receivedMessage.channel
-            .send({
-                embed: embed
-            })
-            .then(message => {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
-            .catch(console.error);
+        Client.sendMessage(receivedMessage, embed);
     });
 }
 function handleEquip(receivedMessage, search, parameters) {
@@ -634,79 +643,55 @@ function handleEquip(receivedMessage, search, parameters) {
         var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
 
-        receivedMessage.channel
-            .send(mainChannelID, {
-                embed: {
-                    color: pinkHexCode,
-                    author: {
-                        name: client.user.username,
-                        icon_url: client.user.avatarURL
-                    },
-                    thumbnail: {
-                        url: imgurl
-                    },
-                    title: title,
-                    fields: nodes,
-                    url: "https://exvius.gamepedia.com/" + pageName
-                }
-            })
-            .then(message => {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
-            .catch(console.error);
+        var embed = {
+            color: pinkHexCode,
+            thumbnail: {
+                url: imgurl
+            },
+            title: title,
+            fields: nodes,
+            url: "https://exvius.gamepedia.com/" + pageName
+        };
+
+        Client.sendMessage(receivedMessage, embed);
     });
 }
 function handleSkill(receivedMessage, search, parameters) {
+
     search = search.toTitleCase("_");
     log(`Searching Skills For: ${search}...`);
     ffbe.queryWikiForAbility(search, parameters, function (imgurl, pageName, nodes) {
         var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
 
-        receivedMessage.channel
-            .send(mainChannelID, {
-                embed: {
-                    color: pinkHexCode,
-                    author: {
-                        name: client.user.username,
-                        icon_url: client.user.avatarURL
-                    },
-                    thumbnail: {
-                        url: imgurl
-                    },
-                    title: title,
-                    fields: nodes,
-                    url: "https://exvius.gamepedia.com/" + pageName
-                }
-            })
-            .then(message => {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
-            .catch(console.error);
+        var embed = {
+            color: pinkHexCode,
+            thumbnail: {
+                url: imgurl
+            },
+            title: title,
+            fields: nodes,
+            url: "https://exvius.gamepedia.com/" + pageName
+        };
+
+        Client.sendMessage(receivedMessage, embed);
     });
 }
 function handleSearch(receivedMessage, search) {
     log(`Searching For: ${search}...`);
     ffbe.queryWikiWithSearch(search, function (batch) {
-        receivedMessage.channel
-            .send(mainChannelID, {
-                embed: {
-                    color: pinkHexCode,
-                    author: {
-                        name: client.user.username,
-                        icon_url: client.user.avatarURL
-                    },
-                    fields: batch
-                }
-            })
-            .then(message => {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
-            .catch(console.error);
+
+        var embed = {
+            color: pinkHexCode,
+            fields: batch
+        };
+
+        Client.sendMessage(receivedMessage, embed);
     });
 }
 function handleRank(receivedMessage, search, parameters) {
     log("\nSearching Rankings for: " + search);
+
     if (search) {
         const unit = config.getUnitRank(search.toLowerCase());
         if (!unit) {
@@ -714,46 +699,33 @@ function handleRank(receivedMessage, search, parameters) {
             return;
         }
 
-        client.fetchUser(muspelUserID)
-        .then(muspel => {
-            var embed = {
-                author: {
-                    name: muspel.username,
-                    icon_url: muspel.avatarURL
-                },
-                title: unit.Unit,
-                url: wikiEndpoint + unit.Unit.replaceAll(" ", "_"),
-                color: pinkHexCode,
-                fields: [
-                    {
-                        name: "Rank",
-                        value: `${unit.Base} - ${unit.TDH}`
-                    }
-                ],
-                thumbnail: {
-                    url: unit.imgurl
+        var embed = {
+            title: unit.Unit,
+            url: wikiEndpoint + unit.Unit.replaceAll(" ", "_"),
+            color: pinkHexCode,
+            fields: [
+                {
+                    name: "Rank",
+                    value: `${unit.Base} - ${unit.TDH}`
                 }
-            };
-
-            if (unit.notes) {
-                embed.fields[embed.fields.length] = {
-                    name: "Notes",
-                    value: unit.notes
-                };
+            ],
+            thumbnail: {
+                url: unit.imgurl
             }
+        };
 
-            receivedMessage.channel
-            .send({
-                embed: embed
-            })
-            .then(message => {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
-            .catch(console.error);
-        });
+        if (unit.notes) {
+            embed.fields[embed.fields.length] = {
+                name: "Notes",
+                value: unit.notes
+            };
+        }
+
+        Client.sendMessageWithAuthor(receivedMessage, embed, muspelUserID);
         return;
     }
 
+    /*
     var embeds = [];
     var rankings = config.getRankings(search);
     log("\nRankings");
@@ -777,19 +749,10 @@ function handleRank(receivedMessage, search, parameters) {
 
     log("\nEmbeds");
     log(embeds);
-    client.fetchUser(furculaUserID)
-    .then(calculator => {
-        embeds.forEach(embed => {
-            receivedMessage.channel
-                .send({
-                    embed: embed
-                })
-                .then(message => {
-                    //cacheBotMessage(receivedMessage.id, message.id);
-                })
-                .catch(console.error);
-        });
+    embeds.forEach(embed => {
+        Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
     });
+    */
 }
 
 function handleK(receivedMessage, search, id, name) {
@@ -825,10 +788,6 @@ function handleK(receivedMessage, search, id, name) {
     name = name.toTitleCase("_")
     var embed = {
         color: pinkHexCode,
-        author: {
-            name: client.user.username,
-            icon_url: client.user.avatarURL
-        },
         thumbnail: {
             url: sprite(getMaxRarity(id))
         },
@@ -837,14 +796,7 @@ function handleK(receivedMessage, search, id, name) {
         fields: fields
     };
 
-    receivedMessage.channel
-        .send({
-            embed: embed
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
+    Client.sendMessage(receivedMessage, embed);
 }
 
 function handleKit(receivedMessage, search, parameters, active) {
@@ -874,10 +826,6 @@ function handleKit(receivedMessage, search, parameters, active) {
     log(`Unit Name: ${name}`);
     var embed = {
         color: pinkHexCode,
-        author: {
-            name: client.user.username,
-            icon_url: client.user.avatarURL
-        },
         thumbnail: {
              url: sprite(getMaxRarity(id))
         },
@@ -886,14 +834,7 @@ function handleKit(receivedMessage, search, parameters, active) {
         fields: fields
     };
 
-    receivedMessage.channel
-        .send({
-            embed: embed
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
+    Client.sendMessage(receivedMessage, embed);
 }
 function handleAbility(receivedMessage, search, parameters) {
     handleKit(receivedMessage, search, parameters, true);
@@ -964,7 +905,7 @@ function handleData(receivedMessage, search, parameters) {
             fields: fields
         }
         
-        sendMessage(receivedMessage, embed);
+        Client.sendMessage(receivedMessage, embed);
     });
 }
 
@@ -983,7 +924,7 @@ function handleReactions(receivedMessage) {
                 }
             });
             break;
-        case commandJake:
+        case "hi jake":
             receivedMessage.react("🌹");
             receivedMessage.react("🛋");
             break;
@@ -1001,31 +942,20 @@ function handleReactions(receivedMessage) {
             break;
     }
 }
-function handleEmote(receivedMessage, prefix) {
+function handleEmote(receivedMessage) {
     var img = receivedMessage.content.split(" ")[0];
-    img = img.toLowerCase().replace(prefix, "");
+    img = img.toLowerCase().slice(1, img.length);
 
     var filename = validateEmote(img);
-    if (filename) {
-        var Attachment = new Discord.Attachment(filename);
-        if (Attachment) {
-            receivedMessage.channel
-                .send(Attachment)
-                .then(message => {
-                    cacheBotMessage(receivedMessage.id, message.id);
-                })
-                .catch(console.error);
-        }
-    }
-
-    log(filename + " doesn't exist");
-    return null;
+    if (!filename) return;
+    
+    Client.sendImage(receivedMessage, filename);
 }
 function handleQuote(receivedMessage, search) {
     //var s = getSearchString(quoteQueryPrefix, content).toLowerCase();
     switch (search) {
         case "morrow":
-            receivedMessage.channel.send(new Discord.Attachment("morrow0.png"));
+            Client.send(receivedMessage, new Discord.Attachment("morrow0.png"));
             break;
         default:
             break;
@@ -1048,15 +978,30 @@ function handleGif(receivedMessage, search, parameters) {
     getGif(search, param, (filename) => {
         log("success");
 
-        var Attachment = new Discord.Attachment(filename);
-        if (Attachment) {
-            receivedMessage.channel
-                .send(Attachment)
-                .then(message => {
-                    cacheBotMessage(receivedMessage.id, message.id);
-                })
-                .catch(console.error);
-        }
+        Client.sendImage(receivedMessage, filename);
+    });
+}
+function handleSprite(receivedMessage, search, parameters) {
+
+    var unit = getUnitKey(search);
+    if (!unit) {
+        return;
+    }
+
+    unit = getMaxRarity(unit)
+
+    log("Searching Unit Sprite For: " + search);
+    validateUnit(search, function (valid, imgurl) {
+        search = search.replaceAll("_", " ");
+
+        var embed = {
+            color: pinkHexCode,
+            image: {
+                url: sprite(unit)
+            }
+        };
+
+        Client.sendMessage(receivedMessage, embed);
     });
 }
 
@@ -1064,23 +1009,15 @@ function handleGif(receivedMessage, search, parameters) {
 function handleRecentunits(receivedMessage, search, parameters) {
 
     ffbe.queryWikiFrontPage((links) => {
-        receivedMessage.channel
-        .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                title: "Recently Released Units",
-                description: links,
-                url: "https://exvius.gamepedia.com/Unit_List"
-            }
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
+        var embed = {
+            color: pinkHexCode,
+            author: Client.getAuthorEmbed(),
+            title: "Recently Released Units",
+            description: links,
+            url: "https://exvius.gamepedia.com/Unit_List"
+        };
+
+        Client.sendMessage(receivedMessage, embed);
     })
 }
 function handleWhatis(receivedMessage, search, parameters) {
@@ -1089,27 +1026,14 @@ function handleWhatis(receivedMessage, search, parameters) {
     if (!info) {
         return;
     }
-        
-    client.fetchUser(renaulteUserID)
-    .then(calculator => {
+    
+    var embed = {
+        color: pinkHexCode,
+        title: info.title,
+        description: info.description
+    };
 
-        receivedMessage.channel
-        .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: calculator.username,
-                    icon_url: calculator.avatarURL
-                },
-                title: info.title,
-                description: info.description
-            }
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
-    });
+    Client.sendMessageWithAuthor(receivedMessage, embed, renaulteUserID);
 }
 function handleGuide(receivedMessage, search, parameters) {
     handleWhatis(receivedMessage, search, parameters);
@@ -1143,44 +1067,26 @@ function handleGlbestunits(receivedMessage, search, parameters) {
         list += "\n" + links;
     });
 
-    client.fetchUser("159846139124908032")
-    .then(general => {
+    var embed = {
+        color: pinkHexCode,
+        title: `Global Best 7★ Units (random order, limited units __excluded__)`,
+        description: list,
+    };
 
-        receivedMessage.channel
-        .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: general.username,
-                    icon_url: general.avatarURL
-                },
-                title: `Global Best 7★ Units (random order, limited units __excluded__)`,
-                description: list,
-            }
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
-    });
+    Client.sendMessageWithAuthor(receivedMessage, embed, renaulteUserID);
 }
 function handleHelp(receivedMessage) {
     var data = fs.readFileSync("readme.json", "ASCII");
     var readme = JSON.parse(data);
 
-    receivedMessage.author
-        .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                description: readme.description,
-                fields: readme.fields,
-                title: readme.title
-            }
-        })
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-        .catch(console.error);
+    var embed = {
+        color: pinkHexCode,
+        description: readme.description,
+        fields: readme.fields,
+        title: readme.title
+    };
+
+    Client.sendPrivateMessage(receivedMessage, embed);
 }
 
 // DAMAGE
@@ -1229,7 +1135,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
         },
     }
     
-    sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
 function handleBurst(receivedMessage, search, parameters) {
     handleDpt(receivedMessage, search, parameters, true);
@@ -1295,6 +1201,7 @@ function handleAddemo(receivedMessage, search, parameters) {
     if (existing) {
         var Attachment = new Discord.Attachment(existing);
         if (Attachment) {
+            
             var embed = {
                 title: "Conflict",
                 description:
@@ -1306,56 +1213,44 @@ function handleAddemo(receivedMessage, search, parameters) {
                 files: [{ attachment: `${existing}`, name: existing }]
             };
 
-            receivedMessage.channel
-                .send({ embed: embed })
-                .then(message => {
-                    cacheBotMessage(receivedMessage.id, message.id);
-                    message.react(okEmoji);
-                    message.react(cancelEmoji);
+            Client.sendMessage(receivedMessage, embed, message => {
+                
+                message.react(okEmoji);
+                message.react(cancelEmoji);
 
-                    const filter = (reaction, user) =>
-                        (reaction.emoji.name === okEmoji ||
-                            reaction.emoji.name === cancelEmoji) &&
-                        user.id !== message.author.id;
-                    message
-                        .awaitReactions(filter, { max: 1, time: 60000 })
-                        .then(collected => {
-                            const reaction = collected.first().emoji.name;
-                            const count = collected.size;
+                const filter = (reaction, user) =>
+                                (reaction.emoji.name === okEmoji || reaction.emoji.name === cancelEmoji) &&
+                                user.id !== message.author.id;
 
-                            if (count === 1 && reaction === okEmoji) {
-                                fs.unlink(existing, err => {
-                                    if (err) {
-                                        log(err);
-                                        return;
+                message.awaitReactions(filter, { max: 1, time: 60000 })
+                    .then(collected => {
+                        const reaction = collected.first().emoji.name;
+                        const count = collected.size;
+
+                        if (count === 1 && reaction === okEmoji) {
+
+                            overwriteFile(existing, url, result => {
+                                const guildId = receivedMessage.guild.id;
+                                receivedMessage.guild.emojis.forEach(customEmoji => {
+                                    if (customEmoji.name === config.getSuccess(guildId)) {
+                                        message.delete();
+                                        //receivedMessage.reply(`Emote has been replaced. :${customEmoji}:`);
+                                        respondSuccess(receivedMessage);
                                     }
-
-                                    downloadFile(name, url, result => {
-                                        log(result);
-
-                                        const guildId = receivedMessage.guild.id;
-                                        receivedMessage.guild.emojis.forEach(customEmoji => {
-                                            if (customEmoji.name === config.getSuccess(guildId)) {
-                                                message.delete();
-                                                //receivedMessage.reply(`Emote has been replaced. :${customEmoji}:`);
-                                                respondSuccess(receivedMessage);
-                                            }
-                                        });
-                                    });
                                 });
-                            } else if (count === 0 || reaction === cancelEmoji) {
-                                log("AddEmo - no response");
-                                message.delete();
-                                respondFailure(receivedMessage);
-                            }
-                        })
-                        .catch(collected => {
+                            });
+                        } else if (count === 0 || reaction === cancelEmoji) {
                             log("AddEmo - no response");
                             message.delete();
                             respondFailure(receivedMessage);
-                        });
-                })
-                .catch(console.error);
+                        }
+                    })
+                    .catch(collected => {
+                        log("AddEmo - no response");
+                        message.delete();
+                        respondFailure(receivedMessage);
+                    });
+            });
         }
     } else {
         downloadFile(name, url, result => {
@@ -1370,6 +1265,7 @@ function handleAddshortcut(receivedMessage, search, parameters) {
     log("Set Information");
     log(`Shortcut: ${search}`);
     log(`Command: ${command}`);
+
     if (config.validateEditor(guildId(receivedMessage), userId(receivedMessage))) {
         log("User is not an editor");
         return;
@@ -1388,13 +1284,16 @@ function handleSet(receivedMessage, search, parameters) {
     if (!search || parameters.length === 0) {
         return;
     }
-    const guildId = receivedMessage.guild.id;
-    const setting = config.getSettings(guildId, search);
 
-    var reply = `Settings for '${search}':`;
-    log(reply);
-    receivedMessage.channel.send(reply);
-    receivedMessage.channel.send(JSON.stringify(setting));
+    const guildId = receivedMessage.guild.id;
+    const setting = Client.guildSettings[guildId];
+
+    var embed = {
+        title: `Settings for '${search}'`,
+        description: JSON.stringify(setting)
+    }
+
+    Client.sendMessage(receivedMessage, embed);
 }
 function handleSetrankings(receivedMessage, search, parameters) {
     if (receivedMessage.guild) {
@@ -1470,8 +1369,7 @@ function handlePrefix(receivedMessage) {
 }
 function handleUpdate(receivedMessage, search, parameters) {
 
-    var id = receivedMessage.author.id;
-    if (id != renaulteUserID && id != jimooriUserID && id != furculaUserID) {
+    if (!Client.isAuthorized(receivedMessage.author)) {
         return;
     }
 
@@ -1531,6 +1429,8 @@ function convertValueToLink(value) {
 
 // IMAGES
 
+
+
 var unitsDump = null;
 function getUnitKey(search) {
     if (unitsDump === null) {
@@ -1558,36 +1458,7 @@ function getMaxRarity(unit) {
     return unit;
 }
 
-function handleSprite(receivedMessage, search, parameters) {
 
-    var unit = getUnitKey(search);
-    if (!unit) {
-        return;
-    }
-
-    unit = getMaxRarity(unit)
-
-    log("Searching Unit Sprite For: " + search);
-    validateUnit(search, function (valid, imgurl) {
-        search = search.replaceAll("_", " ");
-
-        var embed = {
-            color: pinkHexCode,
-            image: {
-                url: sprite(unit)
-            }
-        };
-
-        receivedMessage.channel
-            .send({
-                embed: embed
-            })
-            .then(message => {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
-            .catch(console.error);
-    });
-}
 function getGif(search, param, callback) {
     log("getGif: " + search + `(${param})`);
     
@@ -1754,6 +1625,7 @@ function validateUnit(search, callback) {
 }
 function validateEmote(emote) {
     var file = null;
+
     const types = config.filetypes();
     for (var i = 0; i < types.length; i++) {
         var filename = "emotes/" + emote + types[i];
@@ -1765,63 +1637,13 @@ function validateEmote(emote) {
 
     return file;
 }
-function validateCommand(receivedMessage, command) {
-    var roles = receivedMessage.member.roles.array();
-    var guildId = receivedMessage.channel.guild.id;
-
-    for (var i = 0; i < roles.length; i++) {
-        log("Attempt to validate: " + roles[i].name);
-        if (config.validateCommand(guildId, roles[i].name, command)) {
-            log("Role Validated");
-            return true;
-        }
-    }
-
-    return false;
-}
 
 // Response
 function respondSuccess(receivedMessage, toUser = false) {
-
-    if (toUser) {
-        receivedMessage.react(config.getSuccess());
-        return;
-    }
-
-    const guildId = receivedMessage.guild.id;
-    const emojis = receivedMessage.guild.emojis.array();
-
-    var customEmoji = emojis.find(e => {
-        return e.name === config.getSuccess(guildId);
-    });
-
-    if (customEmoji) {
-        receivedMessage.react(customEmoji);
-    } else {
-        // If none of the servers custom emojis matches the saved one, then the server is set to use a unicode emoji
-        receivedMessage.react(config.getSuccess(guildId));
-    }
+    Client.respondSuccess(receivedMessage, toUser);
 }
 function respondFailure(receivedMessage, toUser = false) {
-
-    if (toUser) {
-        receivedMessage.react(config.getFailure());
-        return;
-    }
-
-    const guildId = receivedMessage.guild.id;
-    const emojis = receivedMessage.guild.emojis.array();
-
-    var customEmoji = emojis.find(e => {
-        return e.name === config.getFailure(guildId);
-    });
-
-    if (customEmoji) {
-        receivedMessage.react(customEmoji);
-    } else {
-        // If none of the servers custom emojis matches the saved one, then the server is set to use a unicode emoji
-        receivedMessage.react(config.getFailure(guildId));
-    }
+    Client.respondFailure(receivedMessage, toUser);
 }
 
 function convertCommand(command, content, prefix) {
@@ -1851,60 +1673,6 @@ function runCommand(receivedMessage) {
     
 }
 
-function privateMessage(receivedMessage) {
-    const content = receivedMessage.content;
-    var copy = content.toLowerCase();
-
-    var id = receivedMessage.author.id;
-    log("Private Message From: " + id);
-    log(content)
-    if (editor.isEditing(id)) {
-        log("Is Editor");
-        editor.editorResponse(receivedMessage);
-        return;
-    }
-    if (id != renaulteUserID && id != jimooriUserID) {
-        return;
-    }
-
-    log("Settings Change Allowed");
-
-    try {
-        if (content.startsWith("?setinfo")) {
-            log("Settings Change")
-            editor.SetInfo(client, receivedMessage);
-            return;
-        }
-
-        var params = getParameters(content);
-        var parameters = params.parameters;
-        copy = params.msg;
-
-        var command = getCommandString(content, "?");
-        const search = getSearchString(`?${command}`, copy);
-        if (!search && parameters.length === 0) {
-            log("Could not parse search string");
-            respondFailure(receivedMessage, true);
-            throw command;
-        }
-
-        if (content.startsWith("?addinfo")) {
-            handleAddinfo(receivedMessage, search, parameters);
-            editor.AddInfo(receivedMessage, search);
-        } else if (content.startsWith("?setrank")) {
-            handleSetrankings(receivedMessage, search, parameters);
-        } else if (content.startsWith("?setinfo")) {
-            handleSetinfo(receivedMessage, search, parameters);
-        }
-    } catch(e) {
-        log("Failed: " + e);
-        respondFailure(receivedMessage, true);
-    }
-}
-
-function escapeString(s) {
-    return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-};
 function unitQuery(receivedMessage, command, search) {
     if (!command)
         return false;
@@ -1944,146 +1712,7 @@ function unitQuery(receivedMessage, command, search) {
     handleK(receivedMessage, search, id, command);
     return true;
 }
-function guildMessage(receivedMessage, guildId, prefix) {
 
-    var copy = receivedMessage.content.toLowerCase();
-    const attachment = receivedMessage.attachments.first();
-    if (attachment) {
-        log("Message Attachments");
-        log(attachment.url);
-    }
-
-    // the command name
-    let com = getCommandString(copy, prefix);
-    try {
-        let valid = false;
-        log(eval(`valid = (typeof handle${com} === 'function');`));
-        if (!valid) {
-            let search = getSearchString(`${prefix}${com}`, copy);
-            if (unitQuery(receivedMessage, com, search))
-                return;
-        }
-    } catch (e) {
-        //log(e);
-        //log("JP Unit: " + command);
-        let search = getSearchString(`${prefix}${com}`, copy);
-        if (unitQuery(receivedMessage, com, search))
-            return;
-    }
-
-    try {
-        var command = getCommandString(copy, prefix);
-        var shortcut = config.getShortcut(guildId, command);
-        if (shortcut) {
-            log("Found Command Shortcut");
-            copy = shortcut;
-            command = getCommandString(copy, prefix);
-            log(`New Command: ${command}`);
-            log(`New Content: ${copy}`);
-        }
-        //log("Before");
-        //log(command);
-        //log(copy);
-
-        // If the command has a shortcut convert it.
-        var newCommand = convertCommand(command, copy, prefix);
-        if (newCommand) {
-            command = newCommand.command;
-            copy = newCommand.content;
-            //log("After");
-            //log(command);
-            //log(copy);
-        }
-
-        // Get any parameters from the final comand string
-        var params = getParameters(copy);
-        var parameters = params.parameters;
-        copy = params.msg;
-        
-        // Get search string for command.
-        const search = getSearchString(`${prefix}${command}`, copy, (command !== "Dpt"));
-
-        // Validate the user
-        if (!validateCommand(receivedMessage, command)) {
-            log(
-                "Could not validate permissions for: " +
-                receivedMessage.member.displayName
-            );
-            //respondFailure(receivedMessage);
-            throw command;
-        }
-
-        // If no parameters or search provided exit.
-        if (!search && parameters.length === 0) {
-            log("Could not parse search string");
-            throw command;
-        }
-
-        /*
-        log("\ngetCommandString: " + command);
-        log("getSearchString: " + search);
-        log("getParameters:");
-        log(parameters);
-        */
-        if (command.toLowerCase() === `addemo` && parameters.length === 0) {
-            //log("Addemo but no parameters.");
-            if (attachment) {
-                //log("Message Has Attachments");
-                //log(attachment.url);
-                parameters[0] = attachment.url;
-            }
-        }
-        var run = "handle" + command + "(receivedMessage, search, parameters)";
-
-        //log("Running Command: " + command);
-        eval(run);
-    } catch (e) {
-        //log(e);
-        //log(`No search terms found for "${e}", run other commands: `);
-        try {
-            log("\nTrying Backup Command: " + "handle" + e);
-            eval("handle" + e + "(receivedMessage)");
-        } catch (f) {
-            log(f);
-            log("Command doesn't exist");
-            if (validateCommand(receivedMessage, "emote")) {
-                handleEmote(receivedMessage, prefix);
-            } else {
-                log("Emotes are disabled for this user");
-            }
-        }
-    }
-}
-
-// SEND RESPONSE
-
-function sendMessage(receivedMessage, embed, callback = null) {
-    receivedMessage.channel
-    .send({embed: embed})
-    .then(message => {
-        cacheBotMessage(receivedMessage.id, message.id);
-        if (callback) callback(message);
-    })
-    .catch(console.error);
-}
-function sendMessageWithAuthor(receivedMessage, embed, authorId, callback = null) {
-    client.fetchUser(authorId)
-    .then(author => {
-
-        embed.author = {
-            name: author.username,
-            icon_url: author.avatarURL
-        };
-
-        receivedMessage.channel
-        .send({embed: embed})
-        .then(message => {
-            cacheBotMessage(receivedMessage.id, message.id);
-            if (callback) callback(message);
-        })
-        .catch(console.error);
-    });
-}
 
 // HELPERS
 function getQuotedWord(str) {
@@ -2107,6 +1736,21 @@ function getQuotedWord(str) {
 function getFileExtension(link) {
     return link.substring(link.lastIndexOf("."), link.length);
 }
+function overwriteFile(existing, url, callback) {
+    fs.unlink(existing, err => {
+        if (err) {
+            log(err);
+            return;
+        }
+
+        downloadFile(name, url, result => {
+            log(result);
+
+            callback(result);
+            
+        });
+    });
+}
 function downloadFile(name, link, callback) {
     var ext = link.substring(link.lastIndexOf("."), link.length);
     if (!config.filetypes().includes(ext)) {
@@ -2120,6 +1764,7 @@ function downloadFile(name, link, callback) {
         callback("success");
     });
 }
+
 // PARSING HELPERS
 function convertSearchTerm(search) {
     var s = search;

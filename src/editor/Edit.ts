@@ -6,12 +6,12 @@
 
 
 import "discord.js";
+//import {Client} from "../discord.js";
 
 //const Discord = require("discord.js");
 const Editor = require("./Editor.js");
 const constants = require("../../bin/constants.js");
 
-var client;
 var editors = {};
 
 
@@ -370,8 +370,6 @@ export class Edit implements EditInterface {
         return editors[userId];
     }
     SetInfo = function(cli, receivedMessage) {
-        client = cli;
-
         // Create a new editor session and respond with the current settings
         var userId = receivedMessage.author.id;
         newEditor(receivedMessage, "information");

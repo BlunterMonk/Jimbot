@@ -6,10 +6,10 @@
 //////////////////////////////////////////
 Object.defineProperty(exports, "__esModule", { value: true });
 require("discord.js");
+//import {Client} from "../discord.js";
 //const Discord = require("discord.js");
 var Editor = require("./Editor.js");
 var constants = require("../../bin/constants.js");
-var client;
 var editors = {};
 function log(data) {
     console.log(data);
@@ -292,7 +292,6 @@ var Edit = /** @class */ (function () {
             return editors[userId];
         };
         this.SetInfo = function (cli, receivedMessage) {
-            client = cli;
             // Create a new editor session and respond with the current settings
             var userId = receivedMessage.author.id;
             newEditor(receivedMessage, "information");

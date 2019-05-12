@@ -12,109 +12,10 @@ var rankingFile = 'data/rankings.json';
 var rankingDump = 'data/rankingsdump.json';
 var unitCalc = 'data/unitcalculations.json';
 var infoJson = 'data/information.json';
-/*interface GuildConfig {
-    name: string;
-    prefix: string;
-    successEmote: "✅";
-    failureEmote: "❌";
-    adminRoles: string[];
-    adminOnlyCommands: string[];
-    disabledCommands: string[];
-    editors: string[];
-    shortcuts: {};
-}*/
-var GuildSettings = /** @class */ (function () {
-    function GuildSettings(name, guildId) {
-        this.guildName = name;
-        this.guildId = guildId;
-        this.load();
-        console.log("Guild Config Settings");
-        console.log(this.settings);
-        this.settings.name = name;
-        this.save();
-    }
-    GuildSettings.prototype.load = function () {
-        var filename = "./config/config-" + this.guildId + ".json";
-        if (fs.existsSync(filename)) {
-            var data = fs.readFileSync(filename);
-            this.settings = JSON.parse(String(data));
-        }
-        else {
-            var data = fs.readFileSync("./config/config-default.json");
-            this.settings = JSON.parse(String(data));
-        }
-    };
-    GuildSettings.prototype.save = function () {
-        var newData = JSON.stringify(this.settings, null, '\t');
-        fs.writeFileSync(this.getFilename(), newData);
-    };
-    GuildSettings.prototype.getFilename = function () {
-        return "config/config-" + this.guildId + ".json";
-    };
-    GuildSettings.prototype.getPrefix = function () {
-        return this.settings.prefix;
-    };
-    GuildSettings.prototype.setPrefix = function (prefix) {
-        this.settings.prefix = prefix;
-        this.save();
-    };
-    GuildSettings.prototype.getSuccessEmote = function () {
-        return this.settings.successEmote;
-    };
-    GuildSettings.prototype.getFailureEmote = function () {
-        return this.settings.failureEmote;
-    };
-    GuildSettings.prototype.getSettings = function (name) {
-        if (name) {
-            return this.settings[name];
-        }
-        return this.settings;
-    };
-    GuildSettings.prototype.getShortcut = function (name) {
-        name = name.toLowerCase();
-        console.log("Searching For Shortcut: " + name);
-        if (!this.settings.shortcuts || !this.settings.shortcuts[name])
-            return null;
-        console.log("Found Shortcut: " + this.settings.shortcuts[name]);
-        return this.settings.shortcuts[name];
-    };
-    GuildSettings.prototype.setShortcut = function (name, command) {
-        name = name.toLowerCase();
-        if (!this.settings["shortcuts"]) {
-            this.settings["shortcuts"] = {};
-        }
-        this.settings.shortcuts[name] = command;
-        this.save();
-        return true;
-    };
-    GuildSettings.prototype.validateAdminRole = function (role) {
-        return this.settings.adminRoles.find(function (r) { return role.toLowerCase() === r.toLowerCase(); });
-    };
-    GuildSettings.prototype.validateEditor = function (userId) {
-        return this.settings.editors.includes(userId);
-    };
-    GuildSettings.prototype.validateCommand = function (userRole, command) {
-        command = command.toLowerCase();
-        var filtered = this.settings.adminOnlyCommands.filter(function (r) { return r.toLowerCase() === command; });
-        var includes = this.settings.disabledCommands.includes(command);
-        if (filtered.length > 0 || includes) {
-            console.log("Command is Admin only");
-            return this.validateAdminRole(userRole);
-        }
-        return true;
-    };
-    GuildSettings.prototype.validateConfig = function (guildId) {
-        return fs.existsSync("config/config-" + guildId + ".json");
-    };
-    return GuildSettings;
-}());
-exports.GuildSettings = GuildSettings;
-;
 var Config = /** @class */ (function () {
     function Config() {
     }
     Config.prototype.init = function () {
-        this.guilds = {};
         var data = fs.readFileSync(filename);
         this.configuration = JSON.parse(data);
         var rank = fs.readFileSync(rankingFile);
@@ -137,18 +38,6 @@ var Config = /** @class */ (function () {
     Config.prototype.saveInformation = function () {
         var newData = JSON.stringify(this.information, null, "\t");
         fs.writeFileSync(infoJson, newData);
-    };
-    Config.prototype.loadGuild = function (name, guildId) {
-        this.guilds[guildId] = new GuildSettings(name, guildId);
-        //console.log("Loaded Guild");
-        //console.log(this.guilds[guildId]);
-    };
-    Config.prototype.unloadGuild = function (guildId) {
-        if (this.guilds[guildId]) {
-            //console.log("Unloaded Guild");
-            //console.log(this.guilds[guildId]);
-            delete this.guilds[guildId];
-        }
     };
     Config.prototype.reload = function (file) {
         if (!file) {
@@ -190,30 +79,6 @@ var Config = /** @class */ (function () {
     Config.prototype.addAlias = function (name, value) {
         this.configuration.unitAliases[name.toLowerCase()] = value;
     };
-    Config.prototype.setPrefix = function (guildId, prefix) {
-        if (!this.guilds[guildId]) {
-            return;
-        }
-        this.guilds[guildId].setPrefix(prefix);
-    };
-    Config.prototype.getPrefix = function (guildId) {
-        if (!this.guilds[guildId]) {
-            return this.configuration.defaultPrefix;
-        }
-        return this.guilds[guildId].getPrefix();
-    };
-    Config.prototype.getSuccess = function (guildId) {
-        if (!this.guilds[guildId]) {
-            return this.configuration.defaultSuccessEmote;
-        }
-        return this.guilds[guildId].getSuccessEmote();
-    };
-    Config.prototype.getFailure = function (guildId) {
-        if (!this.guilds[guildId]) {
-            return this.configuration.defaultFailureEmote;
-        }
-        return this.guilds[guildId].getFailureEmote();
-    };
     Config.prototype.setRankings = function (category, data) {
         console.log("setRankings: category(" + category + "), data(" + data + ")");
         if (this.rankings.bestunits[category]) {
@@ -231,9 +96,6 @@ var Config = /** @class */ (function () {
         return this.fullRankings.find(function (r) {
             return r["Unit"] === name;
         });
-    };
-    Config.prototype.getSettings = function (guildId, name) {
-        return this.guilds[guildId].getSettings(name);
     };
     Config.prototype.getCalculations = function (searchTerm) {
         var _this = this;
@@ -289,25 +151,6 @@ var Config = /** @class */ (function () {
             return this.information[name];
         }
         return null;
-    };
-    Config.prototype.getShortcut = function (guildId, command) {
-        return this.guilds[guildId].getShortcut(command);
-    };
-    Config.prototype.setShortcut = function (guildId, name, command) {
-        return this.guilds[guildId].setShortcut(name, command);
-    };
-    Config.prototype.validateCommand = function (guildId, userRole, command) {
-        //console.log(`Config Validate Command (${guildId})` + this.guilds[guildId]);
-        if (!this.guilds[guildId]) {
-            console.log("Unknown guild, allow");
-            return true;
-        }
-        //console.log("Validate Command Guild: " + guildId);
-        //console.log(this.guilds[guildId]);
-        return this.guilds[guildId].validateCommand(userRole, command);
-    };
-    Config.prototype.validateEditor = function (guildId, userId) {
-        return this.guilds[guildId].validateEditor(userId);
     };
     Config.prototype.getInfoSettings = function () {
         return this.information;

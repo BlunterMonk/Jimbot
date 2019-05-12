@@ -4,6 +4,7 @@
 // Discord: Jimoori#2006
 // Jimbot: Discord Bot
 //////////////////////////////////////////
+var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var Discord = require("discord.js");
 var request = require("request");
@@ -11,14 +12,15 @@ var fs = require("fs");
 var cheerio = require("cheerio");
 var https = require("https");
 var http = require("http");
-require("include");
+var global_js_1 = require("./global.js");
 require("./string/string-extension.js");
+var discord_js_1 = require("./discord.js");
 var Config = require("./config/config.js");
 var Editor = require("./editor/Edit.js");
 var FFBE = require("./ffbe/ffbewiki.js");
 var Cache = require("./cache/cache.js");
 var constants = require("./constants.js");
-var client = new Discord.Client();
+var Commands = require("./commands/commands.js");
 var config = null;
 var editor = null;
 var ffbe = null;
@@ -69,107 +71,124 @@ var searchAliases = [
     { reg: /mit/g, value: "mitigate|reduce damage" },
     { reg: /evoke/g, value: "evoke|evocation" }
 ];
-// Commands
-var commandCyra = "hi cyra";
-var commandJake = "hi jake";
-var loading = true;
-// Get your bot's secret token from:
-// https://discordapp.com/developers/applicati  ons/
-// Click on your application -> Bot -> Token -> "Click to Reveal Token"
-var bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg";
-var bot_secret_token_test = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk";
-client.login(bot_secret_token_test);
-// Keep track of added messages
-var botMessages = [];
-function cacheBotMessage(received, sent) {
-    botMessages[botMessages.length] = {
-        received: received,
-        sent: sent,
-        time: new Date()
-    };
-    //log("Cached Message");
-    //log(botMessages[botMessages.length - 1]);
-}
-//joined a server
-client.on("guildCreate", function (guild) {
-    log("Joined a new guild: " + guild.name);
-    //Your other stuff like adding to guildArray
-    config.loadGuild(guild.name, guild.id);
+process.on("unhandledRejection", function (reason, p) {
+    global_js_1.log("Unhandled Rejection at: Promise(" + p + "), Reason: " + reason);
+    // application specific logging, throwing an error, or other logic here
 });
-//removed from a server
-client.on("guildDelete", function (guild) {
-    log("Left a guild: " + guild.name);
-    //remove from guildArray
-    config.unloadGuild(guild.name, guild.id);
-});
-client.on("ready", function () {
-    log("Connected as " + client.user.tag);
+// Initialize Client
+discord_js_1.Client.init(function () {
     cache = new Cache.Cache();
     cache.init();
     editor = new Editor.Edit();
     editor.init(function (msg, key, file) {
-        log("Response From Editor");
+        global_js_1.log("Response From Editor");
         config.reload(file);
         respondSuccess(msg, true);
         handleWhatis(msg, key, null);
     }, function (msg) {
-        log("Response From Editor");
+        global_js_1.log("Response From Editor");
         respondFailure(msg, true);
     });
     ffbe = new FFBE.FFBE();
     config = new Config.Config();
     config.init();
-    LoadGuilds();
-    log("Configuration Loaded");
-    loading = false;
+    Commands.init(config);
+    global_js_1.log("Configuration Loaded");
+    discord_js_1.Client.setMessageCallback(onMessage.bind(_this));
+    discord_js_1.Client.setPrivateMessageCallback(onPrivateMessage.bind(_this));
 });
-client.on("message", function (receivedMessage) {
-    // Prevent bot from responding to its own messages
-    if (receivedMessage.author == client.user || loading) {
+function onPrivateMessage(receivedMessage, content) {
+    var copy = content.toLowerCase();
+    var id = receivedMessage.author.id;
+    global_js_1.log("Private Message From: " + id);
+    global_js_1.log(content);
+    if (editor.isEditing(id)) {
+        global_js_1.log("Is Editor");
+        editor.editorResponse(receivedMessage);
         return;
     }
-    var content = receivedMessage.content;
-    if (!receivedMessage.guild) {
-        privateMessage(receivedMessage);
-        return;
-    }
-    var guildId = receivedMessage.guild.id;
-    var prefix = config.getPrefix(guildId);
-    if (!content.startsWith(prefix)) {
-        handleReactions(receivedMessage);
-        return;
-    }
-    guildMessage(receivedMessage, guildId, prefix);
-});
-client.on("messageDelete", function (deletedMessage) {
-    log("Message Deleted");
-    log(deletedMessage.id);
-    for (var i = 0; i < botMessages.length; i++) {
-        var msg = botMessages[i];
-        if (msg.received === deletedMessage.id) {
-            var sent = deletedMessage.channel
-                .fetchMessage(msg.sent)
-                .then(function (sent) {
-                if (sent) {
-                    log("Deleted Message");
-                    sent.delete();
-                    botMessages.splice(i, 1);
-                }
-            })
-                .catch(console.error);
-            break;
+    global_js_1.log("Settings Change Allowed");
+    try {
+        if (content.startsWith("?setinfo")) {
+            global_js_1.log("Settings Change");
+            editor.SetInfo(discord_js_1.Client, receivedMessage);
+            return;
+        }
+        var params = getParameters(content);
+        var command = getCommandString(content, "?");
+        var parameters = params.parameters;
+        var search = getSearchString("?" + command, copy);
+        if (!search && parameters.length === 0) {
+            global_js_1.log("Could not parse search string");
+            respondFailure(receivedMessage, true);
+            throw command;
+        }
+        if (content.startsWith("?addinfo")) {
+            handleAddinfo(receivedMessage, search, parameters);
+            editor.AddInfo(receivedMessage, search);
+        }
+        else if (content.startsWith("?setrank")) {
+            handleSetrankings(receivedMessage, search, parameters);
+        }
+        else if (content.startsWith("?setinfo")) {
+            handleSetinfo(receivedMessage, search, parameters);
         }
     }
-});
-process.on("unhandledRejection", function (reason, p) {
-    log("Unhandled Rejection at: Promise(" + p + "), Reason: " + reason);
-    // application specific logging, throwing an error, or other logic here
-});
-1;
+    catch (e) {
+        global_js_1.log("Failed: " + e);
+        respondFailure(receivedMessage, true);
+    }
+}
+function onMessage(receivedMessage, content) {
+    var guildId = receivedMessage.guild.id;
+    var copy = receivedMessage.content.toLowerCase();
+    var attachment = receivedMessage.attachments.first();
+    if (attachment) {
+        global_js_1.log("Message Attachments");
+        global_js_1.log(attachment.url);
+    }
+    // the command name
+    /*
+    let com = getCommandString(copy, prefix);
+    try {
+        let valid = false;
+        log(eval(`valid = (typeof handle${com} === 'function');`));
+        if (!valid) {
+            let search = getSearchString(`${prefix}${com}`, copy);
+            if (unitQuery(receivedMessage, com, search))
+                return;
+        }
+    } catch (e) {
+        //log(e);
+        //log("JP Unit: " + command);
+        let search = getSearchString(`${prefix}${com}`, copy);
+        if (unitQuery(receivedMessage, com, search))
+            return;
+    }
+    */
+    var com = Commands.getCommandObject(content, attachment, discord_js_1.Client.guildSettings[guildId]);
+    global_js_1.log("\n Command Obect");
+    global_js_1.log(com);
+    try {
+        var search = com.search;
+        var parameters = com.parameters;
+        eval(com.run);
+    }
+    catch (e) {
+        global_js_1.log(e);
+        global_js_1.log("Command doesn't exist");
+        if (discord_js_1.Client.validate(receivedMessage, "emote")) {
+            handleEmote(receivedMessage);
+        }
+        else {
+            global_js_1.log("Emotes are disabled for this user");
+        }
+    }
+}
 function getUnitData(id) {
     var filename = "tempdata/" + id + ".json";
     if (fs.existsSync(filename)) {
-        log("Loading cached unit: " + id);
+        global_js_1.log("Loading cached unit: " + id);
         var u = fs.readFileSync(filename);
         return JSON.parse(u.toString());
     }
@@ -180,11 +199,11 @@ function getUnitData(id) {
     unitsList = null;
     bigUnits = null;
     if (!unit) {
-        log("Could not find unit data");
+        global_js_1.log("Could not find unit data");
         unit = null;
         return null;
     }
-    log("Caching unit");
+    global_js_1.log("Caching unit");
     if (!fs.existsSync("tempdata/"))
         fs.mkdirSync("tempdata/", { recursive: true });
     if (!fs.existsSync(filename)) {
@@ -192,14 +211,6 @@ function getUnitData(id) {
     }
     fs.writeFileSync(filename, JSON.stringify(unit, null, "\t"));
     return unit;
-}
-function checkString(text, keyword) {
-    return keyword.test(text.replace(/\s*/g, ""));
-}
-function compareStrings(text, search) {
-    var keyword = new RegExp(search.replace(/_/g, ".*").replace(/ /g, ".*"), "i");
-    //log(`compareStrings(${text}, ${keyword})`);
-    return keyword.test(text.replace(/\s*/g, ""));
 }
 function searchUnitSkills(unit, keyword, active) {
     var reg = /\([^\)]+\)/g;
@@ -235,10 +246,10 @@ function searchUnitSkills(unit, keyword, active) {
     if (LB && (active === undefined || active == true)) {
         var n = found.length;
         var s = "";
-        var all = checkString(LB.name, keyword);
-        log("LB Name: " + LB.name + ", All: " + all);
+        var all = global_js_1.checkString(LB.name, keyword);
+        global_js_1.log("LB Name: " + LB.name + ", All: " + all);
         LB.max_level.forEach(function (effect) {
-            if (all || checkString(effect, keyword)) {
+            if (all || global_js_1.checkString(effect, keyword)) {
                 s += "*" + effect + "*\n";
                 found[n] = {
                     name: LB.name + " - MAX",
@@ -253,15 +264,15 @@ function searchUnitSkills(unit, keyword, active) {
 }
 function collectSkillEffects(key, skills, keyword, total) {
     var skill = skills[key];
-    var all = checkString(skill.name, keyword);
+    var all = global_js_1.checkString(skill.name, keyword);
     //log(`Skill Name: ${skill.name}, All: ${all}`);
     var reg = /\([^\)]+\)/g;
     var _loop_1 = function (ind) {
         var effect = skill.effects[ind];
-        if (checkString(effect, ignoreEffectRegex))
+        if (global_js_1.checkString(effect, ignoreEffectRegex))
             return "continue";
         //log(`Skill Effect: ${effect}, Keyword: ${keyword}`);
-        if (all || checkString(effect, keyword)) {
+        if (all || global_js_1.checkString(effect, keyword)) {
             var added_1 = false;
             var match = reg.exec(effect);
             do {
@@ -269,7 +280,7 @@ function collectSkillEffects(key, skills, keyword, total) {
                     break;
                 var k = match[0].replace("(", "").replace(")", "");
                 var subskill = skills[k];
-                if (k != key && subskill && subskill.name.includes(skill.name) && !checkString(subskill.effects[0], ignoreEffectRegex)) {
+                if (k != key && subskill && subskill.name.includes(skill.name) && !global_js_1.checkString(subskill.effects[0], ignoreEffectRegex)) {
                     //log(match);
                     //log(`Sub Skill: ${subskill.name}, Effect: ${subskill.effects}`);
                     subskill.effects.forEach(function (sub) {
@@ -289,7 +300,7 @@ function collectSkillEffects(key, skills, keyword, total) {
     }
     if (skill.strings.desc_short) {
         var desc = skill.strings.desc_short[0];
-        if (checkString(desc, keyword)) {
+        if (global_js_1.checkString(desc, keyword)) {
             //log(`Description: ${desc}, keyword: ${keyword}`);
             //log(`Effects`);
             //log(skill.effects);
@@ -299,13 +310,13 @@ function collectSkillEffects(key, skills, keyword, total) {
     return total;
 }
 function searchUnitItems(unit, keyword) {
-    log("searchUnitItems(" + unit.name + ", " + keyword + ")");
+    global_js_1.log("searchUnitItems(" + unit.name + ", " + keyword + ")");
     var found = [];
     var LB = unit.LB;
-    if (LB && (checkString(LB.name, keyword) || checkString("lb", keyword))) {
+    if (LB && (global_js_1.checkString(LB.name, keyword) || global_js_1.checkString("lb", keyword))) {
         var n = found.length;
         var s = "";
-        log("LB Name: " + LB.name);
+        global_js_1.log("LB Name: " + LB.name);
         LB.max_level.forEach(function (effect) {
             s += "*" + effect + "*\n";
             found[n] = {
@@ -315,18 +326,18 @@ function searchUnitItems(unit, keyword) {
         });
     }
     var TMR = unit.TMR;
-    if (TMR && checkString("tmr", keyword)) {
+    if (TMR && global_js_1.checkString("tmr", keyword)) {
         var n = found.length;
-        log("TMR Name: " + TMR.name + ", Type: " + TMR.type);
+        global_js_1.log("TMR Name: " + TMR.name + ", Type: " + TMR.type);
         found[n] = equipToString(TMR);
     }
     var STMR = unit.STMR;
-    if (STMR && checkString("stmr", keyword)) {
+    if (STMR && global_js_1.checkString("stmr", keyword)) {
         var n = found.length;
-        log("STMR Name: " + STMR.name + ", Type: " + STMR.type);
+        global_js_1.log("STMR Name: " + STMR.name + ", Type: " + STMR.type);
         found[n] = equipToString(STMR);
     }
-    log(found);
+    global_js_1.log(found);
     return found;
 }
 function searchUnitFrames(unit) {
@@ -412,11 +423,11 @@ function equipToString(equip) {
     var effects = "";
     var slot = "";
     var stats = "";
-    log("Equip Name: " + equip.name + ", Type: " + equip.type);
+    global_js_1.log("Equip Name: " + equip.name + ", Type: " + equip.type);
     if (equip.type == "EQUIP") {
         if (equip.effects) {
             equip.effects.forEach(function (effect) {
-                if (!checkString(effect, /grants.*passive/i))
+                if (!global_js_1.checkString(effect, /grants.*passive/i))
                     effects += effect + "\n";
             });
         }
@@ -427,7 +438,7 @@ function equipToString(equip) {
                 if (!stat)
                     return;
                 if (constants.statParameters.includes(key.toLowerCase())) {
-                    log(key + "; " + stat + ", ");
+                    global_js_1.log(key + "; " + stat + ", ");
                     stats += key + ": " + stat + ", ";
                 }
                 else {
@@ -437,7 +448,7 @@ function equipToString(equip) {
                         var sub = stat[subkey];
                         if (!sub)
                             return;
-                        log(subkey + "; " + sub + ", ");
+                        global_js_1.log(subkey + "; " + sub + ", ");
                         stats += subkey + ": " + sub + ", ";
                     });
                 }
@@ -450,7 +461,7 @@ function equipToString(equip) {
                 if (!skill)
                     return;
                 skill.effects.forEach(function (eff) {
-                    log(key + ": " + eff);
+                    global_js_1.log(key + ": " + eff);
                     effects += eff + "\n";
                 });
             });
@@ -500,15 +511,11 @@ function arrayToString(array) {
 // WIKI 
 function handleUnit(receivedMessage, search, parameters) {
     search = search.toTitleCase("_");
-    log("Searching Units For: " + search);
+    global_js_1.log("Searching Units For: " + search);
     ffbe.queryWikiForUnit(search, parameters, function (pageName, imgurl, description, limited, fields) {
         pageName = pageName.replaceAll("_", " ");
         var embed = {
             color: pinkHexCode,
-            author: {
-                name: client.user.username,
-                icon_url: client.user.avatarURL
-            },
             thumbnail: {
                 url: imgurl
             },
@@ -532,142 +539,92 @@ function handleUnit(receivedMessage, search, parameters) {
                 text: "Unit Is Limited"
             };
         }
-        receivedMessage.channel
-            .send({
-            embed: embed
-        })
-            .then(function (message) {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-            .catch(console.error);
+        discord_js_1.Client.sendMessage(receivedMessage, embed);
     });
 }
 function handleEquip(receivedMessage, search, parameters) {
     search = search.toTitleCase("_");
-    log("Searching Equipment For: " + search + "...");
+    global_js_1.log("Searching Equipment For: " + search + "...");
     ffbe.queryWikiForEquipment(search, parameters, function (imgurl, pageName, nodes) {
         var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
-        receivedMessage.channel
-            .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                thumbnail: {
-                    url: imgurl
-                },
-                title: title,
-                fields: nodes,
-                url: "https://exvius.gamepedia.com/" + pageName
-            }
-        })
-            .then(function (message) {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-            .catch(console.error);
+        var embed = {
+            color: pinkHexCode,
+            thumbnail: {
+                url: imgurl
+            },
+            title: title,
+            fields: nodes,
+            url: "https://exvius.gamepedia.com/" + pageName
+        };
+        discord_js_1.Client.sendMessage(receivedMessage, embed);
     });
 }
 function handleSkill(receivedMessage, search, parameters) {
     search = search.toTitleCase("_");
-    log("Searching Skills For: " + search + "...");
+    global_js_1.log("Searching Skills For: " + search + "...");
     ffbe.queryWikiForAbility(search, parameters, function (imgurl, pageName, nodes) {
         var title = pageName;
         pageName = pageName.replaceAll(" ", "_");
-        receivedMessage.channel
-            .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                thumbnail: {
-                    url: imgurl
-                },
-                title: title,
-                fields: nodes,
-                url: "https://exvius.gamepedia.com/" + pageName
-            }
-        })
-            .then(function (message) {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-            .catch(console.error);
+        var embed = {
+            color: pinkHexCode,
+            thumbnail: {
+                url: imgurl
+            },
+            title: title,
+            fields: nodes,
+            url: "https://exvius.gamepedia.com/" + pageName
+        };
+        discord_js_1.Client.sendMessage(receivedMessage, embed);
     });
 }
 function handleSearch(receivedMessage, search) {
-    log("Searching For: " + search + "...");
+    global_js_1.log("Searching For: " + search + "...");
     ffbe.queryWikiWithSearch(search, function (batch) {
-        receivedMessage.channel
-            .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                fields: batch
-            }
-        })
-            .then(function (message) {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-            .catch(console.error);
+        var embed = {
+            color: pinkHexCode,
+            fields: batch
+        };
+        discord_js_1.Client.sendMessage(receivedMessage, embed);
     });
 }
 function handleRank(receivedMessage, search, parameters) {
-    log("\nSearching Rankings for: " + search);
+    global_js_1.log("\nSearching Rankings for: " + search);
     if (search) {
-        var unit_1 = config.getUnitRank(search.toLowerCase());
-        if (!unit_1) {
-            log("Could not find unit");
+        var unit = config.getUnitRank(search.toLowerCase());
+        if (!unit) {
+            global_js_1.log("Could not find unit");
             return;
         }
-        client.fetchUser(muspelUserID)
-            .then(function (muspel) {
-            var embed = {
-                author: {
-                    name: muspel.username,
-                    icon_url: muspel.avatarURL
-                },
-                title: unit_1.Unit,
-                url: wikiEndpoint + unit_1.Unit.replaceAll(" ", "_"),
-                color: pinkHexCode,
-                fields: [
-                    {
-                        name: "Rank",
-                        value: unit_1.Base + " - " + unit_1.TDH
-                    }
-                ],
-                thumbnail: {
-                    url: unit_1.imgurl
+        var embed = {
+            title: unit.Unit,
+            url: wikiEndpoint + unit.Unit.replaceAll(" ", "_"),
+            color: pinkHexCode,
+            fields: [
+                {
+                    name: "Rank",
+                    value: unit.Base + " - " + unit.TDH
                 }
-            };
-            if (unit_1.notes) {
-                embed.fields[embed.fields.length] = {
-                    name: "Notes",
-                    value: unit_1.notes
-                };
+            ],
+            thumbnail: {
+                url: unit.imgurl
             }
-            receivedMessage.channel
-                .send({
-                embed: embed
-            })
-                .then(function (message) {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
-                .catch(console.error);
-        });
+        };
+        if (unit.notes) {
+            embed.fields[embed.fields.length] = {
+                name: "Notes",
+                value: unit.notes
+            };
+        }
+        discord_js_1.Client.sendMessageWithAuthor(receivedMessage, embed, muspelUserID);
         return;
     }
+    /*
     var embeds = [];
     var rankings = config.getRankings(search);
     log("\nRankings");
     log(rankings);
-    rankings.forEach(function (rank) {
+    rankings.forEach(rank => {
         embeds[embeds.length] = {
             title: rank.name,
             url: rank.pageurl,
@@ -683,39 +640,31 @@ function handleRank(receivedMessage, search, parameters) {
             }
         };
     });
+
     log("\nEmbeds");
     log(embeds);
-    client.fetchUser(furculaUserID)
-        .then(function (calculator) {
-        embeds.forEach(function (embed) {
-            receivedMessage.channel
-                .send({
-                embed: embed
-            })
-                .then(function (message) {
-                //cacheBotMessage(receivedMessage.id, message.id);
-            })
-                .catch(console.error);
-        });
+    embeds.forEach(embed => {
+        Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
     });
+    */
 }
 function handleK(receivedMessage, search, id, name) {
-    log("handleKit(" + search + ")");
+    global_js_1.log("handleKit(" + search + ")");
     var unit = getUnitData(id);
     if (!unit) {
-        log("Could not find unit data: " + unit);
+        global_js_1.log("Could not find unit data: " + unit);
         return;
     }
     var fields = null;
     var keyword = new RegExp(search.replace(/_/g, ".*"), "i");
-    if (checkString(search, /frames|chain/i)) {
+    if (global_js_1.checkString(search, /frames|chain/i)) {
         fields = searchUnitFrames(unit);
     }
-    else if (checkString(search, /enhancement/i)) {
+    else if (global_js_1.checkString(search, /enhancement/i)) {
         fields = searchUnitSkills(unit, /\+2$|\+1$/i, undefined);
     }
-    else if (checkString(search, /cd/i)) {
-        log("SEARCHING FOR CD");
+    else if (global_js_1.checkString(search, /cd/i)) {
+        global_js_1.log("SEARCHING FOR CD");
         fields = searchUnitSkills(unit, /one.*use.*every.*turns/i, undefined);
     }
     else {
@@ -724,16 +673,12 @@ function handleK(receivedMessage, search, id, name) {
         fields = skills.concat(items);
     }
     if (!fields || fields.length == 0) {
-        log("Failed to get unit skill list: " + keyword);
+        global_js_1.log("Failed to get unit skill list: " + keyword);
         return;
     }
     name = name.toTitleCase("_");
     var embed = {
         color: pinkHexCode,
-        author: {
-            name: client.user.username,
-            icon_url: client.user.avatarURL
-        },
         thumbnail: {
             url: sprite(getMaxRarity(id))
         },
@@ -741,42 +686,31 @@ function handleK(receivedMessage, search, id, name) {
         url: "https://exvius.gamepedia.com/" + name,
         fields: fields
     };
-    receivedMessage.channel
-        .send({
-        embed: embed
-    })
-        .then(function (message) {
-        cacheBotMessage(receivedMessage.id, message.id);
-    })
-        .catch(console.error);
+    discord_js_1.Client.sendMessage(receivedMessage, embed);
 }
 function handleKit(receivedMessage, search, parameters, active) {
-    log("handleKit(" + search + ")");
+    global_js_1.log("handleKit(" + search + ")");
     var id = getUnitKey(search);
     if (!id) {
-        log("No Unit Found");
+        global_js_1.log("No Unit Found");
         return;
     }
     var unit = getUnitData(id);
     if (!unit) {
-        log("Could not find unit data: " + unit);
+        global_js_1.log("Could not find unit data: " + unit);
         return;
     }
     var key = convertParametersToSkillSearch(parameters);
     var keyword = new RegExp(key.replace(/_/g, ".*"), "gi");
     var fields = searchUnitSkills(unit, keyword, active);
     if (!fields || fields.length == 0) {
-        log("Failed to get unit skill list: " + keyword);
+        global_js_1.log("Failed to get unit skill list: " + keyword);
         return;
     }
     var name = unit.name.toTitleCase();
-    log("Unit Name: " + name);
+    global_js_1.log("Unit Name: " + name);
     var embed = {
         color: pinkHexCode,
-        author: {
-            name: client.user.username,
-            icon_url: client.user.avatarURL
-        },
         thumbnail: {
             url: sprite(getMaxRarity(id))
         },
@@ -784,14 +718,7 @@ function handleKit(receivedMessage, search, parameters, active) {
         url: "https://exvius.gamepedia.com/" + name.replaceAll(" ", "_"),
         fields: fields
     };
-    receivedMessage.channel
-        .send({
-        embed: embed
-    })
-        .then(function (message) {
-        cacheBotMessage(receivedMessage.id, message.id);
-    })
-        .catch(console.error);
+    discord_js_1.Client.sendMessage(receivedMessage, embed);
 }
 function handleAbility(receivedMessage, search, parameters) {
     handleKit(receivedMessage, search, parameters, true);
@@ -800,15 +727,15 @@ function handlePassive(receivedMessage, search, parameters) {
     handleKit(receivedMessage, search, parameters, false);
 }
 function handleEnhancements(receivedMessage, search, parameters) {
-    log("handleKit(" + search + ")");
+    global_js_1.log("handleKit(" + search + ")");
     var id = getUnitKey(search);
     if (!id) {
-        log("No Unit Found");
+        global_js_1.log("No Unit Found");
         return;
     }
     var unit = getUnitData(id);
     if (!unit) {
-        log("Could not find unit data: " + unit);
+        global_js_1.log("Could not find unit data: " + unit);
         return;
     }
 }
@@ -816,7 +743,7 @@ function handleData(receivedMessage, search, parameters) {
     search = search.replaceAll("_", " ");
     var data = cache.getSkill(search);
     if (!data) {
-        log("Could not find Data for: " + search);
+        global_js_1.log("Could not find Data for: " + search);
         return;
     }
     var defaultParameters = [
@@ -851,7 +778,7 @@ function handleData(receivedMessage, search, parameters) {
             color: pinkHexCode,
             fields: fields
         };
-        sendMessage(receivedMessage, embed);
+        discord_js_1.Client.sendMessage(receivedMessage, embed);
     });
 }
 // FLUFF
@@ -867,7 +794,7 @@ function handleReactions(receivedMessage) {
                 }
             });
             break;
-        case commandJake:
+        case "hi jake":
             receivedMessage.react("🌹");
             receivedMessage.react("🛋");
             break;
@@ -883,36 +810,26 @@ function handleReactions(receivedMessage) {
             break;
     }
 }
-function handleEmote(receivedMessage, prefix) {
+function handleEmote(receivedMessage) {
     var img = receivedMessage.content.split(" ")[0];
-    img = img.toLowerCase().replace(prefix, "");
+    img = img.toLowerCase().slice(1, img.length);
     var filename = validateEmote(img);
-    if (filename) {
-        var Attachment = new Discord.Attachment(filename);
-        if (Attachment) {
-            receivedMessage.channel
-                .send(Attachment)
-                .then(function (message) {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
-                .catch(console.error);
-        }
-    }
-    log(filename + " doesn't exist");
-    return null;
+    if (!filename)
+        return;
+    discord_js_1.Client.sendImage(receivedMessage, filename);
 }
 function handleQuote(receivedMessage, search) {
     //var s = getSearchString(quoteQueryPrefix, content).toLowerCase();
     switch (search) {
         case "morrow":
-            receivedMessage.channel.send(new Discord.Attachment("morrow0.png"));
+            discord_js_1.Client.send(receivedMessage, new Discord.Attachment("morrow0.png"));
             break;
         default:
             break;
     }
 }
 function handleGif(receivedMessage, search, parameters) {
-    log("Searching gifs for: " + search);
+    global_js_1.log("Searching gifs for: " + search);
     var bot = /^\d/.test(search);
     if (bot)
         search = search.toUpperCase();
@@ -922,38 +839,39 @@ function handleGif(receivedMessage, search, parameters) {
         param = gifAliases[param];
     }
     getGif(search, param, function (filename) {
-        log("success");
-        var Attachment = new Discord.Attachment(filename);
-        if (Attachment) {
-            receivedMessage.channel
-                .send(Attachment)
-                .then(function (message) {
-                cacheBotMessage(receivedMessage.id, message.id);
-            })
-                .catch(console.error);
-        }
+        global_js_1.log("success");
+        discord_js_1.Client.sendImage(receivedMessage, filename);
+    });
+}
+function handleSprite(receivedMessage, search, parameters) {
+    var unit = getUnitKey(search);
+    if (!unit) {
+        return;
+    }
+    unit = getMaxRarity(unit);
+    global_js_1.log("Searching Unit Sprite For: " + search);
+    validateUnit(search, function (valid, imgurl) {
+        search = search.replaceAll("_", " ");
+        var embed = {
+            color: pinkHexCode,
+            image: {
+                url: sprite(unit)
+            }
+        };
+        discord_js_1.Client.sendMessage(receivedMessage, embed);
     });
 }
 // INFORMATION
 function handleRecentunits(receivedMessage, search, parameters) {
     ffbe.queryWikiFrontPage(function (links) {
-        receivedMessage.channel
-            .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: client.user.username,
-                    icon_url: client.user.avatarURL
-                },
-                title: "Recently Released Units",
-                description: links,
-                url: "https://exvius.gamepedia.com/Unit_List"
-            }
-        })
-            .then(function (message) {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-            .catch(console.error);
+        var embed = {
+            color: pinkHexCode,
+            author: discord_js_1.Client.getAuthorEmbed(),
+            title: "Recently Released Units",
+            description: links,
+            url: "https://exvius.gamepedia.com/Unit_List"
+        };
+        discord_js_1.Client.sendMessage(receivedMessage, embed);
     });
 }
 function handleWhatis(receivedMessage, search, parameters) {
@@ -961,25 +879,12 @@ function handleWhatis(receivedMessage, search, parameters) {
     if (!info) {
         return;
     }
-    client.fetchUser(renaulteUserID)
-        .then(function (calculator) {
-        receivedMessage.channel
-            .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: calculator.username,
-                    icon_url: calculator.avatarURL
-                },
-                title: info.title,
-                description: info.description
-            }
-        })
-            .then(function (message) {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-            .catch(console.error);
-    });
+    var embed = {
+        color: pinkHexCode,
+        title: info.title,
+        description: info.description
+    };
+    discord_js_1.Client.sendMessageWithAuthor(receivedMessage, embed, renaulteUserID);
 }
 function handleGuide(receivedMessage, search, parameters) {
     handleWhatis(receivedMessage, search, parameters);
@@ -1008,49 +913,30 @@ function handleGlbestunits(receivedMessage, search, parameters) {
         });
         list += "\n" + links;
     });
-    client.fetchUser("159846139124908032")
-        .then(function (general) {
-        receivedMessage.channel
-            .send(mainChannelID, {
-            embed: {
-                color: pinkHexCode,
-                author: {
-                    name: general.username,
-                    icon_url: general.avatarURL
-                },
-                title: "Global Best 7\u2605 Units (random order, limited units __excluded__)",
-                description: list,
-            }
-        })
-            .then(function (message) {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-            .catch(console.error);
-    });
+    var embed = {
+        color: pinkHexCode,
+        title: "Global Best 7\u2605 Units (random order, limited units __excluded__)",
+        description: list,
+    };
+    discord_js_1.Client.sendMessageWithAuthor(receivedMessage, embed, renaulteUserID);
 }
 function handleHelp(receivedMessage) {
     var data = fs.readFileSync("readme.json", "ASCII");
     var readme = JSON.parse(data);
-    receivedMessage.author
-        .send(mainChannelID, {
-        embed: {
-            color: pinkHexCode,
-            description: readme.description,
-            fields: readme.fields,
-            title: readme.title
-        }
-    })
-        .then(function (message) {
-        cacheBotMessage(receivedMessage.id, message.id);
-    })
-        .catch(console.error);
+    var embed = {
+        color: pinkHexCode,
+        description: readme.description,
+        fields: readme.fields,
+        title: readme.title
+    };
+    discord_js_1.Client.sendPrivateMessage(receivedMessage, embed);
 }
 // DAMAGE
 function handleDpt(receivedMessage, search, parameters, isBurst) {
     search = search.replaceAll("_", " ");
     var calc = cache.getCalculations(search, isBurst);
     if (!calc) {
-        log("Could not find calculations for: " + search);
+        global_js_1.log("Could not find calculations for: " + search);
         return;
     }
     var text = "";
@@ -1086,7 +972,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
             text: "visit the link provided for more calculations"
         },
     };
-    sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+    discord_js_1.Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
 function handleBurst(receivedMessage, search, parameters) {
     handleDpt(receivedMessage, search, parameters, true);
@@ -1094,7 +980,7 @@ function handleBurst(receivedMessage, search, parameters) {
 // ADDING RESOURCES
 function handleAddalias(receivedMessage, search, parameters) {
     if (receivedMessage.content.replace(/[^"]/g, "").length < 4) {
-        log("Invalid Alias");
+        global_js_1.log("Invalid Alias");
         return;
     }
     var w1 = parameters[0];
@@ -1106,7 +992,7 @@ function handleAddalias(receivedMessage, search, parameters) {
         else {
             validateUnit(w2, function (valid) {
                 if (valid) {
-                    log("Unit is valid");
+                    global_js_1.log("Unit is valid");
                     w1 = w1.replaceAll(" ", "_");
                     config.addAlias(w1, w2);
                     config.save();
@@ -1122,7 +1008,7 @@ function handleAddalias(receivedMessage, search, parameters) {
 function handleAddemo(receivedMessage, search, parameters) {
     var s = receivedMessage.content.split(" ");
     if (!parameters) {
-        log("Error with command, no parameters provided.");
+        global_js_1.log("Error with command, no parameters provided.");
         return;
     }
     var name = "";
@@ -1139,7 +1025,7 @@ function handleAddemo(receivedMessage, search, parameters) {
         url = s[2];
     }
     else {
-        log("Error with command, emote could not be added.");
+        global_js_1.log("Error with command, emote could not be added.");
         return;
     }
     var existing = validateEmote(name);
@@ -1155,70 +1041,57 @@ function handleAddemo(receivedMessage, search, parameters) {
                 },
                 files: [{ attachment: "" + existing, name: existing }]
             };
-            receivedMessage.channel
-                .send({ embed: embed })
-                .then(function (message) {
-                cacheBotMessage(receivedMessage.id, message.id);
+            discord_js_1.Client.sendMessage(receivedMessage, embed, function (message) {
                 message.react(okEmoji);
                 message.react(cancelEmoji);
                 var filter = function (reaction, user) {
-                    return (reaction.emoji.name === okEmoji ||
-                        reaction.emoji.name === cancelEmoji) &&
+                    return (reaction.emoji.name === okEmoji || reaction.emoji.name === cancelEmoji) &&
                         user.id !== message.author.id;
                 };
-                message
-                    .awaitReactions(filter, { max: 1, time: 60000 })
+                message.awaitReactions(filter, { max: 1, time: 60000 })
                     .then(function (collected) {
                     var reaction = collected.first().emoji.name;
                     var count = collected.size;
                     if (count === 1 && reaction === okEmoji) {
-                        fs.unlink(existing, function (err) {
-                            if (err) {
-                                log(err);
-                                return;
-                            }
-                            downloadFile(name, url, function (result) {
-                                log(result);
-                                var guildId = receivedMessage.guild.id;
-                                receivedMessage.guild.emojis.forEach(function (customEmoji) {
-                                    if (customEmoji.name === config.getSuccess(guildId)) {
-                                        message.delete();
-                                        //receivedMessage.reply(`Emote has been replaced. :${customEmoji}:`);
-                                        respondSuccess(receivedMessage);
-                                    }
-                                });
+                        overwriteFile(existing, url, function (result) {
+                            var guildId = receivedMessage.guild.id;
+                            receivedMessage.guild.emojis.forEach(function (customEmoji) {
+                                if (customEmoji.name === config.getSuccess(guildId)) {
+                                    message.delete();
+                                    //receivedMessage.reply(`Emote has been replaced. :${customEmoji}:`);
+                                    respondSuccess(receivedMessage);
+                                }
                             });
                         });
                     }
                     else if (count === 0 || reaction === cancelEmoji) {
-                        log("AddEmo - no response");
+                        global_js_1.log("AddEmo - no response");
                         message.delete();
                         respondFailure(receivedMessage);
                     }
                 })
                     .catch(function (collected) {
-                    log("AddEmo - no response");
+                    global_js_1.log("AddEmo - no response");
                     message.delete();
                     respondFailure(receivedMessage);
                 });
-            })
-                .catch(console.error);
+            });
         }
     }
     else {
         downloadFile(name, url, function (result) {
-            log(result);
+            global_js_1.log(result);
             respondSuccess(receivedMessage);
         });
     }
 }
 function handleAddshortcut(receivedMessage, search, parameters) {
     var command = parameters[0];
-    log("Set Information");
-    log("Shortcut: " + search);
-    log("Command: " + command);
+    global_js_1.log("Set Information");
+    global_js_1.log("Shortcut: " + search);
+    global_js_1.log("Command: " + command);
     if (config.validateEditor(guildId(receivedMessage), userId(receivedMessage))) {
-        log("User is not an editor");
+        global_js_1.log("User is not an editor");
         return;
     }
     if (config.setShortcut(guildId(receivedMessage), search, command)) {
@@ -1234,11 +1107,12 @@ function handleSet(receivedMessage, search, parameters) {
         return;
     }
     var guildId = receivedMessage.guild.id;
-    var setting = config.getSettings(guildId, search);
-    var reply = "Settings for '" + search + "':";
-    log(reply);
-    receivedMessage.channel.send(reply);
-    receivedMessage.channel.send(JSON.stringify(setting));
+    var setting = discord_js_1.Client.guildSettings[guildId];
+    var embed = {
+        title: "Settings for '" + search + "'",
+        description: JSON.stringify(setting)
+    };
+    discord_js_1.Client.sendMessage(receivedMessage, embed);
 }
 function handleSetrankings(receivedMessage, search, parameters) {
     if (receivedMessage.guild) {
@@ -1248,9 +1122,9 @@ function handleSetrankings(receivedMessage, search, parameters) {
     search = search.replaceAll("_", " ");
     search = search.toTitleCase();
     search = "[" + search + "]";
-    log("Set Rankings");
-    log("Catergory: " + search);
-    log("Value: " + value);
+    global_js_1.log("Set Rankings");
+    global_js_1.log("Catergory: " + search);
+    global_js_1.log("Value: " + value);
     if (config.setRankings(search, value)) {
         respondSuccess(receivedMessage, true);
     }
@@ -1264,9 +1138,9 @@ function handleSetinfo(receivedMessage, search, parameters) {
     }
     var title = parameters[0];
     var desc = parameters[1];
-    log("Set Information");
-    log("Title: " + title);
-    log("Desc: " + desc);
+    global_js_1.log("Set Information");
+    global_js_1.log("Title: " + title);
+    global_js_1.log("Desc: " + desc);
     if (config.setInformation(search, title, desc)) {
         respondSuccess(receivedMessage, true);
     }
@@ -1278,7 +1152,7 @@ function handleAddinfo(receivedMessage, search, parameters) {
     if (receivedMessage.guild) {
         return;
     }
-    log("Add Information: " + search);
+    global_js_1.log("Add Information: " + search);
     if (config.setInformation(search, "title", "desc")) {
         respondSuccess(receivedMessage, true);
     }
@@ -1290,10 +1164,10 @@ function handlePrefix(receivedMessage) {
     if (receivedMessage.member.roles.find(function (r) { return r.name === "Admin"; }) ||
         receivedMessage.member.roles.find(function (r) { return r.name === "Mod"; })) {
         // TODO: Add logic to change prefix to a valid character.
-        log("User Is Admin");
+        global_js_1.log("User Is Admin");
         var s = receivedMessage.content.split(" ");
         if (!s[1] || s[1].length !== 1) {
-            log("Invalid Prefix");
+            global_js_1.log("Invalid Prefix");
             respondFailure(receivedMessage);
             return;
         }
@@ -1304,19 +1178,18 @@ function handlePrefix(receivedMessage) {
     }
 }
 function handleUpdate(receivedMessage, search, parameters) {
-    var id = receivedMessage.author.id;
-    if (id != renaulteUserID && id != jimooriUserID && id != furculaUserID) {
+    if (!discord_js_1.Client.isAuthorized(receivedMessage.author)) {
         return;
     }
-    log("Handle Update");
+    global_js_1.log("Handle Update");
     try {
         cache.updateDamage();
     }
     catch (e) {
-        log(e);
+        global_js_1.log(e);
         respondFailure(receivedMessage, true);
     }
-    log("Finished Updating");
+    global_js_1.log("Finished Updating");
     respondSuccess(receivedMessage, true);
 }
 function handleReload(receivedMessage, search, parameters) {
@@ -1324,16 +1197,16 @@ function handleReload(receivedMessage, search, parameters) {
     if (id != renaulteUserID && id != jimooriUserID && id != furculaUserID) {
         return;
     }
-    log("Handle Reload");
+    global_js_1.log("Handle Reload");
     try {
         cache.reload();
         config.reload(null);
     }
     catch (e) {
-        log(e);
+        global_js_1.log(e);
         respondFailure(receivedMessage, true);
     }
-    log("Finished Reloading");
+    global_js_1.log("Finished Reloading");
     respondSuccess(receivedMessage, true);
 }
 // COMMANDS END
@@ -1354,7 +1227,7 @@ function convertValueToLink(value) {
 var unitsDump = null;
 function getUnitKey(search) {
     if (unitsDump === null) {
-        log("loading units list");
+        global_js_1.log("loading units list");
         var data = fs.readFileSync("data/unitkeys.json");
         unitsDump = JSON.parse(String(data));
     }
@@ -1369,43 +1242,18 @@ function isLetter(str) {
 function getMaxRarity(unit) {
     var rarity = unit[unit.length - 1];
     var id = unit.substring(0, unit.length - 1);
-    log("Unit ID: " + unit);
+    global_js_1.log("Unit ID: " + unit);
     if (rarity === "5") {
         unit = id + "7";
     }
     return unit;
 }
-function handleSprite(receivedMessage, search, parameters) {
-    var unit = getUnitKey(search);
-    if (!unit) {
-        return;
-    }
-    unit = getMaxRarity(unit);
-    log("Searching Unit Sprite For: " + search);
-    validateUnit(search, function (valid, imgurl) {
-        search = search.replaceAll("_", " ");
-        var embed = {
-            color: pinkHexCode,
-            image: {
-                url: sprite(unit)
-            }
-        };
-        receivedMessage.channel
-            .send({
-            embed: embed
-        })
-            .then(function (message) {
-            cacheBotMessage(receivedMessage.id, message.id);
-        })
-            .catch(console.error);
-    });
-}
 function getGif(search, param, callback) {
-    log("getGif: " + search + ("(" + param + ")"));
+    global_js_1.log("getGif: " + search + ("(" + param + ")"));
     var filename = "tempgifs/" + search + "/" + param + ".gif";
     if (fs.existsSync(filename)) {
         callback(filename);
-        log("Returning cached gif");
+        global_js_1.log("Returning cached gif");
         return;
     }
     var unit = getUnitKey(search);
@@ -1413,7 +1261,7 @@ function getGif(search, param, callback) {
         unit = search;
     var rarity = unit[unit.length - 1];
     var id = unit.substring(0, unit.length - 1);
-    log("Unit ID: " + unit);
+    global_js_1.log("Unit ID: " + unit);
     var unitL = null; // ignore using othet source if JP
     if (isLetter(search[0])) {
         unitL = search.replaceAll("_", "+");
@@ -1429,31 +1277,31 @@ function getGif(search, param, callback) {
                 else
                     return 1;
             });
-            log(gifs);
+            global_js_1.log(gifs);
             var img = gifs.find(function (n) {
                 n = n.toLowerCase();
                 if (param.includes("win")) {
                     return n.includes(param) && !n.includes("before");
                 }
-                log("Compare Gifs: " + n + ", " + param);
+                global_js_1.log("Compare Gifs: " + n + ", " + param);
                 // magic has priority
-                if (compareStrings(n, "limit")) {
-                    return compareStrings(param, "limit") && compareStrings(n, param);
+                if (global_js_1.compareStrings(n, "limit")) {
+                    return global_js_1.compareStrings(param, "limit") && global_js_1.compareStrings(n, param);
                 }
-                else if (compareStrings(n, "mag")) {
-                    log("Found mag: param: " + compareStrings(param, "mag") + ", n to param: " + compareStrings(n, param));
-                    return compareStrings(n, param) && compareStrings(param, "mag");
+                else if (global_js_1.compareStrings(n, "mag")) {
+                    global_js_1.log("Found mag: param: " + global_js_1.compareStrings(param, "mag") + ", n to param: " + global_js_1.compareStrings(n, param));
+                    return global_js_1.compareStrings(n, param) && global_js_1.compareStrings(param, "mag");
                 }
-                else if (compareStrings(n, "standby")) {
-                    log("Found Standby: param: " + compareStrings(param, "magic") + ", n: " + compareStrings(n, "magic"));
-                    return compareStrings(param, "standby")
-                        && ((!compareStrings(param, "magic") && !compareStrings(n, "magic"))
-                            || (compareStrings(param, "magic") && compareStrings(n, "magic")));
+                else if (global_js_1.compareStrings(n, "standby")) {
+                    global_js_1.log("Found Standby: param: " + global_js_1.compareStrings(param, "magic") + ", n: " + global_js_1.compareStrings(n, "magic"));
+                    return global_js_1.compareStrings(param, "standby")
+                        && ((!global_js_1.compareStrings(param, "magic") && !global_js_1.compareStrings(n, "magic"))
+                            || (global_js_1.compareStrings(param, "magic") && global_js_1.compareStrings(n, "magic")));
                 }
                 else if (param.includes("attack") || n.includes("atk")) {
                     return n.includes("attack") || n.includes("atk");
                 }
-                return compareStrings(n, param);
+                return global_js_1.compareStrings(n, param);
             });
             if (!img) {
                 img = gifs.find(function (n) {
@@ -1462,15 +1310,15 @@ function getGif(search, param, callback) {
             }
             if (img) {
                 img = img.replaceAll(" ", "%20");
-                log("Found Requested Gif");
-                log(img);
+                global_js_1.log("Found Requested Gif");
+                global_js_1.log(img);
                 if (!fs.existsSync("tempgifs/" + search + "/"))
                     fs.mkdirSync("tempgifs/" + search + "/", { recursive: true });
                 var file = null;
                 var source = img.slice(0, 5) === 'https' ? https : http;
                 source.get(img, function (response) {
                     if (response.statusCode !== 200) {
-                        log("Unit Animation not found");
+                        global_js_1.log("Unit Animation not found");
                         return;
                     }
                     file = fs.createWriteStream(filename);
@@ -1530,9 +1378,9 @@ function getGif(search, param, callback) {
 }
 // Validation
 function validateUnit(search, callback) {
-    log("validateUnit(" + search + ")");
+    global_js_1.log("validateUnit(" + search + ")");
     var unit = getUnitKey(search.replaceAll(" ", "_"));
-    log(unit);
+    global_js_1.log(unit);
     callback(unit != null);
 }
 function validateEmote(emote) {
@@ -1547,56 +1395,14 @@ function validateEmote(emote) {
     }
     return file;
 }
-function validateCommand(receivedMessage, command) {
-    var roles = receivedMessage.member.roles.array();
-    var guildId = receivedMessage.channel.guild.id;
-    for (var i = 0; i < roles.length; i++) {
-        log("Attempt to validate: " + roles[i].name);
-        if (config.validateCommand(guildId, roles[i].name, command)) {
-            log("Role Validated");
-            return true;
-        }
-    }
-    return false;
-}
 // Response
 function respondSuccess(receivedMessage, toUser) {
     if (toUser === void 0) { toUser = false; }
-    if (toUser) {
-        receivedMessage.react(config.getSuccess());
-        return;
-    }
-    var guildId = receivedMessage.guild.id;
-    var emojis = receivedMessage.guild.emojis.array();
-    var customEmoji = emojis.find(function (e) {
-        return e.name === config.getSuccess(guildId);
-    });
-    if (customEmoji) {
-        receivedMessage.react(customEmoji);
-    }
-    else {
-        // If none of the servers custom emojis matches the saved one, then the server is set to use a unicode emoji
-        receivedMessage.react(config.getSuccess(guildId));
-    }
+    discord_js_1.Client.respondSuccess(receivedMessage, toUser);
 }
 function respondFailure(receivedMessage, toUser) {
     if (toUser === void 0) { toUser = false; }
-    if (toUser) {
-        receivedMessage.react(config.getFailure());
-        return;
-    }
-    var guildId = receivedMessage.guild.id;
-    var emojis = receivedMessage.guild.emojis.array();
-    var customEmoji = emojis.find(function (e) {
-        return e.name === config.getFailure(guildId);
-    });
-    if (customEmoji) {
-        receivedMessage.react(customEmoji);
-    }
-    else {
-        // If none of the servers custom emojis matches the saved one, then the server is set to use a unicode emoji
-        receivedMessage.react(config.getFailure(guildId));
-    }
+    discord_js_1.Client.respondFailure(receivedMessage, toUser);
 }
 function convertCommand(command, content, prefix) {
     //log("Convert Command");
@@ -1621,57 +1427,6 @@ function convertCommand(command, content, prefix) {
 }
 function runCommand(receivedMessage) {
 }
-function privateMessage(receivedMessage) {
-    var content = receivedMessage.content;
-    var copy = content.toLowerCase();
-    var id = receivedMessage.author.id;
-    log("Private Message From: " + id);
-    log(content);
-    if (editor.isEditing(id)) {
-        log("Is Editor");
-        editor.editorResponse(receivedMessage);
-        return;
-    }
-    if (id != renaulteUserID && id != jimooriUserID) {
-        return;
-    }
-    log("Settings Change Allowed");
-    try {
-        if (content.startsWith("?setinfo")) {
-            log("Settings Change");
-            editor.SetInfo(client, receivedMessage);
-            return;
-        }
-        var params = getParameters(content);
-        var parameters = params.parameters;
-        copy = params.msg;
-        var command = getCommandString(content, "?");
-        var search = getSearchString("?" + command, copy);
-        if (!search && parameters.length === 0) {
-            log("Could not parse search string");
-            respondFailure(receivedMessage, true);
-            throw command;
-        }
-        if (content.startsWith("?addinfo")) {
-            handleAddinfo(receivedMessage, search, parameters);
-            editor.AddInfo(receivedMessage, search);
-        }
-        else if (content.startsWith("?setrank")) {
-            handleSetrankings(receivedMessage, search, parameters);
-        }
-        else if (content.startsWith("?setinfo")) {
-            handleSetinfo(receivedMessage, search, parameters);
-        }
-    }
-    catch (e) {
-        log("Failed: " + e);
-        respondFailure(receivedMessage, true);
-    }
-}
-function escapeString(s) {
-    return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-}
-;
 function unitQuery(receivedMessage, command, search) {
     if (!command)
         return false;
@@ -1689,11 +1444,11 @@ function unitQuery(receivedMessage, command, search) {
         return false;
     //log(`Unit ID valid`);
     if (search && !search.empty()) {
-        log(search);
-        search = escapeString(search);
-        log(search);
+        global_js_1.log(search);
+        search = global_js_1.escapeString(search);
+        global_js_1.log(search);
         searchAliases.forEach(function (regex) {
-            if (checkString(search, regex.reg)) {
+            if (global_js_1.checkString(search, regex.reg)) {
                 //log(`Search contains a word to replace`);
                 search = search.replace(regex.reg, regex.value);
                 //log(`New Search: ${search}`);
@@ -1707,138 +1462,6 @@ function unitQuery(receivedMessage, command, search) {
     handleK(receivedMessage, search, id, command);
     return true;
 }
-function guildMessage(receivedMessage, guildId, prefix) {
-    var copy = receivedMessage.content.toLowerCase();
-    var attachment = receivedMessage.attachments.first();
-    if (attachment) {
-        log("Message Attachments");
-        log(attachment.url);
-    }
-    // the command name
-    var com = getCommandString(copy, prefix);
-    try {
-        var valid = false;
-        log(eval("valid = (typeof handle" + com + " === 'function');"));
-        if (!valid) {
-            var search = getSearchString("" + prefix + com, copy);
-            if (unitQuery(receivedMessage, com, search))
-                return;
-        }
-    }
-    catch (e) {
-        //log(e);
-        //log("JP Unit: " + command);
-        var search = getSearchString("" + prefix + com, copy);
-        if (unitQuery(receivedMessage, com, search))
-            return;
-    }
-    try {
-        var command = getCommandString(copy, prefix);
-        var shortcut = config.getShortcut(guildId, command);
-        if (shortcut) {
-            log("Found Command Shortcut");
-            copy = shortcut;
-            command = getCommandString(copy, prefix);
-            log("New Command: " + command);
-            log("New Content: " + copy);
-        }
-        //log("Before");
-        //log(command);
-        //log(copy);
-        // If the command has a shortcut convert it.
-        var newCommand = convertCommand(command, copy, prefix);
-        if (newCommand) {
-            command = newCommand.command;
-            copy = newCommand.content;
-            //log("After");
-            //log(command);
-            //log(copy);
-        }
-        // Get any parameters from the final comand string
-        var params = getParameters(copy);
-        var parameters = params.parameters;
-        copy = params.msg;
-        // Get search string for command.
-        var search = getSearchString("" + prefix + command, copy, (command !== "Dpt"));
-        // Validate the user
-        if (!validateCommand(receivedMessage, command)) {
-            log("Could not validate permissions for: " +
-                receivedMessage.member.displayName);
-            //respondFailure(receivedMessage);
-            throw command;
-        }
-        // If no parameters or search provided exit.
-        if (!search && parameters.length === 0) {
-            log("Could not parse search string");
-            throw command;
-        }
-        /*
-        log("\ngetCommandString: " + command);
-        log("getSearchString: " + search);
-        log("getParameters:");
-        log(parameters);
-        */
-        if (command.toLowerCase() === "addemo" && parameters.length === 0) {
-            //log("Addemo but no parameters.");
-            if (attachment) {
-                //log("Message Has Attachments");
-                //log(attachment.url);
-                parameters[0] = attachment.url;
-            }
-        }
-        var run = "handle" + command + "(receivedMessage, search, parameters)";
-        //log("Running Command: " + command);
-        eval(run);
-    }
-    catch (e) {
-        //log(e);
-        //log(`No search terms found for "${e}", run other commands: `);
-        try {
-            log("\nTrying Backup Command: " + "handle" + e);
-            eval("handle" + e + "(receivedMessage)");
-        }
-        catch (f) {
-            log(f);
-            log("Command doesn't exist");
-            if (validateCommand(receivedMessage, "emote")) {
-                handleEmote(receivedMessage, prefix);
-            }
-            else {
-                log("Emotes are disabled for this user");
-            }
-        }
-    }
-}
-// SEND RESPONSE
-function sendMessage(receivedMessage, embed, callback) {
-    if (callback === void 0) { callback = null; }
-    receivedMessage.channel
-        .send({ embed: embed })
-        .then(function (message) {
-        cacheBotMessage(receivedMessage.id, message.id);
-        if (callback)
-            callback(message);
-    })
-        .catch(console.error);
-}
-function sendMessageWithAuthor(receivedMessage, embed, authorId, callback) {
-    if (callback === void 0) { callback = null; }
-    client.fetchUser(authorId)
-        .then(function (author) {
-        embed.author = {
-            name: author.username,
-            icon_url: author.avatarURL
-        };
-        receivedMessage.channel
-            .send({ embed: embed })
-            .then(function (message) {
-            cacheBotMessage(receivedMessage.id, message.id);
-            if (callback)
-                callback(message);
-        })
-            .catch(console.error);
-    });
-}
 // HELPERS
 function getQuotedWord(str) {
     if (str.replace(/[^\""]/g, "").length < 2) {
@@ -1847,9 +1470,9 @@ function getQuotedWord(str) {
     var start = str.indexOf('"');
     var end = str.indexOfAfterIndex('"', start + 1);
     var word = str.substring(start + 1, end);
-    log(start);
-    log(end);
-    log("Quoted Word: " + word);
+    global_js_1.log(start);
+    global_js_1.log(end);
+    global_js_1.log("Quoted Word: " + word);
     if (word.empty()) {
         return null;
     }
@@ -1858,10 +1481,22 @@ function getQuotedWord(str) {
 function getFileExtension(link) {
     return link.substring(link.lastIndexOf("."), link.length);
 }
+function overwriteFile(existing, url, callback) {
+    fs.unlink(existing, function (err) {
+        if (err) {
+            global_js_1.log(err);
+            return;
+        }
+        downloadFile(name, url, function (result) {
+            global_js_1.log(result);
+            callback(result);
+        });
+    });
+}
 function downloadFile(name, link, callback) {
     var ext = link.substring(link.lastIndexOf("."), link.length);
     if (!config.filetypes().includes(ext)) {
-        log("Invalid img URL");
+        global_js_1.log("Invalid img URL");
         return;
     }
     var file = fs.createWriteStream("emotes/" + name + ext);
@@ -1875,7 +1510,7 @@ function convertSearchTerm(search) {
     var s = search;
     var alias = config.getAlias(s.replaceAll(" ", "_"));
     if (alias) {
-        log("Found Alias: " + alias);
+        global_js_1.log("Found Alias: " + alias);
         return alias.replaceAll(" ", "_");
     }
     //search = search.toLowerCase();
@@ -1890,7 +1525,7 @@ function convertParametersToSkillSearch(parameters) {
         search += param;
     });
     searchAliases.forEach(function (regex) {
-        if (checkString(search, regex.reg)) {
+        if (global_js_1.checkString(search, regex.reg)) {
             //log(`Search contains a word to replace`);
             search = search.replace(regex.reg, regex.value);
             //log(`New Search: ${search}`);
@@ -1909,7 +1544,7 @@ function getSearchString(prefix, msg, replace) {
         var s = search;
         var alias = config.getAlias(s.replaceAll(" ", "_"));
         if (alias) {
-            log("Found Alias: " + alias);
+            global_js_1.log("Found Alias: " + alias);
             return alias.replaceAll(" ", "_");
         }
     }

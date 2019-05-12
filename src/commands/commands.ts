@@ -1,4 +1,3 @@
-import { GuildSettings } from './../config/config';
 //////////////////////////////////////////
 // Author: Dahmitri Stephenson
 // Discord: Jimoori#2006
@@ -6,8 +5,11 @@ import { GuildSettings } from './../config/config';
 //////////////////////////////////////////
 
 
-import "./string/string-extension.js";
-import "include";
+import "../string/string-extension.js";
+import { log, logData,
+    checkString, compareStrings,
+    escapeString } from "../global.js";
+import * as gs from "../config/guild.js";
 
 const searchAliases = [
     { reg: /imbue/g, value: "add element" },
@@ -20,7 +22,7 @@ const searchAliases = [
 ]
 
 const regexCommand = /^[^\s]*/;
-const regexSearch = /.*?\s+(.*[^"])\s.*/;
+const regexSearch = /^(?:.*?\s)(.*?)(?='|"|‘|’|“|”|$)/;
 const regexParameter = /"[^"]+"|‘[^‘]+‘|‘[^’]+’|“[^“]+“|”[^”]+”|“[^“^”]+”|'[^']+'/g;
 
 
@@ -48,14 +50,14 @@ function getSearchString(msg, replace = true) {
     search = search.replaceAll(" ", "_");
     return search;
 }
-function getCommandString(msg) {
+export function getCommandString(msg) {
     var split = regexCommand.exec(msg);
 
     if (!split) {
         return null;
     }
 
-    return split[0];
+    return split[0].capitalize();
 }
 function getParameters(msg) {
 
@@ -74,41 +76,7 @@ function getParameters(msg) {
     return { msg: msg, parameters: parameters };
 }
 
-
-
-function convertSearchTerm(search) {
-    var s = search;
-    var alias = config.getAlias(s.replaceAll(" ", "_"));
-    if (alias) {
-        log("Found Alias: " + alias);
-        return alias.replaceAll(" ", "_");
-    }
-
-    //search = search.toLowerCase();
-    search = search.replaceAll(" ", "_");
-    return search;
-}
-function convertParametersToSkillSearch(parameters) {
-    var search = "";
-    parameters.forEach((param, ind) => {
-        if (ind > 0) 
-            search += "|";
-        search += param;
-    });
-
-    searchAliases.forEach(regex => {
-        if (checkString(search, regex.reg)) {
-            //log(`Search contains a word to replace`);
-            search = search.replace(regex.reg, regex.value);
-            //log(`New Search: ${search}`);
-        }
-    });
-
-    return search.replaceAll(" ",".*")
-}
-
-
-function convertCommand(command, content, prefix) {
+function convertCommand(command, content) {
 
     //log("Convert Command");
     //log(command);
@@ -125,128 +93,80 @@ function convertCommand(command, content, prefix) {
         return {
             command: "Dpt",
             parameters: ["chain" ],
-            content: content.replace(`${prefix}damage`, `${prefix}dpt`)
+            content: content.replace(`damage`, `dpt`)
         };
     }
 
     return null;
 }
-function validateCommand(receivedMessage, command) {
-    var roles = receivedMessage.member.roles.array();
-    var guildId = receivedMessage.channel.guild.id;
 
-    for (var i = 0; i < roles.length; i++) {
-        log("Attempt to validate: " + roles[i].name);
-        if (config.validateCommand(guildId, roles[i].name, command)) {
-            log("Role Validated");
-            return true;
-        }
-    }
-
-    return false;
+export interface CommandObject {
+    attachment: any;
+    command: string;
+    search: string;
+    parameters: string[];
+    run: string;
 }
+var config = null;
+export var init = function(conf) {
+    config = conf;
+};
+export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSettings): CommandObject {
 
-
-export var config = null;
-export var guildMessage = function(msg, attachment, guildSettings: GuildSettings): string {
-
+    var attachment = null;
     var copy = msg.toLowerCase();
-    if (attachment) {
+    if (attach) {
         log("Message Attachments");
-        log(attachment.url);
+        log(attach.url);
+        attachment = attach.url;
     }
 
     // the command name
-    let com = getCommandString(copy);
-    try {
-        let valid = false;
-        log(eval(`valid = (typeof handle${com} === 'function');`));
-        if (!valid) {
-            let search = getSearchString(copy);
-            if (unitQuery(receivedMessage, com, search))
-                return;
-        }
-    } catch (e) {
-        log(e);
+    var command = getCommandString(copy);
+    var shortcut = guildSettings.getShortcut(command);
+    if (shortcut) {
+        log("Found Command Shortcut");
+        copy = shortcut;
+        command = getCommandString(copy);
+        log(`New Command: ${command}`);
+        log(`New Content: ${copy}`);
     }
 
-    try {
-        var command = getCommandString(copy);
-        var shortcut = guildSettings.getShortcut(command);
-        if (shortcut) {
-            log("Found Command Shortcut");
-            copy = shortcut;
-            command = getCommandString(copy, prefix);
-            log(`New Command: ${command}`);
-            log(`New Content: ${copy}`);
-        }
-        //log("Before");
+    // If the command has a shortcut convert it.
+    var newCommand = convertCommand(command, copy);
+    if (newCommand) {
+        command = newCommand.command;
+        copy = newCommand.content;
+        //log("After");
         //log(command);
         //log(copy);
+    }
 
-        // If the command has a shortcut convert it.
-        var newCommand = convertCommand(command, copy, prefix);
-        if (newCommand) {
-            command = newCommand.command;
-            copy = newCommand.content;
-            //log("After");
-            //log(command);
-            //log(copy);
+    // Get any parameters from the final comand string
+    var params = getParameters(copy);
+    var parameters = params.parameters;
+    
+    // Get search string for command.
+    const search = getSearchString(copy, (command !== "Dpt"));
+
+    log("\ngetCommandString: " + command);
+    log("getSearchString: " + search);
+    log("getParameters:");
+    log(parameters);
+    
+    if (command.toLowerCase() === `addemo` && parameters.length === 0) {
+        if (attachment) {
+            parameters[0] = attachment.url;
         }
+    }
 
-        // Get any parameters from the final comand string
-        var params = getParameters(copy);
-        var parameters = params.parameters;
-        copy = params.msg;
-        
-        // Get search string for command.
-        const search = getSearchString(`${prefix}${command}`, copy, (command !== "Dpt"));
+    var run = "handle" + command + "(receivedMessage, search, parameters)";
 
-        // Validate the user
-        if (!validateCommand(receivedMessage, command)) {
-            log("Could not validate permissions for: " + displayName);
-            //respondFailure(receivedMessage);
-            throw command;
-        }
-
-        // If no parameters or search provided exit.
-        if (!search && parameters.length === 0) {
-            log("Could not parse search string");
-            throw command;
-        }
-
-        /**/
-        log("\ngetCommandString: " + command);
-        log("getSearchString: " + search);
-        log("getParameters:");
-        log(parameters);
-        
-        if (command.toLowerCase() === `addemo` && parameters.length === 0) {
-            //log("Addemo but no parameters.");
-            if (attachment) {
-                //log("Message Has Attachments");
-                //log(attachment.url);
-                parameters[0] = attachment.url;
-            }
-        }
-        var run = "handle" + command + "(receivedMessage, search, parameters)";
-
-        //log("Running Command: " + command);
-        eval(run);
-    } catch (e) {
-        //log(e);
-        //log(`No search terms found for "${e}", run other commands: `);
-        try {
-            log("\nTrying Backup Command: " + "handle" + e);
-            eval("handle" + e + "(receivedMessage)");
-        } catch (f) {
-            log(f);
-            log("Command doesn't exist");
-            if (validateCommand(receivedMessage, "emote")) {
-                handleEmote(receivedMessage, prefix);
-            } else {
-                log("Emotes are disabled for this user");
-            }
-        }
+    return {
+        attachment: attachment,
+        command: command,
+        search: search,
+        parameters: parameters,
+        run: run
     }
 }

@@ -13,120 +13,6 @@ const rankingDump = 'data/rankingsdump.json';
 const unitCalc = 'data/unitcalculations.json';
 const infoJson = 'data/information.json';
 
-/*interface GuildConfig {
-    name: string;
-    prefix: string;
-    successEmote: "✅";
-    failureEmote: "❌";
-    adminRoles: string[];
-    adminOnlyCommands: string[];
-    disabledCommands: string[];
-	editors: string[];
-    shortcuts: {};
-}*/
-
-export class GuildSettings {
-    guildName: any;
-    guildId: any;
-    settings: any;
-    constructor(name: string, guildId: any) {
-
-        this.guildName = name;
-        this.guildId = guildId;
-
-        this.load();
-        console.log("Guild Config Settings");
-        console.log(this.settings);
-
-        this.settings.name = name;
-        this.save();
-    }
-
-    load() {
-        var filename = `./config/config-${this.guildId}.json`;
-        if (fs.existsSync(filename)) {
-            var data = fs.readFileSync(filename);
-            this.settings = JSON.parse(String(data));
-        } else {
-            var data = fs.readFileSync(`./config/config-default.json`);
-            this.settings = JSON.parse(String(data));
-        }
-    }
-    save() {
-        var newData = JSON.stringify(this.settings, null, '\t');
-        fs.writeFileSync(this.getFilename(), newData);
-    }
-
-    getFilename() {
-        return `config/config-${this.guildId}.json`;
-    }
-    getPrefix() {
-        return this.settings.prefix;
-    }
-    setPrefix(prefix: string) {
-        this.settings.prefix = prefix;
-        this.save();
-    }
-
-    getSuccessEmote() {
-        return this.settings.successEmote;
-    }
-    getFailureEmote() {
-        return this.settings.failureEmote;
-    }
-
-    getSettings(name: string) {
-        if (name) {
-            return this.settings[name];
-        }
-
-        return this.settings;
-    }
-
-    getShortcut(name: string) {
-        name = name.toLowerCase();
-        console.log(`Searching For Shortcut: ${name}`);
-        if (!this.settings.shortcuts || !this.settings.shortcuts[name])
-            return null;
-            
-        console.log(`Found Shortcut: ${this.settings.shortcuts[name]}`);
-        return this.settings.shortcuts[name];
-    }
-    setShortcut(name: string, command: string) {
-        name = name.toLowerCase();
-
-        if (!this.settings[`shortcuts`]) {
-            this.settings[`shortcuts`] = {}
-        }
-
-        this.settings.shortcuts[name] = command;
-        this.save();
-        return true;
-    }
-
-    validateAdminRole(role: string) {
-        return this.settings.adminRoles.find((r) => role.toLowerCase() === r.toLowerCase());
-    }
-    validateEditor(userId: string) {
-        return this.settings.editors.includes(userId);
-    }
-    validateCommand(userRole: string, command: string) {
-        command = command.toLowerCase();
-
-        var filtered = this.settings.adminOnlyCommands.filter(r => r.toLowerCase() === command);
-        var includes = this.settings.disabledCommands.includes(command);
-        if (filtered.length > 0 || includes) {
-            console.log("Command is Admin only");
-            return this.validateAdminRole(userRole);
-        }
-        return true;
-    }
-    validateConfig(guildId: string) {
-        return fs.existsSync(`config/config-${guildId}.json`);
-    }
-
-};
-
 export class Config {
     configuration: any;
     rankings: any;
@@ -134,13 +20,10 @@ export class Config {
     serverSettings: any;
     calculations: any;
     information: any;
-    guilds: any;
     constructor() {
     }
 
     init() {
-        this.guilds = {};
-        
         var data = fs.readFileSync(filename);
         this.configuration = JSON.parse(data);
 
@@ -167,18 +50,6 @@ export class Config {
     saveInformation() {
         var newData = JSON.stringify(this.information, null, "\t");
         fs.writeFileSync(infoJson, newData);
-    }
-    loadGuild(name: string, guildId: string) {
-        this.guilds[guildId] = new GuildSettings(name, guildId);
-        //console.log("Loaded Guild");
-        //console.log(this.guilds[guildId]);
-    }
-    unloadGuild(guildId: string) {
-        if (this.guilds[guildId]) {
-            //console.log("Unloaded Guild");
-            //console.log(this.guilds[guildId]);
-            delete this.guilds[guildId];
-        }
     }
     reload(file: string) {
         if (!file) {
@@ -222,30 +93,7 @@ export class Config {
     addAlias(name: string, value: any) {
         this.configuration.unitAliases[name.toLowerCase()] = value;
     }
-    setPrefix(guildId: string, prefix: string) {
-        if (!this.guilds[guildId]) {
-            return;
-        }
-        this.guilds[guildId].setPrefix(prefix);
-    }
-    getPrefix(guildId: string) {
-        if (!this.guilds[guildId]) {
-            return this.configuration.defaultPrefix;
-        }
-        return this.guilds[guildId].getPrefix();
-    }
-    getSuccess(guildId: string) {
-        if (!this.guilds[guildId]) {
-            return this.configuration.defaultSuccessEmote;
-        }
-        return this.guilds[guildId].getSuccessEmote();
-    }
-    getFailure(guildId: string) {
-        if (!this.guilds[guildId]) {
-            return this.configuration.defaultFailureEmote;
-        }
-        return this.guilds[guildId].getFailureEmote();
-    }
+
     setRankings(category: string, data: any) {
         console.log(`setRankings: category(${category}), data(${data})`);
         if (this.rankings.bestunits[category]) {
@@ -264,9 +112,7 @@ export class Config {
             return r["Unit"] === name;
         });
     }
-    getSettings(guildId: string, name: string) {
-        return this.guilds[guildId].getSettings(name);
-    }
+
     getCalculations(searchTerm: string) {
         var category = this.calculations[searchTerm];
 
@@ -327,25 +173,7 @@ export class Config {
         }
         return null;
     }
-    getShortcut(guildId: string, command: string) {
-        return this.guilds[guildId].getShortcut(command);
-    }
-    setShortcut(guildId: string, name: string, command: string) {
-        return this.guilds[guildId].setShortcut(name, command);
-    }
-    validateCommand(guildId: string, userRole: string, command: string) {
-        //console.log(`Config Validate Command (${guildId})` + this.guilds[guildId]);
-        if (!this.guilds[guildId]) {
-            console.log("Unknown guild, allow");
-            return true;
-        }
-        //console.log("Validate Command Guild: " + guildId);
-        //console.log(this.guilds[guildId]);
-        return this.guilds[guildId].validateCommand(userRole, command);
-    }
-    validateEditor(guildId: string, userId: string) {
-        return this.guilds[guildId].validateEditor(userId);
-    }
+
     getInfoSettings() {
         return this.information;
     }
