@@ -32,12 +32,12 @@
 		"description": "**CG Rain**\n**CG Lasswell V2**\n**CG Onion Knight**\n**CG Noctis**\n**CG Dark Fina**\n**Lunafreya**"
 	},
 	"zeno_rotation": {
-		"title": "Zeno Rotation - Requires Fire Weapon",
-		"description": "Perfect Void (CD) + Scorch            \\nObliterating Mirror of Equity's Roar x 2            \\nObliterating Mirror of Equity's Roar x 2            \\nSubjection to Equity - Crimson (LB)            \\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar            \\nObliterating Mirror of Equity's Roar x 3            \\nScorch + Obliterating Mirror of Equity's Roar            \\nSubjection to Equity - Crimson (LB)            \\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar            \\nObliterating Mirror of Equity's Roar x 3"
+		"title": "Zeno Rotation",
+		"description": "**Requires Fire Weapon and LB Fill Buff**\nPerfect Void (CD) + Scorch\nObliterating Mirror of Equity's Roar x 2\nObliterating Mirror of Equity's Roar x 2\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3\nScorch + Obliterating Mirror of Equity's Roar\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3\n\n**No LB Fill or Fire Weapon**\nMirror of Equity - Acuity + Mirror of Equity - Disorder \nPerfect Void (CD) + Scorch\nFiraga Slash + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 2\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3\nScorch + Firaga Slash\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3"
 	},
 	"zeno_of_the_beta_star": {
-		"title": "Zeno Rot",
-		"description": "Perfect Void (CD) + Scorch\\nObliterating Mirror of Equity's Roar x 2\\nObliterating Mirror of Equity's Roar x 2\\nSubjection to Equity - Crimson (LB)\\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\\nObliterating Mirror of Equity's Roar x 3\\nScorch + Obliterating Mirror of Equity's Roar\\nSubjection to Equity - Crimson (LB)\\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\\nObliterating Mirror of Equity's Roar x 3"
+		"title": "Zeno Rotation - No Fire Weapon Or LB Fill",
+		"description": "Scorch + Blazing Heat - Ash\nPerfect Void (CD) + Scorch\nObliterating Mirror of Equity's Roar x 2\nObliterating Mirror of Equity's Roar x 2\nSubjection to Equity - Crimson (LB)\nScorch  + Blazing Heat - Ash\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3\nScorch + Obliterating Mirror of Equity's Roar\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3"
 	},
 	"zeno1": {
 		"title": "zeno rot again",

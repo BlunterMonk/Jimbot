@@ -1,51 +1,4 @@
 {
-	"burst hybrid": {
-		"Kurasame (no element w/ no external imperil)": {
-			"name": "Kurasame (no element w/ no external imperil)",
-			"damage": "5,431,967,805",
-			"turns": 4
-		},
-		"Kurasame (no element w/ external imperil) *": {
-			"name": "Kurasame (no element w/ external imperil) *",
-			"damage": "4,752,971,830",
-			"turns": 3
-		},
-		"Felix": {
-			"name": "Felix",
-			"damage": "4,155,018,238",
-			"turns": 5
-		},
-		"Kurasame (ice weapon)": {
-			"name": "Kurasame (ice weapon)",
-			"damage": "4,015,107,873",
-			"turns": 7
-		},
-		"Aurora Fryevia": {
-			"name": "Aurora Fryevia",
-			"damage": "2,808,413,032",
-			"turns": 3
-		},
-		"Karlette": {
-			"name": "Karlette",
-			"damage": "2,543,898,950",
-			"turns": 6
-		},
-		"Fryevia": {
-			"name": "Fryevia",
-			"damage": "2,473,221,261",
-			"turns": 3
-		},
-		"Kunshira (spark chain, no external imperil)": {
-			"name": "Kunshira (spark chain, no external imperil)",
-			"damage": "1,563,891,133",
-			"turns": 2
-		},
-		"Kunshira (spark chain, w/ single element external imperil)": {
-			"name": "Kunshira (spark chain, w/ single element external imperil)",
-			"damage": "1,492,069,593",
-			"turns": 2
-		}
-	},
 	"hybrid": {
 		"Kurasame (no element w/ external imperil)": {
 			"name": "Kurasame (no element w/ external imperil)",
@@ -101,27 +54,27 @@
 	"physical": {
 		"Zeno": {
 			"name": "Zeno",
-			"damage": "9,572,926,490",
+			"damage": "10,108,289,099",
 			"turns": 10
 		},
 		"Esther": {
 			"name": "Esther",
-			"damage": "7,313,434,972",
+			"damage": "7,580,208,163",
 			"turns": 10
 		},
 		"Balthier (TDW, max roll, with a dupe)": {
 			"name": "Balthier (TDW, max roll, with a dupe)",
-			"damage": "4,778,025,112",
+			"damage": "3,585,199,123",
 			"turns": 9
 		},
 		"Akstar": {
 			"name": "Akstar",
-			"damage": "4,385,485,895",
+			"damage": "5,267,948,964",
 			"turns": 12
 		},
 		"Citan (w/ external imperil)": {
 			"name": "Citan (w/ external imperil)",
-			"damage": "3,922,386,452",
+			"damage": "4,025,140,149",
 			"turns": 12
 		},
 		"Aranea (Jump capping)": {
@@ -171,8 +124,8 @@
 		},
 		"Ang (LB & Bold Shot chain capping)": {
 			"name": "Ang (LB & Bold Shot chain capping)",
-			"damage": "2,253,546,461",
-			"turns": 10
+			"damage": "3,591,286,561",
+			"turns": 5
 		},
 		"Sora (element weapon, w/ external imperil, AT)": {
 			"name": "Sora (element weapon, w/ external imperil, AT)",
@@ -255,7 +208,7 @@
 			"turns": 0
 		}
 	},
-	"burst physal": {
+	"burst physical": {
 		"Balthier (TDW, max roll, with a dupe)": {
 			"name": "Balthier (TDW, max roll, with a dupe)",
 			"damage": "20,264,484,576",
@@ -577,6 +530,53 @@
 			"name": "Sol",
 			"damage": "6,094,258,013",
 			"turns": 8
+		}
+	},
+	"burst hybrid": {
+		"Kurasame (no element w/ no external imperil)": {
+			"name": "Kurasame (no element w/ no external imperil)",
+			"damage": "5,431,967,805",
+			"turns": 4
+		},
+		"Kurasame (no element w/ external imperil) *": {
+			"name": "Kurasame (no element w/ external imperil) *",
+			"damage": "4,752,971,830",
+			"turns": 3
+		},
+		"Felix": {
+			"name": "Felix",
+			"damage": "4,155,018,238",
+			"turns": 5
+		},
+		"Kurasame (ice weapon)": {
+			"name": "Kurasame (ice weapon)",
+			"damage": "4,015,107,873",
+			"turns": 7
+		},
+		"Aurora Fryevia": {
+			"name": "Aurora Fryevia",
+			"damage": "2,808,413,032",
+			"turns": 3
+		},
+		"Karlette": {
+			"name": "Karlette",
+			"damage": "2,543,898,950",
+			"turns": 6
+		},
+		"Fryevia": {
+			"name": "Fryevia",
+			"damage": "2,473,221,261",
+			"turns": 3
+		},
+		"Kunshira (spark chain, no external imperil)": {
+			"name": "Kunshira (spark chain, no external imperil)",
+			"damage": "1,563,891,133",
+			"turns": 2
+		},
+		"Kunshira (spark chain, w/ single element external imperil)": {
+			"name": "Kunshira (spark chain, w/ single element external imperil)",
+			"damage": "1,492,069,593",
+			"turns": 2
 		}
 	},
 	"magic": {
