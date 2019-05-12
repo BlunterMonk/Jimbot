@@ -591,7 +591,7 @@ interface FFBE {
     queryWikiForUnit(search, parameters, callback);
 };
 */
-export class FFBE {
+class ffbe {
     constructor() {
 
     }
@@ -787,3 +787,5 @@ export class FFBE {
     }
 
 };
+
+export const FFBE = new ffbe();

@@ -9,12 +9,13 @@ import "../string/string-extension.js";
 
 import * as furcDamage from "./cacheDamage.js";
 
-var rankingDump = 'data/rankingsdump.json';
-var unitCalc = 'data/unitcalculations.json';
-var infoJson = 'data/information.json';
-var skillsJson = 'data/skills.json';
-var limitburstsJson = 'data/limitbursts.json';
+const rankingDump = 'data/rankingsdump.json';
+const unitCalc = 'data/unitcalculations.json';
+const infoJson = 'data/information.json';
+const skillsJson = 'data/skills.json';
+const limitburstsJson = 'data/limitbursts.json';
 const rankingFile = 'data/rankings.json';
+const unitKeysJson = "data/unitkeys.json";
 
 export class Cache {
     fullRankings: any;
@@ -23,7 +24,9 @@ export class Cache {
     skillset: any;
     limitbursts: any;
     rankings: any;
+    unitsDump: any;
     constructor() {
+        this.init();
     }
 
     init() {
@@ -44,6 +47,7 @@ export class Cache {
         this.information = JSON.parse(fs.readFileSync(infoJson).toString());
         this.calculations = JSON.parse(fs.readFileSync(unitCalc).toString());
         this.rankings = JSON.parse(fs.readFileSync(rankingFile).toString());
+        this.unitsDump = JSON.parse(fs.readFileSync(unitKeysJson).toString());
         
         var skills = JSON.parse(fs.readFileSync(skillsJson).toString());
         var lbs = JSON.parse(fs.readFileSync(limitburstsJson).toString());
@@ -55,6 +59,14 @@ export class Cache {
             this.calculations = JSON.parse(fs.readFileSync(unitCalc).toString());
             console.log("Reloaded Calculations");
         });
+    }
+
+    getUnitKey(search) {
+        if (!this.unitsDump[search]) {
+            return null
+        }
+
+        return this.unitsDump[search];
     }
 
     // Wiki Rankings
@@ -125,12 +137,13 @@ export class Cache {
     }
 
     // Information
-    setInformation(name: string, title: string, data: any) {
+    setInformation(name: string, title: string, data: any, author: string) {
         if (this.information.aliases[name]) {
             name = this.information.aliases[name];
         }
 
         this.information[name] = {
+            author: author,
             title: title,
             description: data
         } 
@@ -149,7 +162,7 @@ export class Cache {
     }
     
 
-    getSkill(searchTerm: string) {
+    getSkill(searchTerm: string): any {
         var found: { [key: string]: string } = {};
 
         if (this.skillset[searchTerm]) {
@@ -171,3 +184,5 @@ export class Cache {
         return found;
     }
 };
+
+export const cache = new Cache();

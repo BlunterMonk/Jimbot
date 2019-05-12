@@ -156,7 +156,7 @@ class Editor {
 
         var info = readFileSync(this.file);
         var information = JSON.parse(String(info));
-        console.log("Info Loaded");
+        //console.log("Info Loaded");
 
         var returnEval = null;
         try {
@@ -171,13 +171,13 @@ class Editor {
                 console.log(`Tree: ${t}`);
                 evaluation += `["${t}"]`;
                 if (t == this.getEditedObjectKey()) {
-                    console.log("Found Object Key");
+                    //console.log("Found Object Key");
                     returnEval = evaluation;
-                    console.log(returnEval);
+                    //console.log(returnEval);
                 }
             });
             evaluation += "= this.data";
-            console.log(`Evaluation: ${evaluation}`);
+            //console.log(`Evaluation: ${evaluation}`);
             eval(evaluation);
         } catch(e) {
             console.log(e);
@@ -185,8 +185,8 @@ class Editor {
             return false;
         }
 
-        console.log("Edited Information");
-        console.log(information);
+        //console.log("Edited Information");
+        //console.log(information);
 
         var newData = JSON.stringify(information, null, "\t");
         writeFileSync(this.file, newData);

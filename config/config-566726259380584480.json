@@ -11,10 +11,18 @@
 		"prefix",
 		"getsettings"
 	],
-	"editors": [],
+	"editors": [
+		"159846139124908032",
+		"131139508421918721",
+		"344500120827723777"
+	],
 	"disabledCommands": [],
 	"shortcuts": {
 		"tips": "?whatis new player",
-		"noob": "!whatis new player info"
+		"noob": "!whatis new player info",
+		"eletetris": "?whatis elemental tetris",
+		"bunnies": "?gif sylvie \"win\"",
+		"festunits": "?whatis festunits",
+		"zenorot": "?whatis zeno rotation"
 	}
 }

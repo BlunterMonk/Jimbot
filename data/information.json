@@ -8,43 +8,43 @@
 		"new player": "new_player_info"
 	},
 	"elemental_tetris": {
+		"author": "159846139124908032",
 		"title": "❓What is Element Tetris?❓",
 		"description": "The total % across elements must add up to the specified amount to nullify damage.\n\nEx. Dark Espers Scorn: Requires 400% Fire/Wind/Water/Dark to survive turns 5/10/15/etc.\n\n100% Fire / 50% Wind / 50% Water / 200% Dark = 400% total, ✅success!\n400% Fire / 0% Wind / 0% Water / 0% Dark = 400% total, ✅success!\n80% Fire / 20% Wind / 20% Water / 70% Dark = 190% total, ❌fail!\n\n👉All party members need all resists.\n👉Buffs and imperils work. Buffing 70% all element resist will only require 120% Fire/Wind/Water/Dark.\n\n1⃣Dark Espers Scorn: 400% Fire/Wind/Water/Dark and 420% Fire/Water/Dark\n2⃣Ultros/Typhon Scorn: 100% Lightning, 50% Fire, 20% Earth/Water/Wind\n3⃣Lich: 50+% Fire/Ice/Lightning\n4⃣Glacial Scorn: 380% Ice/Water/Wind\n\n👉[See Furcula's post for more information.](https://bit.ly/2L54eY4)"
 	},
 	"new_player_info": {
+		"author": "159846139124908032",
 		"title": "**:exclamation:New Player Info:exclamation:**",
 		"description": "\n\n**Important:**\n:point_right:One team can't do everything, you'll need specific setups for each encounter\n:point_right:Story is very easy, take any 5 units you want\n:point_right:5:star: Ashe and Lightning are guaranteed, free units. They are sufficient for story content. Ashe is normally a 4:star: base unit.\n:point_right:Friend units have a 3 hour cooldown\n:point_right:Visit #global-friends to find strong friends to clear harder encounters\n:point_right:When making STMR, fuse two 7:star: together\n\n**Never:**\n:point_right:Never sell any 3:star: or higher units, ever\n:point_right:Never fuse any 5:star: units together, ever\n:point_right:Never buy magic keys\n:point_right:Never use tickets on the \"Rare Summon\" banner at the very bottom\n:point_right:Never use max-level King Metal Cactuars on non-7:star: units\n\n**Avoid:**\n:point_right:Avoid lapis reviving if you die\n:point_right:Avoid NRG refreshing with lapis (buy the NRG daily if you must)\n:point_right:Avoid doing the 500 lapis single pull\n:point_right:Avoid fusing a 5:star: into a 7:star: for the 50% moogle (wait for 4th copy, then make two 7:star:)"
 	},
 	"astolfo": {
+		"author": "131139508421918721",
 		"title": "Why Astolfo is the Cutest Waifu",
 		"description": "He protecc, He attacc, but most importantly, he a snacc. I love Astolfo."
 	},
 	"ruler": {
+		"author": "131139508421918721",
 		"title": "Why Ruler Is Cooler",
 		"description": "Her iron will is so dummy thicc the sound of it's ass cheeks scares away enemies and make them cry."
 	},
 	"summon_fest": {
+		"author": "131139508421918721",
 		"title": "Summon Fest",
 		"description": "**Summon Fest** is a time limited event where certain units will have higher than normal drop rates. However, these units cannot be summoned through normal rare-summoning.\\nThe following units are exclusinve to Summon Fest:\\n**CG Rain**\\n**CG Lasswell V2**\\n**CG Onion Knight**\\n**CG Noctis**\\n**CG Dark Fina**\\n**Lunafreya**"
 	},
 	"festunits": {
+		"author": "131139508421918721",
 		"title": "List of Summon Fest Units",
 		"description": "**CG Rain**\n**CG Lasswell V2**\n**CG Onion Knight**\n**CG Noctis**\n**CG Dark Fina**\n**Lunafreya**"
 	},
 	"zeno_rotation": {
+		"author": "131139508421918721",
 		"title": "Zeno Rotation",
 		"description": "**Requires Fire Weapon and LB Fill Buff**\nPerfect Void (CD) + Scorch\nObliterating Mirror of Equity's Roar x 2\nObliterating Mirror of Equity's Roar x 2\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3\nScorch + Obliterating Mirror of Equity's Roar\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3\n\n**No LB Fill or Fire Weapon**\nMirror of Equity - Acuity + Mirror of Equity - Disorder \nPerfect Void (CD) + Scorch\nFiraga Slash + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 2\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3\nScorch + Firaga Slash\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3"
 	},
-	"zeno_of_the_beta_star": {
-		"title": "Zeno Rotation - No Fire Weapon Or LB Fill",
-		"description": "Scorch + Blazing Heat - Ash\nPerfect Void (CD) + Scorch\nObliterating Mirror of Equity's Roar x 2\nObliterating Mirror of Equity's Roar x 2\nSubjection to Equity - Crimson (LB)\nScorch  + Blazing Heat - Ash\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3\nScorch + Obliterating Mirror of Equity's Roar\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3"
-	},
-	"zeno1": {
-		"title": "zeno rot again",
-		"description": "Perfect Void (CD) + Scorch\\nObliterating Mirror of Equity's Roar x 2\\nObliterating Mirror of Equity's Roar x 2\\nSubjection to Equity - Crimson (LB)\\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\\nObliterating Mirror of Equity's Roar x 3\\nScorch + Obliterating Mirror of Equity's Roar\\nSubjection to Equity - Crimson (LB)\\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\\nObliterating Mirror of Equity's Roar x 3"
-	},
-	"zeno2": {
-		"title": "zeno rottt",
-		"description": "Perfect Void (CD) + Scorch\nObliterating Mirror of Equity's Roar x 2\nObliterating Mirror of Equity's Roar x 2\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3\nScorch + Obliterating Mirror of Equity's Roar\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3"
+	"tifa": {
+		"author": "fajfdk",
+		"title": "Tifa Is Cool",
+		"description": "She is really nice and fun and big and big and really cool."
 	}
 }

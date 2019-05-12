@@ -16,8 +16,8 @@ import {getCommandString} from "./commands/commands.js";
     "ready"
     "message"
  */
-// const bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"; // prod
-const bot_secret_token = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk"; // test
+const bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"; // prod
+// const bot_secret_token = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk"; // test
 
 class client {
     discordClient: Discord.Client;
@@ -139,6 +139,21 @@ class client {
                 if (callback) callback(message);
             })
             .catch(console.error);
+        })
+        .catch(reason =>{
+            console.error(reason);
+
+            embed.author = {
+                name: `From: ${authorId}`,
+            };
+
+            receivedMessage.channel
+            .send({embed: embed})
+            .then(message => {
+                this.cacheBotMessage(receivedMessage.id, message.id);
+                if (callback) callback(message);
+            })
+            .catch(console.error);
         });
     }
     sendPrivateMessage(receivedMessage, embed, callback = null) {
@@ -209,7 +224,7 @@ class client {
             return;
         }
 
-        const content = receivedMessage.content;
+        var content = receivedMessage.content;
 
         // Send private message results to authorized users
         if (!receivedMessage.guild && this.isAuthorized(receivedMessage.author)) {
@@ -228,8 +243,17 @@ class client {
             return;
         }
 
+        var command = getCommandString(content.slice(1, content.length));
+
+        // Replace shortcuts if requested
+        const shortcut = this.getShortcut(guildId, command.toLowerCase());
+        if (shortcut) {
+            log(`Replacing Shortcut with new command, shortcut: ${shortcut}`);
+            content = shortcut;
+            command = getCommandString(content.slice(1, content.length));
+        }
+
         // Validate the user 
-        const command = getCommandString(content.slice(1, content.length));
         if (!this.validate(receivedMessage, command)) {
             log(`Permission Denied, User: ${receivedMessage.author.id}, Command: ${command}`);
             return;

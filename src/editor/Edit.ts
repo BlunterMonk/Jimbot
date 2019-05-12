@@ -81,9 +81,7 @@ function respondAddAction(receivedMessage, key) {
     };
 
     if (key) {
-        embed.description = "Please submit the new title"
-    } else {
-        embed.description = "Please submit the new value"
+        embed.description = `Please submit the new ${key.toTitleCase()}`;
     }
 
     receivedMessage.channel
