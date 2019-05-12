@@ -123,13 +123,17 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
 
     // the command name
     var command = getCommandString(copy);
-    var shortcut = guildSettings.getShortcut(command);
-    if (shortcut) {
-        log("Found Command Shortcut");
-        copy = shortcut;
-        command = getCommandString(copy);
-        log(`New Command: ${command}`);
-        log(`New Content: ${copy}`);
+
+    if (guildSettings) {
+
+        var shortcut = guildSettings.getShortcut(command);
+        if (shortcut) {
+            log("Found Command Shortcut");
+            copy = shortcut;
+            command = getCommandString(copy);
+            log(`New Command: ${command}`);
+            log(`New Content: ${copy}`);
+        }
     }
 
     // If the command has a shortcut convert it.

@@ -101,5 +101,13 @@
 		".jpg",
 		".png",
 		".gif"
-	]
+	],
+	"shortcuts": {
+		"eletetris": "?whatis ele tetris",
+		"tips": "?whatis new player info",
+		"new": "?whatis new player info",
+		"noob": "?whatis new player info",
+		"bunnies": "?gif sylvie \"win\"",
+		"festunits": "?whatis festunits"
+	}
 }

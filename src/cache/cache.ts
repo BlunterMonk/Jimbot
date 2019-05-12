@@ -14,6 +14,7 @@ var unitCalc = 'data/unitcalculations.json';
 var infoJson = 'data/information.json';
 var skillsJson = 'data/skills.json';
 var limitburstsJson = 'data/limitbursts.json';
+const rankingFile = 'data/rankings.json';
 
 export class Cache {
     fullRankings: any;
@@ -21,6 +22,7 @@ export class Cache {
     information: any;
     skillset: any;
     limitbursts: any;
+    rankings: any;
     constructor() {
     }
 
@@ -31,16 +33,23 @@ export class Cache {
         var newData = JSON.stringify(this.information, null, "\t");
         fs.writeFileSync(infoJson, newData);
     }
+    saveRankings() {
+        var newData = JSON.stringify(this.rankings, null, "\t");
+        fs.writeFileSync(rankingFile, newData);
+    }
+
     reload() {
         console.log("Reloading Cached Data");
         this.fullRankings = JSON.parse(fs.readFileSync(rankingDump).toString());
         this.information = JSON.parse(fs.readFileSync(infoJson).toString());
         this.calculations = JSON.parse(fs.readFileSync(unitCalc).toString());
-
+        this.rankings = JSON.parse(fs.readFileSync(rankingFile).toString());
+        
         var skills = JSON.parse(fs.readFileSync(skillsJson).toString());
         var lbs = JSON.parse(fs.readFileSync(limitburstsJson).toString());
         this.skillset = Object.assign({}, skills, lbs);
     }
+
     updateDamage() {
         furcDamage.UpdateFurculaCalculations(() =>{
             this.calculations = JSON.parse(fs.readFileSync(unitCalc).toString());
@@ -53,6 +62,19 @@ export class Cache {
         return this.fullRankings.find((r) => {
             return r["Unit"] === name;
         });
+    }
+    setRankings(category: string, data: any) {
+        console.log(`setRankings: category(${category}), data(${data})`);
+        if (this.rankings.bestunits[category]) {
+            console.log(this.rankings.bestunits[category]);
+            this.rankings.bestunits[category] = data;
+            this.saveRankings();
+            return true;
+        }
+        return false;
+    }
+    getRankings(category: string) {
+        return this.rankings[category.toLowerCase()];
     }
 
 
@@ -101,6 +123,31 @@ export class Cache {
             return found;
         }
     }
+
+    // Information
+    setInformation(name: string, title: string, data: any) {
+        if (this.information.aliases[name]) {
+            name = this.information.aliases[name];
+        }
+
+        this.information[name] = {
+            title: title,
+            description: data
+        } 
+        this.saveInformation();
+        return true;
+    }
+    getInformation(name: string)  {
+        if (this.information.aliases[name]) {
+            name = this.information.aliases[name];
+        }
+
+        if (this.information[name]) {
+            return this.information[name];
+        }
+        return null;
+    }
+    
 
     getSkill(searchTerm: string) {
         var found: { [key: string]: string } = {};

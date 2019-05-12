@@ -82,7 +82,8 @@ discord_js_1.Client.init(function () {
     editor = new Editor.Edit();
     editor.init(function (msg, key, file) {
         global_js_1.log("Response From Editor");
-        config.reload(file);
+        cache.reload();
+        config.reload();
         respondSuccess(msg, true);
         handleWhatis(msg, key, null);
     }, function (msg) {
@@ -98,7 +99,6 @@ discord_js_1.Client.init(function () {
     discord_js_1.Client.setPrivateMessageCallback(onPrivateMessage.bind(_this));
 });
 function onPrivateMessage(receivedMessage, content) {
-    var copy = content.toLowerCase();
     var id = receivedMessage.author.id;
     global_js_1.log("Private Message From: " + id);
     global_js_1.log(content);
@@ -108,29 +108,31 @@ function onPrivateMessage(receivedMessage, content) {
         return;
     }
     global_js_1.log("Settings Change Allowed");
+    var com = Commands.getCommandObject(content, null, null);
+    global_js_1.log("\nCommand Obect");
+    global_js_1.log(com);
+    var command = com.command;
+    var parameters = com.parameters;
+    var search = com.search;
     try {
-        if (content.startsWith("?setinfo")) {
+        if (command == "Setinfo") {
             global_js_1.log("Settings Change");
             editor.SetInfo(discord_js_1.Client, receivedMessage);
             return;
         }
-        var params = getParameters(content);
-        var command = getCommandString(content, "?");
-        var parameters = params.parameters;
-        var search = getSearchString("?" + command, copy);
         if (!search && parameters.length === 0) {
             global_js_1.log("Could not parse search string");
             respondFailure(receivedMessage, true);
-            throw command;
+            return;
         }
-        if (content.startsWith("?addinfo")) {
+        if (command == "Addinfo") {
             handleAddinfo(receivedMessage, search, parameters);
             editor.AddInfo(receivedMessage, search);
         }
-        else if (content.startsWith("?setrank")) {
+        else if (command == "Setrank") {
             handleSetrankings(receivedMessage, search, parameters);
         }
-        else if (content.startsWith("?setinfo")) {
+        else if (command == "Setinfo") {
             handleSetinfo(receivedMessage, search, parameters);
         }
     }
@@ -141,34 +143,18 @@ function onPrivateMessage(receivedMessage, content) {
 }
 function onMessage(receivedMessage, content) {
     var guildId = receivedMessage.guild.id;
-    var copy = receivedMessage.content.toLowerCase();
     var attachment = receivedMessage.attachments.first();
     if (attachment) {
         global_js_1.log("Message Attachments");
         global_js_1.log(attachment.url);
     }
-    // the command name
-    /*
-    let com = getCommandString(copy, prefix);
-    try {
-        let valid = false;
-        log(eval(`valid = (typeof handle${com} === 'function');`));
-        if (!valid) {
-            let search = getSearchString(`${prefix}${com}`, copy);
-            if (unitQuery(receivedMessage, com, search))
-                return;
-        }
-    } catch (e) {
-        //log(e);
-        //log("JP Unit: " + command);
-        let search = getSearchString(`${prefix}${com}`, copy);
-        if (unitQuery(receivedMessage, com, search))
-            return;
-    }
-    */
+    // Get command information
     var com = Commands.getCommandObject(content, attachment, discord_js_1.Client.guildSettings[guildId]);
     global_js_1.log("\n Command Obect");
     global_js_1.log(com);
+    if (unitQuery(receivedMessage, com.command, com.search)) {
+        return;
+    }
     try {
         var search = com.search;
         var parameters = com.parameters;
@@ -591,7 +577,7 @@ function handleSearch(receivedMessage, search) {
 function handleRank(receivedMessage, search, parameters) {
     global_js_1.log("\nSearching Rankings for: " + search);
     if (search) {
-        var unit = config.getUnitRank(search.toLowerCase());
+        var unit = cache.getUnitRank(search.toLowerCase());
         if (!unit) {
             global_js_1.log("Could not find unit");
             return;
@@ -875,7 +861,7 @@ function handleRecentunits(receivedMessage, search, parameters) {
     });
 }
 function handleWhatis(receivedMessage, search, parameters) {
-    var info = config.getInformation(search);
+    var info = cache.getInformation(search);
     if (!info) {
         return;
     }
@@ -897,7 +883,7 @@ function handleNoob(receivedMessage, search, parameters) {
 }
 function handleGlbestunits(receivedMessage, search, parameters) {
     var guildId = receivedMessage.guild.id;
-    var settings = config.getRankings("bestunits");
+    var settings = cache.getRankings("bestunits");
     var list = "";
     Object.keys(settings).forEach(function (v) {
         var units = settings[v].split(" / ");
@@ -994,7 +980,7 @@ function handleAddalias(receivedMessage, search, parameters) {
                 if (valid) {
                     global_js_1.log("Unit is valid");
                     w1 = w1.replaceAll(" ", "_");
-                    config.addAlias(w1, w2);
+                    config.setAlias(w1, w2);
                     config.save();
                     respondSuccess(receivedMessage);
                 }
@@ -1125,7 +1111,7 @@ function handleSetrankings(receivedMessage, search, parameters) {
     global_js_1.log("Set Rankings");
     global_js_1.log("Catergory: " + search);
     global_js_1.log("Value: " + value);
-    if (config.setRankings(search, value)) {
+    if (cache.setRankings(search, value)) {
         respondSuccess(receivedMessage, true);
     }
     else {
@@ -1141,7 +1127,7 @@ function handleSetinfo(receivedMessage, search, parameters) {
     global_js_1.log("Set Information");
     global_js_1.log("Title: " + title);
     global_js_1.log("Desc: " + desc);
-    if (config.setInformation(search, title, desc)) {
+    if (cache.setInformation(search, title, desc)) {
         respondSuccess(receivedMessage, true);
     }
     else {
@@ -1153,7 +1139,7 @@ function handleAddinfo(receivedMessage, search, parameters) {
         return;
     }
     global_js_1.log("Add Information: " + search);
-    if (config.setInformation(search, "title", "desc")) {
+    if (cache.setInformation(search, "title", "desc")) {
         respondSuccess(receivedMessage, true);
     }
     else {
@@ -1200,7 +1186,7 @@ function handleReload(receivedMessage, search, parameters) {
     global_js_1.log("Handle Reload");
     try {
         cache.reload();
-        config.reload(null);
+        config.reload();
     }
     catch (e) {
         global_js_1.log(e);

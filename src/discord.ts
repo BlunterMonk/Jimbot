@@ -27,14 +27,15 @@ class client {
     guildSettings: any;
     onMessageCallback: any;
     onPrivateMessageCallback: any;
-    authorizedUsers: [
-        "159846139124908032", // renaulteUserID
-        "131139508421918721", // jimooriUserID
-        "344500120827723777"  // furculaUserID
-    ];
+    authorizedUsers: string[];
     constructor() {
         this.guildSettings = {};
         this.botMessages = [];
+        this.authorizedUsers = [
+            "159846139124908032", // renaulteUserID
+            "131139508421918721", // jimooriUserID
+            "344500120827723777"  // furculaUserID
+        ];
     }
 
     setMessageCallback(callback: any) {

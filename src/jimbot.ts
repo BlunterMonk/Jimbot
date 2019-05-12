@@ -98,7 +98,9 @@ Client.init(() => {
     editor = new Editor.Edit();
     editor.init((msg, key, file) => {
         log("Response From Editor");
-        config.reload(file);
+        cache.reload();
+        config.reload();
+
         respondSuccess(msg, true);
         handleWhatis(msg, key, null);
     }, (msg) =>{
@@ -121,7 +123,6 @@ Client.init(() => {
 
 function onPrivateMessage(receivedMessage, content) {
 
-    var copy = content.toLowerCase();
     var id = receivedMessage.author.id;
     
     log("Private Message From: " + id);
@@ -132,34 +133,37 @@ function onPrivateMessage(receivedMessage, content) {
         editor.editorResponse(receivedMessage);
         return;
     }
-
+    
     log("Settings Change Allowed");
 
+    const com = Commands.getCommandObject(content, null, null);
+    log("\nCommand Obect");
+    log(com);
+
+    const command = com.command;
+    const parameters = com.parameters;
+    const search = com.search;
+
     try {
-        if (content.startsWith("?setinfo")) {
+        if (command == "Setinfo") {
             log("Settings Change")
 
             editor.SetInfo(Client, receivedMessage);
             return;
         }
 
-        var params = getParameters(content);
-        var command = getCommandString(content, "?");
-        var parameters = params.parameters;
-
-        const search = getSearchString(`?${command}`, copy);
         if (!search && parameters.length === 0) {
             log("Could not parse search string");
             respondFailure(receivedMessage, true);
-            throw command;
+            return;
         }
 
-        if (content.startsWith("?addinfo")) {
+        if (command == "Addinfo") {
             handleAddinfo(receivedMessage, search, parameters);
             editor.AddInfo(receivedMessage, search);
-        } else if (content.startsWith("?setrank")) {
+        } else if (command == "Setrank") {
             handleSetrankings(receivedMessage, search, parameters);
-        } else if (content.startsWith("?setinfo")) {
+        } else if (command == "Setinfo") {
             handleSetinfo(receivedMessage, search, parameters);
         }
     } catch(e) {
@@ -171,36 +175,20 @@ function onMessage(receivedMessage, content) {
     
     const guildId = receivedMessage.guild.id;
 
-    var copy = receivedMessage.content.toLowerCase();
     const attachment = receivedMessage.attachments.first();
     if (attachment) {
         log("Message Attachments");
         log(attachment.url);
     }
 
-    // the command name
-    /*
-    let com = getCommandString(copy, prefix);
-    try {
-        let valid = false;
-        log(eval(`valid = (typeof handle${com} === 'function');`));
-        if (!valid) {
-            let search = getSearchString(`${prefix}${com}`, copy);
-            if (unitQuery(receivedMessage, com, search))
-                return;
-        }
-    } catch (e) {
-        //log(e);
-        //log("JP Unit: " + command);
-        let search = getSearchString(`${prefix}${com}`, copy);
-        if (unitQuery(receivedMessage, com, search))
-            return;
-    }
-    */
-   
+    // Get command information
     var com = Commands.getCommandObject(content, attachment, Client.guildSettings[guildId]);
     log("\n Command Obect");
     log(com);
+
+    if (unitQuery(receivedMessage, com.command, com.search)) {
+        return;
+    }
 
     try {
         var search = com.search;
@@ -693,7 +681,7 @@ function handleRank(receivedMessage, search, parameters) {
     log("\nSearching Rankings for: " + search);
 
     if (search) {
-        const unit = config.getUnitRank(search.toLowerCase());
+        const unit = cache.getUnitRank(search.toLowerCase());
         if (!unit) {
             log("Could not find unit");
             return;
@@ -948,7 +936,7 @@ function handleEmote(receivedMessage) {
 
     var filename = validateEmote(img);
     if (!filename) return;
-    
+
     Client.sendImage(receivedMessage, filename);
 }
 function handleQuote(receivedMessage, search) {
@@ -1022,7 +1010,7 @@ function handleRecentunits(receivedMessage, search, parameters) {
 }
 function handleWhatis(receivedMessage, search, parameters) {
 
-    var info = config.getInformation(search)
+    var info = cache.getInformation(search)
     if (!info) {
         return;
     }
@@ -1047,7 +1035,7 @@ function handleNoob(receivedMessage, search, parameters) {
 function handleGlbestunits(receivedMessage, search, parameters) {
 
     const guildId = receivedMessage.guild.id;
-    const settings = config.getRankings("bestunits");
+    const settings = cache.getRankings("bestunits");
 
     var list = "";
     Object.keys(settings).forEach((v) => {
@@ -1161,7 +1149,7 @@ function handleAddalias(receivedMessage, search, parameters) {
                     log("Unit is valid");
 
                     w1 = w1.replaceAll(" ", "_");
-                    config.addAlias(w1, w2);
+                    config.setAlias(w1, w2);
                     config.save();
 
                     respondSuccess(receivedMessage);
@@ -1309,7 +1297,7 @@ function handleSetrankings(receivedMessage, search, parameters) {
     log(`Catergory: ${search}`);
     log(`Value: ${value}`);
 
-    if (config.setRankings(search, value)) {
+    if (cache.setRankings(search, value)) {
         respondSuccess(receivedMessage, true);
     } else {
         respondFailure(receivedMessage, true);
@@ -1327,7 +1315,7 @@ function handleSetinfo(receivedMessage, search, parameters) {
     log(`Title: ${title}`);
     log(`Desc: ${desc}`);
 
-    if (config.setInformation(search, title, desc)) {
+    if (cache.setInformation(search, title, desc)) {
         respondSuccess(receivedMessage, true);
     } else {
         respondFailure(receivedMessage, true);
@@ -1340,7 +1328,7 @@ function handleAddinfo(receivedMessage, search, parameters) {
 
     log(`Add Information: ${search}`);
 
-    if (config.setInformation(search, "title", "desc")) {
+    if (cache.setInformation(search, "title", "desc")) {
         respondSuccess(receivedMessage, true);
     } else {
         respondFailure(receivedMessage, true);
@@ -1396,7 +1384,7 @@ function handleReload(receivedMessage, search, parameters) {
 
     try {
         cache.reload();
-        config.reload(null);
+        config.reload();
     } catch(e) {
         log(e);
         respondFailure(receivedMessage, true);
