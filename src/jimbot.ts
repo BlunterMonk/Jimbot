@@ -12,17 +12,14 @@ import * as https from "https";
 import * as http from "http";
 
 //import "./global.js";
-import { log, logData, checkString, compareStrings, escapeString } from "./global.js";
 import "./string/string-extension.js";
-import { Client } from "./discord.js";
-import {unitSearch, unitSearchWithParameters} from "./ffbe/unit.js";
+import { log, logData, checkString, compareStrings, escapeString } from "./global.js";
+import {Client} from "./discord.js";
 import {config} from "./config/config.js";
-import {FFBE} from "./ffbe/ffbewiki.js";
-import * as Editor from "./editor/Edit.js";
 import {cache} from "./cache/cache.js";
-import * as constants from "./constants.js";
-import * as Commands from "./commands/commands.js";
 import {handle} from "./commands/handles.js";
+import * as Editor from "./editor/Edit.js";
+import * as Commands from "./commands/commands.js";
 
 var editor = null;
 
