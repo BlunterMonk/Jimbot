@@ -21,7 +21,7 @@ const searchAliases = [
     { reg: /buff/i, value: "increase|increase atk|increase def|increase mag|increase spr"},
     { reg: /debuff/i, value: "debuff|decrease|reduce"},
     { reg: /imperil/i, value: "reduce resistance"},
-    { reg: /mit/i, value: "mitigate|reduce damage"},
+    { reg: /mitigate/i, value: "mitigate|reduce damage"},
     { reg: /evoke/i, value: "evoke|evocation"}
 ]
 var unitDefaultSearch = "tmr|stmr";
