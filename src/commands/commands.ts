@@ -150,17 +150,17 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
     
     // Get search string for command.
     const search = getSearchString(copy, (command !== "Dpt"));
+    
+    if (command.toLowerCase() === `addemo` && parameters.length === 0) {
+        if (attachment) {
+            parameters[0] = attachment;
+        }
+    }
 
     log("\ngetCommandString: " + command);
     log("getSearchString: " + search);
     log("getParameters:");
     log(parameters);
-    
-    if (command.toLowerCase() === `addemo` && parameters.length === 0) {
-        if (attachment) {
-            parameters[0] = attachment.url;
-        }
-    }
 
     var run = "handle" + command + "(receivedMessage, search, parameters)";
 
