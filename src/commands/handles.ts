@@ -50,8 +50,6 @@ const aniGL = (n) => `https://exvius.gg/gl/units/${n}/animations/`;
 const aniJP = (n) => `https://exvius.gg/jp/units/${n}/animations/`;
 const guildId = (msg) => msg.guild.id;
 const userId = (msg) => msg.author.id;
-
-var unitDefaultSearch = "tmr|stmr";
 // Lookup Tables
 
 const gifAliases = {
@@ -61,18 +59,6 @@ const gifAliases = {
     "win_before": "before",
     "win before": "before"
 }
-const searchAliases = [
-    { reg: /imbue/g, value: "add element" },
-    { reg: /break/g, value: "break|reduce def|reduce atk|reduce mag|reduce spr"},
-    { reg: /buff/g, value: "increase|increase atk|increase def|increase mag|increase spr"},
-    { reg: /debuff/g, value: "debuff|decrease|reduce"},
-    { reg: /imperil/g, value: "reduce resistance"},
-    { reg: /mit/g, value: "mitigate|reduce damage"},
-    { reg: /evoke/g, value: "evoke|evocation"}
-]
-
-
-
 
 
 // COMMANDS
@@ -747,6 +733,7 @@ function handleK(receivedMessage, search, id) {
     log(`handleKit(${search})`);
 
     var unit = unitSearch(id, search);
+    if (!unit) return;
 
     var name = unit.name.toTitleCase();
     var embed = {
@@ -772,9 +759,9 @@ function handleKit(receivedMessage, search, parameters, active) {
     }
 
     var unit = unitSearchWithParameters(id, active, parameters);
+    if (!unit) return;
 
     var name = unit.name.toTitleCase();
-    log(`Unit Name: ${name}`);
     var embed = {
         color: pinkHexCode,
         thumbnail: {
@@ -869,23 +856,7 @@ function handleUnitQuery(receivedMessage, command, search) {
         return false;
 
     //log(`Unit ID valid`);
-    if (search && !search.empty()) {
-        log(search);
-        search = escapeString(search);
-        log(search);
-        searchAliases.forEach(regex => {
-            if (checkString(search, regex.reg)) {
-                //log(`Search contains a word to replace`);
-                search = search.replace(regex.reg, regex.value);
-                //log(`New Search: ${search}`);
-            }
-        });
-        search = search.replaceAll(" ",".*")
-    } else {
-        search = unitDefaultSearch;
-    }
-
-    handleK(receivedMessage, search, id);
+    handleK(receivedMessage, escapeString(search), id);
     return true;
 }
 

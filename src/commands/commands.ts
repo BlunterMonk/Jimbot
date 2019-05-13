@@ -9,16 +9,6 @@ import "../string/string-extension.js";
 import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
 import * as gs from "../config/guild.js";
 
-const searchAliases = [
-    { reg: /imbue/g, value: "add element" },
-    { reg: /break/g, value: "break|reduce def|reduce atk|reduce mag|reduce spr"},
-    { reg: /buff/g, value: "increase|increase atk|increase def|increase mag|increase spr"},
-    { reg: /debuff/g, value: "debuff|decrease|reduce"},
-    { reg: /imperil/g, value: "reduce resistance"},
-    { reg: /mit/g, value: "mitigate|reduce damage"},
-    { reg: /evoke/g, value: "evoke|evocation"}
-]
-
 const regexCommand = /^[^\s]*/;
 const regexSearch = /^(?:.*?\s)(.*?)(?='|"|‘|’|“|”|$)/;
 const regexParameter = /"[^"]+"|‘[^‘]+‘|‘[^’]+’|“[^“]+“|”[^”]+”|“[^“^”]+”|'[^']+'/g;

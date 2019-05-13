@@ -16,16 +16,31 @@ import * as constants from "../constants.js";
 const chainFamilies = JSON.parse(String(fs.readFileSync("data/chainfamilies.json")));
 const ignoreEffectRegex = /grants.*passive|unlock.*\[.*CD\]/i;
 const searchAliases = [
-    { reg: /imbue/g, value: "add element" },
-    { reg: /break/g, value: "break|reduce def|reduce atk|reduce mag|reduce spr"},
-    { reg: /buff/g, value: "increase|increase atk|increase def|increase mag|increase spr"},
-    { reg: /debuff/g, value: "debuff|decrease|reduce"},
-    { reg: /imperil/g, value: "reduce resistance"},
-    { reg: /mit/g, value: "mitigate|reduce damage"},
-    { reg: /evoke/g, value: "evoke|evocation"}
+    { reg: /imbue/i, value: "add element" },
+    { reg: /break/i, value: "break|reduce def|reduce atk|reduce mag|reduce spr"},
+    { reg: /buff/i, value: "increase|increase atk|increase def|increase mag|increase spr"},
+    { reg: /debuff/i, value: "debuff|decrease|reduce"},
+    { reg: /imperil/i, value: "reduce resistance"},
+    { reg: /mit/i, value: "mitigate|reduce damage"},
+    { reg: /evoke/i, value: "evoke|evocation"}
 ]
+var unitDefaultSearch = "tmr|stmr";
 
 ////////////////////////////////////////////////////////////
+
+// Convert search into valid regex
+function convertToSkillSearch(search) {
+
+    searchAliases.forEach(regex => {
+        if (checkString(search, regex.reg)) {
+            log(`Search contains a word to replace: ${regex.reg}`);
+            search = search.replace(regex.reg, regex.value);
+            log(`New Search: ${search}`);
+        }
+    });
+
+    return search.replaceAll(" ",".*")
+}
 
 // Convert search parameters into valid regex
 function convertParametersToSkillSearch(parameters) {
@@ -38,9 +53,9 @@ function convertParametersToSkillSearch(parameters) {
 
     searchAliases.forEach(regex => {
         if (checkString(search, regex.reg)) {
-            //log(`Search contains a word to replace`);
+            log(`Search contains a word to replace: ${regex.reg}`);
             search = search.replace(regex.reg, regex.value);
-            //log(`New Search: ${search}`);
+            log(`New Search: ${search}`);
         }
     });
 
@@ -266,7 +281,11 @@ function collectSkillEffects(key, skills, keyword, total) {
                 //log(`Description: ${desc}, keyword: ${keyword}`);
                 //log(`Effects`);
                 //log(skill.effects);
-                total += `*"${desc}"*\n`;
+                skill.effects.forEach(sub => {
+                    total += `${sub}\n`;
+                    added = true;
+                });
+                //total += `*"${desc}"*\n`;
             }
         }
     }
@@ -468,17 +487,24 @@ export function unitSearch(id: string, search: string): any {
         log(`Could not find unit data: ${unit}`);
         return null;
     }
-    
+
+    if (!search || search.empty()) {
+        search = unitDefaultSearch;
+    }
+
     var fields = null;
-    var keyword = new RegExp(search.replace(/_/g,".*"), "i");
     if (checkString(search, /frames|chain/i)) {
         fields = searchUnitFrames(unit);
     } else if (checkString(search, /enhancement/i)) {
         fields = searchUnitSkills(unit, /\+2$|\+1$/i, undefined);
     } else if (checkString(search, /cd/i)) {
-        log("SEARCHING FOR CD");
         fields = searchUnitSkills(unit, /one.*use.*every.*turns/i, undefined);
     } else {
+        
+        // Resolve search string
+        
+        var key = convertToSkillSearch(search);
+        var keyword = new RegExp(key.replace(/_/g,".*"), "i");
         var items = searchUnitItems(unit, keyword);
         var skills = searchUnitSkills(unit, keyword, true);
         
@@ -486,7 +512,7 @@ export function unitSearch(id: string, search: string): any {
     }
 
     if (!fields || fields.length == 0) {
-        log(`Failed to get unit skill list: ${keyword}`);
+        log(`Failed to get unit skill list: ${search}`);
         return null;
     }
 
