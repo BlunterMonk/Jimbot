@@ -18,6 +18,97 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20190513
+|type  = Issue
+|title = Important Notice
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190513AccountSuspensionAdvisory.html
+}}
+{{Recent News
+|date  = 20190509
+|type  = Issue
+|title = Version 3.5.5
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190425GL355PatchNotes.html
+}}
+{{Recent News
+|date  = 20190509
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190509PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20190507
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_NEWS_AkstarFeatureSummon_Compilation.jpg
+}}
+{{Recent News
+|date  = 20190507
+|type  = Event
+|title = Akstar
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/AkstarUnitIntroQuest.jpg
+}}
+{{Recent News
+|date  = 20190507
+|type  = Event
+|title = Out for Vengeance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_OutforVengance.jpg
+}}
+{{Recent News
+|date  = 20190507
+|type  = Other
+|title = 5★ Guaranteed (20% Featured) Ticket (A/Z) Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190507Guaranteed20FeaturedTicket.html
+}}
+{{Recent News
+|date  = 20190507
+|type  = Event
+|title = Dwarven Castle
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/FFIVDwarvenCastle.jpg
+}}
+{{Recent News
+|date  = 20190507
+|type  = Event
+|title = Vault of Hidden Treasures
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190507VaultofHiddenTreasures.html
+}}
+{{Recent News
+|date  = 20190507
+|type  = Other
+|title = Free 10+1 Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190507FFBE11FreeSummon.html
+}}
+{{Recent News
+|date  = 20190507
+|type  = Other
+|title = Spring 2019 Free Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190507Spring2019FreeSummon.html
+}}
+{{Recent News
+|date  = 20190507
+|type  = Other
+|title = May Flowers Login Bonus: Round 2
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190507MayFlowersLoginBonusRound2.html
+}}
+{{Recent News
+|date  = 20190507
+|type  = Other
+|title = May Flowers Login Bonus: Round 1
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190507MayFlowersLoginBonusRound1ver4.html
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20190507
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190508Maintenance.html
+}}
+{{Recent News
+|date  = 20190503
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190503FFIVDarknessBundle.html
+}}
+{{Recent News
 |date  = 20190502
 |type  = Maintenance
 |title = Post Maintenance Note
@@ -59,7 +150,6 @@
 |title = The Crimson Gear
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_TheCrimsonGear.jpg
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20190430
 |type  = Maintenance

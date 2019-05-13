@@ -1201,18 +1201,17 @@ function getQuotedWord(str) {
 function getFileExtension(link) {
     return link.substring(link.lastIndexOf("."), link.length);
 }
-function overwriteFile(existing, url, callback) {
+function overwriteFile(existing: string, url, callback) {
     fs.unlink(existing, err => {
         if (err) {
             log(err);
             return;
         }
 
-        downloadFile(name, url, result => {
+        downloadFile(existing.slice(existing.lastIndexOf("/"), existing.lastIndexOf(".")), url, result => {
             log(result);
 
             callback(result);
-            
         });
     });
 }
@@ -1245,6 +1244,9 @@ export function handle(receivedMessage, com: Commands.CommandObject): boolean {
     try {
         var search = com.search;
         var parameters = com.parameters;
+
+        if (com.attachment)
+            parameters[parameters.length] = com.attachment;
 
         eval(com.run);
     } catch (e) {
