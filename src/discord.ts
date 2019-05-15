@@ -61,6 +61,7 @@ class client {
 
         this.on("ready", () => {
             log(`Client Loaded, User: ${this.discordClient.user.username}`);
+            this.discordClient.user.setActivity("use '?help' for bot info"); 
             
             this.LoadGuilds();
 
