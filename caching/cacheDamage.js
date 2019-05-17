@@ -79,37 +79,49 @@ function authorize(credentials, callback) {
         }
     };
 
-    var queryEnd = function (list) {
-        count -= 1;
+    var queryEndBurst = function (list) {
 
+        var keys = Object.keys(units);
+        keys.forEach((key, ind) => {
+            var unit = list[key];
+            if (!unit) {
+                console.log("Missing: " + key);
+                return;
+            }
+            units[key].burst = unit.damage;
+            units[key].burstTurn = unit.turns;
+        });
+
+        console.log("Unit Fields");
+        console.log("Total: " + totalUnits);
+
+        //var save = JSON.stringify(units, null, "\t");
+        //fs.writeFileSync(saveLocation, save);
+
+        var keys = Object.keys(units);
+        keys.forEach((key, ind) => {
+            var index = key;
+
+            if (!key.includes("(KH)")) {
+                key = key.replace(/\(.*\)/, "").trim();
+            } else {
+                var i = key.lastIndexOf("(");
+                key = key.substring(i, key.length);
+            }
+
+            var range = `${key}!A1:AB20`
+            console.log(`[${ind}] Looking For: ` + range)
+            setTimeout(() => {
+                GetBuildLink(oAuth2Client, index, range, queryEnd2)
+            }, 1000 * ind);
+        });
+    }
+
+    var queryEnd = function (list) {
         units = list;
         totalUnits += Object.keys(list).length;
 
-        if (count <= 0) {
-            console.log("Unit Fields");
-            console.log("Total: " + totalUnits);
-
-            //var save = JSON.stringify(units, null, "\t");
-            //fs.writeFileSync(saveLocation, save);
-
-            var keys = Object.keys(units);
-            keys.forEach((key, ind) => {
-                var index = key;
-
-                if (!key.includes("(KH)")) {
-                    key = key.replace(/\(.*\)/, "").trim();
-                } else {
-                    var i = key.lastIndexOf("(");
-                    key = key.substring(i, key.length);
-                }
-
-                var range = `${key}!A1:AB20`
-                console.log(`[${ind}] Looking For: ` + range)
-                setTimeout(() => {
-                    GetBuildLink(oAuth2Client, index, range, queryEnd2)
-                }, 1000 * ind);
-            });
-        }
+        GetUnitComparison(oAuth2Client, `${burstSheetName}!A3:N`, queryEndBurst);
     };
 
     // for (let ind = 0; ind < ranges.length; ind++) {
@@ -117,7 +129,6 @@ function authorize(credentials, callback) {
         
         //setTimeout(() => {
             GetUnitComparison(oAuth2Client, `${sheetName}!A3:N`, queryEnd);
-            //GetUnitComparison(oAuth2Client, "burst_", `${burstSheetName}!A3:N`, queryEnd);
         //}, 10000 * ind);
     // }
 }

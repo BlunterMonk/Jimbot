@@ -51,6 +51,24 @@ export class Config {
         this.configuration.unitAliases[name.toLowerCase()] = value;
     }
 
+    // COMMAND ALIASES
+    getCommandAlias(name: string) {
+        name = name.toLowerCase();
+        console.log(`Searching For Command Alias: ${name}`);
+        if (!this.configuration.commandAliases || !this.configuration.commandAliases[name])
+            return null;
+            
+        console.log(`Found Command Alias: ${this.configuration.commandAliases[name]}`);
+        return this.configuration.commandAliases[name];
+    }
+    setCommandAlias(name: string, command: string) {
+        name = name.toLowerCase().replaceAll(" ", "_");
+
+        this.configuration.commandAliases[name] = command;
+        this.save();
+        return true;
+    }
+
     // SHORTCUTS
     getShortcut(name: string) {
         name = name.toLowerCase();

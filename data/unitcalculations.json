@@ -5,6 +5,8 @@
 		"turns": "10",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#fad70810-72ee-11e9-a1b8-7b53378612e4",
+		"burst": "21,032,037,957",
+		"burstTurn": "6",
 		"wiki": "https://exvius.gamepedia.com/Zeno_of_the_Beta_Star",
 		"rotation": [
 			"Perfect Void (CD) + Scorch",
@@ -31,6 +33,8 @@
 		"turns": "11",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#1622b810-739b-11e9-a1b8-7b53378612e4",
+		"burst": "13,927,784,245",
+		"burstTurn": "5",
 		"wiki": "https://exvius.gamepedia.com/Esther",
 		"rotation": [
 			"Shock Embrace + Combat Overdrive",
@@ -57,6 +61,8 @@
 		"turns": "12",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#f3ed9480-738c-11e9-a1b8-7b53378612e4",
+		"burst": "11,068,838,268",
+		"burstTurn": "6",
 		"wiki": "https://exvius.gamepedia.com/Akstar",
 		"rotation": [
 			"Perfect Void (CD) + Mirror of Equity - Emptiness",
@@ -83,6 +89,8 @@
 		"turns": "12",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#027ec000-7469-11e9-a1b8-7b53378612e4",
+		"burst": "5,319,629,858",
+		"burstTurn": "2",
 		"wiki": "https://exvius.gamepedia.com/Citan",
 		"rotation": [
 			"Kyuuka (CD) + Crystal Water",
@@ -109,6 +117,8 @@
 		"turns": "5",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#81d0a700-7433-11e9-a1b8-7b53378612e4",
+		"burst": "6,818,963,409",
+		"burstTurn": "2",
 		"wiki": "https://exvius.gamepedia.com/Ang",
 		"rotation": [
 			"Steady Bow",
@@ -135,6 +145,8 @@
 		"turns": "9",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#50d70de0-7444-11e9-a1b8-7b53378612e4",
+		"burst": "14,839,047,527",
+		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Balthier",
 		"rotation": [
 			"Killer Shot",
@@ -161,6 +173,8 @@
 		"turns": "5",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#22069fb0-743c-11e9-a1b8-7b53378612e4",
+		"burst": "8,709,456,659",
+		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Aranea",
 		"rotation": [
 			"Aerial Supremacy +2",
@@ -187,6 +201,8 @@
 		"turns": "4",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#51384510-7462-11e9-a1b8-7b53378612e4",
+		"burst": "11,662,277,511",
+		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Cid",
 		"rotation": [
 			"Sky Dragon Squall (CD)",
@@ -213,6 +229,8 @@
 		"turns": "11",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#62c39aa0-7476-11e9-a1b8-7b53378612e4",
+		"burst": "5,605,651,254",
+		"burstTurn": "5",
 		"wiki": "https://exvius.gamepedia.com/Crimson",
 		"rotation": [
 			"Fire Riser + Combustion Blade + Noble Banishing Blade",
@@ -238,7 +256,9 @@
 		"damage": "2,522,673,281",
 		"turns": "5",
 		"type": "physical",
-		"url": null
+		"url": null,
+		"burst": "3,187,867,924",
+		"burstTurn": "2"
 	},
 	"Yego - Pending": {
 		"name": "Yego - Pending",
@@ -246,6 +266,8 @@
 		"turns": "8",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#fcab0fe0-7840-11e9-a1b8-7b53378612e4",
+		"burst": "3,180,590,291",
+		"burstTurn": "2",
 		"wiki": "https://exvius.gamepedia.com/Yego",
 		"rotation": [
 			"Get Serious (CD) + Brutal Whip",
@@ -272,6 +294,8 @@
 		"turns": "10",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#a46a2450-7486-11e9-a1b8-7b53378612e4",
+		"burst": "3,494,567,934",
+		"burstTurn": "2",
 		"wiki": "https://exvius.gamepedia.com/Fei",
 		"rotation": [
 			"Awakening + Yamikei",
@@ -298,6 +322,8 @@
 		"turns": "7",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#943bbc00-7388-11e9-a1b8-7b53378612e4",
+		"burst": "3,678,831,980",
+		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/2B",
 		"rotation": [
 			"Supreme Support Weapon",
@@ -324,6 +350,8 @@
 		"turns": "8",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#7a686b10-7514-11e9-a1b8-7b53378612e4",
+		"burst": "3,014,635,890",
+		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/A2",
 		"rotation": [
 			"Avoid Heavy Attack x 2",
@@ -350,6 +378,8 @@
 		"turns": "11",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#7eb34610-7783-11e9-a1b8-7b53378612e4",
+		"burst": "2,524,427,568",
+		"burstTurn": "2",
 		"wiki": "https://exvius.gamepedia.com/Hyoh",
 		"rotation": [
 			"Way of the Void",
@@ -376,6 +406,8 @@
 		"turns": "10",
 		"type": "physical",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#432b3870-745c-11e9-a1b8-7b53378612e4",
+		"burst": "2,078,496,382",
+		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Beatrix",
 		"rotation": [
 			"Sword of the Clear Mind",
@@ -406,7 +438,9 @@
 		"damage": "",
 		"turns": "",
 		"type": "physical",
-		"url": null
+		"url": null,
+		"burst": "",
+		"burstTurn": ""
 	},
 	"Tifa": {
 		"name": "Tifa",
@@ -418,7 +452,9 @@
 	"Sephiroth": {
 		"name": "Sephiroth",
 		"type": "physical",
-		"url": null
+		"url": null,
+		"burst": "",
+		"burstTurn": ""
 	},
 	"Unreleased units": {
 		"name": "Unreleased units",
@@ -506,6 +542,8 @@
 		"turns": "10",
 		"type": "magic",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#fceb2f00-7483-11e9-a1b8-7b53378612e4",
+		"burst": "7,036,199,602",
+		"burstTurn": "7",
 		"wiki": "https://exvius.gamepedia.com/Elly",
 		"rotation": [
 			"Paradigm Shift",
@@ -531,14 +569,18 @@
 		"damage": "",
 		"turns": "",
 		"type": "magic",
-		"url": null
+		"url": null,
+		"burst": "",
+		"burstTurn": ""
 	},
 	"Sophia": {
 		"name": "Sophia",
 		"damage": "",
 		"turns": "",
 		"type": "magic",
-		"url": null
+		"url": null,
+		"burst": "",
+		"burstTurn": ""
 	},
 	"Ultima": {
 		"name": "Ultima",
@@ -566,14 +608,18 @@
 		"damage": "",
 		"turns": "",
 		"type": "magic",
-		"url": null
+		"url": null,
+		"burst": "",
+		"burstTurn": ""
 	},
 	"Tiana": {
 		"name": "Tiana",
 		"damage": "",
 		"turns": "",
 		"type": "magic",
-		"url": null
+		"url": null,
+		"burst": "",
+		"burstTurn": ""
 	},
 	"Christine (w/ external imperil)": {
 		"name": "Christine (w/ external imperil)",
@@ -607,6 +653,8 @@
 		"turns": "10",
 		"type": "magic",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#b7e6f3c0-7786-11e9-a1b8-7b53378612e4",
+		"burst": "1,517,828,138",
+		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Grim_Lord_Sakura",
 		"rotation": [
 			"Grim - Eldritch Wave x 3",
@@ -633,6 +681,8 @@
 		"turns": "18",
 		"type": "magic",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#82040ce0-7450-11e9-a1b8-7b53378612e4",
+		"burst": "2,349,624,495",
+		"burstTurn": "10",
 		"wiki": "https://exvius.gamepedia.com/Barbariccia",
 		"rotation": [
 			"Tempest Eye Wall (CD)",
@@ -661,7 +711,9 @@
 	"Trance Terra (w/ external imperil)": {
 		"name": "Trance Terra (w/ external imperil)",
 		"type": "magic",
-		"url": null
+		"url": null,
+		"burst": "",
+		"burstTurn": ""
 	},
 	"Circe": {
 		"name": "Circe",
@@ -669,6 +721,8 @@
 		"turns": "9",
 		"type": "magic",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#7bbebc40-7464-11e9-a1b8-7b53378612e4",
+		"burst": "2,914,982,069",
+		"burstTurn": "6",
 		"wiki": "https://exvius.gamepedia.com/Circe",
 		"rotation": [
 			"Predict - Torrential Omen x 2",
@@ -715,6 +769,8 @@
 		"turns": "5",
 		"type": "hybrid",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#c1ad6f40-784b-11e9-a1b8-7b53378612e4",
+		"burst": "4,263,117,422",
+		"burstTurn": "2",
 		"wiki": "https://exvius.gamepedia.com/Nagi",
 		"rotation": [
 			"Clad in Power",
@@ -746,6 +802,8 @@
 		"turns": "11",
 		"type": "hybrid",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#9d5e1e50-7779-11e9-a1b8-7b53378612e4",
+		"burst": "3,908,662,079",
+		"burstTurn": "5",
 		"wiki": "https://exvius.gamepedia.com/Felix",
 		"rotation": [
 			"Salute - Blade Storm + Salute - Blade Rush x 2",
@@ -823,6 +881,8 @@
 		"turns": "7",
 		"type": "hybrid",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#571b58c0-7780-11e9-a1b8-7b53378612e4",
+		"burst": "2,733,435,778",
+		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Fryevia",
 		"rotation": [
 			"En Garde! (CD) + Frost Flower Blitz+2",

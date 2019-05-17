@@ -18,11 +18,31 @@
 	],
 	"disabledCommands": [],
 	"shortcuts": {
-		"tips": "?whatis new player",
-		"noob": "!whatis new player info",
-		"eletetris": "?whatis elemental tetris",
-		"bunnies": "?gif sylvie \"win\"",
-		"festunits": "?whatis festunits",
-		"zenorot": "?whatis zeno rotation"
+		"tips": {
+			"command": "whatis",
+			"search": "new player"
+		},
+		"noob": { 
+			"command": "whatis",
+			"search": "new player info"
+		},
+		"eletetris": {
+			"command": "whatis",
+			"search": "elemental tetris"
+		},
+		"bunnies": {
+			 "command": "gif",
+			 "search": "sylvie",
+			 "parameters": [ "win" ]
+		},
+		"festunits": {
+			"command": "whatis",
+			"search": "festunits"
+		},
+		"zenorot": { 
+			"command": "whatis zeno rotation",
+			"search": "zeno rotation",
+			"parameters": []
+		}
 	}
 }

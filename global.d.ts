@@ -8,7 +8,7 @@ declare interface String {
     indexOfAfter (search, start): string;
     indexOfAfterIndex (search, start): string;
     matches (other): boolean;
-    closestMatchIn (list): string;
+    closestMatchIn (list, threshold): string;
 }
 
 declare function log(data: any);

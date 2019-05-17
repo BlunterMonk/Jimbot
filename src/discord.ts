@@ -16,8 +16,8 @@ import {getCommandString} from "./commands/commands.js";
     "ready"
     "message"
  */
-const bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"; // prod
-// const bot_secret_token = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk"; // test
+// const bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"; // prod
+const bot_secret_token = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk"; // test
 
 class client {
     discordClient: Discord.Client;
@@ -223,6 +223,9 @@ class client {
         this.discordClient.on(event, callback);
     }
 
+    // ON MESSAGE
+    // Filter out messages and route them to the apporpriate place.
+    // Also validate commands based on server settings and configuration for aliases.
     onMessage(receivedMessage) {
 
         // Prevent bot from responding to its own messages
@@ -255,7 +258,13 @@ class client {
         const shortcut = this.getShortcut(guildId, command.toLowerCase());
         if (shortcut) {
             log(`Replacing Shortcut with new command, shortcut: ${shortcut}`);
-            content = shortcut;
+            let param = "";
+            if (shortcut.parameters) {
+                shortcut.parameters.forEach(p => {
+                    param += `"${p}"`;
+                });
+            }
+            content = shortcut.command + ;
             command = getCommandString(content.slice(1, content.length));
         }
 

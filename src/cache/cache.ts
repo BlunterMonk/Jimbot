@@ -95,11 +95,20 @@ export class Cache {
         console.log(`Searching Calculations For: ${searchTerm}`);
         
         var units = Object.keys(this.calculations);
-        var match = searchTerm.closestMatchIn(units);
+        for (let index = 0; index < units.length; index++) {
+            const unit = this.calculations[units[index]];
+            const name = unit.name.toLowerCase();
+            
+            if (name.includes(searchTerm)) {
+                return unit;
+            }
+        }
+
+        var match = searchTerm.closestMatchIn(units, 0.25);
         if (!match) 
             return null;
 
-        return this.calculations(match);
+        return this.calculations[match];
     }
     // Furcula Damage Calculations
     getCalculations(searchTerm: string) {
@@ -118,10 +127,10 @@ export class Cache {
             
             Object.keys(this.calculations).forEach((key) => {
                 var unit = this.calculations[key];
-                var name = unit.name.toLowerCase().replaceAll(" ", "_");
+                var name = unit.name.toLowerCase();
                 
-                console.log(`Searching For: ${search}`);
-                console.log(`Found Unit: ${name}`);
+                //console.log(`Searching For: ${search}`);
+                //console.log(`Found Unit: ${name}`);
                 if (name.includes(search.toLowerCase())) {
                     found[found.length] = unit;
                 }

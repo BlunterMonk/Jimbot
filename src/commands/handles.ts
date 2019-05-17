@@ -39,6 +39,7 @@ const cancelEmoji = "❌";
 const wikiEndpoint = "https://exvius.gamepedia.com/";
 const ffbegifEndpoint = "http://www.ffbegif.com/";
 const exviusdbEndpoint = "https://exvius.gg/gl/units/205000805/animations/";
+const sheetURL = "https://docs.google.com/spreadsheets/d/1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
 
 const renaulteUserID    = "159846139124908032";
 const jimooriUserID     = "131139508421918721";
@@ -413,6 +414,32 @@ function handleHelp(receivedMessage) {
 }
 
 // DAMAGE
+function handleDamage(receivedMessage, search, parameters) {
+
+    search = search.replaceAll("_", " ");
+    var calc = cache.getUnitCalc(search);
+    if (!calc) {
+        log("Could not find calculations for: " + search);
+        return;
+    }
+    var text = "";
+    if (!calc.damage.empty()) {
+        text += `**Damage Per Turn:** ${calc.damage}\n`;
+    }
+    if (!calc.burst.empty()) {
+        text += `**Highest Burst:** ${calc.burst} on turn ${calc.burstTurn}\n`;
+    }
+    text += `\n[(spreadsheet)](${sheetURL}) - [(wiki)](${calc.wiki}) - [(build)](${calc.url})\n`;
+
+    var embed = <any>{
+        color: pinkHexCode,
+        title: `${calc.name}`,
+        url: sheetURL,
+        description: text,
+    }
+    
+    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+}
 function handleDpt(receivedMessage, search, parameters, isBurst) {
 
     search = search.replaceAll("_", " ");
@@ -434,8 +461,9 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
         const element = calc[key];
 
         if (isBurst) {
-            text += `**${element.name}:** ${element.burst} on turn ${element.turns}\n`;
-        } else {
+            if (!element.burst.empty())
+                text += `**${element.name}:** ${element.burst} on turn ${element.turns}\n`;
+        } else if (!element.damage.empty()) {
             text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
         }
     }
@@ -451,7 +479,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
     var embed = <any>{
         color: pinkHexCode,
         title: title,
-        url: "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0/edit#gid=0",
+        url: sheetURL,
         description: text,
         footer: {
             text: "visit the link provided for more calculations"
@@ -467,21 +495,33 @@ function handleRotation(receivedMessage, search, parameters) {
 
     search = search.replaceAll("_", " ");
     var calc = cache.getUnitCalc(search);
-    if (!calc) {
+    if (!calc || !calc.rotation) {
         log("Could not find calculations for: " + search);
         return;
     }
 
-    var text = "";
+    var bturn = 0;
+    var text = `**Damage Per Turn: ${calc.damage}**\n`;
+    if (!calc.burst.empty()) {
+        text += `**Highest Burst: ${calc.burst} on turn ${calc.burstTurn}**\n`;
+        bturn = parseInt(calc.burstTurn);
+    }
+    text += `**[(spreadsheet)](${sheetURL}) - [(wiki)](${calc.wiki}) - [(build)](${calc.url})**\n\n`;
+    calc.rotation.forEach((txt, ind) => {
+        if (txt.empty()) 
+            return;
+
+        if (ind+1 === bturn) {
+            text += `**[${ind+1}]: ${txt}**\n`;
+        } else {
+            text += `**[${ind+1}]**: ${txt}\n`;
+        }
+    });
 
     var embed = <any>{
         color: pinkHexCode,
         title: `Optimal Rotation For: ${calc.name}`,
-        url: "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0",
         description: text,
-        footer: {
-            text: `((wiki))[${calc.wiki}] - ((build))[${calc.build}]`
-        },
     }
     
     Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);

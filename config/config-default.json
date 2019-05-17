@@ -11,5 +11,6 @@
     ],
     "disabledCommands": [
         "addemo", "addalias", "emote"
-    ]
+    ],
+	"shortcuts": {}
 }

@@ -101,12 +101,36 @@
 		".png",
 		".gif"
 	],
+	"commandAliases": {
+		"rot": "rotation",
+		"dmg": "damage"
+	},
 	"shortcuts": {
-		"eletetris": "?whatis ele tetris",
-		"tips": "?whatis new player info",
-		"new": "?whatis new player info",
-		"noob": "?whatis new player info",
-		"bunnies": "?gif sylvie \"win\"",
-		"festunits": "?whatis festunits"
+		"tips": {
+			"command": "?whatis",
+			"search": "new player"
+		},
+		"noob": { 
+			"command": "!whatis",
+			"search": "new player info"
+		},
+		"eletetris": {
+			"command": "?whatis",
+			"search": "elemental tetris"
+		},
+		"bunnies": {
+			 "command": "?gif",
+			 "search": "sylvie",
+			 "parameters": [ "win" ]
+		},
+		"festunits": {
+			"command": "?whatis",
+			"search": "festunits"
+		},
+		"zenorot": { 
+			"command": "?whatis zeno rotation",
+			"search": "zeno rotation",
+			"parameters": []
+		}
 	}
 }
