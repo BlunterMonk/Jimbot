@@ -90,5 +90,40 @@ String.prototype.indexOfAfterIndex = function (search, start) {
 String.prototype.matches = function (other) {
     return this === other;
 };
+String.prototype.closestMatchIn = function (list: string[]): string {
+
+    var search = this.toLowerCase();
+    var count = list.length;
+    var similar = [];
+
+    for (var i = 0; i < count; i++) {
+
+        var txt = list[i].toLowerCase();
+        var match = txt.similarity(search);
+        if (match >= 0.5) {
+            similar[similar.length] = {
+                txt: txt,
+                similarity: match
+            };
+        }
+
+        if (txt === search) {
+            return txt;
+        }
+    }
+
+    if (similar.length > 0) {
+        var highest = similar.sort((a, b) => {
+            return b.similarity - a.similarity;
+        })[0];
+
+        log("Highest");
+        log(highest);
+
+        return highest.txt;
+    }
+
+    return null;
+}
 
 module.exports = String;

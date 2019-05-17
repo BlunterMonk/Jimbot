@@ -69,6 +69,11 @@ class client {
         });
     }
 
+    reload() {
+        log("Reloading Guild Settings");
+        this.LoadGuilds();
+    }
+
     loadGuild(guild: any) {
         const name = guild.name;
         const guildId = guild.id;

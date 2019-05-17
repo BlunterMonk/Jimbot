@@ -58,30 +58,31 @@ function authorize(credentials, callback) {
     var units = {};
     var count = 1;
     var totalUnits = 0;
-    var queryEnd2 = function (url, index) {
-        console.log(`[${totalUnits}]${index}: ${url}`)
+    var queryEnd2 = function (wiki, url, rotation, index) {
+        console.log(`[${totalUnits}] ${index}: ${url}`)
         totalUnits--;
 
-        if (units["physical"][index]) {
-            units["physical"][index].url = url;
-        } else if (units["magical"][index]) {
-            units["magical"][index].url = url;
-        } else if (units["hybrid"][index]) {
-            units["hybrid"][index].url = url;
-        } else {
-            console.log("Could not find unit to add link to, " + index)
+        if (index) {
+            if (units[index]) {
+                units[index].wiki = wiki;
+                units[index].url = url;
+                units[index].rotation = rotation;
+            } else {
+                console.log("Could not find unit to add link to, " + index)
+            }
         }
 
-        if (totalUnits <= 0) {
+        if (totalUnits <= 1) {
+            console.log("Finished Getting Unit Calcs");
             var save = JSON.stringify(units, null, "\t");
             fs.writeFileSync(saveLocation, save);
         }
     };
 
-    var queryEnd = function (list, index) {
+    var queryEnd = function (list) {
         count -= 1;
 
-        units[index] = list;
+        units = list;
         totalUnits += Object.keys(list).length;
 
         if (count <= 0) {
@@ -91,26 +92,22 @@ function authorize(credentials, callback) {
             //var save = JSON.stringify(units, null, "\t");
             //fs.writeFileSync(saveLocation, save);
 
-            var cats = Object.keys(units);
-            cats.forEach((cat) => {
-                console.log("Category: " + cat);
-                var keys = Object.keys(units[cat]);
-                keys.forEach((key, ind) => {
-                    var index = key;
+            var keys = Object.keys(units);
+            keys.forEach((key, ind) => {
+                var index = key;
 
-                    if (!key.includes("(KH)")) {
-                        key = key.replace(/\(.*\)/, "").trim();
-                    } else {
-                        var i = key.lastIndexOf("(");
-                        key = key.substring(i, key.length);
-                    }
+                if (!key.includes("(KH)")) {
+                    key = key.replace(/\(.*\)/, "").trim();
+                } else {
+                    var i = key.lastIndexOf("(");
+                    key = key.substring(i, key.length);
+                }
 
-                    var range = `${key}!A1:B1`
-                    console.log("Looking For: " + range)
-                    setTimeout(() => {
-                      GetBuildLink(oAuth2Client, index, range, queryEnd2)
-                    }, 1000 * ind);
-                });
+                var range = `${key}!A1:AB20`
+                console.log(`[${ind}] Looking For: ` + range)
+                setTimeout(() => {
+                    GetBuildLink(oAuth2Client, index, range, queryEnd2)
+                }, 1000 * ind);
             });
         }
     };
@@ -119,7 +116,7 @@ function authorize(credentials, callback) {
         // const range = ranges[ind];
         
         //setTimeout(() => {
-            GetUnitComparison(oAuth2Client, "", `${sheetName}!A3:N`, queryEnd);
+            GetUnitComparison(oAuth2Client, `${sheetName}!A3:N`, queryEnd);
             //GetUnitComparison(oAuth2Client, "burst_", `${burstSheetName}!A3:N`, queryEnd);
         //}, 10000 * ind);
     // }
@@ -218,7 +215,7 @@ function GetSheet(auth, index, range, callback) {
  * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
-function GetUnitComparison(auth, index, range, callback) {
+function GetUnitComparison(auth, range, callback) {
     var sheets = google.sheets({version: 'v4', auth});
 
     sheets.spreadsheets.values.get({
@@ -231,8 +228,6 @@ function GetUnitComparison(auth, index, range, callback) {
 
         const rows = res.data.values;
         if (rows.length) {
-            var units = {};
-
             //console.log('Name, DPT:');
 
             // Print columns A and E, which correspond to indices 0 and 4.
@@ -254,6 +249,7 @@ function GetUnitComparison(auth, index, range, callback) {
                         name: pName,
                         damage: row[2],
                         turns: row[3],
+                        type: "physical",
                         url: null
                     }
                 }
@@ -263,6 +259,7 @@ function GetUnitComparison(auth, index, range, callback) {
                         name: mName,
                         damage: row[7],
                         turns: row[8],
+                        type: "magic",
                         url: null
                     }
                 }
@@ -272,6 +269,7 @@ function GetUnitComparison(auth, index, range, callback) {
                         name: hName,
                         damage: row[12],
                         turns: row[13],
+                        type: "hybrid",
                         url: null
                     }
                 }
@@ -282,21 +280,25 @@ function GetUnitComparison(auth, index, range, callback) {
                 }*/
             });
 
-            /*
-            var sorted = [];
+            /*var sorted = [];
             bySortedValue(units, function(key, value) {
                 console.log(`${key}: ${value}`);
                 sorted[sorted.length] = value;
             });*/
 
+            var units = Object.assign({}, phy, mag, hyb);
+            var save = JSON.stringify(units, null, "\t");
+            fs.writeFileSync(saveLocation, save);
+        
+
             console.log("\nPhysical");
             console.log(phy);
-            console.log("\nMagic");
-            console.log(mag);
-            console.log("\nHybrid");
-            console.log(hyb);
+            //console.log("\nMagic");
+            //console.log(mag);
+            //console.log("\nHybrid");
+            //console.log(hyb);
             //console.log(rows);
-            callback(phy, `${index}phy`);
+            callback(units);
             //callback(mag, `${index}mag`);
             //callback(hyb, `${index}hyb`);
         } else {
@@ -324,15 +326,24 @@ function GetBuildLink(auth, index, range, callback) {
             var units = {};
 
             var b = "";
-            rows.map((row) => {
-                console.log(row);
-                b = row[1];
+            var w = "";
+            var rotation = [];
+            rows.map((row, ind) => {
+                if (ind == 0) {
+                    w = row[1];
+                } else if (ind == 1) {
+                    b = row[1];
+                } else if (ind > 3) {
+                    rotation.push(row[1]);
+                }
             });
 
-            //callback(b, index);
+            //console.log("Unit Data: ");
+            //console.log(rotation);
+            callback(w, b, rotation, index);
         } else {
             console.log('No data found.');
-            callback(null, index);
+            callback(null, null, null, null);
         }
     });
 }

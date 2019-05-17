@@ -416,7 +416,7 @@ function handleHelp(receivedMessage) {
 function handleDpt(receivedMessage, search, parameters, isBurst) {
 
     search = search.replaceAll("_", " ");
-    var calc = cache.getCalculations(search, isBurst);
+    var calc = cache.getCalculations(search);
     if (!calc) {
         log("Could not find calculations for: " + search);
         return;
@@ -434,7 +434,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
         const element = calc[key];
 
         if (isBurst) {
-            text += `**${element.name}:** ${element.damage} on turn ${element.turns}\n`;
+            text += `**${element.name}:** ${element.burst} on turn ${element.turns}\n`;
         } else {
             text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
         }
@@ -462,6 +462,29 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
 }
 function handleBurst(receivedMessage, search, parameters) {
     handleDpt(receivedMessage, search, parameters, true);
+}
+function handleRotation(receivedMessage, search, parameters) {
+
+    search = search.replaceAll("_", " ");
+    var calc = cache.getUnitCalc(search);
+    if (!calc) {
+        log("Could not find calculations for: " + search);
+        return;
+    }
+
+    var text = "";
+
+    var embed = <any>{
+        color: pinkHexCode,
+        title: `Optimal Rotation For: ${calc.name}`,
+        url: "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0",
+        description: text,
+        footer: {
+            text: `((wiki))[${calc.wiki}] - ((build))[${calc.build}]`
+        },
+    }
+    
+    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
 
 
@@ -719,6 +742,7 @@ function handleReload(receivedMessage, search, parameters) {
     try {
         cache.reload();
         config.reload();
+        Client.reload();
     } catch(e) {
         log(e);
         respondFailure(receivedMessage, true);

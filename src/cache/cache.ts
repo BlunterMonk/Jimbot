@@ -89,51 +89,46 @@ export class Cache {
         return this.rankings[category.toLowerCase()];
     }
 
+    getUnitCalc(searchTerm: string) {
+        searchTerm = searchTerm.replaceAll("_", " ").toLowerCase();
 
-    // Furcula Damage Calculations
-    getCalculations(searchTerm: string, isBurst: boolean) {
-        var category = this.calculations[searchTerm];
-        if (category)
-            return category;
-        else if (isBurst && this.calculations["burst " + searchTerm]) {
-            return this.calculations["burst " + searchTerm];
-        }
-
-        if (!category) {
-            var found: { [key: string]: string } = {};
-            var names = searchTerm.split("|");
-
-            console.log("Get Calculations");
-            console.log(names);
-            names.forEach((search, index) => {
-
-                search = search.trim();
-                
-                Object.keys(this.calculations).forEach((cat) => {
-                    var category = this.calculations[cat];
-                    
-                    if (isBurst && !cat.includes("burst")) {
-                        return;
-                    } else if (!isBurst && cat.includes("burst")) {
-                        return;
-                    }
-
-                    console.log(`Searching Category: ${cat}, for: ${search}`);
+        console.log(`Searching Calculations For: ${searchTerm}`);
         
-                    Object.keys(category).forEach((key) => {
-                        var unit = category[key];
-                        var name = unit.name.toLowerCase().replaceAll(" ", "_");
-                        
-                        console.log(`Found Unit: ${name}`);
-                        if (name.includes(search.toLowerCase())) {
-                            found[unit.name] = unit;
-                        }
-                    });
-                });
-            });
+        var units = Object.keys(this.calculations);
+        var match = searchTerm.closestMatchIn(units);
+        if (!match) 
+            return null;
 
-            return found;
-        }
+        return this.calculations(match);
+    }
+    // Furcula Damage Calculations
+    getCalculations(searchTerm: string) {
+        if (this.calculations[searchTerm])
+            return this.calculations[searchTerm];
+
+        var found = [];
+        //var found: { [key: string]: string } = {};
+        var names = searchTerm.split("|");
+
+        console.log("Get Calculations");
+        console.log(names);
+        names.forEach((search, index) => {
+
+            search = search.trim();
+            
+            Object.keys(this.calculations).forEach((key) => {
+                var unit = this.calculations[key];
+                var name = unit.name.toLowerCase().replaceAll(" ", "_");
+                
+                console.log(`Searching For: ${search}`);
+                console.log(`Found Unit: ${name}`);
+                if (name.includes(search.toLowerCase())) {
+                    found[found.length] = unit;
+                }
+            });
+        });
+
+        return found;
     }
 
     // Information
