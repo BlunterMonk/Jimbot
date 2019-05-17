@@ -4,10 +4,11 @@ const {google} = require('googleapis');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
-const calcSheet = "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0";
+//const calcSheet = "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0";
+const calcSheet = "https://docs.google.com/spreadsheets/d/1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
 const sheetName = "Damage comparison";
 const burstSheetName = "Burst comparison";
-const sheetID = "1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0";
+const sheetID = "1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
 const saveLocation = "data/unitcalculations.json";
 
 var sheets = null;
@@ -45,17 +46,17 @@ function authorize(credentials, callback) {
     oAuth2Client.setCredentials(JSON.parse(token));
     sheets = google.sheets({version: 'v4', oAuth2Client});
 
-    var ranges = [
+    /*var ranges = [
         { name: "physical", range: `${sheetName}!B3:D` },
         { name: "magical", range: `${sheetName}!G3:I` },
         { name: "hybrid", range: `${sheetName}!L3:N` },
         { name: "burst_physical", range: `${burstSheetName}!B3:D` },
         { name: "burst_magical", range: `${burstSheetName}!G3:I` },
         { name: "burst_hybrid", range: `${burstSheetName}!L3:N` }
-    ]
+    ]*/
 
     var units = {};
-    var count = 6;
+    var count = 1;
     var totalUnits = 0;
     var queryEnd2 = function (url, index) {
         console.log(`[${totalUnits}]${index}: ${url}`)
@@ -89,7 +90,7 @@ function authorize(credentials, callback) {
 
             //var save = JSON.stringify(units, null, "\t");
             //fs.writeFileSync(saveLocation, save);
-            /*
+
             var cats = Object.keys(units);
             cats.forEach((cat) => {
                 console.log("Category: " + cat);
@@ -106,22 +107,22 @@ function authorize(credentials, callback) {
 
                     var range = `${key}!A1:B1`
                     console.log("Looking For: " + range)
-                    //setTimeout(() => {
-                        GetBuildLink(index, range, queryEnd2)
-                    //}, 1000 * ind);
+                    setTimeout(() => {
+                      GetBuildLink(oAuth2Client, index, range, queryEnd2)
+                    }, 1000 * ind);
                 });
             });
-            */
         }
     };
 
-    for (let ind = 0; ind < ranges.length; ind++) {
-        const range = ranges[ind];
+    // for (let ind = 0; ind < ranges.length; ind++) {
+        // const range = ranges[ind];
         
         //setTimeout(() => {
-            GetUnitComparison(oAuth2Client, range.name, range.range, queryEnd);
+            GetUnitComparison(oAuth2Client, "", `${sheetName}!A3:N`, queryEnd);
+            //GetUnitComparison(oAuth2Client, "burst_", `${burstSheetName}!A3:N`, queryEnd);
         //}, 10000 * ind);
-    }
+    // }
 }
 
 /**
@@ -235,13 +236,50 @@ function GetUnitComparison(auth, index, range, callback) {
             //console.log('Name, DPT:');
 
             // Print columns A and E, which correspond to indices 0 and 4.
+            var phy = {};
+            var mag = {};
+            var hyb = {};
+
             rows.map((row) => {
-            //console.log(`${row}`);
-                units[row[0]] = {
+                //console.log("Row: ");
+                var pName = row[1];
+                var mName = row[6];
+                var hName = row[11];
+                //console.log(`Physical { ${pName}: ${row[2]} - ${row[3]} }`);
+                //console.log(`Magic { ${mName}: ${row[7]} - ${row[8]} }`);
+                //console.log(`Hybrid { ${hName}: ${row[12]} - ${row[13]} }`);
+
+                if (pName) {
+                    phy[pName] = {
+                        name: pName,
+                        damage: row[2],
+                        turns: row[3],
+                        url: null
+                    }
+                }
+
+                if (mName) {
+                    mag[mName] = {
+                        name: mName,
+                        damage: row[7],
+                        turns: row[8],
+                        url: null
+                    }
+                }
+
+                if (hName) {
+                    hyb[hName] = {
+                        name: hName,
+                        damage: row[12],
+                        turns: row[13],
+                        url: null
+                    }
+                }
+                /*units[row[0]] = {
                     name: row[0],
                     damage: row[1],
                     turns: parseInt(row[2])
-                }
+                }*/
             });
 
             /*
@@ -251,8 +289,16 @@ function GetUnitComparison(auth, index, range, callback) {
                 sorted[sorted.length] = value;
             });*/
 
-            //console.log(units);
-            callback(units, index);
+            console.log("\nPhysical");
+            console.log(phy);
+            console.log("\nMagic");
+            console.log(mag);
+            console.log("\nHybrid");
+            console.log(hyb);
+            //console.log(rows);
+            callback(phy, `${index}phy`);
+            //callback(mag, `${index}mag`);
+            //callback(hyb, `${index}hyb`);
         } else {
             console.log('No data found.');
             callback(null, index);
@@ -260,7 +306,8 @@ function GetUnitComparison(auth, index, range, callback) {
     });
 }
 
-function GetBuildLink(index, range, callback) {
+function GetBuildLink(auth, index, range, callback) {
+    var sheets = google.sheets({version: 'v4', auth});
        
     sheets.spreadsheets.values.get({
         spreadsheetId: sheetID,
@@ -278,10 +325,11 @@ function GetBuildLink(index, range, callback) {
 
             var b = "";
             rows.map((row) => {
+                console.log(row);
                 b = row[1];
             });
 
-            callback(b, index);
+            //callback(b, index);
         } else {
             console.log('No data found.');
             callback(null, index);
