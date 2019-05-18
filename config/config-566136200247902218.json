@@ -18,12 +18,33 @@
 		"344500120827723777"
 	],
 	"shortcuts": {
-		"eletetris": "?whatis ele tetris",
-		"tips": "?whatis new player info",
-		"new": "?whatis new player info",
-		"noob": "?whatis new player info",
-		"tops": "?whatis elemental tetris",
-		"bunnies": "?gif sylvie \"win\"",
-		"zenorot": "?whatis zeno rotation"
+		"tips": {
+			"command": "whatis",
+			"search": "new player"
+		},
+		"noob": {
+			"command": "whatis",
+			"search": "new player info"
+		},
+		"eletetris": {
+			"command": "whatis",
+			"search": "elemental tetris"
+		},
+		"bunnies": {
+			"command": "gif",
+			"search": "sylvie",
+			"parameters": [
+				"win"
+			]
+		},
+		"festunits": {
+			"command": "whatis",
+			"search": "festunits"
+		},
+		"zenorot": {
+			"command": "whatis",
+			"search": "zeno rotation",
+			"parameters": []
+		}
 	}
 }

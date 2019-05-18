@@ -54,10 +54,11 @@ export class Cache {
         this.skillset = Object.assign({}, skills, lbs);
     }
 
-    updateDamage() {
+    updateDamage(callback) {
         furcDamage.UpdateFurculaCalculations(() =>{
             this.calculations = JSON.parse(fs.readFileSync(unitCalc).toString());
             console.log("Reloaded Calculations");
+            callback();
         });
     }
 
@@ -89,51 +90,64 @@ export class Cache {
         return this.rankings[category.toLowerCase()];
     }
 
+    getUnitCalc(searchTerm: string) {
+        searchTerm = searchTerm.replaceAll("_", " ").toLowerCase();
 
-    // Furcula Damage Calculations
-    getCalculations(searchTerm: string, isBurst: boolean) {
-        var category = this.calculations[searchTerm];
-        if (category)
-            return category;
-        else if (isBurst && this.calculations["burst " + searchTerm]) {
-            return this.calculations["burst " + searchTerm];
-        }
-
-        if (!category) {
-            var found: { [key: string]: string } = {};
-            var names = searchTerm.split("|");
-
-            console.log("Get Calculations");
-            console.log(names);
-            names.forEach((search, index) => {
-
-                search = search.trim();
-                
-                Object.keys(this.calculations).forEach((cat) => {
-                    var category = this.calculations[cat];
-                    
-                    if (isBurst && !cat.includes("burst")) {
-                        return;
-                    } else if (!isBurst && cat.includes("burst")) {
-                        return;
-                    }
-
-                    console.log(`Searching Category: ${cat}, for: ${search}`);
+        console.log(`Searching Calculations For: ${searchTerm}`);
         
-                    Object.keys(category).forEach((key) => {
-                        var unit = category[key];
-                        var name = unit.name.toLowerCase().replaceAll(" ", "_");
-                        
-                        console.log(`Found Unit: ${name}`);
-                        if (name.includes(search.toLowerCase())) {
-                            found[unit.name] = unit;
-                        }
-                    });
-                });
-            });
-
-            return found;
+        var units = Object.keys(this.calculations);
+        for (let index = 0; index < units.length; index++) {
+            const unit = this.calculations[units[index]];
+            const name = unit.name.toLowerCase();
+            
+            if (name.includes(searchTerm)) {
+                return unit;
+            }
         }
+
+        var match = searchTerm.closestMatchIn(units, 0.25);
+        if (!match) 
+            return null;
+
+        return this.calculations[match];
+    }
+    // Furcula Damage Calculations
+    getCalculations(searchTerm: string) {
+        if (this.calculations[searchTerm])
+            return this.calculations[searchTerm];
+
+        var found = [];
+        //var found: { [key: string]: string } = {};
+        var names = searchTerm.split("|");
+        if (!names || names.length == 1) 
+            names = searchTerm.split(",");
+
+        console.log("Get Calculations");
+        console.log(names);
+        names.forEach((search, index) => {
+
+            search = search.trim();
+            
+            Object.keys(this.calculations).forEach((key) => {
+                var unit = this.calculations[key];
+                var name = unit.name.toLowerCase();
+                
+                //console.log(`Searching For: ${search}`);
+                //console.log(`Found Unit: ${name}`);
+                if (name.includes(search.toLowerCase())) {
+                    found[found.length] = unit;
+                }
+            });
+        });
+
+        return found;
+    }
+    getAllCalculations() {
+        var total = [];
+        Object.keys(this.calculations).forEach(key => {
+            total[total.length] = this.calculations[key];
+        });
+        return total;
     }
 
     // Information

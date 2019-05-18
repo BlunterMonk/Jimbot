@@ -48,8 +48,6 @@ Client.init(() => {
         Client.respondFailure(msg, true);
     })
 
-    Commands.init(config);
-
     log("Configuration Loaded");
 
     Client.setMessageCallback(onMessage.bind(this));

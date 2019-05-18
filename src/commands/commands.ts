@@ -8,6 +8,7 @@
 import "../string/string-extension.js";
 import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
 import * as gs from "../config/guild.js";
+import {config} from "../config/config.js";
 
 const regexCommand = /^[^\s]*/;
 const regexSearch = /^(?:.*?\s)(.*?)(?='|"|‘|’|“|”|$)/;
@@ -66,22 +67,12 @@ function getParameters(msg) {
 
 function convertCommand(command, content) {
 
-    //log("Convert Command");
-    //log(command);
-    //log("\n");
-
     // TODO: make this more robust.
     if (command === "Family") {
         return {
             command: "Unit",
             parameters: ["chain" ],
             content: content.replace("family", "unit") + ` "chain"`
-        };
-    } else if (command === "Damage") {
-        return {
-            command: "Dpt",
-            parameters: ["chain" ],
-            content: content.replace(`damage`, `dpt`)
         };
     }
 
@@ -95,10 +86,6 @@ export interface CommandObject {
     parameters: string[];
     run: string;
 }
-var config = null;
-export var init = function(conf) {
-    config = conf;
-};
 export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSettings): CommandObject {
 
     var attachment = null;
@@ -122,6 +109,11 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
             log(`New Command: ${command}`);
             log(`New Content: ${copy}`);
         }
+    }
+
+    const alias = config.getCommandAlias(command);
+    if (alias) {
+        command = alias;
     }
 
     // If the command has a shortcut convert it.

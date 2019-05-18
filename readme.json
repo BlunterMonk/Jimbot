@@ -32,7 +32,15 @@
         },
         {
             "name": "Get Unit Calculations",
-            "value": "- **?dpt** *[unit name -or- category]* \"[limit]\"\n- **?burst** *[unit name -or- category]* \"[limit]\"\n- optional: the amount of results to return, default is 5.\n- categories: \"physical\", \"magic\", \"hybrid\"\n- example: **?dpt Esther**\n- example: **?burst hybrid \"10\"**\nYou can search for multiple units at once by separating the names with a pipe(|) character."
+            "value": "- **?dpt** *[unit name -or- category]* \"[limit]\"\n- **?burst** *[unit name -or- category]* \"[limit]\"\n- optional: the amount of results to return, default is 5.\n- example: **?dpt Esther**\nYou can search for multiple units at once by separating the names with a pipe(|) character."
+        },
+        {
+            "name": "Get Unit Rotation",
+            "value": "- **?rot** *[unit name]*\n- example: **?rot zeno**\n"
+        },
+        {
+            "name": "Get Top DPS",
+            "value": "- **?topdps** *[optional category]*\n- category: physical, magic, hybrid\nGet the top 10 DPS for GL. no parameter will return the top 10 from all categories. Provide a category to only show the units of that type."
         },
         {
             "name": "Get Best Units",

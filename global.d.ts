@@ -1,5 +1,5 @@
 declare interface String {
-    similarity (s1, s2): any;
+    similarity (s2): any;
     toTitleCase (splitter): string;
     replaceAll (search, replacement): string;
     capitalize (): string
@@ -8,6 +8,7 @@ declare interface String {
     indexOfAfter (search, start): string;
     indexOfAfterIndex (search, start): string;
     matches (other): boolean;
+    closestMatchIn (list, threshold): string;
 }
 
 declare function log(data: any);

@@ -69,6 +69,11 @@ class client {
         });
     }
 
+    reload() {
+        log("Reloading Guild Settings");
+        this.LoadGuilds();
+    }
+
     loadGuild(guild: any) {
         const name = guild.name;
         const guildId = guild.id;
@@ -218,6 +223,9 @@ class client {
         this.discordClient.on(event, callback);
     }
 
+    // ON MESSAGE
+    // Filter out messages and route them to the apporpriate place.
+    // Also validate commands based on server settings and configuration for aliases.
     onMessage(receivedMessage) {
 
         // Prevent bot from responding to its own messages
@@ -225,13 +233,14 @@ class client {
             return;
         }
 
-        var content = receivedMessage.content;
+        var contentPrefix = receivedMessage.content.charAt(0);
+        var content = receivedMessage.content.toLowerCase().slice(1, receivedMessage.content.length);
 
         // Send private message results to authorized users
         if (!receivedMessage.guild && this.isAuthorized(receivedMessage.author)) {
 
             if (this.onPrivateMessageCallback)
-                this.onPrivateMessageCallback(receivedMessage, content.slice(1, content.length));
+                this.onPrivateMessageCallback(receivedMessage, content);
             
             return;
         }
@@ -239,19 +248,26 @@ class client {
         // Check to see if the sender 
         const guildId = receivedMessage.guild.id;
         const prefix = this.guildSettings[guildId].getPrefix();
-        if (!content.startsWith(prefix)) {
+        if (contentPrefix != prefix) {
             //handleReactions(receivedMessage);
             return;
         }
 
-        var command = getCommandString(content.slice(1, content.length));
+        var command = getCommandString(content);
 
         // Replace shortcuts if requested
         const shortcut = this.getShortcut(guildId, command.toLowerCase());
         if (shortcut) {
             log(`Replacing Shortcut with new command, shortcut: ${shortcut}`);
-            content = shortcut;
-            command = getCommandString(content.slice(1, content.length));
+            let param = "";
+            if (shortcut.parameters) {
+                shortcut.parameters.forEach(p => {
+                    param += `"${p}"`;
+                });
+            }
+            content = `${shortcut.command} ${shortcut.search} ${param}`;
+            log(`New Content: ${content}`);
+            command = getCommandString(content);
         }
 
         // Validate the user 
@@ -262,7 +278,7 @@ class client {
 
         // Send results
         if (this.onMessageCallback)
-            this.onMessageCallback(receivedMessage, content.slice(1, content.length));
+            this.onMessageCallback(receivedMessage, content);
     }
 
     // Delete bot generated messages if the user deleted their request
