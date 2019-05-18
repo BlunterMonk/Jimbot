@@ -16,8 +16,8 @@ import {getCommandString} from "./commands/commands.js";
     "ready"
     "message"
  */
-// const bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"; // prod
-const bot_secret_token = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk"; // test
+const bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"; // prod
+// const bot_secret_token = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk"; // test
 
 class client {
     discordClient: Discord.Client;
