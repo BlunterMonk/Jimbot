@@ -526,7 +526,60 @@ function handleRotation(receivedMessage, search, parameters) {
     
     Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
+function handleTopdps(receivedMessage, search, parameters) {
 
+    const calcs = cache.getAllCalculations();
+    const check = search && !search.empty();
+
+    const culled = [];
+    calcs.forEach(unit => {
+
+        if (check && !unit.type.includes(search))
+            return;
+        if (!unit.damage || unit.damage === undefined || unit.damage.empty())
+            return;
+
+        var ad = parseInt(unit.damage.replaceAll(",", ""));
+
+        if (Number.isNaN(ad)) return;
+
+        culled.push(unit);
+    });
+
+
+    const sorted = culled.sort((a, b) => {
+
+        var ad = parseInt(a.damage.replaceAll(",", ""));
+        var bd = parseInt(b.damage.replaceAll(",", ""));
+
+        if (Number.isNaN(ad)) {
+            return -1;
+        } else if (Number.isNaN(bd)) {
+            return 1;
+        }
+
+        if (bd < ad)
+            return -1;
+        else 
+            return 1;
+    });
+
+    var text = "";
+    var count = Math.min(10, sorted.length);
+    for (let index = 0; index < count; index++) {
+        const unit = sorted[index];
+        
+        text += `**${unit.name}:** ${unit.damage}\n`;
+    }
+
+    var embed = <any>{
+        color: pinkHexCode,
+        title: `Top DPS In GL`,
+        description: text,
+    }
+    
+    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+}
 
 // ADDING RESOURCES
 function handleAddalias(receivedMessage, search, parameters) {
@@ -761,14 +814,14 @@ function handleUpdate(receivedMessage, search, parameters) {
     log("Handle Update");
 
     try {
-        cache.updateDamage();
+        cache.updateDamage(() => {
+            log("Finished Updating");
+            respondSuccess(receivedMessage, true);
+        });
     } catch(e) {
         log(e);
         respondFailure(receivedMessage, true);
     }
-
-    log("Finished Updating");
-    respondSuccess(receivedMessage, true);
 }
 function handleReload(receivedMessage, search, parameters) {
 

@@ -233,13 +233,14 @@ class client {
             return;
         }
 
-        var content = receivedMessage.content;
+        var contentPrefix = receivedMessage.content.charAt(0);
+        var content = receivedMessage.content.toLowerCase().slice(1, receivedMessage.content.length);
 
         // Send private message results to authorized users
         if (!receivedMessage.guild && this.isAuthorized(receivedMessage.author)) {
 
             if (this.onPrivateMessageCallback)
-                this.onPrivateMessageCallback(receivedMessage, content.slice(1, content.length));
+                this.onPrivateMessageCallback(receivedMessage, content);
             
             return;
         }
@@ -247,12 +248,12 @@ class client {
         // Check to see if the sender 
         const guildId = receivedMessage.guild.id;
         const prefix = this.guildSettings[guildId].getPrefix();
-        if (!content.startsWith(prefix)) {
+        if (contentPrefix != prefix) {
             //handleReactions(receivedMessage);
             return;
         }
 
-        var command = getCommandString(content.slice(1, content.length));
+        var command = getCommandString(content);
 
         // Replace shortcuts if requested
         const shortcut = this.getShortcut(guildId, command.toLowerCase());
@@ -264,8 +265,9 @@ class client {
                     param += `"${p}"`;
                 });
             }
-            content = shortcut.command + ;
-            command = getCommandString(content.slice(1, content.length));
+            content = `${shortcut.command} ${shortcut.search} ${param}`;
+            log(`New Content: ${content}`);
+            command = getCommandString(content);
         }
 
         // Validate the user 
@@ -276,7 +278,7 @@ class client {
 
         // Send results
         if (this.onMessageCallback)
-            this.onMessageCallback(receivedMessage, content.slice(1, content.length));
+            this.onMessageCallback(receivedMessage, content);
     }
 
     // Delete bot generated messages if the user deleted their request

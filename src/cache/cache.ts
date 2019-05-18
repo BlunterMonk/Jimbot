@@ -54,10 +54,11 @@ export class Cache {
         this.skillset = Object.assign({}, skills, lbs);
     }
 
-    updateDamage() {
+    updateDamage(callback) {
         furcDamage.UpdateFurculaCalculations(() =>{
             this.calculations = JSON.parse(fs.readFileSync(unitCalc).toString());
             console.log("Reloaded Calculations");
+            callback();
         });
     }
 
@@ -118,6 +119,8 @@ export class Cache {
         var found = [];
         //var found: { [key: string]: string } = {};
         var names = searchTerm.split("|");
+        if (!names || names.length == 1) 
+            names = searchTerm.split(",");
 
         console.log("Get Calculations");
         console.log(names);
@@ -138,6 +141,13 @@ export class Cache {
         });
 
         return found;
+    }
+    getAllCalculations() {
+        var total = [];
+        Object.keys(this.calculations).forEach(key => {
+            total[total.length] = this.calculations[key];
+        });
+        return total;
     }
 
     // Information

@@ -251,6 +251,34 @@
 			""
 		]
 	},
+	"Jecht (spark chain)": {
+		"name": "Jecht (spark chain)",
+		"damage": "2,795,076,748",
+		"turns": "6",
+		"type": "physical",
+		"url": "http://ffbeEquip.com/builder.html?server=GL#6b3fdb60-7937-11e9-a1b8-7b53378612e4",
+		"burst": "4,859,044,047",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Jecht",
+		"rotation": [
+			"Fake out",
+			"Jecht Shot + Hot Steel x 2",
+			"Hot Steel x 3",
+			"LB",
+			"Jecht Rush x 3",
+			"Jecht Rush x 3",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Cloud (KH)": {
 		"name": "Cloud (KH)",
 		"damage": "2,522,673,281",
@@ -260,14 +288,12 @@
 		"burst": "3,187,867,924",
 		"burstTurn": "2"
 	},
-	"Yego - Pending": {
-		"name": "Yego - Pending",
-		"damage": "2,394,470,994",
+	"Yego": {
+		"name": "Yego",
+		"damage": "2,511,711,375",
 		"turns": "8",
 		"type": "physical",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#fcab0fe0-7840-11e9-a1b8-7b53378612e4",
-		"burst": "3,180,590,291",
-		"burstTurn": "2",
+		"url": "http://ffbeEquip.com/builder.html?server=GL#b38094d0-7925-11e9-a1b8-7b53378612e4",
 		"wiki": "https://exvius.gamepedia.com/Yego",
 		"rotation": [
 			"Get Serious (CD) + Brutal Whip",
@@ -428,24 +454,13 @@
 			""
 		]
 	},
-	"Sora (element weapon, w/ external imperil, AT)": {
-		"name": "Sora (element weapon, w/ external imperil, AT)",
+	"Prompto": {
+		"name": "Prompto",
 		"type": "physical",
 		"url": null
 	},
-	"Prompto": {
-		"name": "Prompto",
-		"damage": "",
-		"turns": "",
-		"type": "physical",
-		"url": null,
-		"burst": "",
-		"burstTurn": ""
-	},
 	"Tifa": {
 		"name": "Tifa",
-		"damage": "",
-		"turns": "",
 		"type": "physical",
 		"url": null
 	},
@@ -456,84 +471,14 @@
 		"burst": "",
 		"burstTurn": ""
 	},
+	"Sora": {
+		"name": "Sora",
+		"type": "physical",
+		"url": null
+	},
 	"Unreleased units": {
 		"name": "Unreleased units",
 		"type": "magic",
-		"url": null
-	},
-	"Regina (Ideal)": {
-		"name": "Regina (Ideal)",
-		"type": "physical",
-		"url": null
-	},
-	"CG Bartz": {
-		"name": "CG Bartz",
-		"type": "physical",
-		"url": null
-	},
-	"Regina (only LB chain)": {
-		"name": "Regina (only LB chain)",
-		"type": "physical",
-		"url": null
-	},
-	"Chocobo Fina (w/ external imperil)": {
-		"name": "Chocobo Fina (w/ external imperil)",
-		"type": "physical",
-		"url": null
-	},
-	"Regina (elemental weapon, only LB chain)": {
-		"name": "Regina (elemental weapon, only LB chain)",
-		"type": "physical",
-		"url": null
-	},
-	"CG Lightning": {
-		"name": "CG Lightning",
-		"type": "physical",
-		"url": null
-	},
-	"Adventurer Locke": {
-		"name": "Adventurer Locke",
-		"type": "physical",
-		"url": null
-	},
-	"Assassin Shadow": {
-		"name": "Assassin Shadow",
-		"type": "physical",
-		"url": null
-	},
-	"Physalis": {
-		"name": "Physalis",
-		"type": "physical",
-		"url": null
-	},
-	"Chocobo Fina (no imperil)": {
-		"name": "Chocobo Fina (no imperil)",
-		"type": "physical",
-		"url": null
-	},
-	"CG Firion (w/ external imperil)": {
-		"name": "CG Firion (w/ external imperil)",
-		"type": "physical",
-		"url": null
-	},
-	"Kimono Ayaka (w/ external imperil)": {
-		"name": "Kimono Ayaka (w/ external imperil)",
-		"type": "physical",
-		"url": null
-	},
-	"Regina (No chain mod)": {
-		"name": "Regina (No chain mod)",
-		"type": "physical",
-		"url": null
-	},
-	"CG Firion (no imperil)": {
-		"name": "CG Firion (no imperil)",
-		"type": "physical",
-		"url": null
-	},
-	"Kimono Ayaka (no imperil)": {
-		"name": "Kimono Ayaka (no imperil)",
-		"type": "physical",
 		"url": null
 	},
 	"Elly": {
@@ -589,12 +534,33 @@
 		"type": "magic",
 		"url": null
 	},
-	"BM Golbez": {
-		"name": "BM Golbez",
+	"Black Mage Golbez": {
+		"name": "Black Mage Golbez",
 		"damage": "2,820,031,578",
 		"turns": "",
 		"type": "magic",
-		"url": null
+		"url": "http://ffbeEquip.com/builder.html?server=GL#8301ec80-745e-11e9-a1b8-7b53378612e4",
+		"burst": "7,386,012,615",
+		"burstTurn": "7",
+		"wiki": "https://exvius.gamepedia.com/Black_Mage_Golbez",
+		"rotation": [
+			"Twin Moon (CD) + Abyssal Quasar",
+			"Abyssal Quasar x 4",
+			"Abyssal Quasar x 2",
+			"Abyssal Quasar x 2",
+			"Abyssal Quasar x 2",
+			"Twin Moon (CD) + Abyssal Quasar",
+			"Twin Meteor (CD) + Abyssal Quasar x 3",
+			"Abyssal Quasar x 2",
+			"Abyssal Quasar x 2",
+			"Abyssal Quasar x 2",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
 	},
 	"Maria": {
 		"name": "Maria",
@@ -614,8 +580,6 @@
 	},
 	"Tiana": {
 		"name": "Tiana",
-		"damage": "",
-		"turns": "",
 		"type": "magic",
 		"url": null,
 		"burst": "",
@@ -711,9 +675,7 @@
 	"Trance Terra (w/ external imperil)": {
 		"name": "Trance Terra (w/ external imperil)",
 		"type": "magic",
-		"url": null,
-		"burst": "",
-		"burstTurn": ""
+		"url": null
 	},
 	"Circe": {
 		"name": "Circe",
@@ -743,33 +705,13 @@
 			""
 		]
 	},
-	"Trance Terra (no external imperil)": {
-		"name": "Trance Terra (no external imperil)",
-		"type": "magic",
-		"url": null
-	},
-	"CG Dark Fina": {
-		"name": "CG Dark Fina",
-		"type": "magic",
-		"url": null
-	},
-	"CG Terra": {
-		"name": "CG Terra",
-		"type": "magic",
-		"url": null
-	},
-	"Sol": {
-		"name": "Sol",
-		"type": "magic",
-		"url": null
-	},
-	"Nagi - Pending": {
-		"name": "Nagi - Pending",
-		"damage": "3,303,916,002",
+	"Nagi (spark chain)": {
+		"name": "Nagi (spark chain)",
+		"damage": "4,061,456,219",
 		"turns": "5",
 		"type": "hybrid",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#c1ad6f40-784b-11e9-a1b8-7b53378612e4",
-		"burst": "4,263,117,422",
+		"url": "http://ffbeEquip.com/builder.html?server=GL#36d612d0-7929-11e9-a1b8-7b53378612e4",
+		"burst": "5,240,588,670",
 		"burstTurn": "2",
 		"wiki": "https://exvius.gamepedia.com/Nagi",
 		"rotation": [
@@ -791,10 +733,33 @@
 			""
 		]
 	},
-	"Kurasame (no element w/ external imperil)": {
-		"name": "Kurasame (no element w/ external imperil)",
+	"Kurasame": {
+		"name": "Kurasame",
+		"damage": "2,706,316,771",
+		"turns": "11",
 		"type": "hybrid",
-		"url": null
+		"url": "http://ffbeEquip.com/builder.html?server=GL#b8dc3b30-7931-11e9-a1b8-7b53378612e4",
+		"burst": "4,880,359,050",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Kurasame",
+		"rotation": [
+			"Zekken - Twilight Rain x 3",
+			"Ice Magic Unleashed (CD)",
+			"Zekken - Twilight Rain x 3",
+			"Zekken - Twilight Rain x 3",
+			"Zekken - Twilight Rain x 3",
+			"Zekken - Sudden Downpour x 2",
+			"Absolute Zero (LB)",
+			"Zekken - Twilight Rain x 3",
+			"Diamond Rain",
+			"Absolute Zero (LB)",
+			"Zekken - Twilight Rain x 3",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
 	},
 	"Felix (spark chain)": {
 		"name": "Felix (spark chain)",
@@ -824,17 +789,14 @@
 			""
 		]
 	},
-	"Kurasame (ice w/ external imperil)": {
-		"name": "Kurasame (ice w/ external imperil)",
-		"type": "hybrid",
-		"url": null
-	},
 	"Aurora Fryevia": {
 		"name": "Aurora Fryevia",
 		"damage": "1,997,371,971",
 		"turns": "7",
 		"type": "hybrid",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#ad1f92c0-743f-11e9-a1b8-7b53378612e4",
+		"burst": "2,856,839,626",
+		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Aurora_Fryevia",
 		"rotation": [
 			"Flash - Furious Radiance x 3",
@@ -855,25 +817,61 @@
 			""
 		]
 	},
-	"Kurasame (no element w/ no external imperil)": {
-		"name": "Kurasame (no element w/ no external imperil)",
+	"Kunshira (spark chain)": {
+		"name": "Kunshira (spark chain)",
+		"damage": "1,876,262,091",
+		"turns": "6",
 		"type": "hybrid",
-		"url": null
-	},
-	"Kurasame (ice w/ no external imperil)": {
-		"name": "Kurasame (ice w/ no external imperil)",
-		"type": "hybrid",
-		"url": null
+		"url": "http://ffbeEquip.com/builder.html?server=GL#b1e150d0-7932-11e9-a1b8-7b53378612e4",
+		"burst": "2,450,386,453",
+		"burstTurn": "2",
+		"wiki": "https://exvius.gamepedia.com/Kunshira",
+		"rotation": [
+			"Falling Elements (CD)",
+			"Tempest Spellblade +2",
+			"Tempest Spellblade +2",
+			"Tempest Spellblade +2",
+			"Tempest Spellblade +2",
+			"Tempest Spellblade +2",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
 	},
 	"Karlette": {
 		"name": "Karlette",
+		"damage": "1,730,656,746",
+		"turns": "12",
 		"type": "hybrid",
-		"url": null
-	},
-	"Kunshira (spark chain, w/ single element external imperil)": {
-		"name": "Kunshira (spark chain, w/ single element external imperil)",
-		"type": "hybrid",
-		"url": null
+		"url": "http://ffbeEquip.com/builder.html?server=GL#fad73300-792c-11e9-a1b8-7b53378612e4",
+		"burst": "2,755,449,443",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Karlette",
+		"rotation": [
+			"Dystopic Thunder + Cosmic Creation x 2",
+			"Spear Style",
+			"Cosmic Creaction x 3",
+			"Cosmic Creaction x 3",
+			"Lost Legacy (CD)",
+			"Dystopic Thunder + Cosmic Creation x 2",
+			"Cosmic Creaction x 3",
+			"Cosmic Creaction x 3",
+			"Lost Legacy (CD)",
+			"Dystopic Thunder + Cosmic Creation x 2",
+			"Cosmic Creaction x 3",
+			"Cosmic Creaction x 3",
+			"",
+			"",
+			"",
+			""
+		]
 	},
 	"Fryevia": {
 		"name": "Fryevia",

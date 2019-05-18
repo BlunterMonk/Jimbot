@@ -22,7 +22,7 @@
 			"command": "whatis",
 			"search": "new player"
 		},
-		"noob": { 
+		"noob": {
 			"command": "whatis",
 			"search": "new player info"
 		},
@@ -31,16 +31,18 @@
 			"search": "elemental tetris"
 		},
 		"bunnies": {
-			 "command": "gif",
-			 "search": "sylvie",
-			 "parameters": [ "win" ]
+			"command": "gif",
+			"search": "sylvie",
+			"parameters": [
+				"win"
+			]
 		},
 		"festunits": {
 			"command": "whatis",
 			"search": "festunits"
 		},
-		"zenorot": { 
-			"command": "whatis zeno rotation",
+		"zenorot": {
+			"command": "whatis",
 			"search": "zeno rotation",
 			"parameters": []
 		}
