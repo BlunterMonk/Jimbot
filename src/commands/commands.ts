@@ -113,7 +113,7 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
 
     const alias = config.getCommandAlias(command);
     if (alias) {
-        command = alias;
+        command = alias.capitalize();
     }
 
     // If the command has a shortcut convert it.
