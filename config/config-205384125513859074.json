@@ -15,13 +15,18 @@
 		"addemo",
 		"addalias",
 		"addshortcut",
-		"emote"
+		"emote",
+		"addresponse",
+		"response"
 	],
 	"editors": [
 		"159846139124908032",
 		"131139508421918721",
 		"344500120827723777"
 	],
+	"response": {
+
+	},
 	"shortcuts": {
 		"tips": {
 			"command": "whatis",

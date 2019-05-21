@@ -223,6 +223,7 @@ class client {
         this.discordClient.on(event, callback);
     }
 
+    ///////////////////////////////////////////////////////////
     // ON MESSAGE
     // Filter out messages and route them to the apporpriate place.
     // Also validate commands based on server settings and configuration for aliases.
@@ -249,7 +250,15 @@ class client {
         const guildId = receivedMessage.guild.id;
         const prefix = this.guildSettings[guildId].getPrefix();
         if (contentPrefix != prefix) {
-            //handleReactions(receivedMessage);
+
+            // Handle Reactions;
+            if (this.validate(receivedMessage, "response")) {
+                let res = this.getResponse(guildId, receivedMessage.content);
+                this.send(receivedMessage, res);
+            } else {
+                log(`Permission Denied, User: ${receivedMessage.author.id}, Command: ${command}`);
+            }
+            
             return;
         }
 
@@ -329,6 +338,12 @@ class client {
     }
     getFailure(guildId: string) {
         return this.guildSettings[guildId].getFailureEmote();
+    }
+    getResponse(guildId: string, name: string) {
+        return this.guildSettings[guildId].getResponse(name);
+    }
+    setResponse(guildId: string, name: string, value: string) {
+        return this.guildSettings[guildId].setResponse(name, value);
     }
     getShortcut(guildId: string, command: string) {
         return this.guildSettings[guildId].getShortcut(command);

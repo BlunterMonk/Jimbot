@@ -97,6 +97,15 @@ export class GuildSettings {
         return true;
     }
 
+    getResponse(name: string) {
+        return this.settings.response[name];
+    }
+    setResponse(name: string, value: string) {
+        this.settings.response[name] = value;
+        this.save();
+        return (this.settings.response[name]);
+    }
+
     validateAdminRole(role: string) {
         return this.settings.adminRoles.find((r) => role.toLowerCase() === r.toLowerCase());
     }

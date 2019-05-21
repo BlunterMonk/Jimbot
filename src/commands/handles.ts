@@ -716,6 +716,24 @@ function handleAddshortcut(receivedMessage, search, parameters) {
         respondFailure(receivedMessage, true);
     }
 }
+function handleAddresponse(receivedMessage, search, parameters) {
+
+    var command = parameters[0];
+    if (parameters.length == 2) {
+        search = parameters[0];
+        command = parameters[1];
+    }
+    
+    log("Add Response");
+    log(`Shortcut: ${search}`);
+    log(`Command: ${command}`);
+
+    if (Client.setResponse(guildId(receivedMessage), search, command)) {
+        respondSuccess(receivedMessage, true);
+    } else {
+        respondFailure(receivedMessage, true);
+    }
+}
 
 
 // SETTINGS
@@ -734,7 +752,7 @@ function handleSet(receivedMessage, search, parameters) {
 
     Client.sendMessage(receivedMessage, embed);
 }
-function handleSetrankings(receivedMessage, search, parameters) {
+function handleSetbestunits(receivedMessage, search, parameters) {
     if (receivedMessage.guild) {
         return;
     }
@@ -1304,7 +1322,7 @@ function overwriteFile(existing: string, url, callback) {
     });
 }
 function downloadFile(name, link, callback) {
-    var ext = link.substring(link.lastIndexOf("."), link.length);
+    var ext = link.substring(link.lastIndexOf("."), link.length).toLowerCase();
     if (!config.filetypes().includes(ext)) {
         log("Invalid img URL");
         return;
