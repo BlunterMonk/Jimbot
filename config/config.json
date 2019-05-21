@@ -100,7 +100,9 @@
 		"edel": "マダム・エーデル",
 		"fid": "フィーナ&リド2018夏",
 		"cutest_order": "ファイサリス",
-		"faisalith": "ファイサリス"
+		"faisalith": "ファイサリス",
+		"zode": "zolulu & delulu",
+		"wkn": "white knight noel"
 	},
 	"filetypes": [
 		".jpg",
@@ -116,7 +118,7 @@
 			"command": "?whatis",
 			"search": "new player"
 		},
-		"noob": { 
+		"noob": {
 			"command": "!whatis",
 			"search": "new player info"
 		},
@@ -125,15 +127,17 @@
 			"search": "elemental tetris"
 		},
 		"bunnies": {
-			 "command": "?gif",
-			 "search": "sylvie",
-			 "parameters": [ "win" ]
+			"command": "?gif",
+			"search": "sylvie",
+			"parameters": [
+				"win"
+			]
 		},
 		"festunits": {
 			"command": "?whatis",
 			"search": "festunits"
 		},
-		"zenorot": { 
+		"zenorot": {
 			"command": "?whatis zeno rotation",
 			"search": "zeno rotation",
 			"parameters": []
