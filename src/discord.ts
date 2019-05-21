@@ -252,11 +252,13 @@ class client {
         if (contentPrefix != prefix) {
 
             // Handle Reactions;
-            if (this.validate(receivedMessage, "response")) {
-                let res = this.getResponse(guildId, receivedMessage.content);
-                this.send(receivedMessage, res);
-            } else {
-                log(`Permission Denied, User: ${receivedMessage.author.id}, Command: ${command}`);
+            let res = this.getResponse(guildId, receivedMessage.content);
+            if (res) {
+                if (this.validate(receivedMessage, "response")) {
+                    this.send(receivedMessage, res);
+                } else {
+                    log(`Permission Denied, User: ${receivedMessage.author.id}, Command: ${command}`);
+                }
             }
             
             return;
