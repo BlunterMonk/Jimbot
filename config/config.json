@@ -108,7 +108,10 @@
 		"kedgar": "king edgar of figaro",
 		"edgarv2": "king_edgar_of_figaro",
 		"sabinv2": "monk_sabin_of_kolts",
-		"lms": "liquid metal slime"
+		"lms": "liquid metal slime",
+		"cgwol": "ウォーリア オブ ライト",
+		"cg_wol": "ウォーリア オブ ライト",
+		"cglid": "heavenly technician lid"
 	},
 	"filetypes": [
 		".jpg",
