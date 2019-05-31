@@ -277,7 +277,7 @@ function collectSkillEffects(key, skills, keyword, total) {
     if (!added) {
         if (skill.strings.desc_short) {
             var desc = skill.strings.desc_short[0];
-            if (checkString(desc, keyword)) {
+            if (desc && checkString(desc, keyword)) {
                 //log(`Description: ${desc}, keyword: ${keyword}`);
                 //log(`Effects`);
                 //log(skill.effects);
