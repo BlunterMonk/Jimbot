@@ -18,6 +18,307 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20190602
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190602HalfSummonBanner.html
+}}
+{{Recent News
+|date  = 20190601
+|type  = Other
+|title = Monthly 5★ Select Summon Tickets
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190601JuneFreeSelectSummonTicket.html
+}}
+{{Recent News
+|date  = 20190601
+|type  = Other
+|title = Guaranteed 5★ Special Summon Tickets
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201906015StarGuaranteedTicket.html
+}}
+{{Recent News
+|date  = 20190531
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190531Version360IssueReport.html
+}}
+{{Recent News
+|date  = 20190531
+|type  = Other
+|title = Summer 2019 Free Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190531Summer2019FreeSummon.html
+}}
+{{Recent News
+|date  = 20190531
+|type  = Other
+|title = Summer Celebration 5★ Guaranteed Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190531SummerCelebrationGacha.html
+}}
+{{Recent News
+|date  = 20190530
+|type  = Issue
+|title = Version 3.6.0
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190530GL360PatchNotes.html
+}}
+{{Recent News
+|date  = 20190530
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190530PostMaintenanceExtended2.html
+}}
+{{Recent News
+|date  = 20190528
+|type  = Trial
+|title = Scorn of the Octopus and the Teacher
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_trial_boss_ChamberoftheIndignantOctopusTeacher.jpg
+}}
+{{Recent News
+|date  = 20190528
+|type  = Story
+|title = The Story Continues!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_unlockcontinent_arc8_1.jpg
+}}
+{{Recent News
+|date  = 20190528
+|type  = Story
+|title = Madam's Manor
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/MadamsManor.jpg
+}}
+{{Recent News
+|date  = 20190528
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190528FFBESummerFinaFeatureSummon.jpg
+}}
+{{Recent News
+|date  = 20190528
+|type  = Event
+|title = Unit Intro Quest - Summer Fina & Lid, Summer Folka & Citra
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/SummerUnitTrialQuest.jpg
+}}
+{{Recent News
+|date  = 20190528
+|type  = Event
+|title = Figaro Castle - Exploration
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190528FFVIFigaroCastleExploration.jpg
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20190528
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190529Maintenance.html
+}}
+{{Recent News
+|date  = 20190528
+|type  = Other
+|title = Exchange Shop
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190528SummerSummonCoinExchange.html
+}}
+{{Recent News
+|date  = 20190528
+|type  = Other
+|title = June 2019 Login Bonus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190528SummerSPLoginBonus.html
+}}
+{{Recent News
+|date  = 20190528
+|type  = Other
+|title = 5★ Guaranteed (30% Featured) Ticket (Summer 2019) Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019052830GuaranteedFeaturedTicket.html
+}}
+{{Recent News
+|date  = 20190528
+|type  = Other
+|title = 5★ Guaranteed 10+1 Summon Ticket (US TMR) Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20195285StarGuaranteed10plus1ticketUS.html
+}}
+{{Recent News
+|date  = 20190527
+|type  = Issue
+|title = Important Notice
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019052764bitSupportAdvisory.html
+}}
+{{Recent News
+|date  = 20190527
+|type  = Other
+|title = 5★ Guaranteed 10+1 Summon Ticket (AU TMR) Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20195275StarGuaranteed10plus1ticketAU.html
+}}
+{{Recent News
+|date  = 20190527
+|type  = Other
+|title = 5★ Guaranteed 10+1 Summon Ticket (ER TMR) Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201905275StarGuaranteed10plus1ticketER.html
+}}
+{{Recent News
+|date  = 20190524
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201905245starSpecialSummonIssueReport.html
+}}
+{{Recent News
+|date  = 20190524
+|type  = Other
+|title = Featured Global Line-Up
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190527FFBEGlobalSummon2.html
+}}
+{{Recent News
+|date  = 20190523
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190523PostMaintenance.html
+}}
+{{Recent News
+|date  = 20190521
+|type  = Event
+|title = Figaro Castle
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_FFVI_FigaroCastle.jpg
+}}
+{{Recent News
+|date  = 20190521
+|type  = Event
+|title = Magitek Ruins - Central Area
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/FFBEMagitekRuinsCentralArea.jpg
+}}
+{{Recent News
+|date  = 20190521
+|type  = Unit
+|title = Featured Summon FINAL FANTASY VI
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_NEWS_FigaroFeatureSummon_Compilation.jpg
+}}
+{{Recent News
+|date  = 20190521
+|type  = Other
+|title = Summon Coin Exchange
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190521SummonCoinExchange.html
+}}
+{{Recent News
+|date  = 20190521
+|type  = Unit
+|title = Ability Awakening Update!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190521AbilityAwakeningBatch28.jpg
+}}
+{{Recent News
+|date  = 20190521
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190523Maintenance.html
+}}
+{{Recent News
+|date  = 20190521
+|type  = Other
+|title = FFVI Login Bonus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190521FFVISPLoginBonus.html
+}}
+{{Recent News
+|date  = 20190521
+|type  = Other
+|title = 5★ Guaranteed (30% Featured) Ticket (FFVI) Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190521FFVI30GuaranteedTicket.html
+}}
+{{Recent News
+|date  = 20190521
+|type  = Issue
+|title = Important Notice
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190521AccountSuspensionImplementation.html
+}}
+{{Recent News
+|date  = 20190520
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190520OutforVengeance2.html
+}}
+{{Recent News
+|date  = 20190517
+|type  = Other
+|title = Spring Celebration 5★ Guaranteed Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190517SpringCelebrationGachaRerun.html
+}}
+{{Recent News
+|date  = 20190517
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190517HalfEnergyIssueReport.html
+}}
+{{Recent News
+|date  = 20190516
+|type  = Other
+|title = 3rd Anniversary Livestream Event
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190516ThirdYearAnniversaryLivestream.html
+}}
+{{Recent News
+|date  = 20190516
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190516PostMaintenance.html
+}}
+{{Recent News
+|date  = 20190515
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190516IssueReportOutForVengeance.html
+}}
+{{Recent News
+|date  = 20190515
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190516AdvisoryNewPlayerLogin.html
+}}
+{{Recent News
+|date  = 20190514
+|type  = Event
+|title = The Floating Continent
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/FloatingContinent.jpg
+}}
+{{Recent News
+|date  = 20190514
+|type  = Event
+|title = The Orders and the Magitek Ruins
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_raid_OrdersAndTheMagitekRuins.jpg
+}}
+{{Recent News
+|date  = 20190514
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_NEWS_NagiFeatureSummon_Compilation.jpg
+}}
+{{Recent News
+|date  = 20190514
+|type  = Other
+|title = Introducing the 5★ Guaranteed (20% Yego) and 5★ Guaranteed (Yego) Ticket Summons
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190514YegoExchangeTicket.html
+}}
+{{Recent News
+|date  = 20190514
+|type  = Other
+|title = Introducing the 5★ Guaranteed (20% Nagi) and 5★ Guaranteed (Nagi) Ticket Summons
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190514NagiExchangeTicket.html
+}}
+{{Recent News
+|date  = 20190514
+|type  = Other
+|title = Half Energy
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190514HalfEnergyCampaign.html
+}}
+{{Recent News
+|date  = 20190514
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190516Maintenance.html
+}}
+{{Recent News
+|date  = 20190514
+|type  = Event
+|title = Steel Castle Melfikya
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190514WeaponEnhancement.html
+}}
+{{Recent News
+|date  = 20190514
+|type  = Event
+|title = Out for Vengeance EXTRA STAGE
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/AkstarExtraStage.jpg
+}}
+{{Recent News
 |date  = 20190513
 |type  = Issue
 |title = Important Notice
@@ -95,7 +396,6 @@
 |title = May Flowers Login Bonus: Round 1
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190507MayFlowersLoginBonusRound1ver4.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20190507
 |type  = Maintenance
