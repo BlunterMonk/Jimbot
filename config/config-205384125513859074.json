@@ -53,6 +53,11 @@
 			"command": "whatis zeno rotation",
 			"search": "zeno rotation",
 			"parameters": []
+		},
+		"fudgingcurrency": {
+			"command": "whatis",
+			"search": "currency",
+			"parameters": []
 		}
 	}
 }
