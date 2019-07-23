@@ -113,7 +113,9 @@
 		"cg_wol": "ウォーリア オブ ライト",
 		"cglid": "heavenly technician lid",
 		"cilka": "summer folka & citra",
-		"best_sabin": "monk sabin of kolts"
+		"best_sabin": "monk sabin of kolts",
+		"nugget": "immortal flame katy",
+		"kanon": "cannon"
 	},
 	"filetypes": [
 		".jpg",
@@ -153,9 +155,9 @@
 			"search": "zeno rotation",
 			"parameters": []
 		},
-                "fudgingcurrency": {
-                        "command": "?whatis",
-                        "search": "currency"
-                }
+		"fudgingcurrency": {
+			"command": "?whatis",
+			"search": "currency"
+		}
 	}
 }

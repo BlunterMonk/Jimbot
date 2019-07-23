@@ -1,5 +1,4 @@
 {
-	"name": "/r/FFBraveExvius",
 	"prefix": "?",
 	"successEmote": "✅",
 	"failureEmote": "❌",
@@ -59,5 +58,6 @@
 			"search": "currency",
 			"parameters": []
 		}
-	}
+	},
+	"name": "/r/FFBraveExvius"
 }

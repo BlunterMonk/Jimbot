@@ -1,5 +1,4 @@
 {
-	"name": "Jimbot-Env",
 	"prefix": "?",
 	"successEmote": "gucci",
 	"failureEmote": "fail",
@@ -50,5 +49,6 @@
 			"search": "zeno rotation",
 			"parameters": []
 		}
-	}
+	},
+	"name": "Jimbot-Env"
 }

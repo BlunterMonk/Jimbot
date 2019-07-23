@@ -6,9 +6,9 @@ cd ../ffbe-jp/
 git pull
 cd ../Jimbot
 
-node caching/cacheUnitsList.js
-node caching/cacheDamage.js
-node caching/cacheRankingsDump.js
-node caching/cacheEvents.js
-node caching/cacheUnitSkills.js
-node caching/cullSkills.js
+nodejs caching/cacheUnitsList.js
+#:node caching/cacheDamage.js
+nodejs caching/cacheRankingsDump.js
+nodejs caching/cacheEvents.js
+#node caching/cacheUnitSkills.js
+#node caching/cullSkills.js

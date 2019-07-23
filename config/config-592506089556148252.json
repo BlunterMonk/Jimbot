@@ -12,10 +12,9 @@
 	],
 	"disabledCommands": [
 		"addemo",
-		"addalias",
-		"emote"
+		"addalias"
 	],
-	"response": {},
 	"shortcuts": {},
-	"name": "Hello There"
+	"response": {},
+	"name": "KWEHHHH!"
 }
