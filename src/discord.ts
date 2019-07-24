@@ -8,6 +8,7 @@ import { log, logData, checkString, compareStrings, escapeString } from "./globa
 import * as Discord from "discord.js";
 import * as gs from "./config/guild.js";
 import {getCommandString} from "./commands/commands.js";
+import * as fs from "fs";
 
 /**
  *  Events
@@ -16,8 +17,6 @@ import {getCommandString} from "./commands/commands.js";
     "ready"
     "message"
  */
-const bot_secret_token = "NTY0NTc5NDgwMzk2NjI3OTg4.XK5wQQ.4UDNKfpdLOYg141a9KDJ3B9dTMg"; // prod
-// const bot_secret_token = "NTY1NjkxMzc2NTA3OTQ0OTcy.XK6HUg.GdFWKdG4EwdbQWf7N_r2eAtuxtk"; // test
 
 class client {
     discordClient: Discord.Client;
@@ -26,6 +25,7 @@ class client {
     onMessageCallback: any;
     onPrivateMessageCallback: any;
     authorizedUsers: string[];
+    credentials: any;
     constructor() {
         this.guildSettings = {};
         this.botMessages = [];
@@ -51,8 +51,10 @@ class client {
     }
     
     init(callback) {
+        this.credentials = JSON.parse(String(fs.readFileSync("./discord.json")));
+
         this.discordClient = new Discord.Client();
-        this.discordClient.login(bot_secret_token);
+        this.discordClient.login(this.credentials.token);
 
         this.on("message", this.onMessage.bind(this));
         this.on("messageDelete", this.onMessageDelete.bind(this));
