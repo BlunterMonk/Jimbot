@@ -18,6 +18,115 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20190725
+|type  = Unit
+|title = Ability Awakening Update!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190723AbilityAwakeningBatch30.jpg
+}}
+{{Recent News
+|date  = 20190725
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190725IssueReportElenaMAG.html
+}}
+{{Recent News
+|date  = 20190725
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/IssueReportArenaBonusUnits.html
+}}
+{{Recent News
+|date  = 20190725
+|type  = Issue
+|title = Version 3.7.1
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190725GL371PatchNotes.html
+}}
+{{Recent News
+|date  = 20190725
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190725PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20190724
+|type  = Trial
+|title = Series Boss Battles: Chaotic Darkness
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ChaoticDarkness.png
+}}
+{{Recent News
+|date  = 20190724
+|type  = Other
+|title = Esper Ore Recipes
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190724EsperOreRecipe.html
+}}
+{{Recent News
+|date  = 20190724
+|type  = Issue
+|title = Important Notice
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019072364BitSupportReminder.html
+}}
+{{Recent News
+|date  = 20190723
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190723IssueReportMyraAndChamberofVengeful.html
+}}
+{{Recent News
+|date  = 20190723
+|type  = Vortex
+|title = Chamber of Enlightenment - Latent Abilities
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190723LatentAbilities.html
+}}
+{{Recent News
+|date  = 20190723
+|type  = Story
+|title = The Story Continues!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_unlockcontinent_arc9-1.jpg
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20190723
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_NEWS_RiveraFeatureSummon_Compilation.jpg
+}}
+{{Recent News
+|date  = 20190723
+|type  = Event
+|title = Golden Bomb Battle!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/FFBEGoldenBombBattle.jpg
+}}
+{{Recent News
+|date  = 20190723
+|type  = Event
+|title = Golden Bomb Rush!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/FFBEAnniversaryEventRaid.jpg
+}}
+{{Recent News
+|date  = 20190723
+|type  = Event
+|title = Empress of Virtue
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/TheEmpressofVirtue.png
+}}
+{{Recent News
+|date  = 20190723
+|type  = Other
+|title = Epic 5★ Guaranteed 10+1 Ticket (Heroes) Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201907235StarGuaranteed10plus1ticketHeroes.html
+}}
+{{Recent News
+|date  = 20190723
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190724Maintenance.html
+}}
+{{Recent News
+|date  = 20190719
+|type  = Issue
+|title = Important Notice
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20192007FundamentalForces.html
+}}
+{{Recent News
 |date  = 20190718
 |type  = Maintenance
 |title = Post Maintenance Note
@@ -89,7 +198,6 @@
 |title = Comeback Campaign FINAL FANTASY BRAVE EXVIUS Intermediate Results
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190716ComebackMilestoneIntermediateResults.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20190716
 |type  = Maintenance
