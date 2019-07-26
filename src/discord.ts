@@ -113,14 +113,17 @@ class client {
     }
 
     // Send message to the destination based on the reqested location
-    send(receivedMessage, msg, callback = null) {
+    send(receivedMessage, msg, callback = null, error = null) {
         receivedMessage.channel
         .send(msg)
         .then(message => {
             this.cacheBotMessage(receivedMessage.id, message.id);
             if (callback) callback(message);
         })
-        .catch(console.error);
+        .catch(e => {
+            console.error(e);
+            if (error) error(e);
+        });
     }
     sendImage(receivedMessage, filename, callback = null) {
         var Attachment = new Discord.Attachment(filename);
@@ -128,10 +131,10 @@ class client {
             Client.send(receivedMessage, Attachment);
         }
     }
-    sendMessage(receivedMessage, embed, callback = null) {
-        this.send(receivedMessage, {embed: embed}, callback);
+    sendMessage(receivedMessage, embed, callback = null, error = null) {
+        this.send(receivedMessage, {embed: embed}, callback, error);
     }
-    sendMessageWithAuthor(receivedMessage, embed, authorId, callback = null) {
+    sendMessageWithAuthor(receivedMessage, embed, authorId, callback = null, error = null) {
         this.discordClient.fetchUser(authorId)
         .then(author => {
 
@@ -146,7 +149,10 @@ class client {
                 this.cacheBotMessage(receivedMessage.id, message.id);
                 if (callback) callback(message);
             })
-            .catch(console.error);
+            .catch(e => {
+                console.error(e);
+                if (error) error(e);
+            });
         })
         .catch(reason =>{
             console.error(reason);
@@ -161,17 +167,23 @@ class client {
                 this.cacheBotMessage(receivedMessage.id, message.id);
                 if (callback) callback(message);
             })
-            .catch(console.error);
+            .catch(e => {
+                console.error(e);
+                if (error) error(e);
+            });
         });
     }
-    sendPrivateMessage(receivedMessage, embed, callback = null) {
+    sendPrivateMessage(receivedMessage, embed, callback = null, error = null) {
         receivedMessage.author
         .send({embed: embed})
         .then(message => {
             this.cacheBotMessage(receivedMessage.id, message.id);
             if (callback) callback(message);
         })
-        .catch(console.error);
+        .catch(e => {
+            console.error(e);
+            if (error) error(e);
+        });
     }
 
     respondSuccess(receivedMessage, toUser = false) {
