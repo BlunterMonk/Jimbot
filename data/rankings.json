@@ -1,14 +1,14 @@
 {
 	"bestunits": {
 		"[Physical Chainer]": "monk sabin / zeno / esther",
-		"[Physical Finisher]": "aranea / balthier / cid",
-		"[Magical Chainer]": "Black Mage Golbez / High Seraph Ultima / Lulu",
+		"[Physical Finisher]": "regina / balthier / cid",
+		"[Magical Chainer]": "circe / high seraph ultima / mediena",
 		"[Magical Finisher]": "lulu / emperor / cg sakura",
-		"[Hybrid Chainer]": "nagi / kurasame / aurora fryevia",
+		"[Hybrid Chainer]": "malphasie / nagi / kurasame",
 		"[Physical Tank]": "Sieghard / Wilhelm / mercenary ramza",
-		"[Magical Tank]": "Awakened Rain / Basch / Beryl",
-		"[Healer]": "Myra / Folka / Lotus Mage Fina",
-		"[Breaker]": "king edgar / auron / loren",
+		"[Magical Tank]": "awakened rain / basch / cg charlotte",
+		"[Healer]": "aerith / folka / myra",
+		"[Breaker]": "fid / auron / edgar",
 		"[Buffer]": "Sylvie / Yuraisha / Maritime Strategist Nichol",
 		"[Support/Misc]": "Zargabaath / Seaside Nichol / Eiko"
 	},

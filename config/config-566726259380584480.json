@@ -1,5 +1,4 @@
 {
-	"name": "Nuke Proof Avalonia",
 	"prefix": "!",
 	"successEmote": "kthumbsup",
 	"failureEmote": "❌",
@@ -49,5 +48,6 @@
 			"search": "zeno rotation",
 			"parameters": []
 		}
-	}
+	},
+	"name": "Nuke Proof Avalonia"
 }

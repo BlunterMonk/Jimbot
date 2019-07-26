@@ -98,7 +98,7 @@
 		"lorraine": "loren",
 		"madam_edel": "マダム・エーデル",
 		"edel": "マダム・エーデル",
-		"fid": "フィーナ&リド2018夏",
+		"fid": "summer fina & lid",
 		"cutest_order": "ファイサリス",
 		"faisalith": "ファイサリス",
 		"zode": "zolulu & delulu",
@@ -108,7 +108,14 @@
 		"kedgar": "king edgar of figaro",
 		"edgarv2": "king_edgar_of_figaro",
 		"sabinv2": "monk_sabin_of_kolts",
-		"lms": "liquid metal slime"
+		"lms": "liquid metal slime",
+		"cgwol": "ウォーリア オブ ライト",
+		"cg_wol": "ウォーリア オブ ライト",
+		"cglid": "heavenly technician lid",
+		"cilka": "summer folka & citra",
+		"best_sabin": "monk sabin of kolts",
+		"nugget": "immortal flame katy",
+		"kanon": "cannon"
 	},
 	"filetypes": [
 		".jpg",
@@ -147,6 +154,10 @@
 			"command": "?whatis zeno rotation",
 			"search": "zeno rotation",
 			"parameters": []
+		},
+		"fudgingcurrency": {
+			"command": "?whatis",
+			"search": "currency"
 		}
 	}
 }

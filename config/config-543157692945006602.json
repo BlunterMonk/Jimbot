@@ -1,5 +1,4 @@
 {
-	"name": "Hello There",
 	"prefix": "?",
 	"successEmote": "✅",
 	"failureEmote": "❌",
@@ -17,5 +16,6 @@
 		"emote"
 	],
 	"response": {},
-	"shortcuts": {}
+	"shortcuts": {},
+	"name": "Hello There"
 }
