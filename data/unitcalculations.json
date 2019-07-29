@@ -1581,6 +1581,34 @@
 			""
 		]
 	},
+	"Blossom Sage Sakura (pending)": {
+		"name": "Blossom Sage Sakura (pending)",
+		"damage": "4,993,942,330",
+		"turns": "10",
+		"type": "magic",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#e1e27200-b1bd-11e9-a1b8-7b53378612e4",
+		"burst": "10,256,965,859",
+		"burstTurn": "7",
+		"wiki": "https://exvius.gamepedia.com/Blossom_Sage_Sakura",
+		"rotation": [
+			"Celestial Roar+2 (CD)",
+			"Quick Shock Blade+2 + Quick Final Thunder+2 x 2 + Quick Shock Blade+2 + Quick Final Thunder+2",
+			"Blossoming Thunder II + Quick Shock Blade+2 + Quick Final Thunder+2",
+			"Quick Shock Blade+2 + Quick Final Thunder+2 x 2",
+			"Blossoming Thunder II + Quick Shock Blade+2 + Quick Final Thunder+2",
+			"Celestial Roar+2 (CD)",
+			"Quick Shock Blade+2 + Quick Final Thunder+2 + Quick Shock Blade+2 + Quick Final Thunder+2 x 2",
+			"Blossoming Thunder II + Quick Shock Blade+2 + Quick Final Thunder+2",
+			"Quick Shock Blade+2 + Quick Final Thunder+2 x 2",
+			"Blossoming Thunder II + Quick Shock Blade+2 + Quick Final Thunder+2",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Elly": {
 		"name": "Elly",
 		"damage": "3,892,003,521",
