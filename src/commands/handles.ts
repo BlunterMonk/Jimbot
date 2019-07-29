@@ -370,34 +370,99 @@ function handleNoob(receivedMessage, search, parameters) {
 }
 function handleGlbestunits(receivedMessage, search, parameters) {
 
-    const guildId = receivedMessage.guild.id;
-    const settings = cache.getRankings("bestunits");
+    const settings = cache.getTopUnits(search);
 
-    var list = "";
-    Object.keys(settings).forEach((v) => {
-
-        var units = settings[v].split(" / ");
-        var links = `**${v}:** `;
+    var getLinks = function(units, cat, link) {
+        var links = `**[${cat.replaceAll("_", " ").toTitleCase(" ")}]:** `;
         units.forEach((u, ind) => {
-            //log(u);
+
             u = convertSearchTerm(u);
-            u = convertValueToLink(u);
+            if (link) {
+                u = convertValueToLink(u);
+            } else {
+                u = u.replaceAll("_", " ");
+                u = u.toTitleCase(" ");
+            }
+
             links += u;
-            if (ind < 2) {
-                links += "/ ";
+            if (ind < units.length - 1) {
+                links += " / ";
             }
         });
+        return links
+    }
 
-        list += "\n" + links;
-    });
+    var list = "";
+    if (!search || search.empty()) {
+        var categories = Object.keys(settings);
+        categories.forEach((cat) => {
+            var units = settings[cat];
+            list += "\n" + getLinks(units, cat, true);
+        });
+    } else {
+        list += "\n" + getLinks(settings, search, true);
+    }
 
+    var t =  `Global Best 7★ Units (random order, limited units __excluded__)`;
     var embed = {
         color: pinkHexCode,
-        title: `Global Best 7★ Units (random order, limited units __excluded__)`,
+        title: t,
         description: list,
     };
 
-    Client.sendMessageWithAuthor(receivedMessage, embed, renaulteUserID);
+    Client.sendMessage(receivedMessage, embed, null, (e) => {
+        log("Message too big, removing links")
+
+        list = "";
+        categories.forEach((cat) => {
+            var units = settings[cat];
+            list += "\n" + getLinks(units, cat, false);
+        });
+
+        embed = {
+            color: pinkHexCode,
+            title: t,
+            description: list,
+        };
+
+        Client.sendMessage(receivedMessage, embed)
+    });
+}
+function handleAddtopunit(receivedMessage, search, parameters) {
+    if (receivedMessage.guild) {
+        return;
+    }
+ 
+    var cat = search;
+    var unit = parameters[0];
+    if (search.empty()) {
+        cat = parameters[0];
+        unit = parameters[1];
+    }
+
+    if (cache.addTopUnit(cat, unit)) {
+        respondSuccess(receivedMessage, true);
+    } else {
+        respondFailure(receivedMessage, true);
+    }
+}
+function handleRemovetopunit(receivedMessage, search, parameters) {
+    if (receivedMessage.guild) {
+        return;
+    }
+
+    var cat = search;
+    var unit = parameters[0];
+    if (search.empty()) {
+        cat = parameters[0];
+        unit = parameters[1];
+    }
+
+    if (cache.removeTopUnit(cat, unit)) {
+        respondSuccess(receivedMessage, true);
+    } else {
+        respondFailure(receivedMessage, true);
+    }
 }
 function handleHelp(receivedMessage) {
     var data = fs.readFileSync("readme.json", "ASCII");
@@ -1193,7 +1258,7 @@ function convertSearchTerm(search) {
     var s = search;
     var alias = config.getAlias(s.replaceAll(" ", "_"));
     if (alias) {
-        log("Found Alias: " + alias);
+        //log("Found Alias: " + alias);
         return alias.replaceAll(" ", "_");
     }
 

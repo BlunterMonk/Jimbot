@@ -32,7 +32,8 @@ class client {
         this.authorizedUsers = [
             "159846139124908032", // renaulteUserID
             "131139508421918721", // jimooriUserID
-            "344500120827723777"  // furculaUserID
+            "344500120827723777",  // furculaUserID
+            "324904806332497932" // cottonID
         ];
     }
 

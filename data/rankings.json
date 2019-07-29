@@ -12,6 +12,63 @@
 		"[Buffer]": "Sylvie / Yuraisha / Maritime Strategist Nichol",
 		"[Support/Misc]": "Zargabaath / Seaside Nichol / Eiko"
 	},
+	"topunits": {
+		"physical_chainer": [
+			"monk sabin",
+			"zeno",
+			"esther"
+		],
+		"physical_finisher": [
+			"regina",
+			"balthier",
+			"cid"
+		],
+		"magical_chainer": [
+			"circe",
+			"high seraph ultima",
+			"mediena"
+		],
+		"magical_finisher": [
+			"lulu",
+			"emperor",
+			"cg sakura"
+		],
+		"hybrid_chainer": [
+			"malphasie",
+			"elena",
+			"kurasame"
+		],
+		"physical_tank": [
+			"sieghard",
+			"wilhelm",
+			"mercenary ramza"
+		],
+		"magical_tank": [
+			"awakened rain",
+			"basch",
+			"cg charlotte"
+		],
+		"healer": [
+			"aerith",
+			"folka",
+			"myra"
+		],
+		"breaker": [
+			"fid",
+			"auron",
+			"edgar"
+		],
+		"buffer": [
+			"sylvie",
+			"yuraisha",
+			"rivera"
+		],
+		"support": [
+			"zargabaath",
+			"seaside nichol",
+			"eiko"
+		]
+	},
 	"physical_chainer": [
 		{
 			"name": "Crimson",
