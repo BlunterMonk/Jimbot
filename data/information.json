@@ -10,7 +10,7 @@
 	"elemental_tetris": {
 		"author": "159846139124908032",
 		"title": "❓What is Element Tetris?❓",
-		"description": "The total % across elements must add up to the specified amount to nullify damage.\n\nEx. Dark Espers Scorn: Requires 400% Fire/Wind/Water/Dark to survive turns 5/10/15/etc.\n\n100% Fire / 50% Wind / 50% Water / 200% Dark = 400% total, ✅success!\n400% Fire / 0% Wind / 0% Water / 0% Dark = 400% total, ✅success!\n80% Fire / 20% Wind / 20% Water / 70% Dark = 190% total, ❌fail!\n\n👉All party members need all resists.\n👉Buffs and imperils work. Buffing 70% all element resist will only require 120% Fire/Wind/Water/Dark.\n\n1⃣Dark Espers Scorn: 400% Fire/Wind/Water/Dark and 420% Fire/Water/Dark\n2⃣Ultros/Typhon Scorn: 100% Lightning, 50% Fire, 20% Earth/Water/Wind\n3⃣Lich: 50+% Fire/Ice/Lightning\n4⃣Glacial Scorn: 380% Ice/Water/Wind\n\n👉[See Furcula's post for more information.](https://bit.ly/2L54eY4)"
+		"description": "The total % across elements must add up to the specified amount to nullify damage.\n\nEx. Dark Espers Scorn: Requires 400% Fire/Wind/Water/Dark to survive turns 5/10/15/etc.\n\n100% Fire / 50% Wind / 50% Water / 200% Dark = 400% total, ✅success!\n400% Fire / 0% Wind / 0% Water / 0% Dark = 400% total, ✅success!\n80% Fire / 20% Wind / 20% Water / 70% Dark = 190% total, ❌fail!\n\n👉All party members need all resists.\n👉Buffs and imperils work. Buffing 70% all element resist will only require 120% Fire/Wind/Water/Dark.\n\n1⃣Dark Espers Scorn: 400% Fire/Wind/Water/Dark and 420% Fire/Water/Dark\n2⃣Ultros/Typhon Scorn: 100% Lightning, 50% Fire, 20% Earth/Water/Wind\n3⃣Lich: 50+% Fire, Ice, Lightning\n4⃣Glacial Scorn: 380% Ice/Water/Wind\n\n👉[See Furcula's post for more information.](https://bit.ly/2L54eY4)"
 	},
 	"new_player_info": {
 		"author": "159846139124908032",
@@ -37,11 +37,6 @@
 		"title": "List of Summon Fest Units",
 		"description": "**CG Rain**\n**CG Lasswell V2**\n**CG Onion Knight**\n**CG Noctis**\n**CG Dark Fina**\n**Lunafreya**"
 	},
-	"zeno_rotation": {
-		"author": "131139508421918721",
-		"title": "Zeno Rotation",
-		"description": "**Requires Fire Weapon and LB Fill Buff**\nPerfect Void (CD) + Scorch\nObliterating Mirror of Equity's Roar x 2\nObliterating Mirror of Equity's Roar x 2\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3\nScorch + Obliterating Mirror of Equity's Roar\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3\n\n**No LB Fill or Fire Weapon**\nMirror of Equity - Acuity + Mirror of Equity - Disorder \nPerfect Void (CD) + Scorch\nFiraga Slash + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 2\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3\nScorch + Firaga Slash\nSubjection to Equity - Crimson (LB)\nTrue Mirror of Equity (CD) + Obliterating Mirror of Equity's Roar\nObliterating Mirror of Equity's Roar x 3"
-	},
 	"tifa": {
 		"author": "fajfdk",
 		"title": "Tifa Is Cool",
@@ -52,7 +47,7 @@
 		"title": "TMR Farming",
 		"description": "Use this guide which describes the TMR farming process with an emulator.\n[Collection of Memu (and Nox) Macros 1280x720 and 720x1280 #3](https://www.reddit.com/r/FFBraveExvius/comments/96t087/collection_of_memu_and_nox_macros_1280x720_and/)"
 	},
-	"android_macro": {
+	"macro": {
 		"author": "564579480396627988",
 		"title": "Macro App for Android",
 		"description": "To use macro's on Android, install this application.\n[Tapping - Auto Clicker](https://play.google.com/store/apps/details?id=com.autoclicker.clicker&hl=en_US)"

@@ -90,6 +90,43 @@ export class Cache {
         return this.rankings[category.toLowerCase()];
     }
 
+    // TOP UNITS
+    addTopUnit(category: string, name: string) {
+        if (!this.rankings.topunits[category]) {
+            console.log(`Category (${category}), not found`);
+            return false;
+        }
+
+        this.rankings.topunits[category].push(name);
+        this.saveRankings();
+        return true;
+    }
+    removeTopUnit(category: string, name: string) {
+        if (!this.rankings.topunits[category]) {
+            console.log(`Category (${category}), not found`);
+            return false;
+        }
+
+        console.log(name)
+        console.log(this.rankings.topunits[category])
+        this.rankings.topunits[category].forEach((element, index) => {
+            if (element == name) {
+                this.rankings.topunits[category].splice(index, 1);
+            }
+        });
+        console.log("------------")
+        console.log(this.rankings.topunits[category])
+        this.saveRankings();
+        return true;
+    }
+    getTopUnits(category: string) {
+        if (!this.rankings.topunits[category]) {
+            return this.rankings.topunits;
+        }
+
+        return this.rankings.topunits[category];
+    }
+
     getUnitCalc(searchTerm: string) {
         searchTerm = searchTerm.replaceAll("_", " ").toLowerCase();
 
