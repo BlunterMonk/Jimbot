@@ -56,9 +56,7 @@ const userId = (msg) => msg.author.id;
 const gifAliases = {
     "lb": "limit",
     "limit burst": "limit",
-    "victory": "before",
-    "win_before": "before",
-    "win before": "before"
+    "victory": "win before"
 }
 
 
@@ -1089,11 +1087,19 @@ function getMaxRarity(unit) {
     log("Unit ID: " + unit);
     if (rarity === "5") {
         unit = id + "7";
+    } else {
+        unit = id + "6";
     }
     return unit;
 }
 function getGif(search, param, callback) {
     log("getGif: " + search + `(${param})`);
+
+    var unitName = search
+    unitName = unitName.toTitleCase("_").replaceAll("_", "%20")
+
+    var animationName = param
+    animationName = param.toTitleCase().replaceAll(" ", "%20")
     
     const filename = `tempgifs/${search}/${param}.gif`;
     if (fs.existsSync(filename)) {
@@ -1102,19 +1108,36 @@ function getGif(search, param, callback) {
         return;
     }
 
-    var unit = getUnitKey(search);
-    if (!unit)
-        unit = search;
+    var unitID = getUnitKey(search);
+    if (!unitID)
+        unitID = search;
 
-    
-
-    var rarity = unit[unit.length-1];
-    var id = unit.substring(0, unit.length-1);
-    log("Unit ID: " + unit);
+    var rarity = unitID[unitID.length-1];
+    var id = unitID.substring(0, unitID.length-1);
+    log("Unit ID: " + unitID);
     
     var unitL = null; // ignore using othet source if JP
     if (isLetter(search[0])) {
         unitL = search.replaceAll("_", "+");
+    }
+
+    var saveGif = function(url) {
+        if (!fs.existsSync(`tempgifs/${search}/`))
+        fs.mkdirSync( `tempgifs/${search}/`, { recursive: true});
+        
+        var file = null;
+        var source = url.slice(0, 5) === 'https' ? https : http;
+        source.get(url, function(response) {
+            if (response.statusCode !== 200) {
+                log("Unit Animation not found");
+                return;
+            }
+            file = fs.createWriteStream(filename);
+            file.on('finish', function() {
+                callback(filename);
+            });
+            return response.pipe(file);
+        });
     }
     
     var gifs = [];
@@ -1175,27 +1198,12 @@ function getGif(search, param, callback) {
                 log("Found Requested Gif");
                 log(img);
                 
-                if (!fs.existsSync(`tempgifs/${search}/`))
-                    fs.mkdirSync( `tempgifs/${search}/`, { recursive: true});
-                    
-                var file = null;
-                var source = img.slice(0, 5) === 'https' ? https : http;
-                source.get(img, function(response) {
-                    if (response.statusCode !== 200) {
-                        log("Unit Animation not found");
-                        return;
-                    }
-                    file = fs.createWriteStream(filename);
-                    file.on('finish', function() {
-                        callback(filename);
-                    });
-                    return response.pipe(file);
-                });
+                saveGif(img);
             }
         }
     };
 
-    var uri = [ aniGL(unit), aniJP(unit) ];
+    var uri = [ aniGL(unitID), aniJP(unitID) ];
     for(var i = 0; i < 2; i++) {
         request(
             { uri: uri[i] },
@@ -1217,24 +1225,35 @@ function getGif(search, param, callback) {
         );
     }
 
+    var direct = `http://www.ffbegif.com/${unitName}/${getMaxRarity(unitID)}%20${animationName}.gif`;
+    log(`Searching for: ${direct}`);
+    request(
+        { uri: direct },
+        function(error, response, body) {
+
+            if (response.statusCode != 200) {
+                log(`Gif could not be found.`)
+                return;
+            }
+            
+            saveGif(direct);
+        }
+    );
+
+    /*log(`Searching for: ${direct}`);
+    var siteSearch = `${ffbegifEndpoint}?page=${i}&name=${unitL}`;
     if (unitL) {
         for(var i = 0; i < 2; i++) {
             request(
-                { uri: `${ffbegifEndpoint}?page=${i}&name=${unitL}` },
+                { uri: direct },
                 function(error, response, body) {
+                    log(body);
                     const $ = cheerio.load(body);
                     $('img').each((ind, el) => {
                         var src = $(el).attr('src');
                         if (src === undefined)
                             return;
 
-                        /*if (rarity === "5") {
-                            if (!src.includes(id + "7")){
-                                return;
-                            }
-                        }*/
-
-                        //log(`SRC: ${src}`);
                         if (src.includes("Move")) return;
 
                         var ext = getFileExtension(src);
@@ -1249,7 +1268,7 @@ function getGif(search, param, callback) {
         }
     } else {
         count -= 2;
-    }
+    }*/
 
     queryEnd(count);
 }
