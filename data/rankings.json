@@ -14,19 +14,20 @@
 	},
 	"topunits": {
 		"physical_chainer": [
-			"monk sabin",
 			"zeno",
-			"esther"
+			"esther",
+			"monk sabin of kolts",
+			"radiant lightning"
 		],
 		"physical_finisher": [
 			"regina",
-			"balthier",
-			"cid"
+			"zack",
+			"cg jake"
 		],
 		"magical_chainer": [
 			"circe",
-			"high seraph ultima",
-			"mediena"
+			"mediena",
+			"blossom sage sakura"
 		],
 		"magical_finisher": [
 			"lulu",
@@ -36,7 +37,7 @@
 		"hybrid_chainer": [
 			"malphasie",
 			"elena",
-			"kurasame"
+			"nagi"
 		],
 		"physical_tank": [
 			"sieghard",
@@ -46,7 +47,8 @@
 		"magical_tank": [
 			"awakened rain",
 			"basch",
-			"cg charlotte"
+			"cg charlotte",
+			"sacred shield charlotte"
 		],
 		"healer": [
 			"aerith",
@@ -55,18 +57,18 @@
 		],
 		"breaker": [
 			"fid",
-			"auron",
-			"edgar"
+			"cg lid",
+			"king edgar of figaro"
 		],
 		"buffer": [
 			"sylvie",
 			"yuraisha",
-			"rivera"
+			"maritime strategist nichol"
 		],
 		"support": [
 			"zargabaath",
 			"seaside nichol",
-			"eiko"
+			"lotus mage fina"
 		]
 	},
 	"physical_chainer": [

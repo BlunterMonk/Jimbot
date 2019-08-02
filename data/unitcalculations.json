@@ -27,6 +27,34 @@
 			""
 		]
 	},
+	"Radiant Lightning (pending)": {
+		"name": "Radiant Lightning (pending)",
+		"damage": "11,235,456,148",
+		"turns": "11",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#19ad50b0-b35d-11e9-a1b8-7b53378612e4",
+		"burst": "16,006,214,756",
+		"burstTurn": "4",
+		"wiki": "https://exvius.gamepedia.com/Radiant_Lightning",
+		"rotation": [
+			"Paradigm Shift: Commando (CD) + Defying Destiny (Lightning)",
+			"Zantetsuken (LB)",
+			"Relentless Assault x 2",
+			"Relentless Assault x 2",
+			"Relentless Assault x 2",
+			"Zantetsuken (LB)",
+			"Relentless Assault x 2",
+			"Relentless Assault x 2",
+			"Relentless Assault x 2",
+			"Zantetsuken (LB)",
+			"Relentless Assault x 2",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Zeno of the Beta Star": {
 		"name": "Zeno of the Beta Star",
 		"damage": "10,108,289,099",
@@ -1413,34 +1441,6 @@
 			""
 		]
 	},
-	"Flash Lightning": {
-		"name": "Flash Lightning",
-		"damage": "8,824,528,382",
-		"turns": "11",
-		"type": "physical",
-		"url": "http://ffbeEquip.com/builder.html?server=JP#9af7b270-8f2f-11e9-a1b8-7b53378612e4",
-		"burst": "13,396,142,490",
-		"burstTurn": "4",
-		"wiki": "https://exvius.gamepedia.com/Flash_Lightning/JP",
-		"rotation": [
-			"運命に抗う力 (CD)       ",
-			"オプティマチェンジ：アタッカー (CD)       ",
-			"斬鉄剣 (LB)       ",
-			"ラッシュアサルト",
-			"ラッシュアサルト",
-			"斬鉄剣 (LB)       ",
-			"ラッシュアサルト",
-			"ラッシュアサルト",
-			"斬鉄剣 (LB)       ",
-			"ラッシュアサルト",
-			"ラッシュアサルト",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
 	"Fina & Chocobo": {
 		"name": "Fina & Chocobo",
 		"damage": "7,549,517,447",
@@ -1583,23 +1583,23 @@
 	},
 	"Blossom Sage Sakura (pending)": {
 		"name": "Blossom Sage Sakura (pending)",
-		"damage": "4,993,942,330",
+		"damage": "5,349,356,899",
 		"turns": "10",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#e1e27200-b1bd-11e9-a1b8-7b53378612e4",
-		"burst": "10,256,965,859",
+		"burst": "10,574,445,436",
 		"burstTurn": "7",
 		"wiki": "https://exvius.gamepedia.com/Blossom_Sage_Sakura",
 		"rotation": [
 			"Celestial Roar+2 (CD)",
 			"Quick Shock Blade+2 + Quick Final Thunder+2 x 2 + Quick Shock Blade+2 + Quick Final Thunder+2",
 			"Blossoming Thunder II + Quick Shock Blade+2 + Quick Final Thunder+2",
-			"Quick Shock Blade+2 + Quick Final Thunder+2 x 2",
+			"Quick Shock Blade+2 x 2+ Quick Final Thunder+2",
 			"Blossoming Thunder II + Quick Shock Blade+2 + Quick Final Thunder+2",
 			"Celestial Roar+2 (CD)",
 			"Quick Shock Blade+2 + Quick Final Thunder+2 + Quick Shock Blade+2 + Quick Final Thunder+2 x 2",
 			"Blossoming Thunder II + Quick Shock Blade+2 + Quick Final Thunder+2",
-			"Quick Shock Blade+2 + Quick Final Thunder+2 x 2",
+			"Quick Shock Blade+2 x 2+ Quick Final Thunder+2",
 			"Blossoming Thunder II + Quick Shock Blade+2 + Quick Final Thunder+2",
 			"",
 			"",
