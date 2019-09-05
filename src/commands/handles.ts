@@ -505,6 +505,23 @@ function handleDamage(receivedMessage, search, parameters) {
 }
 function handleDpt(receivedMessage, search, parameters, isBurst) {
 
+    if (receivedMessage.channel.name.includes("wiki")) {
+        var noteText = "[Damage Spreadsheet](https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU/edit#gid=558725580)\n"
+
+        var embed = <any>{
+            color: pinkHexCode,
+            title: title,
+            url: sheetURL,
+            description: `${noteText}Wiki ratings deserve the wiki spreadsheet.`,
+            footer: {
+                text: "muspel numbers coming soon... (tm)"
+            },
+        }
+        
+        Client.sendMessageWithAuthor(receivedMessage, embed, muspelUserID);
+        return
+    }
+
     search = search.replaceAll("_", " ");
     var calc = cache.getCalculations(search);
     if (!calc) {
@@ -925,6 +942,7 @@ function handleReload(receivedMessage, search, parameters) {
     log("Finished Reloading");
     respondSuccess(receivedMessage, true);
 }
+
 
 // UNIT DATAMINE INFORMATION
 function handleK(receivedMessage, search, id) {
