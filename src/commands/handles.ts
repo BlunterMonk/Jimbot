@@ -542,7 +542,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
 
         if (isBurst) {
             if (!element.burst.empty())
-                text += `**${element.name}:** ${element.burst} on turn ${element.turns}\n`;
+                text += `**${element.name}:** ${element.burst} on turn ${element.burstTurn}\n`;
         } else if (!element.damage.empty()) {
             text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
         }
