@@ -8,9 +8,11 @@ import * as fs from "fs";
 import "../string/string-extension.js";
 
 import * as furcDamage from "./cacheDamage.js";
+import * as muspDamage from "./cacheMuspel.js";
 
 const rankingDump = 'data/rankingsdump.json';
-const unitCalc = 'data/unitcalculations.json';
+const furcCalc = 'data/furculacalculations.json';
+const muspCalc = 'data/muspelcalculations.json';
 const infoJson = 'data/information.json';
 const skillsJson = 'data/skills.json';
 const limitburstsJson = 'data/limitbursts.json';
@@ -20,6 +22,7 @@ const unitKeysJson = "data/unitkeys.json";
 export class Cache {
     fullRankings: any;
     calculations: any;
+    muspelCalculations: any;
     information: any;
     skillset: any;
     limitbursts: any;
@@ -45,7 +48,8 @@ export class Cache {
         console.log("Reloading Cached Data");
         this.fullRankings = JSON.parse(fs.readFileSync(rankingDump).toString());
         this.information = JSON.parse(fs.readFileSync(infoJson).toString());
-        this.calculations = JSON.parse(fs.readFileSync(unitCalc).toString());
+        this.calculations = JSON.parse(fs.readFileSync(furcCalc).toString());
+        this.muspelCalculations = JSON.parse(fs.readFileSync(muspCalc).toString());
         this.rankings = JSON.parse(fs.readFileSync(rankingFile).toString());
         this.unitsDump = JSON.parse(fs.readFileSync(unitKeysJson).toString());
         
@@ -54,12 +58,20 @@ export class Cache {
         this.skillset = Object.assign({}, skills, lbs);
     }
 
-    updateDamage(callback) {
-        furcDamage.UpdateFurculaCalculations(() =>{
-            this.calculations = JSON.parse(fs.readFileSync(unitCalc).toString());
-            console.log("Reloaded Calculations");
-            callback();
-        });
+    updateDamage(isMuspel: boolean, callback) {
+        if (isMuspel) {
+            muspDamage.UpdateMuspelCalculations(() =>{
+                this.muspelCalculations = JSON.parse(fs.readFileSync(muspCalc).toString());
+                console.log("Reloaded Muspel Calculations");
+                callback();
+            });
+        } else {
+            furcDamage.UpdateFurculaCalculations(() =>{
+                this.calculations = JSON.parse(fs.readFileSync(furcCalc).toString());
+                console.log("Reloaded Furcula Calculations");
+                callback();
+            });
+        }
     }
 
     getUnitKey(search) {
@@ -148,10 +160,9 @@ export class Cache {
 
         return this.calculations[match];
     }
-    // Furcula Damage Calculations
-    getCalculations(searchTerm: string) {
-        if (this.calculations[searchTerm])
-            return this.calculations[searchTerm];
+    getCalc(searchTerm: string, source: any) {
+        if (source[searchTerm])
+            return source[searchTerm];
 
         var found = [];
         //var found: { [key: string]: string } = {};
@@ -165,8 +176,8 @@ export class Cache {
 
             search = search.trim();
             
-            Object.keys(this.calculations).forEach((key) => {
-                var unit = this.calculations[key];
+            Object.keys(source).forEach((key) => {
+                var unit = source[key];
                 var name = unit.name.toLowerCase();
                 
                 //console.log(`Searching For: ${search}`);
@@ -178,6 +189,14 @@ export class Cache {
         });
 
         return found;
+    }
+    // Furcula Damage Calculations
+    getCalculations(isMuspel: boolean, searchTerm: string) {
+        if (isMuspel) {
+            return this.getCalc(searchTerm, this.muspelCalculations);
+        } else {
+            return this.getCalc(searchTerm, this.calculations);
+        }
     }
     getAllCalculations() {
         var total = [];

@@ -91,6 +91,11 @@ export class Config {
         return true;
     }
 
+    // USERS
+    getAuthorizedUsers() {
+        return this.configuration.authorizedUsers;
+    }
+
 };
 
 export const config = new Config();

@@ -9,6 +9,7 @@ import * as Discord from "discord.js";
 import * as gs from "./config/guild.js";
 import {getCommandString} from "./commands/commands.js";
 import * as fs from "fs";
+import {config} from "./config/config.js";
 
 /**
  *  Events
@@ -24,17 +25,10 @@ class client {
     guildSettings: any;
     onMessageCallback: any;
     onPrivateMessageCallback: any;
-    authorizedUsers: string[];
     credentials: any;
     constructor() {
         this.guildSettings = {};
         this.botMessages = [];
-        this.authorizedUsers = [
-            "159846139124908032", // renaulteUserID
-            "131139508421918721", // jimooriUserID
-            "344500120827723777",  // furculaUserID
-            "324904806332497932" // cottonID
-        ];
     }
 
     setMessageCallback(callback: any) {
@@ -335,7 +329,7 @@ class client {
     // HELPER
 
     isAuthorized(author): boolean {
-        return this.authorizedUsers.includes(author.id);
+        return config.getAuthorizedUsers().includes(author.id);
     }
 
 

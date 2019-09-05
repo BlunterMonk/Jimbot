@@ -12,11 +12,10 @@ import {google} from 'googleapis';
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 //const calcSheet = "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0";
-const calcSheet = "https://docs.google.com/spreadsheets/d/1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
-const sheetName = "Damage comparison";
-const burstSheetName = "Burst comparison";
-const sheetID = "1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
-const saveLocation = "data/furculacalculations.json";
+const calcSheet = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU";
+const sheetName = "7* Damage Comparison";
+const sheetID = "14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU";
+const saveLocation = "data/muspelcalculations.json";
 
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first time.
@@ -41,77 +40,19 @@ function authorize(credentials, callback, finished) {
     oAuth2Client.setCredentials(JSON.parse(token));
 
     var units = {};
-    var totalUnits = 0;
-
-    // Add unit page info to data
-    var queryEnd2 = function (wiki, url, rotation, index) {
-        console.log(`[${totalUnits}] ${index}: ${url}`)
-        totalUnits--;
-
-        if (index) {
-            if (units[index]) {
-                units[index].wiki = wiki;
-                units[index].url = url;
-                units[index].rotation = rotation;
-            } else {
-                console.log("Could not find unit to add link to, " + index)
-            }
-        }
-
-        if (totalUnits <= 1) {
-            console.log("Finished Getting Unit Calcs");
-
-            var save = JSON.stringify(units, null, "\t");
-            fs.writeFileSync(saveLocation, save);
-
-            finished();
-        }
-    };
-
-    // Add unit burst damage info
-    var queryEndBurst = function (list) {
-
-        var keys = Object.keys(units);
-        keys.forEach((key, ind) => {
-            var unit = list[key];
-            if (!unit) {
-                console.log("Missing Unit Information: " + key);
-                return;
-            }
-            units[key].burst = unit.damage;
-            units[key].burstTurn = unit.turns;
-        });
-
-        console.log("Unit Fields");
-        console.log("Total: " + totalUnits);
-
-        // Start getting unit pages
-        var keys = Object.keys(units);
-        keys.forEach((key, ind) => {
-            var index = key;
-
-            if (!key.includes("(KH)")) {
-                key = key.replace(/\(.*\)/, "").trim();
-            }
-
-            var range = `${key}!A1:AB20`
-            console.log(`[${ind}] Looking For: ` + range)
-            setTimeout(() => {
-                GetBuildLink(oAuth2Client, index, range, queryEnd2)
-            }, 1000 * ind);
-        });
-    }
 
     // Read secondary burst damage page
     var queryEnd = function (list) {
         units = list;
-        totalUnits += Object.keys(list).length;
 
-        GetUnitComparison(oAuth2Client, `${burstSheetName}!A3:N`, queryEndBurst);
+        var save = JSON.stringify(units, null, "\t");
+        fs.writeFileSync(saveLocation, save);
+
+        finished();
     };
-            
+
     // Read main comparison page 
-    GetUnitComparison(oAuth2Client, `${sheetName}!A3:N`, queryEnd);
+    GetUnitComparison(oAuth2Client, `${sheetName}!A2:O`, queryEnd);
 }
 
 /**
@@ -171,21 +112,24 @@ function GetUnitComparison(auth, range, callback) {
             var phy = {};
             var mag = {};
             var hyb = {};
+            var fin = {};
 
             rows.map((row) => {
-                //console.log("Row: ");
-                var pName = row[1];
-                var mName = row[6];
-                var hName = row[11];
-                //console.log(`Physical { ${pName}: ${row[2]} - ${row[3]} }`);
-                //console.log(`Magic { ${mName}: ${row[7]} - ${row[8]} }`);
-                //console.log(`Hybrid { ${hName}: ${row[12]} - ${row[13]} }`);
+                console.log("Row: ");
+                var pName = row[0];
+                var mName = row[4];
+                var hName = row[8];
+                var fName = row[12];
+                console.log(`Physical { ${pName}: ${row[1]} - ${row[2]} }`);
+                console.log(`Magic { ${mName}: ${row[5]} - ${row[6]} }`);
+                console.log(`Hybrid { ${hName}: ${row[9]} - ${row[10]} }`);
+                console.log(`Finisher { ${fName}: ${row[13]} - ${row[14]} }`);
 
                 if (pName) {
                     phy[pName] = {
                         name: pName,
-                        damage: row[2],
-                        turns: row[3],
+                        damage: row[1],
+                        turns: row[2],
                         type: "physical",
                         url: null
                     }
@@ -194,8 +138,8 @@ function GetUnitComparison(auth, range, callback) {
                 if (mName) {
                     mag[mName] = {
                         name: mName,
-                        damage: row[7],
-                        turns: row[8],
+                        damage: row[5],
+                        turns: row[6],
                         type: "magic",
                         url: null
                     }
@@ -204,17 +148,27 @@ function GetUnitComparison(auth, range, callback) {
                 if (hName) {
                     hyb[hName] = {
                         name: hName,
-                        damage: row[12],
-                        turns: row[13],
+                        damage: row[9],
+                        turns: row[10],
                         type: "hybrid",
+                        url: null
+                    }
+                }
+                
+                if (fName) {
+                    fin[fName] = {
+                        name: fName,
+                        damage: row[13],
+                        turns: row[14],
+                        type: "finisher",
                         url: null
                     }
                 }
             });
 
-            var units = Object.assign({}, phy, mag, hyb);
-            var save = JSON.stringify(units, null, "\t");
-            fs.writeFileSync(saveLocation, save);
+            var units = Object.assign({}, phy, mag, hyb, fin);
+            //var save = JSON.stringify(units, null, "\t");
+            //fs.writeFileSync(saveLocation, save);
 
             callback(units);
         } else {
@@ -224,45 +178,7 @@ function GetUnitComparison(auth, range, callback) {
     });
 }
 
-function GetBuildLink(auth, index, range, callback) {
-    var sheets = google.sheets({version: 'v4', auth});
-       
-    sheets.spreadsheets.values.get({
-        spreadsheetId: sheetID,
-        range: range
-    }, (err, res) => {
-        if (err) {
-            callback(null, index);
-            console.log('The API returned an error: ' + err);
-            return 
-        }
-
-        const rows = res.data.values;
-        if (rows.length) {
-            var units = {};
-
-            var b = "";
-            var w = "";
-            var rotation = [];
-            rows.map((row, ind) => {
-                if (ind == 0) {
-                    w = row[1];
-                } else if (ind == 1) {
-                    b = row[1];
-                } else if (ind > 3) {
-                    rotation.push(row[1]);
-                }
-            });
-
-            callback(w, b, rotation, index);
-        } else {
-            console.log('No data found.');
-            callback(null, null, null, null);
-        }
-    });
-}
-
-export var UpdateFurculaCalculations = function(callback) {
+export var UpdateMuspelCalculations = function(callback) {
 
     console.log(TOKEN_PATH);
 

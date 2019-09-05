@@ -40,10 +40,12 @@ const wikiEndpoint = "https://exvius.gamepedia.com/";
 const ffbegifEndpoint = "http://www.ffbegif.com/";
 const exviusdbEndpoint = "https://exvius.gg/gl/units/205000805/animations/";
 const sheetURL = "https://docs.google.com/spreadsheets/d/1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
+const muspelURL = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU/edit#gid=558725580";
 
 const renaulteUserID    = "159846139124908032";
 const jimooriUserID     = "131139508421918721";
 const furculaUserID     = "344500120827723777";
+const cottonUserID      = "324904806332497932";
 const muspelUserID      = "114545824989446149";
 
 const sprite = (n) => `https://exvius.gg/static/img/assets/unit/unit_ills_${n}.png`;
@@ -506,24 +508,12 @@ function handleDamage(receivedMessage, search, parameters) {
 function handleDpt(receivedMessage, search, parameters, isBurst) {
 
     if (receivedMessage.channel.name.includes("wiki")) {
-        var noteText = "[Damage Spreadsheet](https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU/edit#gid=558725580)\n"
-
-        var embed = <any>{
-            color: pinkHexCode,
-            title: title,
-            url: sheetURL,
-            description: `${noteText}Wiki ratings deserve the wiki spreadsheet.`,
-            footer: {
-                text: "muspel numbers coming soon... (tm)"
-            },
-        }
-        
-        Client.sendMessageWithAuthor(receivedMessage, embed, muspelUserID);
-        return
+        handleMuspel(receivedMessage, search, parameters);
+        return;
     }
-
+    
     search = search.replaceAll("_", " ");
-    var calc = cache.getCalculations(search);
+    var calc = cache.getCalculations(false, search);
     if (!calc) {
         log("Could not find calculations for: " + search);
         return;
@@ -540,9 +530,8 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
         const key = keys[ind];
         const element = calc[key];
 
-        if (isBurst) {
-            if (!element.burst.empty())
-                text += `**${element.name}:** ${element.burst} on turn ${element.burstTurn}\n`;
+        if (isBurst && !element.burst.empty()) {
+            text += `**${element.name}:** ${element.burst} on turn ${element.burstTurn}\n`;
         } else if (!element.damage.empty()) {
             text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
         }
@@ -654,11 +643,54 @@ function handleTopdps(receivedMessage, search, parameters) {
 
     var embed = <any>{
         color: pinkHexCode,
-        title: `Top DPS In GL`,
+        title: `Top DPS`,
         description: text,
     }
     
     Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+}
+function handleMuspel(receivedMessage, search, parameters) {
+
+    search = search.replaceAll("_", " ");
+    var calc = cache.getCalculations(true, search);
+    if (!calc) {
+        log("Could not find calculations for: " + search);
+        return;
+    }
+
+    var text = "";
+    var limit = 5;
+    if (parameters && parameters[0])
+        limit = parameters[0];
+        
+    const keys = Object.keys(calc);
+    const cap = Math.min(limit, keys.length);
+    for (let ind = 0; ind < cap; ind++) {
+        const key = keys[ind];
+        const element = calc[key];
+
+        if (element.damage.empty())
+            continue;
+
+        if (element.type == "finisher") {
+            text += `**${element.name} (${element.type}):** ${element.damage} on turn ${element.turns}\n`;
+        } else {
+            text += `**${element.name} (${element.type}):** ${element.damage} : ${element.turns}\n`;
+        }
+    }
+
+    var s = search.toTitleCase();
+    var embed = <any>{
+        color: pinkHexCode,
+        title: `Muspel Damage Comparisons: ${s}`,
+        url: muspelURL,
+        description: text,
+        footer: {
+            text: "visit the link provided for more calculations"
+        },
+    }
+    
+    Client.sendMessageWithAuthor(receivedMessage, embed, muspelUserID);
 }
 
 // ADDING RESOURCES
@@ -912,7 +944,7 @@ function handleUpdate(receivedMessage, search, parameters) {
     log("Handle Update");
 
     try {
-        cache.updateDamage(() => {
+        cache.updateDamage(receivedMessage.author.id == muspelUserID, () => {
             log("Finished Updating");
             respondSuccess(receivedMessage, true);
         });
