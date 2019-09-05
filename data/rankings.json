@@ -15,24 +15,23 @@
 	"topunits": {
 		"physical_chainer": [
 			"zeno",
-			"esther",
-			"monk sabin of kolts",
-			"radiant lightning"
+			"radiant lightning",
+			"warrior of light bartz"
 		],
 		"physical_finisher": [
 			"regina",
-			"zack",
-			"cg jake"
+			"cg jake",
+			"cid"
 		],
 		"magical_chainer": [
 			"circe",
-			"mediena",
-			"blossom sage sakura"
+			"tsukiko",
+			"kimono fina"
 		],
 		"magical_finisher": [
 			"lulu",
-			"emperor",
-			"cg sakura"
+			"cg sakura",
+			"rinoa"
 		],
 		"hybrid_chainer": [
 			"malphasie",
@@ -47,13 +46,13 @@
 		"magical_tank": [
 			"awakened rain",
 			"basch",
-			"cg charlotte",
 			"sacred shield charlotte"
 		],
 		"healer": [
 			"aerith",
 			"folka",
-			"myra"
+			"myra",
+			"warrior of light lenna"
 		],
 		"breaker": [
 			"fid",

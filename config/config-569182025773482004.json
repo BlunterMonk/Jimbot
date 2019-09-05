@@ -1,0 +1,21 @@
+{
+	"name": "Pulls Por el Rainbow",
+	"prefix": "?",
+	"successEmote": "✅",
+	"failureEmote": "❌",
+	"adminRoles": [
+		"admin",
+		"mod"
+	],
+	"adminOnlyCommands": [
+		"prefix",
+		"getsettings"
+	],
+	"disabledCommands": [
+		"addemo",
+		"addalias",
+		"emote"
+	],
+	"shortcuts": {},
+	"response": {}
+}
