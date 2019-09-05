@@ -18,6 +18,481 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20190823
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/KimonoFinaFeatureSummon.jpg
+}}
+{{Recent News
+|date  = 20190822
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190822PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20190822
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190822TheEmpressSupremeIssueReport.html
+}}
+{{Recent News
+|date  = 20190821
+|type  = Event
+|title = March of the Demons
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/MarchoftheDemons.jpg
+}}
+{{Recent News
+|date  = 20190821
+|type  = Trial
+|title = The Empress Supreme
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/EmpressSupremeMorgana.jpg
+}}
+{{Recent News
+|date  = 20190821
+|type  = Unit
+|title = Global original units have been upgraded! (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190820UnitsRevampBatch2v2.html
+}}
+{{Recent News
+|date  = 20190821
+|type  = Other
+|title = Introducing the OCTOPATH TRAVELER Limited Time Exchange Ticket (P/O) Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190820OctopathExchangeTicketPO.html
+}}
+{{Recent News
+|date  = 20190821
+|type  = Other
+|title = Exchange Shop (EU TM)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190820EnhancedUnitsTMExchangeShop2.html
+}}
+{{Recent News
+|date  = 20190821
+|type  = Other
+|title = Exchange Shop (Enhanced Units)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190820EnhancedUnitsExchangeShop2.html
+}}
+{{Recent News
+|date  = 20190821
+|type  = Other
+|title = Enhanced Units Select Bundle
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190820EnhancedUnitsBundle.html
+}}
+{{Recent News
+|date  = 20190820
+|type  = Event
+|title = Brigands' Den
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190820OctopathRaidBrigandsDen.jpg
+}}
+{{Recent News
+|date  = 20190820
+|type  = Unit
+|title = Featured Summon OCTOPATH TRAVELER
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/FeaturedSummonOctopathTraveler.png
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20190820
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190821Maintenance.html
+}}
+{{Recent News
+|date  = 20190819
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190819SummerUnitSummonFidFoltraIssueReport.html
+}}
+{{Recent News
+|date  = 20190819
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190819YoungArchaeologistBundleIssueReport.html
+}}
+{{Recent News
+|date  = 20190816
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190816IssueReportRevertAbilityNamesDesc.html
+}}
+{{Recent News
+|date  = 20190816
+|type  = Issue
+|title = Issue Report (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190816TsukikoIssueReportv2.html
+}}
+{{Recent News
+|date  = 20190815
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190815PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20190814
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190814IssueReportKaitoInRaidNews.html
+}}
+{{Recent News
+|date  = 20190814
+|type  = Other
+|title = FFBE Unit and Monster Design Contest
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190814UnitCreationContest2.html
+}}
+{{Recent News
+|date  = 20190813
+|type  = Event
+|title = Demon Parade
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190813ElementalBattleDemonParade2.jpg
+}}
+{{Recent News
+|date  = 20190813
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/KaitoTsukikoGacha.jpg
+}}
+{{Recent News
+|date  = 20190813
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190819FidFitraSummonUpdatev2.jpg
+}}
+{{Recent News
+|date  = 20190813
+|type  = Issue Report
+|title = Important Notice
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190813EnlightenmentKeysImprovementsv2.html
+}}
+{{Recent News
+|date  = 20190813
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190814Maintenance.html
+}}
+{{Recent News
+|date  = 20190813
+|type  = Other
+|title = Exchange Shop (Kaito/Tsukiko)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190813KaitoTsukikoExchangeShop.html
+}}
+{{Recent News
+|date  = 20190813
+|type  = Other
+|title = Exchange Shop (End of Summer 2019)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190813EndofSummerExchangeShop.html
+}}
+{{Recent News
+|date  = 20190813
+|type  = Other
+|title = Introducing the 5★ Guaranteed (20% Featured) Ticket (K/T) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190813KTGuaranteed20FeaturedTicket.html
+}}
+{{Recent News
+|date  = 20190813
+|type  = Other
+|title = Introducing the 5★ Guaranteed (30% Featured) Ticket (End of Summer 2019) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190813EoSGuaranteed30FeaturedTicket.html
+}}
+{{Recent News
+|date  = 20190813
+|type  = Other
+|title = FFBE 서울 팬미팅 개최! (South Korea Meet-Up)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190813KoreaMeetUp.html
+}}
+{{Recent News
+|date  = 20190809
+|type  = Other
+|title = Player's Voice Campaign 2019 (Part 2) Final Voting Results
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190809PlayersVoiceCampaignFinalResults.html
+}}
+{{Recent News
+|date  = 20190808
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190808PostMaintenance.html
+}}
+{{Recent News
+|date  = 20190806
+|type  = Event
+|title = Steel Castle Melfikya
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190806WeaponEnhancement.html
+}}
+{{Recent News
+|date  = 20190806
+|type  = Event
+|title = The Gapra Whitewood - Exploration
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_FF13TheGapraWhitewood_Exploration.jpg
+}}
+{{Recent News
+|date  = 20190806
+|type  = Event
+|title = Trial Marathon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190806TrialMarathonRTH.jpg
+}}
+{{Recent News
+|date  = 20190806
+|type  = Trial
+|title = Scorn of the Fallen Ice Bird
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_trial_boss_scornofthefallenbird.jpg
+}}
+{{Recent News
+|date  = 20190806
+|type  = Vortex
+|title = Short Stories: Awakened Rain and Raegen
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190806AnnivShortStories.png
+}}
+{{Recent News
+|date  = 20190806
+|type  = Other
+|title = FINAL FANTASY BRAVE EXVIUS ANNIVERSARY FOLLOW-UP 5★ GUARANTEED TYPE SUMMON
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190805AnniversaryFollowUpGuaranteedTypeSummon.html
+}}
+{{Recent News
+|date  = 20190806
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190807Maintenance.html
+}}
+{{Recent News
+|date  = 20190806
+|type  = Other
+|title = Exchange Shop
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190806AfterAnnivExchangeShop.html
+}}
+{{Recent News
+|date  = 20190802
+|type  = Other
+|title = Anniversary Follow-Up 5★ Guaranteed Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190729AnniversaryFollowUp5StarGuaranteedSummon.html
+}}
+{{Recent News
+|date  = 20190801
+|type  = Other
+|title = Introducing the Anniversary Follow-Up Ticket Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190726AnnivFollowUpTicketSummon.html
+}}
+{{Recent News
+|date  = 20190801
+|type  = Other
+|title = Anniversary Follow-Up
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190801AnniversaryFollowUpCampaign.html
+}}
+{{Recent News
+|date  = 20190801
+|type  = Other
+|title = Monthly 5★ Select Summon Tickets
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190801AugustFreeSelectSummonTicket.html
+}}
+{{Recent News
+|date  = 20190801
+|type  = Other
+|title = Guaranteed 5★ Special Summon Ticket
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201908015StarGuaranteedTicket.html
+}}
+{{Recent News
+|date  = 20190731
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190731PostMaintenance.html
+}}
+{{Recent News
+|date  = 20190731
+|type  = Other
+|title = 50% Trust Moogle (ALL) for Completing Main Story
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190729StoryMissionSpecial.html
+}}
+{{Recent News
+|date  = 20190731
+|type  = Other
+|title = Latent Abilities Update
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190731LatentAbilitiesUpdate.html
+}}
+{{Recent News
+|date  = 20190730
+|type  = Other
+|title = Exchange Shop (R.Lightning/N.Hope)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190729CGLightningExchangeShop.html
+}}
+{{Recent News
+|date  = 20190730
+|type  = Other
+|title = Anniversary Follow-Up & Player's Voice Part 1 Login Bonus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190729STMRLoginCampaign.html
+}}
+{{Recent News
+|date  = 20190730
+|type  = Other
+|title = Comeback Campaign FINAL FANTASY BRAVE EXVIUS Intermediate Results
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190729ComebackMilestoneDistribution.html
+}}
+{{Recent News
+|date  = 20190730
+|type  = Other
+|title = Player's Voice Campaign 2019 (Part 2)  Intermediate Voting Results
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190726PlayersVoiceCampaignUpdate.html
+}}
+{{Recent News
+|date  = 20190729
+|type  = Unit
+|title = Featured Summon FINAL FANTASY XIII
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/CGLightningFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20190729
+|type  = Event
+|title = Radiant Lightning
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/CGLightningIntroQuest.jpg
+}}
+{{Recent News
+|date  = 20190729
+|type  = Event
+|title = The Gapra Whitewood
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/TheGapraWhitewood.jpg
+}}
+{{Recent News
+|date  = 20190729
+|type  = Other
+|title = Free Daily Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190729FreeSummon.html
+}}
+{{Recent News
+|date  = 20190729
+|type  = Other
+|title = Introducing the 5★ Guaranteed (30% Featured) Ticket (R.Lightning/N.Hope) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190729FFXIIIGuaranteed30FeaturedTicket.html
+}}
+{{Recent News
+|date  = 20190729
+|type  = Other
+|title = Fountain of Tickets
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190729FountainofTickets.html
+}}
+{{Recent News
+|date  = 20190729
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190731Maintenance.html
+}}
+{{Recent News
+|date  = 20190726
+|type  = Issue
+|title = Issue Report (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190726RiveraAbilities3V2.html
+}}
+{{Recent News
+|date  = 20190726
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190726IssueReport371UpdateBugs.html
+}}
+{{Recent News
+|date  = 20190725
+|type  = Unit
+|title = Ability Awakening Update!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190723AbilityAwakeningBatch30.jpg
+}}
+{{Recent News
+|date  = 20190725
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190725IssueReportElenaMAG.html
+}}
+{{Recent News
+|date  = 20190725
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/IssueReportArenaBonusUnits.html
+}}
+{{Recent News
+|date  = 20190725
+|type  = Issue
+|title = Version 3.7.1
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190725GL371PatchNotes.html
+}}
+{{Recent News
+|date  = 20190725
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190725PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20190724
+|type  = Trial
+|title = Series Boss Battles: Chaotic Darkness
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ChaoticDarkness.png
+}}
+{{Recent News
+|date  = 20190724
+|type  = Other
+|title = Esper Ore Recipes
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190724EsperOreRecipe.html
+}}
+{{Recent News
+|date  = 20190724
+|type  = Issue
+|title = Important Notice
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019072364BitSupportReminder.html
+}}
+{{Recent News
+|date  = 20190723
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190723IssueReportMyraAndChamberofVengeful.html
+}}
+{{Recent News
+|date  = 20190723
+|type  = Vortex
+|title = Chamber of Enlightenment - Latent Abilities
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190723LatentAbilities.html
+}}
+{{Recent News
+|date  = 20190723
+|type  = Story
+|title = The Story Continues!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/news_banner_unlockcontinent_arc9-1.jpg
+}}
+{{Recent News
+|date  = 20190723
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/gacha_NEWS_RiveraFeatureSummon_Compilation.jpg
+}}
+{{Recent News
+|date  = 20190723
+|type  = Event
+|title = Golden Bomb Battle!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/FFBEGoldenBombBattle.jpg
+}}
+{{Recent News
+|date  = 20190723
+|type  = Event
+|title = Golden Bomb Rush!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/FFBEAnniversaryEventRaid.jpg
+}}
+{{Recent News
+|date  = 20190723
+|type  = Event
+|title = Empress of Virtue
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/TheEmpressofVirtue.png
+}}
+{{Recent News
+|date  = 20190723
+|type  = Other
+|title = Epic 5★ Guaranteed 10+1 Ticket (Heroes) Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201907235StarGuaranteed10plus1ticketHeroes.html
+}}
+{{Recent News
+|date  = 20190723
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190724Maintenance.html
+}}
+{{Recent News
+|date  = 20190719
+|type  = Issue
+|title = Important Notice
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20192007FundamentalForces.html
+}}
+{{Recent News
 |date  = 20190718
 |type  = Maintenance
 |title = Post Maintenance Note
@@ -89,7 +564,6 @@
 |title = Comeback Campaign FINAL FANTASY BRAVE EXVIUS Intermediate Results
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190716ComebackMilestoneIntermediateResults.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20190716
 |type  = Maintenance

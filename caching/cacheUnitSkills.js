@@ -11,6 +11,7 @@ log("loading units list")
 //cacheUnit("401001405");
 //cacheUnit("401006805");
 cacheAll();
+log("Finished Updating Skills");
 
 function cacheUnit(id) {
     var data = getUnitData(id);

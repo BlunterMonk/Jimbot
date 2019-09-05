@@ -10,5 +10,7 @@ nodejs caching/cacheUnitsList.js
 #:node caching/cacheDamage.js
 nodejs caching/cacheRankingsDump.js
 nodejs caching/cacheEvents.js
-#node caching/cacheUnitSkills.js
-#node caching/cullSkills.js
+nodejs caching/cacheUnitSkills.js
+nodejs caching/cullSkills.js
+
+echo 'update complete'
