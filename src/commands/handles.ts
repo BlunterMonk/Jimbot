@@ -47,6 +47,7 @@ const jimooriUserID     = "131139508421918721";
 const furculaUserID     = "344500120827723777";
 const cottonUserID      = "324904806332497932";
 const muspelUserID      = "114545824989446149";
+const shadoUserID      = "103785126026043392";
 
 const sprite = (n) => `https://exvius.gg/static/img/assets/unit/unit_ills_${n}.png`;
 const aniGL = (n) => `https://exvius.gg/gl/units/${n}/animations/`;
@@ -482,7 +483,7 @@ function handleHelp(receivedMessage) {
 function handleDamage(receivedMessage, search, parameters) {
 
     search = search.replaceAll("_", " ");
-    var calc = cache.getUnitCalc(search);
+    var calc = cache.getUnitCalculation("furcula", search);
     if (!calc) {
         log("Could not find calculations for: " + search);
         return;
@@ -505,24 +506,14 @@ function handleDamage(receivedMessage, search, parameters) {
     
     Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
-function handleDpt(receivedMessage, search, parameters, isBurst) {
-
-    if (receivedMessage.channel.name.includes("wiki")) {
-        handleMuspel(receivedMessage, search, parameters);
-        return;
-    }
-    
-    search = search.replaceAll("_", " ");
-    var calc = cache.getCalculations(false, search);
+function buildDamageEmbed(search, limit, isBurst, source) {
+    var calc = cache.getCalculations(source, search);
     if (!calc) {
         log("Could not find calculations for: " + search);
         return;
     }
 
     var text = "";
-    var limit = 5;
-    if (parameters && parameters[0])
-        limit = parameters[0];
         
     const keys = Object.keys(calc);
     const cap = Math.min(limit, keys.length);
@@ -554,16 +545,47 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
             text: "visit the link provided for more calculations"
         },
     }
+
+    return embed
+}
+function handleDpt(receivedMessage, search, parameters, isBurst) {
+
+    if (receivedMessage.channel.name.includes("wiki")) {
+        handleMuspel(receivedMessage, search, parameters);
+        return;
+    }
+    
+    search = search.replaceAll("_", " ");
+
+    var limit = 5;
+    if (parameters && parameters[0])
+        limit = parameters[0];
+
+    var embed = buildDamageEmbed(search, limit, isBurst, "furcula");
     
     Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+}
+function handleWhale(receivedMessage, search, parameters, isBurst) {
+
+    search = search.replaceAll("_", " ");
+
+    var limit = 5;
+    if (parameters && parameters[0])
+        limit = parameters[0];
+
+    var embed = buildDamageEmbed(search, limit, isBurst, "whale");
+    
+    Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
 }
 function handleBurst(receivedMessage, search, parameters) {
     handleDpt(receivedMessage, search, parameters, true);
 }
-function handleRotation(receivedMessage, search, parameters) {
+function handleWhaleburst(receivedMessage, search, parameters) {
+    handleWhale(receivedMessage, search, parameters, true);
+}
+function buildRotationEmbed(search, source) {
 
-    search = search.replaceAll("_", " ");
-    var calc = cache.getUnitCalc(search);
+    var calc = cache.getUnitCalculation(source, search);
     if (!calc || !calc.rotation) {
         log("Could not find calculations for: " + search);
         return;
@@ -592,8 +614,22 @@ function handleRotation(receivedMessage, search, parameters) {
         title: `Optimal Rotation For: ${calc.name}`,
         description: text,
     }
-    
+
+    return embed;
+}
+function handleRotation(receivedMessage, search, parameters) {
+
+    search = search.replaceAll("_", " ");
+
+    var embed = buildRotationEmbed(search, "furcula");
     Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+}
+function handleWhaletation(receivedMessage, search, parameters) {
+
+    search = search.replaceAll("_", " ");
+
+    var embed = buildRotationEmbed(search, "whale");
+    Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
 }
 function handleTopdps(receivedMessage, search, parameters) {
 
@@ -652,7 +688,7 @@ function handleTopdps(receivedMessage, search, parameters) {
 function handleMuspel(receivedMessage, search, parameters) {
 
     search = search.replaceAll("_", " ");
-    var calc = cache.getCalculations(true, search);
+    var calc = cache.getCalculations("muspel", search);
     if (!calc) {
         log("Could not find calculations for: " + search);
         return;
@@ -941,17 +977,43 @@ function handleUpdate(receivedMessage, search, parameters) {
         return;
     }
 
-    log("Handle Update");
-
-    try {
-        cache.updateDamage(receivedMessage.author.id == muspelUserID, () => {
-            log("Finished Updating");
-            respondSuccess(receivedMessage, true);
-        });
-    } catch(e) {
-        log(e);
-        respondFailure(receivedMessage, true);
+    var source = "";
+    if (receivedMessage.author.id != jimooriUserID) {
+        source = config.getUserNameFromID(receivedMessage.author.id)
+    } else {
+        source = parameters[0];
     }
+
+    log(`Handle Update: ${source}`);
+    if (cache.isUpdating == true) {
+        log("already updating");
+        Client.send(receivedMessage, "Sorry bud, an update is in progress, please try again later.")
+        respondFailure(receivedMessage, true);
+        return;
+    }
+
+    var phrases = [
+        "Roger roger, starting update!",
+        "Rikai, kōshin masutā no kaishi!",
+        "deja que comience la actualización!",
+        "Oh bountiful deity, deliver on to us a revalation!",
+        "mettre à jour la feuille mettre à jour la feuille!"
+    ]
+
+    var msg = phrases[getRandomInt(phrases.length)]
+
+    Client.send(receivedMessage, msg);
+
+    cache.updateDamage(source, () => {
+        log("Finished Updating");
+        respondSuccess(receivedMessage, true);
+        Client.send(receivedMessage, "done!");
+    }).catch(e => {
+        log(e);
+        Client.send(receivedMessage, "Something went wrong, give it another try.");
+
+        respondFailure(receivedMessage, true);
+    });
 }
 function handleReload(receivedMessage, search, parameters) {
 
@@ -974,7 +1036,9 @@ function handleReload(receivedMessage, search, parameters) {
     log("Finished Reloading");
     respondSuccess(receivedMessage, true);
 }
-
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
 
 // UNIT DATAMINE INFORMATION
 function handleK(receivedMessage, search, id) {

@@ -22,7 +22,7 @@
 	},
 	"Aloha Lasswell": {
 		"name": "Aloha Lasswell",
-		"damage": "10,533,575,791 ",
+		"damage": "9,721,994,395 ",
 		"turns": "10",
 		"type": "physical",
 		"url": null
@@ -655,13 +655,6 @@
 		"damage": "626,607,910 ",
 		"turns": "1",
 		"type": "magic",
-		"url": null
-	},
-	"Hybrid": {
-		"name": "Hybrid",
-		"damage": "Avg Damage",
-		"turns": "Turn Count",
-		"type": "hybrid",
 		"url": null
 	},
 	"Elena": {

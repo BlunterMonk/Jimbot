@@ -117,7 +117,6 @@
 		"kanon": "cannon",
 		"teetfa": "tifa",
 		"best_waifu_ever": "sieghard",
-		"whale": "chow",
 		"alolan_lasswell": "aloha lasswell",
 		"suk": "sieghard",
 		"thisty": "awakened rain",
@@ -126,8 +125,7 @@
 		"hot_bi_dad": "ignacio",
 		"firelord": "veritas of the flame",
 		"god": "ignacio",
-		"mustache": "wilhelm",
-		"flame);_drop_table_aliases;--": "veritas of the flame"
+		"mustache": "wilhelm"
 	},
 	"filetypes": [
 		".jpg",
@@ -136,7 +134,11 @@
 	],
 	"commandAliases": {
 		"rot": "rotation",
-		"dmg": "damage"
+		"dmg": "damage",
+		"wdpt": "whale",
+		"wrot": "whaletation",
+		"whalerot": "whaletation",
+		"furcula": "dpt"
 	},
 	"shortcuts": {
 		"tips": {
@@ -172,11 +174,11 @@
 			"search": "currency"
 		}
 	},
-	"authorizedUsers": [
-		"159846139124908032",
-		"131139508421918721",
-		"344500120827723777",
-		"324904806332497932",
-		"114545824989446149"
-	]
+	"authorizedUsers": {
+		"131139508421918721": "jimoori:",
+		"344500120827723777": "furcula:",
+		"324904806332497932": "cotton:",
+		"114545824989446149": "muspel:",
+		"103785126026043392": "shado:"
+	}
 }

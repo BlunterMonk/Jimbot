@@ -13,6 +13,8 @@ import * as muspDamage from "./cacheMuspel.js";
 const rankingDump = 'data/rankingsdump.json';
 const furcCalc = 'data/furculacalculations.json';
 const muspCalc = 'data/muspelcalculations.json';
+const whaleCalc = 'data/whalecalculations.json';
+
 const infoJson = 'data/information.json';
 const skillsJson = 'data/skills.json';
 const limitburstsJson = 'data/limitbursts.json';
@@ -23,16 +25,20 @@ export class Cache {
     fullRankings: any;
     calculations: any;
     muspelCalculations: any;
+    whaleCalculations: any;
     information: any;
     skillset: any;
     limitbursts: any;
     rankings: any;
     unitsDump: any;
+    isUpdating: any;
     constructor() {
         this.init();
     }
 
     init() {
+        this.isUpdating = false;
+
         this.reload();
     }
     saveInformation() {
@@ -48,8 +54,11 @@ export class Cache {
         console.log("Reloading Cached Data");
         this.fullRankings = JSON.parse(fs.readFileSync(rankingDump).toString());
         this.information = JSON.parse(fs.readFileSync(infoJson).toString());
+        
         this.calculations = JSON.parse(fs.readFileSync(furcCalc).toString());
         this.muspelCalculations = JSON.parse(fs.readFileSync(muspCalc).toString());
+        this.whaleCalculations = JSON.parse(fs.readFileSync(whaleCalc).toString());
+
         this.rankings = JSON.parse(fs.readFileSync(rankingFile).toString());
         this.unitsDump = JSON.parse(fs.readFileSync(unitKeysJson).toString());
         
@@ -58,18 +67,30 @@ export class Cache {
         this.skillset = Object.assign({}, skills, lbs);
     }
 
-    updateDamage(isMuspel: boolean, callback) {
-        if (isMuspel) {
-            muspDamage.UpdateMuspelCalculations(() =>{
+    async updateDamage(source: string, callback) {
+        this.isUpdating = true;
+        switch (source) {
+        case "muspel":
+            await muspDamage.UpdateMuspelCalculations(() =>{
                 this.muspelCalculations = JSON.parse(fs.readFileSync(muspCalc).toString());
                 console.log("Reloaded Muspel Calculations");
                 callback();
+                this.isUpdating = false;
             });
-        } else {
-            furcDamage.UpdateFurculaCalculations(() =>{
+        case "furcula":
+            await furcDamage.UpdateFurculaCalculations(() =>{
                 this.calculations = JSON.parse(fs.readFileSync(furcCalc).toString());
                 console.log("Reloaded Furcula Calculations");
                 callback();
+                this.isUpdating = false;
+            });
+        case "whale":
+        case "shado":
+            await furcDamage.UpdateWhaleCalculations(() =>{
+                this.whaleCalculations = JSON.parse(fs.readFileSync(whaleCalc).toString());
+                console.log("Reloaded Whale Calculations");
+                callback();
+                this.isUpdating = false;
             });
         }
     }
@@ -139,63 +160,31 @@ export class Cache {
         return this.rankings.topunits[category];
     }
 
-    getUnitCalc(searchTerm: string) {
-        searchTerm = searchTerm.replaceAll("_", " ").toLowerCase();
 
-        console.log(`Searching Calculations For: ${searchTerm}`);
-        
-        var units = Object.keys(this.calculations);
-        for (let index = 0; index < units.length; index++) {
-            const unit = this.calculations[units[index]];
-            const name = unit.name.toLowerCase();
-            
-            if (name.includes(searchTerm)) {
-                return unit;
-            }
+    getUnitCalculation(source: string, searchTerm: string) {
+        switch (source) {
+            case "furcula":
+                return getUnitCalc(searchTerm, this.calculations);
+            case "whale":
+            case "shado":
+                return getUnitCalc(searchTerm, this.whaleCalculations);
+            default:
+                return null;
         }
-
-        var match = searchTerm.closestMatchIn(units, 0.25);
-        if (!match) 
-            return null;
-
-        return this.calculations[match];
     }
-    getCalc(searchTerm: string, source: any) {
-        if (source[searchTerm])
-            return source[searchTerm];
 
-        var found = [];
-        //var found: { [key: string]: string } = {};
-        var names = searchTerm.split("|");
-        if (!names || names.length == 1) 
-            names = searchTerm.split(",");
-
-        console.log("Get Calculations");
-        console.log(names);
-        names.forEach((search, index) => {
-
-            search = search.trim();
-            
-            Object.keys(source).forEach((key) => {
-                var unit = source[key];
-                var name = unit.name.toLowerCase();
-                
-                //console.log(`Searching For: ${search}`);
-                //console.log(`Found Unit: ${name}`);
-                if (name.includes(search.toLowerCase())) {
-                    found[found.length] = unit;
-                }
-            });
-        });
-
-        return found;
-    }
     // Furcula Damage Calculations
-    getCalculations(isMuspel: boolean, searchTerm: string) {
-        if (isMuspel) {
-            return this.getCalc(searchTerm, this.muspelCalculations);
-        } else {
-            return this.getCalc(searchTerm, this.calculations);
+    getCalculations(source: string, searchTerm: string) {
+        switch (source) {
+            case "muspel":
+                return getCalc(searchTerm, this.muspelCalculations);
+            case "furcula":
+                return getCalc(searchTerm, this.calculations);
+            case "whale":
+            case "shado":
+                return getCalc(searchTerm, this.whaleCalculations);
+            default:
+                return null;
         }
     }
     getAllCalculations() {
@@ -254,5 +243,57 @@ export class Cache {
         return found;
     }
 };
+
+function getCalc(searchTerm: string, source: any) {
+    if (source[searchTerm])
+        return source[searchTerm];
+
+    var found = [];
+    //var found: { [key: string]: string } = {};
+    var names = searchTerm.split("|");
+    if (!names || names.length == 1) 
+        names = searchTerm.split(",");
+
+    console.log("Get Calculations");
+    console.log(names);
+    names.forEach((search, index) => {
+
+        search = search.trim();
+        
+        Object.keys(source).forEach((key) => {
+            var unit = source[key];
+            var name = unit.name.toLowerCase();
+            
+            //console.log(`Searching For: ${search}`);
+            //console.log(`Found Unit: ${name}`);
+            if (name.includes(search.toLowerCase())) {
+                found[found.length] = unit;
+            }
+        });
+    });
+
+    return found;
+}
+function getUnitCalc(searchTerm: string, source: any) {
+    searchTerm = searchTerm.replaceAll("_", " ").toLowerCase();
+
+    console.log(`Searching Calculations For: ${searchTerm}`);
+    
+    var units = Object.keys(source);
+    for (let index = 0; index < units.length; index++) {
+        const unit = source[units[index]];
+        const name = unit.name.toLowerCase();
+        
+        if (name.includes(searchTerm)) {
+            return unit;
+        }
+    }
+
+    var match = searchTerm.closestMatchIn(units, 0.25);
+    if (!match) 
+        return null;
+
+    return source[match];
+}
 
 export const cache = new Cache();

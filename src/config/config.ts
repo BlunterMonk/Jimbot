@@ -92,10 +92,26 @@ export class Config {
     }
 
     // USERS
+    isIDAuthorized(id: string) {
+        return this.configuration.authorizedUsers[id] != null;
+    }
     getAuthorizedUsers() {
         return this.configuration.authorizedUsers;
     }
-
+    getUserNameFromID(id: string) {
+        return this.configuration.authorizedUsers[id];
+    }
+    getUserIDFromName(name: string) {
+        
+        var id = "";
+        Object.keys(this.configuration.authorizedUsers).forEach(key => {
+            if (name == this.configuration.authorizedUsers[key]) {
+                id = key
+            }
+        });
+        console.log(`getUserIDFromName(${name}) return:(${id})`)
+        return id;
+    }
 };
 
 export const config = new Config();

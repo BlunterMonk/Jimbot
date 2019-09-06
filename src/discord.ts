@@ -329,7 +329,7 @@ class client {
     // HELPER
 
     isAuthorized(author): boolean {
-        return config.getAuthorizedUsers().includes(author.id);
+        return config.isIDAuthorized(author.id);
     }
 
 

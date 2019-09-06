@@ -8,15 +8,20 @@
 const fs = require('fs');
 const readline = require('readline');
 import {google} from 'googleapis';
+import { rejects } from 'assert';
+var sleep = require('sleep');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 //const calcSheet = "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0";
 const calcSheet = "https://docs.google.com/spreadsheets/d/1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
+const whaleSheet = "https://docs.google.com/spreadsheets/d/1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
 const sheetName = "Damage comparison";
 const burstSheetName = "Burst comparison";
 const sheetID = "1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
-const saveLocation = "data/furculacalculations.json";
+const whaleSheetID = "1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
+const furculaSaveLocation = "data/furculacalculations.json";
+const whaleSaveLocation = "data/whalecalculations.json";
 
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first time.
@@ -28,7 +33,7 @@ const TOKEN_PATH = 'token.json';
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials, callback, finished) {
+function authorize(credentials, sourceID, saveLocation, callback, finished) {
     const {client_secret, client_id, redirect_uris} = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
@@ -70,6 +75,9 @@ function authorize(credentials, callback, finished) {
 
     // Add unit burst damage info
     var queryEndBurst = function (list) {
+        if (list == null) {
+            return;
+        }
 
         var keys = Object.keys(units);
         keys.forEach((key, ind) => {
@@ -87,7 +95,9 @@ function authorize(credentials, callback, finished) {
 
         // Start getting unit pages
         var keys = Object.keys(units);
-        keys.forEach((key, ind) => {
+        for (let ind = 0; ind < keys.length; ind++) {
+            var key = keys[ind];
+            
             var index = key;
 
             if (!key.includes("(KH)")) {
@@ -96,22 +106,35 @@ function authorize(credentials, callback, finished) {
 
             var range = `${key}!A1:AB20`
             console.log(`[${ind}] Looking For: ` + range)
-            setTimeout(() => {
-                GetBuildLink(oAuth2Client, index, range, queryEnd2)
-            }, 1000 * ind);
-        });
+
+            try {
+                GetBuildLink(oAuth2Client, sourceID, index, range, queryEnd2);
+            } catch(e) {
+                break;
+            }
+
+            sleep.sleep(1)//sleep for 5 seconds
+        };
     }
 
     // Read secondary burst damage page
     var queryEnd = function (list) {
+        if (list == null) {
+            return;
+        }
+
         units = list;
+
+        var save = JSON.stringify(units, null, "\t");
+        fs.writeFileSync(saveLocation, save);
+
         totalUnits += Object.keys(list).length;
 
-        GetUnitComparison(oAuth2Client, `${burstSheetName}!A3:N`, queryEndBurst);
+        GetUnitComparison(oAuth2Client, sourceID, `${burstSheetName}!A3:N`, queryEndBurst);
     };
             
     // Read main comparison page 
-    GetUnitComparison(oAuth2Client, `${sheetName}!A3:N`, queryEnd);
+    GetUnitComparison(oAuth2Client, sourceID, `${sheetName}!A3:N`, queryEnd);
 }
 
 /**
@@ -153,16 +176,18 @@ function getNewToken(oAuth2Client, callback) {
  * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
-function GetUnitComparison(auth, range, callback) {
+function GetUnitComparison(auth, sourceID, range, callback) {
     var sheets = google.sheets({version: 'v4', auth});
 
     sheets.spreadsheets.values.get({
-        spreadsheetId: sheetID,
+        spreadsheetId: sourceID,
         range: range
     }, (err, res) => {
 
-        if (err) 
-            return console.log('The API returned an error: ' + err);
+        if (err) {
+            callback(null);
+            throw new Error(`The API returned an error: ${err}`);
+        }
 
         const rows = res.data.values;
         if (rows.length) {
@@ -213,8 +238,6 @@ function GetUnitComparison(auth, range, callback) {
             });
 
             var units = Object.assign({}, phy, mag, hyb);
-            var save = JSON.stringify(units, null, "\t");
-            fs.writeFileSync(saveLocation, save);
 
             callback(units);
         } else {
@@ -224,18 +247,17 @@ function GetUnitComparison(auth, range, callback) {
     });
 }
 
-function GetBuildLink(auth, index, range, callback) {
+function GetBuildLink(auth, sourceID, index, range, callback) {
     var sheets = google.sheets({version: 'v4', auth});
        
     sheets.spreadsheets.values.get({
-        spreadsheetId: sheetID,
+        spreadsheetId: sourceID,
         range: range
     }, (err, res) => {
-        if (err) {
-            callback(null, index);
-            console.log('The API returned an error: ' + err);
-            return 
-        }
+        // if (err) {
+            callback(null, null, null, null);
+            throw new Error(`The API returned an error: ${err}`);
+        // }
 
         const rows = res.data.values;
         if (rows.length) {
@@ -264,12 +286,27 @@ function GetBuildLink(auth, index, range, callback) {
 
 export var UpdateFurculaCalculations = function(callback) {
 
-    console.log(TOKEN_PATH);
+    return new Promise(function (resolve, reject) {
+        reject(Error('I was never going to resolve.'))
 
-    fs.readFile('credentials.json', (err, content) => {
-        if (err) 
-            return console.log('Error loading client secret file:', err);
-        // Authorize a client with credentials, then call the Google Sheets API.
-        authorize(JSON.parse(content), GetUnitComparison, callback);
+        fs.readFile('credentials.json', (err, content) => {
+            if (err) 
+                return console.log('Error loading client secret file:', err);
+            // Authorize a client with credentials, then call the Google Sheets API.
+            authorize(JSON.parse(content), sheetID, furculaSaveLocation, GetUnitComparison, callback);
+        });
+    })
+}
+
+export var UpdateWhaleCalculations = function(callback) {
+
+    return new Promise(function (resolve, reject) {
+
+        fs.readFile('credentials.json', (err, content) => {
+            if (err) 
+                return console.log('Error loading client secret file:', err);
+            // Authorize a client with credentials, then call the Google Sheets API.
+            authorize(JSON.parse(content), whaleSheetID, whaleSaveLocation, GetUnitComparison, callback);
+        });
     });
 }
