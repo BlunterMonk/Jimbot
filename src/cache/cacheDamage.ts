@@ -96,10 +96,13 @@ function authorize(credentials, sourceID, saveLocation, callback, finished) {
         var keys = Object.keys(units);
         keys.forEach((key, ind) => {
 
-            if (oldUnits[key] && units[key].damage == oldUnits[key].damage) {
+            if (oldUnits[key] 
+                && units[key].damage == oldUnits[key].damage
+                && units[key].burst == oldUnits[key].burst) {
+                    
                 console.log(`Skipping Unit: ${key}`);
                 units[key] = oldUnits[key];
-                totalUnits--;
+                queryEnd2(null, null, null, null);
                 return;
             }
             
@@ -132,7 +135,7 @@ function authorize(credentials, sourceID, saveLocation, callback, finished) {
 
         GetUnitComparison(oAuth2Client, sourceID, `${burstSheetName}!A3:N`, queryEndBurst);
     };
-            
+
     // Read main comparison page 
     GetUnitComparison(oAuth2Client, sourceID, `${sheetName}!A3:N`, queryEnd);
 }

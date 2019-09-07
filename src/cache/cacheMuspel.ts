@@ -105,6 +105,7 @@ function GetUnitComparison(auth, range, callback) {
     }, (err, res) => {
 
         if (err) {
+            console.log('The API returned an error: ' + err);
             Reject(Error('The API returned an error: ' + err));
             return;
         }

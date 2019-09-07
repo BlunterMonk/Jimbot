@@ -1020,6 +1020,14 @@ function handleUpdate(receivedMessage, search, parameters) {
         }
     });
 }
+function handleForceupdate(receivedMessage, search, parameters) {
+    if (receivedMessage.author.id != jimooriUserID) {
+        return;
+    }
+
+    cache.isUpdating = false;
+    handleUpdate(receivedMessage, search, parameters);
+}
 function handleReload(receivedMessage, search, parameters) {
 
     var id = receivedMessage.author.id;

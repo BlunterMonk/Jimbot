@@ -2627,13 +2627,41 @@
 			""
 		]
 	},
+	"Nagi (spark chain)": {
+		"name": "Nagi (spark chain)",
+		"damage": "3,344,399,138",
+		"turns": "5",
+		"type": "hybrid",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#079a1ee0-d184-11e9-bb5b-398871b58cc1",
+		"burst": "4,315,353,727",
+		"burstTurn": "2",
+		"wiki": "https://exvius.gamepedia.com/Nagi",
+		"rotation": [
+			"Clad in Power",
+			"Projection - Dance of Darkness",
+			"Projection - Dance of Darkness",
+			"Projection - Dance of Darkness",
+			"Projection - Dance of Darkness",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Kurasame": {
 		"name": "Kurasame",
-		"damage": "2,604,717,652",
+		"damage": "2,919,562,415",
 		"turns": "11",
 		"type": "hybrid",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#6bdade00-7cc8-11e9-a1b8-7b53378612e4",
-		"burst": "4,667,328,078",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#ea969d60-d132-11e9-bb5b-398871b58cc1",
+		"burst": "5,225,934,184",
 		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Kurasame",
 		"rotation": [
@@ -2657,11 +2685,11 @@
 	},
 	"Felix (spark chain)": {
 		"name": "Felix (spark chain)",
-		"damage": "2,568,366,564",
+		"damage": "2,903,208,784",
 		"turns": "11",
 		"type": "hybrid",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#9d5e1e50-7779-11e9-a1b8-7b53378612e4",
-		"burst": "3,908,662,079",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#ab33f220-d183-11e9-bb5b-398871b58cc1",
+		"burst": "4,418,240,854",
 		"burstTurn": "5",
 		"wiki": "https://exvius.gamepedia.com/Felix",
 		"rotation": [
@@ -2683,41 +2711,13 @@
 			""
 		]
 	},
-	"Nagi (spark chain)": {
-		"name": "Nagi (spark chain)",
-		"damage": "2,845,851,876",
-		"turns": "5",
-		"type": "hybrid",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#69ddd8f0-bba7-11e9-9d66-5b7bd6bc7eb8",
-		"burst": "3,672,066,937",
-		"burstTurn": "2",
-		"wiki": "https://exvius.gamepedia.com/Nagi",
-		"rotation": [
-			"Clad in Power",
-			"Projection - Dance of Darkness",
-			"Projection - Dance of Darkness",
-			"Projection - Dance of Darkness",
-			"Projection - Dance of Darkness",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
 	"Aurora Fryevia": {
 		"name": "Aurora Fryevia",
-		"damage": "1,997,371,971",
+		"damage": "2,360,990,109",
 		"turns": "7",
 		"type": "hybrid",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#ad1f92c0-743f-11e9-a1b8-7b53378612e4",
-		"burst": "2,856,839,626",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#81f236f0-d134-11e9-bb5b-398871b58cc1",
+		"burst": "3,387,836,026",
 		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Aurora_Fryevia",
 		"rotation": [
@@ -2741,11 +2741,11 @@
 	},
 	"Karlette": {
 		"name": "Karlette",
-		"damage": "1,730,656,746",
+		"damage": "1,937,509,870",
 		"turns": "12",
 		"type": "hybrid",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#fad73300-792c-11e9-a1b8-7b53378612e4",
-		"burst": "2,755,449,443",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#c9350dc0-d135-11e9-bb5b-398871b58cc1",
+		"burst": "3,083,257,076",
 		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Karlette",
 		"rotation": [
@@ -2769,11 +2769,11 @@
 	},
 	"Fryevia": {
 		"name": "Fryevia",
-		"damage": "1,583,021,155",
+		"damage": "1,716,156,966",
 		"turns": "7",
 		"type": "hybrid",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#09cbd6c0-93dd-11e9-a1b8-7b53378612e4",
-		"burst": "2,886,423,106",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#bf4ab9b0-d138-11e9-bb5b-398871b58cc1",
+		"burst": "3,145,412,491",
 		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Fryevia",
 		"rotation": [
@@ -2797,11 +2797,11 @@
 	},
 	"Kunshira (spark chain)": {
 		"name": "Kunshira (spark chain)",
-		"damage": "1,364,983,700",
+		"damage": "1,710,432,003",
 		"turns": "6",
 		"type": "hybrid",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#3259e900-bba2-11e9-9d66-5b7bd6bc7eb8",
-		"burst": "1,782,660,101",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#4d9bdfa0-d184-11e9-bb5b-398871b58cc1",
+		"burst": "2,233,813,404",
 		"burstTurn": "2",
 		"wiki": "https://exvius.gamepedia.com/Kunshira",
 		"rotation": [

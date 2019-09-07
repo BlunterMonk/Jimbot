@@ -1,4 +1,32 @@
 {
+	"Radiant Lightning": {
+		"name": "Radiant Lightning",
+		"damage": "20,162,517,953",
+		"turns": "11",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#48c8d330-d115-11e9-bb5b-398871b58cc1",
+		"burst": "25,970,454,000",
+		"burstTurn": "4",
+		"wiki": "https://exvius.gamepedia.com/Radiant_Lightning",
+		"rotation": [
+			"Paradigm Shift: Commando (CD) + Defying Destiny (Lightning)",
+			"Zantetsuken (LB)",
+			"Relentless Assault x 2",
+			"Relentless Assault x 2",
+			"Relentless Assault x 2",
+			"Zantetsuken (LB)",
+			"Relentless Assault x 2",
+			"Relentless Assault x 2",
+			"Relentless Assault x 2",
+			"Zantetsuken (LB)",
+			"Relentless Assault x 2",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Regina (finisher)": {
 		"name": "Regina (finisher)",
 		"damage": "19,943,168,115",
@@ -27,25 +55,27 @@
 			""
 		]
 	},
-	"Radiant Lightning": {
-		"name": "Radiant Lightning",
-		"damage": "18,080,258,874",
-		"turns": "11",
+	"Reberta (pending)": {
+		"name": "Reberta (pending)",
+		"damage": "18,086,710,037",
+		"turns": "5",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#48c8d330-d115-11e9-bb5b-398871b58cc1",
-		"wiki": "https://exvius.gamepedia.com/Radiant_Lightning",
+		"url": "https://ffbeequip.com/builder.html?server=GL#611e6830-d112-11e9-bb5b-398871b58cc1",
+		"burst": "43,740,568,121",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Reberta",
 		"rotation": [
-			"Paradigm Shift: Commando (CD) + Defying Destiny (Lightning)",
-			"Zantetsuken (LB)",
-			"Relentless Assault x 2",
-			"Relentless Assault x 2",
-			"Relentless Assault x 2",
-			"Zantetsuken (LB)",
-			"Relentless Assault x 2",
-			"Relentless Assault x 2",
-			"Relentless Assault x 2",
-			"Zantetsuken (LB)",
-			"Relentless Assault x 2",
+			"Crimson Raid (CD)",
+			"Death Crimson (Jump)",
+			"Death Crimson (Land)",
+			"Death Crimson (Jump)",
+			"Death Crimson (Land)",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
 			"",
 			"",
 			"",
@@ -59,6 +89,8 @@
 		"turns": "16",
 		"type": "physical",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#87eba7f0-d114-11e9-bb5b-398871b58cc1",
+		"burst": "41,873,946,234",
+		"burstTurn": "6",
 		"wiki": "https://exvius.gamepedia.com/Warrior_of_Light_Bartz/JP",
 		"rotation": [
 			"Gained a job level - Level 2",
@@ -77,34 +109,6 @@
 			"Brave Blade (FFV)",
 			"Dancer: Sword Dance x 2",
 			"Dancer: Sword Dance x 2"
-		]
-	},
-	"Cid (finisher)": {
-		"name": "Cid (finisher)",
-		"damage": "",
-		"turns": "4",
-		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#a637bdb0-cad0-11e9-a7ee-83d283e1de8e",
-		"burst": "",
-		"burstTurn": "3",
-		"wiki": "https://exvius.gamepedia.com/Cid",
-		"rotation": [
-			"Sky Dragon Squall+2 (CD)",
-			"True Spineshatter Dive 0 (Jump)",
-			"True Spineshatter Dive 0 (Land)",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
 		]
 	},
 	"Zeno of the Beta Star": {
@@ -196,26 +200,7 @@
 		"damage": "12,751,828,364",
 		"turns": "5",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#0a728940-c5bd-11e9-9d66-5b7bd6bc7eb8",
-		"wiki": "https://exvius.gamepedia.com/Aloha_Lasswell",
-		"rotation": [
-			"Summer - Enriched Mind (CD) + Summer - Winds of the Sea + Summer - Showdown (CD)",
-			"Summer - Winds of the Sea x3",
-			"Summer - Winds of the Sea x3",
-			"Summer - Winds of the Sea x3",
-			"Summer - Winds of the Sea x2 + Summer - Showdown (CD)",
-			"Summer - Winds of the Sea x3",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
+		"url": null
 	},
 	"Zack (finisher)": {
 		"name": "Zack (finisher)",
@@ -306,26 +291,7 @@
 		"damage": "10,278,786,962",
 		"turns": "5",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#041951c0-c37c-11e9-9d66-5b7bd6bc7eb8",
-		"wiki": "https://exvius.gamepedia.com/Pyro_Glacial_Lasswell",
-		"rotation": [
-			"Mirror of Equity - Concentration II",
-			"Obliterating Mirror of Equity +2",
-			"Obliterating Mirror of Equity +2",
-			"Obliterating Mirror of Equity +2",
-			"Obliterating Mirror of Equity +2",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
+		"url": null
 	},
 	"Akstar": {
 		"name": "Akstar",
@@ -355,19 +321,21 @@
 			""
 		]
 	},
-	"Reberta (pending)": {
-		"name": "Reberta (pending)",
+	"Cid (finisher)": {
+		"name": "Cid (finisher)",
 		"damage": "",
-		"turns": "5",
+		"turns": "4",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#48a36630-d02b-11e9-bb5b-398871b58cc1",
-		"wiki": "https://exvius.gamepedia.com/Reberta",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#a637bdb0-cad0-11e9-a7ee-83d283e1de8e",
+		"burst": "",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Cid",
 		"rotation": [
-			"Crimson Raid (CD)",
-			"Death Crimson (Jump)",
-			"Death Crimson (Land)",
-			"Death Crimson (Jump)",
-			"Death Crimson (Land)",
+			"Sky Dragon Squall+2 (CD)",
+			"True Spineshatter Dive 0 (Jump)",
+			"True Spineshatter Dive 0 (Land)",
+			"",
+			"",
 			"",
 			"",
 			"",
@@ -1058,28 +1026,7 @@
 		"damage": "",
 		"turns": "5",
 		"type": "physical",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#9511b740-79f7-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "2",
-		"wiki": "https://exvius.gamepedia.com/Prompto",
-		"rotation": [
-			"Gravity Well +2 + Circular Saw + 2",
-			"Circular Saw + 2 x 2",
-			"Circular Saw + 2 x 2",
-			"Circular Saw + 2 x 2",
-			"Circular Saw + 2 x 2",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
+		"url": null
 	},
 	"Hyoh": {
 		"name": "Hyoh",
@@ -1282,28 +1229,7 @@
 		"damage": "",
 		"turns": "6",
 		"type": "physical",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#6e088210-90c1-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "2",
-		"wiki": "https://exvius.gamepedia.com/Lightning",
-		"rotation": [
-			"Endless Army",
-			"Lightning Strike (CD)",
-			"Endless Army",
-			"Lightning Strike (CD)",
-			"Endless Army",
-			"Lightning Strike (CD)",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
+		"url": null
 	},
 	"Tidus": {
 		"name": "Tidus",
@@ -1366,28 +1292,7 @@
 		"damage": "",
 		"turns": "5",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#d1ad7b00-9d2c-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "2",
-		"wiki": "https://exvius.gamepedia.com/Orlandeau",
-		"rotation": [
-			"Divine Ruination+2",
-			"Divine Ruination+2",
-			"Divine Ruination+2",
-			"Divine Ruination+2",
-			"Divine Ruination+2",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
+		"url": null
 	},
 	"Gilgamesh": {
 		"name": "Gilgamesh",
@@ -1422,26 +1327,7 @@
 		"damage": "",
 		"turns": "12",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=JP#99cd43c0-a2d9-11e9-a1b8-7b53378612e4",
-		"wiki": "https://exvius.gamepedia.com/Onion_Knight_(CG)/JP",
-		"rotation": [
-			"ジョブチェンジアタック (LB)       ",
-			"ウォータスライス + ウォータシュレッダー        ",
-			"したごしらえ (CD) + 水の熟練技        ",
-			"ウォータシュレッダー   x 3",
-			"ウォータシュレッダー   x 3",
-			"ウォータスライス +  オニオンディセクト (CD)       ",
-			"ジョブチェンジアタック (LB)  ",
-			"ウォータスライス + ウォータシュレッダー        ",
-			"したごしらえ (CD) + 水の熟練技        ",
-			"ウォータシュレッダー   x 3",
-			"ウォータシュレッダー   x 3",
-			"ウォータスライス + ウォータシュレッダー        ",
-			"",
-			"",
-			"",
-			""
-		]
+		"url": null
 	},
 	"CG Rain": {
 		"name": "CG Rain",
@@ -1499,62 +1385,6 @@
 			""
 		]
 	},
-	"Light Warrior Bartz": {
-		"name": "Light Warrior Bartz",
-		"damage": "",
-		"turns": "12",
-		"type": "physical",
-		"url": "http://ffbeEquip.com/builder.html?server=JP#94674b80-7b6d-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "6",
-		"wiki": "https://exvius.gamepedia.com/Warrior_of_Light_Bartz/JP",
-		"rotation": [
-			"ジョブレベルアップ：レベル2        ",
-			"ジョブレベルアップ：レベル3        ",
-			"ジョブレベルアップ：ジョブマスター★★★        ",
-			"かけらに眠る勇者の心 (CD) + 踊り子：つるぎのまい        ",
-			"魔法剣二刀流 (CD)",
-			"ブレイブブレイド",
-			"踊り子：つるぎのまい\t",
-			"踊り子：つるぎのまい\t",
-			"魔法剣二刀流 (CD)",
-			"ブレイブブレイド",
-			"踊り子：つるぎのまい\t",
-			"踊り子：つるぎのまい\t",
-			"",
-			"",
-			"",
-			""
-		]
-	},
-	"Flash Lightning": {
-		"name": "Flash Lightning",
-		"damage": "",
-		"turns": "11",
-		"type": "physical",
-		"url": "http://ffbeEquip.com/builder.html?server=JP#9af7b270-8f2f-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "4",
-		"wiki": "https://exvius.gamepedia.com/Flash_Lightning/JP",
-		"rotation": [
-			"運命に抗う力 (CD)       ",
-			"オプティマチェンジ：アタッカー (CD)       ",
-			"斬鉄剣 (LB)       ",
-			"ラッシュアサルト",
-			"ラッシュアサルト",
-			"斬鉄剣 (LB)       ",
-			"ラッシュアサルト",
-			"ラッシュアサルト",
-			"斬鉄剣 (LB)       ",
-			"ラッシュアサルト",
-			"ラッシュアサルト",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
 	"Fina & Chocobo": {
 		"name": "Fina & Chocobo",
 		"damage": "",
@@ -1589,6 +1419,8 @@
 		"turns": "13",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#c0262560-d113-11e9-bb5b-398871b58cc1",
+		"burst": "31,724,696,642",
+		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Kimono_Fina",
 		"rotation": [
 			"Flash - Ice x 3",
@@ -1643,6 +1475,8 @@
 		"turns": "12",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#264f1d10-c444-11e9-9d66-5b7bd6bc7eb8",
+		"burst": "11,853,540,639",
+		"burstTurn": "10",
 		"wiki": "https://exvius.gamepedia.com/Tsukiko",
 		"rotation": [
 			"Spirit Fire - Exorcism (CD) + Spirit Fire - Nine Tails (CD) + Spirit Fire - Purifying Water",
@@ -1669,7 +1503,7 @@
 		"turns": "10",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#915b0980-c385-11e9-9d66-5b7bd6bc7eb8",
-		"burst": "",
+		"burst": "12,218,510,452",
 		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Mediena",
 		"rotation": [
@@ -1697,8 +1531,8 @@
 		"turns": "10",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#6701f370-c5be-11e9-9d66-5b7bd6bc7eb8",
-		"burst": "",
-		"burstTurn": "4",
+		"burst": "11,003,758,520",
+		"burstTurn": "7",
 		"wiki": "https://exvius.gamepedia.com/Grim_Lord_Sakura",
 		"rotation": [
 			"Grim - Impending Horror (CD) + Grim - Specter Flames x 2",
@@ -1724,26 +1558,7 @@
 		"damage": "8,349,268,671",
 		"turns": "10",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#16ccad90-c385-11e9-9d66-5b7bd6bc7eb8",
-		"wiki": "https://exvius.gamepedia.com/Blossom_Sage_Sakura",
-		"rotation": [
-			"Celestial Roar+2 (CD)",
-			"Quick Shock Blade+2 + Quick Final Thunder+2 x 2 + Quick Shock Blade+2 + Quick Final Thunder+2",
-			"Blossoming Thunder II + Quick Shock Blade+2 + Quick Final Thunder+2",
-			"Quick Shock Blade+2 x 2+ Quick Final Thunder+2",
-			"Blossoming Thunder II + Quick Shock Blade+2 + Quick Final Thunder+2",
-			"Celestial Roar+2 (CD)",
-			"Quick Shock Blade+2 + Quick Final Thunder+2 + Quick Shock Blade+2 + Quick Final Thunder+2 x 2",
-			"Blossoming Thunder II + Quick Shock Blade+2 + Quick Final Thunder+2",
-			"Quick Shock Blade+2 x 2+ Quick Final Thunder+2",
-			"Blossoming Thunder II + Quick Shock Blade+2 + Quick Final Thunder+2",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
+		"url": null
 	},
 	"Elly": {
 		"name": "Elly",
@@ -1751,7 +1566,7 @@
 		"turns": "10",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#59be1680-c384-11e9-9d66-5b7bd6bc7eb8",
-		"burst": "",
+		"burst": "15,843,873,236",
 		"burstTurn": "7",
 		"wiki": "https://exvius.gamepedia.com/Elly",
 		"rotation": [
@@ -1779,7 +1594,7 @@
 		"turns": "9",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#0f738880-c384-11e9-9d66-5b7bd6bc7eb8",
-		"burst": "",
+		"burst": "8,469,922,387",
 		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/High_Seraph_Ultima",
 		"rotation": [
@@ -1807,7 +1622,7 @@
 		"turns": "11",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#69704bd0-c383-11e9-9d66-5b7bd6bc7eb8",
-		"burst": "",
+		"burst": "8,213,836,709",
 		"burstTurn": "5",
 		"wiki": "https://exvius.gamepedia.com/Sophia",
 		"rotation": [
@@ -2060,6 +1875,34 @@
 			""
 		]
 	},
+	"Sol": {
+		"name": "Sol",
+		"damage": "",
+		"turns": "10",
+		"type": "magic",
+		"url": "http://ffbeEquip.com/builder.html?server=JP#c48189c0-7aaf-11e9-a1b8-7b53378612e4",
+		"burst": "",
+		"burstTurn": "7",
+		"wiki": "https://exvius.gamepedia.com/Sol/JP",
+		"rotation": [
+			"賢者の知恵 + ディヴァインソーラー ",
+			"ディヴァインソーラー x 4",
+			"ディヴァインソーラー x 2",
+			"混沌の闇 (LB)       ",
+			"ディヴァインソーラー x 4",
+			"賢者の知恵 + ディヴァインソーラー x 3                     ",
+			"ディヴァインソーラー x 4",
+			"混沌の闇 (LB)       ",
+			"ディヴァインソーラー x 4",
+			"ディヴァインソーラー x 3 + カオスノヴァ (CD)       ",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Barbariccia (spark chain)": {
 		"name": "Barbariccia (spark chain)",
 		"damage": "",
@@ -2093,28 +1936,7 @@
 		"damage": "",
 		"turns": "15",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#7c2b7e80-9d3a-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "13",
-		"wiki": "https://exvius.gamepedia.com/Lunera",
-		"rotation": [
-			"Ionitan Caritas (CD)",
-			"Aureole Ray+2 + Gale Arrow",
-			"Aureole Ray+2 + Gale Arrow",
-			"Aureole Ray+2",
-			"Aureole Ray+2",
-			"Ionitan Caritas (CD)",
-			"Aureole Ray+2 + Gale Arrow",
-			"Aureole Ray+2 + Gale Arrow",
-			"Aureole Ray+2",
-			"Aureole Ray+2",
-			"Ionitan Caritas (CD)",
-			"Aureole Ray+2 + Gale Arrow",
-			"Aureole Ray+2 + Gale Arrow",
-			"Aureole Ray+2",
-			"Aureole Ray+2",
-			""
-		]
+		"url": null
 	},
 	"Trance Terra": {
 		"name": "Trance Terra",
@@ -2149,28 +1971,7 @@
 		"damage": "",
 		"turns": "15",
 		"type": "magic",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#7db98640-90bd-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "8",
-		"wiki": "https://exvius.gamepedia.com/Immortal_Flame_Katy",
-		"rotation": [
-			"Jackpot",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice + Tornado",
-			"Jackpot",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice + Tornado",
-			"Jackpot",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice + Tornado",
-			""
-		]
+		"url": null
 	},
 	"Black Mage Vivi": {
 		"name": "Black Mage Vivi",
@@ -2256,34 +2057,6 @@
 			""
 		]
 	},
-	"Sol": {
-		"name": "Sol",
-		"damage": "",
-		"turns": "10",
-		"type": "magic",
-		"url": "http://ffbeEquip.com/builder.html?server=JP#c48189c0-7aaf-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "7",
-		"wiki": "https://exvius.gamepedia.com/Sol/JP",
-		"rotation": [
-			"賢者の知恵 + ディヴァインソーラー ",
-			"ディヴァインソーラー x 4",
-			"ディヴァインソーラー x 2",
-			"混沌の闇 (LB)       ",
-			"ディヴァインソーラー x 4",
-			"賢者の知恵 + ディヴァインソーラー x 3                     ",
-			"ディヴァインソーラー x 4",
-			"混沌の闇 (LB)       ",
-			"ディヴァインソーラー x 4",
-			"ディヴァインソーラー x 3 + カオスノヴァ (CD)       ",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
 	"Dark Mage Exdeath": {
 		"name": "Dark Mage Exdeath",
 		"damage": "",
@@ -2318,8 +2091,8 @@
 		"turns": "10",
 		"type": "hybrid",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#e7affa40-b30c-11e9-a1b8-7b53378612e4",
-		"burst": "24,978,846,914",
-		"burstTurn": "3",
+		"burst": "27,150,920,559",
+		"burstTurn": "8",
 		"wiki": "https://exvius.gamepedia.com/Elena",
 		"rotation": [
 			"Way of the Aurora (CD) + Luminous Enervation",
@@ -2457,26 +2230,7 @@
 		"damage": "2,132,548,054",
 		"turns": "12",
 		"type": "hybrid",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#da454fb0-c43f-11e9-9d66-5b7bd6bc7eb8",
-		"wiki": "https://exvius.gamepedia.com/Karlette",
-		"rotation": [
-			"Dystopic Thunder + Cosmic Creation x 2",
-			"Spear Style",
-			"Cosmic Creaction x 3",
-			"Cosmic Creaction x 3",
-			"Lost Legacy (CD)",
-			"Dystopic Thunder + Cosmic Creation x 2",
-			"Cosmic Creaction x 3",
-			"Cosmic Creaction x 3",
-			"Lost Legacy (CD)",
-			"Dystopic Thunder + Cosmic Creation x 2",
-			"Cosmic Creaction x 3",
-			"Cosmic Creaction x 3",
-			"",
-			"",
-			"",
-			""
-		]
+		"url": null
 	},
 	"Nagi (spark chain)": {
 		"name": "Nagi (spark chain)",
