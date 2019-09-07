@@ -1004,15 +1004,16 @@ function handleUpdate(receivedMessage, search, parameters) {
 
     Client.send(receivedMessage, msg);
 
-    cache.updateDamage(source, () => {
-        log("Finished Updating");
-        respondSuccess(receivedMessage, true);
-        Client.send(receivedMessage, "done!");
-    }).catch(e => {
-        log(e);
-        Client.send(receivedMessage, "Something went wrong, give it another try.");
+    cache.updateDamage(source, (success, error) => {
+        log(`Finished Updating: ${success}`);
 
-        respondFailure(receivedMessage, true);
+        if (success) {
+            Client.send(receivedMessage, "done!");
+            respondSuccess(receivedMessage, true);
+        } else {
+            Client.send(receivedMessage, `Something went wrong, give it another try in a few minutes. ${error}`);
+            respondFailure(receivedMessage, true);
+        }
     });
 }
 function handleReload(receivedMessage, search, parameters) {

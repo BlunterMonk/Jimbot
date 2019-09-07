@@ -8,6 +8,7 @@
 const fs = require('fs');
 const readline = require('readline');
 import {google} from 'googleapis';
+import { rejects } from 'assert';
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
@@ -16,6 +17,7 @@ const calcSheet = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg5
 const sheetName = "7* Damage Comparison";
 const sheetID = "14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU";
 const saveLocation = "data/muspelcalculations.json";
+var Reject = null;
 
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first time.
@@ -102,8 +104,10 @@ function GetUnitComparison(auth, range, callback) {
         range: range
     }, (err, res) => {
 
-        if (err) 
-            return console.log('The API returned an error: ' + err);
+        if (err) {
+            Reject(Error('The API returned an error: ' + err));
+            return;
+        }
 
         const rows = res.data.values;
         if (rows.length) {
@@ -115,15 +119,11 @@ function GetUnitComparison(auth, range, callback) {
             var fin = {};
 
             rows.map((row) => {
-                console.log("Row: ");
                 var pName = row[0];
                 var mName = row[4];
                 var hName = row[8];
                 var fName = row[12];
-                console.log(`Physical { ${pName}: ${row[1]} - ${row[2]} }`);
-                console.log(`Magic { ${mName}: ${row[5]} - ${row[6]} }`);
-                console.log(`Hybrid { ${hName}: ${row[9]} - ${row[10]} }`);
-                console.log(`Finisher { ${fName}: ${row[13]} - ${row[14]} }`);
+                console.log(`Row: {\n\tPhysical { ${pName}: ${row[1]} - ${row[2]} }\n\tMagic { ${mName}: ${row[5]} - ${row[6]} }\n\tHybrid { ${hName}: ${row[9]} - ${row[10]} }\n\tFinisher { ${fName}: ${row[13]} - ${row[14]} }}`);
 
                 if (pName) {
                     phy[pName] = {
@@ -180,12 +180,14 @@ function GetUnitComparison(auth, range, callback) {
 
 export var UpdateMuspelCalculations = function(callback) {
 
-    console.log(TOKEN_PATH);
-
-    fs.readFile('credentials.json', (err, content) => {
-        if (err) 
-            return console.log('Error loading client secret file:', err);
-        // Authorize a client with credentials, then call the Google Sheets API.
-        authorize(JSON.parse(content), GetUnitComparison, callback);
+    return new Promise(function (resolve, reject) {
+        Reject = reject;//(Error('I was never going to resolve.'))
+        
+        fs.readFile('credentials.json', (err, content) => {
+            if (err) 
+                return console.log('Error loading client secret file:', err);
+            // Authorize a client with credentials, then call the Google Sheets API.
+            authorize(JSON.parse(content), GetUnitComparison, callback);
+        });
     });
 }

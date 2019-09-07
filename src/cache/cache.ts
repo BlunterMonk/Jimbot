@@ -69,29 +69,47 @@ export class Cache {
 
     async updateDamage(source: string, callback) {
         this.isUpdating = true;
+
+        var self = this;
+        var success = function() {
+            console.log(`Reloaded ${source} Calculations`);
+
+            callback(true, null);
+
+            self.isUpdating = false;
+        }
+        var fail = function(e) {
+            console.log(`failed to update ${source} calculations`);
+            console.log(e);
+
+            self.isUpdating = false;
+
+            callback(false, e);
+        }
+
         switch (source) {
         case "muspel":
-            await muspDamage.UpdateMuspelCalculations(() =>{
+            muspDamage.UpdateMuspelCalculations(() =>{
                 this.muspelCalculations = JSON.parse(fs.readFileSync(muspCalc).toString());
-                console.log("Reloaded Muspel Calculations");
-                callback();
-                this.isUpdating = false;
-            });
+                success()
+            }).catch(fail);
+            break;
+
         case "furcula":
-            await furcDamage.UpdateFurculaCalculations(() =>{
+            furcDamage.UpdateFurculaCalculations(() =>{
                 this.calculations = JSON.parse(fs.readFileSync(furcCalc).toString());
-                console.log("Reloaded Furcula Calculations");
-                callback();
-                this.isUpdating = false;
-            });
+                success()
+            }).catch(fail);
+            break;
+
         case "whale":
         case "shado":
-            await furcDamage.UpdateWhaleCalculations(() =>{
+            furcDamage.UpdateWhaleCalculations(() =>{
                 this.whaleCalculations = JSON.parse(fs.readFileSync(whaleCalc).toString());
-                console.log("Reloaded Whale Calculations");
-                callback();
-                this.isUpdating = false;
-            });
+                success()
+            }).catch(fail);
+            break;
+
         }
     }
 

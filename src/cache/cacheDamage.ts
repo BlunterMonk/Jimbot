@@ -9,7 +9,7 @@ const fs = require('fs');
 const readline = require('readline');
 import {google} from 'googleapis';
 import { rejects } from 'assert';
-var sleep = require('sleep');
+var sleep = require('thread-sleep');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
@@ -22,6 +22,7 @@ const sheetID = "1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
 const whaleSheetID = "1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
 const furculaSaveLocation = "data/furculacalculations.json";
 const whaleSaveLocation = "data/whalecalculations.json";
+var Reject;
 
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first time.
@@ -75,10 +76,6 @@ function authorize(credentials, sourceID, saveLocation, callback, finished) {
 
     // Add unit burst damage info
     var queryEndBurst = function (list) {
-        if (list == null) {
-            return;
-        }
-
         var keys = Object.keys(units);
         keys.forEach((key, ind) => {
             var unit = list[key];
@@ -95,9 +92,7 @@ function authorize(credentials, sourceID, saveLocation, callback, finished) {
 
         // Start getting unit pages
         var keys = Object.keys(units);
-        for (let ind = 0; ind < keys.length; ind++) {
-            var key = keys[ind];
-            
+        keys.forEach((key, ind) => {
             var index = key;
 
             if (!key.includes("(KH)")) {
@@ -105,24 +100,18 @@ function authorize(credentials, sourceID, saveLocation, callback, finished) {
             }
 
             var range = `${key}!A1:AB20`
-            console.log(`[${ind}] Looking For: ` + range)
+            console.log(`[${ind}] Looking For: ${range}`)
 
-            try {
+            setTimeout(() => {
                 GetBuildLink(oAuth2Client, sourceID, index, range, queryEnd2);
-            } catch(e) {
-                break;
-            }
+            }, ind * 1000);
 
-            sleep.sleep(1)//sleep for 5 seconds
-        };
+            // sleep(1000)//sleep for 1 seconds
+        });
     }
 
     // Read secondary burst damage page
     var queryEnd = function (list) {
-        if (list == null) {
-            return;
-        }
-
         units = list;
 
         var save = JSON.stringify(units, null, "\t");
@@ -185,7 +174,9 @@ function GetUnitComparison(auth, sourceID, range, callback) {
     }, (err, res) => {
 
         if (err) {
-            callback(null);
+            console.log('The API returned an error: ' + err);
+            Reject(Error('The API returned an error: ' + err));
+            return;
             throw new Error(`The API returned an error: ${err}`);
         }
 
@@ -205,8 +196,8 @@ function GetUnitComparison(auth, sourceID, range, callback) {
                 //console.log(`Physical { ${pName}: ${row[2]} - ${row[3]} }`);
                 //console.log(`Magic { ${mName}: ${row[7]} - ${row[8]} }`);
                 //console.log(`Hybrid { ${hName}: ${row[12]} - ${row[13]} }`);
-
-                if (pName) {
+                
+                if (pName && !pName.includes("Unreleased")) {
                     phy[pName] = {
                         name: pName,
                         damage: row[2],
@@ -216,7 +207,7 @@ function GetUnitComparison(auth, sourceID, range, callback) {
                     }
                 }
 
-                if (mName) {
+                if (mName && !mName.includes("Unreleased")) {
                     mag[mName] = {
                         name: mName,
                         damage: row[7],
@@ -226,7 +217,7 @@ function GetUnitComparison(auth, sourceID, range, callback) {
                     }
                 }
 
-                if (hName) {
+                if (hName && !hName.includes("Unreleased")) {
                     hyb[hName] = {
                         name: hName,
                         damage: row[12],
@@ -247,22 +238,26 @@ function GetUnitComparison(auth, sourceID, range, callback) {
     });
 }
 
+function readUnitPage(err, res) {
+
+}
+
 function GetBuildLink(auth, sourceID, index, range, callback) {
     var sheets = google.sheets({version: 'v4', auth});
-       
+    
     sheets.spreadsheets.values.get({
         spreadsheetId: sourceID,
         range: range
     }, (err, res) => {
-        // if (err) {
-            callback(null, null, null, null);
-            throw new Error(`The API returned an error: ${err}`);
-        // }
+
+        if (err) {
+            console.log('The API returned an error: ' + err);
+            Reject(Error('The API returned an error: ' + err));
+            return;
+        }
 
         const rows = res.data.values;
         if (rows.length) {
-            var units = {};
-
             var b = "";
             var w = "";
             var rotation = [];
@@ -287,7 +282,7 @@ function GetBuildLink(auth, sourceID, index, range, callback) {
 export var UpdateFurculaCalculations = function(callback) {
 
     return new Promise(function (resolve, reject) {
-        reject(Error('I was never going to resolve.'))
+        Reject = reject;//(Error('I was never going to resolve.'))
 
         fs.readFile('credentials.json', (err, content) => {
             if (err) 
@@ -301,6 +296,7 @@ export var UpdateFurculaCalculations = function(callback) {
 export var UpdateWhaleCalculations = function(callback) {
 
     return new Promise(function (resolve, reject) {
+        Reject = reject;//(Error('I was never going to resolve.'))
 
         fs.readFile('credentials.json', (err, content) => {
             if (err) 
