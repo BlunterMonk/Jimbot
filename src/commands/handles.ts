@@ -41,6 +41,7 @@ const ffbegifEndpoint = "http://www.ffbegif.com/";
 const exviusdbEndpoint = "https://exvius.gg/gl/units/205000805/animations/";
 const sheetURL = "https://docs.google.com/spreadsheets/d/1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
 const muspelURL = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU/edit#gid=558725580";
+const whaleSheet = "https://docs.google.com/spreadsheets/d/1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
 
 const renaulteUserID    = "159846139124908032";
 const jimooriUserID     = "131139508421918721";
@@ -574,7 +575,8 @@ function handleWhale(receivedMessage, search, parameters, isBurst) {
         limit = parameters[0];
 
     var embed = buildDamageEmbed(search, limit, isBurst, "whale");
-    
+    embed.url = whaleSheet;
+
     Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
 }
 function handleBurst(receivedMessage, search, parameters) {
@@ -629,6 +631,8 @@ function handleWhaletation(receivedMessage, search, parameters) {
     search = search.replaceAll("_", " ");
 
     var embed = buildRotationEmbed(search, "whale");
+    embed.url = whaleSheet;
+
     Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
 }
 function handleTopdps(receivedMessage, search, parameters) {
