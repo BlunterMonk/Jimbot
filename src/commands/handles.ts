@@ -522,9 +522,9 @@ function buildDamageEmbed(search, limit, isBurst, source) {
         const key = keys[ind];
         const element = calc[key];
 
-        if (isBurst && !element.burst.empty()) {
+        if (isBurst && element.burst && !element.burst.empty()) {
             text += `**${element.name}:** ${element.burst} on turn ${element.burstTurn}\n`;
-        } else if (!element.damage.empty()) {
+        } else if (element.damage && !element.damage.empty()) {
             text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
         }
     }
