@@ -2403,41 +2403,13 @@
 			""
 		]
 	},
-	"Black Mage Vivi (JP)": {
-		"name": "Black Mage Vivi (JP)",
-		"damage": "10,280,530,743",
-		"turns": "14",
-		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=JP#e5a03f00-a1f3-11e9-a1b8-7b53378612e4",
-		"burst": "14,896,240,406",
-		"burstTurn": "7",
-		"wiki": "https://exvius.gamepedia.com/Black_Mage_Vivi/JP",
-		"rotation": [
-			"魔力をためる (CD) + スピリットフォール        ",
-			"終焉の炎 x 4       ",
-			"終焉の炎 x 4       ",
-			"終焉の炎 x 4       ",
-			"トリニティジハード (LB)       ",
-			"魔力をためる (CD) + 終焉の炎  x 3  ",
-			"終焉の炎 x 4       ",
-			"終焉の炎 x 4       ",
-			"終焉の炎 x 4       ",
-			"トリニティジハード (LB)       ",
-			"魔力をためる (CD) + 終焉の炎  x 3  ",
-			"終焉の炎 x 4       ",
-			"終焉の炎 x 4       ",
-			"終焉の炎 x 4       ",
-			"",
-			""
-		]
-	},
 	"White Lily Dark Fina (JP)": {
 		"name": "White Lily Dark Fina (JP)",
-		"damage": "10,222,583,463",
+		"damage": "11,586,746,017",
 		"turns": "12",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=JP#7000a6c0-9fa2-11e9-a1b8-7b53378612e4",
-		"burst": "14,269,496,070",
+		"url": "https://ffbeEquip.com/builder.html?server=JP#9cb785b0-d12c-11e9-bb5b-398871b58cc1",
+		"burst": "16,189,150,595",
 		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/White_Lily_Dark_Fina/JP",
 		"rotation": [
@@ -2459,13 +2431,41 @@
 			""
 		]
 	},
+	"Black Mage Vivi (JP)": {
+		"name": "Black Mage Vivi (JP)",
+		"damage": "11,280,964,514",
+		"turns": "14",
+		"type": "magic",
+		"url": "https://ffbeEquip.com/builder.html?server=JP#651964c0-d12c-11e9-bb5b-398871b58cc1",
+		"burst": "16,345,844,744",
+		"burstTurn": "7",
+		"wiki": "https://exvius.gamepedia.com/Black_Mage_Vivi/JP",
+		"rotation": [
+			"魔力をためる (CD) + スピリットフォール        ",
+			"終焉の炎 x 4       ",
+			"終焉の炎 x 4       ",
+			"終焉の炎 x 4       ",
+			"トリニティジハード (LB)       ",
+			"魔力をためる (CD) + 終焉の炎  x 3  ",
+			"終焉の炎 x 4       ",
+			"終焉の炎 x 4       ",
+			"終焉の炎 x 4       ",
+			"トリニティジハード (LB)       ",
+			"魔力をためる (CD) + 終焉の炎  x 3  ",
+			"終焉の炎 x 4       ",
+			"終焉の炎 x 4       ",
+			"終焉の炎 x 4       ",
+			"",
+			""
+		]
+	},
 	"Magitek Warrior Terra (JP)": {
 		"name": "Magitek Warrior Terra (JP)",
-		"damage": "7,930,557,719",
+		"damage": "8,995,485,030",
 		"turns": "9",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=JP#2c682200-9f9b-11e9-a1b8-7b53378612e4",
-		"burst": "16,972,735,136",
+		"url": "https://ffbeEquip.com/builder.html?server=JP#de541790-d12c-11e9-bb5b-398871b58cc1",
+		"burst": "19,314,015,192",
 		"burstTurn": "8",
 		"wiki": "https://exvius.gamepedia.com/Magitek_Warrior_Terra/JP",
 		"rotation": [
@@ -2489,11 +2489,11 @@
 	},
 	"Great Mage Kefka (JP)": {
 		"name": "Great Mage Kefka (JP)",
-		"damage": "7,036,144,952",
+		"damage": "7,994,798,298",
 		"turns": "12",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#1a94b9c0-c701-11e9-9d66-5b7bd6bc7eb8",
-		"burst": "9,021,442,602",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#48c82300-d12d-11e9-bb5b-398871b58cc1",
+		"burst": "10,265,261,523",
 		"burstTurn": "8",
 		"wiki": "https://exvius.gamepedia.com/Great_Mage_Kefka/JP",
 		"rotation": [
@@ -2517,11 +2517,11 @@
 	},
 	"Sol (JP)": {
 		"name": "Sol (JP)",
-		"damage": "5,348,382,362",
+		"damage": "6,147,853,711",
 		"turns": "10",
 		"type": "magic",
-		"url": "http://ffbeEquip.com/builder.html?server=JP#c48189c0-7aaf-11e9-a1b8-7b53378612e4",
-		"burst": "9,341,396,096",
+		"url": "https://ffbeEquip.com/builder.html?server=JP#768a9d40-d12d-11e9-bb5b-398871b58cc1",
+		"burst": "10,755,732,687",
 		"burstTurn": "7",
 		"wiki": "https://exvius.gamepedia.com/Sol/JP",
 		"rotation": [
@@ -2545,11 +2545,11 @@
 	},
 	"Dark Mage Exdeath (JP)": {
 		"name": "Dark Mage Exdeath (JP)",
-		"damage": "5,001,828,148",
+		"damage": "5,713,263,114",
 		"turns": "14",
 		"type": "magic",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#76418750-8f37-11e9-a1b8-7b53378612e4",
-		"burst": "6,390,842,205",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#b61a6f30-d12d-11e9-bb5b-398871b58cc1",
+		"burst": "7,278,298,216",
 		"burstTurn": "6",
 		"wiki": "https://exvius.gamepedia.com/Dark_Mage_Exdeath/JP",
 		"rotation": [
@@ -2601,10 +2601,10 @@
 	},
 	"Malphasie": {
 		"name": "Malphasie",
-		"damage": "7,009,824,840",
+		"damage": "7,970,530,038",
 		"turns": "11",
 		"type": "hybrid",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#ee230300-bb3a-11e9-9d66-5b7bd6bc7eb8",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#2ec68120-d12f-11e9-bb5b-398871b58cc1",
 		"burst": "11,174,776,850",
 		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Malphasie",

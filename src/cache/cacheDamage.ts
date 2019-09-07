@@ -47,6 +47,7 @@ function authorize(credentials, sourceID, saveLocation, callback, finished) {
     oAuth2Client.setCredentials(JSON.parse(token));
 
     var units = {};
+    var oldUnits = JSON.parse(fs.readFileSync(saveLocation).toString());
     var totalUnits = 0;
 
     // Add unit page info to data
@@ -63,8 +64,8 @@ function authorize(credentials, sourceID, saveLocation, callback, finished) {
                 console.log("Could not find unit to add link to, " + index)
             }
         }
-
-        if (totalUnits <= 1) {
+        
+        if (totalUnits <= 0) {
             console.log("Finished Getting Unit Calcs");
 
             var save = JSON.stringify(units, null, "\t");
@@ -91,8 +92,17 @@ function authorize(credentials, sourceID, saveLocation, callback, finished) {
         console.log("Total: " + totalUnits);
 
         // Start getting unit pages
+        var timer = 1;
         var keys = Object.keys(units);
         keys.forEach((key, ind) => {
+
+            if (oldUnits[key] && units[key].damage == oldUnits[key].damage) {
+                console.log(`Skipping Unit: ${key}`);
+                units[key] = oldUnits[key];
+                totalUnits--;
+                return;
+            }
+            
             var index = key;
 
             if (!key.includes("(KH)")) {
@@ -104,8 +114,9 @@ function authorize(credentials, sourceID, saveLocation, callback, finished) {
 
             setTimeout(() => {
                 GetBuildLink(oAuth2Client, sourceID, index, range, queryEnd2);
-            }, ind * 1000);
+            }, timer * 1000);
 
+            timer++;
             // sleep(1000)//sleep for 1 seconds
         });
     }
@@ -114,7 +125,7 @@ function authorize(credentials, sourceID, saveLocation, callback, finished) {
     var queryEnd = function (list) {
         units = list;
 
-        var save = JSON.stringify(units, null, "\t");
+        var save = JSON.stringify(list, null, "\t");
         fs.writeFileSync(saveLocation, save);
 
         totalUnits += Object.keys(list).length;
@@ -177,7 +188,7 @@ function GetUnitComparison(auth, sourceID, range, callback) {
             console.log('The API returned an error: ' + err);
             Reject(Error('The API returned an error: ' + err));
             return;
-            throw new Error(`The API returned an error: ${err}`);
+            //throw new Error(`The API returned an error: ${err}`);
         }
 
         const rows = res.data.values;
@@ -238,10 +249,6 @@ function GetUnitComparison(auth, sourceID, range, callback) {
     });
 }
 
-function readUnitPage(err, res) {
-
-}
-
 function GetBuildLink(auth, sourceID, index, range, callback) {
     var sheets = google.sheets({version: 'v4', auth});
     
@@ -252,8 +259,14 @@ function GetBuildLink(auth, sourceID, index, range, callback) {
 
         if (err) {
             console.log('The API returned an error: ' + err);
-            Reject(Error('The API returned an error: ' + err));
-            return;
+
+            var s = `${err}`;
+            if (!s.toLowerCase().includes("unable to parse")) {
+                Reject(Error('The API returned an error: ' + err));
+                return;
+            }
+
+            callback(null, null, null, null);
         }
 
         const rows = res.data.values;
