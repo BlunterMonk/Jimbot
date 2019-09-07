@@ -89,14 +89,14 @@ export class Cache {
 
         switch (source) {
         case "muspel":
-            muspDamage.UpdateMuspelCalculations(() =>{
+            await muspDamage.UpdateMuspelCalculations(() =>{
                 this.muspelCalculations = JSON.parse(fs.readFileSync(muspCalc).toString());
                 success()
             }).catch(fail);
             break;
 
         case "furcula":
-            furcDamage.UpdateFurculaCalculations(() =>{
+            await furcDamage.UpdateFurculaCalculations(() =>{
                 this.calculations = JSON.parse(fs.readFileSync(furcCalc).toString());
                 success()
             }).catch(fail);
@@ -104,7 +104,7 @@ export class Cache {
 
         case "whale":
         case "shado":
-            furcDamage.UpdateWhaleCalculations(() =>{
+            await furcDamage.UpdateWhaleCalculations(() =>{
                 this.whaleCalculations = JSON.parse(fs.readFileSync(whaleCalc).toString());
                 success()
             }).catch(fail);
