@@ -13,6 +13,13 @@
 		"type": "physical",
 		"url": null
 	},
+	"Reberta (jump chain)": {
+		"name": "Reberta (jump chain)",
+		"damage": "11,747,548,103 ",
+		"turns": "12",
+		"type": "physical",
+		"url": null
+	},
 	"Zeno": {
 		"name": "Zeno",
 		"damage": "11,619,084,058 ",
@@ -744,6 +751,13 @@
 	"Cid": {
 		"name": "Cid",
 		"damage": "11,195,646,899",
+		"turns": "3",
+		"type": "finisher",
+		"url": null
+	},
+	"Reberta (finisher)": {
+		"name": "Reberta (finisher)",
+		"damage": "7,624,670,966",
 		"turns": "3",
 		"type": "finisher",
 		"url": null
