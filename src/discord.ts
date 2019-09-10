@@ -7,7 +7,7 @@
 import { log, logData, checkString, compareStrings, escapeString } from "./global.js";
 import * as Discord from "discord.js";
 import * as gs from "./config/guild.js";
-import {getCommandString} from "./commands/commands.js";
+import {getCommandString, getSearchString} from "./commands/commands.js";
 import * as fs from "fs";
 import {config} from "./config/config.js";
 
@@ -279,14 +279,22 @@ class client {
         const shortcut = this.getShortcut(guildId, command.toLowerCase());
         if (shortcut) {
             log(`Replacing Shortcut with new command, shortcut: ${shortcut}`);
+            log(shortcut);
+
             let param = "";
             if (shortcut.parameters) {
                 shortcut.parameters.forEach(p => {
                     param += `"${p}"`;
                 });
             }
-            content = `${shortcut.command} ${shortcut.search} ${param}`;
-            log(`New Content: ${content}`);
+
+            let s = getSearchString(content, true);
+            if (shortcut.search && !shortcut.search.empty()) {
+                s = shortcut.search;
+            }
+
+            content = `${shortcut.command} ${s} ${param}`;
+            log(`New Content: (${content})`);
             command = getCommandString(content);
         }
 
@@ -357,7 +365,12 @@ class client {
         return this.guildSettings[guildId].setResponse(name, value);
     }
     getShortcut(guildId: string, command: string) {
-        return this.guildSettings[guildId].getShortcut(command);
+        var s = this.guildSettings[guildId].getShortcut(command);
+        if (s) {
+            return s;
+        }
+        
+        return config.getShortcut(command);
     }
     setShortcut(guildId: string, name: string, command: string) {
         return this.guildSettings[guildId].setShortcut(name, command);

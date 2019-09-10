@@ -143,19 +143,19 @@
 	},
 	"shortcuts": {
 		"tips": {
-			"command": "?whatis",
+			"command": "whatis",
 			"search": "new player"
 		},
 		"noob": {
-			"command": "!whatis",
+			"command": "whatis",
 			"search": "new player info"
 		},
 		"eletetris": {
-			"command": "?whatis",
+			"command": "whatis",
 			"search": "elemental tetris"
 		},
 		"bunnies": {
-			"command": "?gif",
+			"command": "gif",
 			"search": "sylvie",
 			"parameters": [
 				"win"
@@ -165,14 +165,13 @@
 			"command": "?whatis",
 			"search": "festunits"
 		},
-		"zenorot": {
-			"command": "?whatis zeno rotation",
-			"search": "zeno rotation",
-			"parameters": []
+		"stmr": {
+			"command": "unit",
+			"parameters": ["stmr"]
 		},
-		"fudgingcurrency": {
-			"command": "?whatis",
-			"search": "currency"
+		"tmr": {
+			"command": "unit",
+			"parameters": ["tmr"]
 		}
 	},
 	"authorizedUsers": {

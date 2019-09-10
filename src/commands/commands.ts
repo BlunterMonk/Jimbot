@@ -15,7 +15,7 @@ const regexSearch = /^(?:.*?\s)(.*?)(?='|"|‘|’|“|”|$)/;
 const regexParameter = /"[^"]+"|‘[^‘]+‘|‘[^’]+’|“[^“]+“|”[^”]+”|“[^“^”]+”|'[^']+'/g;
 
 
-function getSearchString(msg, replace = true) {
+export function getSearchString(msg, replace = true) {
     var match = msg.match(regexSearch);
     if (!match) return;
 
