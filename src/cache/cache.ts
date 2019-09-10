@@ -9,6 +9,7 @@ import "../string/string-extension.js";
 
 import * as furcDamage from "./cacheDamage.js";
 import * as muspDamage from "./cacheMuspel.js";
+import * as cacheWiki from "./cacheWiki.js";
 
 const rankingDump = 'data/rankingsdump.json';
 const furcCalc = 'data/furculacalculations.json';
@@ -95,6 +96,13 @@ export class Cache {
             }).catch(fail);
             break;
 
+        case "wiki":
+            await cacheWiki.cacheWikiRankings(rankingDump, () => {
+                this.fullRankings = JSON.parse(fs.readFileSync(rankingDump).toString());
+                success();
+            }).catch(fail);
+            break;
+
         case "furcula":
             await furcDamage.UpdateFurculaCalculations(() =>{
                 this.calculations = JSON.parse(fs.readFileSync(furcCalc).toString());
@@ -123,9 +131,7 @@ export class Cache {
 
     // Wiki Rankings
     getUnitRank(name: string) {
-        return this.fullRankings.find((r) => {
-            return r["Unit"] === name;
-        });
+        return this.fullRankings[name];
     }
     setRankings(category: string, data: any) {
         console.log(`setRankings: category(${category}), data(${data})`);
