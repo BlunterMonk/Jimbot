@@ -180,7 +180,6 @@ function handleRecentunits(receivedMessage, search, parameters) {
     })
 }
 
-
 function handleRank(receivedMessage, search, parameters) {
     log("\nSearching Rankings for: " + search);
 
@@ -192,61 +191,42 @@ function handleRank(receivedMessage, search, parameters) {
         }
 
         var embed = {
-            title: unit.Unit,
-            url: wikiEndpoint + unit.Unit.replaceAll(" ", "_"),
+            title: unit.name,
+            url: unit.url,
             color: pinkHexCode,
             fields: [
                 {
                     name: "Rank",
-                    value: `${unit.Base} - ${unit.TDH}`
+                    value: unit.rating,
+                    inline: true
+                }, 
+                {
+                    name: "Role",
+                    value: unit.role,
+                    inline: true
+                },
+                {
+                    name: "Notes",
+                    value: unit.notes
                 }
             ],
             thumbnail: {
-                url: unit.imgurl
+                url: unit.icon
             }
         };
 
-        if (unit.notes) {
+        var calc = buildDamageEmbed(search, 5, false, "muspel");
+        if (calc) {
             embed.fields[embed.fields.length] = {
-                name: "Notes",
-                value: unit.notes
-            };
+                name: "Damage Calculation",
+                value: calc.description
+            }
         }
 
         Client.sendMessageWithAuthor(receivedMessage, embed, muspelUserID);
         return;
     }
-
-    /*
-    var embeds = [];
-    var rankings = config.getRankings(search);
-    log("\nRankings");
-    log(rankings);
-    rankings.forEach(rank => {
-        embeds[embeds.length] = {
-            title: rank.name,
-            url: rank.pageurl,
-            color: pinkHexCode,
-            fields: [
-                {
-                    name: rank.comparison,
-                    value: rank.reason
-                }
-            ],
-            thumbnail: {
-                url: rank.imgurl
-            }
-        };
-    });
-
-    log("\nEmbeds");
-    log(embeds);
-    embeds.forEach(embed => {
-        Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
-    });
-    */
 }
-
 
 // FLUFF
 function handleReactions(receivedMessage) {
@@ -511,7 +491,7 @@ function buildDamageEmbed(search, limit, isBurst, source) {
     var calc = cache.getCalculations(source, search);
     if (!calc) {
         log("Could not find calculations for: " + search);
-        return;
+        return null;
     }
 
     var text = "";

@@ -1,30 +1,27 @@
-const wiki = require("nodemw");
-const fs = require("fs");
-const cheerio = require("cheerio");
-const String = require('../bin/string/string-extension.js');
+import * as wiki from "nodemw";
+import * as cheerio from "cheerio";
+import * as fs from "fs";
+import "../string/string-extension.js";
+import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
+
+const wikiEndpoint = "https://exvius.gamepedia.com";
 const wikiClient = new wiki({
     protocol: "https", // Wikipedia now enforces HTTPS
     server: "exvius.gamepedia.com", // host name of MediaWiki-powered site
     path: "/", // path to api.php script
     debug: false // is more verbose when set to true
 });
-const dumpLocation = "data/rankingsdump.txt";
-const saveLocation = "data/rankingsdump.json";
-const wikiEndpoint = "https://exvius.gamepedia.com";
 
-loadRankingsList(() => { });
+function loadRankingsList(saveLocation, callback, error) {
 
-function log(data) {
-    console.log(data);
-}
-
-function loadRankingsList(callback) {
     var search = "Unit_Rankings";
     wikiClient.getArticle(search, function (err, content, redirect) {
         if (err || !content) {
             console.error(err);
+            error(err);
             return;
         }
+        
         if (redirect) {
             log("Redirect Info: ");
             log(redirect);
@@ -33,17 +30,18 @@ function loadRankingsList(callback) {
         wikiClient.parse(content, search, function (err, xml, images) {
             if (err) {
                 log(err);
+                error(err);
                 return;
             }
+
             log("Parsing Unit Rankings Page");
-            //log(xml);
 
             const $ = cheerio.load(xml);
             var table = $(".unit_rating");
-            fs.writeFileSync(dumpLocation, xml);
 
             if (!table.is("table")) {
                 log("Not Table");
+                error(err);
                 return;
             }
             var results = {};
@@ -58,7 +56,7 @@ function loadRankingsList(callback) {
                     headings.push(head);
                 });
 
-            log(headings);
+            // log(headings);
 
             table.each((tableIndex, element) => {
                 $(element)
@@ -79,7 +77,7 @@ function loadRankingsList(callback) {
                                 value = img;
                             } else if (ind == 1) {
                                 var url = $(this).find("a").attr("href");
-                                row.url = wikiEndpoint + url;
+                                row["url"] = wikiEndpoint + url;
                                 value = value.replaceAll("_", " ");
                             } else if (ind == 2) {
                                 // get names of role icons because this isn't text :(
@@ -103,7 +101,6 @@ function loadRankingsList(callback) {
                         var unitName = row["name"];
 
                         if (unitName) {
-
                             var escpaedName = unitName.replace(
                                 /[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g,
                                 "\\$&"
@@ -138,20 +135,27 @@ function loadRankingsList(callback) {
                                 log("Could not get notes for: " + escpaedName);
                             }
 
-                            log(row)
+                            // log(row)
                             unitName = unitName.toLowerCase().replaceAll(" ", "_");
                             results[unitName] = row;
                         }
                     });
             });
 
-            log(`Total Rankings: ${results.length}`);
+            // log(`Total Rankings: ${results.length}`);
             // log(results)
             var j = JSON.stringify(results);
             //log(j);
             fs.writeFileSync(saveLocation, j);
             log("Unit Rankings Updated");
-            callback();
+            callback(true);
         });
+    });
+}
+
+export var cacheWikiRankings = async function(saveLocation, callback) {
+
+    return new Promise(function (resolve, reject) {
+        loadRankingsList(saveLocation, callback, reject);
     });
 }
