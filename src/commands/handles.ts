@@ -194,6 +194,7 @@ function handleRank(receivedMessage, search, parameters) {
             title: unit.name,
             url: unit.url,
             color: pinkHexCode,
+            description: unit.notes,
             fields: [
                 {
                     name: "Rank",
@@ -204,10 +205,6 @@ function handleRank(receivedMessage, search, parameters) {
                     name: "Role",
                     value: unit.role,
                     inline: true
-                },
-                {
-                    name: "Notes",
-                    value: unit.notes
                 }
             ],
             thumbnail: {
@@ -215,11 +212,13 @@ function handleRank(receivedMessage, search, parameters) {
             }
         };
 
-        var calc = buildDamageEmbed(search, 5, false, "muspel");
-        if (calc) {
+        // Add damage if present
+        var calc = buildMuspelDamageString(search);
+        if (calc && !calc.empty()) {
             embed.fields[embed.fields.length] = {
                 name: "Damage Calculation",
-                value: calc.description
+                value: calc,
+                inline: false
             }
         }
 
@@ -669,9 +668,8 @@ function handleTopdps(receivedMessage, search, parameters) {
     
     Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
-function handleMuspel(receivedMessage, search, parameters) {
 
-    search = search.replaceAll("_", " ");
+function buildMuspelDamageString(search) {
     var calc = cache.getCalculations("muspel", search);
     if (!calc) {
         log("Could not find calculations for: " + search);
@@ -679,13 +677,9 @@ function handleMuspel(receivedMessage, search, parameters) {
     }
 
     var text = "";
-    var limit = 5;
-    if (parameters && parameters[0])
-        limit = parameters[0];
         
     const keys = Object.keys(calc);
-    const cap = Math.min(limit, keys.length);
-    for (let ind = 0; ind < cap; ind++) {
+    for (let ind = 0; ind < keys.length; ind++) {
         const key = keys[ind];
         const element = calc[key];
 
@@ -698,6 +692,14 @@ function handleMuspel(receivedMessage, search, parameters) {
             text += `**${element.name} (${element.type}):** ${element.damage} : ${element.turns}\n`;
         }
     }
+
+    return text;
+}
+function handleMuspel(receivedMessage, search, parameters) {
+
+    search = search.replaceAll("_", " ");
+
+    var text = buildMuspelDamageString(search);
 
     var s = search.toTitleCase();
     var embed = <any>{
