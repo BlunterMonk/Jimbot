@@ -22,6 +22,8 @@ const limitburstsJson = 'data/limitbursts.json';
 const rankingFile = 'data/rankings.json';
 const unitKeysJson = "data/unitkeys.json";
 
+const lyreItemsJson = 'data/lyregard-items.json';
+
 export class Cache {
     fullRankings: any;
     calculations: any;
@@ -33,6 +35,7 @@ export class Cache {
     rankings: any;
     unitsDump: any;
     isUpdating: any;
+    lyregardData: any;
     constructor() {
         this.init();
     }
@@ -66,6 +69,8 @@ export class Cache {
         var skills = JSON.parse(fs.readFileSync(skillsJson).toString());
         var lbs = JSON.parse(fs.readFileSync(limitburstsJson).toString());
         this.skillset = Object.assign({}, skills, lbs);
+
+        this.lyregardData = JSON.parse(fs.readFileSync(lyreItemsJson).toString());
     }
 
     async updateDamage(source: string, callback) {
@@ -102,6 +107,13 @@ export class Cache {
                 success();
             }).catch(fail);
             break;
+ 
+        case "lyregard": 
+            await cacheWiki.cacheLyregardData(lyreItemsJson, () =>{
+                this.lyregardData = JSON.parse(fs.readFileSync(lyreItemsJson).toString());
+                success();
+            }).catch(fail);
+            break;
 
         case "furcula":
             await furcDamage.UpdateFurculaCalculations(() =>{
@@ -117,7 +129,6 @@ export class Cache {
                 success()
             }).catch(fail);
             break;
-
         }
     }
 
@@ -265,6 +276,21 @@ export class Cache {
         }
 
         return found;
+    }
+
+
+    // Lyregard
+    getLyregardItem(id: string): any {
+        for (let index = 0; index < this.lyregardData.length; index++) {
+            const element = this.lyregardData[index];
+            
+            if (element.id == id)
+                return element;
+        }
+        return null;
+    }
+    getLyregardData() {
+        return this.lyregardData;   
     }
 };
 

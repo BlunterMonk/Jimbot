@@ -715,6 +715,11 @@ function handleMuspel(receivedMessage, search, parameters) {
     Client.sendMessageWithAuthor(receivedMessage, embed, muspelUserID);
 }
 
+// FFBEEQUIP
+function handleBuild(receivedMessage, search, parameters) {
+    
+}
+
 // ADDING RESOURCES
 function handleAddalias(receivedMessage, search, parameters) {
     if (receivedMessage.content.replace(/[^"]/g, "").length < 4) {
