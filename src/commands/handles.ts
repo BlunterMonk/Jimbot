@@ -716,8 +716,147 @@ function handleMuspel(receivedMessage, search, parameters) {
 }
 
 // FFBEEQUIP
-function handleBuild(receivedMessage, search, parameters) {
+function requestBuild(url, callback) {
     
+    var buildId = "beffeb70-4ba9-11e9-9e10-93b8df10f245";
+    
+    request(
+        { uri: `https://firebasestorage.googleapis.com/v0/b/ffbeequip.appspot.com/o/PartyBuilds%2F${buildId}.json?alt=media` },
+        function(error, response, body) {
+            const $ = cheerio.load(body);
+            console.log(JSON.parse(body));
+            callback(body);
+            //var save = JSON.stringify(units, null, "\t");
+        }
+    );
+
+}
+export function handleBuild(receivedMessage, search, parameters) {
+
+    var buildURL = "http://ffbeEquip.com/builder.html?server=GL#beffeb70-4ba9-11e9-9e10-93b8df10f245";
+    // requestBuild(buildURL, (data) => {
+        // log(data);
+        var build = JSON.parse(`{
+            "version": 2,
+            "units": [
+                {
+                    "id": "310000105",
+                    "rarity": 7,
+                    "goal": "Maximize P_DAMAGE",
+                    "innateElements": [],
+                    "items": [
+                        {
+                            "slot": 0,
+                            "id": "304001900",
+                            "pinned": false
+                        },
+                        {
+                            "slot": 1,
+                            "id": "302005500",
+                            "pinned": false
+                        },
+                        {
+                            "slot": 2,
+                            "id": "403042000",
+                            "pinned": false
+                        },
+                        {
+                            "slot": 3,
+                            "id": "405004900",
+                            "pinned": true
+                        },
+                        {
+                            "slot": 4,
+                            "id": "409013600",
+                            "pinned": false
+                        },
+                        {
+                            "slot": 5,
+                            "id": "1100000184",
+                            "pinned": false
+                        },
+                        {
+                            "slot": 6,
+                            "id": "504229599",
+                            "pinned": false
+                        },
+                        {
+                            "slot": 7,
+                            "id": "504226380",
+                            "pinned": false
+                        },
+                        {
+                            "slot": 8,
+                            "id": "504227865",
+                            "pinned": true
+                        }
+                    ]
+                }
+            ]
+        }`);
+
+        var totals = {
+            "hp":  "0", "hp%":  "0",
+            "mp":  "0", "mp%":  "0",
+            "atk": "0", "atk%": "0",
+            "def": "0", "def%": "0",
+            "mag": "0", "mag%": "0",
+            "spr": "0", "spr%": "0"
+        }
+        var equipBonus = {
+            "singleWielding": {
+                "atk": "0",
+                "mag": "0",
+                "def": "0",
+                "spr": "0",
+                "accuracy": "0"
+            },
+            "dualWielding": {
+                "atk": "0",
+                "mag": "0",
+                "def": "0",
+                "spr": "0",
+                "accuracy": "0"
+            }
+        }
+
+        var items = [];
+        var text = "";
+        var unit = build.units[0];
+        unit.items.forEach((element, ind) => {
+            var item = cache.getLyregardItem(element.id);
+            items.push(item);
+
+            text += `[${ind}]: ${item.name}\n`;
+
+            log(item);
+            var stats = Object.keys(totals);
+            stats.forEach(s => {
+                if (item[s] != null) {
+                    // log(`Total ${s}: ${parseInt(totals[s])}`);
+                    // log(`Item ${s}: ${parseInt(item[s])}`);
+                    totals[s] = parseInt(totals[s]) + parseInt(item[s]);
+                }
+            });
+
+        });
+        
+        log("Total Stats:");
+        log(totals);
+        // log(text);
+
+        var embed = <any>{
+            color: pinkHexCode,
+            title: `Build: ${getUnitNameFromKey(unit.id)}`,
+            url: buildURL,
+            description: text,
+            thumbnail: {
+                url: `https://ffbeequip.com/img/units/unit_icon_${unit.id}.png`
+            }
+        }
+        
+        // Client.sendMessage(receivedMessage, embed);
+    // });
 }
 
 // ADDING RESOURCES
@@ -1193,6 +1332,9 @@ function isLetter(str) {
 
 function getUnitKey(search) {
     return cache.getUnitKey(search);
+}
+function getUnitNameFromKey(search) {
+    return cache.getUnitName(search);
 }
 
 function getMaxRarity(unit) {

@@ -23,6 +23,7 @@ const rankingFile = 'data/rankings.json';
 const unitKeysJson = "data/unitkeys.json";
 
 const lyreItemsJson = 'data/lyregard-items.json';
+const lyreUnitsJson = 'data/lyregard-units.json';
 
 export class Cache {
     fullRankings: any;
@@ -109,7 +110,7 @@ export class Cache {
             break;
  
         case "lyregard": 
-            await cacheWiki.cacheLyregardData(lyreItemsJson, () =>{
+            await cacheWiki.cacheLyregardData(() =>{
                 this.lyregardData = JSON.parse(fs.readFileSync(lyreItemsJson).toString());
                 success();
             }).catch(fail);
@@ -138,6 +139,18 @@ export class Cache {
         }
 
         return this.unitsDump[search];
+    }
+    getUnitName(id: string) {
+
+        var keys = Object.keys(this.unitsDump);
+        for (let index = 0; index < keys.length; index++) {
+            const k = keys[index];
+            
+            if (this.unitsDump[k] == id)
+                return k;
+        }
+
+        return null;
     }
 
     // Wiki Rankings

@@ -5,7 +5,8 @@ import * as https from "https";
 import "../string/string-extension.js";
 import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
 
-const lyregardEndpoint = "https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/GL/data.json";
+const lyreUnitsEndpoint = "https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/GL/units.json";
+const lyreItemsEndpoint = "https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/GL/data.json";
 const wikiEndpoint = "https://exvius.gamepedia.com";
 const wikiClient = new wiki({
     protocol: "https", // Wikipedia now enforces HTTPS
@@ -155,14 +156,28 @@ function loadRankingsList(saveLocation, callback, error) {
     });
 }
 
+function loadLyregard(callback, error) {
 
-function loadLyregard(saveLocation, callback, error) {
+    var files = 2;
+    var end = function() {
+        files--;
+        if (files <= 0) {
+            callback();
+        }
+    }
 
-    downloadFile(saveLocation, lyregardEndpoint, (p) => {
+    downloadFile("data/lyregard-units.json", lyreUnitsEndpoint, (p) => {
         if (p == null) {
             error(Error('page not found '))
         } else {
-            callback();
+            end();
+        }
+    })
+    downloadFile("data/lyregard-items.json", lyreItemsEndpoint, (p) => {
+        if (p == null) {
+            error(Error('page not found '))
+        } else {
+            end();
         }
     })
 }
@@ -192,9 +207,9 @@ export var cacheWikiRankings = async function(saveLocation, callback) {
     });
 }
 
-export var cacheLyregardData = async function(saveLocation, callback) {
+export var cacheLyregardData = async function(callback) {
 
     return new Promise(function (resolve, reject) {
-        loadLyregard(saveLocation, callback, reject);
+        loadLyregard(callback, reject);
     });
 }
