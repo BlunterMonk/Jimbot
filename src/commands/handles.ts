@@ -18,6 +18,8 @@ import {unitSearch, unitSearchWithParameters} from "../ffbe/unit.js";
 import {config} from "../config/config.js";
 import {FFBE} from "../ffbe/ffbewiki.js";
 import {Cache, cache} from "../cache/cache.js";
+import * as Build from "../ffbe/build.js";
+import {Builder} from "../ffbe/builder.js";
 import * as constants from "../constants.js";
 import * as Commands from "./commands.js";
 
@@ -486,7 +488,7 @@ function handleDamage(receivedMessage, search, parameters) {
     
     Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
-function buildDamageEmbed(search, limit, isBurst, source) {
+function buildDamageEmbed(search, isBurst, source) {
     var calc = cache.getCalculations(source, search);
     if (!calc) {
         log("Could not find calculations for: " + search);
@@ -496,8 +498,7 @@ function buildDamageEmbed(search, limit, isBurst, source) {
     var text = "";
         
     const keys = Object.keys(calc);
-    const cap = Math.min(limit, keys.length);
-    for (let ind = 0; ind < cap; ind++) {
+    for (let ind = 0; ind < keys.length; ind++) {
         const key = keys[ind];
         const element = calc[key];
 
@@ -537,11 +538,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
     
     search = search.replaceAll("_", " ");
 
-    var limit = 5;
-    if (parameters && parameters[0])
-        limit = parameters[0];
-
-    var embed = buildDamageEmbed(search, limit, isBurst, "furcula");
+    var embed = buildDamageEmbed(search, isBurst, "furcula");
     
     Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
@@ -549,11 +546,7 @@ function handleWhale(receivedMessage, search, parameters, isBurst) {
 
     search = search.replaceAll("_", " ");
 
-    var limit = 5;
-    if (parameters && parameters[0])
-        limit = parameters[0];
-
-    var embed = buildDamageEmbed(search, limit, isBurst, "whale");
+    var embed = buildDamageEmbed(search, isBurst, "whale");
     embed.url = whaleSheet;
 
     Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
@@ -716,147 +709,31 @@ function handleMuspel(receivedMessage, search, parameters) {
 }
 
 // FFBEEQUIP
-function requestBuild(url, callback) {
-    
-    var buildId = "beffeb70-4ba9-11e9-9e10-93b8df10f245";
-    
-    request(
-        { uri: `https://firebasestorage.googleapis.com/v0/b/ffbeequip.appspot.com/o/PartyBuilds%2F${buildId}.json?alt=media` },
-        function(error, response, body) {
-            const $ = cheerio.load(body);
-            console.log(JSON.parse(body));
-            callback(body);
-            //var save = JSON.stringify(units, null, "\t");
-        }
-    );
 
-}
 export function handleBuild(receivedMessage, search, parameters) {
 
-    var buildURL = "http://ffbeEquip.com/builder.html?server=GL#beffeb70-4ba9-11e9-9e10-93b8df10f245";
-    // requestBuild(buildURL, (data) => {
+    // var buildURL = "http://ffbeEquip.com/builder.html?server=GL#beffeb70-4ba9-11e9-9e10-93b8df10f245";
+    var buildUUID = "d0eeb330-cf92-11e9-8c4d-8d394a9d768d";
+    var buildURL = "https://ffbeequip.com/builder.html?server=GL#d0eeb330-cf92-11e9-8c4d-8d394a9d768d";
+    Build.requestBuild(search, (data) => {
         // log(data);
-        var build = JSON.parse(`{
-            "version": 2,
-            "units": [
-                {
-                    "id": "310000105",
-                    "rarity": 7,
-                    "goal": "Maximize P_DAMAGE",
-                    "innateElements": [],
-                    "items": [
-                        {
-                            "slot": 0,
-                            "id": "304001900",
-                            "pinned": false
-                        },
-                        {
-                            "slot": 1,
-                            "id": "302005500",
-                            "pinned": false
-                        },
-                        {
-                            "slot": 2,
-                            "id": "403042000",
-                            "pinned": false
-                        },
-                        {
-                            "slot": 3,
-                            "id": "405004900",
-                            "pinned": true
-                        },
-                        {
-                            "slot": 4,
-                            "id": "409013600",
-                            "pinned": false
-                        },
-                        {
-                            "slot": 5,
-                            "id": "1100000184",
-                            "pinned": false
-                        },
-                        {
-                            "slot": 6,
-                            "id": "504229599",
-                            "pinned": false
-                        },
-                        {
-                            "slot": 7,
-                            "id": "504226380",
-                            "pinned": false
-                        },
-                        {
-                            "slot": 8,
-                            "id": "504227865",
-                            "pinned": true
-                        }
-                    ]
-                }
-            ]
-        }`);
+        // var b = JSON.parse(fs.readFileSync("tempdata/sampledata.json").toString());
+        var b = JSON.parse(data);
 
-        var totals = {
-            "hp":  "0", "hp%":  "0",
-            "mp":  "0", "mp%":  "0",
-            "atk": "0", "atk%": "0",
-            "def": "0", "def%": "0",
-            "mag": "0", "mag%": "0",
-            "spr": "0", "spr%": "0"
-        }
-        var equipBonus = {
-            "singleWielding": {
-                "atk": "0",
-                "mag": "0",
-                "def": "0",
-                "spr": "0",
-                "accuracy": "0"
-            },
-            "dualWielding": {
-                "atk": "0",
-                "mag": "0",
-                "def": "0",
-                "spr": "0",
-                "accuracy": "0"
-            }
-        }
-
-        var items = [];
-        var text = "";
-        var unit = build.units[0];
-        unit.items.forEach((element, ind) => {
-            var item = cache.getLyregardItem(element.id);
-            items.push(item);
-
-            text += `[${ind}]: ${item.name}\n`;
-
-            log(item);
-            var stats = Object.keys(totals);
-            stats.forEach(s => {
-                if (item[s] != null) {
-                    // log(`Total ${s}: ${parseInt(totals[s])}`);
-                    // log(`Item ${s}: ${parseInt(item[s])}`);
-                    totals[s] = parseInt(totals[s]) + parseInt(item[s]);
-                }
-            });
-
-        });
-        
-        log("Total Stats:");
-        log(totals);
-        // log(text);
-
+        var text = Build.getBuildText(b);
         var embed = <any>{
             color: pinkHexCode,
-            title: `Build: ${getUnitNameFromKey(unit.id)}`,
+            title: `Build: ${getUnitNameFromKey(b.units[0].id)}`,
             url: buildURL,
             description: text,
             thumbnail: {
-                url: `https://ffbeequip.com/img/units/unit_icon_${unit.id}.png`
+                url: `https://ffbeequip.com/img/units/unit_icon_${b.units[0].id}.png`
             }
         }
-        
-        // Client.sendMessage(receivedMessage, embed);
-    // });
+
+        log(text);
+        Client.sendMessage(receivedMessage, embed);
+    });
 }
 
 // ADDING RESOURCES
@@ -1167,6 +1044,7 @@ function handleReload(receivedMessage, search, parameters) {
         cache.reload();
         config.reload();
         Client.reload();
+        Builder.reload();
     } catch(e) {
         log(e);
         respondFailure(receivedMessage, true);

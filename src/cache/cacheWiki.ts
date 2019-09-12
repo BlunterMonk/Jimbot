@@ -1,12 +1,9 @@
 import * as wiki from "nodemw";
 import * as cheerio from "cheerio";
 import * as fs from "fs";
-import * as https from "https";
 import "../string/string-extension.js";
-import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
+import { log } from "../global.js";
 
-const lyreUnitsEndpoint = "https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/GL/units.json";
-const lyreItemsEndpoint = "https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/GL/data.json";
 const wikiEndpoint = "https://exvius.gamepedia.com";
 const wikiClient = new wiki({
     protocol: "https", // Wikipedia now enforces HTTPS
@@ -156,60 +153,9 @@ function loadRankingsList(saveLocation, callback, error) {
     });
 }
 
-function loadLyregard(callback, error) {
-
-    var files = 2;
-    var end = function() {
-        files--;
-        if (files <= 0) {
-            callback();
-        }
-    }
-
-    downloadFile("data/lyregard-units.json", lyreUnitsEndpoint, (p) => {
-        if (p == null) {
-            error(Error('page not found '))
-        } else {
-            end();
-        }
-    })
-    downloadFile("data/lyregard-items.json", lyreItemsEndpoint, (p) => {
-        if (p == null) {
-            error(Error('page not found '))
-        } else {
-            end();
-        }
-    })
-}
-
-function downloadFile(path, link, callback) {
-    var ext = link.substring(link.lastIndexOf("."), link.length).toLowerCase();
-
-    var file = null;
-    https.get(link, function(response) {
-        if (response.statusCode !== 200) {
-            log("page not found");
-            callback(null);
-            return;
-        }
-        file = fs.createWriteStream(path);
-        file.on('finish', function() {
-            callback(path);
-        });
-        return response.pipe(file);
-    });
-}
-
 export var cacheWikiRankings = async function(saveLocation, callback) {
 
     return new Promise(function (resolve, reject) {
         loadRankingsList(saveLocation, callback, reject);
-    });
-}
-
-export var cacheLyregardData = async function(callback) {
-
-    return new Promise(function (resolve, reject) {
-        loadLyregard(callback, reject);
     });
 }
