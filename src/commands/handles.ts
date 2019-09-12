@@ -712,19 +712,17 @@ function handleMuspel(receivedMessage, search, parameters) {
 
 export function handleBuild(receivedMessage, search, parameters) {
 
-    // var buildURL = "http://ffbeEquip.com/builder.html?server=GL#beffeb70-4ba9-11e9-9e10-93b8df10f245";
-    var buildUUID = "d0eeb330-cf92-11e9-8c4d-8d394a9d768d";
-    var buildURL = "https://ffbeequip.com/builder.html?server=GL#d0eeb330-cf92-11e9-8c4d-8d394a9d768d";
     Build.requestBuild(search, (data) => {
-        // log(data);
+        log(data);
         // var b = JSON.parse(fs.readFileSync("tempdata/sampledata.json").toString());
         var b = JSON.parse(data);
 
+        var name = getUnitNameFromKey(b.units[0].id).toTitleCase(" ");
         var text = Build.getBuildText(b);
         var embed = <any>{
             color: pinkHexCode,
-            title: `Build: ${getUnitNameFromKey(b.units[0].id)}`,
-            url: buildURL,
+            title: `Build: ${name}`,
+            url: search,
             description: text,
             thumbnail: {
                 url: `https://ffbeequip.com/img/units/unit_icon_${b.units[0].id}.png`
@@ -732,7 +730,7 @@ export function handleBuild(receivedMessage, search, parameters) {
         }
 
         log(text);
-        Client.sendMessage(receivedMessage, embed);
+        // Client.sendMessage(receivedMessage, embed);
     });
 }
 
