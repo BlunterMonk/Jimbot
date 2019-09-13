@@ -125,7 +125,8 @@
 		"hot_bi_dad": "ignacio",
 		"firelord": "veritas of the flame",
 		"god": "ignacio",
-		"mustache": "wilhelm"
+		"mustache": "wilhelm",
+		"kydia": "pure summoner rydia"
 	},
 	"filetypes": [
 		".jpg",
@@ -167,11 +168,15 @@
 		},
 		"stmr": {
 			"command": "unit",
-			"parameters": ["stmr"]
+			"parameters": [
+				"stmr"
+			]
 		},
 		"tmr": {
 			"command": "unit",
-			"parameters": ["tmr"]
+			"parameters": [
+				"tmr"
+			]
 		}
 	},
 	"authorizedUsers": {

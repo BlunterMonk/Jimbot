@@ -83,14 +83,12 @@
 			""
 		]
 	},
-	"Reberta (pending)": {
-		"name": "Reberta (pending)",
+	"Reberta": {
+		"name": "Reberta",
 		"damage": "18,086,710,037",
 		"turns": "5",
 		"type": "physical",
 		"url": "https://ffbeequip.com/builder.html?server=GL#611e6830-d112-11e9-bb5b-398871b58cc1",
-		"burst": "43,740,568,121",
-		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Reberta",
 		"rotation": [
 			"Crimson Raid (CD)",
@@ -321,14 +319,42 @@
 		"type": "physical",
 		"url": null
 	},
+	"Dressy Aileen": {
+		"name": "Dressy Aileen",
+		"damage": "8,075,066,454",
+		"turns": "10",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#07134550-d4ea-11e9-a314-1b650a2e0160",
+		"burst": "23,193,081,829",
+		"burstTurn": "4",
+		"wiki": "https://exvius.gamepedia.com/Dressy_Aileen",
+		"rotation": [
+			"Shall We Dance? (CD) + Schematic Rainbow II (CD) + Ground Work II",
+			"Double Reverse Spin x 3",
+			"Fascinating Impact (LB)",
+			"Double Reverse Spin x 3",
+			"Back Whisk + Double Reserve Spin x 2",
+			"Shall We Dance? (CD) + Ground Work II + Double Reserve Spin",
+			"Double Reverse Spin x 3",
+			"Fascinating Impact (LB)",
+			"Double Reverse Spin x 3",
+			"Back Whisk + Double Reserve Spin x 2",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Akstar": {
 		"name": "Akstar",
 		"damage": "7,820,843,865",
 		"turns": "12",
 		"type": "physical",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#0ad9dc70-c492-11e9-9d66-5b7bd6bc7eb8",
-		"burst": "",
-		"burstTurn": "6",
+		"burst": "18,850,111,056",
+		"burstTurn": "11",
 		"wiki": "https://exvius.gamepedia.com/Akstar",
 		"rotation": [
 			"Perfect Void (CD) + Mirror of Equity - Emptiness",
@@ -343,6 +369,34 @@
 			"Subjection to Equity - Rainfall (LB)",
 			"Absolute Mirror of Equity x 3",
 			"Blazing Heat - Ash + True Mirror of Equity (CD) + Mirror of Equit - Supremacy",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"Kimono Ayaka": {
+		"name": "Kimono Ayaka",
+		"damage": "6,885,237,301",
+		"turns": "7",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#fc3a6f60-d4e8-11e9-a314-1b650a2e0160",
+		"burst": "9,098,621,862",
+		"burstTurn": "6",
+		"wiki": "https://exvius.gamepedia.com/Kimono_Ayaka",
+		"rotation": [
+			"Ascension - Goddess' Raiments (CD) + Introduction - Crashing Waterfalls",
+			"Progression - Wild Spirit + Climax - Scarlet Kagura",
+			"Climax - Scarlet Kagura",
+			"Dance of Radiant Fortune (LB)",
+			"Climax - Scarlet Kagura",
+			"Climax - Scarlet Kagura + Finale Transcending Heaven (CD)",
+			"Dance of Radiant Fortune (LB)",
+			"",
+			"",
+			"",
+			"",
+			"",
 			"",
 			"",
 			"",
@@ -377,41 +431,13 @@
 			""
 		]
 	},
-	"Dressy Aileen": {
-		"name": "Dressy Aileen",
-		"damage": "",
-		"turns": "10",
-		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#360b01a0-9899-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "4",
-		"wiki": "https://exvius.gamepedia.com/Dressy_Aileen",
-		"rotation": [
-			"Shall We Dance? (CD) + Schematic Rainbow II (CD) + Ground Work II",
-			"Double Reverse Spin x 3",
-			"Fascinating Impact (LB)",
-			"Double Reverse Spin x 3",
-			"Back Whisk + Double Reserve Spin x 2",
-			"Shall We Dance? (CD) + Ground Work II + Double Reserve Spin",
-			"Double Reverse Spin x 3",
-			"Fascinating Impact (LB)",
-			"Double Reverse Spin x 3",
-			"Back Whisk + Double Reserve Spin x 2",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
 	"Ellesperis": {
 		"name": "Ellesperis",
-		"damage": "",
+		"damage": "7,393,250,309",
 		"turns": "12",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#2c5c4cc0-9e8b-11e9-a1b8-7b53378612e4",
-		"burst": "",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#b4c05490-d4ea-11e9-a314-1b650a2e0160",
+		"burst": "10,786,196,327",
 		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Ellesperis",
 		"rotation": [
@@ -483,34 +509,6 @@
 			"Crystal Water x 3",
 			"Crystal Water x 3",
 			"Arcane Combo (LB)",
-			"",
-			"",
-			"",
-			""
-		]
-	},
-	"Kimono Ayaka": {
-		"name": "Kimono Ayaka",
-		"damage": "",
-		"turns": "7",
-		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#07cf5ec0-98a4-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "6",
-		"wiki": "https://exvius.gamepedia.com/Kimono_Ayaka",
-		"rotation": [
-			"Ascension - Goddess' Raiments (CD) + Introduction - Crashing Waterfalls",
-			"Progression - Wild Spirit + Climax - Scarlet Kagura",
-			"Climax - Scarlet Kagura",
-			"Dance of Radiant Fortune (LB)",
-			"Climax - Scarlet Kagura",
-			"Climax - Scarlet Kagura + Finale Transcending Heaven (CD)",
-			"Dance of Radiant Fortune (LB)",
-			"",
-			"",
-			"",
-			"",
-			"",
 			"",
 			"",
 			"",
@@ -1415,11 +1413,11 @@
 	},
 	"Kimono Fina": {
 		"name": "Kimono Fina",
-		"damage": "16,151,735,635",
+		"damage": "16,791,203,825",
 		"turns": "13",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#c0262560-d113-11e9-bb5b-398871b58cc1",
-		"burst": "31,724,696,642",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#c5d2e880-d57e-11e9-a314-1b650a2e0160",
+		"burst": "32,968,518,110",
 		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Kimono_Fina",
 		"rotation": [
@@ -1443,11 +1441,11 @@
 	},
 	"Christine": {
 		"name": "Christine",
-		"damage": "13,437,986,199",
+		"damage": "15,981,510,451",
 		"turns": "16",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#420f6c00-d342-11e9-a314-1b650a2e0160",
-		"burst": "24,732,109,292",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#4f696c30-d580-11e9-a314-1b650a2e0160",
+		"burst": "29,423,784,636",
 		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Christine",
 		"rotation": [
@@ -1469,13 +1467,41 @@
 			"Snow Burial + Piercing Chill x 3"
 		]
 	},
+	"Sol ": {
+		"name": "Sol ",
+		"damage": "15,412,287,851",
+		"turns": "11",
+		"type": "magic",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#f4039870-d57f-11e9-a314-1b650a2e0160",
+		"burst": "27,074,573,681",
+		"burstTurn": "11",
+		"wiki": "https://exvius.gamepedia.com/Sol/JP",
+		"rotation": [
+			"Sage's Wisdom (CD) + Solar Divinity x 2",
+			"Solar Divinity x 4",
+			"Solar Divinity x 4",
+			"Solar Divinity x 4",
+			"Solar Divinity x 4",
+			"Sage's Wisdom (CD) + Solar Divinity x  2",
+			"Solar Divinity x 3 + Chaotic Nova (CD)",
+			"Solar Divinity x 4",
+			"Solar Divinity x 4",
+			"Power of Chaos + Solar Divinity x 3",
+			"Devastation x 5",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Circe": {
 		"name": "Circe",
-		"damage": "11,890,533,168",
+		"damage": "12,517,376,845",
 		"turns": "9",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#576f9d20-b332-11e9-a1b8-7b53378612e4",
-		"burst": "19,829,953,503",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#d1c9d8a0-d57f-11e9-a314-1b650a2e0160",
+		"burst": "20,875,346,572",
 		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Circe",
 		"rotation": [
@@ -1499,11 +1525,11 @@
 	},
 	"Tsukiko": {
 		"name": "Tsukiko",
-		"damage": "9,596,801,445",
+		"damage": "10,826,007,024",
 		"turns": "12",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#264f1d10-c444-11e9-9d66-5b7bd6bc7eb8",
-		"burst": "11,853,540,639",
+		"burst": "13,406,642,963",
 		"burstTurn": "10",
 		"wiki": "https://exvius.gamepedia.com/Tsukiko",
 		"rotation": [
@@ -1672,12 +1698,61 @@
 			""
 		]
 	},
-	"Cilka (evoke)": {
-		"name": "Cilka (evoke)",
+	"Rinoa (finisher)": {
+		"name": "Rinoa (finisher)",
+		"damage": "5,502,258,942",
+		"turns": "6",
+		"type": "magic",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#2323a2f0-d4e8-11e9-a314-1b650a2e0160",
+		"burst": "8,202,125,131",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Rinoa",
+		"rotation": [
+			"Angelo Tackle x 2",
+			"Angelo Tackle x 2",
+			"Angelo Tackle x 2",
+			"Angelo Tackle x 2",
+			"Angelo Tackle x 2",
+			"Angelo Tackle x 2",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"Summer Folka & Citra (evoke)": {
+		"name": "Summer Folka & Citra (evoke)",
 		"damage": "",
 		"turns": "12",
 		"type": "magic",
-		"url": null
+		"url": "https://ffbeEquip.com/builder.html?server=GL#5fa3b110-a9ec-11e9-a1b8-7b53378612e4",
+		"burst": "",
+		"burstTurn": "6",
+		"wiki": "https://exvius.gamepedia.com/Summer_Folka_%26_Citra",
+		"rotation": [
+			"High Tide Spirit x 2",
+			"Summon - Waves x 2",
+			"Summon - Waves x 2",
+			"Summon - Waves x 2",
+			"Fun in the Sun (LB)",
+			"High Tide Spirit + Summon - Sparkling Waves (CD)",
+			"Summon - Waves x 2",
+			"Summon - Waves x 2",
+			"Summon - Waves x 2",
+			"Summon - Waves x 2",
+			"Fun in the Sun (LB)",
+			"High Tide Spirit + Summon - Sparkling Waves (CD)",
+			"",
+			"",
+			"",
+			""
+		]
 	},
 	"Morgana (evoke)": {
 		"name": "Morgana (evoke)",
@@ -1697,34 +1772,6 @@
 			"Holy Radiance x 3 + Holy Radiance [Dupe: Arcane Trade (CD)]",
 			"Holy Radiance x 3",
 			"Arcane Explosion (LB)",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
-	"Rinoa (finisher)": {
-		"name": "Rinoa (finisher)",
-		"damage": "",
-		"turns": "6",
-		"type": "magic",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#60cf6b00-939f-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "3",
-		"wiki": "https://exvius.gamepedia.com/Rinoa",
-		"rotation": [
-			"Angelo Tackle x 2",
-			"Angelo Tackle x 2",
-			"Angelo Tackle x 2",
-			"Angelo Tackle x 2",
-			"Angelo Tackle x 2",
-			"Angelo Tackle x 2",
-			"",
-			"",
 			"",
 			"",
 			"",
@@ -1769,8 +1816,6 @@
 		"turns": "6",
 		"type": "magic",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#06825c20-88dc-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Maria",
 		"rotation": [
 			"Seibzehn Unleashed (CD) + Magneto",
@@ -1875,34 +1920,6 @@
 			""
 		]
 	},
-	"Sol": {
-		"name": "Sol",
-		"damage": "",
-		"turns": "10",
-		"type": "magic",
-		"url": "http://ffbeEquip.com/builder.html?server=JP#c48189c0-7aaf-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "7",
-		"wiki": "https://exvius.gamepedia.com/Sol/JP",
-		"rotation": [
-			"賢者の知恵 + ディヴァインソーラー ",
-			"ディヴァインソーラー x 4",
-			"ディヴァインソーラー x 2",
-			"混沌の闇 (LB)       ",
-			"ディヴァインソーラー x 4",
-			"賢者の知恵 + ディヴァインソーラー x 3                     ",
-			"ディヴァインソーラー x 4",
-			"混沌の闇 (LB)       ",
-			"ディヴァインソーラー x 4",
-			"ディヴァインソーラー x 3 + カオスノヴァ (CD)       ",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
 	"Barbariccia (spark chain)": {
 		"name": "Barbariccia (spark chain)",
 		"damage": "",
@@ -1944,8 +1961,6 @@
 		"turns": "7",
 		"type": "magic",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#0583c5f0-88de-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Trance_Terra",
 		"rotation": [
 			"Chaos Flare x 4",
@@ -2057,6 +2072,34 @@
 			""
 		]
 	},
+	"Sol": {
+		"name": "Sol",
+		"damage": "",
+		"turns": "10",
+		"type": "magic",
+		"url": "http://ffbeEquip.com/builder.html?server=JP#c48189c0-7aaf-11e9-a1b8-7b53378612e4",
+		"burst": "",
+		"burstTurn": "7",
+		"wiki": "https://exvius.gamepedia.com/Sol/JP",
+		"rotation": [
+			"賢者の知恵 + ディヴァインソーラー ",
+			"ディヴァインソーラー x 4",
+			"ディヴァインソーラー x 2",
+			"混沌の闇 (LB)       ",
+			"ディヴァインソーラー x 4",
+			"賢者の知恵 + ディヴァインソーラー x 3                     ",
+			"ディヴァインソーラー x 4",
+			"混沌の闇 (LB)       ",
+			"ディヴァインソーラー x 4",
+			"ディヴァインソーラー x 3 + カオスノヴァ (CD)       ",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Dark Mage Exdeath": {
 		"name": "Dark Mage Exdeath",
 		"damage": "",
@@ -2115,11 +2158,11 @@
 	},
 	"Malphasie": {
 		"name": "Malphasie",
-		"damage": "10,152,073,292",
+		"damage": "11,832,128,784",
 		"turns": "11",
 		"type": "hybrid",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#b27868c0-c3c5-11e9-9d66-5b7bd6bc7eb8",
-		"burst": "",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#80234930-d4eb-11e9-a314-1b650a2e0160",
+		"burst": "18,851,940,068",
 		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Malphasie",
 		"rotation": [
