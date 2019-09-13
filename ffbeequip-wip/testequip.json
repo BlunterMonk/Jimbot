@@ -1,0 +1,152 @@
+{
+    "version": 2,
+    "units": [
+        {
+            "id": "310000105",
+            "rarity": 7,
+            "goal": "Maximize P_DAMAGE",
+            "innateElements": [],
+            "items": [
+                {
+                    "slot": 0,
+                    "id": "304001900",
+                    "pinned": false
+                },
+                {
+                    "slot": 1,
+                    "id": "302005500",
+                    "pinned": false
+                },
+                {
+                    "slot": 2,
+                    "id": "403042000",
+                    "pinned": false
+                },
+                {
+                    "slot": 3,
+                    "id": "405004900",
+                    "pinned": true
+                },
+                {
+                    "slot": 4,
+                    "id": "1100000184",
+                    "pinned": false
+                },
+                {
+                    "slot": 5,
+                    "id": "1100000184",
+                    "pinned": false
+                },
+                {
+                    "slot": 6,
+                    "id": "504229599",
+                    "pinned": false
+                },
+                {
+                    "slot": 7,
+                    "id": "504226380",
+                    "pinned": false
+                },
+                {
+                    "slot": 8,
+                    "id": "504227865",
+                    "pinned": true
+                }
+            ],
+            "itemEnchantments": [
+                [
+                    "rare_4"
+                ],
+                [
+                    "rare_4"
+                ],
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "esperId": "Titan",
+            "esperPinned": false,
+            "pots": {
+                "spr": 40,
+                "mag": 40,
+                "def": 40,
+                "atk": 65,
+                "mp": 90,
+                "hp": 540
+            },
+            "buffs": {
+                "spr": 0,
+                "mag": 0,
+                "def": 0,
+                "atk": 150,
+                "mp": 0,
+                "hp": 0,
+                "lbFillRate": 0
+            },
+            "lbShardsPerTurn": 0,
+            "mitigation": {
+                "physical": 0,
+                "magical": 0,
+                "global": 0
+            },
+            "drawAttacks": 0,
+            "level": 120
+        }
+    ],
+    "monster": {
+        "races": [],
+        "elementalResist": {
+            "dark": 0,
+            "light": 0,
+            "wind": 0,
+            "earth": 0,
+            "water": 0,
+            "lightning": 0,
+            "ice": 0,
+            "fire": 0
+        },
+        "def": 100,
+        "spr": 100,
+        "breaks": {
+            "atk": 0,
+            "def": 0,
+            "mag": 0,
+            "spr": 0
+        },
+        "buffs": {
+            "atk": 0,
+            "def": 0,
+            "mag": 0,
+            "spr": 0
+        },
+        "breakability": {
+            "atk": true,
+            "def": true,
+            "mag": true,
+            "spr": true
+        },
+        "imperils": {
+            "fire": 0,
+            "ice": 0,
+            "lightning": 0,
+            "water": 0,
+            "earth": 0,
+            "wind": 0,
+            "light": 0,
+            "dark": 0
+        }
+    },
+    "itemSelector": {
+        "mainSelector": "all",
+        "additionalFilters": [
+            "excludePremium",
+            "excludeSTMR",
+            "excludeNotReleasedYet"
+        ]
+    },
+    "useNewJpDamageFormula": false
+}

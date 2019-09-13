@@ -232,6 +232,10 @@ class Build {
         this.equipmentTotal = {};
     }
 
+    getSlots(): any {
+        return this.buildData.items;
+    }
+
     // Finalize the item as equipment and add its stats to the build total
     addToTotal(item2: any) {
         this.total = addToTotal(this.total, item2);
@@ -977,4 +981,29 @@ export function getBuildText(buildData) {
     // });
 
     return text;
+}
+export function CreateBuild(buildData) {
+
+    var unit = buildData.units[0];
+    
+    var build = new Build(unit);
+
+    var allItems = [];
+    
+    unit.items.forEach((element, ind) => {
+        
+        // If only one item is found, equip it right away, otherwise wait for validation
+        var itemInfo = Builder.getItems(element.id);
+        var best = findBestItemVersion(build, element.slot, itemInfo);
+        // log("Best Item Found");
+        // log(best);
+
+        build.addItem(best);
+
+        allItems = allItems.concat(itemInfo);
+    });
+
+    build.setItemData(allItems);
+
+    return build;
 }
