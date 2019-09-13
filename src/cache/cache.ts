@@ -68,7 +68,7 @@ export class Cache {
         this.skillset = Object.assign({}, skills, lbs);
     }
 
-    async updateDamage(source: string, callback) {
+    async updateDamage(source: string, force: boolean, callback) {
         this.isUpdating = true;
 
         var self = this;
@@ -104,7 +104,7 @@ export class Cache {
             break;
 
         case "furcula":
-            await furcDamage.UpdateFurculaCalculations(() =>{
+            await furcDamage.UpdateFurculaCalculations(force, () =>{
                 this.calculations = JSON.parse(fs.readFileSync(furcCalc).toString());
                 success()
             }).catch(fail);
@@ -112,7 +112,7 @@ export class Cache {
 
         case "whale":
         case "shado":
-            await furcDamage.UpdateWhaleCalculations(() =>{
+            await furcDamage.UpdateWhaleCalculations(force, () =>{
                 this.whaleCalculations = JSON.parse(fs.readFileSync(whaleCalc).toString());
                 success()
             }).catch(fail);

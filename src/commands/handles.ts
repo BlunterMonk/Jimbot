@@ -957,7 +957,7 @@ function handlePrefix(receivedMessage) {
         respondSuccess(receivedMessage);
     }
 }
-function handleUpdate(receivedMessage, search, parameters) {
+function handleUpdate(receivedMessage, search, parameters, forced = false) {
 
     if (!Client.isAuthorized(receivedMessage.author)) {
         return;
@@ -990,7 +990,7 @@ function handleUpdate(receivedMessage, search, parameters) {
 
     Client.send(receivedMessage, msg);
 
-    cache.updateDamage(source, (success, error) => {
+    cache.updateDamage(source, forced, (success, error) => {
         log(`Finished Updating: ${success}`);
 
         if (success) {
@@ -1008,7 +1008,7 @@ function handleForceupdate(receivedMessage, search, parameters) {
     }
 
     cache.isUpdating = false;
-    handleUpdate(receivedMessage, search, parameters);
+    handleUpdate(receivedMessage, search, parameters, true);
 }
 function handleReload(receivedMessage, search, parameters) {
 
