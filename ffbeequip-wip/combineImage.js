@@ -1,4 +1,4 @@
-const mergeImages = require('merge-images');
+const mergeImages = require('../bin/merge-images/merge-images.js');
 const fs = require("fs");
 const https = require("https");
 const sizeOf = require('image-size');
@@ -6,6 +6,11 @@ const Canvas = require('canvas')
 const canvas = Canvas.createCanvas(600, 600)
 const ctx = canvas.getContext('2d')
 const Build = require('../bin/ffbe/build.js');
+const downloadFile = require('../bin/string/download.js');
+
+const imageEndpoint = `https://ffbeequip.com/img/`;
+const imgDir = "../ffbeequip/static/img/";
+const imgCacheDir = "./ffbeequip-wip/icons/";
 
 var buildURL = "https://ffbeequip.com/builder.html?server=GL#cd1db650-d52a-11e9-a314-1b650a2e0160";
 processBuild(buildURL);
@@ -82,31 +87,30 @@ frame url
 https://exvius.gamepedia.com/skins/Exvius/resources/images/frame-equipment.png?c70d8
 */
 
-var imgDir = "../ffbeequip/static/img/";
 function buildImage(unit, itemImages) {
 
     // console.log("Unit Image")
     // console.log(unit)
     var load = [{
-        src: "./ffbeequip-wip/template2.png",
+        src: "./ffbeequip-wip/templatec.png",
         x: 0,
         y: 0
     }, 
     {
         src: unit.path,
-        x: 0,//150 - ((unit.w * 2.5) / 2),
+        x: 1000 - unit.w,//150 - ((unit.w * 2.5) / 2),
         y: 0,//150 + ((unit.h * 2.5)),
-        w: unit.w * 2.5,
-        h: unit.h * 2.5
+        w: unit.w,
+        h: unit.h
     }];
 
     var labels = [];
-    var sx = 55;
+    var sx = 0;
     var tx = 100;
-    var sy = 290;
+    var sy = 10;
     var ty = 265;
-    var xspace = 260;
-    var yspace = 90;
+    var xspace = 110;
+    var yspace = 120;
     var y = sy;
     var y2 = ty;
     for (let index = 0; index < 10; index++) {
@@ -124,8 +128,8 @@ function buildImage(unit, itemImages) {
 
             load[load.length] = {
                 src: image.path,
-                x: (sx + (xspace * (index % 2))) - (image.w * 0.5),
-                y: y - (image.h * 0.5),
+                x: (sx + (xspace * (index % 2))),// - (image.w * 0.5),
+                y: y,// - (image.h * 0.5),
                 w: image.w,
                 h: image.h
             }
@@ -137,10 +141,10 @@ function buildImage(unit, itemImages) {
         }
     };
 
-    mergeImages(load, 
+    mergeImages.mergeImages(load, 
         {
-            width: 540,
-            height: 967,
+            width: 1000,
+            height: 620,
             Canvas: Canvas,
             text: labels
         })
@@ -153,7 +157,7 @@ function buildImage(unit, itemImages) {
         var ext = matches[1];
         var data = matches[2];
         var buffer = new Buffer(data, 'base64');
-        fs.writeFileSync('build.' + ext, buffer);
+        fs.writeFileSync('./ffbeequip-wip/build.' + ext, buffer);
     }).catch(console.error);
 }
 
@@ -180,17 +184,19 @@ function downloadImages(slots, items, unitId, callback) {
         }
     }
 
-    var imagePath = imgDir + `units/unit_icon_${unitId}.png`;
+    var imagePath = imageEndpoint + `units/unit_icon_${unitId}.png`;
     console.log(`Image Path: ${imagePath}`);
-    sizeOf(imagePath, function (err, dimensions) {
+    downloadFile.downloadFile(`${imgCacheDir}unit_icon_${unitId}.png`, imagePath, (p) => {
+        sizeOf(p, function (err, dimensions) {
 
-        unit = {
-            path: imagePath,
-            w: dimensions.width,
-            h: dimensions.height
-        };
+            unit = {
+                path: imagePath,
+                w: 2 * dimensions.width,
+                h: 2 * dimensions.height
+            };
 
-        queryEnd();
+            queryEnd();
+        });
     });
 
     slots.forEach(slot => {
@@ -206,18 +212,21 @@ function downloadImages(slots, items, unitId, callback) {
             }
         }
 
-        var imagePath = imgDir + `items/${item.icon}`;
+        var imagePath = imageEndpoint + `items/${item.icon}`;
         console.log(`Image Path: ${imagePath}`);
-        sizeOf(imagePath, function (err, dimensions) {
-    
-            var image = {
-                name: item.name,
-                path: imagePath,
-                w: 90,//dimensions.width,
-                h: 90//dimensions.height
-            };
-    
-            queryEnd(slot.slot, item.id, image);
+        downloadFile.downloadFile(`${imgCacheDir}${item.icon}`, imagePath, (p) => {
+
+            sizeOf(p, function (err, dimensions) {
+                
+                var image = {
+                    name: item.name,
+                    path: imagePath,
+                    w: dimensions.width,
+                    h: dimensions.height
+                };
+                
+                queryEnd(slot.slot, item.id, image);
+            });
         });
     
         // if (item.id) {
