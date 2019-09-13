@@ -243,8 +243,8 @@ class client {
             return;
         }
 
-        var contentPrefix = receivedMessage.content.charAt(0);
-        var content = receivedMessage.content.toLowerCase().slice(1, receivedMessage.content.length);
+        var contentPrefix : string = receivedMessage.content.charAt(0);
+        var content : string = receivedMessage.content.toLowerCase().slice(1, receivedMessage.content.length);
 
         // Send private message results to authorized users
         if (!receivedMessage.guild && this.isAuthorized(receivedMessage.author)) {
@@ -260,14 +260,21 @@ class client {
         const prefix = this.guildSettings[guildId].getPrefix();
         if (contentPrefix != prefix) {
 
-            // Handle Reactions;
-            let res = this.getResponse(guildId, receivedMessage.content);
-            if (res) {
-                if (this.validate(receivedMessage, "response")) {
-                    this.send(receivedMessage, res);
-                } else {
-                    log(`Permission Denied, User: ${receivedMessage.author.id}, Command: ${command}`);
-                }
+            if (content.includes("ffbeequip.com") && this.validate(receivedMessage, "autobuild")) {
+                log(content);
+                this.onMessageCallback(receivedMessage, `build ${receivedMessage.content}`);
+                return;
+            } else {
+
+                // Handle Reactions;
+                // let res = this.getResponse(guildId, receivedMessage.content);
+                // if (res) {
+                //     if (this.validate(receivedMessage, "response")) {
+                //         this.send(receivedMessage, res);
+                //     } else {
+                //         log(`Permission Denied, User: ${receivedMessage.author.id}, Command: ${command}`);
+                //     }
+                // }
             }
             
             return;

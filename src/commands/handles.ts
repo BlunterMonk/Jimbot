@@ -18,6 +18,8 @@ import {unitSearch, unitSearchWithParameters} from "../ffbe/unit.js";
 import {config} from "../config/config.js";
 import {FFBE} from "../ffbe/ffbewiki.js";
 import {Cache, cache} from "../cache/cache.js";
+import * as Build from "../ffbe/build.js";
+import {Builder} from "../ffbe/builder.js";
 import * as constants from "../constants.js";
 import * as Commands from "./commands.js";
 
@@ -486,7 +488,7 @@ function handleDamage(receivedMessage, search, parameters) {
     
     Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
-function buildDamageEmbed(search, limit, isBurst, source) {
+function buildDamageEmbed(search, isBurst, source) {
     var calc = cache.getCalculations(source, search);
     if (!calc) {
         log("Could not find calculations for: " + search);
@@ -496,8 +498,7 @@ function buildDamageEmbed(search, limit, isBurst, source) {
     var text = "";
         
     const keys = Object.keys(calc);
-    const cap = Math.min(limit, keys.length);
-    for (let ind = 0; ind < cap; ind++) {
+    for (let ind = 0; ind < keys.length; ind++) {
         const key = keys[ind];
         const element = calc[key];
 
@@ -537,11 +538,7 @@ function handleDpt(receivedMessage, search, parameters, isBurst) {
     
     search = search.replaceAll("_", " ");
 
-    var limit = 5;
-    if (parameters && parameters[0])
-        limit = parameters[0];
-
-    var embed = buildDamageEmbed(search, limit, isBurst, "furcula");
+    var embed = buildDamageEmbed(search, isBurst, "furcula");
     
     Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
 }
@@ -549,11 +546,7 @@ function handleWhale(receivedMessage, search, parameters, isBurst) {
 
     search = search.replaceAll("_", " ");
 
-    var limit = 5;
-    if (parameters && parameters[0])
-        limit = parameters[0];
-
-    var embed = buildDamageEmbed(search, limit, isBurst, "whale");
+    var embed = buildDamageEmbed(search, isBurst, "whale");
     embed.url = whaleSheet;
 
     Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
@@ -713,6 +706,35 @@ function handleMuspel(receivedMessage, search, parameters) {
     }
     
     Client.sendMessageWithAuthor(receivedMessage, embed, muspelUserID);
+}
+
+// FFBEEQUIP
+
+export function handleBuild(receivedMessage, search, parameters) {
+
+    Build.requestBuild(search, (data) => {
+        // log(data);
+        var b = JSON.parse(data);
+
+        var name = getUnitNameFromKey(b.units[0].id).toTitleCase(" ");
+        var text = Build.getBuildText(b);
+        var desc = text.text.replaceAll("\\[", "**[");
+        desc = desc.replaceAll("\\]:", "]:**");
+
+        var embed = <any>{
+            color: pinkHexCode,
+            title: `Build: ${name}`,
+            url: search,
+            description: desc,
+            // fields: text.fields,
+            thumbnail: {
+                url: `https://ffbeequip.com/img/units/unit_icon_${b.units[0].id}.png`
+            }
+        }
+
+        // log(text);
+        Client.sendMessage(receivedMessage, embed);
+    });
 }
 
 // ADDING RESOURCES
@@ -1023,6 +1045,7 @@ function handleReload(receivedMessage, search, parameters) {
         cache.reload();
         config.reload();
         Client.reload();
+        Builder.reload();
     } catch(e) {
         log(e);
         respondFailure(receivedMessage, true);
@@ -1188,6 +1211,9 @@ function isLetter(str) {
 
 function getUnitKey(search) {
     return cache.getUnitKey(search);
+}
+function getUnitNameFromKey(search) {
+    return cache.getUnitName(search);
 }
 
 function getMaxRarity(unit) {

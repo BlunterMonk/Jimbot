@@ -102,6 +102,9 @@ export class Cache {
                 success();
             }).catch(fail);
             break;
+ 
+        case "lyregard": 
+            break;
 
         case "furcula":
             await furcDamage.UpdateFurculaCalculations(force, () =>{
@@ -117,7 +120,6 @@ export class Cache {
                 success()
             }).catch(fail);
             break;
-
         }
     }
 
@@ -127,6 +129,18 @@ export class Cache {
         }
 
         return this.unitsDump[search];
+    }
+    getUnitName(id: string) {
+
+        var keys = Object.keys(this.unitsDump);
+        for (let index = 0; index < keys.length; index++) {
+            const k = keys[index];
+            
+            if (this.unitsDump[k] == id)
+                return k;
+        }
+
+        return null;
     }
 
     // Wiki Rankings
@@ -266,6 +280,7 @@ export class Cache {
 
         return found;
     }
+    
 };
 
 function getCalc(searchTerm: string, source: any) {
