@@ -10,7 +10,8 @@
 		"prefix",
 		"getsettings"
 	],
-	"disabledCommands": [],
+	"disabledCommands": [
+	],
 	"editors": [
 		"159846139124908032",
 		"131139508421918721",

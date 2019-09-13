@@ -713,24 +713,27 @@ function handleMuspel(receivedMessage, search, parameters) {
 export function handleBuild(receivedMessage, search, parameters) {
 
     Build.requestBuild(search, (data) => {
-        log(data);
-        // var b = JSON.parse(fs.readFileSync("tempdata/sampledata.json").toString());
+        // log(data);
         var b = JSON.parse(data);
 
         var name = getUnitNameFromKey(b.units[0].id).toTitleCase(" ");
         var text = Build.getBuildText(b);
+        var desc = text.text.replaceAll("\\[", "**[");
+        desc = desc.replaceAll("\\]:", "]:**");
+
         var embed = <any>{
             color: pinkHexCode,
             title: `Build: ${name}`,
             url: search,
-            description: text,
+            description: desc,
+            // fields: text.fields,
             thumbnail: {
                 url: `https://ffbeequip.com/img/units/unit_icon_${b.units[0].id}.png`
             }
         }
 
-        log(text);
-        // Client.sendMessage(receivedMessage, embed);
+        // log(text);
+        Client.sendMessage(receivedMessage, embed);
     });
 }
 

@@ -14,15 +14,18 @@ import {Cache, cache} from "../cache/cache.js";
 import * as constants from "../constants.js";
 import * as https from "https";
 
-const lyreUnitsEndpoint = "https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/GL/units.json";
+const lyreUnitsEndpoint = "https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/GL/unitsWithPassives.json";
 const lyreItemsEndpoint = "https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/GL/data.json";
+const lyreEspersEndpoint = "https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/GL/defaultBuilderEspers.json";
 
 const lyreItemsJson = 'data/lyregard-items.json';
 const lyreUnitsJson = 'data/lyregard-units.json';
+const lyreEspersJson = 'data/lyregard-espers.json';
 
 class builder {
     lyregardItems: any;
     lyregardUnits: any;
+    lyregardEspers: any;
     constructor() {
         this.reload();
     }
@@ -30,6 +33,7 @@ class builder {
     reload() {
         this.lyregardItems = JSON.parse(fs.readFileSync(lyreItemsJson).toString());
         this.lyregardUnits = JSON.parse(fs.readFileSync(lyreUnitsJson).toString());
+        this.lyregardEspers = JSON.parse(fs.readFileSync(lyreEspersJson).toString());
     }
     async update(callback) {
 
@@ -48,6 +52,7 @@ class builder {
         await cacheLyregardData(() =>{
             this.lyregardItems = JSON.parse(fs.readFileSync(lyreItemsJson).toString());
             this.lyregardUnits = JSON.parse(fs.readFileSync(lyreUnitsJson).toString());
+            this.lyregardEspers = JSON.parse(fs.readFileSync(lyreEspersJson).toString());
             success();
         }).catch(fail);
     }
@@ -65,8 +70,18 @@ class builder {
     getUnit(id: string): any {
         return this.lyregardUnits[id];
     }
-}
 
+    getEsper(name: string): any {
+        for (let index = 0; index < this.lyregardEspers.length; index++) {
+            const element = this.lyregardEspers[index];
+            
+            if (element.id == name)
+                return element;
+        } 
+
+        return null;
+    }
+}
 
 
 export const Builder = new builder();
@@ -99,14 +114,21 @@ async function cacheLyregardData(callback) {
             }
         }
     
-        downloadFile("data/lyregard-units.json", lyreUnitsEndpoint, (p) => {
+        downloadFile(lyreUnitsJson, lyreUnitsEndpoint, (p) => {
             if (p == null) {
                 reject(Error('page not found '))
             } else {
                 end();
             }
         })
-        downloadFile("data/lyregard-items.json", lyreItemsEndpoint, (p) => {
+        downloadFile(lyreItemsJson, lyreItemsEndpoint, (p) => {
+            if (p == null) {
+                reject(Error('page not found '))
+            } else {
+                end();
+            }
+        })
+        downloadFile(lyreEspersJson, lyreItemsEndpoint, (p) => {
             if (p == null) {
                 reject(Error('page not found '))
             } else {

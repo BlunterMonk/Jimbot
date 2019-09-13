@@ -20,7 +20,7 @@ const ignoreItemKeys = [
     "sortId", "rarity", "maxNumber", "tmrUnit",
     "stmrUnit", "eventName", "exclusiveUnits",
     "skillEnhancement", "special", "enhancements",
-    "equipedConditions"
+    "damageVariance", "equipedConditions"
 ];
 const statValues = [
     "hp", "hp%",
@@ -28,15 +28,30 @@ const statValues = [
     "atk", "atk%",
     "def", "def%",
     "mag", "mag%",
-    "spr", "spr%",
-    "lbFillRate", 
+    "spr", "spr%"
 ];
-const otherStats = [
+const elementList = ['fire','ice','lightning','water','wind','earth','light','dark'];
+const ailmentList = ['poison','blind','sleep','silence','paralysis','confuse','disease','petrification','death'];
+const simpleStats = [
     "evoMag","accuracy","jumpDamage","lbFillRate","mpRefresh"
 ];
-const simpleAddCombineProperties = [
-    "hp","hp%","mp","mp%","atk","atk%","def","def%","mag","mag%","spr","spr%",
-    "evoMag","accuracy","jumpDamage","lbFillRate","mpRefresh"
+const complesStatsToString = [
+    "ailments", "element", "killers",
+    "evade", "notStackableSkills",
+    "resist",
+    "lbFillRate",
+    "lbDamage",
+    "mpRefresh",
+    "lbPerTurn",
+    "jumpDamage",
+    "evoMag",
+    "drawAttacks",
+];
+const itemEffects = [
+    "partialDualWield",
+    "singleWieldingOneHanded",
+    "singleWielding",
+    "dualWielding",
 ];
 const complexStats = [
     "ailments", "element", "killers",
@@ -45,7 +60,7 @@ const complexStats = [
     "lbFillRate",
     "partialDualWield",
     "accuracy",
-    "damageVariance",
+    // "damageVariance",
     "dualWielding",
     "lbDamage",
     "mpRefresh",
@@ -57,8 +72,9 @@ const complexStats = [
     "drawAttacks",
     "singleWielding",
     "allowUseOf"
-]
-class Stats {
+];
+
+interface Stats {
     hp:  number; "hp%":  number;
     mp:  number; "mp%":  number;
     atk: number; "atk%": number;
@@ -66,10 +82,7 @@ class Stats {
     mag: number; "mag%": number;
     spr: number; "spr%": number;
 }
-
 interface Unit {
-}
-class Unit {
     name: string;
     id: string;
     max_rarity: string;
@@ -85,16 +98,14 @@ class Unit {
     enhancementSkills: string[];
     skills: any[];
 }
-
-
-class BuildItem {
+interface BuildItem {
     "slot": number;
     "id": string;
     "pinned": boolean;
 }
 
 // Data loaded from the FFBEEquip Build file
-class BuildData {
+interface BuildData {
     "id": string;
     "rarity": number;
     "goal": string;
@@ -183,10 +194,10 @@ class Build {
             this.loadedUnit = lu;
         }
 
-        log("this.loadedUnit");
-        log(this.loadedUnit);
-        log("this.buildData");
-        log(this.buildData);
+        // log("this.loadedUnit");
+        // log(this.loadedUnit);
+        // log("this.buildData");
+        // log(this.buildData);
 
         this.total = {
             "hp":  "0", "hp%":  "0",
@@ -241,6 +252,8 @@ class Build {
             this.equipedConditions.push(item.type)
         }
 
+        // log("add to equipment total");
+        // log(item);
         this.addToEquipmentTotal(item);
 
         if (item.killers) {
@@ -288,65 +301,154 @@ class Build {
     }
 
     // Calculate final build stats using all data loaded
+    combineNonStats(left: any, right: any): any {
+
+    }
     getTotalStats() {
      
         var passives = getUnitPassiveStats(this, this.loadedUnit);
-        log("Unit Passive Stats");
-        log(passives);
+        // log("Unit Passive Stats");
+        // log(passives);
 
-        var unitStats = getUnitMaxStats(this.loadedUnit, passives, this.buildData.pots, this.equipmentTotal);
-        log("Unit Stats");
-        log(unitStats);
+        var esper = Builder.getEsper(this.buildData.esperId);
+        // log("Esper");
+        // log(esper);
 
-        return this.total;
+        var unitStats = getUnitMaxStats(this.loadedUnit, passives, this.buildData.pots, this.equipmentTotal, esper);
+        // log("Unit Stats");
+        // log(unitStats);
+
+        var total = addOtherStats(unitStats, passives);
+        total = addOtherStats(total, this.equipmentTotal);
+        if (esper)
+            total = addOtherStats(total, esper);
+
+        // log("Total Stats");
+        // log(total);
+
+        return total;
     }
 
     // get a string representation of the build
     getText() {
 
-        var total = this.getTotalStats();
         var text = "";
+        var fields : {
+            name: "",
+            value: "",
+            inline: true
+        }[] = [];
+
+        var add = function(n, v) {
+            fields[fields.length] = {
+                name: n,
+                value: v,
+                inline: true
+            }
+        }
+
+        var total = this.getTotalStats();
+
+        // Total stats
+        var across = 0;
+        var stats = statValues;
+        for (let index = 0; index < stats.length; index++) {
+            const key = stats[index];
+
+            if (!total[key])
+                continue;
+
+            across++;
+            text += `[${key}]: ${total[key]} \t`;
+            if (across % 3 == 0) {
+                text += "\n";
+            }
+
+            add(key, total[key]);
+        }
+
+        stats = Object.keys(total);
+        for (let index = 0; index < stats.length; index++) {
+            const key = stats[index];
+            const substat = total[key];
+
+            if (!simpleStats.includes(key)) {
+                // log("skipped substat: " + key);
+                // log(substat);
+                continue;
+            }
+            
+            text += `[${key}]: ${substat}\n`;
+            add(key, substat);
+        }
+
+        if (total.lbPerTurn) {
+            text += `[lbPerTurn]: ${total.lbPerTurn.max}\n`;
+            add("lbPerTurn", total.lbPerTurn.max);
+        }
+        
+        // Add equipment
         this.equipment.forEach((itemInfo, ind) => {
     
-            text += `[${itemInfo.type}]: ${itemInfo.name}`;
+            var n = `[${itemInfo.type}]: ${itemInfo.name}`;
+            var v = "";
     
             var stats = Object.keys(itemInfo);
             stats.forEach(s => {
                 if (statValues.includes(s) && itemInfo[s] != null) {
-                    text += `, ${s} ${itemInfo[s]}`;
+                    v += `, ${s} ${itemInfo[s]}`;
+                } else if (itemEffects.includes(s)) {
+                    v += `, ${itemEffectToString(s, itemInfo[s])}`;
+                } else {
+                    // log(`${itemInfo.name}: [${s}]`)
+                    // log(itemInfo[s]);
                 }
             });
 
-            text += "\n";
+            text += `${n}${v}\n`;
+            add(n, v);
         });
+
+        if (total.resist) {
+
+            var resistance = getResistTotal(total.resist);
+            // log(resistance);
+
+            var a = "";
+            var e = "";
+            var resistKeys = Object.keys(resistance);
+            resistKeys.forEach(resist => {
+                if (ailmentList.includes(resist))
+                    a += `${resist} ${resistance[resist]}, `;
+                else
+                    e += `${resist} ${resistance[resist]}, `;
+            });
+
+            add("ailment resist", a);
+            add("element resist", e);
+            
+            text += `[element resist]: ${e}\n[ailment resist]: ${a}\n`;
+        }
         
-        var stats = Object.keys(total);
-        stats.forEach(s => {
-            if (otherStats.includes(s)) {
-                if (total[s] != null) {
-                    text += `[${s}]: ${total[s]}\n`;
-                }
-            }
-        });
+        if (total.killers) {
 
-        var rkeys = Object.keys(this.resist);
-        if (rkeys.length > 0) {
-            text += "[resist]: ";
-            rkeys.forEach((element, index) => {
-                if (index > 0) text += ", ";
-                text += `${element} ${this.resist[element]}`;
+            var killers = getKillerTotal(total.killers);
+            // log(killers);
+
+            var killerKeys = Object.keys(killers);
+            killerKeys.forEach(killer => {
+                var k = `physical ${killers[killer].physical}, magical ${killers[killer].magical}`;
+                text += `[${killer} killer]: ${k}\n`;
+                add(`${killer} killer`, k);
             });
+
             text += "\n";
         }
-             
-        var kkeys = Object.keys(this.killers);
-        if (kkeys.length > 0) {
-            kkeys.forEach((element, index) => {
-                text += `[${element} killer]: physical ${this.killers[element].physical}, magical ${this.killers[element].magical}\n`;
-            });
-        }
 
-        return text;
+        return {
+            fields: fields,
+            text: text
+        };
     }
 
 }
@@ -410,20 +512,20 @@ function isEquipedConditionOK(B: Build, condition) {
 /////////////////////////////////////////////
 /// BUILD STAT CALCULATIONS
 // calculate the units max stats with the provided pots
-function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: any): any {
+function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: any, esper: any): any {
 
-    log("getUnitMaxStats:");
-    log("pots");
-    log(pots);
-    log("equipmentTotal");
-    log(equipmentTotal);
-    log("passives");
-    log(passives);
+    // log("getUnitMaxStats:");
+    // log("pots");
+    // log(pots);
+    // log("equipmentTotal");
+    // log(equipmentTotal);
+    // log("passives");
+    // log(passives);
 
     var bonus = addToTotal(passives, equipmentTotal);
 
-    log("total bonuses");
-    log(bonus);
+    // log("total bonuses");
+    // log(bonus);
 
     var total = {};
     var keys = Object.keys(pots);
@@ -433,6 +535,8 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
         let percent = bonus[`${k}%`];
         if (!percent) {
             percent = 0;
+        } else if (percent > 400) {
+            percent = 400;
         }
         
         let pot = pots[k];
@@ -441,26 +545,80 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
             eq = equipmentTotal[k];
         }
         
-        log(`${k}: ${unit.stats.maxStats[k]} + ${pot}`);
+        // log(`${k}: ${unit.stats.maxStats[k]} + ${pot}`);
         let base = max + pot;
-        log(`${k}: ${base} * ${eq} + (${percent / 100} * ${base})`);
-        total[k] = base + eq + ((percent / 100) * base);
+        // log(`${k}: ${base} + ${eq} + (${percent / 100} * ${base})`);
+        base = base + eq + ((percent / 100) * base);
+        // log(`${k}: ${base} + (${eq} * (${ / 100} * ${base})`);
+        total[k] = base;
+    });
+
+    // Add equipment bonuses
+    if (bonus.singleWielding) {
+        var keys = Object.keys(bonus.singleWielding);
+        keys.forEach((k, i) => {
+            var b = bonus.singleWielding[k];
+            if (b > 300)
+                b = 300;
+
+            if (k == "accuracy") {
+                if (!total[k]) 
+                    total[k] = b;
+
+                total[k] = total[k] + b;
+                return;
+            }
+
+            var t = (equipmentTotal[k] * (b / 100));
+            // log(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
+            // log(`${k}: ${total[k]} + ${t}`);
+            total[k] = total[k] + t;
+        });
+    }
+
+    // Add esper bonus
+    // log(`esperId: ${esperId}`);
+    if (esper) {
+        // log("esper");
+        // log(esper);
+
+        var keys = Object.keys(pots);
+        keys.forEach((k, i) => {
+            
+            var e = Math.round(esper[k] / 100);
+            var b = 0;
+            if (bonus.esperStatsBonus && bonus.esperStatsBonus[k]) {
+                b = e * (bonus.esperStatsBonus[k] / 100);
+            }
+            
+            // log(`${k}: ${total[k]} + ${e} + ${b}`);
+            total[k] = total[k] + e + b;
+        });
+    }
+
+    // Round all the stats to the right value
+    var keys = Object.keys(total);
+    keys.forEach((k, i) => {
+        if (!Number.isNaN(parseInt(total[k]))) {
+            total[k] = Math.floor(total[k]);
+        }
     });
 
     return total;
 }
-function getUnitPassiveStats(B: Build, unit: Unit): Stats {
-    var stats = new Stats();
+function getUnitPassiveStats(B: Build, unit: Unit): any {
+    var stats = {};
 
     var passives = [];
     unit.skills.forEach((skill, i) => {
-        if (skill.equipedConditions && isEquipedConditionOK(B, skill.equipedConditions)) {
-            passives.push(skill);
+        if (skill.equipedConditions && !isEquipedConditionOK(B, skill.equipedConditions)) {
+            return;
         }
+        passives.push(skill);
     });
 
-    log("passives");
-    log(passives);
+    // log("passives");
+    // log(passives);
 
     passives.forEach((p, i) => {
         stats = addToTotal(stats, p);
@@ -469,11 +627,28 @@ function getUnitPassiveStats(B: Build, unit: Unit): Stats {
     return stats;
 }
 
+
+function itemEffectToString(key: string, item: any): string {
+
+    var t = JSON.stringify(item);
+    t = t.replace(/[\[\]\(\"\{\}\"\)]/gi,'');
+    t = t.replace(/:/gi, " ");
+    t = t.replace(/,/gi, ", ");
+    t = t.replace(/accuracy.*?(,|\n)/g, " ");
+
+    var k = key.replace(/partialDualWield/g, "dw");
+    k = k.replace(/singleWieldingOneHanded/g, "DH");
+    k = k.replace(/singleWielding/g, "TDH");
+    k = k.replace(/dualWielding/g, "TDW");
+
+    return `${k}(${t})`;
+}
+
 /////////////////////////////////////////////
 /// COMBINING AND MANAGING STATS
 
 function isStat(name) {
-    return simpleAddCombineProperties.includes(name);
+    return simpleStats.includes(name) || statValues.includes(name);
 }
 function addToStat(skill, stat, value): any {
     if (!skill[stat]) {
@@ -493,13 +668,9 @@ function addStatObject(item, key, values): any {
     for (var index = stats.length; index--;) {
         var stat = stats[index];
 
-        // skip combining the name
-        log(stat);
-        if (stat == "name")
+        if (!item[key][stat]) {
+            item[key][stat] = values[stat];
             continue;
-        
-        if (!stat[stat]) {
-            stat[stat] = values[stat];
         }
 
         item[key][stat] = item[key][stat] + values[stat];
@@ -519,7 +690,7 @@ function addToTotal(total: any, item2: any): any {
         if (ignoreItemKeys.includes(statKey))
             continue;
 
-        if (simpleAddCombineProperties.includes(statKey)) {
+        if (isStat(statKey)) {
             if (!finalItem[statKey]) 
                 finalItem[statKey] = 0;
             
@@ -538,6 +709,62 @@ function addToTotal(total: any, item2: any): any {
     }
 
     return finalItem;
+}
+function addOtherStats(total: any, item2: any): any {
+    var finalItem = total;
+    var rightKeys = Object.keys(item2);
+
+    for (let index = 0; index < rightKeys.length; index++) {
+        const statKey = rightKeys[index];
+        const statObj = item2[statKey];
+
+        if (ignoreItemKeys.includes(statKey) || statValues.includes(statKey))
+            continue;
+
+        if (isStat(statKey)) {
+            if (!finalItem[statKey]) 
+                finalItem[statKey] = 0;
+            
+            finalItem = addToStat(finalItem, statKey, item2[statKey]);
+        } else if(Array.isArray(statObj)) {
+            if (!finalItem[statKey]) 
+                finalItem[statKey] = [];
+        
+            finalItem[statKey] = finalItem[statKey].concat(statObj);
+        } else if(complexStats.includes(statKey)) {
+            if (!finalItem[statKey]) 
+                finalItem[statKey] = {};
+        
+            finalItem = addStatObject(finalItem, statKey, item2[statKey]);
+        }
+    }
+
+    return finalItem;
+}
+
+function getResistTotal(resistList: any[]): any {
+    var resistance = {};
+    resistList.forEach(resist => {
+        if (!resistance[resist.name])
+            resistance[resist.name] = 0;
+
+        resistance[resist.name] = parseInt(resistance[resist.name]) + parseInt(resist.percent);
+    });
+
+    return resistance;
+}
+
+function getKillerTotal(killerList: any[]): any {
+    var killers = {};
+    killerList.forEach(kill => {
+        if (!killers[kill.name]) 
+            killers[kill.name] = {physical:0, magical:0};
+
+        killers[kill.name].physical = parseInt(killers[kill.name].physical) + parseInt(kill.physical);
+        killers[kill.name].magical  = parseInt(killers[kill.name].magical ) + parseInt(kill.magical);
+    });
+
+    return killers;
 }
 
 // Combine two item sets, usually for item enhancements
@@ -559,7 +786,7 @@ function combineTwoItems(item1, item2) {
 
         log(`Stat Key: ${statKey}`);
 
-        if (simpleAddCombineProperties.includes(statKey)) {
+        if (isStat(statKey)) {
             if (!finalItem[statKey]) 
                 finalItem[statKey] = 0;
             

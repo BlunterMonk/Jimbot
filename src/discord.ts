@@ -260,7 +260,7 @@ class client {
         const prefix = this.guildSettings[guildId].getPrefix();
         if (contentPrefix != prefix) {
 
-            if (content.includes("ffbeequip.com")) {
+            if (content.includes("ffbeequip.com") && this.validate(receivedMessage, "autobuild")) {
                 log(content);
                 this.onMessageCallback(receivedMessage, `build ${receivedMessage.content}`);
                 return;
