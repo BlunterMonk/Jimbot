@@ -247,11 +247,12 @@ class client {
         var content : string = receivedMessage.content.toLowerCase().slice(1, receivedMessage.content.length);
 
         // Send private message results to authorized users
-        if (!receivedMessage.guild && this.isAuthorized(receivedMessage.author)) {
+        if (!receivedMessage.guild) {
+            if (this.isAuthorized(receivedMessage.author)) {
 
-            if (this.onPrivateMessageCallback)
-                this.onPrivateMessageCallback(receivedMessage, content);
-            
+                if (this.onPrivateMessageCallback)
+                    this.onPrivateMessageCallback(receivedMessage, content);
+            }
             return;
         }
 

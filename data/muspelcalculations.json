@@ -503,6 +503,13 @@
 		"type": "magic",
 		"url": null
 	},
+	"Sol": {
+		"name": "Sol",
+		"damage": "8,827,237,465 ",
+		"turns": "11",
+		"type": "magic",
+		"url": null
+	},
 	"Tsukiko": {
 		"name": "Tsukiko",
 		"damage": "8,607,745,691 ",

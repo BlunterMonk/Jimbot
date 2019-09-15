@@ -1343,6 +1343,9 @@ function getGif(search, param, callback) {
         request(
             { uri: uri[i] },
             function(error, response, body) {
+                if (error || !body || body.empty())
+                    return;
+
                 const $ = cheerio.load(body);
                 $('img').each((ind, el) => {
                     var src = $(el).attr('src');
