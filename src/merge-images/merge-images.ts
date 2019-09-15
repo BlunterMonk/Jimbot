@@ -16,7 +16,7 @@ export var mergeImages = function (sources, options) {
 	options = Object.assign({}, defaultOptions, options);
 
 	// Setup browser/Node.js specific variables
-	var canvas = options.Canvas ? new options.Canvas() : window.document.createElement('canvas');
+	var canvas = options.Canvas ? new options.Canvas.Canvas() : window.document.createElement('canvas');
 	var Image = options.Canvas ? options.Canvas.Image : window["Image"];
 	if (options.Canvas) {
 		options.quality *= 100;
@@ -26,6 +26,8 @@ export var mergeImages = function (sources, options) {
 	var images = sources.map(function (source) { 
 		return new Promise(function (resolve, reject) {
 			// Convert sources to objects
+			console.log("Loading Image:");
+			console.log(source);
 			if (source.constructor.name !== 'Object') {
 				source = { src: source };
 			}

@@ -17,6 +17,7 @@ export function downloadFile(path, link, callback) {
         }
         file = fs.createWriteStream(path);
         file.on('finish', function() {
+            console.log(`file downloaded: ${path}`);
             callback(path);
         });
         return response.pipe(file);
