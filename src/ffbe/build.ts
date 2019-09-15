@@ -1214,6 +1214,10 @@ export function requestBuildData(buildURL: string, callback) {
     request(
         { uri: `https://firebasestorage.googleapis.com/v0/b/ffbeequip.appspot.com/o/PartyBuilds%2F${id}.json?alt=media` },
         function(error, response, body) {
+            if (error || body.empty()) {
+                log(`Build Nod Found: ${id}`);
+                return;
+            }
             const $ = cheerio.load(body);
             log(`Build Found: ${id}`);
             callback(id, body);

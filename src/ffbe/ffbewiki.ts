@@ -655,7 +655,7 @@ class ffbe {
                 }
 
                 const $ = cheerio.load(xml);
-                const imgurl = $(".big-pixelate").attr("src");
+                const imgurl = $(".big-pixelate").attr("src"); // unit icon
                 var description = $(".mw-parser-output").children("p").first().text();
                 description = description.limitTo(constants.descCharLimit);
 
@@ -673,6 +673,39 @@ class ffbe {
                 parseUnitOverview(overview, tips, parameters, (fields, limited) => {
                     callback(search, imgurl, description, limited, fields);
                 });
+            });
+        });
+    }
+    queryWikiForUnitIcon(search, callback) {
+        wikiClient.getArticle(search, function (err, content, redirect) {
+            if (err || !content) {
+                console.error(err);
+                return;
+            }
+            if (redirect) {
+                log("Redirect Info: ");
+                log(redirect);
+            }
+
+            const firstLine = content.indexOf("Unit Infobox");
+            if (firstLine < 0) {
+                const redirectRegex = /(?:.*)\[(.*)\]]/g;
+                const page = redirectRegex.exec(content);
+                log("Redirect To: " + page[1]);
+                this.queryWikiForUnit(page[1], callback);
+                return;
+            }
+
+            wikiClient.parse(content, search, function (err, xml, images) {
+                if (err) {
+                    log(err);
+                    return;
+                }
+
+                const $ = cheerio.load(xml);
+                const imgurl = $(".big-pixelate").attr("src"); // unit icon
+
+                callback(imgurl);
             });
         });
     }

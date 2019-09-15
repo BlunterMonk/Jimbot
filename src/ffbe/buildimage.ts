@@ -5,6 +5,7 @@ import * as https from "https";
 import * as Canvas from 'canvas';
 import * as Build from './build.js';
 import * as Download from '../string/download.js';
+import {FFBE} from './ffbewiki.js';
 const sizeOf = require('image-size');
 
 const canvas = Canvas.createCanvas(600, 600);
@@ -601,29 +602,42 @@ function downloadImages(slots, items, unitId, callback) {
     var filename = `${unitId}.png`;
     var path = `${imgCacheDir}units/${filename}`;
     console.log(`Image Path: ${path}`);
-    if (!fs.existsSync(path)) {
-        Canvas.loadImage(`${imgCacheDir}units-uncropped/${filename}`).then((image) => {
+    if (!fs.existsSync(path)) {//
+        var resizeIcon = function(p2) {
+            Canvas.loadImage(p2).then((image) => {
 
-            // canvas.width = canvasWidth;
-            // canvas.height = canvasHeight;
-            ctx.drawImage(image, 0, 0);
-
-            var trimmed =  mergeImages.trim(ctx, image);
-
-            var fs = require('fs');
-            var string = trimmed.toDataURL();
-            // console.log(string);
-            var regex = /^data:.+\/(.+);base64,(.*)$/;
-            
-            var matches = string.match(regex);
-            var ext = matches[1];
-            var data = matches[2];
-            var buffer = Buffer.alloc(data.length, data, 'base64');
+                // canvas.width = canvasWidth;
+                // canvas.height = canvasHeight;
+                ctx.drawImage(image, 0, 0);
     
-            fs.writeFileSync(path, buffer);
+                var trimmed =  mergeImages.trim(ctx, image);
+    
+                var fs = require('fs');
+                var string = trimmed.toDataURL();
+                // console.log(string);
+                var regex = /^data:.+\/(.+);base64,(.*)$/;
+                
+                var matches = string.match(regex);
+                var ext = matches[1];
+                var data = matches[2];
+                var buffer = Buffer.alloc(data.length, data, 'base64');
         
-            foundUnit(path);
-        }).catch(console.error);
+                fs.writeFileSync(path, buffer);
+            
+                foundUnit(path);
+            }).catch(console.error);
+        }
+
+        let p2 = `${imgCacheDir}units-uncropped/${filename}`;
+        if (!fs.existsSync(p2)) {
+            FFBE.queryWikiForUnitIcon(unitId, (o) => {
+                Download.downloadFile(p2, o, (r) => {
+                    resizeIcon(r);
+                });
+            });
+        } else {
+            resizeIcon(p2);
+        }
     } else {
         foundUnit(path);
     }

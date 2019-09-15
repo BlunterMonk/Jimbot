@@ -713,6 +713,18 @@ function handleMuspel(receivedMessage, search, parameters) {
 
 export function handleBuild(receivedMessage, search, parameters) {
 
+    var unitName = search;
+    unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
+
+    var unitID = getUnitKey(search);
+    if (unitID) {
+        var calc = cache.getUnitCalculation("furcula", search)
+        if (calc) {
+            search = calc.url;
+            log(`Loading Unit Build: ${calc.url}`);
+        }
+    }
+
     Build.requestBuildData(search, (id, data) => {
         // log(data);
         var b = JSON.parse(data).units[0];
