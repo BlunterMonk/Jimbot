@@ -5,7 +5,7 @@
   "main": "jimbot.js",
   "dependencies": {
     "bufferutil": "^3.0.3",
-    "canvas": "^2.4.1",
+    "canvas": "^2.6.0",
     "cheerio": "^1.0.0-rc.3",
     "discord.js": "^11.4.2",
     "erlpack": "discordapp/erlpack",

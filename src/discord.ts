@@ -55,7 +55,7 @@ class client {
         this.on("messageDelete", this.onMessageDelete.bind(this));
         this.on("guildCreate", this.loadGuild.bind(this));
         this.on("guildDelete", this.unloadGuild.bind(this));
-
+        this.on("error", console.error);
         this.on("ready", () => {
             log(`Client Loaded, User: ${this.discordClient.user.username}`);
             this.discordClient.user.setActivity("use '?help' for bot info"); 

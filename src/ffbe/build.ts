@@ -23,15 +23,11 @@ const ignoreItemKeys = [
     "damageVariance", "equipedConditions"
 ];
 const statValues = [
-    "hp", "hp%",
-    "mp", "mp%",
-    "atk", "atk%",
-    "def", "def%",
-    "mag", "mag%",
-    "spr", "spr%"
+    "hp",  "mp",  "atk", "def", "mag", "spr",
+    "hp%", "mp%", "atk%", "mag%", "def%", "spr%"
 ];
-const elementList = ['fire','ice','lightning','water','wind','earth','light','dark'];
-const ailmentList = ['poison','blind','sleep','silence','paralysis','confuse','disease','petrification','death'];
+export const elementList = ['fire','ice','lightning','water','wind','earth','light','dark'];
+export const ailmentList = ['poison','blind','sleep','silence','paralysis','confuse','disease','petrification','death'];
 const simpleStats = [
     "evoMag","accuracy","jumpDamage","lbFillRate","mpRefresh"
 ];
@@ -60,6 +56,7 @@ const complexStats = [
     "lbFillRate",
     "partialDualWield",
     "accuracy",
+    "killers",
     // "damageVariance",
     "dualWielding",
     "lbDamage",
@@ -168,6 +165,7 @@ class Build {
     loadedItems: Item[]; // list of items loaded from data sheet
     loadedUnit: Unit; // unit information loaded from data sheet
 
+    buildID: string; // build UUID from link
     unitID: string; // ID of unit being built
     buildData: BuildData; // unit information
     // Stat totals
@@ -183,8 +181,9 @@ class Build {
     TDW: any; // total TDH equipment bonus
     DH: any; // total DH equipment bonus
     TDH: any; // total TDW equipment bonus
-    constructor(buildData: any) {
+    constructor(buildID: string, buildData: any) {
         this.buildData = buildData;
+        this.buildID = buildID;
         this.unitID = buildData.id;
 
         var lu = Builder.getUnit(buildData.id);
@@ -230,6 +229,32 @@ class Build {
         this.loadedItems = [];
         this.equipment = [];
         this.equipmentTotal = {};
+    }
+
+    getSlots(): any[] {
+        return this.buildData.items;
+    }
+    getEquipment(): any[] {
+        return this.equipment;
+    }
+    getEsperId(): string {
+        return this.buildData.esperId;
+    }
+    getEquipmentInSlot(slot: number): any {
+
+        const slots = this.getSlots();
+        const element = slots.find((v, i) => {
+            return v.slot == slot;
+        });
+
+        if (!element) 
+            return null;
+
+        const item = this.equipment.find((v, i) => {
+            return v.id == element.id;
+        });
+
+        return item;
     }
 
     // Finalize the item as equipment and add its stats to the build total
@@ -307,21 +332,38 @@ class Build {
     getTotalStats() {
      
         var passives = getUnitPassiveStats(this, this.loadedUnit);
-        // log("Unit Passive Stats");
+        // log("\nUnit Passive Stats");
         // log(passives);
 
         var esper = Builder.getEsper(this.buildData.esperId);
-        // log("Esper");
+        // log("\nEsper");
         // log(esper);
 
         var unitStats = getUnitMaxStats(this.loadedUnit, passives, this.buildData.pots, this.equipmentTotal, esper);
-        // log("Unit Stats");
+        // log("\nUnit Stats");
         // log(unitStats);
 
+        // log("\nEquipment Total");
+        // log(this.equipmentTotal);
+
+        // log("\nStat Totals\n{\n");
+
         var total = addOtherStats(unitStats, passives);
+        // log("\n{\nUnit Stats + Pasives");
+        // log(total);
+
         total = addOtherStats(total, this.equipmentTotal);
+        // log("Unit Stats + Pasives + Equipment Total");
+        // log(total);
+        
         if (esper)
             total = addOtherStats(total, esper);
+
+        // log("Unit Stats + Pasives + Equipment Total + Esper");
+        // log(total);
+
+        // log("\n}\n");
+        //var killers = addOtherStats(total.killers)
 
         // log("Total Stats");
         // log(total);
@@ -391,19 +433,7 @@ class Build {
         this.equipment.forEach((itemInfo, ind) => {
     
             var n = `[${itemInfo.type}]: ${itemInfo.name}`;
-            var v = "";
-    
-            var stats = Object.keys(itemInfo);
-            stats.forEach(s => {
-                if (statValues.includes(s) && itemInfo[s] != null) {
-                    v += `, ${s} ${itemInfo[s]}`;
-                } else if (itemEffects.includes(s)) {
-                    v += `, ${itemEffectToString(s, itemInfo[s])}`;
-                } else {
-                    // log(`${itemInfo.name}: [${s}]`)
-                    // log(itemInfo[s]);
-                }
-            });
+            var v = itemToString(itemInfo);
 
             text += `${n}${v}\n`;
             add(n, v);
@@ -411,7 +441,7 @@ class Build {
 
         if (total.resist) {
 
-            var resistance = getResistTotal(total.resist);
+            var resistance = total.resist;// getResistTotal(total.resist);
             // log(resistance);
 
             var a = "";
@@ -432,7 +462,7 @@ class Build {
         
         if (total.killers) {
 
-            var killers = getKillerTotal(total.killers);
+            var killers = total.killers;// getKillerTotal(total.killers);
             // log(killers);
 
             var killerKeys = Object.keys(killers);
@@ -511,10 +541,9 @@ function isEquipedConditionOK(B: Build, condition) {
 
 /////////////////////////////////////////////
 /// BUILD STAT CALCULATIONS
-// calculate the units max stats with the provided pots
-function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: any, esper: any): any {
 
-    // log("getUnitMaxStats:");
+function getTotalBonuses(passives: any, equipmentTotal: any, esper: any) {
+    
     // log("pots");
     // log(pots);
     // log("equipmentTotal");
@@ -523,9 +552,31 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
     // log(passives);
 
     var bonus = addToTotal(passives, equipmentTotal);
+    if (esper) {
+        // log("esper");
+        // log(esper);
 
-    // log("total bonuses");
-    // log(bonus);
+        bonus = addToTotal(bonus, esper);
+    }
+
+    return bonus;
+}
+
+// calculate the units max stats with the provided pots
+function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: any, esper: any): any {
+
+    log("getUnitMaxStats:");
+    log("pots");
+    log(pots);
+    log("equipmentTotal");
+    log(equipmentTotal);
+    log("passives");
+    log(passives);
+
+    var bonus = getTotalBonuses(passives, equipmentTotal, esper);
+
+    log("total bonuses");
+    log(bonus);
 
     var total = {};
     var keys = Object.keys(pots);
@@ -545,12 +596,11 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
             eq = equipmentTotal[k];
         }
         
-        // log(`${k}: ${unit.stats.maxStats[k]} + ${pot}`);
         let base = max + pot;
-        // log(`${k}: ${base} + ${eq} + (${percent / 100} * ${base})`);
-        base = base + eq + ((percent / 100) * base);
-        // log(`${k}: ${base} + (${eq} * (${ / 100} * ${base})`);
-        total[k] = base;
+        log(`${k}: ${max} + ${pot} = ${base}`);
+        let b1 = base + eq + ((percent / 100) * base);
+        log(`${k}: ${base} + ${eq} + (${percent / 100} * ${base}) = ${b1}`);
+        total[k] = b1;
     });
 
     // Add equipment bonuses
@@ -570,17 +620,16 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
             }
 
             var t = (equipmentTotal[k] * (b / 100));
-            // log(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
-            // log(`${k}: ${total[k]} + ${t}`);
-            total[k] = total[k] + t;
+            log(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
+            let t1 = total[k] + t;
+            log(`${k}: ${total[k]} + ${t} = ${t1}`);
+            total[k] = t1;
         });
     }
 
     // Add esper bonus
     // log(`esperId: ${esperId}`);
     if (esper) {
-        // log("esper");
-        // log(esper);
 
         var keys = Object.keys(pots);
         keys.forEach((k, i) => {
@@ -591,8 +640,9 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
                 b = e * (bonus.esperStatsBonus[k] / 100);
             }
             
-            // log(`${k}: ${total[k]} + ${e} + ${b}`);
-            total[k] = total[k] + e + b;
+            let e0 = total[k] + e + b;
+            log(`${k}: ${total[k]} + ${e} + ${b} = ${e0}`);
+            total[k] = e0;
         });
     }
 
@@ -600,6 +650,7 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
     var keys = Object.keys(total);
     keys.forEach((k, i) => {
         if (!Number.isNaN(parseInt(total[k]))) {
+            log(`Floor(${total[k]}) = ${Math.floor(total[k])}`);
             total[k] = Math.floor(total[k]);
         }
     });
@@ -634,7 +685,12 @@ function itemEffectToString(key: string, item: any): string {
     t = t.replace(/[\[\]\(\"\{\}\"\)]/gi,'');
     t = t.replace(/:/gi, " ");
     t = t.replace(/,/gi, ", ");
-    t = t.replace(/accuracy.*?(,|\n)/g, " ");
+    // console.log("Effect Text:" + t)
+    t = t.replace(/accuracy.*?(|\w+|\n)(,|\S+)/g, " ");
+    t = t.trim();
+    // console.log("Edited Text: " + t)
+    if (t.lastIndexOf(",") == t.length-1)
+        t = t.slice(0, t.length - 1);
 
     var k = key.replace(/partialDualWield/g, "dw");
     k = k.replace(/singleWieldingOneHanded/g, "DH");
@@ -642,6 +698,92 @@ function itemEffectToString(key: string, item: any): string {
     k = k.replace(/dualWielding/g, "TDW");
 
     return `${k}(${t})`;
+}
+export function itemToString(item: any): string {
+
+    var v = "";
+    var text = [];
+
+    var stats = Object.keys(item);
+    stats.forEach((s, i) => {
+
+        if (statValues.includes(s) && item[s] != null) {
+            if (s.includes("%"))
+                text[text.length] = `${s.replace("%", "")} ${item[s]}%`;
+            else
+                text[text.length] = `${s} ${item[s]}`;
+        } else if (itemEffects.includes(s)) {
+            text[text.length] = `${itemEffectToString(s, item[s])}`;
+        } else {
+            // log(`${itemInfo.name}: [${s}]`)
+            // log(itemInfo[s]);
+        }
+    });
+
+    // console.log("unsorted");
+    // console.log(text);
+
+    text = sortStats(text);
+    text.forEach((s, i) => {
+        if (i > 0)
+            v += `, `;
+
+        v += s;
+    });
+
+    return v;
+}
+export function itemEnhancementsToString(item: any): string {
+
+    var v = "";
+
+    if (item.enhancements) {
+        item.enhancements.forEach((element, index) => {
+            if (index > 0 && index < item.enhancements.length)
+                v += ", ";
+
+            var label = Constants.itemEnhancementLabels[element];
+            if (!label)
+                return;
+            
+            if (element == "rare_3" || element == "rare_4") 
+                v += label[item.type];
+            else
+                v += label;
+        });
+    }
+
+    return v;
+}
+
+// Sorts a list of strings based on stat priority
+export function sortStats(stats: string[]): string[] {
+    var sorted = stats;
+
+    sorted.sort((a, b): number  => {
+        a = a.replace(/([0-9\s])\w+/g,"");
+        b = b.replace(/([0-9\s])\w+/g,"");
+
+        var ai = statValues.indexOf(a);
+        var bi = statValues.indexOf(b);
+        // console.log(`Compare: (${a})[${ai}] - (${b})[${bi}]`);
+
+        if (ai < 0)
+            return 1;
+        if (bi < 0)
+            return -1;
+
+        if (ai > bi)
+            return 1;
+        else if (ai < bi || ai < 0)
+            return -1;
+
+        return 0;
+    });
+
+    // console.log("sorted");
+    // console.log(sorted);
+    return sorted;
 }
 
 /////////////////////////////////////////////
@@ -679,6 +821,130 @@ function addStatObject(item, key, values): any {
     return item;
 }
 
+function addStats(item1: any, item2: any): any {
+    
+    if (!item1) {
+        item1 = item2;
+    } else {
+        item1 += item2;
+    }
+
+    return item1;
+}
+function addStatArrays(item1: any[], item2: any[]): any {
+
+    let arrayTotal = {};
+
+    if (!item1 || !Array.isArray(item1)) {
+        arrayTotal = item1;
+        item1 = [];
+    }
+    if (!arrayTotal)
+        arrayTotal = {};
+/*
+    log("combine arrays")
+    log(item1);
+    log(item2);
+    log(`Current Array Total`);
+    log(arrayTotal);
+    */
+
+    /*
+    var totalIndex = -1;
+    var total = item1.find((v, i) => { 
+        if (v.name == "total") { 
+            totalIndex = i; 
+            return true;
+        }
+        return false;
+    });
+    if (!total) {
+        total = item2.find((v, i) => { 
+            if (v.name == "total") { 
+                totalIndex = i; 
+                return true;
+            }
+            return false;
+        });
+    }*/
+
+    item1 = item1.concat(item2);
+    item1.forEach((element, index) => {
+        if (!arrayTotal[element.name])
+            arrayTotal[element.name] = {};
+
+        arrayTotal[element.name] = addStatObjects(arrayTotal[element.name], element);
+    });
+
+    /*
+    if (total) {
+        item1[totalIndex] = addStatObjects(total, arrayTotal);
+    }
+    */
+
+    // log(`Array Total`);
+    // log(arrayTotal);
+
+    return arrayTotal;
+}
+function addStatObjects(item1, item2): any {
+
+    // log("addStatObjects");
+    // log(item1);
+    // log(item2);
+
+    var stats = Object.keys(item2);
+    for (var index = stats.length; index--;) {
+        var stat = stats[index];
+        var left = parseInt(item1[stat]);
+        var right = parseInt(item2[stat]);
+
+        if (Number.isNaN(right))
+            continue;
+
+        if (!item1[stat] || Number.isNaN(left)) {
+            item1[stat] = right;
+            continue;
+        }
+
+        item1[stat] = left + right;
+    }
+
+    return item1;
+}
+function combineStat(item1: any, item2: any, statKey) {
+    var finalItem = item1;
+
+    if (isStat(statKey)) {
+
+        // log(`Combining Simple Stat: ${statKey}`);
+        // log(finalItem);
+
+        finalItem = addStats(finalItem, item2);
+    } else if(Array.isArray(item2)) {
+
+        // log(`Combining Stat Array: ${statKey}`);
+        // log(finalItem);
+
+        finalItem = addStatArrays(finalItem, item2);
+    } else if(complexStats.includes(statKey)) {
+
+        // log(`Combining Complex Stat: ${statKey}`);
+        if (!finalItem) finalItem = {};
+
+        // log(finalItem[statKey]);
+
+        if (!finalItem) 
+            finalItem = {};
+    
+        finalItem = addStatObjects(finalItem, item2);
+    }
+
+    // log("New Total");
+    // log(finalItem);
+    // log("---------");
+    return finalItem;
+}
 function addToTotal(total: any, item2: any): any {
     var finalItem = total;
     var rightKeys = Object.keys(item2);
@@ -690,17 +956,30 @@ function addToTotal(total: any, item2: any): any {
         if (ignoreItemKeys.includes(statKey))
             continue;
 
+
         if (isStat(statKey)) {
+
+            // log(`Combining Simple Stat: ${statKey}`);
+            // log(finalItem[statKey]);
+
             if (!finalItem[statKey]) 
                 finalItem[statKey] = 0;
             
             finalItem = addToStat(finalItem, statKey, item2[statKey]);
         } else if(Array.isArray(statObj)) {
+
+            // log(`Combining Stat Array: ${statKey}`);
+            // log(finalItem[statKey]);
+
             if (!finalItem[statKey]) 
                 finalItem[statKey] = [];
         
             finalItem[statKey] = finalItem[statKey].concat(statObj);
         } else if(complexStats.includes(statKey)) {
+
+            // log(`Combining Complex Stat: ${statKey}`);
+            // log(finalItem[statKey]);
+
             if (!finalItem[statKey]) 
                 finalItem[statKey] = {};
         
@@ -714,6 +993,11 @@ function addOtherStats(total: any, item2: any): any {
     var finalItem = total;
     var rightKeys = Object.keys(item2);
 
+    // log("Add Other Stats Item 1");
+    // log(total);
+    // log("Add Other Stats Item 2");
+    // log(item2);
+    
     for (let index = 0; index < rightKeys.length; index++) {
         const statKey = rightKeys[index];
         const statObj = item2[statKey];
@@ -721,6 +1005,9 @@ function addOtherStats(total: any, item2: any): any {
         if (ignoreItemKeys.includes(statKey) || statValues.includes(statKey))
             continue;
 
+        finalItem[statKey] = combineStat(finalItem[statKey], statObj, statKey);
+
+        /*
         if (isStat(statKey)) {
             if (!finalItem[statKey]) 
                 finalItem[statKey] = 0;
@@ -737,6 +1024,7 @@ function addOtherStats(total: any, item2: any): any {
         
             finalItem = addStatObject(finalItem, statKey, item2[statKey]);
         }
+        */
     }
 
     return finalItem;
@@ -784,7 +1072,7 @@ function combineTwoItems(item1, item2) {
         const statKey = rightKeys[index];
         const statObj = item2[statKey];
 
-        log(`Stat Key: ${statKey}`);
+        // log(`Stat Key: ${statKey}`);
 
         if (isStat(statKey)) {
             if (!finalItem[statKey]) 
@@ -917,7 +1205,7 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
 export function getBuildID(buildURL: string) {
     return buildURL.match(/#(.*)/)[0];
 }
-export function requestBuild(buildURL: string, callback) {
+export function requestBuildData(buildURL: string, callback) {
     
     var id = getBuildID(buildURL);
     id = id.slice(1, id.length);
@@ -928,19 +1216,22 @@ export function requestBuild(buildURL: string, callback) {
         function(error, response, body) {
             const $ = cheerio.load(body);
             log(`Build Found: ${id}`);
-            callback(body);
+            callback(id, body);
         }
     );
 }
-export function getBuildText(buildData) {
+export function getBuildText(id: string, buildData) {
 
-    var unit = buildData.units[0];
-    
-    var build = new Build(unit);
+    var build = CreateBuild(id, buildData);
+    var text = build.getText();
+    return text;
+}
+export function CreateBuild(id: string, buildData): Build {
+
+    var build = new Build(id, buildData);
 
     var allItems = [];
-    
-    unit.items.forEach((element, ind) => {
+    buildData.items.forEach((element, ind) => {
         
         // If only one item is found, equip it right away, otherwise wait for validation
         var itemInfo = Builder.getItems(element.id);
@@ -954,27 +1245,6 @@ export function getBuildText(buildData) {
     });
 
     build.setItemData(allItems);
-    // allItems.forEach(element => {
-    //     build.addItem(element);
-    // });
 
-    // log("Total Stats: ");
-    // log(build.getTotalStats());
-
-    var text = build.getText();
-
-    //     text += `[${itemInfo.type}]: ${itemInfo.name}`;
-
-    //     log(itemInfo);
-    //     var stats = Object.keys(stat.total);
-    //     stats.forEach(s => {
-    //         if (itemInfo[s] != null) {
-    //             text += `, ${s} ${itemInfo[s]}`;
-    //         }
-    //     });
-
-    //     text += "\n";
-    // });
-
-    return text;
+    return build;
 }

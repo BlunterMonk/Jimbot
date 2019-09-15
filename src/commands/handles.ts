@@ -19,6 +19,7 @@ import {config} from "../config/config.js";
 import {FFBE} from "../ffbe/ffbewiki.js";
 import {Cache, cache} from "../cache/cache.js";
 import * as Build from "../ffbe/build.js";
+import * as BuildImage from "../ffbe/buildimage.js";
 import {Builder} from "../ffbe/builder.js";
 import * as constants from "../constants.js";
 import * as Commands from "./commands.js";
@@ -712,15 +713,48 @@ function handleMuspel(receivedMessage, search, parameters) {
 
 export function handleBuild(receivedMessage, search, parameters) {
 
-    Build.requestBuild(search, (data) => {
+    Build.requestBuildData(search, (id, data) => {
         // log(data);
-        var b = JSON.parse(data);
+        var b = JSON.parse(data).units[0];
 
-        var name = getUnitNameFromKey(b.units[0].id).toTitleCase(" ");
-        var text = Build.getBuildText(b);
+        // var name = getUnitNameFromKey(b.id).toTitleCase(" ");
+        // var text = Build.getBuildText(id, b);
+        // var desc = text.text.replaceAll("\\[", "**[");
+        // desc = desc.replaceAll("\\]:", "]:**");
+        var build = Build.CreateBuild(id, b);
+
+        var sendImg = function(p) {
+            const attachment = new Discord.Attachment(p, 'build.png');
+            var embed = new Discord.RichEmbed()
+                    .attachFile(attachment)
+                    .setColor(pinkHexCode)
+                    .setImage(`attachment://build.png`);
+    
+            // log(text);
+            Client.sendMessage(receivedMessage, embed);
+        }
+
+        if (fs.existsSync(`./tempbuilds/${id}.png`)) {
+            sendImg(`./tempbuilds/${id}.png`);
+            return;
+        }
+
+        BuildImage.BuildImage(build).then(sendImg).catch((e) => {
+            Client.send(receivedMessage, "Sorry hun, something went wrong.");
+        });
+    });
+}
+export function handleBuildtext(receivedMessage, search, parameters) {
+
+    Build.requestBuildData(search, (id, data) => {
+        // log(data);
+        var b = JSON.parse(data).units[0];
+
+        var name = getUnitNameFromKey(b.id).toTitleCase(" ");
+        var text = Build.getBuildText(id, b);
         var desc = text.text.replaceAll("\\[", "**[");
         desc = desc.replaceAll("\\]:", "]:**");
-
+                
         var embed = <any>{
             color: pinkHexCode,
             title: `Build: ${name}`,
@@ -728,7 +762,7 @@ export function handleBuild(receivedMessage, search, parameters) {
             description: desc,
             // fields: text.fields,
             thumbnail: {
-                url: `https://ffbeequip.com/img/units/unit_icon_${b.units[0].id}.png`
+                url: `https://ffbeequip.com/img/units/unit_icon_${b.id}.png`
             }
         }
 
