@@ -711,21 +711,8 @@ function handleMuspel(receivedMessage, search, parameters) {
 
 // FFBEEQUIP
 
-export function handleBuild(receivedMessage, search, parameters) {
-
-    var unitName = search;
-    unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
-
-    var unitID = getUnitKey(search);
-    if (unitID) {
-        var calc = cache.getUnitCalculation("furcula", search)
-        if (calc) {
-            search = calc.url;
-            log(`Loading Unit Build: ${calc.url}`);
-        }
-    }
-
-    Build.requestBuildData(search, (id, data) => {
+async function build(receivedMessage, url) {
+    Build.requestBuildData(url, (id, data) => {
         // log(data);
         var b = JSON.parse(data).units[0];
 
@@ -756,9 +743,40 @@ export function handleBuild(receivedMessage, search, parameters) {
         });
     });
 }
-export function handleBuildtext(receivedMessage, search, parameters) {
+export function handleBuild(receivedMessage, search, parameters) {
 
-    Build.requestBuildData(search, (id, data) => {
+    var unitName = search;
+    unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
+
+    var unitID = getUnitKey(search);
+    if (unitID) {
+        var calc = cache.getUnitCalculation("furcula", search)
+        if (calc) {
+            search = calc.url;
+            log(`Loading Unit Build: ${calc.url}`);
+        }
+    }
+
+    build(receivedMessage, search);
+}
+export function handleBis(receivedMessage, search, parameters) {
+
+    var unitName = search;
+    unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
+
+    var unitID = getUnitKey(search);
+    if (unitID) {
+        var calc = cache.getUnitCalculation("whale", search)
+        if (calc) {
+            search = calc.url;
+            log(`Loading Unit Build: ${calc.url}`);
+        }
+    }
+
+    build(receivedMessage, search);
+}
+async function buildText(receivedMessage, url) {
+    Build.requestBuildData(url, (id, data) => {
         // log(data);
         var b = JSON.parse(data).units[0];
 
@@ -770,7 +788,7 @@ export function handleBuildtext(receivedMessage, search, parameters) {
         var embed = <any>{
             color: pinkHexCode,
             title: `Build: ${name}`,
-            url: search,
+            url: url,
             description: desc,
             // fields: text.fields,
             thumbnail: {
@@ -781,6 +799,37 @@ export function handleBuildtext(receivedMessage, search, parameters) {
         // log(text);
         Client.sendMessage(receivedMessage, embed);
     });
+}
+export function handleBuildtext(receivedMessage, search, parameters) {
+
+    var unitName = search;
+    unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
+
+    var unitID = getUnitKey(search);
+    if (unitID) {
+        var calc = cache.getUnitCalculation("furcula", search)
+        if (calc) {
+            search = calc.url;
+            log(`Loading Unit Build: ${calc.url}`);
+        }
+    }
+
+    buildText(receivedMessage, search);
+}
+export function handleBistext(receivedMessage, search, parameters) {
+    var unitName = search;
+    unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
+
+    var unitID = getUnitKey(search);
+    if (unitID) {
+        var calc = cache.getUnitCalculation("whale", search)
+        if (calc) {
+            search = calc.url;
+            log(`Loading Unit Build: ${calc.url}`);
+        }
+    }
+
+    buildText(receivedMessage, search);
 }
 
 // ADDING RESOURCES
