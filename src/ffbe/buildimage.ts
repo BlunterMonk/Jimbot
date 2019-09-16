@@ -46,7 +46,7 @@ export async function BuildImage(build: any): Promise<string> {
     
     return new Promise<string>((resolve, reject) => {
         
-        downloadImages(build.getSlots(), equipped, build.loadedUnit.name, (unit, list) => {
+        downloadImages(build.getSlots(), equipped, build.loadedUnit.id, (unit, list) => {
             buildImage(unit, list, build, (p) => {
                 resolve(p);
             });
@@ -111,6 +111,9 @@ add purple text for enhancements
 mess with ultra compact build sheet, only item names and total stats/resistances
 */
 
+/*
+
+*/
 
 function sortKillersByValue(killers) {
 
@@ -142,14 +145,17 @@ function sortKillersByValue(killers) {
 
 function getKillers(killers) {
 
+    console.log("Total Killers");
+    console.log(killers);
+
     var images = [];
     var labels = [];
 
-    var dimensions = 35;
-    var xStart = 370;
-    var yStart = 7;
-    var maxWide = 3; // max amount of icons that can fit horizontally
-    var maxTall = 4; // max amount of icons that can fit vertically
+    var dimensions = 25;
+    var xStart = 112;
+    var yStart = 84;
+    var maxWide = 10; // max amount of icons that can fit horizontally
+    var maxTall = 2; // max amount of icons that can fit vertically
 
     var across = 0;
     var down = 0;
@@ -193,12 +199,14 @@ function getKillers(killers) {
             font: "helvetica", 
             size: 16, 
             x: x + dimensions, 
-            y: y + (dimensions * 0.5),
+            y: y + (dimensions * 0.75),
             align: "left" 
         };
-
-        down++;
-        across = 0;
+        across += 2;
+        if (across >= maxWide) {
+            across = 0;
+            down++;
+        } 
     });
 
     return {
@@ -248,11 +256,10 @@ function getResistances(totalStats) {
     var ailments = getResists(totalStats, Build.ailmentList);
     var elements = getResists(totalStats, Build.elementList);
 
-    console.log("Ailment Resist Values:");
-    console.log(ailments);
-  
-    console.log("Element Resist Values:");
-    console.log(elements);
+    // console.log("Ailment Resist Values:");
+    // console.log(ailments);
+    // console.log("Element Resist Values:");
+    // console.log(elements);
     
     var x0 = 62;
     var y0 = 712;
@@ -315,22 +322,87 @@ function getResistances(totalStats) {
     return labels;
 }
 
-function getMainStats(totalStats) {
+const statValues = [
+    "hp",  "mp",  "atk", "mag", "def", "spr",
+];
+function getMainStats(totalStats, totalBonuses, wieldingBonus) {
     var labels = [];
 
-    var x0 = 185;
-    var x1 = 270;
-    var x2 = 355;
-    var y0 = 60;
-    var y1 = 126;
-    labels[labels.length] = { text: totalStats.hp , font: "helvetica", size: 16, x: x0, y: y0, align: "right" };
-    labels[labels.length] = { text: totalStats.mp , font: "helvetica", size: 16, x: x0, y: y1, align: "right" };
-    labels[labels.length] = { text: totalStats.atk, font: "helvetica", size: 16, x: x1, y: y0, align: "right" };
-    labels[labels.length] = { text: totalStats.mag, font: "helvetica", size: 16, x: x1, y: y1, align: "right" };
-    labels[labels.length] = { text: totalStats.def, font: "helvetica", size: 16, x: x2, y: y0, align: "right" };
-    labels[labels.length] = { text: totalStats.spr, font: "helvetica", size: 16, x: x2, y: y1, align: "right" };
+    log("wield")
+    log(wieldingBonus);
+    // var x0 = 185;
+    // var x1 = 270;
+    // var x2 = 355;
+    // var y0 = 60;
+    // var y1 = 126;
+    
+    let x0 = 230;
+    let x1 = 357;
+    let x2 = 488;
+    let y0 = 38;
+    let y1 = 76;
+    let y2 = 22;
+    let y3 = 58;
+    
+    var yb1 = 42;
+    var yb2 = 104;
+    labels[labels.length] = { text: totalStats.hp   , font: "Helvetica", size: 18, x: x0, y: y0 , align: "right" }; // HP
+    labels[labels.length] = { text: totalStats.mp   , font: "Helvetica", size: 18, x: x0, y: y1 , align: "right" };
+    labels[labels.length] = { text: totalStats.atk  , font: "Helvetica", size: 18, x: x1, y: y0 , align: "right" };
+    labels[labels.length] = { text: totalStats.mag  , font: "Helvetica", size: 18, x: x1, y: y1 , align: "right" };
+    labels[labels.length] = { text: totalStats.def  , font: "Helvetica", size: 18, x: x2, y: y0 , align: "right" };
+    labels[labels.length] = { text: totalStats.spr  , font: "Helvetica", size: 18, x: x2, y: y1 , align: "right" };
 
-    return labels;
+    var bonuses = [];
+    for (let index = 0; index < labels.length; index++) {
+        const element = labels[index];
+        const stat = statValues[index];
+        const key = `${stat}%`;
+        var v = totalBonuses[key];
+        var t = "0";
+
+        var color = `255,255,255,1`;
+        if (v) {
+            color = `0,255,0,1`;
+            if (parseInt(v) >= 400)
+                color = `255,0,0,1`;
+
+            t = `+${v}`;
+        }
+
+        t = `${t}%`;
+        
+        let l = mergeImages.measureText(ctx, t, `10px Helvetica`)
+
+        if (wieldingBonus && wieldingBonus[stat]) {
+            var tdh = wieldingBonus[stat];
+            log(tdh)
+
+            bonuses[bonuses.length] = { 
+                text: `+${tdh}%`,
+                font: "Helvetica", 
+                size: 12,
+                x: element.x - l.width - 6,
+                y: (index % 2) ? y3 : y2,
+                align: "right",
+                color: `255,223,0,1`,
+                strokeColor: `125,125,125,0.5`
+            };
+            log(bonuses[bonuses.length-1]);
+        }
+
+        bonuses[bonuses.length] = { 
+            text: t,
+            font: "Helvetica", 
+            size: 12,
+            x: element.x, 
+            y: (index % 2) ? y3 : y2,
+            align: "right",
+            color: color
+        };
+    }
+
+    return labels.concat(bonuses);
 }
 
 function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align) {
@@ -339,7 +411,7 @@ function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align) {
 
     var fontSize = 12;
     var font =  `${fontSize}px Helvetica`;
-    var itemText = Build.itemToString(equip);
+    var itemText = Build.itemToString(equip).toUpperCase();
     var enhText = Build.itemEnhancementsToString(equip);
     var lines = mergeImages.getLines(ctx, itemText, maxWidth, font);
     var infoY = yInfo;
@@ -356,6 +428,11 @@ function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align) {
             fs2 = 9;
             y2 = 214;
         }
+        var enl = mergeImages.getLines(ctx, enhText, maxWidth, font);
+        if (enl.length > 1) {
+            fs2 = 9;
+            y2 = 207;
+        }
 
         labels[labels.length] = {
             text: enhText,
@@ -364,11 +441,18 @@ function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align) {
             x: xInfo, //start,
             y: y2,
             align: align,
-            color: "255,0,255,1"//,
-            // maxWidth: maxWidth - start,
-            // wrap: true
+            color: "255,0,255,1",
+            strokeColor: "0,0,0,0",
+            maxWidth: maxWidth,
+            wrap: true
         };
     }
+
+    if (lines.length > 3) {
+        fontSize = 10;
+        infoY = yInfo - 10;
+    }
+
     labels[labels.length] = {
         text: itemText,
         font: "Helvetica",
@@ -421,13 +505,14 @@ function getEquipment(itemImages, build) {
       
             // Item name
             labels[labels.length] = {
-                text: image.name,
+                text: image.name.limitTo(25),
                 font: "Helvetica",
-                size: 12,
+                size: 14,
                 x: xName,
                 y: yName,
                 align: align,
-                maxWidth: 155
+                maxWidth: 155,
+                strokeColor: "255,255,255,1"
             };
 
             // type 
@@ -485,28 +570,31 @@ function getEquipment(itemImages, build) {
 
 function buildImage(unit, itemImages, build, callback) {
 
-    var totalStats = build.getTotalStats();
-    console.log("Total Stats");
-    console.log(totalStats);
+    var buildTotal = build.getTotalStats();
+    var totalStats = buildTotal.stats;
+    var totalBonuses = buildTotal.bonuses;
+
+    // console.log("Total Stats");
+    // console.log(totalStats);
 
     // console.log("Unit Image")
     // console.log(unit)
     var labels = [];
     var images = [{
-        src: "./ffbeequip-wip/build-template.png",
+        src: `${imgCacheDir}build-template.png`,
         x: 0,
         y: 0,
         w: canvasWidth,
         h: canvasHeight
     }];
-    if (unit.path && unit.path != "") {
+    if (unit && unit.path && unit.path != "") {
         console.log("Unit Image");
         let ui = {
             src: unit.path,
-            x: 56 - (unit.w * 0.5),//6,//150 - ((unit.w * 2.5) / 2),
-            y: 105 - unit.h,//42,//150 + ((unit.h * 2.5)),
-            w: unit.w,
-            h: unit.h
+            x: 72 - ((unit.w)),//56 - (unit.w * 0.5),//6,//150 - ((unit.w * 2.5) / 2),
+            y: 104 - (unit.h*1.5),//42,//150 + ((unit.h * 2.5)),
+            w: unit.w*1.5,
+            h: unit.h*1.5
         };
         console.log(ui);
         images[images.length] = ui;
@@ -525,8 +613,14 @@ function buildImage(unit, itemImages, build, callback) {
         };
     }
 
+    var wieldingBonus = null;
+    if (totalStats.singleWielding && build.isDoublehanding())
+        wieldingBonus = totalStats.singleWielding;
+    else if (totalStats.dualWielding && build.isDualWielding())
+        wieldingBonus = totalStats.dualWielding;
+
     // Add main stats
-    labels = labels.concat(getMainStats(totalStats));
+    labels = labels.concat(getMainStats(totalStats, totalBonuses, wieldingBonus));
 
     // Add Resistances
     labels = labels.concat(getResistances(totalStats));
@@ -537,9 +631,11 @@ function buildImage(unit, itemImages, build, callback) {
     images = images.concat(equips.images);
 
     // Add killers
-    var killers = getKillers(totalStats.killers);
-    labels = labels.concat(killers.labels);
-    images = images.concat(killers.images);
+    if (totalStats.killers) {
+        var killers = getKillers(totalStats.killers);
+        labels = labels.concat(killers.labels);
+        images = images.concat(killers.images);
+    }
 
     mergeImages.mergeImages(images, 
         {
@@ -560,8 +656,13 @@ function buildImage(unit, itemImages, build, callback) {
 
         var saveLocation = `./tempbuilds/${build.buildID}.png`;
         fs.writeFileSync(saveLocation, buffer);
+
+        console.log(`Build Saved: ${saveLocation}`);
         callback(saveLocation);
-    }).catch(console.error);
+    }).catch((e) =>{
+        console.error(e);
+        console.log("Failed to make image");
+    });
 }
 
 function downloadImages(slots, items, unitId, callback) {
@@ -570,7 +671,7 @@ function downloadImages(slots, items, unitId, callback) {
     // console.log(`initial images`);
     // console.log(imageList);
 
-    var unit = {};
+    var unit = null;
     var count = items.length + 1;
     var queryEnd = function(slot, id, image) {
         count--;
@@ -599,10 +700,10 @@ function downloadImages(slots, items, unitId, callback) {
     }
 
     unitId = unitId.replaceAll(" ", "_");
-    var filename = `${unitId}.png`;
+    var filename = `unit_icon_${unitId}.png`;
     var path = `${imgCacheDir}units/${filename}`;
     console.log(`Image Path: ${path}`);
-    if (!fs.existsSync(path)) {//
+    /*if (!fs.existsSync(path)) {//
         var resizeIcon = function(p2) {
             Canvas.loadImage(p2).then((image) => {
 
@@ -625,22 +726,30 @@ function downloadImages(slots, items, unitId, callback) {
                 fs.writeFileSync(path, buffer);
             
                 foundUnit(path);
-            }).catch(console.error);
+            }).catch((e) => {
+                console.error(e);
+                console.log(`Failed to load image: ${p2}`);
+            });
         }
 
         let p2 = `${imgCacheDir}units-uncropped/${filename}`;
         if (!fs.existsSync(p2)) {
             FFBE.queryWikiForUnitIcon(unitId, (o) => {
-                Download.downloadFile(p2, o, (r) => {
-                    resizeIcon(r);
-                });
+                if (o) {
+                    Download.downloadFile(p2, o, (r) => {
+                        resizeIcon(r);
+                    });
+                } else {
+                    queryEnd(null, null, null);
+                }
             });
         } else {
             resizeIcon(p2);
         }
-    } else {
+    } else {*/
         foundUnit(path);
-    }
+    //}
+
 
     slots.forEach(slot => {
 
@@ -680,6 +789,7 @@ function downloadImages(slots, items, unitId, callback) {
 /* long names
 diamond enlightenment key
 aldore special ops sword
+Black Fox Shapeshifter Mask
 The Lord of the Underworld
 Shield of the Chosen King
 Two-Headed Dragon's Harp

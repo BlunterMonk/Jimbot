@@ -680,6 +680,7 @@ class ffbe {
         wikiClient.getArticle(search, function (err, content, redirect) {
             if (err || !content) {
                 console.error(err);
+                callback(null);
                 return;
             }
             if (redirect) {
@@ -699,6 +700,7 @@ class ffbe {
             wikiClient.parse(content, search, function (err, xml, images) {
                 if (err) {
                     log(err);
+                    callback(null);
                     return;
                 }
 

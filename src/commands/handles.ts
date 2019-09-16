@@ -23,6 +23,8 @@ import * as BuildImage from "../ffbe/buildimage.js";
 import {Builder} from "../ffbe/builder.js";
 import * as constants from "../constants.js";
 import * as Commands from "./commands.js";
+import { resolve } from "dns";
+import { rejects } from "assert";
 
 var mainChannelID;
 const pinkHexCode = 0xffd1dc;
@@ -568,7 +570,7 @@ function buildRotationEmbed(search, source) {
 
     var bturn = 0;
     var text = `**Damage Per Turn: ${calc.damage}**\n`;
-    if (!calc.burst.empty()) {
+    if (calc.burst && !calc.burst.empty()) {
         text += `**Highest Burst: ${calc.burst} on turn ${calc.burstTurn}**\n`;
         bturn = parseInt(calc.burstTurn);
     }
@@ -711,35 +713,54 @@ function handleMuspel(receivedMessage, search, parameters) {
 
 // FFBEEQUIP
 
-async function build(receivedMessage, url) {
-    Build.requestBuildData(url, (id, data) => {
-        // log(data);
-        var b = JSON.parse(data).units[0];
+async function build(receivedMessage, url, includeTitle): Promise<string> {
 
-        // var name = getUnitNameFromKey(b.id).toTitleCase(" ");
-        // var text = Build.getBuildText(id, b);
-        // var desc = text.text.replaceAll("\\[", "**[");
-        // desc = desc.replaceAll("\\]:", "]:**");
-        var build = Build.CreateBuild(id, b);
+    return new Promise<string>((resolve, reject) => {
 
-        var sendImg = function(p) {
-            const attachment = new Discord.Attachment(p, 'build.png');
-            var embed = new Discord.RichEmbed()
-                    .attachFile(attachment)
-                    .setColor(pinkHexCode)
-                    .setImage(`attachment://build.png`);
-    
-            // log(text);
-            Client.sendMessage(receivedMessage, embed);
-        }
+        Build.requestBuildData(url, (id, data) => {
+            log(data);
+            var d = JSON.parse(data);
+            if (!d || !d.units[0]) {
+                log("Could not parse build data");
+                reject("Could not parse build data");
+                return;
+            }      
+            
+            var b = d.units[0];
+            log(b.items);
 
-        if (fs.existsSync(`./tempbuilds/${id}.png`)) {
-            sendImg(`./tempbuilds/${id}.png`);
-            return;
-        }
+            // var name = getUnitNameFromKey(b.id).toTitleCase(" ");
+            // var text = Build.getBuildText(id, b);
+            // var desc = text.text.replaceAll("\\[", "**[");
+            // desc = desc.replaceAll("\\]:", "]:**");
+            var build = Build.CreateBuild(id, b);
 
-        BuildImage.BuildImage(build).then(sendImg).catch((e) => {
-            Client.send(receivedMessage, "Sorry hun, something went wrong.");
+            var sendImg = function(p) {
+                const attachment = new Discord.Attachment(p, 'build.png');
+                var embed = new Discord.RichEmbed()
+                        .attachFile(attachment)
+                        .setColor(pinkHexCode)
+                        .setImage(`attachment://build.png`);
+                    
+                if (includeTitle && !includeTitle.empty()) {
+                    embed.setTitle(includeTitle)
+                        .setURL(url);
+                }
+        
+                // log(text);
+                Client.sendMessage(receivedMessage, embed);
+                resolve();
+            }
+
+            if (fs.existsSync(`./tempbuilds/${id}.png`)) {
+                sendImg(`./tempbuilds/${id}.png`);
+                return;
+            }
+
+            BuildImage.BuildImage(build).then(sendImg).catch((e) => {
+                Client.send(receivedMessage, "Sorry hun, something went wrong.");
+                reject("Could not build image");
+            });
         });
     });
 }
@@ -748,32 +769,42 @@ export function handleBuild(receivedMessage, search, parameters) {
     var unitName = search;
     unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
 
+    var includeTitle = null;
     var unitID = getUnitKey(search);
     if (unitID) {
         var calc = cache.getUnitCalculation("furcula", search)
         if (calc) {
+            includeTitle = search;
             search = calc.url;
             log(`Loading Unit Build: ${calc.url}`);
         }
     }
 
-    build(receivedMessage, search);
+    build(receivedMessage, search, includeTitle)
+    .catch((e) => {
+        log(`Unable to find build: ${search}`);    
+    });
 }
 export function handleBis(receivedMessage, search, parameters) {
 
     var unitName = search;
     unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
 
+    var includeTitle = null;
     var unitID = getUnitKey(search);
     if (unitID) {
         var calc = cache.getUnitCalculation("whale", search)
         if (calc) {
+            includeTitle = search;
             search = calc.url;
             log(`Loading Unit Build: ${calc.url}`);
         }
     }
 
-    build(receivedMessage, search);
+    build(receivedMessage, search, includeTitle)
+    .catch((e) => {
+        log(`Unable to find build: ${search}`);    
+    });
 }
 async function buildText(receivedMessage, url) {
     Build.requestBuildData(url, (id, data) => {
@@ -1098,9 +1129,11 @@ function handleUpdate(receivedMessage, search, parameters, forced = false) {
     var phrases = [
         "Roger roger, starting update!",
         "Rikai, kōshin masutā no kaishi!",
+        "성은이 망극하옵니다 전하.",
         "deja que comience la actualización!",
         "Oh bountiful deity, deliver on to us a revalation!",
-        "mettre à jour la feuille mettre à jour la feuille!"
+        "mettre à jour la feuille mettre à jour la feuille!",
+        "고향을 위협하는 자들은 각오하라!"
     ]
 
     var msg = phrases[getRandomInt(phrases.length)]

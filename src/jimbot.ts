@@ -25,7 +25,8 @@ var editor = null;
 
 
 process.on("unhandledRejection", (reason, p) => {
-    log(`Unhandled Rejection at: Promise(${p}), Reason: ${reason}`);
+    log(`Unhandled Rejection at: Promise(${JSON.stringify(p)}), Reason: ${reason}`);
+    log(p);
     // application specific logging, throwing an error, or other logic here
 });
 

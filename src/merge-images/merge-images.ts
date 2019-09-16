@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+
 // Defaults
 var defaultOptions = {
 	format: 'image/png',
@@ -127,11 +129,14 @@ export var mergeImages = function (sources, options) {
 			if (source.constructor.name !== 'Object') {
 				source = { src: source };
 			}
+			if (!fs.existsSync(source.src))
+				resolve(Object.assign({}, source, { img: null }));
 
 			// Resolve source and img when loaded
 			var img = new Image();
-			img.onerror = function () { return reject(new Error('Couldn\'t load image')); };
+			img.onerror = function () { return /*reject(new Error*/console.log('Couldn\'t load image'); };
 			img.onload = function () { return resolve(Object.assign({}, source, { img: img })); };
+
 			img.src = source.src;
 		}); 
 	});
@@ -154,6 +159,9 @@ export var mergeImages = function (sources, options) {
 
 			// Draw images to canvas
 			images.forEach(function (image: any) {
+				if (!image.img)
+					return;
+
 				ctx.globalAlpha = image.opacity ? image.opacity : 1;
 				
 				if (image.w && image.h)
@@ -165,7 +173,7 @@ export var mergeImages = function (sources, options) {
 			// Add text here
 			if (options.text) {
 				ctx.fillStyle = 'rgba(255,255,255,1)'
-				ctx.strokeStyle = 'rgba(125,125,125,1)'
+				ctx.strokeStyle = 'rgba(0,0,0,0.5)'//'rgba(125,125,125,1)'
 				
 				options.text.forEach((entry, index) => {
 					ctx.font = `${entry.size}px ${entry.font}`;
@@ -180,6 +188,12 @@ export var mergeImages = function (sources, options) {
 						ctx.fillStyle = `rgba(${entry.color})`;
 					} else {
 						ctx.fillStyle = 'rgba(255,255,255,1)'
+					} 
+
+					if (entry.strokeColor) {
+						ctx.strokeStyle = `rgba(${entry.color})`;
+					} else {
+						ctx.strokeStyle = 'rgba(0,0,0,1)'
 					} 
 					
 					if (entry.wrap && entry.maxWidth) {

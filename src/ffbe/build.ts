@@ -22,7 +22,7 @@ const ignoreItemKeys = [
     "skillEnhancement", "special", "enhancements",
     "damageVariance", "equipedConditions"
 ];
-const statValues = [
+export const statValues = [
     "hp",  "mp",  "atk", "def", "mag", "spr",
     "hp%", "mp%", "atk%", "mag%", "def%", "spr%"
 ];
@@ -257,6 +257,17 @@ class Build {
         return item;
     }
 
+    isDualWielding() {
+        var s0 = this.getEquipmentInSlot(0);
+        var s1 = this.getEquipmentInSlot(1);
+        return (s0 && s1);
+    }
+    isDoublehanding() {
+        var s0 = this.getEquipmentInSlot(0);
+        var s1 = this.getEquipmentInSlot(1);
+        return ((s0 && !s1) || (s1 && !s0))
+    }
+
     // Finalize the item as equipment and add its stats to the build total
     addToTotal(item2: any) {
         this.total = addToTotal(this.total, item2);
@@ -329,17 +340,21 @@ class Build {
     combineNonStats(left: any, right: any): any {
 
     }
+    getTotalBonuses() {
+
+    }
     getTotalStats() {
      
         var passives = getUnitPassiveStats(this, this.loadedUnit);
         // log("\nUnit Passive Stats");
         // log(passives);
-
         var esper = Builder.getEsper(this.buildData.esperId);
         // log("\nEsper");
         // log(esper);
+        var equipped = this.equipmentTotal;
 
-        var unitStats = getUnitMaxStats(this.loadedUnit, passives, this.buildData.pots, this.equipmentTotal, esper);
+        var unitStats = getUnitMaxStats(this.loadedUnit, passives, this.buildData.pots, 
+            this.equipmentTotal, esper, this);
         // log("\nUnit Stats");
         // log(unitStats);
 
@@ -348,16 +363,17 @@ class Build {
 
         // log("\nStat Totals\n{\n");
 
-        var total = addOtherStats(unitStats, passives);
+        var totalBonuses = unitStats.bonuses;// getTotalBonuses(passives, equipped, esper);
+        var totalStats = addOtherStats(unitStats.stats, passives);
         // log("\n{\nUnit Stats + Pasives");
         // log(total);
 
-        total = addOtherStats(total, this.equipmentTotal);
+        // total = addOtherStats(total, this.equipmentTotal);
         // log("Unit Stats + Pasives + Equipment Total");
         // log(total);
         
-        if (esper)
-            total = addOtherStats(total, esper);
+        // if (esper)
+            // total = addOtherStats(total, esper);
 
         // log("Unit Stats + Pasives + Equipment Total + Esper");
         // log(total);
@@ -365,10 +381,16 @@ class Build {
         // log("\n}\n");
         //var killers = addOtherStats(total.killers)
 
-        // log("Total Stats");
-        // log(total);
+        log("Total Stats");
+        log(totalStats);
 
-        return total;
+        log("Total Bonuses");
+        log(totalBonuses);
+
+        return {
+            stats: totalStats,
+            bonuses: totalBonuses
+        };
     }
 
     // get a string representation of the build
@@ -389,7 +411,7 @@ class Build {
             }
         }
 
-        var total = this.getTotalStats();
+        var total = this.getTotalStats().stats;
 
         // Total stats
         var across = 0;
@@ -563,7 +585,7 @@ function getTotalBonuses(passives: any, equipmentTotal: any, esper: any) {
 }
 
 // calculate the units max stats with the provided pots
-function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: any, esper: any): any {
+function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: any, esper: any, build: Build): any {
 
     log("getUnitMaxStats:");
     log("pots");
@@ -572,6 +594,10 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
     log(equipmentTotal);
     log("passives");
     log(passives);
+    if (esper) {
+        log("esper");
+        log(esper);
+    }
 
     var bonus = getTotalBonuses(passives, equipmentTotal, esper);
 
@@ -604,9 +630,37 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
     });
 
     // Add equipment bonuses
-    if (bonus.singleWielding) {
+    if (bonus.dualWielding && build.isDualWielding()) {
+        // Add DW bonuses
+         var keys = Object.keys(bonus.dualWielding);
+         keys.forEach((k, i) => {
+             if (!equipmentTotal[k])
+                return;
+
+             var b = bonus.dualWielding[k];
+             if (b > 200)
+                 b = 200;
+ 
+             if (k == "accuracy") {
+                 if (!total[k]) 
+                     total[k] = b;
+ 
+                 total[k] = total[k] + b;
+                 return;
+             }
+ 
+             var t = (equipmentTotal[k] * (b / 100));
+             log(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
+             let t1 = total[k] + t;
+             log(`${k}: ${total[k]} + ${t} = ${t1}`);
+             total[k] = t1;
+         });
+     } else if (bonus.singleWielding && build.isDoublehanding()) {
         var keys = Object.keys(bonus.singleWielding);
         keys.forEach((k, i) => {
+            if (!equipmentTotal[k])
+                return;
+
             var b = bonus.singleWielding[k];
             if (b > 300)
                 b = 300;
@@ -655,7 +709,10 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
         }
     });
 
-    return total;
+    return {
+        stats: total,
+        bonuses: bonus
+    };
 }
 function getUnitPassiveStats(B: Build, unit: Unit): any {
     var stats = {};
@@ -1130,6 +1187,11 @@ function applyEnchantments(item, enchantments) {
 }
 function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
 
+    if (itemWithVariation.length == 0) {
+        log(`Error, could not find item in slot, ${slot}`);
+        return null;
+    }
+
     if (itemWithVariation.length == 1) {
         var item = itemWithVariation[0];
         // if there are no variations of the item, it is fine
@@ -1180,7 +1242,7 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
             if (isApplicable(itemWithVariation[index], B.loadedUnit) && areConditionOK(itemWithVariation[index], B)) {
                 var enh = B.getItemEnchantments(slot);
                 if (enh) {
-                    return applyEnchantments(itemWithVariation[index], item.enhancements);
+                    return applyEnchantments(itemWithVariation[index], itemWithVariation[index].enhancements);
                 } else {
                     return itemWithVariation[index];
                 }
@@ -1214,7 +1276,11 @@ export function requestBuildData(buildURL: string, callback) {
     request(
         { uri: `https://firebasestorage.googleapis.com/v0/b/ffbeequip.appspot.com/o/PartyBuilds%2F${id}.json?alt=media` },
         function(error, response, body) {
-            if (error || body.empty()) {
+            log(`request response`);
+            log(error);
+            log(response.statusCode);
+
+            if (error || response.statusCode != 200 || body.empty()) {
                 log(`Build Nod Found: ${id}`);
                 return;
             }
@@ -1233,6 +1299,8 @@ export function getBuildText(id: string, buildData) {
 export function CreateBuild(id: string, buildData): Build {
 
     var build = new Build(id, buildData);
+    log("Create Build");
+    log(buildData);
 
     var allItems = [];
     buildData.items.forEach((element, ind) => {
@@ -1240,6 +1308,8 @@ export function CreateBuild(id: string, buildData): Build {
         // If only one item is found, equip it right away, otherwise wait for validation
         var itemInfo = Builder.getItems(element.id);
         var best = findBestItemVersion(build, element.slot, itemInfo);
+        if (best == null)
+            return;
         // log("Best Item Found");
         // log(best);
 

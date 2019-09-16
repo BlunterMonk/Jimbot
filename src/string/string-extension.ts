@@ -120,8 +120,8 @@ String.prototype.closestMatchIn = function (list: string[], threshold: number): 
             return b.similarity - a.similarity;
         })[0];
 
-        log("Highest");
-        log(highest);
+        // log("Highest");
+        // log(highest);
 
         return highest.txt;
     }
