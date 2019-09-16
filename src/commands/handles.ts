@@ -713,7 +713,7 @@ function handleMuspel(receivedMessage, search, parameters) {
 
 // FFBEEQUIP
 
-async function build(receivedMessage, url, includeTitle): Promise<string> {
+export async function build(receivedMessage, url, includeTitle, force = false): Promise<string> {
 
     return new Promise<string>((resolve, reject) => {
 
@@ -752,7 +752,7 @@ async function build(receivedMessage, url, includeTitle): Promise<string> {
                 resolve();
             }
 
-            if (fs.existsSync(`./tempbuilds/${id}.png`)) {
+            if (!force && fs.existsSync(`./tempbuilds/${id}.png`)) {
                 sendImg(`./tempbuilds/${id}.png`);
                 return;
             }
