@@ -15,6 +15,15 @@ const imageEndpoint = `https://ffbeequip.com/img/`;
 const imgCacheDir = "./icons/";
 const canvasWidth = 600;
 const canvasHeight = 788;
+const mainStatFontFamily = "Arial Black";
+const resistFontFamily = "Arial Black";
+const fontFamily = "Meiryo";
+const statStroke = "255,255,255,1";
+const textFontFamily = "Meiryo";
+const textStroke = "255,255,255,1";
+const enhancementsFontFamily = "Meiryo";
+const enhancementsColor = "255,0,255,1";
+const enhancementsStroke = "0,0,0,0";
 
 /*
 function sprite(n) { return `https://gamepedia.cursecdn.com/exvius_gamepedia_en/1/15/Unit-${n}-7.png`; }
@@ -154,7 +163,7 @@ function getKillers(killers) {
     var dimensions = 25;
     var xStart = 112;
     var yStart = 84;
-    var maxWide = 10; // max amount of icons that can fit horizontally
+    var maxWide = 14; // max amount of icons that can fit horizontally
     var maxTall = 2; // max amount of icons that can fit vertically
 
     var across = 0;
@@ -196,7 +205,7 @@ function getKillers(killers) {
 
         labels[labels.length] = { 
             text: `${k}%`,
-            font: "helvetica", 
+            font: fontFamily, 
             size: 16, 
             x: x + dimensions, 
             y: y + (dimensions * 0.75),
@@ -272,10 +281,12 @@ function getResistances(totalStats) {
         const e = ailments[index];
         const v = parseInt(e);
 
+        var f = resistFontFamily;
         var t = `${v}%`;
         var c = "255,255,255,1";
         if (v >= 100) {
             t = "Null"
+            f = fontFamily;
         } else if (v == 0) {
             t = "-"
         } else if (v > 0) {
@@ -286,7 +297,7 @@ function getResistances(totalStats) {
 
         labels[labels.length] = { 
             text: t,
-            font: "helvetica", 
+            font: f, 
             size: 16, 
             x: x0 + (spacing * index), 
             y: y0,
@@ -310,7 +321,7 @@ function getResistances(totalStats) {
 
         labels[labels.length] = { 
             text: t, 
-            font: "helvetica", 
+            font: resistFontFamily, 
             size: 16, 
             x: x0 + (spacing * index), 
             y: y1,
@@ -346,12 +357,12 @@ function getMainStats(totalStats, totalBonuses, wieldingBonus) {
     
     var yb1 = 42;
     var yb2 = 104;
-    labels[labels.length] = { text: totalStats.hp   , font: "Helvetica", size: 18, x: x0, y: y0 , align: "right" }; // HP
-    labels[labels.length] = { text: totalStats.mp   , font: "Helvetica", size: 18, x: x0, y: y1 , align: "right" };
-    labels[labels.length] = { text: totalStats.atk  , font: "Helvetica", size: 18, x: x1, y: y0 , align: "right" };
-    labels[labels.length] = { text: totalStats.mag  , font: "Helvetica", size: 18, x: x1, y: y1 , align: "right" };
-    labels[labels.length] = { text: totalStats.def  , font: "Helvetica", size: 18, x: x2, y: y0 , align: "right" };
-    labels[labels.length] = { text: totalStats.spr  , font: "Helvetica", size: 18, x: x2, y: y1 , align: "right" };
+    labels[labels.length] = { text: totalStats.hp   , font: mainStatFontFamily, size: 18, x: x0, y: y0 , align: "right", strokeColor: statStroke }; // HP
+    labels[labels.length] = { text: totalStats.mp   , font: mainStatFontFamily, size: 18, x: x0, y: y1 , align: "right", strokeColor: statStroke };
+    labels[labels.length] = { text: totalStats.atk  , font: mainStatFontFamily, size: 18, x: x1, y: y0 , align: "right", strokeColor: statStroke };
+    labels[labels.length] = { text: totalStats.mag  , font: mainStatFontFamily, size: 18, x: x1, y: y1 , align: "right", strokeColor: statStroke };
+    labels[labels.length] = { text: totalStats.def  , font: mainStatFontFamily, size: 18, x: x2, y: y0 , align: "right", strokeColor: statStroke };
+    labels[labels.length] = { text: totalStats.spr  , font: mainStatFontFamily, size: 18, x: x2, y: y1 , align: "right", strokeColor: statStroke };
 
     var bonuses = [];
     for (let index = 0; index < labels.length; index++) {
@@ -372,7 +383,7 @@ function getMainStats(totalStats, totalBonuses, wieldingBonus) {
 
         t = `${t}%`;
         
-        let l = mergeImages.measureText(ctx, t, `10px Helvetica`)
+        let l = mergeImages.measureText(ctx, t, `10px ${fontFamily}`)
 
         if (wieldingBonus && wieldingBonus[stat]) {
             var tdh = wieldingBonus[stat];
@@ -380,7 +391,7 @@ function getMainStats(totalStats, totalBonuses, wieldingBonus) {
 
             bonuses[bonuses.length] = { 
                 text: `+${tdh}%`,
-                font: "Helvetica", 
+                font: fontFamily, 
                 size: 12,
                 x: element.x - l.width - 6,
                 y: (index % 2) ? y3 : y2,
@@ -393,7 +404,7 @@ function getMainStats(totalStats, totalBonuses, wieldingBonus) {
 
         bonuses[bonuses.length] = { 
             text: t,
-            font: "Helvetica", 
+            font: fontFamily, 
             size: 12,
             x: element.x, 
             y: (index % 2) ? y3 : y2,
@@ -410,7 +421,7 @@ function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align) {
     var labels = [];
 
     var fontSize = 12;
-    var font =  `${fontSize}px Helvetica`;
+    var font =  `${fontSize}px ${fontFamily}`;
     var itemText = Build.itemToString(equip).toUpperCase();
     var enhText = Build.itemEnhancementsToString(equip);
     var lines = mergeImages.getLines(ctx, itemText, maxWidth, font);
@@ -436,13 +447,13 @@ function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align) {
 
         labels[labels.length] = {
             text: enhText,
-            font: "Helvetica",
+            font: enhancementsFontFamily,
             size: 10,
             x: xInfo, //start,
             y: y2,
             align: align,
-            color: "255,0,255,1",
-            strokeColor: "0,0,0,0",
+            color: enhancementsColor,
+            strokeColor: enhancementsStroke,
             maxWidth: maxWidth,
             wrap: true
         };
@@ -455,10 +466,11 @@ function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align) {
 
     labels[labels.length] = {
         text: itemText,
-        font: "Helvetica",
+        font: textFontFamily,
         size: fontSize,
         x: xInfo,
         y: infoY,
+        strokeColor: textStroke,
         align: align,
         maxWidth: maxWidth,
         wrap: true
@@ -506,7 +518,7 @@ function getEquipment(itemImages, build) {
             // Item name
             labels[labels.length] = {
                 text: image.name.limitTo(25),
-                font: "Helvetica",
+                font: fontFamily,
                 size: 14,
                 x: xName,
                 y: yName,

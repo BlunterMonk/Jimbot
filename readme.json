@@ -3,6 +3,18 @@
     "description": "(replace ? with your servers prefix)\nQuotations are required around parameters",
     "fields": [
         {
+            "name": "Post FFBEEquip Build",
+            "value": "- **?build** *[build_url]*\nDisplay the build provided with the share URL from www.FFBEEquip.com\n- example: ?build https://ffbeequip.com/builder.html?server=GL#219122f0-ced0-11e9-a7ee-83d283e1de8e"
+        },
+        {
+            "name": "Post Furcula Unit Builds",
+            "value": "- **?build** *[unit_name]*\nDisplay the build used by Furcula's Damage Calculations\n- example: ?build malphasie"
+        },
+        {
+            "name": "Post Whale Unit Builds",
+            "value": "- **?bis** *[unit_name]*\nDisplay the build used by ShadoWalker's Damage Calculations\n- example: ?bis malphasie"
+        },
+        {
             "name": "Search Wiki",
             "value": "- **?search** *[term]*"
         },
