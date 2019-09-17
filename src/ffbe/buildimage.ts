@@ -50,6 +50,9 @@ function processBuild(search) {
 }*/
 
 function logDataArray(data: any[]) {
+    if (data.length == 0) {
+        return log("[]");
+    }
     log(`[`);
     data.forEach((v,i) => {
         log(`${i}: ${JSON.stringify(v)}`);
