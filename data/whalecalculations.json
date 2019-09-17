@@ -1,11 +1,11 @@
 {
 	"Cid (finisher)": {
 		"name": "Cid (finisher)",
-		"damage": "23,914,179,894",
+		"damage": "25,374,369,284",
 		"turns": "4",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#214e6bb0-d833-11e9-a314-1b650a2e0160",
-		"burst": "71,742,539,682",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#66ec49d0-d89c-11e9-a314-1b650a2e0160",
+		"burst": "76,123,107,852",
 		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Cid",
 		"rotation": [
@@ -1448,6 +1448,62 @@
 			""
 		]
 	},
+	"Madam Edel (JP)": {
+		"name": "Madam Edel (JP)",
+		"damage": "40,548,770,279",
+		"turns": "18",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=JP#ccd59a70-d843-11e9-a314-1b650a2e0160",
+		"burst": "65,763,214,747",
+		"burstTurn": "16",
+		"wiki": "https://exvius.gamepedia.com/Madam_Edel/JP",
+		"rotation": [
+			"ワールドクラッシャー +  天殴地壊        ",
+			"天殴地壊 x 2       ",
+			"覇石・ディクテーター (CD) + 天殴地壊",
+			"煌技・覇天滅砕 (LB)",
+			"ワールドクラッシャー +  天殴地壊",
+			"天石・コンクエスト (CD) +   天殴地壊        ",
+			"天殴地壊 x 2       ",
+			"ワールドクラッシャー +  天殴地壊",
+			"滅石・タイラント (CD) + 天殴地壊        ",
+			"天殴地壊 x 2       ",
+			"ワールドクラッシャー +  天殴地壊",
+			"砕石・パーフェクトワン (CD) + 天殴地壊",
+			"天殴地壊 x 2       ",
+			"天殴地壊 x 2       ",
+			"ワールドクラッシャー +  天殴地壊",
+			"天殴地壊 x 2       "
+		]
+	},
+	"CG Lasswell": {
+		"name": "CG Lasswell",
+		"damage": "18,294,167,766",
+		"turns": "12",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=JP#a681db00-d842-11e9-a314-1b650a2e0160",
+		"burst": "33,416,559,815",
+		"burstTurn": "8",
+		"wiki": "Spoilers",
+		"rotation": [
+			"完全覚醒【ヘス王】 (CD) + 氷炎滅却刃",
+			"明鏡・火華 + 極・明鏡 + 真・明鏡 (CD)",
+			"八垓抜刀 軌ら星 (LB)       ",
+			"絶・明鏡　─紅焔─ + 一念通天 (CD) + 明鏡・天地        ",
+			"明鏡・天地 x 3       ",
+			"八垓抜刀 軌ら星 (LB)       ",
+			"完全覚醒【ヘス王】 (CD) + 明鏡・火華 + 一念通天 (CD)",
+			"明鏡・天地 x 3       ",
+			"八垓抜刀 軌ら星 (LB)       ",
+			"絶・明鏡　─紅焔─ + 一念通天 (CD) + 明鏡・天地",
+			"明鏡・火華 + 明鏡・天地 x 2     ",
+			"八垓抜刀 軌ら星 (LB)       ",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"CG Onion Knight": {
 		"name": "CG Onion Knight",
 		"damage": "",
@@ -1502,34 +1558,6 @@
 			""
 		]
 	},
-	"CG Lasswell": {
-		"name": "CG Lasswell",
-		"damage": "",
-		"turns": "12",
-		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=JP#6a2ce1c0-a2d9-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "4",
-		"wiki": "Spoilers",
-		"rotation": [
-			"完全覚醒【ヘス王】 (CD) + 氷炎滅却刃",
-			"明鏡・火華 + 極・明鏡 + 真・明鏡 (CD)",
-			"八垓抜刀 軌ら星 (LB)       ",
-			"絶・明鏡　─紅焔─ + 一念通天 (CD) + 明鏡・天地        ",
-			"明鏡・天地 x 3       ",
-			"八垓抜刀 軌ら星 (LB)       ",
-			"完全覚醒【ヘス王】 (CD) + 明鏡・火華 + 一念通天 (CD)",
-			"明鏡・天地 x 3       ",
-			"八垓抜刀 軌ら星 (LB)       ",
-			"絶・明鏡　─紅焔─ + 一念通天 (CD) + 明鏡・天地",
-			"明鏡・火華 + 明鏡・天地 x 2     ",
-			"八垓抜刀 軌ら星 (LB)       ",
-			"",
-			"",
-			"",
-			""
-		]
-	},
 	"Fina & Chocobo": {
 		"name": "Fina & Chocobo",
 		"damage": "",
@@ -1560,11 +1588,11 @@
 	},
 	"Kimono Fina": {
 		"name": "Kimono Fina",
-		"damage": "16,791,203,825",
+		"damage": "17,326,091,960",
 		"turns": "13",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#c5d2e880-d57e-11e9-a314-1b650a2e0160",
-		"burst": "32,968,518,110",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#c5bb55b0-d89b-11e9-a314-1b650a2e0160",
+		"burst": "34,008,744,200",
 		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Kimono_Fina",
 		"rotation": [
@@ -1581,6 +1609,34 @@
 			"Phosphorescence - Light x 4",
 			"Arrow of Light (CD) + Flash - Ice + Consecutive Bullseye (CD)",
 			"Phosphorescence - Ice x 3",
+			"",
+			"",
+			""
+		]
+	},
+	"Sol ": {
+		"name": "Sol ",
+		"damage": "16,632,250,613",
+		"turns": "11",
+		"type": "magic",
+		"url": "https://ffbeequip.com/builder.html?server=GL#10142aa0-d893-11e9-a314-1b650a2e0160",
+		"burst": "27,415,488,356",
+		"burstTurn": "11",
+		"wiki": "https://exvius.gamepedia.com/Sol/JP",
+		"rotation": [
+			"Sage's Wisdom (CD) + Solar Divinity x 2",
+			"Solar Divinity x 4",
+			"Solar Divinity x 4",
+			"Solar Divinity x 4",
+			"Solar Divinity x 4",
+			"Sage's Wisdom (CD) + Solar Divinity x  2",
+			"Solar Divinity x 3 + Chaotic Nova (CD)",
+			"Solar Divinity x 4",
+			"Solar Divinity x 4",
+			"Power of Chaos + Solar Divinity x 3",
+			"Devastation x 5",
+			"",
+			"",
 			"",
 			"",
 			""
@@ -1612,34 +1668,6 @@
 			"Eternal Winter (CD) + Snow Surge (CD) + Absolute Zero + Cold Snap",
 			"Snow Burial + Piercing Chill x 3",
 			"Snow Burial + Piercing Chill x 3"
-		]
-	},
-	"Sol ": {
-		"name": "Sol ",
-		"damage": "15,412,287,851",
-		"turns": "11",
-		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#f4039870-d57f-11e9-a314-1b650a2e0160",
-		"burst": "27,074,573,681",
-		"burstTurn": "11",
-		"wiki": "https://exvius.gamepedia.com/Sol/JP",
-		"rotation": [
-			"Sage's Wisdom (CD) + Solar Divinity x 2",
-			"Solar Divinity x 4",
-			"Solar Divinity x 4",
-			"Solar Divinity x 4",
-			"Solar Divinity x 4",
-			"Sage's Wisdom (CD) + Solar Divinity x  2",
-			"Solar Divinity x 3 + Chaotic Nova (CD)",
-			"Solar Divinity x 4",
-			"Solar Divinity x 4",
-			"Power of Chaos + Solar Divinity x 3",
-			"Devastation x 5",
-			"",
-			"",
-			"",
-			"",
-			""
 		]
 	},
 	"Circe": {
@@ -1700,11 +1728,11 @@
 	},
 	"Tsukiko": {
 		"name": "Tsukiko",
-		"damage": "10,826,007,024",
+		"damage": "11,775,487,668",
 		"turns": "12",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#264f1d10-c444-11e9-9d66-5b7bd6bc7eb8",
-		"burst": "13,406,642,963",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#f17d0170-d89c-11e9-a314-1b650a2e0160",
+		"burst": "14,646,444,667",
 		"burstTurn": "10",
 		"wiki": "https://exvius.gamepedia.com/Tsukiko",
 		"rotation": [
@@ -2222,11 +2250,11 @@
 	},
 	"White Lily Dark Fina": {
 		"name": "White Lily Dark Fina",
-		"damage": "",
+		"damage": "17,264,240,241",
 		"turns": "12",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=JP#7000a6c0-9fa2-11e9-a1b8-7b53378612e4",
-		"burst": "",
+		"url": "https://ffbeEquip.com/builder.html?server=JP#8901c0c0-d844-11e9-a314-1b650a2e0160",
+		"burst": "24,023,742,584",
 		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/White_Lily_Dark_Fina/JP",
 		"rotation": [
@@ -2328,6 +2356,34 @@
 			"エアロスパーク x 4",
 			"エアロスパーク x 4",
 			"エアロスパーク x 3",
+			"",
+			""
+		]
+	},
+	"Fina & Dark Fina (JP)": {
+		"name": "Fina & Dark Fina (JP)",
+		"damage": "18,338,727,509",
+		"turns": "10",
+		"type": "magic",
+		"url": "https://ffbeEquip.com/builder.html?server=JP#ec8b5200-d844-11e9-a314-1b650a2e0160",
+		"burst": "28,256,222,540",
+		"burstTurn": "4",
+		"wiki": "https://exvius.gamepedia.com/Fina_%26_Dark_Fina/JP",
+		"rotation": [
+			"ネメシスクラック (CD) + ディバインブレス (CD)",
+			"共鳴する力 (CD) + ルインディザスター (CD) + アースグレア    ",
+			"アースグレア x 3",
+			"ルインディザスター (CD) + アースグレア x 2",
+			"アースグレア x 2 + マナフィールド",
+			"ネメシスクラック (CD) + ルインディザスター (CD) + アースグレア",
+			"アースグレア x 3",
+			"共鳴する力 (CD) + ルインディザスター (CD) + ディバインブレス",
+			"アースグレア x 3",
+			"ルインディザスター (CD) + アースグレア x 2",
+			"",
+			"",
+			"",
+			"",
 			"",
 			""
 		]

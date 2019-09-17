@@ -759,7 +759,8 @@ export async function build(receivedMessage, url, includeTitle, force = false): 
 
             BuildImage.BuildImage(build).then(sendImg).catch((e) => {
                 Client.send(receivedMessage, "Sorry hun, something went wrong.");
-                reject("Could not build image");
+                console.log("Could not build image");
+                reject(e);
             });
         });
     });
@@ -782,6 +783,9 @@ export function handleBuild(receivedMessage, search, parameters) {
 
     build(receivedMessage, search, includeTitle)
     .catch((e) => {
+        console.error(e);
+        log("Build Failed");
+        log(e);
         log(`Unable to find build: ${search}`);    
     });
 }
@@ -1140,6 +1144,21 @@ function handleUpdate(receivedMessage, search, parameters, forced = false) {
 
     Client.send(receivedMessage, msg);
 
+    if (source == "lyregard") {
+        
+        Builder.update((success, error) => {
+            log(`Finished Updating: ${success}`);
+
+            if (success) {
+                Client.send(receivedMessage, "done!");
+                respondSuccess(receivedMessage, true);
+            } else {
+                respondFailure(receivedMessage, true);
+            }
+        });
+        return;
+    }
+
     cache.updateDamage(source, forced, (success, error) => {
         log(`Finished Updating: ${success}`);
 
@@ -1497,7 +1516,7 @@ function getGif(search, param, callback) {
         { uri: direct },
         function(error, response, body) {
 
-            if (response.statusCode != 200) {
+            if (error || !response || response.statusCode != 200) {
                 log(`Gif could not be found.`)
                 return;
             }
