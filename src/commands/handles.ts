@@ -1309,6 +1309,24 @@ function handleData(receivedMessage, search, parameters) {
     });
 }
 
+function handleAddreview(receivedMessage, search, parameters) {
+    
+    var id = receivedMessage.author.id;
+    if (id != jimooriUserID) {
+        return;
+    }
+
+    var reviews = JSON.parse(fs.readFileSync("data/reviews.json").toString());
+
+    var t =  parameters[1];
+    t = t.toTitleCase(". ")
+    reviews[search] = {
+        rating: parameters[0],
+        description: t
+    };
+
+    fs.writeFileSync("data/reviews.json", JSON.stringify(reviews, null, '\t'));
+}
 function handleJimooriview(receivedMessage, search, parameters) {
 
     var reviews = JSON.parse(fs.readFileSync("data/reviews.json").toString());

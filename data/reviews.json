@@ -1,18 +1,22 @@
 {
-    "astolfo": {
-        "rating": 11,
-        "description": "The cream of the crop, the best of the best. Astolfo is all you can ask for and more. And he is a paladin of justice. A true hero of his people, and protector of those that need it. His will is unwavering, his courage unyielding, his grace unmatched. Truly the best man there is."
-    },
-    "malphasie": {
-        "rating": 10,
-        "description": "Malphasie is the best goth gf you can ask for. She a snacc, and she give snack. Her sprite is insanely attractive and cute. Plus hybrids are fun."
-    },
-    "lovely_katy": {
-        "rating": 7,
-        "description": "Katy is a great singer, and quite lovely. Her lovely hair makes up for the otherwise, unlovely dress. But she's our superstar this year, and you can say her reign is *never really over*."
-    },
-    "ai_katy_perry": {
-        "rating": 2,
-        "description": "AI Katy is the creepy ex girlfriend you tried to get rid of. But instead of moving on she murdered you. Make sure to run your anti-virus software."
-    }
+	"astolfo": {
+		"rating": 11,
+		"description": "The cream of the crop, the best of the best. Astolfo is all you can ask for and more. And he is a paladin of justice. A true hero of his people, and protector of those that need it. His will is unwavering, his courage unyielding, his grace unmatched. Truly the best man there is."
+	},
+	"malphasie": {
+		"rating": 10,
+		"description": "Malphasie is the best goth gf you can ask for. She a snacc, and she give snack. Her sprite is insanely attractive and cute. Plus hybrids are fun."
+	},
+	"lovely_katy": {
+		"rating": 7,
+		"description": "Katy is a great singer, and quite lovely. Her lovely hair makes up for the otherwise, unlovely dress. But she's our superstar this year, and you can say her reign is *never really over*."
+	},
+	"ai_katy_perry": {
+		"rating": 2,
+		"description": "AI Katy is the creepy ex girlfriend you tried to get rid of. But instead of moving on she murdered you. Make sure to run your anti-virus software."
+	},
+	"riku": {
+		"rating": "5",
+		"description": "Kind of a bad boy but still a good boy at heart. He kinda screws sora over when he becomes a sad boy. But then becomes a blessed boy again and now we have him."
+	}
 }
