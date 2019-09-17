@@ -262,8 +262,13 @@ class client {
         if (contentPrefix != prefix) {
 
             if (content.includes("ffbeequip.com") && this.validate(receivedMessage, "autobuild")) {
-                log(content);
-                this.onMessageCallback(receivedMessage, `build ${receivedMessage.content}`);
+                var URL = content.match(/(https.*?(\s|$))/g)
+                if (URL) {
+                    var url = URL[0].trim();
+                    console.log(URL);
+                    
+                    this.onMessageCallback(receivedMessage, `build ${url}`);
+                }
                 return;
             } else {
 
