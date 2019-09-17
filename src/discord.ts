@@ -245,6 +245,26 @@ class client {
 
         var contentPrefix : string = receivedMessage.content.charAt(0);
         var content : string = receivedMessage.content.toLowerCase().slice(1, receivedMessage.content.length);
+        /*
+        if (content.includes("ffbeequip.com") && this.validate(receivedMessage, "autobuild")) {
+            var URL = receivedMessage.content.match(/(https.*?(\s|$))/g)
+            console.log(URL);
+            if (URL) {
+                var url = URL[0].trim();
+                console.log(url);
+
+                this.onMessageCallback(receivedMessage, `build ${url}`);
+            }
+            return;
+        } else {
+            var command = getCommandString(content);
+            if (command == "build" || command == "bis") {
+                if (this.onMessageCallback)
+                    this.onMessageCallback(receivedMessage, content);
+            }
+            return;
+        }
+        */
 
         // Send private message results to authorized users
         if (!receivedMessage.guild) {

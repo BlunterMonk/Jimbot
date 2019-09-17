@@ -1,6 +1,6 @@
 import * as mergeImages from '../merge-images/merge-images.js';
 import * as fs from "fs";
-import { log, logData } from "../global.js";
+import { log, logData, logDataArray } from "../global.js";
 import * as https from "https";
 import * as Canvas from 'canvas';
 import * as Build from './build.js';
@@ -49,16 +49,6 @@ function processBuild(search) {
     });
 }*/
 
-function logDataArray(data: any[]) {
-    if (data.length == 0) {
-        return log("[]");
-    }
-    log(`[`);
-    data.forEach((v,i) => {
-        log(`${i}: ${JSON.stringify(v)}`);
-    });
-    log(`]`);
-}
 
 
 export async function BuildImage(build: any): Promise<string> {
@@ -794,6 +784,9 @@ function downloadImages(slots, items, unitId, callback) {
                 break;
             }
         }
+
+        if (!item)
+            return;
         
         var filename = `items/${item.icon}`;
         var imagePath = imageEndpoint + filename;
@@ -829,4 +822,15 @@ tactician magician's wand
 ayaka's crimson umbrella
 The Divine Art of War
 Explosive Spear - Blast Off
+
+[
+0: {"id":"303002600","name":"Tonitrus","type":"greatSword","atk":120,"element":["lightning"],"special":["Gain at the start of a battle: [Bravery (Auto)|ability_77.png]: Increase ATK by 20% for this fight to one ally"],"tmrUnit":"100008903","access":["TMR-3*"],"icon":"item_10231.png","sortId":572,"rarity":7,"enhancements":["rare_4"],"hp%":20,"atk%":20}
+1: {"id":"308004800","name":"Longinus (FFBE)","type":"spear","atk":190,"killers":[{"name":"spirit","physical":75,"magical":75}],"access":["trial"],"maxNumber":1,"icon":"item_11044.png","sortId":1216,"rarity":9,"enhancements":["rare_4"],"hp%":20,"atk%":20}
+2: {"id":"403042000","name":"Prishe's Hairpin","type":"hat","hp%":10,"mp%":10,"atk":45,"tmrUnit":"211000405","access":["TMR-5*"],"icon":"item_30129.png","sortId":522,"rarity":8}
+3: {"id":"405004900","name":"Hyoh's Clothes","type":"clothes","atk":28,"atk%":30,"def":42,"equipedConditions":["greatSword"],"tmrUnit":"100016205","access":["TMR-5*"],"icon":"item_20145.png","sortId":949,"rarity":8}
+4: {"id":"409029600","name":"Hermes Sandals (FFV)","type":"accessory","atk":40,"dualWielding":{"atk":50},"lbPerTurn":{"min":2,"max":2},"tmrUnit":"205001105","access":["TMR-5*"],"icon":"item_50418.png","sortId":1276,"rarity":8}
+5: {"id":"409026900","name":"Seraph Comb","type":"accessory","mp%":20,"atk":50,"atk%":10,"tmrUnit":"207000505","access":["TMR-5*"],"icon":"item_50389.png","sortId":1184,"rarity":8}
+6: {"id":"504230370","name":"Dual Form","type":"materia","dualWielding":{"atk":100},"special":["notStackable"],"tmrUnit":"213001005","access":["TMR-5*"],"icon":"ability_72.png","sortId":939}
+7: {"id":"504229861","name":"A Hero's Bond","type":"materia","atk%":60,"special":["notStackable"],"equipedConditions":["greatSword","clothes"],"tmrUnit":"100020605","access":["TMR-5*"],"icon":"ability_95.png","sortId":911}
+]
 */

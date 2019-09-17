@@ -8,8 +8,24 @@
 export function log(data: any) {
     console.log(data);
 }
+export function debug(data: any) {
+    console.log(data);
+}
+export function trace(data: any) {
+    console.log(data);
+}
 export function logData(data: any) {
     console.log(JSON.stringify(data));
+}
+export function logDataArray(data: any[]) {
+    if (data.length == 0) {
+        return log("[]");
+    }
+    log(`[`);
+    data.forEach((v,i) => {
+        log(`${i}: ${JSON.stringify(v)}`);
+    });
+    log(`]`);
 }
 export function checkString(text: string, keyword: RegExp): boolean {
     return keyword.test(text.replace(/\s*/g,""));
