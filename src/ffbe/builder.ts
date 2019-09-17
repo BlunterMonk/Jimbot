@@ -14,13 +14,13 @@ import {Cache, cache} from "../cache/cache.js";
 import * as constants from "../constants.js";
 import * as https from "https";
 
-const lyreUnitsEndpoint = "https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/GL/unitsWithPassives.json";
-const lyreItemsEndpoint = "https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/GL/data.json";
-const lyreEspersEndpoint = "https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/GL/defaultBuilderEspers.json";
+const lyreUnitsEndpoint  = function(n) { return `https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/${n}/unitsWithPassives.json`; };
+const lyreItemsEndpoint  = function(n) { return `https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/${n}/data.json`; };
+const lyreEspersEndpoint = function(n) { return `https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/${n}/defaultBuilderEspers.json`; };
 
-const lyreItemsJson = 'data/lyregard-items.json';
-const lyreUnitsJson = 'data/lyregard-units.json';
-const lyreEspersJson = 'data/lyregard-espers.json';
+const lyreItemsJson  = function(n) { return `data/lyregard-${n}/lyregard-items.json`;  };
+const lyreUnitsJson  = function(n) { return `data/lyregard-${n}/lyregard-units.json`;  };
+const lyreEspersJson = function(n) { return `data/lyregard-${n}/lyregard-espers.json`; };
 
 class builder {
     lyregardItems: any;
@@ -31,9 +31,16 @@ class builder {
     }
 
     reload() {
-        this.lyregardItems = JSON.parse(fs.readFileSync(lyreItemsJson).toString());
-        this.lyregardUnits = JSON.parse(fs.readFileSync(lyreUnitsJson).toString());
-        this.lyregardEspers = JSON.parse(fs.readFileSync(lyreEspersJson).toString());
+        this.lyregardItems = {};
+        this.lyregardUnits = {};
+        this.lyregardEspers = {};
+
+        var r = ["gl","jp"];
+        r.forEach(element => {
+            this.lyregardItems[element] = JSON.parse(fs.readFileSync(lyreItemsJson(element)).toString());
+            this.lyregardUnits[element] = JSON.parse(fs.readFileSync(lyreUnitsJson(element)).toString());
+            this.lyregardEspers[element]= JSON.parse(fs.readFileSync(lyreEspersJson(element)).toString());
+        });
     }
     async update(callback) {
 
@@ -50,30 +57,27 @@ class builder {
         }
 
         await cacheLyregardData(() =>{
-            this.lyregardItems = JSON.parse(fs.readFileSync(lyreItemsJson).toString());
-            this.lyregardUnits = JSON.parse(fs.readFileSync(lyreUnitsJson).toString());
-            this.lyregardEspers = JSON.parse(fs.readFileSync(lyreEspersJson).toString());
+            this.reload();
             success();
         }).catch(fail);
     }
 
-    getItems(id: string): any[] {
-
+    getItems(region: string, id: string): any[] {
         var items = [];
-        this.lyregardItems.forEach(element => {
+        this.lyregardItems[region].forEach(element => {
             if (element.id == id)
                 items.push(element);
         });
 
         return items;
     }
-    getUnit(id: string): any {
-        return this.lyregardUnits[id];
+    getUnit(region: string, id: string): any {
+        return this.lyregardUnits[region][id];
     }
 
-    getEsper(name: string): any {
-        for (let index = 0; index < this.lyregardEspers.length; index++) {
-            const element = this.lyregardEspers[index];
+    getEsper(region: string, name: string): any {
+        for (let index = 0; index < this.lyregardEspers[region].length; index++) {
+            const element = this.lyregardEspers[region][index];
             
             if (element.id == name)
                 return element;
@@ -106,35 +110,40 @@ function downloadFile(path, link, callback) {
 async function cacheLyregardData(callback) {
 
     return new Promise(function (resolve, reject) {
-        var files = 2;
+        
+        var files = 6;
         var end = function() {
             files--;
             if (files <= 0) {
                 callback();
             }
         }
-    
-        downloadFile(lyreUnitsJson, lyreUnitsEndpoint, (p) => {
-            if (p == null) {
-                reject(Error('page not found '))
-            } else {
-                end();
-            }
-        })
-        downloadFile(lyreItemsJson, lyreItemsEndpoint, (p) => {
-            if (p == null) {
-                reject(Error('page not found '))
-            } else {
-                end();
-            }
-        })
-        downloadFile(lyreEspersJson, lyreItemsEndpoint, (p) => {
-            if (p == null) {
-                reject(Error('page not found '))
-            } else {
-                end();
-            }
-        })
+
+        var r = ["gl","jp"];
+        r.forEach(element => {
+            downloadFile(lyreUnitsJson(element), lyreUnitsEndpoint(element), (p) => {
+                if (p == null) {
+                    reject(Error('page not found '))
+                } else {
+                    end();
+                }
+            })
+            downloadFile(lyreItemsJson(element), lyreItemsEndpoint(element), (p) => {
+                if (p == null) {
+                    reject(Error('page not found '))
+                } else {
+                    end();
+                }
+            })
+            downloadFile(lyreEspersJson(element), lyreItemsEndpoint(element), (p) => {
+                if (p == null) {
+                    reject(Error('page not found '))
+                } else {
+                    end();
+                }
+            })
+        });
+
     });
 }
 

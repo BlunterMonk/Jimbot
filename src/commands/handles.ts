@@ -713,11 +713,11 @@ function handleMuspel(receivedMessage, search, parameters) {
 
 // FFBEEQUIP
 
-async function build(receivedMessage, url, includeTitle): Promise<string> {
+export async function build(receivedMessage, url, includeTitle, force = false): Promise<string> {
 
     return new Promise<string>((resolve, reject) => {
 
-        Build.requestBuildData(url, (id, data) => {
+        Build.requestBuildData(url, (id, region, data) => {
             log(data);
             var d = JSON.parse(data);
             if (!d || !d.units[0]) {
@@ -733,7 +733,7 @@ async function build(receivedMessage, url, includeTitle): Promise<string> {
             // var text = Build.getBuildText(id, b);
             // var desc = text.text.replaceAll("\\[", "**[");
             // desc = desc.replaceAll("\\]:", "]:**");
-            var build = Build.CreateBuild(id, b);
+            var build = Build.CreateBuild(id, region, b);
 
             var sendImg = function(p) {
                 const attachment = new Discord.Attachment(p, 'build.png');
@@ -752,7 +752,7 @@ async function build(receivedMessage, url, includeTitle): Promise<string> {
                 resolve();
             }
 
-            if (fs.existsSync(`./tempbuilds/${id}.png`)) {
+            if (!force && fs.existsSync(`./tempbuilds/${id}.png`)) {
                 sendImg(`./tempbuilds/${id}.png`);
                 return;
             }
@@ -807,12 +807,12 @@ export function handleBis(receivedMessage, search, parameters) {
     });
 }
 async function buildText(receivedMessage, url) {
-    Build.requestBuildData(url, (id, data) => {
+    Build.requestBuildData(url, (id, region, data) => {
         // log(data);
         var b = JSON.parse(data).units[0];
 
         var name = getUnitNameFromKey(b.id).toTitleCase(" ");
-        var text = Build.getBuildText(id, b);
+        var text = Build.getBuildText(id, region, b);
         var desc = text.text.replaceAll("\\[", "**[");
         desc = desc.replaceAll("\\]:", "]:**");
                 

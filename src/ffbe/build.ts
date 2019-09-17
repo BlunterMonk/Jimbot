@@ -166,6 +166,7 @@ class Build {
     loadedUnit: Unit; // unit information loaded from data sheet
 
     buildID: string; // build UUID from link
+    buildRegion: string; // enum { gl, jp }
     unitID: string; // ID of unit being built
     buildData: BuildData; // unit information
     // Stat totals
@@ -181,12 +182,13 @@ class Build {
     TDW: any; // total TDH equipment bonus
     DH: any; // total DH equipment bonus
     TDH: any; // total TDW equipment bonus
-    constructor(buildID: string, buildData: any) {
+    constructor(buildID: string, region: string, buildData: any) {
         this.buildData = buildData;
         this.buildID = buildID;
+        this.buildRegion = region;
         this.unitID = buildData.id;
 
-        var lu = Builder.getUnit(buildData.id);
+        var lu = Builder.getUnit(region, buildData.id);
         if (this.buildData.rarity == 6) {
             this.loadedUnit = lu["6_form"];
         } else {
@@ -229,6 +231,9 @@ class Build {
         this.loadedItems = [];
         this.equipment = [];
         this.equipmentTotal = {};
+    }
+
+    init(loadedUnit: Unit, loadedItems: Item[]) {
     }
 
     getSlots(): any[] {
@@ -348,7 +353,7 @@ class Build {
         var passives = getUnitPassiveStats(this, this.loadedUnit);
         // log("\nUnit Passive Stats");
         // log(passives);
-        var esper = Builder.getEsper(this.buildData.esperId);
+        var esper = Builder.getEsper(this.buildRegion, this.buildData.esperId);
         // log("\nEsper");
         // log(esper);
         var equipped = this.equipmentTotal;
@@ -587,6 +592,7 @@ function getTotalBonuses(passives: any, equipmentTotal: any, esper: any) {
 // calculate the units max stats with the provided pots
 function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: any, esper: any, build: Build): any {
 
+    /*
     log("getUnitMaxStats:");
     log("pots");
     log(pots);
@@ -598,12 +604,14 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
         log("esper");
         log(esper);
     }
+    */
 
     var bonus = getTotalBonuses(passives, equipmentTotal, esper);
 
-    log("total bonuses");
-    log(bonus);
+    // log("total bonuses");
+    // log(bonus);
 
+    // log("Applying Base Stats, Pots, and Bonus %");
     var total = {};
     var keys = Object.keys(pots);
     keys.forEach((k, i) => {
@@ -623,39 +631,44 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
         }
         
         let base = max + pot;
-        log(`${k}: ${max} + ${pot} = ${base}`);
+        // log(`${k}: max_stats + pot = base`);
+        // log(`${k}: ${max} + ${pot} = ${base}`);
         let b1 = base + eq + ((percent / 100) * base);
-        log(`${k}: ${base} + ${eq} + (${percent / 100} * ${base}) = ${b1}`);
+        // log(`${k}: base + eq + (percent * base)`);
+        // log(`${k}: ${base} + ${eq} + (${percent / 100} * ${base}) = ${b1}`);
         total[k] = b1;
     });
 
     // Add equipment bonuses
+    // log("Adding Wielding Bonus")
     if (bonus.dualWielding && build.isDualWielding()) {
         // Add DW bonuses
          var keys = Object.keys(bonus.dualWielding);
          keys.forEach((k, i) => {
-             if (!equipmentTotal[k])
-                return;
+            if (!equipmentTotal[k])
+            return;
 
-             var b = bonus.dualWielding[k];
-             if (b > 200)
-                 b = 200;
- 
-             if (k == "accuracy") {
-                 if (!total[k]) 
-                     total[k] = b;
- 
-                 total[k] = total[k] + b;
-                 return;
-             }
- 
-             var t = (equipmentTotal[k] * (b / 100));
-             log(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
-             let t1 = total[k] + t;
-             log(`${k}: ${total[k]} + ${t} = ${t1}`);
-             total[k] = t1;
+            var b = bonus.dualWielding[k];
+            if (b > 200)
+                b = 200;
+
+            if (k == "accuracy") {
+                if (!total[k]) 
+                    total[k] = b;
+
+                total[k] = total[k] + b;
+                return;
+            }
+
+            var t = (equipmentTotal[k] * (b / 100));
+            //  log(`${k}: (equipmentTotal} * (b / 100) = t`);
+            //  log(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
+            let t1 = total[k] + t;
+            //  log(`${k}: total_${k} + t`);
+            //  log(`${k}: ${total[k]} + ${t} = ${t1}`);
+            total[k] = t1;
          });
-     } else if (bonus.singleWielding && build.isDoublehanding()) {
+    } else if (bonus.singleWielding && build.isDoublehanding()) {
         var keys = Object.keys(bonus.singleWielding);
         keys.forEach((k, i) => {
             if (!equipmentTotal[k])
@@ -674,28 +687,33 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
             }
 
             var t = (equipmentTotal[k] * (b / 100));
-            log(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
-            let t1 = total[k] + t;
-            log(`${k}: ${total[k]} + ${t} = ${t1}`);
+            //  log(`${k}: (equipmentTotal} * (b / 100) = t`);
+            //  log(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
+           let t1 = total[k] + t;
+            //  log(`${k}: total_${k} + t`);
+            //  log(`${k}: ${total[k]} + ${t} = ${t1}`);
             total[k] = t1;
         });
     }
 
     // Add esper bonus
-    // log(`esperId: ${esperId}`);
+    // log("Add Esper Bonus: ");
     if (esper) {
 
         var keys = Object.keys(pots);
         keys.forEach((k, i) => {
             
             var e = Math.round(esper[k] / 100);
+            // log(`${k}: esper_${k} / 100 = e`);
             var b = 0;
             if (bonus.esperStatsBonus && bonus.esperStatsBonus[k]) {
                 b = e * (bonus.esperStatsBonus[k] / 100);
+                // log(`${k}: e * esper_stats_bonus_${k}% = b`);
             }
             
             let e0 = total[k] + e + b;
-            log(`${k}: ${total[k]} + ${e} + ${b} = ${e0}`);
+            // log(`${k}: total_${k} + e + b`);
+            // log(`${k}: ${total[k]} + ${e} + ${b} = ${e0}`);
             total[k] = e0;
         });
     }
@@ -704,8 +722,8 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
     var keys = Object.keys(total);
     keys.forEach((k, i) => {
         if (!Number.isNaN(parseInt(total[k]))) {
-            log(`Floor(${total[k]}) = ${Math.floor(total[k])}`);
-            total[k] = Math.floor(total[k]);
+            // log(`Round(${total[k]}) = ${Math.round(total[k])}`);
+            total[k] = Math.round(total[k]);
         }
     });
 
@@ -716,6 +734,9 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
 }
 function getUnitPassiveStats(B: Build, unit: Unit): any {
     var stats = {};
+
+    if (!unit.skills)
+        return {};
 
     var passives = [];
     unit.skills.forEach((skill, i) => {
@@ -1192,8 +1213,12 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
         return null;
     }
 
+    var item = itemWithVariation[0];
+    // log("Find Best Item")
+    // log("Base Item")
+    // log(item)
+
     if (itemWithVariation.length == 1) {
-        var item = itemWithVariation[0];
         // if there are no variations of the item, it is fine
         if (isApplicable(item, B.loadedUnit) 
             && (!item.equipedConditions || areConditionOK(item, B))) {
@@ -1217,6 +1242,8 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
         //     return result;
         // }
     } else {
+        // log("variations")
+        // log(itemWithVariation)
 
         // sort the list of item variations by priority
         itemWithVariation.sort(function (item1, item2) {
@@ -1236,20 +1263,24 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
             }
             return conditionNumber2 - conditionNumber1;
         });
-
+        
         // Check to see if each item is valid
         for (var index in itemWithVariation) {
             if (isApplicable(itemWithVariation[index], B.loadedUnit) && areConditionOK(itemWithVariation[index], B)) {
                 var enh = B.getItemEnchantments(slot);
                 if (enh) {
-                    return applyEnchantments(itemWithVariation[index], itemWithVariation[index].enhancements);
+                    // log("Variant Item With Enchantments");
+                    // log(itemWithVariation[index]);
+                    return applyEnchantments(itemWithVariation[index], enh);
                 } else {
+                    // log("Best Found");
+                    // log(itemWithVariation[index]);
                     return itemWithVariation[index];
                 }
             }
         }
 
-        var item = itemWithVariation[0];
+        item = itemWithVariation[0];
         var result = {
             "id":item.id, "name":item.name, "jpname":item.jpname, 
             "icon":item.icon, "type":item.type, 
@@ -1267,10 +1298,15 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
 export function getBuildID(buildURL: string) {
     return buildURL.match(/#(.*)/)[0];
 }
+export function getBuildRegion(buildURL: string) {
+    return buildURL.match(/server=(.*)#/)[1];
+}
 export function requestBuildData(buildURL: string, callback) {
     
+    var region = getBuildRegion(buildURL).toLowerCase();
     var id = getBuildID(buildURL);
     id = id.slice(1, id.length);
+    // log(region);
     // log(id);
 
     request(
@@ -1281,24 +1317,24 @@ export function requestBuildData(buildURL: string, callback) {
             log(response.statusCode);
 
             if (error || response.statusCode != 200 || body.empty()) {
-                log(`Build Nod Found: ${id}`);
+                log(`Build Not Found: ${id}`);
                 return;
             }
-            const $ = cheerio.load(body);
-            log(`Build Found: ${id}`);
-            callback(id, body);
+
+            log(`${region} - Build Found: ${id}`);
+            callback(id, region, body);
         }
     );
 }
-export function getBuildText(id: string, buildData) {
+export function getBuildText(id: string, region: string, buildData) {
 
-    var build = CreateBuild(id, buildData);
+    var build = CreateBuild(id, region, buildData);
     var text = build.getText();
     return text;
 }
-export function CreateBuild(id: string, buildData): Build {
+export function CreateBuild(id: string, region: string, buildData): Build {
 
-    var build = new Build(id, buildData);
+    var build = new Build(id, region, buildData);
     log("Create Build");
     log(buildData);
 
@@ -1306,7 +1342,7 @@ export function CreateBuild(id: string, buildData): Build {
     buildData.items.forEach((element, ind) => {
         
         // If only one item is found, equip it right away, otherwise wait for validation
-        var itemInfo = Builder.getItems(element.id);
+        var itemInfo = Builder.getItems(region, element.id);
         var best = findBestItemVersion(build, element.slot, itemInfo);
         if (best == null)
             return;
