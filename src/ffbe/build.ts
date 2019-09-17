@@ -592,6 +592,7 @@ function getTotalBonuses(passives: any, equipmentTotal: any, esper: any) {
 // calculate the units max stats with the provided pots
 function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: any, esper: any, build: Build): any {
 
+    /*
     log("getUnitMaxStats:");
     log("pots");
     log(pots);
@@ -603,12 +604,14 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
         log("esper");
         log(esper);
     }
+    */
 
     var bonus = getTotalBonuses(passives, equipmentTotal, esper);
 
-    log("total bonuses");
-    log(bonus);
+    // log("total bonuses");
+    // log(bonus);
 
+    // log("Applying Base Stats, Pots, and Bonus %");
     var total = {};
     var keys = Object.keys(pots);
     keys.forEach((k, i) => {
@@ -628,39 +631,44 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
         }
         
         let base = max + pot;
-        log(`${k}: ${max} + ${pot} = ${base}`);
+        // log(`${k}: max_stats + pot = base`);
+        // log(`${k}: ${max} + ${pot} = ${base}`);
         let b1 = base + eq + ((percent / 100) * base);
-        log(`${k}: ${base} + ${eq} + (${percent / 100} * ${base}) = ${b1}`);
+        // log(`${k}: base + eq + (percent * base)`);
+        // log(`${k}: ${base} + ${eq} + (${percent / 100} * ${base}) = ${b1}`);
         total[k] = b1;
     });
 
     // Add equipment bonuses
+    // log("Adding Wielding Bonus")
     if (bonus.dualWielding && build.isDualWielding()) {
         // Add DW bonuses
          var keys = Object.keys(bonus.dualWielding);
          keys.forEach((k, i) => {
-             if (!equipmentTotal[k])
-                return;
+            if (!equipmentTotal[k])
+            return;
 
-             var b = bonus.dualWielding[k];
-             if (b > 200)
-                 b = 200;
- 
-             if (k == "accuracy") {
-                 if (!total[k]) 
-                     total[k] = b;
- 
-                 total[k] = total[k] + b;
-                 return;
-             }
- 
-             var t = (equipmentTotal[k] * (b / 100));
-             log(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
-             let t1 = total[k] + t;
-             log(`${k}: ${total[k]} + ${t} = ${t1}`);
-             total[k] = t1;
+            var b = bonus.dualWielding[k];
+            if (b > 200)
+                b = 200;
+
+            if (k == "accuracy") {
+                if (!total[k]) 
+                    total[k] = b;
+
+                total[k] = total[k] + b;
+                return;
+            }
+
+            var t = (equipmentTotal[k] * (b / 100));
+            //  log(`${k}: (equipmentTotal} * (b / 100) = t`);
+            //  log(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
+            let t1 = total[k] + t;
+            //  log(`${k}: total_${k} + t`);
+            //  log(`${k}: ${total[k]} + ${t} = ${t1}`);
+            total[k] = t1;
          });
-     } else if (bonus.singleWielding && build.isDoublehanding()) {
+    } else if (bonus.singleWielding && build.isDoublehanding()) {
         var keys = Object.keys(bonus.singleWielding);
         keys.forEach((k, i) => {
             if (!equipmentTotal[k])
@@ -679,28 +687,33 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
             }
 
             var t = (equipmentTotal[k] * (b / 100));
-            log(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
-            let t1 = total[k] + t;
-            log(`${k}: ${total[k]} + ${t} = ${t1}`);
+            //  log(`${k}: (equipmentTotal} * (b / 100) = t`);
+            //  log(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
+           let t1 = total[k] + t;
+            //  log(`${k}: total_${k} + t`);
+            //  log(`${k}: ${total[k]} + ${t} = ${t1}`);
             total[k] = t1;
         });
     }
 
     // Add esper bonus
-    // log(`esperId: ${esperId}`);
+    // log("Add Esper Bonus: ");
     if (esper) {
 
         var keys = Object.keys(pots);
         keys.forEach((k, i) => {
             
             var e = Math.round(esper[k] / 100);
+            // log(`${k}: esper_${k} / 100 = e`);
             var b = 0;
             if (bonus.esperStatsBonus && bonus.esperStatsBonus[k]) {
                 b = e * (bonus.esperStatsBonus[k] / 100);
+                // log(`${k}: e * esper_stats_bonus_${k}% = b`);
             }
             
             let e0 = total[k] + e + b;
-            log(`${k}: ${total[k]} + ${e} + ${b} = ${e0}`);
+            // log(`${k}: total_${k} + e + b`);
+            // log(`${k}: ${total[k]} + ${e} + ${b} = ${e0}`);
             total[k] = e0;
         });
     }
@@ -709,8 +722,8 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
     var keys = Object.keys(total);
     keys.forEach((k, i) => {
         if (!Number.isNaN(parseInt(total[k]))) {
-            log(`Floor(${total[k]}) = ${Math.floor(total[k])}`);
-            total[k] = Math.floor(total[k]);
+            // log(`Round(${total[k]}) = ${Math.round(total[k])}`);
+            total[k] = Math.round(total[k]);
         }
     });
 
@@ -1200,8 +1213,12 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
         return null;
     }
 
+    var item = itemWithVariation[0];
+    // log("Find Best Item")
+    // log("Base Item")
+    // log(item)
+
     if (itemWithVariation.length == 1) {
-        var item = itemWithVariation[0];
         // if there are no variations of the item, it is fine
         if (isApplicable(item, B.loadedUnit) 
             && (!item.equipedConditions || areConditionOK(item, B))) {
@@ -1225,6 +1242,8 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
         //     return result;
         // }
     } else {
+        // log("variations")
+        // log(itemWithVariation)
 
         // sort the list of item variations by priority
         itemWithVariation.sort(function (item1, item2) {
@@ -1244,20 +1263,24 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
             }
             return conditionNumber2 - conditionNumber1;
         });
-
+        
         // Check to see if each item is valid
         for (var index in itemWithVariation) {
             if (isApplicable(itemWithVariation[index], B.loadedUnit) && areConditionOK(itemWithVariation[index], B)) {
                 var enh = B.getItemEnchantments(slot);
                 if (enh) {
-                    return applyEnchantments(itemWithVariation[index], itemWithVariation[index].enhancements);
+                    // log("Variant Item With Enchantments");
+                    // log(itemWithVariation[index]);
+                    return applyEnchantments(itemWithVariation[index], enh);
                 } else {
+                    // log("Best Found");
+                    // log(itemWithVariation[index]);
                     return itemWithVariation[index];
                 }
             }
         }
 
-        var item = itemWithVariation[0];
+        item = itemWithVariation[0];
         var result = {
             "id":item.id, "name":item.name, "jpname":item.jpname, 
             "icon":item.icon, "type":item.type, 

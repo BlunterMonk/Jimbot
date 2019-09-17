@@ -113,6 +113,9 @@ function onMessage(receivedMessage, content) {
 
     // Get command information
     var com = Commands.getCommandObject(content, attachment, Client.guildSettings[guildId]);
+    if (!com) {
+        return;
+    }
 
     try {
         handle(receivedMessage, com);
