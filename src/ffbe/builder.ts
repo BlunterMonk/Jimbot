@@ -121,21 +121,23 @@ async function cacheLyregardData(callback) {
 
         var r = ["gl","jp"];
         r.forEach(element => {
-            downloadFile(lyreUnitsJson(element), lyreUnitsEndpoint(element), (p) => {
+            var r1 = element.toUpperCase();
+
+            downloadFile(lyreUnitsJson(element), lyreUnitsEndpoint(r1), (p) => {
                 if (p == null) {
                     reject(Error('page not found '))
                 } else {
                     end();
                 }
             })
-            downloadFile(lyreItemsJson(element), lyreItemsEndpoint(element), (p) => {
+            downloadFile(lyreItemsJson(element), lyreItemsEndpoint(r1), (p) => {
                 if (p == null) {
                     reject(Error('page not found '))
                 } else {
                     end();
                 }
             })
-            downloadFile(lyreEspersJson(element), lyreItemsEndpoint(element), (p) => {
+            downloadFile(lyreEspersJson(element), lyreItemsEndpoint(r1), (p) => {
                 if (p == null) {
                     reject(Error('page not found '))
                 } else {

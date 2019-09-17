@@ -1144,6 +1144,21 @@ function handleUpdate(receivedMessage, search, parameters, forced = false) {
 
     Client.send(receivedMessage, msg);
 
+    if (source == "lyregard") {
+        
+        Builder.update((success, error) => {
+            log(`Finished Updating: ${success}`);
+
+            if (success) {
+                Client.send(receivedMessage, "done!");
+                respondSuccess(receivedMessage, true);
+            } else {
+                respondFailure(receivedMessage, true);
+            }
+        });
+        return;
+    }
+
     cache.updateDamage(source, forced, (success, error) => {
         log(`Finished Updating: ${success}`);
 
