@@ -1309,8 +1309,23 @@ function handleData(receivedMessage, search, parameters) {
     });
 }
 
+function handleJimooriview(receivedMessage, search, parameters) {
 
+    var reviews = JSON.parse(fs.readFileSync("data/reviews.json").toString());
+    var text = reviews[search];
+    if (!text)
+        return;
 
+    var s = search.replaceAll("_", " ");
+    s = s.toTitleCase();
+    var embed = <any>{
+        color: pinkHexCode,
+        title: `${s} Review: ${text.rating}/10`,
+        description: text.description
+    }
+    
+    Client.sendMessage(receivedMessage, embed);
+}
 
 
 function handleUnitQuery(receivedMessage, command, search) {
