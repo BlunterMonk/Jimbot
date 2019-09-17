@@ -166,6 +166,7 @@ class Build {
     loadedUnit: Unit; // unit information loaded from data sheet
 
     buildID: string; // build UUID from link
+    buildRegion: string; // enum { gl, jp }
     unitID: string; // ID of unit being built
     buildData: BuildData; // unit information
     // Stat totals
@@ -181,12 +182,13 @@ class Build {
     TDW: any; // total TDH equipment bonus
     DH: any; // total DH equipment bonus
     TDH: any; // total TDW equipment bonus
-    constructor(buildID: string, buildData: any) {
+    constructor(buildID: string, region: string, buildData: any) {
         this.buildData = buildData;
         this.buildID = buildID;
+        this.buildRegion = region;
         this.unitID = buildData.id;
 
-        var lu = Builder.getUnit(buildData.id);
+        var lu = Builder.getUnit(region, buildData.id);
         if (this.buildData.rarity == 6) {
             this.loadedUnit = lu["6_form"];
         } else {
@@ -229,6 +231,9 @@ class Build {
         this.loadedItems = [];
         this.equipment = [];
         this.equipmentTotal = {};
+    }
+
+    init(loadedUnit: Unit, loadedItems: Item[]) {
     }
 
     getSlots(): any[] {
@@ -348,7 +353,7 @@ class Build {
         var passives = getUnitPassiveStats(this, this.loadedUnit);
         // log("\nUnit Passive Stats");
         // log(passives);
-        var esper = Builder.getEsper(this.buildData.esperId);
+        var esper = Builder.getEsper(this.buildRegion, this.buildData.esperId);
         // log("\nEsper");
         // log(esper);
         var equipped = this.equipmentTotal;
@@ -716,6 +721,9 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
 }
 function getUnitPassiveStats(B: Build, unit: Unit): any {
     var stats = {};
+
+    if (!unit.skills)
+        return {};
 
     var passives = [];
     unit.skills.forEach((skill, i) => {
@@ -1267,10 +1275,15 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
 export function getBuildID(buildURL: string) {
     return buildURL.match(/#(.*)/)[0];
 }
+export function getBuildRegion(buildURL: string) {
+    return buildURL.match(/server=(.*)#/)[1];
+}
 export function requestBuildData(buildURL: string, callback) {
     
+    var region = getBuildRegion(buildURL).toLowerCase();
     var id = getBuildID(buildURL);
     id = id.slice(1, id.length);
+    // log(region);
     // log(id);
 
     request(
@@ -1281,24 +1294,24 @@ export function requestBuildData(buildURL: string, callback) {
             log(response.statusCode);
 
             if (error || response.statusCode != 200 || body.empty()) {
-                log(`Build Nod Found: ${id}`);
+                log(`Build Not Found: ${id}`);
                 return;
             }
-            const $ = cheerio.load(body);
-            log(`Build Found: ${id}`);
-            callback(id, body);
+
+            log(`${region} - Build Found: ${id}`);
+            callback(id, region, body);
         }
     );
 }
-export function getBuildText(id: string, buildData) {
+export function getBuildText(id: string, region: string, buildData) {
 
-    var build = CreateBuild(id, buildData);
+    var build = CreateBuild(id, region, buildData);
     var text = build.getText();
     return text;
 }
-export function CreateBuild(id: string, buildData): Build {
+export function CreateBuild(id: string, region: string, buildData): Build {
 
-    var build = new Build(id, buildData);
+    var build = new Build(id, region, buildData);
     log("Create Build");
     log(buildData);
 
@@ -1306,7 +1319,7 @@ export function CreateBuild(id: string, buildData): Build {
     buildData.items.forEach((element, ind) => {
         
         // If only one item is found, equip it right away, otherwise wait for validation
-        var itemInfo = Builder.getItems(element.id);
+        var itemInfo = Builder.getItems(region, element.id);
         var best = findBestItemVersion(build, element.slot, itemInfo);
         if (best == null)
             return;
