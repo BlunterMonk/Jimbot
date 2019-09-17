@@ -15,6 +15,10 @@
             "value": "- **?bis** *[unit_name]*\nDisplay the build used by ShadoWalker's Damage Calculations\n- example: ?bis malphasie"
         },
         {
+            "name": "Builds as text",
+            "value": "- **?buildtext**, **?bistext**\nSame as above, but output the build as text"
+        },
+        {
             "name": "Search Wiki",
             "value": "- **?search** *[term]*"
         },

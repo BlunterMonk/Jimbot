@@ -713,7 +713,7 @@ function handleMuspel(receivedMessage, search, parameters) {
 
 // FFBEEQUIP
 
-async function build(receivedMessage, url, includeTitle): Promise<string> {
+export async function build(receivedMessage, url, includeTitle, force = false): Promise<string> {
 
     return new Promise<string>((resolve, reject) => {
 
@@ -752,14 +752,15 @@ async function build(receivedMessage, url, includeTitle): Promise<string> {
                 resolve();
             }
 
-            if (fs.existsSync(`./tempbuilds/${id}.png`)) {
+            if (!force && fs.existsSync(`./tempbuilds/${id}.png`)) {
                 sendImg(`./tempbuilds/${id}.png`);
                 return;
             }
 
             BuildImage.BuildImage(build).then(sendImg).catch((e) => {
                 Client.send(receivedMessage, "Sorry hun, something went wrong.");
-                reject("Could not build image");
+                console.log("Could not build image");
+                reject(e);
             });
         });
     });
@@ -782,6 +783,9 @@ export function handleBuild(receivedMessage, search, parameters) {
 
     build(receivedMessage, search, includeTitle)
     .catch((e) => {
+        console.error(e);
+        log("Build Failed");
+        log(e);
         log(`Unable to find build: ${search}`);    
     });
 }
@@ -1497,7 +1501,7 @@ function getGif(search, param, callback) {
         { uri: direct },
         function(error, response, body) {
 
-            if (response.statusCode != 200) {
+            if (error || !response || response.statusCode != 200) {
                 log(`Gif could not be found.`)
                 return;
             }

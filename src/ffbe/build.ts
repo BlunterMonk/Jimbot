@@ -187,7 +187,7 @@ class Build {
         this.unitID = buildData.id;
 
         var lu = Builder.getUnit(buildData.id);
-        if (this.buildData.rarity == 6) {
+        if (this.buildData.rarity == 6 && lu["6_form"]) {
             this.loadedUnit = lu["6_form"];
         } else {
             this.loadedUnit = lu;
@@ -457,7 +457,7 @@ class Build {
             var n = `[${itemInfo.type}]: ${itemInfo.name}`;
             var v = itemToString(itemInfo);
 
-            text += `${n}${v}\n`;
+            text += `${n}, ${v.toUpperCase()}\n`;
             add(n, v);
         });
 
@@ -471,9 +471,9 @@ class Build {
             var resistKeys = Object.keys(resistance);
             resistKeys.forEach(resist => {
                 if (ailmentList.includes(resist))
-                    a += `${resist} ${resistance[resist]}, `;
+                    a += `${resist} ${resistance[resist].percent}, `;
                 else
-                    e += `${resist} ${resistance[resist]}, `;
+                    e += `${resist} ${resistance[resist].percent}, `;
             });
 
             add("ailment resist", a);

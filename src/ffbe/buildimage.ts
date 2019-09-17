@@ -1,6 +1,6 @@
 import * as mergeImages from '../merge-images/merge-images.js';
 import * as fs from "fs";
-import { log } from "../global.js";
+import { log, logData } from "../global.js";
 import * as https from "https";
 import * as Canvas from 'canvas';
 import * as Build from './build.js';
@@ -21,9 +21,11 @@ const fontFamily = "Meiryo";
 const statStroke = "255,255,255,1";
 const textFontFamily = "Meiryo";
 const textStroke = "255,255,255,1";
-const enhancementsFontFamily = "Meiryo";
+const enhancementsFontFamily = "Arial";
 const enhancementsColor = "255,0,255,1";
-const enhancementsStroke = "0,0,0,0";
+const enhancementsStroke = "255,255,255,0.5";
+const killersFontFamily = "Arial Black";
+const killerssStroke = "0,0,0,0";
 
 /*
 function sprite(n) { return `https://gamepedia.cursecdn.com/exvius_gamepedia_en/1/15/Unit-${n}-7.png`; }
@@ -47,12 +49,22 @@ function processBuild(search) {
     });
 }*/
 
+function logDataArray(data: any[]) {
+    log(`[`);
+    data.forEach((v,i) => {
+        log(`${i}: ${JSON.stringify(v)}`);
+    });
+    log(`]`);
+}
+
+
 export async function BuildImage(build: any): Promise<string> {
     
     var equipped = build.getEquipment();
-    // console.log("Equipment");
+    console.log("Equipment:");
     // console.log(equipped);
-    
+    logDataArray(equipped);
+
     return new Promise<string>((resolve, reject) => {
         
         downloadImages(build.getSlots(), equipped, build.loadedUnit.id, (unit, list) => {
@@ -205,11 +217,12 @@ function getKillers(killers) {
 
         labels[labels.length] = { 
             text: `${k}%`,
-            font: fontFamily, 
+            font: killersFontFamily, 
             size: 16, 
             x: x + dimensions, 
-            y: y + (dimensions * 0.75),
-            align: "left" 
+            y: y + dimensions - 8,
+            align: "left",
+            strokeColor: killerssStroke
         };
         across += 2;
         if (across >= maxWide) {
