@@ -731,7 +731,11 @@ function downloadImages(slots, items, unitId, callback) {
     var filename = `unit_icon_${unitId}.png`;
     var path = `${imgCacheDir}units/${filename}`;
     console.log(`Image Path: ${path}`);
-    /*if (!fs.existsSync(path)) {//
+    if (fs.existsSync(path))
+        foundUnit(path);
+    else 
+        queryEnd(null, null, null);
+    /*
         var resizeIcon = function(p2) {
             Canvas.loadImage(p2).then((image) => {
 
@@ -775,7 +779,6 @@ function downloadImages(slots, items, unitId, callback) {
             resizeIcon(p2);
         }
     } else {*/
-        foundUnit(path);
     //}
 
 

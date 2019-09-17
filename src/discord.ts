@@ -262,11 +262,12 @@ class client {
         if (contentPrefix != prefix) {
 
             if (content.includes("ffbeequip.com") && this.validate(receivedMessage, "autobuild")) {
-                var URL = content.match(/(https.*?(\s|$))/g)
+                var URL = receivedMessage.content.match(/(https.*?(\s|$))/g)
+                console.log(URL);
                 if (URL) {
                     var url = URL[0].trim();
-                    console.log(URL);
-                    
+                    console.log(url);
+
                     this.onMessageCallback(receivedMessage, `build ${url}`);
                 }
                 return;
