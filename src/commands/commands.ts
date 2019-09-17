@@ -98,6 +98,8 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
 
     // the command name
     var command = getCommandString(copy);
+    if (!command || command.empty())
+        return null;
 
     if (guildSettings) {
 

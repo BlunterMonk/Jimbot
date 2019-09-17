@@ -391,7 +391,7 @@ function getMainStats(totalStats, totalBonuses, wieldingBonus) {
         var color = `255,255,255,1`;
         if (v) {
             color = `0,255,0,1`;
-            if (parseInt(v) >= 400)
+            if (parseInt(v) > 400)
                 color = `255,0,0,1`;
 
             t = `+${v}`;
@@ -403,7 +403,7 @@ function getMainStats(totalStats, totalBonuses, wieldingBonus) {
 
         if (wieldingBonus && wieldingBonus[stat]) {
             var tdh = wieldingBonus[stat];
-            log(tdh)
+            // log(tdh)
 
             bonuses[bonuses.length] = { 
                 text: `+${tdh}%`,
@@ -415,7 +415,7 @@ function getMainStats(totalStats, totalBonuses, wieldingBonus) {
                 color: `255,223,0,1`,
                 strokeColor: `125,125,125,0.5`
             };
-            log(bonuses[bonuses.length-1]);
+            // log(bonuses[bonuses.length-1]);
         }
 
         bonuses[bonuses.length] = { 

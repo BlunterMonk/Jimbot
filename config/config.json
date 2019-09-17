@@ -155,6 +155,10 @@
 			"command": "whatis",
 			"search": "elemental tetris"
 		},
+		"contest": {
+			"command": "whatis",
+			"search": "design_contest"
+		},
 		"bunnies": {
 			"command": "gif",
 			"search": "sylvie",
