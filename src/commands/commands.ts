@@ -105,11 +105,11 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
 
         var shortcut = guildSettings.getShortcut(command);
         if (shortcut) {
-            log("Found Command Shortcut");
+            // log("Found Command Shortcut");
             copy = shortcut;
             command = getCommandString(copy);
-            log(`New Command: ${command}`);
-            log(`New Content: ${copy}`);
+            // log(`New Command: ${command}`);
+            // log(`New Content: ${copy}`);
         }
     }
 
@@ -141,10 +141,10 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
         }
     }
 
-    log("\ngetCommandString: " + command);
-    log("getSearchString: " + search);
-    log("getParameters:");
-    log(parameters);
+    // log("\ngetCommandString: " + command);
+    // log("getSearchString: " + search);
+    // log("getParameters:");
+    // log(parameters);
 
     var run = "handle" + command + "(receivedMessage, search, parameters)";
 
