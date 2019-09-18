@@ -1677,6 +1677,34 @@
 			""
 		]
 	},
+	"Elnath (JP)": {
+		"name": "Elnath (JP)",
+		"damage": "11,668,641,425",
+		"turns": "10",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=JP#fed47c30-d9bf-11e9-a314-1b650a2e0160",
+		"burst": "17,754,536,378",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Elnath/JP",
+		"rotation": [
+			"TYPE001：バトルモード (CD) + カレントナックル",
+			"ライトニングフィスト x 2 ",
+			"リクイデート (CD) + ライトニングフィスト        ",
+			"ダイナミックパルサー (LB)",
+			"ライトニングフィスト x 2 ",
+			"TYPE001：バトルモード (CD) + ライトニングフィスト",
+			"リクイデート (CD) + ライトニングフィスト        ",
+			"カレントナックル + ライトニングフィスト        ",
+			"ダイナミックパルサー (LB)",
+			"リクイデート (CD) + ライトニングフィスト        ",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Assassin Shadow (JP)": {
 		"name": "Assassin Shadow (JP)",
 		"damage": "10,829,156,370",
@@ -1994,11 +2022,11 @@
 	},
 	"Circe": {
 		"name": "Circe",
-		"damage": "7,894,034,467",
+		"damage": "8,263,106,987",
 		"turns": "9",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#cf349130-cade-11e9-a7ee-83d283e1de8e",
-		"burst": "13,164,955,197",
+		"burst": "14,825,781,538",
 		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Circe",
 		"rotation": [
@@ -2050,7 +2078,7 @@
 	},
 	"Summer Folka & Citra (evoke)": {
 		"name": "Summer Folka & Citra (evoke)",
-		"damage": "6,904,331,520",
+		"damage": "7,047,109,999",
 		"turns": "12",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#cebe0d00-cf91-11e9-8c4d-8d394a9d768d",
@@ -2058,7 +2086,7 @@
 		"burstTurn": "6",
 		"wiki": "https://exvius.gamepedia.com/Summer_Folka_%26_Citra",
 		"rotation": [
-			"High Tide Spirit x 2",
+			"High Tide Spirit + Summon - Waves x 2",
 			"Summon - Waves x 2",
 			"Summon - Waves x 2",
 			"Summon - Waves x 2",

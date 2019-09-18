@@ -7,6 +7,7 @@
 import * as Discord from "discord.js";
 import * as request from "request";
 import * as fs from "fs";
+import * as fsextra from "fs-extra";
 import * as cheerio from "cheerio";
 import * as https from "https";
 import * as http from "http";
@@ -775,7 +776,7 @@ export function handleBuild(receivedMessage, search, parameters) {
     if (unitID) {
         var calc = cache.getUnitCalculation("furcula", search)
         if (calc) {
-            includeTitle = search;
+            includeTitle = calc.name;
             search = calc.url;
             log(`Loading Unit Build: ${calc.url}`);
         }
@@ -1150,6 +1151,7 @@ function handleUpdate(receivedMessage, search, parameters, forced = false) {
             log(`Finished Updating: ${success}`);
 
             if (success) {
+                fsextra.emptyDirSync("./tempbuilds");
                 Client.send(receivedMessage, "done!");
                 respondSuccess(receivedMessage, true);
             } else {

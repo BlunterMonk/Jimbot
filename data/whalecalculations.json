@@ -148,11 +148,11 @@
 	},
 	"Zeno of the Beta Star": {
 		"name": "Zeno of the Beta Star",
-		"damage": "14,447,332,160",
+		"damage": "14,747,585,509",
 		"turns": "10",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#200f3000-b307-11e9-a1b8-7b53378612e4",
-		"burst": "30,085,721,896",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#35a37d10-d89e-11e9-a314-1b650a2e0160",
+		"burst": "30,710,981,884",
 		"burstTurn": "6",
 		"wiki": "https://exvius.gamepedia.com/Zeno_of_the_Beta_Star",
 		"rotation": [
@@ -1672,11 +1672,11 @@
 	},
 	"Circe": {
 		"name": "Circe",
-		"damage": "12,517,376,845",
+		"damage": "13,102,606,088",
 		"turns": "9",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#d1c9d8a0-d57f-11e9-a314-1b650a2e0160",
-		"burst": "20,875,346,572",
+		"burst": "23,508,878,167",
 		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Circe",
 		"rotation": [
@@ -1704,7 +1704,7 @@
 		"turns": "8",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#659a96c0-d83f-11e9-a314-1b650a2e0160",
-		"burst": "",
+		"burst": "18,987,905,170",
 		"burstTurn": "6",
 		"wiki": "https://exvius.gamepedia.com/Morgana",
 		"rotation": [
@@ -2390,11 +2390,11 @@
 	},
 	"Elena": {
 		"name": "Elena",
-		"damage": "13,996,085,839",
+		"damage": "14,148,227,180",
 		"turns": "10",
 		"type": "hybrid",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#e7affa40-b30c-11e9-a1b8-7b53378612e4",
-		"burst": "27,150,920,559",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#20108040-d9ae-11e9-a314-1b650a2e0160",
+		"burst": "27,434,786,485",
 		"burstTurn": "8",
 		"wiki": "https://exvius.gamepedia.com/Elena",
 		"rotation": [

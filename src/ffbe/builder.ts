@@ -14,9 +14,9 @@ import {Cache, cache} from "../cache/cache.js";
 import * as constants from "../constants.js";
 import * as https from "https";
 
-const lyreUnitsEndpoint  = function(n) { return `https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/${n}/unitsWithPassives.json`; };
-const lyreItemsEndpoint  = function(n) { return `https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/${n}/data.json`; };
-const lyreEspersEndpoint = function(n) { return `https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/tools/${n}/defaultBuilderEspers.json`; };
+const lyreUnitsEndpoint  = function(n) { return `https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/static/${n}/unitsWithPassives.json`; };
+const lyreItemsEndpoint  = function(n) { return `https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/static/${n}/data.json`; };
+const lyreEspersEndpoint = function(n) { return `https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/static/${n}/defaultBuilderEspers.json`; };
 
 const lyreItemsJson  = function(n) { return `data/lyregard-${n}/lyregard-items.json`;  };
 const lyreUnitsJson  = function(n) { return `data/lyregard-${n}/lyregard-units.json`;  };
@@ -137,7 +137,7 @@ async function cacheLyregardData(callback) {
                     end();
                 }
             })
-            downloadFile(lyreEspersJson(element), lyreItemsEndpoint(r1), (p) => {
+            downloadFile(lyreEspersJson(element), lyreEspersEndpoint(r1), (p) => {
                 if (p == null) {
                     reject(Error('page not found '))
                 } else {
