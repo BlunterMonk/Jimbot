@@ -575,7 +575,7 @@ function buildRotationEmbed(search, source) {
         text += `**Highest Burst: ${calc.burst} on turn ${calc.burstTurn}**\n`;
         bturn = parseInt(calc.burstTurn);
     }
-    text += `**[(spreadsheet)](${sheetURL}) - [(wiki)](${calc.wiki}) - [(build)](${calc.url})**\n\n`;
+    text += `**[(spreadsheet)](${(source == "furcula") ? sheetURL : whaleSheet}) - [(wiki)](${calc.wiki}) - [(build)](${calc.url})**\n\n`;
     calc.rotation.forEach((txt, ind) => {
         if (txt.empty()) 
             return;
@@ -714,7 +714,7 @@ function handleMuspel(receivedMessage, search, parameters) {
 
 // FFBEEQUIP
 
-export async function build(receivedMessage, url, includeTitle, force = false): Promise<string> {
+export async function build(receivedMessage, url, calculation, force = false): Promise<string> {
 
     return new Promise<string>((resolve, reject) => {
 
@@ -743,13 +743,16 @@ export async function build(receivedMessage, url, includeTitle, force = false): 
                         .setColor(pinkHexCode)
                         .setImage(`attachment://build.png`);
                     
-                if (includeTitle && !includeTitle.empty()) {
-                    embed.setTitle(includeTitle)
-                        .setURL(url);
+                if (calculation) {
+                    var text = `**[${calculation.name.trim()}](${calculation.wiki})\n[(sheet)](${(calculation.source == "furcula") ? sheetURL : whaleSheet}) - [(wiki)](${calculation.wiki}) - [(build)](${calculation.url})**\n`;
+                
+                    embed.setDescription(text);
+                    
+                    // log(text);
+                    Client.sendMessageWithAuthor(receivedMessage, embed, (calculation.source == "furcula") ? furculaUserID : shadoUserID);
+                } else {
+                    Client.sendMessage(receivedMessage, embed);
                 }
-        
-                // log(text);
-                Client.sendMessage(receivedMessage, embed);
                 resolve();
             }
 
@@ -776,7 +779,8 @@ export function handleBuild(receivedMessage, search, parameters) {
     if (unitID) {
         var calc = cache.getUnitCalculation("furcula", search)
         if (calc) {
-            includeTitle = calc.name;
+            calc.source = "furcula";
+            includeTitle = calc;
             search = calc.url;
             log(`Loading Unit Build: ${calc.url}`);
         }
@@ -800,12 +804,13 @@ export function handleBis(receivedMessage, search, parameters) {
     if (unitID) {
         var calc = cache.getUnitCalculation("whale", search)
         if (calc) {
-            includeTitle = search;
+            calc.source = "whale";
+            includeTitle = calc;
             search = calc.url;
             log(`Loading Unit Build: ${calc.url}`);
         }
     }
-
+     
     build(receivedMessage, search, includeTitle)
     .catch((e) => {
         log(`Unable to find build: ${search}`);    
@@ -820,7 +825,7 @@ async function buildText(receivedMessage, url) {
         var text = Build.getBuildText(id, region, b);
         var desc = text.text.replaceAll("\\[", "**[");
         desc = desc.replaceAll("\\]:", "]:**");
-                
+
         var embed = <any>{
             color: pinkHexCode,
             title: `Build: ${name}`,
