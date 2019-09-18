@@ -1414,7 +1414,7 @@ function getMaxRarity(unit) {
     }
     return unit;
 }
-function getGif(search, param, callback) {
+async function getGif(search, param, callback) {
     log("getGif: " + search + `(${param})`);
 
     var unitName = search
@@ -1434,7 +1434,6 @@ function getGif(search, param, callback) {
     if (!unitID)
         unitID = search;
 
-    var rarity = unitID[unitID.length-1];
     var id = unitID.substring(0, unitID.length-1);
     log("Unit ID: " + unitID);
     
@@ -1443,159 +1442,39 @@ function getGif(search, param, callback) {
         unitL = search.replaceAll("_", "+");
     }
 
-    var saveGif = function(url) {
+    var saveGif = function(url): Promise<string> {
         if (!fs.existsSync(`tempgifs/${search}/`))
-        fs.mkdirSync( `tempgifs/${search}/`, { recursive: true});
+            fs.mkdirSync( `tempgifs/${search}/`, { recursive: true});
         
         var file = null;
         var source = url.slice(0, 5) === 'https' ? https : http;
-        source.get(url, function(response) {
-            if (response.statusCode !== 200) {
-                log("Unit Animation not found");
-                return;
-            }
-            file = fs.createWriteStream(filename);
-            file.on('finish', function() {
-                callback(filename);
+        return new Promise<string>((resolve, reject) =>{
+
+            source.get(url, function(response) {
+                if (response.statusCode !== 200) {
+                    log("Unit Animation not found");
+                    reject("Unit Animation not found");
+                    return;
+                }
+                file = fs.createWriteStream(filename);
+                file.on('finish', function() {
+                    resolve(filename);
+                });
+                return response.pipe(file);
             });
-            return response.pipe(file);
-        });
+        })
     }
     
-    var gifs = [];
-    var count = 5; // most units only have 2 pages
-    var queryEnd = function (c) {
-        count--;
-
-        if (count <= 0) {
-
-            gifs.sort((a, b) => {
-                if(a.includes("ffbegif"))
-                    return -1;
-                else 
-                    return 1;
-            });
-            log(gifs);
-            
-            var img = gifs.find((n) => {
-                n = n.toLowerCase();
-
-                if (param.includes("win")) {
-                    return n.includes(param) && !n.includes("before");
-                }
-
-                log(`Compare Gifs: ${n}, ${param}`);
-
-                // magic has priority
-                if (compareStrings(n, "limit") || compareStrings(param, "limit")) {
-                    log(`Found Limit: param: ${compareStrings(param, "limit")}, n to param: ${compareStrings(n, param)}`);
-                    return compareStrings(param, "limit") && compareStrings(n, param);
-                } else if ((compareStrings(n, "mag") && !compareStrings(n, "standby")) ||
-                            (compareStrings(param, "mag") && !compareStrings(param, "standby"))) {
-                    log(`Found mag: param: ${compareStrings(param, "mag")}, n to param: ${compareStrings(n, param)}`);
-                    return compareStrings(n, param) && compareStrings(param, "mag") && !compareStrings(n, "standby");
-                } else if (compareStrings(n, "standby")) {
-                    log(`Found Standby: param: ${compareStrings(param, "magic")}, n: ${compareStrings(n, "magic")}`);
-
-                    return compareStrings(param, "standby") 
-                            && ((!compareStrings(param, "magic") && !compareStrings(n, "magic"))
-                            || (compareStrings(param, "magic") && compareStrings(n, "magic")));
-                } else if (compareStrings(n, "atk|attack") && compareStrings(param, "atk|attack")) {
-                    log(`Found Atk: param: ${compareStrings(param, "atk")}, n: ${compareStrings(n, "atk")}`);
-                    log(`Found Attack: param: ${compareStrings(param, "attack")}, n: ${compareStrings(n, "attack")}`);
-                    return true;
-                }
-                
-                log("Gif did not match any cases");
-                return compareStrings(n, param);
-            });
-            if (!img) {
-                img = gifs.find((n) => {
-                    return n.toLowerCase().replaceAll(" ", "_").includes(param.replaceAll(" ", "_"));
-                });
-            }
-            if (img) {
-                
-                img = img.replaceAll(" ", "%20");
-                log("Found Requested Gif");
-                log(img);
-                
-                saveGif(img);
-            }
-        }
-    };
-
-    var uri = [ aniGL(unitID), aniJP(unitID) ];
-    for(var i = 0; i < 2; i++) {
-        request(
-            { uri: uri[i] },
-            function(error, response, body) {
-                if (error || !body || body.empty())
-                    return;
-
-                const $ = cheerio.load(body);
-                $('img').each((ind, el) => {
-                    var src = $(el).attr('src');
-                    if (src === undefined)
-                        return;
-
-                    var ext = getFileExtension(src);
-                    if (ext === ".gif") {
-                        gifs.push(src);
-                    }
-                });
-
-                queryEnd(count);
-            }
-        );
+    for (let rarity = 7; rarity > 2; rarity--) {
+        var direct = `http://www.ffbegif.com/${unitName}/${id}${rarity}%20${animationName}.gif`;
+        log(`Searching for: ${direct}`);
+        await saveGif(direct).then((p) =>{
+            callback(p);
+            rarity = 0;
+        }).catch((e) => {
+            log("failed to get gif");
+        });
     }
-
-    var direct = `http://www.ffbegif.com/${unitName}/${getMaxRarity(unitID)}%20${animationName}.gif`;
-    log(`Searching for: ${direct}`);
-    request(
-        { uri: direct },
-        function(error, response, body) {
-
-            if (error || !response || response.statusCode != 200) {
-                log(`Gif could not be found.`)
-                return;
-            }
-            
-            saveGif(direct);
-        }
-    );
-
-    /*log(`Searching for: ${direct}`);
-    var siteSearch = `${ffbegifEndpoint}?page=${i}&name=${unitL}`;
-    if (unitL) {
-        for(var i = 0; i < 2; i++) {
-            request(
-                { uri: direct },
-                function(error, response, body) {
-                    log(body);
-                    const $ = cheerio.load(body);
-                    $('img').each((ind, el) => {
-                        var src = $(el).attr('src');
-                        if (src === undefined)
-                            return;
-
-                        if (src.includes("Move")) return;
-
-                        var ext = getFileExtension(src);
-                        if (ext === ".gif") {
-                            gifs.push(ffbegifEndpoint+src);
-                        }
-                    });
-
-                    queryEnd(count);
-                }
-            );
-        }
-    } else {
-        count -= 2;
-    }*/
-
-    queryEnd(count);
 }
 
 function convertSearchTerm(search) {
