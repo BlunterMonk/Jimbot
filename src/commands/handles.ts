@@ -735,6 +735,13 @@ export async function build(receivedMessage, url, calculation, force = false): P
             // var desc = text.text.replaceAll("\\[", "**[");
             // desc = desc.replaceAll("\\]:", "]:**");
             var build = Build.CreateBuild(id, region, b);
+            if (!build) {
+                Client.send(receivedMessage, "Sorry hun, something went wrong.");
+                console.log("Could not build image");
+                reject("Could not build unit");
+                return;
+            }
+
 
             var sendImg = function(p) {
                 const attachment = new Discord.Attachment(p, 'build.png');
@@ -800,8 +807,8 @@ export function handleBis(receivedMessage, search, parameters) {
     unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
 
     var includeTitle = null;
-    var unitID = getUnitKey(search);
-    if (unitID) {
+    //var unitID = getUnitKey(search);
+    //if (unitID) {
         var calc = cache.getUnitCalculation("whale", search)
         if (calc) {
             calc.source = "whale";
@@ -809,7 +816,7 @@ export function handleBis(receivedMessage, search, parameters) {
             search = calc.url;
             log(`Loading Unit Build: ${calc.url}`);
         }
-    }
+    //}
      
     build(receivedMessage, search, includeTitle)
     .catch((e) => {
@@ -823,6 +830,12 @@ async function buildText(receivedMessage, url) {
 
         var name = getUnitNameFromKey(b.id).toTitleCase(" ");
         var text = Build.getBuildText(id, region, b);
+        if (!text) {
+            Client.send(receivedMessage, "Sorry hun, something went wrong.");
+            console.log("Could not build text");
+            return;
+        }
+
         var desc = text.text.replaceAll("\\[", "**[");
         desc = desc.replaceAll("\\]:", "]:**");
 

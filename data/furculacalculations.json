@@ -1,4 +1,32 @@
 {
+	"Riku": {
+		"name": "Riku",
+		"damage": "14,615,047,069",
+		"turns": "9",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#33b6bfe0-db1d-11e9-a314-1b650a2e0160",
+		"burst": "21,221,732,731",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Riku",
+		"rotation": [
+			"Duel Trigger (CD) + Dark Break + Dark Hand",
+			"Dark Aura (CD) + Dark Maelstrom x 2",
+			"Dark Maelstrom x 3",
+			"Dark Maelstrom x 3",
+			"Dark Barrage & Dark Impulse (LB)",
+			"Duel Trigger (CD) + Dark Breaker + Dark Aura (CD)",
+			"Dark Maelstrom x 3",
+			"Dark Maelstrom x 3",
+			"Dark Maelstrom x 3",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Radiant Lightning": {
 		"name": "Radiant Lightning",
 		"damage": "14,211,875,383",
@@ -111,8 +139,36 @@
 			"Dancer: Sword Dance x 2"
 		]
 	},
-	"Reberta (pending)": {
-		"name": "Reberta (pending)",
+	"Sephiroth (KH)": {
+		"name": "Sephiroth (KH)",
+		"damage": "13,273,495,845",
+		"turns": "10",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#9a2d5460-db1c-11e9-a314-1b650a2e0160",
+		"burst": "17,749,328,620",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Sephiroth_(KH)",
+		"rotation": [
+			"Prepare to fall! (CD) + Consuming Light + Vanisher",
+			"Super Nova (LB)",
+			"Engulfing Duality x 3",
+			"Engulfing Duality x 3",
+			"Engulfing Duality x 3",
+			"Consuming Light + Engulfing Duality x 2",
+			"Engulfing Duality x 3",
+			"Engulfing Duality x 3",
+			"Engulfing Duality x 3",
+			"Engulfing Duality x 3",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"Reberta": {
+		"name": "Reberta",
 		"damage": "12,132,275,639",
 		"turns": "5",
 		"type": "physical",
@@ -131,6 +187,34 @@
 			"",
 			"",
 			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"Sora": {
+		"name": "Sora",
+		"damage": "11,604,668,511",
+		"turns": "10",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#9ee4b760-db1b-11e9-a314-1b650a2e0160",
+		"burst": "15,085,341,631",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Sora",
+		"rotation": [
+			"Combo Plus (CD) + Ars Arcanum",
+			"Ars Arcanum x 3",
+			"Ars Arcanum x 3",
+			"Ars Arcanum x 3",
+			"Sonic Blade x 3",
+			"Combo Plus (CD) + Ars Arcanum",
+			"Ars Arcanum x 3",
+			"Ars Arcanum x 3",
+			"Ars Arcanum x 3",
+			"Sonic Blade x 3",
 			"",
 			"",
 			"",
@@ -185,6 +269,34 @@
 			"",
 			"",
 			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"Cloud (KH)": {
+		"name": "Cloud (KH)",
+		"damage": "10,380,727,832",
+		"turns": "8",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#b620b420-db1a-11e9-a314-1b650a2e0160",
+		"burst": "12,716,934,774",
+		"burstTurn": "2",
+		"wiki": "https://exvius.gamepedia.com/Cloud_(KH)",
+		"rotation": [
+			"Cross-slash - Omen (CD) + Continuum Cut",
+			"Continuum Cut x 3",
+			"Continuum Cut x 3",
+			"Continuum Cut x 2 + Assault Break (CD)",
+			"Cross-slash - Omen (CD) + Continuum Cut",
+			"Continuum Cut x 3",
+			"Continuum Cut x 3",
+			"Continuum Cut x 2 + Assault Break (CD)",
 			"",
 			"",
 			"",
@@ -391,8 +503,8 @@
 			""
 		]
 	},
-	"Raegen (pending)": {
-		"name": "Raegen (pending)",
+	"Raegen": {
+		"name": "Raegen",
 		"damage": "7,218,092,551",
 		"turns": "12",
 		"type": "physical",
@@ -839,34 +951,6 @@
 			""
 		]
 	},
-	"Sora": {
-		"name": "Sora",
-		"damage": "3,844,442,218",
-		"turns": "8",
-		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#69cc18b0-cadc-11e9-a7ee-83d283e1de8e",
-		"burst": "5,191,385,627",
-		"burstTurn": "3",
-		"wiki": "https://exvius.gamepedia.com/Sora",
-		"rotation": [
-			"Combo Plus (CD) + Ars Arcanum",
-			"Ars Arcanum x 3",
-			"Ars Arcanum x 3",
-			"Ars Arcanum x 3",
-			"Ragnarok (LB)",
-			"Ars Arcanum x 3",
-			"Ars Arcanum x 3",
-			"Ars Arcanum x 3",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
 	"Sephiroth": {
 		"name": "Sephiroth",
 		"damage": "3,574,480,311",
@@ -1055,34 +1139,6 @@
 			"Seiken - Saint Bringer+",
 			"Seiken - Saint Bringer+",
 			"Seiken - Saint Bringer+",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
-	"Cloud (KH)": {
-		"name": "Cloud (KH)",
-		"damage": "2,870,446,256",
-		"turns": "5",
-		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#7225ada0-cb68-11e9-a7ee-83d283e1de8e",
-		"burst": "3,640,146,086",
-		"burstTurn": "2",
-		"wiki": "https://exvius.gamepedia.com/Cloud_(KH)",
-		"rotation": [
-			"Cross-slash-Omen + Continuum Cut",
-			"Continuum Cut x 2",
-			"Continuum Cut x 2",
-			"Continuum Cut x 2",
-			"Continuum Cut x 2",
-			"",
-			"",
-			"",
-			"",
-			"",
 			"",
 			"",
 			"",
@@ -1679,11 +1735,11 @@
 	},
 	"Elnath (JP)": {
 		"name": "Elnath (JP)",
-		"damage": "11,668,641,425",
+		"damage": "0",
 		"turns": "10",
 		"type": "physical",
 		"url": "https://ffbeEquip.com/builder.html?server=JP#fed47c30-d9bf-11e9-a314-1b650a2e0160",
-		"burst": "17,754,536,378",
+		"burst": "0",
 		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Elnath/JP",
 		"rotation": [
@@ -1936,13 +1992,13 @@
 			""
 		]
 	},
-	"Sol (pending)": {
-		"name": "Sol (pending)",
-		"damage": "10,069,279,960",
+	"Sol": {
+		"name": "Sol",
+		"damage": "10,081,239,498",
 		"turns": "11",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#cd9e2100-d516-11e9-a314-1b650a2e0160",
-		"burst": "17,951,514,303",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#16e4bcc0-db1b-11e9-a314-1b650a2e0160",
+		"burst": "17,972,018,601",
 		"burstTurn": "11",
 		"wiki": "https://exvius.gamepedia.com/Sol/JP",
 		"rotation": [

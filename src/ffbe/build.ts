@@ -195,6 +195,9 @@ class Build {
             this.loadedUnit = lu;
         }
 
+        if (!this.loadedUnit)
+            return null;
+
         // log("this.loadedUnit");
         // log(this.loadedUnit);
         // log("this.buildData");
@@ -612,6 +615,25 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
 
     var bonus = getTotalBonuses(passives, equipmentTotal, esper);
 
+    if (esper && esper.conditional) {
+        esper.conditional.forEach((condition, i) => {
+            if (condition.equipedCondition) {
+                let equips = build.getEquipment();
+                equips.forEach((e, j) => {
+                    if (e.type == condition.equipedCondition) {
+                        let keys = Object.keys(condition);
+                        keys.forEach((k, ki) => {
+                            if (!bonus[k]) 
+                                bonus[k] = condition[k];
+                            else
+                                bonus[k] = parseInt(bonus[k]) + parseInt(condition[k]);
+                        });
+                    }
+                });
+            }
+        });
+    }
+
     // log("total bonuses");
     // log(bonus);
 
@@ -720,6 +742,8 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
             trace(`${k}: ${total[k]} + ${e} + ${b} = ${e0}`);
             total[k] = e0;
         });
+
+        
     }
 
     // Round all the stats to the right value
@@ -1196,8 +1220,8 @@ function applyEnchantments(item, enchantments) {
                 enhancementValue = Constants.itemEnhancementAbilities[enhancement];
             }
 
-            // log("Adding Enchantment");
-            // log(enhancementValue);
+            log("Adding Enchantment");
+            log(enhancementValue);
             if (enhancementValue) {
                 result = combineTwoItems(result, enhancementValue);
             }
@@ -1339,12 +1363,18 @@ export function requestBuildData(buildURL: string, callback) {
 export function getBuildText(id: string, region: string, buildData) {
 
     var build = CreateBuild(id, region, buildData);
+    if (!build)
+        return null;
+
     var text = build.getText();
     return text;
 }
 export function CreateBuild(id: string, region: string, buildData): Build {
 
     var build = new Build(id, region, buildData);
+    if (!build)
+        return null;
+
     log("Create Build");
     log(buildData);
 
@@ -1353,7 +1383,7 @@ export function CreateBuild(id: string, region: string, buildData): Build {
         
         // If only one item is found, equip it right away, otherwise wait for validation
         var itemInfo = Builder.getItems(region, element.id);
-        var best = findBestItemVersion(build, element.slot, itemInfo);
+        var best = findBestItemVersion(build, ind, itemInfo);
         if (best == null)
             return;
         // log("Best Item Found");
