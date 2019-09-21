@@ -619,6 +619,8 @@ function handleTopdps(receivedMessage, search, parameters) {
     const culled = [];
     calcs.forEach(unit => {
 
+        if (unit.jp || unit.name.includes("(JP)"))
+            return;
         if (check && !unit.type.includes(search))
             return;
         if (!unit.damage || unit.damage === undefined || unit.damage.empty())

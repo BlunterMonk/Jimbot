@@ -203,6 +203,9 @@ function GetUnitComparison(auth, sourceID, range, callback) {
             var phy = {};
             var mag = {};
             var hyb = {};
+            var pJP = false;
+            var mJP = false;
+            var hJP = false;
 
             rows.map((row) => {
                 //console.log("Row: ");
@@ -213,33 +216,48 @@ function GetUnitComparison(auth, sourceID, range, callback) {
                 //console.log(`Magic { ${mName}: ${row[7]} - ${row[8]} }`);
                 //console.log(`Hybrid { ${hName}: ${row[12]} - ${row[13]} }`);
                 
-                if (pName && !pName.includes("Unreleased")) {
-                    phy[pName] = {
-                        name: pName,
-                        damage: row[2],
-                        turns: row[3],
-                        type: "physical",
-                        url: null
+                if (pName) {
+                    if (!pName.includes("Unreleased")) {
+                        phy[pName] = {
+                            name: pName,
+                            damage: row[2],
+                            turns: row[3],
+                            type: "physical",
+                            url: null,
+                            jp: pJP
+                        }
+                    } else if (!pJP) {
+                        pJP = true;
                     }
                 }
 
-                if (mName && !mName.includes("Unreleased")) {
-                    mag[mName] = {
-                        name: mName,
-                        damage: row[7],
-                        turns: row[8],
-                        type: "magic",
-                        url: null
+                if (mName) {
+                    if (!mName.includes("Unreleased")) {
+                        mag[mName] = {
+                            name: mName,
+                            damage: row[7],
+                            turns: row[8],
+                            type: "magic",
+                            url: null,
+                            jp: mJP
+                        }
+                    } else if (!mJP) {
+                        mJP = true;
                     }
-                }
+                } 
 
-                if (hName && !hName.includes("Unreleased")) {
-                    hyb[hName] = {
-                        name: hName,
-                        damage: row[12],
-                        turns: row[13],
-                        type: "hybrid",
-                        url: null
+                if (hName) {
+                    if (!hName.includes("Unreleased")) {
+                        hyb[hName] = {
+                            name: hName,
+                            damage: row[12],
+                            turns: row[13],
+                            type: "hybrid",
+                            url: null,
+                            jp: hJP
+                        }
+                    } else if (!hJP) {
+                        hJP = true;
                     }
                 }
             });
