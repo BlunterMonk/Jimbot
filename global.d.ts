@@ -3,6 +3,7 @@ declare interface String {
     toTitleCase (splitter): string;
     replaceAll (search, replacement): string;
     capitalize (): string
+    capitalizeWords (splitter): string
     limitTo (limit): string;
     empty (): boolean;
     indexOfAfter (search, start): string;
