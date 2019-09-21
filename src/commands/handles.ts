@@ -5,27 +5,22 @@
 //////////////////////////////////////////
 
 import * as Discord from "discord.js";
-import * as request from "request";
 import * as fs from "fs";
 import * as fsextra from "fs-extra";
-import * as cheerio from "cheerio";
-import * as https from "https";
 import * as http from "http";
-
-import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
-import "../string/string-extension.js";
+import * as https from "https";
+import { cache } from "../cache/cache.js";
+import { config } from "../config/config.js";
 import { Client } from "../discord.js";
-import {unitSearch, unitSearchWithParameters} from "../ffbe/unit.js";
-import {config} from "../config/config.js";
-import {FFBE} from "../ffbe/ffbewiki.js";
-import {Cache, cache} from "../cache/cache.js";
 import * as Build from "../ffbe/build.js";
+import { Builder } from "../ffbe/builder.js";
 import * as BuildImage from "../ffbe/buildimage.js";
-import {Builder} from "../ffbe/builder.js";
-import * as constants from "../constants.js";
+import { FFBE } from "../ffbe/ffbewiki.js";
+import { unitSearch, unitSearchWithParameters } from "../ffbe/unit.js";
+import { escapeString, log } from "../global.js";
+import "../string/string-extension.js";
 import * as Commands from "./commands.js";
-import { resolve } from "dns";
-import { rejects } from "assert";
+import { downloadFile } from "../string/download.js";
 
 var mainChannelID;
 const pinkHexCode = 0xffd1dc;
@@ -988,7 +983,7 @@ function handleAddemo(receivedMessage, search, parameters) {
             });
         }
     } else {
-        downloadFile(name, url, result => {
+        downloadImage(name, url, result => {
             log(result);
             respondSuccess(receivedMessage);
         });
@@ -1382,6 +1377,62 @@ function handleUnitQuery(receivedMessage, command, search) {
 }
 
 
+function handleGrab(receivedMessage, search, parameters) {
+
+    if (receivedMessage.author.id != jimooriUserID) {
+        return;
+    }
+
+    var limit = 1;
+    var p = parseInt(parameters[1]);
+    if (!Number.isNaN(p))
+        limit = p;
+
+
+    // Get messages
+    // receivedMessage.channel.fetchMessages({ limit: limit })
+    //     .then(messages => {
+    //         console.log(`Received ${messages.size} messages`);
+    //     })
+    //     .catch(console.error);
+
+    receivedMessage.channel.fetchMessage(parameters[0])
+        .then(startMessage => {
+            console.log("Found Starting Message");
+            console.log(startMessage.content);
+
+            var start = startMessage.createdTimestamp;
+            var end = receivedMessage.createdTimestamp;
+            log(`Grabbing Messages From: ${start}`);
+        
+            // Get messages and filter by user ID
+            receivedMessage.channel.fetchMessages({limit:100})
+                .then(messages => {
+                    var filtered = messages.filter(m => m.author.id === '350621713823825920' 
+                        && m.attachments.first() != null && m.createdTimestamp >= start && m.createdTimestamp <= end);
+                    console.log(`Found ${filtered.size} images`);
+                    var links : string[] = filtered.map(element => {
+                        return element.attachments.first().url;
+                    });
+
+                    let path = `tempgrabbed/${start}/`;
+                    if (!fs.existsSync(path))
+                        fs.mkdirSync(path, { recursive: true});
+
+                    console.log(links);
+                    links.forEach((link, i) => {
+                        var ext = link.substring(link.lastIndexOf("."), link.length).toLowerCase();
+                        var name = `aya${i}${ext}`;
+                        downloadFile(path + name, link, (p) => {
+                            console.log(`Downloaded ${p}`);
+                        })
+                    });
+                })
+                .catch(console.error);
+        })
+        .catch(console.error);
+}
+
 /////////////////////////////////////////////////
 // RESPONSE
 
@@ -1609,14 +1660,14 @@ function overwriteFile(existing: string, url, callback) {
             return;
         }
 
-        downloadFile(existing.slice(existing.lastIndexOf("/"), existing.lastIndexOf(".")), url, result => {
+        downloadImage(existing.slice(existing.lastIndexOf("/"), existing.lastIndexOf(".")), url, result => {
             log(result);
 
             callback(result);
         });
     });
 }
-function downloadFile(name, link, callback) {
+function downloadImage(name, link, callback) {
     var ext = link.substring(link.lastIndexOf("."), link.length).toLowerCase();
     if (!config.filetypes().includes(ext)) {
         log("Invalid img URL");
