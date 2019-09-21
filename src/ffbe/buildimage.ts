@@ -61,11 +61,21 @@ export async function BuildImage(build: any): Promise<string> {
     return new Promise<string>((resolve, reject) => {
         
         downloadImages(build.getSlots(), equipped, build.loadedUnit.id, (unit, list) => {
-            buildImage(unit, list, build, (p) => {
+
+            let compactOptions = {
+                xStart: 0,
+                yStart: 0
+            }
+            buildCompactImage(unit, compactOptions, build, (p) => {
                 resolve(p);
             });
         });
     });
+}
+
+interface UnitBox {
+    xStart: number;
+    yStart: number;
 }
 
 // // Write "Awesome!"
@@ -157,68 +167,81 @@ function sortKillersByValue(killers) {
     return values;
 }
 
-function getKillers(killers) {
+interface statRow {
+    xStart: number,
+    yStart: number,
+    dimensions: number,
+    maxWide: number,
+    maxTall: number,
+    fontSize: number,
+    spacing: number
+}
 
-    console.log("Total Killers");
-    console.log(killers);
+function getKillers(options: statRow, values: any) {
+
+    console.log("Total Values");
+    console.log(values);
 
     var images = [];
     var labels = [];
 
-    var dimensions = 25;
-    var xStart = 112;
-    var yStart = 84;
-    var maxWide = 14; // max amount of icons that can fit horizontally
-    var maxTall = 2; // max amount of icons that can fit vertically
-
     var across = 0;
     var down = 0;
-    var values = sortKillersByValue(killers);
     var keys = Object.keys(values);
     keys.forEach((k,i) =>{
 
-        var x = xStart;
-        var y = yStart;
+        var x = options.xStart;
+        var y = options.yStart;
 
         const value = values[k];
         value.forEach((v,j) =>{
-            
-            // var mod = (across % maxWide);// ((1+i)*(1+j));
-            // console.log("Killer Image: " + (1+i) + ", " + (1+j));
-            // console.log(`mod: ${mod}`);
-            // console.log(`x: ${maxWide % mod}, y: ${maxWide % mod}`);
-            x = xStart + (across * dimensions),
-            y = yStart + (down * dimensions),
+                
+            x = options.xStart + (across * options.dimensions),
+            y = options.yStart + (down   * options.dimensions),
             
             // Item image
             images[images.length] = {
-                src: `${imgCacheDir}killers/${v}.png`,
+                src: `${imgCacheDir}stats/${v}.png`,
                 x: x,
                 y: y,
-                w: dimensions,
-                h: dimensions
+                w: options.dimensions,
+                h: options.dimensions
             }
 
             // console.log(images[images.length-1]);
 
             across++;
-            if (across >= maxWide) {
+            if (across >= options.maxWide) {
                 across = 0;
                 down++;
             }    
         });
 
+        const v0 = parseInt(k);
+
+        var f = resistFontFamily;
+        var t = `${v0}%`;
+        var c = "255,255,255,1";
+        /*if (v0 >= 100) {
+            t = "Null"
+            f = fontFamily;
+        } else */if (v0 > 0) {
+            c = "0,255,0,1";
+        } else if (v0 < 0) {
+            c = "255,0,0,1";
+        }  
+
         labels[labels.length] = { 
             text: `${k}%`,
             font: killersFontFamily, 
-            size: 16, 
-            x: x + dimensions, 
-            y: y + dimensions - 8,
+            size: options.fontSize, 
+            x: x + options.dimensions, 
+            y: y + options.dimensions - 8,
             align: "left",
             strokeColor: killerssStroke
         };
         across += 2;
-        if (across >= maxWide) {
+        if (across >= options.maxWide) {
             across = 0;
             down++;
         } 
@@ -230,10 +253,49 @@ function getKillers(killers) {
     }
 }
 
-function getResists(totalStats, list) {
+function getResistsByValue(totalStats, list): any {
+
+    var resist = {};
+                              
+    if (!totalStats.resist) {
+        return resist;
+    }
+
+    log("CONVERTING RESIST")
+    log(totalStats.resist);
+        
+    list.forEach((k, i) => {
+        const r = totalStats.resist[k];
+        log(`${k}: ${r}`);
+
+        if (r) {
+            const i = list.indexOf(k)
+            if (i < 0)
+                return;
+
+            var v = r.percent;
+            log(v);
+            if (!resist[`${v}`]) 
+                resist[`${v}`] = [];
+
+            resist[`${v}`].push(`${k}`);
+        } else {
+            if (!resist[`0`]) 
+                resist[`0`] = [];
+
+            resist[`0`].push(`${k}`);
+        }
+    });
+
+    log(resist);
+    return resist;
+}
+
+function getResists(totalStats, list): string[] {
+
     var keys = Object.keys(list);
 
-    var resist = [];
+    var resist : string[] = [];
     for (let index = 0; index < keys.length; index++) {
         resist.push("0");
     }
@@ -241,7 +303,10 @@ function getResists(totalStats, list) {
     if (!totalStats.resist) {
         return resist;
     }
-  
+        
+    log("GET RESISTS")
+    log(totalStats.resist)
+    var values = {};
     var totalKeys = Object.keys(totalStats.resist)
     totalKeys.forEach((k, i) => {
         const r = totalStats.resist[k];
@@ -253,8 +318,10 @@ function getResists(totalStats, list) {
 
             var v = parseInt(resist[i]);
 
-            if (Number.isNaN(v))
-                resist[i] = v = 0;
+            if (Number.isNaN(v)) {
+                resist[i] = "";
+                v = 0;
+            }
 
             resist[i] = `${v + r.percent}`;
         }
@@ -266,22 +333,15 @@ function getResists(totalStats, list) {
     return resist;
 }
 
-function getResistances(totalStats) {
+function getAilmentResistances(options: statRow, totalStats) {
+    
+    var labels = [];
+
+    var x0 = options.xStart;
+    var y0 = options.yStart;
+    var spacing = options.spacing;
 
     var ailments = getResists(totalStats, Build.ailmentList);
-    var elements = getResists(totalStats, Build.elementList);
-
-    // console.log("Ailment Resist Values:");
-    // console.log(ailments);
-    // console.log("Element Resist Values:");
-    // console.log(elements);
-    
-    var x0 = 62;
-    var y0 = 712;
-    var y1 = 772;
-    var spacing = 61;
-
-    var labels = [];
 
     for (let index = 0; index < ailments.length; index++) {
         const e = ailments[index];
@@ -304,12 +364,23 @@ function getResistances(totalStats) {
         labels[labels.length] = { 
             text: t,
             font: f, 
-            size: 16, 
+            size: options.fontSize, 
             x: x0 + (spacing * index), 
             y: y0,
             align: "center" 
         };
     }
+
+    return labels;
+}
+function getElementResistances(options: statRow, totalStats) {
+    
+    var labels = [];
+    var elements = getResists(totalStats, Build.elementList);
+
+    var x0 = options.xStart;
+    var y0 = options.yStart;
+    var spacing = options.spacing;
 
     for (let index = 0; index < elements.length; index++) {
         const e = elements[index];
@@ -328,9 +399,9 @@ function getResistances(totalStats) {
         labels[labels.length] = { 
             text: t, 
             font: resistFontFamily, 
-            size: 16, 
+            size: options.fontSize, 
             x: x0 + (spacing * index), 
-            y: y1,
+            y: y0,
             align: "center",
             color: c
         };
@@ -342,27 +413,30 @@ function getResistances(totalStats) {
 const statValues = [
     "hp",  "mp",  "atk", "mag", "def", "spr",
 ];
-function getMainStats(totalStats, totalBonuses, wieldingBonus) {
+interface mainStatsOptions {
+    xCol1: number,
+    xCol2: number,
+    xCol3: number,
+    yMainRow1: number,
+    yMainRow2: number,
+    yStatBonus: number,
+    yEquipBonus: number
+}
+
+function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wieldingBonus) {
     var labels = [];
 
     log("wield")
     log(wieldingBonus);
-    // var x0 = 185;
-    // var x1 = 270;
-    // var x2 = 355;
-    // var y0 = 60;
-    // var y1 = 126;
     
-    let x0 = 230;
-    let x1 = 357;
-    let x2 = 488;
-    let y0 = 38;
-    let y1 = 76;
-    let y2 = 22;
-    let y3 = 58;
+    let x0 = options.xCol1;
+    let x1 = options.xCol2;
+    let x2 = options.xCol3;
+    let y0 = options.yMainRow1;
+    let y1 = options.yMainRow2; 
+    let y2 = options.yStatBonus;
+    let y3 = options.yEquipBonus;
     
-    var yb1 = 42;
-    var yb2 = 104;
     labels[labels.length] = { text: totalStats.hp   , font: mainStatFontFamily, size: 18, x: x0, y: y0 , align: "right", strokeColor: statStroke }; // HP
     labels[labels.length] = { text: totalStats.mp   , font: mainStatFontFamily, size: 18, x: x0, y: y1 , align: "right", strokeColor: statStroke };
     labels[labels.length] = { text: totalStats.atk  , font: mainStatFontFamily, size: 18, x: x1, y: y0 , align: "right", strokeColor: statStroke };
@@ -586,6 +660,111 @@ function getEquipment(itemImages, build) {
     };
 }
 
+function buildCompactImage(unit, imageOptions: UnitBox, build, callback) {
+
+    let imageWidth = 1300;
+    let imageHeight = 336;
+
+    var buildTotal = build.getTotalStats();
+    var totalStats = buildTotal.stats;
+    var totalBonuses = buildTotal.bonuses;
+
+    var labels = [];
+    var images = [{
+        src: `${imgCacheDir}unit-overview-background.png`,
+        x: imageOptions.xStart,
+        y: imageOptions.yStart,
+        w: imageWidth,
+        h: imageHeight
+    }];
+    if (unit && unit.path && unit.path != "") {
+        console.log("Unit Image");
+        let ui = {
+            src: unit.path,
+            x: imageOptions.xStart + 6,
+            y: imageOptions.yStart + 5,
+            w: unit.w*3,
+            h: unit.h*3
+        };
+        console.log(ui);
+        images[images.length] = ui;
+        images[images.length] = {
+            src: `${imgCacheDir}unit-icon-frame.png`,
+            x: imageOptions.xStart + 6,
+            y: imageOptions.yStart + 5,
+            w: unit.w*3,
+            h: unit.h*3
+        };
+    }
+
+
+    let killerOptions = { // compact mode settings
+        xStart: imageOptions.xStart + 40,
+        yStart: imageOptions.yStart + 270,
+        dimensions: 50,
+        maxWide: 14, // max amount of icons that can fit horizontally
+        maxTall: 2, // max amount of icons that can fit vertically
+        fontSize: 32,
+        spacing: 0
+    }
+
+    if (totalStats.killers) {
+        var values = sortKillersByValue(totalStats.killers);
+        var killers = getKillers(killerOptions, values);
+        labels = labels.concat(killers.labels);
+        images = images.concat(killers.images);
+    }
+
+    // Add Ailment Resistances
+    let resistOptions = { // compact mode settings
+        xStart: imageOptions.xStart + 40,
+        yStart: imageOptions.yStart + 120,
+        dimensions: 50,
+        maxWide: 15, // max amount of icons that can fit horizontally
+        maxTall: 1, // max amount of icons that can fit vertically
+        fontSize: 32,
+        spacing: 100
+    };
+    var ailments = getResistsByValue(totalStats, Build.ailmentList);
+    var ailmentDisplay = getKillers(resistOptions, ailments);
+    labels = labels.concat(ailmentDisplay.labels);
+    images = images.concat(ailmentDisplay.images);
+
+    // Add Elemental Resistances
+    resistOptions.xStart = imageOptions.xStart + 65;
+    resistOptions.yStart = imageOptions.yStart + 200;
+    resistOptions.spacing = 50;
+    var elements = getResistsByValue(totalStats, Build.elementList);
+    var elementDisplay = getElementResistances(resistOptions, elements);
+    labels = labels.concat(elementDisplay);
+
+    // Add Esper
+    var esper = build.getEsperId();
+    var esperPath = `${imgCacheDir}espers/${esper}.png`;
+    console.log(`Esper Path: ${esperPath}`);
+    if (esper && fs.existsSync(esperPath)) {
+        images[images.length] = {
+            src: esperPath,
+            x: imageWidth - 224,
+            y: 0,
+            w: 224,
+            h: 224
+        };
+    }
+
+    // Finish frame
+    images[images.length] = {
+        src: `${imgCacheDir}unit-overview-top-frame-short.png`,
+        x: 0,
+        y: 0,
+        w: imageWidth,
+        h: imageHeight
+    };
+
+    var saveLocation = `./tempbuilds/compact/${build.buildID}.png`;
+    finalizeImage(saveLocation, images, labels, imageWidth, imageHeight, callback);
+}
+
 function buildImage(unit, itemImages, build, callback) {
 
     var buildTotal = build.getTotalStats();
@@ -638,10 +817,30 @@ function buildImage(unit, itemImages, build, callback) {
         wieldingBonus = totalStats.dualWielding;
 
     // Add main stats
-    labels = labels.concat(getMainStats(totalStats, totalBonuses, wieldingBonus));
+    let mainStats = {
+        xCol1: 230,
+        xCol2: 357,
+        xCol3: 488,
+        yMainRow1: 38,
+        yMainRow2: 76,
+        yStatBonus: 22,
+        yEquipBonus: 58,
+    };
+    labels = labels.concat(getMainStats(mainStats, totalStats, totalBonuses, wieldingBonus));
 
     // Add Resistances
-    labels = labels.concat(getResistances(totalStats));
+    let resistOptions = {
+        xStart: 62,
+        yStart: 712,
+        dimensions: 772,
+        maxWide: 9,
+        maxTall: 1,
+        fontSize: 16,
+        spacing: 61
+    };
+    labels = labels.concat(getAilmentResistances(resistOptions, totalStats));
+    resistOptions.yStart = 772,
+    labels = labels.concat(getElementResistances(resistOptions, totalStats));
 
     // Add equipment
     var equips = getEquipment(itemImages, build);
@@ -649,16 +848,32 @@ function buildImage(unit, itemImages, build, callback) {
     images = images.concat(equips.images);
 
     // Add killers
+    let killerOptions = { // Normal sheet settings
+        xStart: 112,
+        yStart: 84,
+        dimensions: 25,
+        maxWide: 15, // max amount of icons that can fit horizontally
+        maxTall: 2, // max amount of icons that can fit vertically
+        fontSize: 16,
+        spacing: 0
+    };
     if (totalStats.killers) {
-        var killers = getKillers(totalStats.killers);
+        var values = sortKillersByValue(totalStats.killers);
+        var killers = getKillers(killerOptions, values);
         labels = labels.concat(killers.labels);
         images = images.concat(killers.images);
     }
 
+    var saveLocation = `./tempbuilds/${build.buildID}.png`;
+    finalizeImage(saveLocation, images, labels, canvasWidth, canvasHeight, callback);
+}
+
+function finalizeImage(saveLocation: string, images: any[], labels: any[], cWidth, cHeight, callback) {
+
     mergeImages.mergeImages(images, 
         {
-            width: canvasWidth,
-            height: canvasHeight,
+            width: cWidth,
+            height: cHeight,
             Canvas: Canvas,
             text: labels
         })
@@ -672,7 +887,6 @@ function buildImage(unit, itemImages, build, callback) {
         var data = matches[2];
         var buffer = Buffer.alloc(data.length, data, 'base64');
 
-        var saveLocation = `./tempbuilds/${build.buildID}.png`;
         fs.writeFileSync(saveLocation, buffer);
 
         console.log(`Build Saved: ${saveLocation}`);
