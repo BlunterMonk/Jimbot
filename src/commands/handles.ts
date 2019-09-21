@@ -76,6 +76,8 @@ const gifAliases = {
 function handleUnit(receivedMessage, search, parameters) {
 
     search = search.toTitleCase("_");
+    search = search.capitalizeWords(".");
+
     log("Searching Units For: " + search);
 
     FFBE.queryWikiForUnit(search, parameters, function (pageName, imgurl, description, limited, fields) {
@@ -1419,11 +1421,14 @@ function getMaxRarity(unit) {
 async function getGif(search, param, callback) {
     log("getGif: " + search + `(${param})`);
 
-    var unitName = search
-    unitName = unitName.toTitleCase("_").replaceAll("_", "%20")
+    var unitName = search;
+    unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
+    log(`unitName: (${unitName})`);
+    unitName = unitName.capitalizeWords(".");
+    log(`unitName: (${unitName})`);
 
-    var animationName = param
-    animationName = param.toTitleCase().replaceAll(" ", "%20")
+    var animationName = param;
+    animationName = animationName.toTitleCase().replaceAll(" ", "%20");
     
     const filename = `tempgifs/${search}/${param}.gif`;
     if (fs.existsSync(filename)) {
