@@ -653,12 +653,20 @@ function handleTopdps(receivedMessage, search, parameters) {
             return 1;
     });
 
+    var limit = 10;
+    var p = parseInt(parameters[0]);
+    if (!Number.isNaN(p))
+        limit = p;
+
     var text = "";
-    var count = Math.min(10, sorted.length);
+    var count = Math.min(limit, sorted.length);
     for (let index = 0; index < count; index++) {
         const unit = sorted[index];
         
-        text += `**${unit.name}:** ${unit.damage}\n`;
+        if (check)
+            text += `**${unit.name}:** ${unit.damage}\n`;
+        else 
+            text += `**${unit.name} (${unit.type}):** ${unit.damage}\n`;
     }
 
     var embed = <any>{

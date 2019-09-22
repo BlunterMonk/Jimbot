@@ -2468,6 +2468,16 @@
 			""
 		]
 	},
+	"A.I. Katy (pending)": {
+		"name": "A.I. Katy (pending)",
+		"damage": "11,947,181,844",
+		"turns": "10",
+		"type": "hybrid",
+		"url": null,
+		"jp": false,
+		"burst": "13,723,000,821",
+		"burstTurn": "2"
+	},
 	"Malphasie": {
 		"name": "Malphasie",
 		"damage": "11,832,128,784",
@@ -2600,34 +2610,6 @@
 			"Dystopic Thunder + Cosmic Creation x 2",
 			"Cosmic Creaction x 3",
 			"Cosmic Creaction x 3",
-			"",
-			"",
-			"",
-			""
-		]
-	},
-	"Nagi (spark chain)": {
-		"name": "Nagi (spark chain)",
-		"damage": "",
-		"turns": "5",
-		"type": "hybrid",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#36d612d0-7929-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "2",
-		"wiki": "https://exvius.gamepedia.com/Nagi",
-		"rotation": [
-			"Clad in Power",
-			"Projection - Dance of Darkness",
-			"Projection - Dance of Darkness",
-			"Projection - Dance of Darkness",
-			"Projection - Dance of Darkness",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
 			"",
 			"",
 			"",

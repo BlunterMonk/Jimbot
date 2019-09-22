@@ -3140,6 +3140,35 @@
 			""
 		]
 	},
+	"A.I. Katy (pending)": {
+		"name": "A.I. Katy (pending)",
+		"damage": "7,793,181,087",
+		"turns": "10",
+		"type": "hybrid",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#89100ba0-db44-11e9-a314-1b650a2e0160",
+		"jp": false,
+		"burst": "8,461,773,797",
+		"burstTurn": "2",
+		"wiki": "https://exvius.gamepedia.com/A.I._Katy",
+		"rotation": [
+			"Directive - System Update (CD) + Directive - Crossed Wires+ x 2",
+			"Directive - Crossed Wires+ x 3",
+			"Directive - Crossed Wires+ x 3",
+			"Directive - Crossed Wires+ x 3",
+			"Directive - Crossed Wires+ x 3",
+			"Directive - Crossed Wires+ x 3",
+			"Directive - Crossed Wires+ x 3",
+			"Directive - Crossed Wires+ x 3",
+			"Directive - Crossed Wires+ x 3",
+			"Directive - Crossed Wires+ x 3",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Nagi (spark chain)": {
 		"name": "Nagi (spark chain)",
 		"damage": "3,344,399,138",
