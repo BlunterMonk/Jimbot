@@ -718,7 +718,7 @@ export async function build(receivedMessage, url, calculation, force = false): P
     return new Promise<string>((resolve, reject) => {
 
         Build.requestBuildData(url, (id, region, data) => {
-            log(data);
+            // log(data);
             var d = JSON.parse(data);
             if (!d || !d.units[0]) {
                 log("Could not parse build data");
