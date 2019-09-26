@@ -63,6 +63,25 @@ String.prototype.toTitleCase = function (splitter) {
         .join(splitter);
         */
 }
+    
+String.prototype.capitalizeWords = function (splitter) {
+    if (!splitter) {
+        splitter = " ";
+    }
+    return this.split(splitter).map(function(word) {
+        if (word.length > 3 || (word.charAt(0) != "o" && word.charAt(0) != "f" && word.charAt(0) != "t"))
+            return (word.charAt(0).toUpperCase() + word.slice(1));
+        else 
+            return word;
+    }).join(splitter);
+    /*
+    return this
+        .toLowerCase()
+        .split(splitter)
+        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(splitter);
+        */
+}
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, "g"), replacement);
