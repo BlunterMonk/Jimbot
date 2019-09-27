@@ -937,8 +937,16 @@ function downloadImages(slots, items, unitId, callback) {
     console.log(`Image Path: ${path}`);
     if (fs.existsSync(path))
         foundUnit(path);
-    else 
-        queryEnd(null, null, null);
+    else {
+        let source = `https://ffbeequip.com/img/units/${filename}`;
+        Download.downloadFile(path, source).then((p) =>{
+            console.log(`Image Donloaded: ${source}`);
+            foundUnit(p);
+        }).catch((e) => {
+            console.log(`Image Failed to Donload: ${source}`);
+            queryEnd(null, null, null);
+        });
+    }
     /*
         var resizeIcon = function(p2) {
             Canvas.loadImage(p2).then((image) => {
@@ -1016,7 +1024,7 @@ function downloadImages(slots, items, unitId, callback) {
         if (fs.existsSync(path)) {
             queryEnd(slot.slot, item.id, image);
         } else {
-            Download.downloadFile(path, imagePath, (p) =>{
+            Download.downloadFile(path, imagePath).then((p) =>{
             // console.log(`Image Donloaded: ${id}`);
                 queryEnd(slot.slot, item.id, image);
             });

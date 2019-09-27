@@ -126,7 +126,11 @@
 		"firelord": "veritas of the flame",
 		"god": "ignacio",
 		"mustache": "wilhelm",
-		"kydia": "pure summoner rydia"
+		"kydia": "pure summoner rydia",
+		"ai_katy": "a.i. katy",
+		"365_katy": "a.i. katy",
+		"sephiroth_kh": "sephiroth (KH)",
+		"vicktor_pachinko": "viktor marchenko"
 	},
 	"filetypes": [
 		".jpg",
@@ -167,6 +171,10 @@
 			"parameters": [
 				"win"
 			]
+		},
+		"resources": {
+			"command": "?whatis",
+			"search": "resources"
 		},
 		"festunits": {
 			"command": "?whatis",

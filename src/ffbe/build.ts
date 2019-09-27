@@ -93,6 +93,7 @@ interface Unit {
     stats_pattern: number;
     equip: string[];
     enhancementSkills: string[];
+    enhancements: any[];
     skills: any[];
 }
 interface BuildItem {
@@ -194,6 +195,9 @@ class Build {
         } else {
             this.loadedUnit = lu;
         }
+
+        if (!this.loadedUnit)
+            return null;
 
         // log("this.loadedUnit");
         // log(this.loadedUnit);
@@ -515,26 +519,26 @@ class Build {
 
 function isApplicable(item, unit: Unit) {
     if (item.exclusiveSex && item.exclusiveSex != unit.sex) {
-        log(`Item fails gender exlusivity`);
+        //log(`Item fails gender exlusivity`);
         return false;
     }
     if (item.exclusiveUnits && !item.exclusiveUnits.includes(unit.id)) {
-        log(`Item fails Unit exclusivity: `);
-        log(item.exclusiveUnits);
+        //log(`Item fails Unit exclusivity: `);
+        //log(item.exclusiveUnits);
         return false;
     }
     return true;
 }
 function areConditionOK(item, B: Build, level = 0) {
     if (level && item.levelCondition && item.levelCondition > level) {
-        log(`Item fails to meet level condition`);
+        //log(`Item fails to meet level condition`);
         return false;
     }
     if (item.equipedConditions) {
         for (var conditionIndex = item.equipedConditions.length; conditionIndex--;) {
             if (!isEquipedConditionOK(B, item.equipedConditions[conditionIndex])) {
-                log(`Item fails to meet equipment conditions`);
-                logData(item.equipedConditions[conditionIndex]);
+                //log(`Item fails to meet equipment conditions`);
+                //logData(item.equipedConditions[conditionIndex]);
                 return false;
             }
         }
@@ -543,25 +547,34 @@ function areConditionOK(item, B: Build, level = 0) {
 }
 function isEquipedConditionOK(B: Build, condition) {
     var equiped = B.equipment;
+    //log("isEuipedConditionOk: Condition");
+    //log(condition);
 
     if (Array.isArray(condition)) {
         return condition.some(c => isEquipedConditionOK(B, c));
     } else {
         if (elementList.includes(condition)) {
+            //log("Checking Equipment Element Condition");
             if ((equiped[0] && equiped[0].element && equiped[0].element.includes(condition)) || (equiped[1] && equiped[1].element && equiped[1].element.includes(condition))) {
                 return true;
             }
         } else if (B.equipedConditions.includes(condition)) {
+            //log("Checking Equipment Condition");
             for (var equipedIndex = 0; equipedIndex < 10; equipedIndex++) {
                 if (equiped[equipedIndex] && equiped[equipedIndex].type == condition) {
+                    //log("Passed Equipment Condition");
                     return true;
                 }
             }
         } else if (condition == "unarmed") {
+            //log("Checking Unarmed Condition")
             if (!equiped[0] && ! equiped[1]) {
+                //log("Passed Unarmed Condition");
                 return true;
             }
         } else {
+            //log("Checking Remaining Conditions");
+            //logDataArray(equiped);
             for (var equipedIndex = 0; equipedIndex < 10; equipedIndex++) {
                 if (equiped[equipedIndex] && equiped[equipedIndex].id == condition) {
                     return true;
@@ -598,19 +611,38 @@ function getTotalBonuses(passives: any, equipmentTotal: any, esper: any) {
 // calculate the units max stats with the provided pots
 function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: any, esper: any, build: Build): any {
 
-    debug("getUnitMaxStats:");
-    debug("pots");
-    debug(pots);
-    debug("equipmentTotal");
-    debug(equipmentTotal);
-    debug("passives");
-    debug(passives);
-    if (esper) {
-        debug("esper");
-        debug(esper);
-    }
+    // debug("getUnitMaxStats:");
+    // debug("pots");
+    // debug(pots);
+    // debug("equipmentTotal");
+    // debug(equipmentTotal);
+    // debug("passives");
+    // debug(passives);
+    // if (esper) {
+    //     debug("esper");
+    //     debug(esper);
+    // }
 
     var bonus = getTotalBonuses(passives, equipmentTotal, esper);
+
+    if (esper && esper.conditional) {
+        esper.conditional.forEach((condition, i) => {
+            if (condition.equipedCondition) {
+                let equips = build.getEquipment();
+                equips.forEach((e, j) => {
+                    if (e.type == condition.equipedCondition) {
+                        let keys = Object.keys(condition);
+                        keys.forEach((k, ki) => {
+                            if (!bonus[k]) 
+                                bonus[k] = condition[k];
+                            else
+                                bonus[k] = parseInt(bonus[k]) + parseInt(condition[k]);
+                        });
+                    }
+                });
+            }
+        });
+    }
 
     // log("total bonuses");
     // log(bonus);
@@ -635,11 +667,11 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
         }
         
         let base = max + pot;
-        trace(`${k}: max_stats + pot = base`);
-        trace(`${k}: ${max} + ${pot} = ${base}`);
+        //trace(`${k}: max_stats + pot = base`);
+        //trace(`${k}: ${max} + ${pot} = ${base}`);
         let b1 = base + eq + ((percent / 100) * base);
-        trace(`${k}: base + eq + (percent * base)`);
-        trace(`${k}: ${base} + ${eq} + (${percent / 100} * ${base}) = ${b1}`);
+        //trace(`${k}: base + eq + (percent * base)`);
+        //trace(`${k}: ${base} + ${eq} + (${percent / 100} * ${base}) = ${b1}`);
         total[k] = b1;
     });
 
@@ -665,11 +697,11 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
             }
 
             var t = (equipmentTotal[k] * (b / 100));
-            trace(`${k}: (equipmentTotal} * (b / 100) = t`);
-            trace(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
+            //trace(`${k}: (equipmentTotal} * (b / 100) = t`);
+            //trace(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
             let t1 = total[k] + t;
-            trace(`${k}: total_${k} + t`);
-            trace(`${k}: ${total[k]} + ${t} = ${t1}`);
+            //trace(`${k}: total_${k} + t`);
+            //trace(`${k}: ${total[k]} + ${t} = ${t1}`);
             total[k] = t1;
          });
     } else if (bonus.singleWielding && build.isDoublehanding()) {
@@ -691,11 +723,11 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
             }
 
             var t = (equipmentTotal[k] * (b / 100));
-            trace(`${k}: (equipmentTotal} * (b / 100) = t`);
-            trace(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
+            //trace(`${k}: (equipmentTotal} * (b / 100) = t`);
+            //trace(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
             let t1 = total[k] + t;
-            trace(`${k}: total_${k} + t`);
-            trace(`${k}: ${total[k]} + ${t} = ${t1}`);
+            //trace(`${k}: total_${k} + t`);
+            //trace(`${k}: ${total[k]} + ${t} = ${t1}`);
             total[k] = t1;
         });
     }
@@ -708,18 +740,20 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
         keys.forEach((k, i) => {
             
             var e = Math.round(esper[k] / 100);
-            trace(`${k}: esper_${k} / 100 = e`);
+            //trace(`${k}: esper_${k} / 100 = e`);
             var b = 0;
             if (bonus.esperStatsBonus && bonus.esperStatsBonus[k]) {
                 b = e * (bonus.esperStatsBonus[k] / 100);
-                trace(`${k}: e * esper_stats_bonus_${k}% = b`);
+                //trace(`${k}: e * esper_stats_bonus_${k}% = b`);
             }
             
             let e0 = total[k] + e + b;
-            trace(`${k}: total_${k} + e + b`);
-            trace(`${k}: ${total[k]} + ${e} + ${b} = ${e0}`);
+            //trace(`${k}: total_${k} + e + b`);
+            //trace(`${k}: ${total[k]} + ${e} + ${b} = ${e0}`);
             total[k] = e0;
         });
+
+        
     }
 
     // Round all the stats to the right value
@@ -744,18 +778,45 @@ function getUnitPassiveStats(B: Build, unit: Unit): any {
 
     var passives = [];
     unit.skills.forEach((skill, i) => {
+        //log("\nTesting Passive");
+        //logData(skill);
+
         if (skill.equipedConditions && !isEquipedConditionOK(B, skill.equipedConditions)) {
+            //log("Passive Skill Not Activated");
             return;
         }
         passives.push(skill);
+        //log("Passive Passed\n");
     });
-
-    // log("passives");
-    // log(passives);
 
     passives.forEach((p, i) => {
         stats = addToTotal(stats, p);
     });
+
+    if (unit.enhancements) {
+
+        unit.enhancements.forEach(element => {
+            //og("\nTesting Enhancement");
+            //logData(element);
+            if (element.levels && element.levels[2]) {
+                let enh = element.levels[2];
+                //logData(enh);
+
+                if (enh.equipedConditions && !isEquipedConditionOK(B, enh.equipedConditions)) {
+                    //log("Passive Enhancement Not Activated");
+                    return;
+                }
+
+                enh.forEach(e => {
+                    stats = addToTotal(stats, e);
+                });
+                //log("Enhancement Passed\n");
+            }
+        });
+    }
+
+    // log("passives");
+    // log(passives);
 
     return stats;
 }
@@ -1196,8 +1257,8 @@ function applyEnchantments(item, enchantments) {
                 enhancementValue = Constants.itemEnhancementAbilities[enhancement];
             }
 
-            // log("Adding Enchantment");
-            // log(enhancementValue);
+            log("Adding Enchantment");
+            log(enhancementValue);
             if (enhancementValue) {
                 result = combineTwoItems(result, enhancementValue);
             }
@@ -1339,12 +1400,18 @@ export function requestBuildData(buildURL: string, callback) {
 export function getBuildText(id: string, region: string, buildData) {
 
     var build = CreateBuild(id, region, buildData);
+    if (!build)
+        return null;
+
     var text = build.getText();
     return text;
 }
 export function CreateBuild(id: string, region: string, buildData): Build {
 
     var build = new Build(id, region, buildData);
+    if (!build)
+        return null;
+
     log("Create Build");
     log(buildData);
 
@@ -1353,7 +1420,7 @@ export function CreateBuild(id: string, region: string, buildData): Build {
         
         // If only one item is found, equip it right away, otherwise wait for validation
         var itemInfo = Builder.getItems(region, element.id);
-        var best = findBestItemVersion(build, element.slot, itemInfo);
+        var best = findBestItemVersion(build, ind, itemInfo);
         if (best == null)
             return;
         // log("Best Item Found");

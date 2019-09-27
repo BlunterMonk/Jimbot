@@ -181,13 +181,6 @@
 		"type": "physical",
 		"url": null
 	},
-	"Sora": {
-		"name": "Sora",
-		"damage": "2,502,721,029 ",
-		"turns": "11",
-		"type": "physical",
-		"url": null
-	},
 	"2B": {
 		"name": "2B",
 		"damage": "2,428,138,920 ",
@@ -226,13 +219,6 @@
 	"Lenneth": {
 		"name": "Lenneth",
 		"damage": "1,852,035,162 ",
-		"turns": "5",
-		"type": "physical",
-		"url": null
-	},
-	"Cloud (KH) (Killer Bow)": {
-		"name": "Cloud (KH) (Killer Bow)",
-		"damage": "1,780,666,698 ",
 		"turns": "5",
 		"type": "physical",
 		"url": null
@@ -505,7 +491,7 @@
 	},
 	"Sol": {
 		"name": "Sol",
-		"damage": "8,827,237,465 ",
+		"damage": "9,379,912,856 ",
 		"turns": "11",
 		"type": "magic",
 		"url": null

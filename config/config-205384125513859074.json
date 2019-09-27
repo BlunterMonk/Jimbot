@@ -16,7 +16,8 @@
 		"addshortcut",
 		"emote",
 		"addresponse",
-		"response"
+		"response",
+		"autobuild"
 	],
 	"editors": [
 		"159846139124908032",
