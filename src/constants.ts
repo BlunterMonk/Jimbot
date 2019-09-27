@@ -40,6 +40,7 @@ export const weaponList = ["dagger", "sword", "greatSword", "katana", "staff", "
 export const shieldList = ["lightShield", "heavyShield"];
 export const headList = ["hat", "helm"];
 export const bodyList = ["clothes", "robe", "lightArmor", "heavyArmor"];
+export const babyWord = ["of", "the", "and"];
 
 export const itemEnhancementAbilities = {
     "rare_3":{

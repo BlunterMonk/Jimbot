@@ -296,7 +296,85 @@ function queryPage(id, paramName, callback) {
         });
     });
 }
-function getPageID(search, categories, callback) {
+
+function getValidPage(search, callback) {
+
+    search = search.replaceAll("_"," ");
+    constants.babyWord.forEach(b => {
+        search.replaceAll(b, "");
+    });
+
+    log(`Searching Wiki For: ${search}`);
+
+    var similar = [];
+    wikiClient.getAllPages(function (err, redirect, content) {
+        if (err) {
+            log(err);
+            return;
+        }
+
+        var id = null;
+        var name = search;
+        for (var i = 0; i < redirect.length; i++) {
+            if (!callback) {
+                return;
+            }
+
+            var page = redirect[i];
+
+            var title = page.title.toLowerCase();
+            search = search.toLowerCase();
+
+            var match = title.similarity(search);
+            var split = search.split(" ");
+            split.forEach(s => {
+                if (title.includes(s)) {
+                    match += 0.25;
+                }
+            });
+
+            if (match >= constants.similarityTreshold) {
+                // log(`Very Similar ${title} -vs- ${search} (${match})`)
+                similar[similar.length] = {
+                    id: page.pageid,
+                    title: page.title,
+                    similarity: match
+                };
+            } // else if (match >= constants.similarityTreshold * 0.5) {
+            //     log(`Kinda Similar ${title} -vs- ${search} (${match})`)
+            // }
+
+            title = title.replaceAll(" ", "_");
+            if (title === search) {
+                id = page.pageid;
+                name = page.title;
+                callback(id, name);
+                return;
+            }
+        }
+
+        if (callback && similar.length > 0) {
+            var sorted = similar.sort((a, b) => {
+                return b.similarity - a.similarity;
+            });
+            // log(sorted);
+
+            var highest = sorted[0];
+
+            // log("Highest");
+            // log(highest);
+
+            id = highest.id;
+            name = highest.title;
+
+            var other = convertValueToLink(name);
+
+            callback(id, name, other);
+        }
+    });
+}
+
+function getPageIDWithCategory(search, categories, callback) {
     var count = categories.length;
     var similar = [];
     var queryEnd = function (id, name) {
@@ -308,10 +386,13 @@ function getPageID(search, categories, callback) {
             count = 0;
         } else if (!id && count <= 0) {
             if (callback && similar.length > 0) {
-                var highest = similar.sort((a, b) => {
-                    return b.similarity - a.similarity;
-                })[0];
 
+                var sorted = similar.sort((a, b) => {
+                    return b.similarity - a.similarity;
+                });
+                log(sorted);
+
+                var highest = sorted[0];
                 log("Highest");
                 log(highest);
 
@@ -731,7 +812,7 @@ class ffbe {
         this.queryWikiPage(search, parameters, abilityCategories, callback);
     }
     queryWikiPage(search, params, categories, callback) {
-        getPageID(search, categories, function (id, pageName, other) {
+        getPageIDWithCategory(search, categories, function (id, pageName, other) {
             wikiClient.getArticle(id, function (err, content, redirect) {
                 if (err) {
                     log(err);
@@ -780,6 +861,20 @@ class ffbe {
             fields[0].value = convertTitlesToLinks(batch);
 
             callback(fields);
+        });
+    }    
+    queryWikiForPage(search, callback) {
+        getValidPage(search, function (id, pageName, other) {
+            wikiClient.search(search, (err, results) => {
+                if (err) {
+                    log(err);
+                    return;
+                }
+
+                log(`getPageID: ${id}, ${pageName}`);
+                log(other);
+                callback(other);
+            });
         });
     }
     queryWikiFrontPage(callback) {

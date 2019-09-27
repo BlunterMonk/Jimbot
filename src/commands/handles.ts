@@ -186,6 +186,19 @@ function handleRecentunits(receivedMessage, search, parameters) {
         Client.sendMessage(receivedMessage, embed);
     })
 }
+function handleWiki(receivedMessage, search, parameters) {
+    log(`Searching For: ${search}...`);
+
+    FFBE.queryWikiForPage(search, function (batch) {
+
+        var embed = {
+            color: pinkHexCode,
+            description: batch
+        };
+
+        Client.sendMessage(receivedMessage, embed);
+    });
+}
 
 function handleRank(receivedMessage, search, parameters) {
     log("\nSearching Rankings for: " + search);
