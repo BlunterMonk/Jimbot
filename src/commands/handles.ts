@@ -5,14 +5,13 @@
 //////////////////////////////////////////
 
 import * as Discord from "discord.js";
-import * as request from "request";
 import * as fs from "fs";
 import * as fsextra from "fs-extra";
-import * as cheerio from "cheerio";
 import * as https from "https";
 import * as http from "http";
+import {spawn} from "cross-spawn"; 
 
-import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
+import { log, logData, escapeString } from "../global.js";
 import "../string/string-extension.js";
 import { Client } from "../discord.js";
 import {unitSearch, unitSearchWithParameters} from "../ffbe/unit.js";
@@ -22,12 +21,8 @@ import {Cache, cache} from "../cache/cache.js";
 import * as Build from "../ffbe/build.js";
 import * as BuildImage from "../ffbe/buildimage.js";
 import {Builder} from "../ffbe/builder.js";
-import * as constants from "../constants.js";
 import * as Commands from "./commands.js";
-import { resolve } from "dns";
-import { rejects } from "assert";
 
-var mainChannelID;
 const pinkHexCode = 0xffd1dc;
 const linkFilter = [
     /\|Trial/,
@@ -1193,7 +1188,7 @@ function handleForceupdate(receivedMessage, search, parameters) {
 function handleReload(receivedMessage, search, parameters) {
 
     var id = receivedMessage.author.id;
-    if (id != renaulteUserID && id != jimooriUserID && id != furculaUserID) {
+    if (id != jimooriUserID) {
         return;
     }
 
@@ -1212,8 +1207,65 @@ function handleReload(receivedMessage, search, parameters) {
     log("Finished Reloading");
     respondSuccess(receivedMessage, true);
 }
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
+function handleRecache(receivedMessage, search, parameters) {
+    var id = receivedMessage.author.id;
+    if (id != jimooriUserID) {
+        return;
+    }
+
+    var child = null;
+    if (!fs.existsSync(".\\cache.bat"))
+        child = spawn("sh", ["./cache.sh"]);
+    else 
+        child = spawn(".\\cache.bat");
+    
+    // since these are streams, you can pipe them elsewhere
+    // child.stdout.setEncoding('utf8');
+    child.stderr.pipe(process.stdout);
+
+    // Handle Errors
+    child.on('error', (chunk) => {
+        let output = chunk.toString()
+        console.log(`child process error ${output}`);
+
+        Client.send(receivedMessage, "recache failed\n" + chunk)
+    });
+
+    // Finish 
+    child.on('close', (code) => {
+        console.log(`child process exited with code ${code}`);
+        Client.send(receivedMessage, "recache complete")
+    });
+
+    // Respond to data stream
+    child.stdout.on('data', (chunk) => {
+        let output = chunk.toString()
+        if (output.empty())
+            return;
+
+        console.log(`${output}`);
+
+        Client.sendMessage(receivedMessage, {
+            title: "Recache Progress",
+            color: pinkHexCode,
+            description: output
+        })
+    });
+}
+function handleClear(receivedMessage, search, parameters) {
+    var id = receivedMessage.author.id;
+    if (id != jimooriUserID) {
+        return;
+    }
+
+    if (parameters[0] == "all") {
+        fsextra.emptyDirSync(`./tempbuilds}`);
+        fsextra.emptyDirSync(`./tempdata}`);
+        fsextra.emptyDirSync(`./tempgifs}`);
+    } else {
+        if (fs.existsSync(`./${parameters[0]}`))
+            fsextra.emptyDirSync(`./${parameters[0]}`);
+    }
 }
 
 // UNIT DATAMINE INFORMATION
@@ -1246,6 +1298,9 @@ function handleKit(receivedMessage, search, parameters, active) {
         return;
     }
 
+    if (parameters.length == 0)
+        parameters[0] = "_";
+        
     var unit = unitSearchWithParameters(id, active, parameters);
     if (!unit) return;
 
@@ -1396,6 +1451,9 @@ function respondFailure(receivedMessage, toUser = false) {
 /////////////////////////////////////////////////
 // PARSING HELPERS
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
 function isLetter(str) {
     return str.length === 1 && str.match(/[a-z]/i);
 }

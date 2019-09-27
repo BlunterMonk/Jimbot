@@ -1,13 +1,18 @@
 const fs = require("fs");
 
-var data = fs.readFileSync(`../ffbe/skills.json`);
-var SkillList = JSON.parse(data.toString());
+var passives = JSON.parse(fs.readFileSync(`../ffbe/skills_passive.json`).toString());
+var abilities = JSON.parse(fs.readFileSync(`../ffbe/skills_ability.json`).toString());
+var magic = JSON.parse(fs.readFileSync(`../ffbe/skills_magic.json`).toString());
+var SkillList = Object.assign({}, passives, abilities, magic);
+passives = null;
+abilities = null;
+magic = null;
+
 var lbs = fs.readFileSync(`../ffbe/limitbursts.json`);
 var LimitBursts = JSON.parse(lbs.toString());
 
 cacheSkills();
 cacheLimitBursts();
-
 
 function cacheSkills() {
     var keys = Object.keys(SkillList);

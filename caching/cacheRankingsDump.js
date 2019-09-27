@@ -58,7 +58,7 @@ function loadRankingsList(callback) {
                     headings.push(head);
                 });
 
-            log(headings);
+            // log(headings);
 
             table.each((tableIndex, element) => {
                 $(element)
@@ -138,14 +138,14 @@ function loadRankingsList(callback) {
                                 log("Could not get notes for: " + escpaedName);
                             }
 
-                            log(row)
+                            // log(row)
                             unitName = unitName.toLowerCase().replaceAll(" ", "_");
                             results[unitName] = row;
                         }
                     });
             });
 
-            log(`Total Rankings: ${results.length}`);
+            // log(`Total Rankings: ${results.length}`);
             // log(results)
             var j = JSON.stringify(results);
             //log(j);

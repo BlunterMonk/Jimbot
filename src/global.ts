@@ -28,6 +28,8 @@ export function logDataArray(data: any[]) {
     log(`]`);
 }
 export function checkString(text: string, keyword: RegExp): boolean {
+    // log(`${keyword}.test(${text.replace(/\s*/g,"")})`);
+    // log(`${keyword.test(text.replace(/\s*/g,""))}`);
     return keyword.test(text.replace(/\s*/g,""));
 }
 export function compareStrings(text: string, search: string): boolean {

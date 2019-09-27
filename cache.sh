@@ -6,11 +6,10 @@ cd ../ffbe-jp/
 git pull
 cd ../Jimbot
 
-nodejs caching/cacheUnitsList.js
-#:node caching/cacheDamage.js
-nodejs caching/cacheRankingsDump.js
-nodejs caching/cacheEvents.js
-nodejs caching/cacheUnitSkills.js
-nodejs caching/cullSkills.js
+node caching/cacheUnitsList.js
+node caching/cacheRankingsDump.js
+node caching/cacheEvents.js
+node caching/cacheUnitSkills.js
+node caching/cullSkills.js
 
 echo 'update complete'

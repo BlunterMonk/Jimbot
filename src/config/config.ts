@@ -26,6 +26,7 @@ export class Config {
     }
     
     reload() {
+        console.log("Reloading Configuration");
         var data = fs.readFileSync(filename);
         this.configuration = JSON.parse(data);
     }
