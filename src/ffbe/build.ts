@@ -793,24 +793,27 @@ function getUnitPassiveStats(B: Build, unit: Unit): any {
         stats = addToTotal(stats, p);
     });
 
-    unit.enhancements.forEach(element => {
-        //og("\nTesting Enhancement");
-        //logData(element);
-        if (element.levels && element.levels[2]) {
-            let enh = element.levels[2];
-            //logData(enh);
+    if (unit.enhancements) {
 
-            if (enh.equipedConditions && !isEquipedConditionOK(B, enh.equipedConditions)) {
-                //log("Passive Enhancement Not Activated");
-                return;
+        unit.enhancements.forEach(element => {
+            //og("\nTesting Enhancement");
+            //logData(element);
+            if (element.levels && element.levels[2]) {
+                let enh = element.levels[2];
+                //logData(enh);
+
+                if (enh.equipedConditions && !isEquipedConditionOK(B, enh.equipedConditions)) {
+                    //log("Passive Enhancement Not Activated");
+                    return;
+                }
+
+                enh.forEach(e => {
+                    stats = addToTotal(stats, e);
+                });
+                //log("Enhancement Passed\n");
             }
-
-            enh.forEach(e => {
-                stats = addToTotal(stats, e);
-            });
-            //log("Enhancement Passed\n");
-        }
-    });
+        });
+    }
 
     // log("passives");
     // log(passives);

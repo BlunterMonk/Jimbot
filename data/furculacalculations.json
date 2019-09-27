@@ -195,6 +195,35 @@
 			""
 		]
 	},
+	"Eleven (pending)": {
+		"name": "Eleven (pending)",
+		"damage": "11,665,557,220",
+		"turns": "12",
+		"type": "physical",
+		"url": "",
+		"jp": false,
+		"burst": "18,121,000,959",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Eleven",
+		"rotation": [
+			"The Luminary Awakens (CD) + Falcon Slash x 2",
+			"Gigaslash (CD) + Falcon Slash x 2",
+			"Quadraslash x 3",
+			"Flamesplitter (CD) + Falcon Slash x 2",
+			"Quadraslash x 2",
+			"Blade of Ultimate Power (LB)",
+			"The Luminary Awakens (CD) + Gigagash (CD) + Gigaslash (CD)",
+			"Quadraslash x 3",
+			"Flamesplitter (CD) + Falcon Slash x 2",
+			"Quadraslash x 3",
+			"Blade of Ultimate Power (LB)",
+			"Falcon Slash x 3",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Sora": {
 		"name": "Sora",
 		"damage": "11,604,668,511",
@@ -1989,6 +2018,62 @@
 			"Phosphorescence - Ice x 3",
 			"",
 			"",
+			""
+		]
+	},
+	"Veronica (spark chain, pending)": {
+		"name": "Veronica (spark chain, pending)",
+		"damage": "12,728,099,086",
+		"turns": "18",
+		"type": "magic",
+		"jp": false,
+		"burst": "22,205,557,465",
+		"burstTurn": "6",
+		"wiki": "https://exvius.gamepedia.com/Veronica",
+		"rotation": [
+			"Echo Aura (CD) + Kaboomle",
+			"Kaboomle x 3",
+			"Kaboomle x 3",
+			"Ring of Wrack and Ruin (CD) + Kaboomle",
+			"Mighty Magic Burst (LB)",
+			"Magic Burst x 3",
+			"Echo Aura (CD) + Magic Burst",
+			"Magic Burst x 3",
+			"Magic Burst x 3",
+			"Magic Burst x 3",
+			"Ring of Wrack and Ruin (CD) + Magic Burst x 2",
+			"Mighty Magic Burst (LB)",
+			"Echo Aura (CD) + Magic Burst x 2",
+			"Magic Burst x 3",
+			"Magic Burst x 3",
+			"Magic Burst x 3"
+		]
+	},
+	"Mordegon (pending)": {
+		"name": "Mordegon (pending)",
+		"damage": "11,524,985,528",
+		"turns": "15",
+		"type": "magic",
+		"jp": false,
+		"burst": "17,117,718,592",
+		"burstTurn": "15",
+		"wiki": "https://exvius.gamepedia.com/Mordegon",
+		"rotation": [
+			"Uncanny Strength + Winter's Might (CD) + Cold Cloud",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Winter's Might (CD) + Freeze Out x 2",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Winter's Might (CD) + Freeze Out x 2",
+			"Uncanny Strength + Freeze Out x 2",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
 			""
 		]
 	},

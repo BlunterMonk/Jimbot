@@ -2470,8 +2470,8 @@
 	},
 	"A.I. Katy (pending)": {
 		"name": "A.I. Katy (pending)",
-		"damage": "11,947,181,844",
-		"turns": "10",
+		"damage": "hell",
+		"turns": "no",
 		"type": "hybrid",
 		"url": null,
 		"jp": false,

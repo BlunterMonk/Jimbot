@@ -72,6 +72,8 @@ function handleUnit(receivedMessage, search, parameters) {
 
     search = search.toTitleCase("_");
     search = search.capitalizeWords(".");
+    if (search.includes("(kh)"))
+        search = search.replace("(kh)", "(KH)");
 
     log("Searching Units For: " + search);
 
@@ -1444,9 +1446,9 @@ function handleGrab(receivedMessage, search, parameters) {
                     links.forEach((link, i) => {
                         var ext = link.substring(link.lastIndexOf("."), link.length).toLowerCase();
                         var name = `aya${i}${ext}`;
-                        downloadFile(path + name, link, (p) => {
+                        downloadFile(path + name, link).then(p => {
                             console.log(`Downloaded ${p}`);
-                        })
+                        }).catch(console.error);
                     });
                 })
                 .catch(console.error);

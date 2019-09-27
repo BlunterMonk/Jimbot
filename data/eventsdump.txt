@@ -18,6 +18,91 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20190926
+|type  = Issue
+|title = Version 3.8.0
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190926GL380PatchNotes.html
+}}
+{{Recent News
+|date  = 20190926
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190926GL380VersionUpdateIssueReport.html
+}}
+{{Recent News
+|date  = 20190926
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190926PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20190924
+|type  = Event
+|title = Vs. Malicious Monsters
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190924DQXISMaliciousMonsters.jpg
+}}
+{{Recent News
+|date  = 20190924
+|type  = Event
+|title = DRAGON QUEST XI S Event Dungeon DQ XI S Character Battle
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190924DQXISDailyCharacterBattle.html
+}}
+{{Recent News
+|date  = 20190924
+|type  = Unit
+|title = Featured Summon DRAGON QUEST XI S
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20190924DQXISMordegonGreatDragonSummon.jpg
+}}
+{{Recent News
+|date  = 20190924
+|type  = Event
+|title = Heartless: Behemoth
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/KHHeartlessBehemoth.jpg
+}}
+{{Recent News
+|date  = 20190924
+|type  = Other
+|title = Dragon Quest XI S: Echoes of an Elusive Age Collaboration
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190924UnitUpgradeDQ.html
+}}
+{{Recent News
+|date  = 20190924
+|type  = Other
+|title = Introducing the DQ XI S Special Unit Summoning Key (Silver) and DQ XI S Special Unit Summoning Key (Gold)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190924DQXISpecialLimitedKeyExchange.html
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20190924
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190926Maintenance.html
+}}
+{{Recent News
+|date  = 20190924
+|type  = Other
+|title = Exchange Shop (E/V/S)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190924DQXISSEVExchangeShop.html
+}}
+{{Recent News
+|date  = 20190924
+|type  = Story
+|title = The Story Continues!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/StoryArc210.jpg
+}}
+{{Recent News
+|date  = 20190923
+|type  = Issue
+|title = Issue Report (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190923iOS13IssueReportv2.html
+}}
+{{Recent News
+|date  = 20190920
+|type  = Other
+|title = Get Kingdom Hearts III now!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190920KH3Promo.html
+}}
+{{Recent News
 |date  = 20190919
 |type  = Maintenance
 |title = Post Maintenance Note
@@ -83,7 +168,6 @@
 |title = 40M Downloads Login Bonus: Round 2
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019091740MDownloadLoginBonusPart2.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20190917
 |type  = Other
@@ -112,7 +196,7 @@
 |date  = 20190917
 |type  = Other
 |title = FINAL FANTASY BRAVE EXVIUS x KINGDOM HEARTS Union χ
-|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190917FFBEKHUxCollaborationv2.html
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190917FFBEKHUxCollaboration.html
 }}
 {{Recent News
 |date  = 20190912
@@ -243,7 +327,7 @@
 {{Recent News
 |date  = 20190828
 |type  = Other
-|title = Rainbow Free Weekly 10+1 Summon
+|title = 7% Rainbow Free Weekly 10+1 Summon
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190827PVC2019Part2Weekly7FreeSummon.html
 }}
 {{Recent News
