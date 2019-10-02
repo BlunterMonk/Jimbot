@@ -6,21 +6,14 @@
 
 
 import "discord.js";
-//import {Client} from "../discord.js";
+import * as Editor from"./Editor.js";
+import * as constants from "../../bin/constants.js";
+import { log } from "../global.js";
 
-//const Discord = require("discord.js");
-const Editor = require("./Editor.js");
-const constants = require("../../bin/constants.js");
+////////////////////////////////////////////////////////////
 
 var editors = {};
 
-
-function log(data) {
-    console.log(data);
-}
-function logData(data) {
-    console.log(JSON.stringify(data));
-}
 function indexToUnicode(index) {
     var ind = String(index);
     var number = "";
@@ -41,7 +34,7 @@ function newEditor(receivedMessage, file) {
         guildId = guildId(receivedMessage);
     } 
 
-    editors[userId] = new Editor(guildId, userId, `data/${file}.json`);
+    editors[userId] = new Editor.Editor(guildId, userId, `data/${file}.json`);
     var settings = editors[userId].getState();
     log("\nNew Editor");
     log(settings);

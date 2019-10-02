@@ -8,7 +8,8 @@
 const fs = require('fs');
 const readline = require('readline');
 import {google} from 'googleapis';
-import { rejects } from 'assert';
+
+////////////////////////////////////////////////////////////
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
@@ -68,7 +69,7 @@ function getNewToken(oAuth2Client, callback) {
         access_type: 'offline',
         scope: SCOPES,
     });
-    console.log('Authorize this app by visiting this url:', authUrl);
+    log('Authorize this app by visiting this url: ' + authUrl);
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
@@ -84,7 +85,7 @@ function getNewToken(oAuth2Client, callback) {
             fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
                 if (err) 
                     return console.error(err);
-                console.log('Token stored to', TOKEN_PATH);
+                log('Token stored to ' + TOKEN_PATH);
             });
             callback(oAuth2Client);
         });
@@ -105,14 +106,14 @@ function GetUnitComparison(auth, range, callback) {
     }, (err, res) => {
 
         if (err) {
-            console.log('The API returned an error: ' + err);
+            log('The API returned an error: ' + err);
             Reject(Error('The API returned an error: ' + err));
             return;
         }
 
         const rows = res.data.values;
         if (rows.length) {
-            //console.log('Name, DPT:');
+            //log('Name, DPT:');
 
             var phy = {};
             var mag = {};
@@ -124,7 +125,7 @@ function GetUnitComparison(auth, range, callback) {
                 var mName = row[4];
                 var hName = row[8];
                 var fName = row[12];
-                console.log(`Row: {\n\tPhysical { ${pName}: ${row[1]} - ${row[2]} }\n\tMagic { ${mName}: ${row[5]} - ${row[6]} }\n\tHybrid { ${hName}: ${row[9]} - ${row[10]} }\n\tFinisher { ${fName}: ${row[13]} - ${row[14]} }}`);
+                log(`Row: {\n\tPhysical { ${pName}: ${row[1]} - ${row[2]} }\n\tMagic { ${mName}: ${row[5]} - ${row[6]} }\n\tHybrid { ${hName}: ${row[9]} - ${row[10]} }\n\tFinisher { ${fName}: ${row[13]} - ${row[14]} }}`);
 
                 if (pName) {
                     phy[pName] = {
@@ -173,7 +174,7 @@ function GetUnitComparison(auth, range, callback) {
 
             callback(units);
         } else {
-            console.log('No data found.');
+            log('No data found.');
             callback(null);
         }
     });
@@ -186,7 +187,7 @@ export var UpdateMuspelCalculations = function(callback) {
         
         fs.readFile('credentials.json', (err, content) => {
             if (err) 
-                return console.log('Error loading client secret file:', err);
+                return log('Error loading client secret file: ' + err);
             // Authorize a client with credentials, then call the Google Sheets API.
             authorize(JSON.parse(content), GetUnitComparison, callback);
         });

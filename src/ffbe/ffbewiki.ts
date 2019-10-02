@@ -4,13 +4,13 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
-
 import "../util/string-extension.js";
 import * as constants from "../constants.js";
-
-const config = require("../config/config.js");
+import * as cheerio from "cheerio";
+import { log } from "../global.js";
 const wiki = require("nodemw");
-const cheerio = require("cheerio");
+
+////////////////////////////////////////////////////////////
 
 const wikiEndpoint = "https://exvius.gamepedia.com/";
 const wikiClient = new wiki({
@@ -75,14 +75,9 @@ const linkRegexp2 = /\(\[\[(.*Events)(?:\|.*)\]\]\)|\(.*(Trial).*\)|(\(.*Quest.*
 const unicodeStar = "★";
 const unicodeStarOpen = "✫";
 
-
-function log(data) {
-    console.log(data);
-}
 function isStat(name) {
     return statParameters.includes(name.toLowerCase().trim());
 }
-
 
 function convertValueToLink(value) {
     

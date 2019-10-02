@@ -4,12 +4,10 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
-import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
 import "../util/string-extension.js";
 import * as fs from "fs";
-import * as https from "https";
-import * as http from "http";
 import * as constants from "../constants.js";
+import { log, checkString } from "../global.js";
 
 ////////////////////////////////////////////////////////////
 

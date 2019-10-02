@@ -4,6 +4,10 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
+import { log } from "../global.js";
+
+////////////////////////////////////////////////////////////
+
 function editDistance(s1, s2) {
     s1 = s1.toLowerCase();
     s2 = s2.toLowerCase();
@@ -119,7 +123,7 @@ String.prototype.closestMatchIn = function (list: string[], threshold: number): 
 
         var txt = list[i].toLowerCase();
         var match = txt.similarity(search);
-        console.log(`Comparing: ${search} -vs- ${txt}, match: ${match}`);
+        log(`Comparing: ${search} -vs- ${txt}, match: ${match}`);
         if (match >= threshold) {
             similar[similar.length] = {
                 txt: list[i],
@@ -132,8 +136,8 @@ String.prototype.closestMatchIn = function (list: string[], threshold: number): 
         }
     }
 
-    console.log("Similar Matches");
-    console.log(similar);
+    log("Similar Matches");
+    log(similar);
     if (similar.length > 0) {
         var highest = similar.sort((a, b) => {
             return b.similarity - a.similarity;

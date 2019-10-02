@@ -11,3 +11,4 @@ ffbeequip-wip/
 node_modules/
 .DS_STORE
 icons/items/
+log/

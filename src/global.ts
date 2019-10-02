@@ -4,18 +4,26 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
+import {logger, jsonWithTimestamp } from "./util/logger.js";
 
-export function log(data: any) {
-    console.log(data);
+////////////////////////////////////////////////////////////
+
+export function log(...data: any[]) {
+    let text = "";
+    data.forEach((t,i) => {
+        if (i > 0) text += `, `
+        text += JSON.stringify(t);
+    });
+    logger.info(text);
+}
+export function logData(msg: string, data: any) {
+    logger.info(`${msg}, ${JSON.stringify(data)}`);
 }
 export function debug(data: any) {
-    console.log(data);
+    logger.debug(data);
 }
 export function trace(data: any) {
-    console.log(data);
-}
-export function logData(data: any) {
-    console.log(JSON.stringify(data));
+    logger.silly(data);
 }
 export function logDataArray(data: any[]) {
     if (data.length == 0) {

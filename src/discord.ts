@@ -4,20 +4,14 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
-import { log, logData, checkString, compareStrings, escapeString } from "./global.js";
 import * as Discord from "discord.js";
 import * as gs from "./config/guild.js";
-import {getCommandString, getSearchString} from "./commands/commands.js";
 import * as fs from "fs";
-import {config} from "./config/config.js";
+import { config } from "./config/config.js";
+import { getCommandString, getSearchString } from "./commands/commands.js";
+import { log } from "./global.js";
 
-/**
- *  Events
-    "guildCreate"
-    "guildDelete"
-    "ready"
-    "message"
- */
+////////////////////////////////////////////////////////////
 
 class client {
     discordClient: Discord.Client;
@@ -76,14 +70,14 @@ class client {
         const guildId = guild.id;
         
         this.guildSettings[guildId] = new gs.GuildSettings(name, guildId);
-        //console.log("Loaded Guild");
-        //console.log(this.guildSettings[guildId]);
+        //log("Loaded Guild");
+        //log(this.guildSettings[guildId]);
     }
     unloadGuild(guild: any) {
         const guildId = guild.id;
         if (this.guildSettings[guildId]) {
-            //console.log("Unloaded Guild");
-            //console.log(this.guilds[guildId]);
+            //log("Unloaded Guild");
+            //log(this.guilds[guildId]);
             delete this.guildSettings[guildId];
         }
     }
@@ -248,10 +242,10 @@ class client {
         /*
         if (content.includes("ffbeequip.com") && this.validate(receivedMessage, "autobuild")) {
             var URL = receivedMessage.content.match(/(https.*?(\s|$))/g)
-            console.log(URL);
+            log(URL);
             if (URL) {
                 var url = URL[0].trim();
-                console.log(url);
+                log(url);
 
                 this.onMessageCallback(receivedMessage, `build ${url}`);
             }
@@ -283,10 +277,10 @@ class client {
 
             if (content.includes("ffbeequip.com") && this.validate(receivedMessage, "autobuild")) {
                 var URL = receivedMessage.content.match(/(https.*?(\s|$))/g)
-                console.log(URL);
+                log(URL);
                 if (URL) {
                     var url = URL[0].trim();
-                    console.log(url);
+                    log(url);
 
                     this.onMessageCallback(receivedMessage, `build ${url}`);
                 }
@@ -414,13 +408,13 @@ class client {
         return this.guildSettings[guildId].getSettings(name);
     }
     validateCommand(guildId: string, userRole: string, command: string) {
-        //console.log(`Config Validate Command (${guildId})` + this.guilds[guildId]);
+        //log(`Config Validate Command (${guildId})` + this.guilds[guildId]);
         if (!this.guildSettings[guildId]) {
-            console.log("Unknown guild, allow");
+            log("Unknown guild, allow");
             return true;
         }
-        //console.log("Validate Command Guild: " + guildId);
-        //console.log(this.guilds[guildId]);
+        //log("Validate Command Guild: " + guildId);
+        //log(this.guilds[guildId]);
         return this.guildSettings[guildId].validateCommand(userRole, command);
     }
     validateEditor(guildId: string, userId: string) {

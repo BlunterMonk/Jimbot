@@ -5,8 +5,12 @@
 //////////////////////////////////////////
 
 
-const fs = require('fs');
 import "../util/string-extension.js";
+import * as fs from "fs";
+import { log } from "../global.js";
+
+////////////////////////////////////////////////////////////
+
 const filename = './data/profiles.json';
 
 export class Profile {
@@ -16,16 +20,14 @@ export class Profile {
     }
 
     init() {
-        var data = fs.readFileSync(filename);
-        this.configuration = JSON.parse(data);
+        this.configuration = JSON.parse(fs.readFileSync(filename).toString());
     }
     save() {
         var newData = JSON.stringify(this.configuration, null, "\t");
         fs.writeFileSync(filename, newData);
     }
     reload() {
-        var data = fs.readFileSync(filename);
-        this.configuration = JSON.parse(data);
+        this.configuration = JSON.parse(fs.readFileSync(filename).toString());
     }
 
     // ALIASES

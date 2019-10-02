@@ -5,11 +5,12 @@
 //////////////////////////////////////////
 
 
-const fs = require('fs');
-const readline = require('readline');
+import * as fs from "fs";
+import * as readline from 'readline';
 import {google} from 'googleapis';
-import { rejects } from 'assert';
-var sleep = require('thread-sleep');
+import { log } from "../global.js";
+
+////////////////////////////////////////////////////////////
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
@@ -41,10 +42,14 @@ function authorize(credentials, forced, sourceID, saveLocation, callback, finish
 
     // Check if we have previously stored a token.
     var token = fs.readFileSync(TOKEN_PATH);
-    if (!token) 
-        token = getNewToken(oAuth2Client, callback);
+    if (!token) {
+        log("Error getting token");
+        Reject(Error("Error getting token"));
+        return;
+    } 
+        //token = getNewToken(oAuth2Client, callback);
 
-    oAuth2Client.setCredentials(JSON.parse(token));
+    oAuth2Client.setCredentials(JSON.parse(token.toString()));
 
     var units = {};
     var oldUnits = JSON.parse(fs.readFileSync(saveLocation).toString());
@@ -52,7 +57,7 @@ function authorize(credentials, forced, sourceID, saveLocation, callback, finish
 
     // Add unit page info to data
     var queryEnd2 = function (wiki, url, rotation, index) {
-        console.log(`[${totalUnits}] ${index}: ${url}`)
+        log(`[${totalUnits}] ${index}: ${url}`)
         totalUnits--;
 
         if (index) {
@@ -61,12 +66,12 @@ function authorize(credentials, forced, sourceID, saveLocation, callback, finish
                 units[index].url = url;
                 units[index].rotation = rotation;
             } else {
-                console.log("Could not find unit to add link to, " + index)
+                log("Could not find unit to add link to, " + index)
             }
         }
         
         if (totalUnits <= 0) {
-            console.log("Finished Getting Unit Calcs");
+            log("Finished Getting Unit Calcs");
 
             var save = JSON.stringify(units, null, "\t");
             fs.writeFileSync(saveLocation, save);
@@ -81,15 +86,15 @@ function authorize(credentials, forced, sourceID, saveLocation, callback, finish
         keys.forEach((key, ind) => {
             var unit = list[key];
             if (!unit) {
-                console.log("Missing Unit Information: " + key);
+                log("Missing Unit Information: " + key);
                 return;
             }
             units[key].burst = unit.damage;
             units[key].burstTurn = unit.turns;
         });
 
-        console.log("Unit Fields");
-        console.log("Total: " + totalUnits);
+        log("Unit Fields");
+        log("Total: " + totalUnits);
 
         // Start getting unit pages
         var timer = 1;
@@ -100,7 +105,7 @@ function authorize(credentials, forced, sourceID, saveLocation, callback, finish
                 && units[key].damage == oldUnits[key].damage
                 && units[key].burst == oldUnits[key].burst) {
                     
-                console.log(`Skipping Unit: ${key}`);
+                log(`Skipping Unit: ${key}`);
                 units[key] = oldUnits[key];
                 queryEnd2(null, null, null, null);
                 return;
@@ -115,7 +120,7 @@ function authorize(credentials, forced, sourceID, saveLocation, callback, finish
             key = key.trim();
 
             var range = `${key}!A1:AB20`
-            console.log(`[${ind}] Looking For: ${range}`)
+            log(`[${ind}] Looking For: ${range}`)
 
             setTimeout(() => {
                 GetBuildLink(oAuth2Client, sourceID, index, range, queryEnd2);
@@ -153,7 +158,7 @@ function getNewToken(oAuth2Client, callback) {
         access_type: 'offline',
         scope: SCOPES,
     });
-    console.log('Authorize this app by visiting this url:', authUrl);
+    log('Authorize this app by visiting this url: ' + authUrl);
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
@@ -169,7 +174,7 @@ function getNewToken(oAuth2Client, callback) {
             fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
                 if (err) 
                     return console.error(err);
-                console.log('Token stored to', TOKEN_PATH);
+                log('Token stored to ' + TOKEN_PATH);
             });
             callback(oAuth2Client);
         });
@@ -190,7 +195,7 @@ function GetUnitComparison(auth, sourceID, range, callback) {
     }, (err, res) => {
 
         if (err) {
-            console.log('The API returned an error: ' + err);
+            log('The API returned an error: ' + err);
             Reject(Error('The API returned an error: ' + err));
             return;
             //throw new Error(`The API returned an error: ${err}`);
@@ -198,7 +203,7 @@ function GetUnitComparison(auth, sourceID, range, callback) {
 
         const rows = res.data.values;
         if (rows.length) {
-            //console.log('Name, DPT:');
+            //log('Name, DPT:');
 
             var phy = {};
             var mag = {};
@@ -208,13 +213,13 @@ function GetUnitComparison(auth, sourceID, range, callback) {
             var hJP = false;
 
             rows.map((row) => {
-                //console.log("Row: ");
+                //log("Row: ");
                 var pName = row[1];
                 var mName = row[6];
                 var hName = row[11];
-                //console.log(`Physical { ${pName}: ${row[2]} - ${row[3]} }`);
-                //console.log(`Magic { ${mName}: ${row[7]} - ${row[8]} }`);
-                //console.log(`Hybrid { ${hName}: ${row[12]} - ${row[13]} }`);
+                //log(`Physical { ${pName}: ${row[2]} - ${row[3]} }`);
+                //log(`Magic { ${mName}: ${row[7]} - ${row[8]} }`);
+                //log(`Hybrid { ${hName}: ${row[12]} - ${row[13]} }`);
                 
                 if (pName) {
                     if (!pName.includes("Unreleased")) {
@@ -266,7 +271,7 @@ function GetUnitComparison(auth, sourceID, range, callback) {
 
             callback(units);
         } else {
-            console.log('No data found.');
+            log('No data found.');
             callback(null);
         }
     });
@@ -281,7 +286,7 @@ function GetBuildLink(auth, sourceID, index, range, callback) {
     }, (err, res) => {
 
         if (err) {
-            console.log('The API returned an error: ' + err);
+            log('The API returned an error: ' + err);
 
             var s = `${err}`;
             if (!s.toLowerCase().includes("unable to parse")) {
@@ -309,7 +314,7 @@ function GetBuildLink(auth, sourceID, index, range, callback) {
 
             callback(w, b, rotation, index);
         } else {
-            console.log('No data found.');
+            log('No data found.');
             callback(null, null, null, null);
         }
     });
@@ -322,9 +327,9 @@ export var UpdateFurculaCalculations = function(forced, callback) {
 
         fs.readFile('credentials.json', (err, content) => {
             if (err) 
-                return console.log('Error loading client secret file:', err);
+                return log('Error loading client secret file:' + err);
             // Authorize a client with credentials, then call the Google Sheets API.
-            authorize(JSON.parse(content), forced, sheetID, furculaSaveLocation, GetUnitComparison, callback);
+            authorize(JSON.parse(content.toString()), forced, sheetID, furculaSaveLocation, GetUnitComparison, callback);
         });
     })
 }
@@ -336,9 +341,9 @@ export var UpdateWhaleCalculations = function(forced, callback) {
 
         fs.readFile('credentials.json', (err, content) => {
             if (err) 
-                return console.log('Error loading client secret file:', err);
+                return log('Error loading client secret file: ' + err);
             // Authorize a client with credentials, then call the Google Sheets API.
-            authorize(JSON.parse(content), forced, whaleSheetID, whaleSaveLocation, GetUnitComparison, callback);
+            authorize(JSON.parse(content.toString()), forced, whaleSheetID, whaleSaveLocation, GetUnitComparison, callback);
         });
     });
 }

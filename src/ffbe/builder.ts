@@ -4,15 +4,12 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
-import * as request from "request";
-import * as fs from "fs";
-import * as cheerio from "cheerio";
-
-import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
 import "../util/string-extension.js";
-import {Cache, cache} from "../cache/cache.js";
-import * as constants from "../constants.js";
+import * as fs from "fs";
 import * as https from "https";
+import { log } from "../global.js";
+
+////////////////////////////////////////////////////////////
 
 const lyreUnitsEndpoint  = function(n) { return `https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/static/${n}/unitsWithPassives.json`; };
 const lyreItemsEndpoint  = function(n) { return `https://raw.githubusercontent.com/lyrgard/ffbeEquip/master/static/${n}/data.json`; };
@@ -46,12 +43,12 @@ class builder {
 
         var self = this;
         var success = function() {
-            console.log(`Reloaded Lyregard Data`);
+            log(`Reloaded Lyregard Data`);
 
             callback(true, null);
         }
         var fail = function(e) {
-            console.log(`failed to update Lyregard data: ${e}`);
+            log(`failed to update Lyregard data: ${e}`);
 
             callback(false, e);
         }

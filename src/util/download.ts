@@ -1,11 +1,15 @@
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
 
-import * as request from "request";
-import * as fs from "fs";
-
-import { log } from "../global.js";
 import "../util/string-extension.js";
-import * as http from "http";
+import * as fs from "fs";
 import * as https from "https";
+import { log } from "../global.js";
+
+////////////////////////////////////////////////////////////
 
 export function downloadFile(path, link): Promise<string> {
 
@@ -20,7 +24,7 @@ export function downloadFile(path, link): Promise<string> {
             }
             file = fs.createWriteStream(path);
             file.on('finish', function() {
-                console.log(`file downloaded: ${path}`);
+                log(`file downloaded: ${path}`);
                 resolve(path);
             });
             return response.pipe(file);

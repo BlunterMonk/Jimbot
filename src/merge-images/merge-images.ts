@@ -1,4 +1,13 @@
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
+
 import * as fs from 'fs';
+import { log } from "../global.js";
+
+////////////////////////////////////////////////////////////
 
 // Defaults
 var defaultOptions = {
@@ -124,8 +133,8 @@ export var mergeImages = function (sources, options) {
 	var images = sources.map(function (source) { 
 		return new Promise(function (resolve, reject) {
 			// Convert sources to objects
-			// console.log("Loading Image:");
-			// console.log(source);
+			// log("Loading Image:");
+			// log(source);
 			if (source.constructor.name !== 'Object') {
 				source = { src: source };
 			}
@@ -134,7 +143,7 @@ export var mergeImages = function (sources, options) {
 
 			// Resolve source and img when loaded
 			var img = new Image();
-			img.onerror = function () { return /*reject(new Error*/console.log('Couldn\'t load image'); };
+			img.onerror = function () { return /*reject(new Error*/log('Couldn\'t load image'); };
 			img.onload = function () { return resolve(Object.assign({}, source, { img: img })); };
 
 			img.src = source.src;

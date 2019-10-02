@@ -1,12 +1,18 @@
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
+
 import * as mergeImages from '../merge-images/merge-images.js';
 import * as fs from "fs";
-import { log, logData, logDataArray } from "../global.js";
-import * as https from "https";
 import * as Canvas from 'canvas';
 import * as Build from './build.js';
 import * as Download from '../util/download.js';
-import {FFBE} from './ffbewiki.js';
-const sizeOf = require('image-size');
+import { log, logDataArray } from "../global.js";
+import { sizeOf } from 'image-size';
+
+////////////////////////////////////////////////////////////
 
 const canvas = Canvas.createCanvas(600, 600);
 const ctx = canvas.getContext('2d')
@@ -54,8 +60,8 @@ function processBuild(search) {
 export async function BuildImage(build: any): Promise<string> {
     
     var equipped = build.getEquipment();
-    console.log("Equipment:");
-    // console.log(equipped);
+    log("Equipment:");
+    // log(equipped);
     logDataArray(equipped);
 
     return new Promise<string>((resolve, reject) => {
@@ -179,8 +185,8 @@ interface statRow {
 
 function getKillers(options: statRow, values: any) {
 
-    console.log("Total Values");
-    console.log(values);
+    log("Total Values");
+    log(values);
 
     var images = [];
     var labels = [];
@@ -208,7 +214,7 @@ function getKillers(options: statRow, values: any) {
                 h: options.dimensions
             }
 
-            // console.log(images[images.length-1]);
+            // log(images[images.length-1]);
 
             across++;
             if (across >= options.maxWide) {
@@ -327,8 +333,8 @@ function getResists(totalStats, list): string[] {
         }
     });
 
-    // console.log("Resist Values");
-    // console.log(resist);
+    // log("Resist Values");
+    // log(resist);
     
     return resist;
 }
@@ -509,7 +515,7 @@ function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align) {
     if (enhText != "") { // weapons
         // var end = mergeImages.measureText(ctx, lines[lines.length-1], font).width;
         // var start = xInfo + end + 2;
-        // console.log(`Enhance Text: start(${start}), end(${end})`);
+        // log(`Enhance Text: start(${start}), end(${end})`);
         var y2 = 212;
         let fs2 = 10;
 
@@ -576,11 +582,11 @@ function getEquipment(itemImages, build) {
         const odd = index % 2;
         const equip = build.getEquipmentInSlot(index);
 
-        // console.log(`Equipment in slot: ${index}`);
-        // console.log(equip);
+        // log(`Equipment in slot: ${index}`);
+        // log(equip);
         
         if (equip && image) {
-            // console.log(image)
+            // log(image)
       
             var xIcon = -6;
             var xType = 106;
@@ -678,7 +684,7 @@ function buildCompactImage(unit, imageOptions: UnitBox, build, callback) {
         h: imageHeight
     }];
     if (unit && unit.path && unit.path != "") {
-        console.log("Unit Image");
+        log("Unit Image");
         let ui = {
             src: unit.path,
             x: imageOptions.xStart + 6,
@@ -686,7 +692,7 @@ function buildCompactImage(unit, imageOptions: UnitBox, build, callback) {
             w: unit.w*3,
             h: unit.h*3
         };
-        console.log(ui);
+        log(ui);
         images[images.length] = ui;
         images[images.length] = {
             src: `${imgCacheDir}unit-icon-frame.png`,
@@ -741,7 +747,7 @@ function buildCompactImage(unit, imageOptions: UnitBox, build, callback) {
     // Add Esper
     var esper = build.getEsperId();
     var esperPath = `${imgCacheDir}espers/${esper}.png`;
-    console.log(`Esper Path: ${esperPath}`);
+    log(`Esper Path: ${esperPath}`);
     if (esper && fs.existsSync(esperPath)) {
         images[images.length] = {
             src: esperPath,
@@ -771,11 +777,11 @@ function buildImage(unit, itemImages, build, callback) {
     var totalStats = buildTotal.stats;
     var totalBonuses = buildTotal.bonuses;
 
-    // console.log("Total Stats");
-    // console.log(totalStats);
+    // log("Total Stats");
+    // log(totalStats);
 
-    // console.log("Unit Image")
-    // console.log(unit)
+    // log("Unit Image")
+    // log(unit)
     var labels = [];
     var images = [{
         src: `${imgCacheDir}build-template.png`,
@@ -785,7 +791,7 @@ function buildImage(unit, itemImages, build, callback) {
         h: canvasHeight
     }];
     if (unit && unit.path && unit.path != "") {
-        console.log("Unit Image");
+        log("Unit Image");
         let ui = {
             src: unit.path,
             x: 72 - ((unit.w)),//56 - (unit.w * 0.5),//6,//150 - ((unit.w * 2.5) / 2),
@@ -793,13 +799,13 @@ function buildImage(unit, itemImages, build, callback) {
             w: unit.w*1.5,
             h: unit.h*1.5
         };
-        console.log(ui);
+        log(ui);
         images[images.length] = ui;
     }
 
     var esper = build.getEsperId();
     var esperPath = `${imgCacheDir}espers/${esper}.png`;
-    console.log(`Esper Path: ${esperPath}`);
+    log(`Esper Path: ${esperPath}`);
     if (esper && fs.existsSync(esperPath)) {
         images[images.length] = {
             src: esperPath,
@@ -889,19 +895,19 @@ function finalizeImage(saveLocation: string, images: any[], labels: any[], cWidt
 
         fs.writeFileSync(saveLocation, buffer);
 
-        console.log(`Build Saved: ${saveLocation}`);
+        log(`Build Saved: ${saveLocation}`);
         callback(saveLocation);
     }).catch((e) =>{
         console.error(e);
-        console.log("Failed to make image");
+        log("Failed to make image");
     });
 }
 
 function downloadImages(slots, items, unitId, callback) {
 
     var imageList = {};
-    // console.log(`initial images`);
-    // console.log(imageList);
+    // log(`initial images`);
+    // log(imageList);
 
     var unit = null;
     var count = items.length + 1;
@@ -911,8 +917,8 @@ function downloadImages(slots, items, unitId, callback) {
         imageList[slot] = image;
 
         if (count <= 0) {
-            // console.log(`Done downloading images`);
-            // console.log(imageList);
+            // log(`Done downloading images`);
+            // log(imageList);
 
             callback(unit, imageList);
         }
@@ -934,16 +940,16 @@ function downloadImages(slots, items, unitId, callback) {
     unitId = unitId.replaceAll(" ", "_");
     var filename = `unit_icon_${unitId}.png`;
     var path = `${imgCacheDir}units/${filename}`;
-    console.log(`Image Path: ${path}`);
+    log(`Image Path: ${path}`);
     if (fs.existsSync(path))
         foundUnit(path);
     else {
         let source = `https://ffbeequip.com/img/units/${filename}`;
         Download.downloadFile(path, source).then((p) =>{
-            console.log(`Image Donloaded: ${source}`);
+            log(`Image Donloaded: ${source}`);
             foundUnit(p);
         }).catch((e) => {
-            console.log(`Image Failed to Donload: ${source}`);
+            log(`Image Failed to Donload: ${source}`);
             queryEnd(null, null, null);
         });
     }
@@ -959,7 +965,7 @@ function downloadImages(slots, items, unitId, callback) {
     
                 var fs = require('fs');
                 var string = trimmed.toDataURL();
-                // console.log(string);
+                // log(string);
                 var regex = /^data:.+\/(.+);base64,(.*)$/;
                 
                 var matches = string.match(regex);
@@ -972,7 +978,7 @@ function downloadImages(slots, items, unitId, callback) {
                 foundUnit(path);
             }).catch((e) => {
                 console.error(e);
-                console.log(`Failed to load image: ${p2}`);
+                log(`Failed to load image: ${p2}`);
             });
         }
 
@@ -996,7 +1002,7 @@ function downloadImages(slots, items, unitId, callback) {
 
     slots.forEach(slot => {
 
-        // console.log(slot)
+        // log(slot)
 
         var item = null;
         for (let index = 0; index < items.length; index++) {
@@ -1020,12 +1026,12 @@ function downloadImages(slots, items, unitId, callback) {
             h: 112
         };
 
-        // console.log(`Image Path: ${imagePath}`);
+        // log(`Image Path: ${imagePath}`);
         if (fs.existsSync(path)) {
             queryEnd(slot.slot, item.id, image);
         } else {
             Download.downloadFile(path, imagePath).then((p) =>{
-            // console.log(`Image Donloaded: ${id}`);
+            // log(`Image Donloaded: ${id}`);
                 queryEnd(slot.slot, item.id, image);
             });
         };

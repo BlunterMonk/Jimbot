@@ -6,9 +6,11 @@
 
 
 import "../util/string-extension.js";
-import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
 import * as gs from "../config/guild.js";
-import {config} from "../config/config.js";
+import { log } from "../global.js";
+import { config } from "../config/config.js";
+
+////////////////////////////////////////////////////////////
 
 const regexCommand = /^[^\s]*/;
 const regexSearch = /^(?:.*?\s)(.*?)(?='|"|‘|’|“|”|$)/;

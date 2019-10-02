@@ -4,16 +4,14 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
-import * as request from "request";
-import * as fs from "fs";
-import * as cheerio from "cheerio";
-
-import { log, logData, logDataArray, debug, trace } from "../global.js";
 import "../util/string-extension.js";
-import {Cache, cache} from "../cache/cache.js";
+import * as request from "request";
 import * as Constants from "../constants.js";
-import {Builder} from "./builder.js";
+import { log, logData, logDataArray, debug, trace } from "../global.js";
+import { Builder } from "./builder.js";
 import { LoginTicket } from "google-auth-library/build/src/auth/loginticket";
+
+////////////////////////////////////////////////////////////
 
 const ignoreItemKeys = [
     "id", "access", "type", "icon", "wikiEntry",
@@ -519,26 +517,26 @@ class Build {
 
 function isApplicable(item, unit: Unit) {
     if (item.exclusiveSex && item.exclusiveSex != unit.sex) {
-        //log(`Item fails gender exlusivity`);
+        debug(`Item fails gender exlusivity`);
         return false;
     }
     if (item.exclusiveUnits && !item.exclusiveUnits.includes(unit.id)) {
-        //log(`Item fails Unit exclusivity: `);
-        //log(item.exclusiveUnits);
+        debug(`Item fails Unit exclusivity: `);
+        debug(item.exclusiveUnits);
         return false;
     }
     return true;
 }
 function areConditionOK(item, B: Build, level = 0) {
     if (level && item.levelCondition && item.levelCondition > level) {
-        //log(`Item fails to meet level condition`);
+        debug(`Item fails to meet level condition`);
         return false;
     }
     if (item.equipedConditions) {
         for (var conditionIndex = item.equipedConditions.length; conditionIndex--;) {
             if (!isEquipedConditionOK(B, item.equipedConditions[conditionIndex])) {
-                //log(`Item fails to meet equipment conditions`);
-                //logData(item.equipedConditions[conditionIndex]);
+                debug(`Item fails to meet equipment conditions`);
+                debug(item.equipedConditions[conditionIndex]);
                 return false;
             }
         }
@@ -547,34 +545,34 @@ function areConditionOK(item, B: Build, level = 0) {
 }
 function isEquipedConditionOK(B: Build, condition) {
     var equiped = B.equipment;
-    //log("isEuipedConditionOk: Condition");
-    //log(condition);
+    debug("isEuipedConditionOk: Condition");
+    debug(condition);
 
     if (Array.isArray(condition)) {
         return condition.some(c => isEquipedConditionOK(B, c));
     } else {
         if (elementList.includes(condition)) {
-            //log("Checking Equipment Element Condition");
+            debug("Checking Equipment Element Condition");
             if ((equiped[0] && equiped[0].element && equiped[0].element.includes(condition)) || (equiped[1] && equiped[1].element && equiped[1].element.includes(condition))) {
                 return true;
             }
         } else if (B.equipedConditions.includes(condition)) {
-            //log("Checking Equipment Condition");
+            debug("Checking Equipment Condition");
             for (var equipedIndex = 0; equipedIndex < 10; equipedIndex++) {
                 if (equiped[equipedIndex] && equiped[equipedIndex].type == condition) {
-                    //log("Passed Equipment Condition");
+                    debug("Passed Equipment Condition");
                     return true;
                 }
             }
         } else if (condition == "unarmed") {
-            //log("Checking Unarmed Condition")
+            debug("Checking Unarmed Condition")
             if (!equiped[0] && ! equiped[1]) {
-                //log("Passed Unarmed Condition");
+                debug("Passed Unarmed Condition");
                 return true;
             }
         } else {
-            //log("Checking Remaining Conditions");
-            //logDataArray(equiped);
+            debug("Checking Remaining Conditions");
+            debug(equiped);
             for (var equipedIndex = 0; equipedIndex < 10; equipedIndex++) {
                 if (equiped[equipedIndex] && equiped[equipedIndex].id == condition) {
                     return true;
@@ -611,17 +609,17 @@ function getTotalBonuses(passives: any, equipmentTotal: any, esper: any) {
 // calculate the units max stats with the provided pots
 function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: any, esper: any, build: Build): any {
 
-    // debug("getUnitMaxStats:");
-    // debug("pots");
-    // debug(pots);
-    // debug("equipmentTotal");
-    // debug(equipmentTotal);
-    // debug("passives");
-    // debug(passives);
-    // if (esper) {
-    //     debug("esper");
-    //     debug(esper);
-    // }
+    debug("getUnitMaxStats:");
+    debug("pots");
+    debug(pots);
+    debug("equipmentTotal");
+    debug(equipmentTotal);
+    debug("passives");
+    debug(passives);
+    if (esper) {
+        debug("esper");
+        debug(esper);
+    }
 
     var bonus = getTotalBonuses(passives, equipmentTotal, esper);
 
@@ -644,10 +642,10 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
         });
     }
 
-    // log("total bonuses");
-    // log(bonus);
+    debug("total bonuses");
+    debug(bonus);
 
-    // log("Applying Base Stats, Pots, and Bonus %");
+    debug("Applying Base Stats, Pots, and Bonus %");
     var total = {};
     var keys = Object.keys(pots);
     keys.forEach((k, i) => {
@@ -667,22 +665,22 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
         }
         
         let base = max + pot;
-        //trace(`${k}: max_stats + pot = base`);
-        //trace(`${k}: ${max} + ${pot} = ${base}`);
+        trace(`${k}: max_stats + pot = base`);
+        trace(`${k}: ${max} + ${pot} = ${base}`);
         let b1 = base + eq + ((percent / 100) * base);
-        //trace(`${k}: base + eq + (percent * base)`);
-        //trace(`${k}: ${base} + ${eq} + (${percent / 100} * ${base}) = ${b1}`);
+        trace(`${k}: base + eq + (percent * base)`);
+        trace(`${k}: ${base} + ${eq} + (${percent / 100} * ${base}) = ${b1}`);
         total[k] = b1;
     });
 
     // Add equipment bonuses
-    // log("Adding Wielding Bonus")
+    debug("Adding Wielding Bonus")
     if (bonus.dualWielding && build.isDualWielding()) {
         // Add DW bonuses
-         var keys = Object.keys(bonus.dualWielding);
-         keys.forEach((k, i) => {
+        var keys = Object.keys(bonus.dualWielding);
+        keys.forEach((k, i) => {
             if (!equipmentTotal[k])
-            return;
+                return;
 
             var b = bonus.dualWielding[k];
             if (b > 200)
@@ -697,11 +695,11 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
             }
 
             var t = (equipmentTotal[k] * (b / 100));
-            //trace(`${k}: (equipmentTotal} * (b / 100) = t`);
-            //trace(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
+            trace(`${k}: (equipmentTotal} * (b / 100) = t`);
+            trace(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
             let t1 = total[k] + t;
-            //trace(`${k}: total_${k} + t`);
-            //trace(`${k}: ${total[k]} + ${t} = ${t1}`);
+            trace(`${k}: total_${k} + t`);
+            trace(`${k}: ${total[k]} + ${t} = ${t1}`);
             total[k] = t1;
          });
     } else if (bonus.singleWielding && build.isDoublehanding()) {
@@ -723,44 +721,42 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
             }
 
             var t = (equipmentTotal[k] * (b / 100));
-            //trace(`${k}: (equipmentTotal} * (b / 100) = t`);
-            //trace(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
+            trace(`${k}: (equipmentTotal} * (b / 100) = t`);
+            trace(`${k}: (${equipmentTotal[k]} * ${b / 100}) = ${t}`);
             let t1 = total[k] + t;
-            //trace(`${k}: total_${k} + t`);
-            //trace(`${k}: ${total[k]} + ${t} = ${t1}`);
+            trace(`${k}: total_${k} + t`);
+            trace(`${k}: ${total[k]} + ${t} = ${t1}`);
             total[k] = t1;
         });
     }
 
     // Add esper bonus
-    // log("Add Esper Bonus: ");
+    debug("Add Esper Bonus: ");
     if (esper) {
 
         var keys = Object.keys(pots);
         keys.forEach((k, i) => {
             
             var e = Math.round(esper[k] / 100);
-            //trace(`${k}: esper_${k} / 100 = e`);
+            trace(`${k}: esper_${k} / 100 = e`);
             var b = 0;
             if (bonus.esperStatsBonus && bonus.esperStatsBonus[k]) {
                 b = e * (bonus.esperStatsBonus[k] / 100);
-                //trace(`${k}: e * esper_stats_bonus_${k}% = b`);
+                trace(`${k}: e * esper_stats_bonus_${k}% = b`);
             }
             
             let e0 = total[k] + e + b;
-            //trace(`${k}: total_${k} + e + b`);
-            //trace(`${k}: ${total[k]} + ${e} + ${b} = ${e0}`);
+            trace(`${k}: total_${k} + e + b`);
+            trace(`${k}: ${total[k]} + ${e} + ${b} = ${e0}`);
             total[k] = e0;
         });
-
-        
     }
 
     // Round all the stats to the right value
     var keys = Object.keys(total);
     keys.forEach((k, i) => {
         if (!Number.isNaN(parseInt(total[k]))) {
-            // log(`Round(${total[k]}) = ${Math.round(total[k])}`);
+            debug(`Round(${total[k]}) = ${Math.round(total[k])}`);
             total[k] = Math.round(total[k]);
         }
     });
@@ -828,10 +824,10 @@ function itemEffectToString(key: string, item: any): string {
     t = t.replace(/[\[\]\(\"\{\}\"\)]/gi,'');
     t = t.replace(/:/gi, " ");
     t = t.replace(/,/gi, ", ");
-    // console.log("Effect Text:" + t)
+    // log("Effect Text:" + t)
     t = t.replace(/accuracy.*?(|\w+|\n)(,|\S+)/g, " ");
     t = t.trim();
-    // console.log("Edited Text: " + t)
+    // log("Edited Text: " + t)
     if (t.lastIndexOf(",") == t.length-1)
         t = t.slice(0, t.length - 1);
 
@@ -863,8 +859,8 @@ export function itemToString(item: any): string {
         }
     });
 
-    // console.log("unsorted");
-    // console.log(text);
+    // log("unsorted");
+    // log(text);
 
     text = sortStats(text);
     text.forEach((s, i) => {
@@ -909,7 +905,7 @@ export function sortStats(stats: string[]): string[] {
 
         var ai = statValues.indexOf(a);
         var bi = statValues.indexOf(b);
-        // console.log(`Compare: (${a})[${ai}] - (${b})[${bi}]`);
+        // log(`Compare: (${a})[${ai}] - (${b})[${bi}]`);
 
         if (ai < 0)
             return 1;
@@ -924,8 +920,8 @@ export function sortStats(stats: string[]): string[] {
         return 0;
     });
 
-    // console.log("sorted");
-    // console.log(sorted);
+    // log("sorted");
+    // log(sorted);
     return sorted;
 }
 
@@ -1280,8 +1276,7 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
 
     var item = itemWithVariation[0];
     log("Find Best Item")
-    log("Base Item")
-    logData(item)
+    logData("Base Item", item)
 
     if (itemWithVariation.length == 1) {
         // if there are no variations of the item, it is fine
@@ -1337,12 +1332,10 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
             if (isApplicable(itemWithVariation[index], B.loadedUnit) && areConditionOK(itemWithVariation[index], B)) {
                 var enh = B.getItemEnchantments(slot);
                 if (enh) {
-                    log("Variant Item With Enchantments");
-                    logData(itemWithVariation[index]);
+                    logData("Variant Item With Enchantments", itemWithVariation[index]);
                     return applyEnchantments(itemWithVariation[index], enh);
                 } else {
-                    log("Best Found");
-                    logData(itemWithVariation[index]);
+                    logData("Best Found", itemWithVariation[index]);
                     return itemWithVariation[index];
                 }
             }
@@ -1359,8 +1352,7 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
             result["special"] = ["notStackable"];
         }
         
-        log("Default Found");
-        logData(item);
+        logData("Default Found", item);
         return result;
     }
 }

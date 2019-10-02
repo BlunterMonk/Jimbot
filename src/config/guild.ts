@@ -5,8 +5,11 @@
 //////////////////////////////////////////
 
 
-const fs = require('fs');
 import "../util/string-extension.js";
+import * as fs from "fs";
+import { log } from "../global.js";
+
+////////////////////////////////////////////////////////////
 
 /*interface GuildConfig {
     name: string;
@@ -78,11 +81,11 @@ export class GuildSettings {
 
     getShortcut(name: string) {
         name = name.toLowerCase();
-        console.log(`Searching For Shortcut: ${name}`);
+        log(`Searching For Shortcut: ${name}`);
         if (!this.settings.shortcuts || !this.settings.shortcuts[name])
             return null;
             
-        console.log(`Found Shortcut: ${this.settings.shortcuts[name]}`);
+        log(`Found Shortcut: ${this.settings.shortcuts[name]}`);
         return this.settings.shortcuts[name];
     }
     setShortcut(name: string, command: string) {
@@ -118,7 +121,7 @@ export class GuildSettings {
         var filtered = this.settings.adminOnlyCommands.filter(r => r.toLowerCase() === command);
         var includes = this.settings.disabledCommands.includes(command);
         if (filtered.length > 0 || includes) {
-            console.log("Command is Admin only");
+            log("Command is Admin only");
             return this.validateAdminRole(userRole);
         }
         return true;

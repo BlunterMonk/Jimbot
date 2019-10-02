@@ -11,19 +11,20 @@ import * as https from "https";
 import * as http from "http";
 import {spawn} from "cross-spawn"; 
 
-import { log, logData, escapeString } from "../global.js";
 import "../util/string-extension.js";
+import * as Build from "../ffbe/build.js";
+import * as BuildImage from "../ffbe/buildimage.js";
+import * as Commands from "./commands.js";
+import { log, logData, escapeString } from "../global.js";
 import { cache } from "../cache/cache.js";
 import { config } from "../config/config.js";
 import { Client } from "../discord.js";
-import * as Build from "../ffbe/build.js";
 import { Builder } from "../ffbe/builder.js";
-import * as BuildImage from "../ffbe/buildimage.js";
-import * as Commands from "./commands.js";
 import { FFBE } from "../ffbe/ffbewiki.js";
 import { unitSearch, unitSearchWithParameters } from "../ffbe/unit.js";
-import "../util/string-extension.js";
 import { downloadFile } from "../util/download.js";
+
+////////////////////////////////////////////////////////////
 
 const pinkHexCode = 0xffd1dc;
 const linkFilter = [
@@ -46,19 +47,15 @@ const sheetURL = "https://docs.google.com/spreadsheets/d/1RgfRNTHJ4qczJVBRLb5ayv
 const muspelURL = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU/edit#gid=558725580";
 const whaleSheet = "https://docs.google.com/spreadsheets/d/1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
 
-const renaulteUserID    = "159846139124908032";
-const jimooriUserID     = "131139508421918721";
-const furculaUserID     = "344500120827723777";
-const cottonUserID      = "324904806332497932";
-const muspelUserID      = "114545824989446149";
-const shadoUserID      = "103785126026043392";
+const jimooriUserID = "131139508421918721";
+const furculaUserID = "344500120827723777";
+const cottonUserID  = "324904806332497932";
+const muspelUserID  = "114545824989446149";
+const shadoUserID   = "103785126026043392";
 
 const sprite = (n) => `https://exvius.gg/static/img/assets/unit/unit_ills_${n}.png`;
-const aniGL = (n) => `https://exvius.gg/gl/units/${n}/animations/`;
-const aniJP = (n) => `https://exvius.gg/jp/units/${n}/animations/`;
 const guildId = (msg) => msg.guild.id;
 const userId = (msg) => msg.author.id;
-// Lookup Tables
 
 const gifAliases = {
     "lb": "limit",
@@ -66,7 +63,7 @@ const gifAliases = {
     "victory": "win before"
 }
 
-
+////////////////////////////////////////////////////////////
 // COMMANDS
 
 // WIKI 
@@ -761,7 +758,7 @@ export async function build(receivedMessage, url, calculation, force = false): P
             var build = Build.CreateBuild(id, region, b);
             if (!build) {
                 Client.send(receivedMessage, "Sorry hun, something went wrong.");
-                console.log("Could not build image");
+                log("Could not build image");
                 reject("Could not build unit");
                 return;
             }
@@ -794,7 +791,7 @@ export async function build(receivedMessage, url, calculation, force = false): P
 
             BuildImage.BuildImage(build).then(sendImg).catch((e) => {
                 Client.send(receivedMessage, "Sorry hun, something went wrong.");
-                console.log("Could not build image");
+                log("Could not build image");
                 reject(e);
             });
         });
@@ -856,7 +853,7 @@ async function buildText(receivedMessage, url) {
         var text = Build.getBuildText(id, region, b);
         if (!text) {
             Client.send(receivedMessage, "Sorry hun, something went wrong.");
-            console.log("Could not build text");
+            log("Could not build text");
             return;
         }
 
@@ -1264,14 +1261,14 @@ function handleRecache(receivedMessage, search, parameters) {
     // Handle Errors
     child.on('error', (chunk) => {
         let output = chunk.toString()
-        console.log(`child process error ${output}`);
+        log(`child process error ${output}`);
 
         Client.send(receivedMessage, "recache failed\n" + chunk)
     });
 
     // Finish 
     child.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
+        log(`child process exited with code ${code}`);
         Client.send(receivedMessage, "recache complete")
     });
 
@@ -1281,7 +1278,7 @@ function handleRecache(receivedMessage, search, parameters) {
         if (output.empty())
             return;
 
-        console.log(`${output}`);
+        log(`${output}`);
 
         Client.sendMessage(receivedMessage, {
             title: "Recache Progress",
@@ -1490,14 +1487,14 @@ function handleGrab(receivedMessage, search, parameters) {
     // Get messages
     // receivedMessage.channel.fetchMessages({ limit: limit })
     //     .then(messages => {
-    //         console.log(`Received ${messages.size} messages`);
+    //         log(`Received ${messages.size} messages`);
     //     })
     //     .catch(console.error);
 
     receivedMessage.channel.fetchMessage(parameters[0])
         .then(startMessage => {
-            console.log("Found Starting Message");
-            console.log(startMessage.content);
+            log("Found Starting Message");
+            log(startMessage.content);
 
             var start = startMessage.createdTimestamp;
             var end = receivedMessage.createdTimestamp;
@@ -1508,7 +1505,7 @@ function handleGrab(receivedMessage, search, parameters) {
                 .then(messages => {
                     var filtered = messages.filter(m => m.author.id === '350621713823825920' 
                         && m.attachments.first() != null && m.createdTimestamp >= start && m.createdTimestamp <= end);
-                    console.log(`Found ${filtered.size} images`);
+                    log(`Found ${filtered.size} images`);
                     var links : string[] = filtered.map(element => {
                         return element.attachments.first().url;
                     });
@@ -1517,12 +1514,12 @@ function handleGrab(receivedMessage, search, parameters) {
                     if (!fs.existsSync(path))
                         fs.mkdirSync(path, { recursive: true});
 
-                    console.log(links);
+                    log(links);
                     links.forEach((link, i) => {
                         var ext = link.substring(link.lastIndexOf("."), link.length).toLowerCase();
                         var name = `aya${i}${ext}`;
                         downloadFile(path + name, link).then(p => {
-                            console.log(`Downloaded ${p}`);
+                            log(`Downloaded ${p}`);
                         }).catch(console.error);
                     });
                 })
@@ -1787,8 +1784,7 @@ function downloadImage(name, link, callback) {
 
 export function handle(receivedMessage, com: Commands.CommandObject): boolean {
     
-    log("\nHandle Command Obect");
-    log(com);
+    log("Handle Command Object", com);
 
     if (handleUnitQuery(receivedMessage, com.command, com.search)) {
         return;
@@ -1803,8 +1799,7 @@ export function handle(receivedMessage, com: Commands.CommandObject): boolean {
 
         eval(com.run);
     } catch (e) {
-        log(e);
-        log("Command doesn't exist");
+        log("Command doesn't exist", e);
 
         if (Client.validate(receivedMessage, "emote")) {
             handleEmote(receivedMessage);

@@ -5,8 +5,12 @@
 //////////////////////////////////////////
 
 
-const fs = require('fs');
+import * as fs from "fs";
 import "../util/string-extension.js";
+import { log } from "../global.js";
+
+////////////////////////////////////////////////////////////
+
 const filename = './config/config.json';
 
 export class Config {
@@ -17,8 +21,7 @@ export class Config {
     }
 
     init() {
-        var data = fs.readFileSync(filename);
-        this.configuration = JSON.parse(data);
+        this.configuration = JSON.parse(fs.readFileSync(filename).toString());
     }
     save() {
         var newData = JSON.stringify(this.configuration, null, "\t");
@@ -26,9 +29,8 @@ export class Config {
     }
     
     reload() {
-        console.log("Reloading Configuration");
-        var data = fs.readFileSync(filename);
-        this.configuration = JSON.parse(data);
+        log("Reloading Configuration");
+        this.configuration = JSON.parse(fs.readFileSync(filename).toString());
     }
 
     alias() {
@@ -42,7 +44,7 @@ export class Config {
     getAlias(value: any) {
         value = value.toLowerCase();
         if (this.configuration.unitAliases[value]) {
-            console.log("found alias");
+            log("found alias");
             return this.configuration.unitAliases[value];
         } else {
             return null;
@@ -55,11 +57,11 @@ export class Config {
     // COMMAND ALIASES
     getCommandAlias(name: string) {
         name = name.toLowerCase();
-        console.log(`Searching For Command Alias: ${name}`);
+        log(`Searching For Command Alias: ${name}`);
         if (!this.configuration.commandAliases || !this.configuration.commandAliases[name])
             return null;
             
-        console.log(`Found Command Alias: ${this.configuration.commandAliases[name]}`);
+        log(`Found Command Alias: ${this.configuration.commandAliases[name]}`);
         return this.configuration.commandAliases[name];
     }
     setCommandAlias(name: string, command: string) {
@@ -73,11 +75,11 @@ export class Config {
     // SHORTCUTS
     getShortcut(name: string) {
         name = name.toLowerCase();
-        console.log(`Searching For Shortcut: ${name}`);
+        log(`Searching For Shortcut: ${name}`);
         if (!this.configuration.shortcuts || !this.configuration.shortcuts[name])
             return null;
             
-        console.log(`Found Shortcut: ${this.configuration.shortcuts[name]}`);
+        log(`Found Shortcut: ${this.configuration.shortcuts[name]}`);
         return this.configuration.shortcuts[name];
     }
     setShortcut(name: string, command: string) {
@@ -110,7 +112,7 @@ export class Config {
                 id = key
             }
         });
-        console.log(`getUserIDFromName(${name}) return:(${id})`)
+        log(`getUserIDFromName(${name}) return:(${id})`)
         return id;
     }
 };

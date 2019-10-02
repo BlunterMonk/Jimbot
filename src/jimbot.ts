@@ -4,25 +4,18 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
-import * as Discord from "discord.js";
-import * as request from "request";
-import * as fs from "fs";
-import * as cheerio from "cheerio";
-import * as https from "https";
-import * as http from "http";
-
-//import "./global.js";
 import "./util/string-extension.js";
-import { log, logData, checkString, compareStrings, escapeString } from "./global.js";
-import {Client} from "./discord.js";
-import {config} from "./config/config.js";
-import {cache} from "./cache/cache.js";
-import {handle} from "./commands/handles.js";
 import * as Editor from "./editor/Edit.js";
 import * as Commands from "./commands/commands.js";
+import { log, logData } from "./global.js";
+import { Client } from "./discord.js";
+import { config } from "./config/config.js";
+import { cache } from "./cache/cache.js";
+import { handle } from "./commands/handles.js";
+
+////////////////////////////////////////////////////////////
 
 var editor = null;
-
 
 process.on("unhandledRejection", (reason, p) => {
     log(`Unhandled Rejection at: Promise(${JSON.stringify(p)}), Reason: ${reason}`);
@@ -71,8 +64,7 @@ function onPrivateMessage(receivedMessage, content) {
     log("Settings Change Allowed");
 
     const com = Commands.getCommandObject(content, null, null);
-    log("\nCommand Obect");
-    log(com);
+    logData("Command Obect", com);
 
     const command = com.command;
     const parameters = com.parameters;
@@ -107,8 +99,7 @@ function onMessage(receivedMessage, content) {
 
     const attachment = receivedMessage.attachments.first();
     if (attachment) {
-        log("Message Attachments");
-        log(attachment.url);
+        log("Message Attachments", attachment.url);
     }
 
     // Get command information

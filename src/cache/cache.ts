@@ -10,6 +10,9 @@ import "../util/string-extension.js";
 import * as furcDamage from "./cacheDamage.js";
 import * as muspDamage from "./cacheMuspel.js";
 import * as cacheWiki from "./cacheWiki.js";
+import { log } from "../global.js";
+
+////////////////////////////////////////////////////////////
 
 const rankingDump = 'data/rankingsdump.json';
 const furcCalc = 'data/furculacalculations.json';
@@ -52,7 +55,7 @@ export class Cache {
     }
 
     reload() {
-        console.log("Reloading Cached Data");
+        log("Reloading Cached Data");
         this.fullRankings = JSON.parse(fs.readFileSync(rankingDump).toString());
         this.information = JSON.parse(fs.readFileSync(infoJson).toString());
         
@@ -73,15 +76,15 @@ export class Cache {
 
         var self = this;
         var success = function() {
-            console.log(`Reloaded ${source} Calculations`);
+            log(`Reloaded ${source} Calculations`);
 
             callback(true, null);
 
             self.isUpdating = false;
         }
         var fail = function(e) {
-            console.log(`failed to update ${source} calculations`);
-            console.log(e);
+            log(`failed to update ${source} calculations`);
+            log(e);
 
             self.isUpdating = false;
 
@@ -148,9 +151,9 @@ export class Cache {
         return this.fullRankings[name];
     }
     setRankings(category: string, data: any) {
-        console.log(`setRankings: category(${category}), data(${data})`);
+        log(`setRankings: category(${category}), data(${data})`);
         if (this.rankings.bestunits[category]) {
-            console.log(this.rankings.bestunits[category]);
+            log(this.rankings.bestunits[category]);
             this.rankings.bestunits[category] = data;
             this.saveRankings();
             return true;
@@ -164,7 +167,7 @@ export class Cache {
     // TOP UNITS
     addTopUnit(category: string, name: string) {
         if (!this.rankings.topunits[category]) {
-            console.log(`Category (${category}), not found`);
+            log(`Category (${category}), not found`);
             return false;
         }
 
@@ -174,19 +177,19 @@ export class Cache {
     }
     removeTopUnit(category: string, name: string) {
         if (!this.rankings.topunits[category]) {
-            console.log(`Category (${category}), not found`);
+            log(`Category (${category}), not found`);
             return false;
         }
 
-        console.log(name)
-        console.log(this.rankings.topunits[category])
+        log(name)
+        log(this.rankings.topunits[category])
         this.rankings.topunits[category].forEach((element, index) => {
             if (element == name) {
                 this.rankings.topunits[category].splice(index, 1);
             }
         });
-        console.log("------------")
-        console.log(this.rankings.topunits[category])
+        log("------------")
+        log(this.rankings.topunits[category])
         this.saveRankings();
         return true;
     }
@@ -293,8 +296,8 @@ function getCalc(searchTerm: string, source: any) {
     if (!names || names.length == 1) 
         names = searchTerm.split(",");
 
-    console.log("Get Calculations");
-    console.log(names);
+    log("Get Calculations");
+    log(names);
     names.forEach((search, index) => {
 
         search = search.trim();
@@ -303,8 +306,8 @@ function getCalc(searchTerm: string, source: any) {
             var unit = source[key];
             var name = unit.name.toLowerCase();
             
-            //console.log(`Searching For: ${search}`);
-            //console.log(`Found Unit: ${name}`);
+            //log(`Searching For: ${search}`);
+            //log(`Found Unit: ${name}`);
             if (name.includes(search.toLowerCase())) {
                 found[found.length] = unit;
             }
@@ -316,7 +319,7 @@ function getCalc(searchTerm: string, source: any) {
 function getUnitCalc(searchTerm: string, source: any) {
     searchTerm = searchTerm.replaceAll("_", " ").toLowerCase();
 
-    console.log(`Searching Calculations For: ${searchTerm}`);
+    log(`Searching Calculations For: ${searchTerm}`);
     
     var units = Object.keys(source);
     for (let index = 0; index < units.length; index++) {

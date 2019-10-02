@@ -1,8 +1,16 @@
+//////////////////////////////////////////
+// Author: Dahmitri Stephenson
+// Discord: Jimoori#2006
+// Jimbot: Discord Bot
+//////////////////////////////////////////
+
 import * as wiki from "nodemw";
 import * as cheerio from "cheerio";
 import * as fs from "fs";
 import "../util/string-extension.js";
 import { log } from "../global.js";
+
+////////////////////////////////////////////////////////////
 
 const wikiEndpoint = "https://exvius.gamepedia.com";
 const wikiClient = new wiki({
