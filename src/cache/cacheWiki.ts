@@ -1,7 +1,7 @@
 import * as wiki from "nodemw";
 import * as cheerio from "cheerio";
 import * as fs from "fs";
-import "../string/string-extension.js";
+import "../util/string-extension.js";
 import { log } from "../global.js";
 
 const wikiEndpoint = "https://exvius.gamepedia.com";

@@ -12,7 +12,7 @@ import * as http from "http";
 import {spawn} from "cross-spawn"; 
 
 import { log, logData, escapeString } from "../global.js";
-import "../string/string-extension.js";
+import "../util/string-extension.js";
 import { cache } from "../cache/cache.js";
 import { config } from "../config/config.js";
 import { Client } from "../discord.js";
@@ -22,8 +22,8 @@ import * as BuildImage from "../ffbe/buildimage.js";
 import * as Commands from "./commands.js";
 import { FFBE } from "../ffbe/ffbewiki.js";
 import { unitSearch, unitSearchWithParameters } from "../ffbe/unit.js";
-import "../string/string-extension.js";
-import { downloadFile } from "../string/download.js";
+import "../util/string-extension.js";
+import { downloadFile } from "../util/download.js";
 
 const pinkHexCode = 0xffd1dc;
 const linkFilter = [

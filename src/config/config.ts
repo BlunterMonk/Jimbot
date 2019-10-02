@@ -6,7 +6,7 @@
 
 
 const fs = require('fs');
-import "../string/string-extension.js";
+import "../util/string-extension.js";
 const filename = './config/config.json';
 
 export class Config {

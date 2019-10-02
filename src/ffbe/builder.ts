@@ -9,7 +9,7 @@ import * as fs from "fs";
 import * as cheerio from "cheerio";
 
 import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
-import "../string/string-extension.js";
+import "../util/string-extension.js";
 import {Cache, cache} from "../cache/cache.js";
 import * as constants from "../constants.js";
 import * as https from "https";

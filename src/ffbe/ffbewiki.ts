@@ -5,7 +5,7 @@
 //////////////////////////////////////////
 
 
-import "../string/string-extension.js";
+import "../util/string-extension.js";
 import * as constants from "../constants.js";
 
 const config = require("../config/config.js");

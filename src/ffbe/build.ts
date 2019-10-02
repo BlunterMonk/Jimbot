@@ -9,7 +9,7 @@ import * as fs from "fs";
 import * as cheerio from "cheerio";
 
 import { log, logData, logDataArray, debug, trace } from "../global.js";
-import "../string/string-extension.js";
+import "../util/string-extension.js";
 import {Cache, cache} from "../cache/cache.js";
 import * as Constants from "../constants.js";
 import {Builder} from "./builder.js";

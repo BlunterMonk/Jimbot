@@ -4,7 +4,7 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
-import "../string/string-extension.js";
+import "../util/string-extension.js";
 import { readFileSync, writeFileSync } from "fs";
 
 // TODO: move editor functions from jimbot.js to editor.js

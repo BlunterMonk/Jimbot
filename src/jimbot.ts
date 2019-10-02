@@ -12,7 +12,7 @@ import * as https from "https";
 import * as http from "http";
 
 //import "./global.js";
-import "./string/string-extension.js";
+import "./util/string-extension.js";
 import { log, logData, checkString, compareStrings, escapeString } from "./global.js";
 import {Client} from "./discord.js";
 import {config} from "./config/config.js";

@@ -6,7 +6,7 @@
 
 
 const fs = require('fs');
-import "../string/string-extension.js";
+import "../util/string-extension.js";
 const filename = './data/profiles.json';
 
 export class Profile {

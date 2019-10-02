@@ -4,7 +4,7 @@ import { log, logData, logDataArray } from "../global.js";
 import * as https from "https";
 import * as Canvas from 'canvas';
 import * as Build from './build.js';
-import * as Download from '../string/download.js';
+import * as Download from '../util/download.js';
 import {FFBE} from './ffbewiki.js';
 const sizeOf = require('image-size');
 

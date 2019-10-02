@@ -5,7 +5,7 @@
 //////////////////////////////////////////
 
 import { log, logData, checkString, compareStrings, escapeString } from "../global.js";
-import "../string/string-extension.js";
+import "../util/string-extension.js";
 import * as fs from "fs";
 import * as https from "https";
 import * as http from "http";

@@ -3,7 +3,7 @@ import * as request from "request";
 import * as fs from "fs";
 
 import { log } from "../global.js";
-import "../string/string-extension.js";
+import "../util/string-extension.js";
 import * as http from "http";
 import * as https from "https";
 

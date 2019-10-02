@@ -5,7 +5,7 @@
 //////////////////////////////////////////
 
 import * as fs from "fs";
-import "../string/string-extension.js";
+import "../util/string-extension.js";
 
 class Profile {
     
