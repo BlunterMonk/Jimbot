@@ -141,11 +141,6 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
         }
     }
 
-    log("\ngetCommandString: " + command);
-    log("getSearchString: " + search);
-    log("getParameters:");
-    log(parameters);
-
     var run = "handle" + command + "(receivedMessage, search, parameters)";
 
     return {

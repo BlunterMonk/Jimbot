@@ -348,7 +348,7 @@ function getValidPage(search, callback) {
             if (title === search) {
                 id = page.pageid;
                 name = page.title;
-                callback(id, name);
+                callback(id, name, convertValueToLink(name));
                 return;
             }
         }
@@ -693,7 +693,7 @@ class ffbe {
                 const redirectRegex = /(?:.*)\[(.*)\]]/g;
                 const page = redirectRegex.exec(content);
                 log("Redirect To: " + page[1]);
-                this.queryWikiForUnit(page[1], callback);
+                this.queryWikiForUnit(page[1], parameters, callback);
                 return;
             }
 

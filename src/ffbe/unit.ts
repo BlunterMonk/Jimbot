@@ -25,6 +25,7 @@ const searchAliases = [
     { reg: /evoke/i, value: "evoke|evocation"},
     { reg: /tdh/i, value: "armed with a single weapon"},
     { reg: /tdw/i, value: "armed with two weapons"},
+    { reg: /killers/i, value: "damage against"}
 ]
 var unitDefaultSearch = "tmr|stmr";
 
@@ -304,7 +305,7 @@ function collectSkillEffects(key, skills, keyword, total) {
 }
 
 // Search unit data for skill information
-function searchUnitSkills(unit, keyword: RegExp, active) {
+function searchUnitSkills(unit, keyword: RegExp, active: boolean) {
     log(`Search Unit Skills: ${keyword}, active: ${active}`)
 
     var reg = /\([^\)]+\)/g;
@@ -314,8 +315,8 @@ function searchUnitSkills(unit, keyword: RegExp, active) {
     var keys = Object.keys(skills);
     keys.forEach(key => {
         var skill = skills[key];
-        if (active != undefined && skill.attack_type != "None") {
-            //log(`Skipping Skill: ${skill.name} - ${skill.active}`);
+        if (active === false && skill.attack_type != "None") {
+            log(`Skipping Skill: ${skill.name} - ${skill.attack_type}`);
             return;
         }
 

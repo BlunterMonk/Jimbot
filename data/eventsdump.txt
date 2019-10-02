@@ -18,6 +18,30 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20190929
+|type  = Issue
+|title = Version 3.8.1
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190930GL381PatchNotes.html
+}}
+{{Recent News
+|date  = 20190927
+|type  = Other
+|title = FFBE NYC LIVESTREAM EVENT 2019
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190927NewYorkFanFesta.html
+}}
+{{Recent News
+|date  = 20190927
+|type  = Other
+|title = 40M DL Four Rainbows Guaranteed Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019092740MDLRainbowsSummon.html
+}}
+{{Recent News
+|date  = 20190926
+|type  = Other
+|title = THE DEFINITIVE DRAGON QUEST XI EXPERIENCE
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190924DQXISFreeDemo.html
+}}
+{{Recent News
 |date  = 20190926
 |type  = Issue
 |title = Version 3.8.0

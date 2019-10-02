@@ -339,6 +339,7 @@ class client {
         }
 
         // Send results
+        log(`Message Received From: ${receivedMessage.guild.name}, ${receivedMessage.author.username}`)
         if (this.onMessageCallback)
             this.onMessageCallback(receivedMessage, content);
     }

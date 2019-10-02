@@ -66,7 +66,7 @@ export async function BuildImage(build: any): Promise<string> {
                 xStart: 0,
                 yStart: 0
             }
-            buildCompactImage(unit, compactOptions, build, (p) => {
+            buildImage(unit, list, build, (p) => {
                 resolve(p);
             });
         });

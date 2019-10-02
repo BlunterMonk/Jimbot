@@ -27,14 +27,13 @@
 			""
 		]
 	},
-	"Radiant Lightning": {
-		"name": "Radiant Lightning",
+	"Radiant Lightning (external imbue)": {
+		"name": "Radiant Lightning (external imbue)",
 		"damage": "20,162,517,953",
 		"turns": "11",
 		"type": "physical",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#48c8d330-d115-11e9-bb5b-398871b58cc1",
-		"burst": "25,970,454,000",
-		"burstTurn": "4",
+		"jp": false,
 		"wiki": "https://exvius.gamepedia.com/Radiant_Lightning",
 		"rotation": [
 			"Paradigm Shift: Commando (CD) + Defying Destiny (Lightning)",
@@ -142,6 +141,33 @@
 			"",
 			"",
 			"",
+			"",
+			""
+		]
+	},
+	"Eleven (external imbue)": {
+		"name": "Eleven (external imbue)",
+		"damage": "17,324,654,878",
+		"turns": "12",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#352d9300-e160-11e9-b677-3b8586bd2e6d",
+		"jp": false,
+		"wiki": "https://exvius.gamepedia.com/Eleven",
+		"rotation": [
+			"The Luminary Awakens (CD) + Gigaslash (CD)/Gigagash (CD) + Falcon Slash/Gigaslash (CD)",
+			"Quadraslash x 3",
+			"Flamesplitter (CD) + Falcon Slash x 2",
+			"Quadraslash x 3",
+			"Blade of Ultimate Power (LB)",
+			"Gigagash (CD)/Gigaslash (CD) + Gigaslash (CD)/Falcon Slash + Falcon Slash",
+			"Quadraslash x 3",
+			"The Luminary Awakens (CD) + Flamesplitter (CD)",
+			"Quadraslash x 3",
+			"Gilgaslash (CD) + Falcon Slash x 2",
+			"Quadraslash x 3",
+			"Blade of Ultimate Power (LB)",
+			"Flamesplitter (CD)/Gigagash (CD) + Falcon Slash/Flamesplitter (CD) + Falcon Slash",
+			"Quadraslash x 3",
 			"",
 			""
 		]
@@ -1446,34 +1472,6 @@
 			""
 		]
 	},
-	"Gilgamesh": {
-		"name": "Gilgamesh",
-		"damage": "",
-		"turns": "13",
-		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#32895cc0-9cfe-11e9-a1b8-7b53378612e4",
-		"burst": "",
-		"burstTurn": "5",
-		"wiki": "https://exvius.gamepedia.com/Gilgamesh",
-		"rotation": [
-			"Tri-Attack+2",
-			"Tri-Attack+2",
-			"Tri-Attack+2",
-			"Gilgamesh Transform (LB)",
-			"Secret Sword Art - Excalibur",
-			"Secret Sword Art - Excalibur",
-			"Secret Sword Art - Excalibur",
-			"Secret Sword Art - Excalibur",
-			"Gilgamesh Transform (LB)",
-			"Secret Sword Art - Excalibur",
-			"Secret Sword Art - Excalibur",
-			"Secret Sword Art - Excalibur",
-			"Secret Sword Art - Excalibur",
-			"",
-			"",
-			""
-		]
-	},
 	"Madam Edel (JP)": {
 		"name": "Madam Edel (JP)",
 		"damage": "40,548,770,279",
@@ -1668,6 +1666,33 @@
 			""
 		]
 	},
+	"Mordegon": {
+		"name": "Mordegon",
+		"damage": "16,118,853,484",
+		"turns": "15",
+		"type": "magic",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#071e4cb0-e22e-11e9-b677-3b8586bd2e6d",
+		"jp": false,
+		"wiki": "https://exvius.gamepedia.com/Mordegon",
+		"rotation": [
+			"Uncanny Strength + Winter's Might (CD) + Cold Cloud",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Winter's Might (CD) + Freeze Out x 2",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Winter's Might (CD) + Freeze Out x 2",
+			"Uncanny Strength + Freeze Out x 2",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			"Freeze Out x 3",
+			""
+		]
+	},
 	"Christine": {
 		"name": "Christine",
 		"damage": "15,981,510,451",
@@ -1694,6 +1719,33 @@
 			"Eternal Winter (CD) + Snow Surge (CD) + Absolute Zero + Cold Snap",
 			"Snow Burial + Piercing Chill x 3",
 			"Snow Burial + Piercing Chill x 3"
+		]
+	},
+	"Veronica (spark chain)": {
+		"name": "Veronica (spark chain)",
+		"damage": "14,932,441,275",
+		"turns": "18",
+		"type": "magic",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#34436170-e15d-11e9-b677-3b8586bd2e6d",
+		"jp": false,
+		"wiki": "https://exvius.gamepedia.com/Veronica",
+		"rotation": [
+			"Echo Aura (CD) + Kaboomle",
+			"Kaboomle x 3",
+			"Kaboomle x 3",
+			"Ring of Wrack and Ruin (CD) + Kaboomle",
+			"Mighty Magic Burst (LB)",
+			"Magic Burst x 3",
+			"Echo Aura (CD) + Magic Burst",
+			"Magic Burst x 3",
+			"Magic Burst x 3",
+			"Magic Burst x 3",
+			"Ring of Wrack and Ruin (CD) + Magic Burst x 2",
+			"Mighty Magic Burst (LB)",
+			"Echo Aura (CD) + Magic Burst x 2",
+			"Magic Burst x 3",
+			"Magic Burst x 3",
+			"Magic Burst x 3"
 		]
 	},
 	"Circe": {
@@ -2246,32 +2298,6 @@
 			""
 		]
 	},
-	"Immortal Flame Katy": {
-		"name": "Immortal Flame Katy",
-		"damage": "",
-		"turns": "15",
-		"type": "magic",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#7db98640-90bd-11e9-a1b8-7b53378612e4",
-		"wiki": "https://exvius.gamepedia.com/Immortal_Flame_Katy",
-		"rotation": [
-			"Jackpot",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice + Tornado",
-			"Jackpot",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice + Tornado",
-			"Jackpot",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice x 2 + Tornado",
-			"Raging Ice + Tornado",
-			""
-		]
-	},
 	"Black Mage Vivi": {
 		"name": "Black Mage Vivi",
 		"damage": "",
@@ -2470,8 +2496,7 @@
 	},
 	"A.I. Katy (pending)": {
 		"name": "A.I. Katy (pending)",
-		"damage": "hell",
-		"turns": "no",
+		"damage": "no",
 		"type": "hybrid",
 		"url": null,
 		"jp": false,

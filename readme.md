@@ -86,3 +86,8 @@ Make sure VS2015 is installed, and set it in npm
 ```
 npm config set msvs_version 2015 --global
 ```
+
+make sure servece creater is installed to run the bot as a service
+```
+npm install -g qckwinsvc
+```
