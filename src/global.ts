@@ -8,22 +8,28 @@ import {logger, jsonWithTimestamp } from "./util/logger.js";
 
 ////////////////////////////////////////////////////////////
 
-export function log(...data: any[]) {
+function printf(...msg: any[]): string {
     let text = "";
-    data.forEach((t,i) => {
+    msg.forEach((t,i) => {
         if (i > 0) text += `, `
         text += JSON.stringify(t);
     });
-    logger.info(text);
+    return text;
+}
+export function log(...data: any[]) {
+    logger.info(printf(data));
 }
 export function logData(msg: string, data: any) {
     logger.info(`${msg}, ${JSON.stringify(data)}`);
 }
-export function debug(data: any) {
-    logger.debug(data);
+export function debug(...data: any[]) {
+    logger.debug(printf(data));
 }
-export function trace(data: any) {
-    logger.silly(data);
+export function trace(...data: any[]) {
+    logger.silly(printf(data));
+}
+export function error(...data: any[]) {
+    logger.error(printf(data));
 }
 export function logDataArray(data: any[]) {
     if (data.length == 0) {

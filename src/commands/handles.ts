@@ -15,7 +15,7 @@ import "../util/string-extension.js";
 import * as Build from "../ffbe/build.js";
 import * as BuildImage from "../ffbe/buildimage.js";
 import * as Commands from "./commands.js";
-import { log, logData, escapeString } from "../global.js";
+import { log, logData, error, escapeString } from "../global.js";
 import { cache } from "../cache/cache.js";
 import { config } from "../config/config.js";
 import { Client } from "../discord.js";
@@ -1451,6 +1451,9 @@ function handleUnitQuery(receivedMessage, command, search) {
     if (!command)
         return false;
 
+    if (!search)
+        search = "";
+
     //log(`${command} Doesn't Exists`);
     var s = command.toLowerCase();
     //log(`Search: ${search}`);
@@ -1800,6 +1803,8 @@ export function handle(receivedMessage, com: Commands.CommandObject): boolean {
         eval(com.run);
     } catch (e) {
         log("Command doesn't exist", e);
+        console.log(e);
+        error(e)
 
         if (Client.validate(receivedMessage, "emote")) {
             handleEmote(receivedMessage);

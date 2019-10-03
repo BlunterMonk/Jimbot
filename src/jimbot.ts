@@ -7,7 +7,7 @@
 import "./util/string-extension.js";
 import * as Editor from "./editor/Edit.js";
 import * as Commands from "./commands/commands.js";
-import { log, logData } from "./global.js";
+import { log, logData, error } from "./global.js";
 import { Client } from "./discord.js";
 import { config } from "./config/config.js";
 import { cache } from "./cache/cache.js";
@@ -111,7 +111,8 @@ function onMessage(receivedMessage, content) {
     try {
         handle(receivedMessage, com);
     } catch (e) {
-        log(e);
-        log("Command doesn't exist");
+        log("Command doesn't exist: ", e);
+        console.log(e);
+        error(e);
     }
 }
