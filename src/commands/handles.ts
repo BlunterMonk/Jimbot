@@ -1334,7 +1334,7 @@ function handleKit(receivedMessage, search, parameters, active) {
     }
 
     if (parameters.length == 0)
-        parameters[0] = "_";
+        parameters[0] = "";
         
     var unit = unitSearchWithParameters(id, active, parameters);
     if (!unit) return;

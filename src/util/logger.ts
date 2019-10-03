@@ -17,7 +17,7 @@ export const jsonWithTimestamp = combine(
 ); 
 
 var options = {
-    level: "debug",
+    level: "silly",
     // format: winston.format.json(),
     format: combine(
         timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),

@@ -18,6 +18,66 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20191002
+|type  = Unit
+|title = Ability Awakening Update!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191001AbilityAwakeningBatch32.jpg
+}}
+{{Recent News
+|date  = 20191001
+|type  = Event
+|title = The Cyclone
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191001FFIITheCyclone.jpg
+}}
+{{Recent News
+|date  = 20191001
+|type  = Event
+|title = Wild Rose Firion
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191001CGFirionIntroQuest.jpg
+}}
+{{Recent News
+|date  = 20191001
+|type  = Unit
+|title = Featured Summon FINAL FANTASY II
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191001FFIICGFirionFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20191001
+|type  = Event
+|title = Vs. Raid! Forces of Darkness, Vs. Indignus, Vs. Calasmos
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191001DQXISTrialIndignusCalasmus.jpg
+}}
+{{Recent News
+|date  = 20191001
+|type  = Other
+|title = Exchange Shop (WR.Firion/DK.Leon)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191001FFIIExchangeShop.html
+}}
+{{Recent News
+|date  = 20191001
+|type  = Other
+|title = Introducing the 5★ Guaranteed (30% Featured) Ticket (FFII) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191001FFIIGuaranteed30FeaturedBanner.html
+}}
+{{Recent News
+|date  = 20191001
+|type  = Other
+|title = Monthly 5★ Select Summon Tickets
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191001OctoberFreeSelectSummonTicket.html
+}}
+{{Recent News
+|date  = 20191001
+|type  = Other
+|title = Guaranteed 5★ Special Summon Ticket
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201910015StarGuaranteedTicket.html
+}}
+{{Recent News
+|date  = 20191001
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191003Maintenance.html
+}}
+{{Recent News
 |date  = 20190929
 |type  = Issue
 |title = Version 3.8.1
@@ -35,6 +95,7 @@
 |title = 40M DL Four Rainbows Guaranteed Summon
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019092740MDLRainbowsSummon.html
 }}
+</onlyinclude>
 {{Recent News
 |date  = 20190926
 |type  = Other
@@ -95,7 +156,6 @@
 |title = Introducing the DQ XI S Special Unit Summoning Key (Silver) and DQ XI S Special Unit Summoning Key (Gold)
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190924DQXISpecialLimitedKeyExchange.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20190924
 |type  = Maintenance
