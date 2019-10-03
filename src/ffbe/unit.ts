@@ -7,7 +7,7 @@
 import "../util/string-extension.js";
 import * as fs from "fs";
 import * as constants from "../constants.js";
-import { log, checkString } from "../global.js";
+import { log, checkString, trace } from "../global.js";
 
 ////////////////////////////////////////////////////////////
 
@@ -79,53 +79,50 @@ function equipToString(equip) {
                     effects += `${effect}\n`;
             });
         }
-        
-        if (equip.stats) {
-            var statKeys = Object.keys(equip.stats);
-            statKeys.forEach(key => {
-                const stat = equip.stats[key];
-                if (!stat) return;
-
-                if (constants.statParameters.includes(key.toLowerCase())) {
-                    log(`${key}; ${stat}, `);
-                    stats += `${key}: ${stat}, `;
-                } else {
-                    stats += `\n${key.replaceAll("_", " ").toTitleCase(" ")}:\n`;
-                    var substatKeys = Object.keys(stat);
-                    substatKeys.forEach(subkey => {
-                        const sub = stat[subkey];
-                        if (!sub) return;
-            
-                        log(`${subkey}; ${sub}, `);
-                        stats += `${subkey}: ${sub}, `;
-                    });
-                }
-            });
-        }
-
-        if (equip.skills) {
-            var skillKeys = Object.keys(equip.skills);
-            skillKeys.forEach(key => {
-                const skill = equip.skills[key];
-                if (!skill) return;
-
-                skill.effects.forEach(eff => {
-                    log(`${key}: ${eff}`);
-                    effects += `${eff}\n`;
-                });
-            });
-        }
-
-        if (equip.slot === "Weapon")
-            slot = constants.weaponList[equip.type_id-1].toTitleCase(" ");
-        else
-            slot = equip.slot;
     }
     
-    if (equip.type == "MATERIA") {
-        effects += `"*${equip.strings.desc_short[0]}"*\n`;
-        slot = "Materia";
+    if (equip.stats) {
+        var statKeys = Object.keys(equip.stats);
+        statKeys.forEach(key => {
+            const stat = equip.stats[key];
+            if (!stat) return;
+
+            if (constants.statParameters.includes(key.toLowerCase())) {
+                trace(`${key}; ${stat}, `);
+                stats += `${key}: ${stat}, `;
+            } else {
+                stats += `\n${key.replaceAll("_", " ").toTitleCase(" ")}:\n`;
+                var substatKeys = Object.keys(stat);
+                substatKeys.forEach(subkey => {
+                    const sub = stat[subkey];
+                    if (!sub) return;
+        
+                    trace(`${subkey}; ${sub}, `);
+                    stats += `${subkey}: ${sub}, `;
+                });
+            }
+        });
     }
+
+    if (equip.skills) {
+        var skillKeys = Object.keys(equip.skills);
+        skillKeys.forEach(key => {
+            const skill = equip.skills[key];
+            if (!skill) return;
+
+            skill.effects.forEach(eff => {
+                trace(`${key}: ${eff}`);
+                effects += `${eff}\n`;
+            });
+        });
+    }
+
+    if (equip.slot === "Weapon")
+        slot = constants.weaponList[equip.type_id-1].toTitleCase(" ");
+    else if (equip.type == "MATERIA")
+        slot = "Materia";
+    else
+        slot = equip.slot;
 
     return {
         name: `${equip.name} - ${slot}`,
@@ -212,8 +209,10 @@ function getUnitData(id) {
         log("Could not find unit data in GL");
 
         let jpList = JSON.parse(fs.readFileSync(`data/units/units-jp.json`).toString());
-        if (!jpList[id])
+        if (!jpList[id]) {
+            log("Could not find unit data in JP");
             return null;
+        }
 
         unit = jpList[id];
     }
@@ -244,12 +243,11 @@ function collectSkillEffects(key, skills, keyword, total) {
         if (checkString(effect, ignoreEffectRegex))
             continue;
         
-        log(`Skill Effect ${skill.name}: ${effect}, Keyword: ${keyword}, all: ${all}`);
+        trace(`Skill Effect ${skill.name}: ${effect}, Keyword: ${keyword}, all: ${all}`);
 
         // Attempt to match the effect information with the search keywords.
         if (all || checkString(effect, keyword)) {
-            log(`adding skill`);
-            log(total);
+            trace(`adding skill: `, total);
 
             // Find any subsequent ability ID's within the effect information and get their effects as well.
             let match = reg.exec(effect);
