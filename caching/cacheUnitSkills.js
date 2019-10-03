@@ -199,18 +199,22 @@ function getSkillsFromUnit(unit, unitId) {
             let match = reg.exec(effect);
             while(match) {
                 //log(match);
-                extraKeys.push(match[0].replace("(", "").replace(")", ""));
+                let k = match[0].replace("(", "").replace(")", "");
+                let p = `${key}`;
+                extraKeys.push({key: k, parent: p});
                 match = reg.exec(effect);
             }
         });
     });
     //log(`\nExtra Keys`);
     //log(extraKeys);
-    extraKeys.forEach(key => {
-        if (!skillList[key] || skillData[key]) return;
+    extraKeys.forEach(extra => {
+        if (!skillList[extra.key] || skillData[extra.key]) return;
 
         //log(skillList[key]);
-        skillData[key] = trimSkill(skillList[key], "");
+        let trimmed = trimSkill(skillList[extra.key], "");
+        trimmed.parentID = extra.parent;
+        skillData[extra.key] = trimmed;
     });
 
     let enhancements = getEnhancementsFromUnit(parseInt(unitId), skillList, JP);

@@ -237,6 +237,8 @@ function collectSkillEffects(key, skills, keyword, total) {
     
     let added = false;
     var reg = /\([^\)]+\)/g;
+    let tempText = "";
+    let skillMatches = false;
     for (let ind = 0; ind < skill.effects.length; ind++) {
 
         const effect = skill.effects[ind]
@@ -247,7 +249,10 @@ function collectSkillEffects(key, skills, keyword, total) {
 
         // Attempt to match the effect information with the search keywords.
         if (all || checkString(effect, keyword)) {
+            skillMatches = true;
+
             trace(`adding skill: `, total);
+            total += `${effect.replace(/\s\([0-9]+\)/g, "")}.\n`;
 
             // Find any subsequent ability ID's within the effect information and get their effects as well.
             let match = reg.exec(effect);
@@ -256,46 +261,23 @@ function collectSkillEffects(key, skills, keyword, total) {
 
                 let k = match[0].replace("(", "").replace(")", "");
                 let subskill = skills[k];
-                if (k != key && subskill && subskill.name.includes(skill.name) && !checkString(subskill.effects[0], ignoreEffectRegex)) {
+                if (k != key && subskill && subskill.name.includes(skill.name) 
+                    && !checkString(subskill.effects[0], ignoreEffectRegex)) {
+
                     //log(match);
                     //log(`Sub Skill: ${subskill.name}, Effect: ${subskill.effects}`);
                     subskill.effects.forEach(sub => {
-                        total += `${sub}\n`;
+                        total += `${sub.replace(/\s\([0-9]+\)/g, "")}\n`;
                         added = true;
                     });
+
                     //total += collectSkillEffects(k, skills, keyword, total);
                 }
 
                 match = reg.exec(effect);
             } while(match);
-
-            // if the skill lacks any dependant skill information, add it to the total.
-            // if (!added) {
-                total += `${effect}\n`;
-                added = true;
-            // }
         }
     }
-
-    // If the search failed to find any effect data matching the keywords, 
-    // attempt to match the skill description
-    /*
-    if (!added) {
-        if (skill.strings.desc_short) {
-            var desc = skill.strings.desc_short[0];
-            if (desc && checkString(desc, keyword)) {
-                //log(`Description: ${desc}, keyword: ${keyword}`);
-                //log(`Effects`);
-                //log(skill.effects);
-                skill.effects.forEach(sub => {
-                    total += `${sub}\n`;
-                    added = true;
-                });
-                //total += `*"${desc}"*\n`;
-            }
-        }
-    }
-    */
         
     return total;
 }
@@ -311,7 +293,8 @@ function searchUnitSkills(unit, keyword: RegExp, active: boolean) {
     var keys = Object.keys(skills);
     keys.forEach(key => {
         var skill = skills[key];
-        if (active === false && skill.attack_type != "None") {
+        var isPassive = skill.attack_type != "None" && !skill.cost;
+        if (active === false && isPassive) {
             log(`Skipping Skill: ${skill.name} - ${skill.attack_type}`);
             return;
         }
@@ -331,29 +314,39 @@ function searchUnitSkills(unit, keyword: RegExp, active: boolean) {
 
         if (total.empty()) return;
 
+        let unlocked = "";
+        // if (skill.parentID) {
+        //     let parent = `${skills[skill.parentID].name} (${skill.parentID})`;
+        //     unlocked = ` - Unlocked By: ${parent}`;
+        // }
         found[found.length] = {
-            name: skill.name,
+            name: `${skill.name} - (${key}) - ${isPassive ? "Passive" : "Active"}`,
             value: total
         };
     });
         
     // Search LB
     if (LB && (active === undefined || active == true)) {
-        var n = found.length;
-        var s = "";
+        let n = found.length;
+        let s = "";
+        let f = false;
 
-        var all = checkString(LB.name, keyword);
+        let all = checkString(LB.name, keyword);
         log(`LB Name: ${LB.name}, All: ${all}`);
 
         LB.max_level.forEach(effect => {
+            s += `*${effect.replace(/\s\([0-9]+\)/g, "")}*\n`;
             if (all || checkString(effect, keyword)) {
-                s += `*${effect}*\n`;
-                found[n] = {
-                    name: `${LB.name} - MAX`,
-                    value: s
-                };
+                f = true;
             }
         });
+
+        if (f) {
+            found[n] = {
+                name: `${LB.name} - MAX`,
+                value: s
+            };
+        }
     }
 
     //log(`Searched Skills For: ${keyword}`);
