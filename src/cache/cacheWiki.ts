@@ -31,8 +31,7 @@ function loadRankingsList(saveLocation, callback, error) {
         }
         
         if (redirect) {
-            log("Redirect Info: ");
-            log(redirect);
+            log("Redirect Info: ", redirect);
         }
 
         wikiClient.parse(content, search, function (err, xml, images) {
