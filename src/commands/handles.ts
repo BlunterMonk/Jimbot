@@ -818,7 +818,7 @@ export function handleBuild(receivedMessage, search, parameters) {
     .catch((e) => {
         console.error(e);
         log("Build Failed");
-        log(e);
+        error(e.message, e.stack);
         log(`Unable to find build: ${search}`);    
     });
 }

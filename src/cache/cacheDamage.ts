@@ -103,7 +103,8 @@ function authorize(credentials, forced, sourceID, saveLocation, callback, finish
 
             if (forced == false && oldUnits[key] 
                 && units[key].damage == oldUnits[key].damage
-                && units[key].burst == oldUnits[key].burst) {
+                && units[key].burst == oldUnits[key].burst
+                && units[key].url == oldUnits[key].url) {
                     
                 log(`Skipping Unit: ${key}`);
                 units[key] = oldUnits[key];
@@ -228,7 +229,7 @@ function GetUnitComparison(auth, sourceID, range, callback) {
                             damage: row[2],
                             turns: row[3],
                             type: "physical",
-                            url: null,
+                            url: "",
                             jp: pJP
                         }
                     } else if (!pJP) {
@@ -243,7 +244,7 @@ function GetUnitComparison(auth, sourceID, range, callback) {
                             damage: row[7],
                             turns: row[8],
                             type: "magic",
-                            url: null,
+                            url: "",
                             jp: mJP
                         }
                     } else if (!mJP) {
@@ -258,7 +259,7 @@ function GetUnitComparison(auth, sourceID, range, callback) {
                             damage: row[12],
                             turns: row[13],
                             type: "hybrid",
-                            url: null,
+                            url: "",
                             jp: hJP
                         }
                     } else if (!hJP) {
