@@ -294,7 +294,7 @@ function searchUnitSkills(unit, keyword: RegExp, active: boolean) {
     keys.forEach(key => {
         var skill = skills[key];
         var isPassive = skill.attack_type != "None" && !skill.cost;
-        if (active === false && isPassive) {
+        if ((active === false && !isPassive) || (active === true && isPassive)) {
             log(`Skipping Skill: ${skill.name} - ${skill.attack_type}`);
             return;
         }

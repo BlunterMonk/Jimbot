@@ -4,6 +4,7 @@
 	"defaultSuccessEmote": "✅",
 	"defaultFailureEmote": "❌",
 	"unitAliases": {
+		"11": "eleven",
 		"hot_gay_dad": "ignacio",
 		"turtle": "ryunan",
 		"asswell": "Aloha Lasswell",
@@ -134,7 +135,11 @@
 		"murdergon": "mordegon",
 		"shadowlord": "shadow lord",
 		"shadowspacelord": "shadow lord",
-		"jan-pinyon": "ジャン＝ピニヨン"
+		"jan-pinyon": "ジャン＝ピニヨン",
+		"murder_g": "mordegon",
+		"the_big_suk": "tsukiko",
+		"cg_shantotto": "連邦の黒い悪魔シャントット",
+		"pecil": "聖騎士セシル"
 	},
 	"filetypes": [
 		".jpg",
