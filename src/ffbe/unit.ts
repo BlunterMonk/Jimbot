@@ -69,6 +69,7 @@ function equipToString(equip) {
     var effects = "";
     var slot = "";
     var stats = "";
+    var fields = [];
 
     log(`Equip Name: ${equip.name}, Type: ${equip.type}`);
 
@@ -110,10 +111,16 @@ function equipToString(equip) {
             const skill = equip.skills[key];
             if (!skill) return;
 
+            let subskill = "";
             skill.effects.forEach(eff => {
                 trace(`${key}: ${eff}`);
-                effects += `${eff}\n`;
+                subskill += `${eff}\n`;
             });
+
+            fields[fields.length] = {
+                name: `${skill.name}`,
+                value: subskill
+            };
         });
     }
 
@@ -124,10 +131,12 @@ function equipToString(equip) {
     else
         slot = equip.slot;
 
-    return {
+    fields[fields.length] = {
         name: `${equip.name} - ${slot}`,
         value: `${stats}\n${effects}`
-    }
+    };
+
+    return fields;
 }
 
 // Transform array into frame data string
@@ -314,7 +323,7 @@ function searchUnitSkills(unit, keyword: RegExp, active: boolean) {
 
         if (total.empty()) return;
 
-        let unlocked = "";
+        // let unlocked = "";
         // if (skill.parentID) {
         //     let parent = `${skills[skill.parentID].name} (${skill.parentID})`;
         //     unlocked = ` - Unlocked By: ${parent}`;
@@ -384,7 +393,7 @@ function searchUnitItems(unit, keyword: RegExp) {
         var n = found.length;
 
         log(`TMR Name: ${TMR.name}, Type: ${TMR.type}`);
-        found[n] = equipToString(TMR);
+        found = found.concat(equipToString(TMR));
     }
 
     // Collect information for unit STMR
@@ -393,7 +402,7 @@ function searchUnitItems(unit, keyword: RegExp) {
         var n = found.length;
 
         log(`STMR Name: ${STMR.name}, Type: ${STMR.type}`);
-        found[n] = equipToString(STMR);
+        found = found.concat(equipToString(STMR));
     }
 
     return found;
