@@ -316,6 +316,26 @@ function handleGif(receivedMessage, search, parameters) {
         Client.sendImage(receivedMessage, filename);
     });
 }
+function handleCg(receivedMessage, search, parameters) {
+    log("Searching CG for: " + search);
+    
+    search = search.replaceAll("_", " ");
+
+    const filename = `./cg/${search}.mp4`;
+    if (!fs.existsSync(filename)) {
+        log("CG Animation Doesn't Exist: ", filename);
+        return;
+    }
+
+    const file = `${search}.mp4`;
+    const attachment = new Discord.Attachment(filename, file);
+    var embed = new Discord.RichEmbed()
+            .attachFile(attachment)
+            .setColor(pinkHexCode)
+            .setImage(`attachment://${file}`);
+
+    Client.send(receivedMessage, attachment);
+}
 function handleSprite(receivedMessage, search, parameters) {
 
     var unit = getUnitKey(search);
