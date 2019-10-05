@@ -70,14 +70,12 @@ class client {
         const guildId = guild.id;
         
         this.guildSettings[guildId] = new gs.GuildSettings(name, guildId);
-        //log("Loaded Guild");
-        //log(this.guildSettings[guildId]);
+        //log("Loaded Guild", this.guildSettings[guildId]);
     }
     unloadGuild(guild: any) {
         const guildId = guild.id;
         if (this.guildSettings[guildId]) {
-            //log("Unloaded Guild");
-            //log(this.guilds[guildId]);
+            //log("Unloaded Guild", this.guilds[guildId]);
             delete this.guildSettings[guildId];
         }
     }
@@ -97,8 +95,7 @@ class client {
             sent: sent,
             time: new Date()
         };
-        //log("Cached Message");
-        //log(botMessages[botMessages.length - 1]);
+        //log("Cached Message", botMessages[botMessages.length - 1]);
     }
 
     // Send message to the destination based on the reqested location
@@ -306,8 +303,7 @@ class client {
         // Replace shortcuts if requested
         const shortcut = this.getShortcut(guildId, command.toLowerCase());
         if (shortcut) {
-            log(`Replacing Shortcut with new command, shortcut: ${shortcut}`);
-            log(shortcut);
+            log(`Replacing Shortcut with new command, shortcut: `, shortcut);
 
             let param = "";
             if (shortcut.parameters) {
@@ -340,8 +336,7 @@ class client {
 
     // Delete bot generated messages if the user deleted their request
     onMessageDelete(deletedMessage) {
-        log("Message Deleted");
-        log(deletedMessage.id);
+        log("Message Deleted: ", deletedMessage.id);
     
         for (var i = 0; i < this.botMessages.length; i++) {
             var msg = this.botMessages[i];

@@ -10,7 +10,7 @@ import * as Canvas from 'canvas';
 import * as Build from './build.js';
 import * as Download from '../util/download.js';
 import { log, logDataArray } from "../global.js";
-import { sizeOf } from 'image-size';
+const sizeOf = require('image-size');
 
 ////////////////////////////////////////////////////////////
 

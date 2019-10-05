@@ -83,8 +83,7 @@ export class Cache {
             self.isUpdating = false;
         }
         var fail = function(e) {
-            log(`failed to update ${source} calculations`);
-            log(e);
+            log(`failed to update ${source} calculations`, e);
 
             self.isUpdating = false;
 
@@ -181,14 +180,12 @@ export class Cache {
             return false;
         }
 
-        log(name)
-        log(this.rankings.topunits[category])
+        log("removeTopUnit", name, this.rankings.topunits[category])
         this.rankings.topunits[category].forEach((element, index) => {
             if (element == name) {
                 this.rankings.topunits[category].splice(index, 1);
             }
         });
-        log("------------")
         log(this.rankings.topunits[category])
         this.saveRankings();
         return true;
@@ -296,8 +293,7 @@ function getCalc(searchTerm: string, source: any) {
     if (!names || names.length == 1) 
         names = searchTerm.split(",");
 
-    log("Get Calculations");
-    log(names);
+    log("Get Calculations", names);
     names.forEach((search, index) => {
 
         search = search.trim();

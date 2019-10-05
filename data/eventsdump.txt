@@ -18,6 +18,12 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20191003
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191003PostMaintenanceExtended.html
+}}
+{{Recent News
 |date  = 20191002
 |type  = Unit
 |title = Ability Awakening Update!
@@ -71,6 +77,7 @@
 |title = Guaranteed 5★ Special Summon Ticket
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201910015StarGuaranteedTicket.html
 }}
+</onlyinclude>
 {{Recent News
 |date  = 20191001
 |type  = Maintenance
@@ -95,7 +102,6 @@
 |title = 40M DL Four Rainbows Guaranteed Summon
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019092740MDLRainbowsSummon.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20190926
 |type  = Other
