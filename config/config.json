@@ -3,6 +3,7 @@
 	"defaultPrefix": "!",
 	"defaultSuccessEmote": "✅",
 	"defaultFailureEmote": "❌",
+	"loglevel": "debug",
 	"unitAliases": {
 		"11": "eleven",
 		"hot_gay_dad": "ignacio",
