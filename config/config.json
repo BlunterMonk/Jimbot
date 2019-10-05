@@ -125,7 +125,7 @@
 		"hot_big_dad": "ignacio",
 		"hot_bi_dad": "ignacio",
 		"firelord": "veritas of the flame",
-		"god": "ignacio",
+		"god": "rizer",
 		"mustache": "wilhelm",
 		"kydia": "pure summoner rydia",
 		"ai_katy": "a.i. katy",
@@ -139,7 +139,8 @@
 		"murder_g": "mordegon",
 		"the_big_suk": "tsukiko",
 		"cg_shantotto": "連邦の黒い悪魔シャントット",
-		"pecil": "聖騎士セシル"
+		"pecil": "聖騎士セシル",
+		"overpowered": "rizer"
 	},
 	"filetypes": [
 		".jpg",
@@ -200,6 +201,10 @@
 			"parameters": [
 				"tmr"
 			]
+		},
+		"bestcg": {
+			"command": "cg",
+			"search": "firion"
 		}
 	},
 	"authorizedUsers": {

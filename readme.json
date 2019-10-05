@@ -39,8 +39,8 @@
             "value": "- **?equip** *[name]*\n- example: **?equip Asterisk**"
         },
         {
-            "name": "Get Unit Sprite",
-            "value": "- **?sprite** *[name]*\n- example: **?sprite Esther**"
+            "name": "Get CG Animation",
+            "value": "- **?cg** *[unit_name]* \""
         },
         {
             "name": "Get Unit GIFs",
@@ -48,7 +48,7 @@
         },
         {
             "name": "Get Unit Calculations",
-            "value": "- **?dpt** *[unit name -or- category]* \"[limit]\"\n- **?burst** *[unit name -or- category]* \"[limit]\"\n- optional: the amount of results to return, default is 5.\n- example: **?dpt Esther**\nYou can search for multiple units at once by separating the names with a pipe(|) character."
+            "value": "- **?dpt** *[unit name -or- category]* \"[limit]\"\n- **?burst** *[unit name -or- category]* \"[limit]\"\n- optional: the amount of results to return, default is 5.\n- example: **?dpt Esther**\nYou can search for multiple units at once by separating the names with a pipe( | ) character."
         },
         {
             "name": "Get Unit Rotation",

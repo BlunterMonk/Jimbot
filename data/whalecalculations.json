@@ -33,27 +33,8 @@
 		"damage": "20,797,975,395",
 		"turns": "11",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#b6ac2480-e6fd-11e9-b677-3b8586bd2e6d",
-		"jp": false,
-		"wiki": "https://exvius.gamepedia.com/Radiant_Lightning",
-		"rotation": [
-			"Paradigm Shift: Commando (CD) + Defying Destiny (Lightning)",
-			"Zantetsuken (LB)",
-			"Relentless Assault x 2",
-			"Relentless Assault x 2",
-			"Relentless Assault x 2",
-			"Zantetsuken (LB)",
-			"Relentless Assault x 2",
-			"Relentless Assault x 2",
-			"Relentless Assault x 2",
-			"Zantetsuken (LB)",
-			"Relentless Assault x 2",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
+		"url": "",
+		"jp": false
 	},
 	"Regina (finisher)": {
 		"name": "Regina (finisher)",
@@ -89,27 +70,8 @@
 		"damage": "18,190,887,622",
 		"turns": "12",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#352d9300-e160-11e9-b677-3b8586bd2e6d",
-		"jp": false,
-		"wiki": "https://exvius.gamepedia.com/Eleven",
-		"rotation": [
-			"The Luminary Awakens (CD) + Gigaslash (CD)/Gigagash (CD) + Falcon Slash/Gigaslash (CD)",
-			"Quadraslash x 3",
-			"Flamesplitter (CD) + Falcon Slash x 2",
-			"Quadraslash x 3",
-			"Blade of Ultimate Power (LB)",
-			"Gigagash (CD)/Gigaslash (CD) + Gigaslash (CD)/Falcon Slash + Falcon Slash",
-			"Quadraslash x 3",
-			"The Luminary Awakens (CD) + Flamesplitter (CD)",
-			"Quadraslash x 3",
-			"Gilgaslash (CD) + Falcon Slash x 2",
-			"Quadraslash x 3",
-			"Blade of Ultimate Power (LB)",
-			"Flamesplitter (CD)/Gigagash (CD) + Falcon Slash/Flamesplitter (CD) + Falcon Slash",
-			"Quadraslash x 3",
-			"",
-			""
-		]
+		"url": "",
+		"jp": false
 	},
 	"Reberta": {
 		"name": "Reberta",
@@ -290,8 +252,8 @@
 		"url": "",
 		"jp": false
 	},
-	"Wild Rose Swordsman Firion": {
-		"name": "Wild Rose Swordsman Firion",
+	"Wild Rose Firion": {
+		"name": "Wild Rose Firion",
 		"damage": "13,062,820,084",
 		"turns": "13",
 		"type": "physical",
@@ -1279,27 +1241,8 @@
 		"damage": "",
 		"turns": "6",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#125039d0-9cfc-11e9-a1b8-7b53378612e4",
-		"jp": false,
-		"wiki": "https://exvius.gamepedia.com/Luneth",
-		"rotation": [
-			"Blade Torrent",
-			"Blade Torrent",
-			"Swordshower",
-			"Blade Torrent",
-			"Blade Torrent",
-			"Swordshower",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
+		"url": "",
+		"jp": false
 	},
 	"Aileen": {
 		"name": "Aileen",
@@ -1369,7 +1312,7 @@
 	},
 	"CG Onion Knight": {
 		"name": "CG Onion Knight",
-		"damage": "",
+		"damage": "24,760,055,347",
 		"turns": "12",
 		"type": "physical",
 		"url": "",

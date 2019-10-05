@@ -320,6 +320,10 @@ function handleCg(receivedMessage, search, parameters) {
     log("Searching CG for: " + search);
     
     search = search.replaceAll("_", " ");
+    if (search == "rain")
+        search = "SPOILER_rain";
+    else if (search == "spoiler lasswell" || search == "king lasswell" || search == "chairman lasswell")
+        search = "SPOILER_lasswell";
 
     const filename = `./cg/${search}.mp4`;
     if (!fs.existsSync(filename)) {
