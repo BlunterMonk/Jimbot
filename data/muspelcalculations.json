@@ -1,8 +1,29 @@
 {
 	"Radiant Lightning": {
 		"name": "Radiant Lightning",
-		"damage": "13,057,684,574 ",
+		"damage": "14,787,206,587 ",
 		"turns": "10",
+		"type": "physical",
+		"url": null
+	},
+	"Dark Knight Leon": {
+		"name": "Dark Knight Leon",
+		"damage": "14,046,981,149",
+		"turns": "8",
+		"type": "physical",
+		"url": null
+	},
+	"Riku": {
+		"name": "Riku",
+		"damage": "13,652,530,809 ",
+		"turns": "8",
+		"type": "physical",
+		"url": null
+	},
+	"Eleven": {
+		"name": "Eleven",
+		"damage": "13,020,073,389 ",
+		"turns": "14",
 		"type": "physical",
 		"url": null
 	},
@@ -27,6 +48,20 @@
 		"type": "physical",
 		"url": null
 	},
+	"Sephiroth (KH)": {
+		"name": "Sephiroth (KH)",
+		"damage": "11,408,167,378 ",
+		"turns": "10",
+		"type": "physical",
+		"url": null
+	},
+	"Shadow Lord": {
+		"name": "Shadow Lord",
+		"damage": "10,181,319,816",
+		"turns": "10",
+		"type": "physical",
+		"url": null
+	},
 	"Aloha Lasswell": {
 		"name": "Aloha Lasswell",
 		"damage": "9,721,994,395 ",
@@ -41,8 +76,22 @@
 		"type": "physical",
 		"url": null
 	},
-	"Monk Sabin": {
-		"name": "Monk Sabin",
+	"Sora": {
+		"name": "Sora",
+		"damage": "7,993,737,558 ",
+		"turns": "5",
+		"type": "physical",
+		"url": null
+	},
+	"Pyro Glacial Lasswell": {
+		"name": "Pyro Glacial Lasswell",
+		"damage": "7,705,247,885 ",
+		"turns": "6",
+		"type": "physical",
+		"url": null
+	},
+	"Monk Sabin of Kolts": {
+		"name": "Monk Sabin of Kolts",
 		"damage": "7,333,370,051 ",
 		"turns": "10",
 		"type": "physical",
@@ -55,13 +104,6 @@
 		"type": "physical",
 		"url": null
 	},
-	"Pyro Glacial Lasswell": {
-		"name": "Pyro Glacial Lasswell",
-		"damage": "6,908,412,272 ",
-		"turns": "6",
-		"type": "physical",
-		"url": null
-	},
 	"Raegen": {
 		"name": "Raegen",
 		"damage": "6,626,765,230 ",
@@ -69,10 +111,31 @@
 		"type": "physical",
 		"url": null
 	},
+	"Wild Rose Firion": {
+		"name": "Wild Rose Firion",
+		"damage": "6,534,021,629 ",
+		"turns": "10",
+		"type": "physical",
+		"url": null
+	},
+	"Cloud (KH)": {
+		"name": "Cloud (KH)",
+		"damage": "6,165,068,071 ",
+		"turns": "8",
+		"type": "physical",
+		"url": null
+	},
 	"Regina": {
 		"name": "Regina",
 		"damage": "5,906,705,675 ",
 		"turns": "4",
+		"type": "physical",
+		"url": null
+	},
+	"Nalu": {
+		"name": "Nalu",
+		"damage": "5,866,801,764 ",
+		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
@@ -104,8 +167,8 @@
 		"type": "physical",
 		"url": null
 	},
-	"Squall (chainer)": {
-		"name": "Squall (chainer)",
+	"Squall": {
+		"name": "Squall",
 		"damage": "4,571,954,643 ",
 		"turns": "5",
 		"type": "physical",
@@ -167,8 +230,8 @@
 		"type": "physical",
 		"url": null
 	},
-	"Lila (ATK)": {
-		"name": "Lila (ATK)",
+	"Lila": {
+		"name": "Lila",
 		"damage": "2,632,882,461 ",
 		"turns": "8",
 		"type": "physical",
@@ -283,13 +346,6 @@
 		"name": "Hyoh",
 		"damage": "1,247,812,764",
 		"turns": "8",
-		"type": "physical",
-		"url": null
-	},
-	"Nalu": {
-		"name": "Nalu",
-		"damage": "1,127,990,358 ",
-		"turns": "7",
 		"type": "physical",
 		"url": null
 	},
@@ -447,24 +503,10 @@
 		"type": "physical",
 		"url": null
 	},
-	"Squall": {
-		"name": "Squall",
-		"damage": "685,266,845",
-		"turns": "1",
-		"type": "physical",
-		"url": null
-	},
 	"Orlandeau": {
 		"name": "Orlandeau",
 		"damage": "674,197,886",
 		"turns": "1",
-		"type": "physical",
-		"url": null
-	},
-	"Shadowlord": {
-		"name": "Shadowlord",
-		"damage": "617,844,128",
-		"turns": "3",
 		"type": "physical",
 		"url": null
 	},
@@ -479,6 +521,20 @@
 		"name": "Kimono Fina",
 		"damage": "12,655,106,631 ",
 		"turns": "10",
+		"type": "magic",
+		"url": null
+	},
+	"Veronica": {
+		"name": "Veronica",
+		"damage": "11,435,165,322 ",
+		"turns": "14",
+		"type": "magic",
+		"url": null
+	},
+	"Mordegon": {
+		"name": "Mordegon",
+		"damage": "11,179,202,327 ",
+		"turns": "15",
 		"type": "magic",
 		"url": null
 	},
@@ -514,6 +570,13 @@
 		"name": "Grim Lord Sakura",
 		"damage": "7,451,422,027 ",
 		"turns": "10",
+		"type": "magic",
+		"url": null
+	},
+	"Livid Shantotto": {
+		"name": "Livid Shantotto",
+		"damage": "6,785,973,726 ",
+		"turns": "9",
 		"type": "magic",
 		"url": null
 	},
@@ -643,8 +706,8 @@
 		"type": "magic",
 		"url": null
 	},
-	"Trance Terra (T7 Rotation)": {
-		"name": "Trance Terra (T7 Rotation)",
+	"Trance Terra": {
+		"name": "Trance Terra",
 		"damage": "839,913,189 ",
 		"turns": "7",
 		"type": "magic",
@@ -666,8 +729,15 @@
 	},
 	"Malphasie": {
 		"name": "Malphasie",
-		"damage": "6,187,057,037 ",
+		"damage": "6,865,047,708 ",
 		"turns": "6",
+		"type": "hybrid",
+		"url": null
+	},
+	"A.I. Katy": {
+		"name": "A.I. Katy",
+		"damage": "5,448,501,620 ",
+		"turns": "5",
 		"type": "hybrid",
 		"url": null
 	},
@@ -678,17 +748,17 @@
 		"type": "hybrid",
 		"url": null
 	},
-	"Felix": {
-		"name": "Felix",
-		"damage": "2,379,948,061 ",
-		"turns": "7",
-		"type": "hybrid",
-		"url": null
-	},
 	"Kurasame": {
 		"name": "Kurasame",
 		"damage": "2,412,126,857 ",
 		"turns": "10",
+		"type": "hybrid",
+		"url": null
+	},
+	"Felix": {
+		"name": "Felix",
+		"damage": "2,379,948,061 ",
+		"turns": "7",
 		"type": "hybrid",
 		"url": null
 	},
@@ -804,6 +874,13 @@
 		"type": "finisher",
 		"url": null
 	},
+	"Emperor": {
+		"name": "Emperor",
+		"damage": "2,694,962,954",
+		"turns": "5",
+		"type": "finisher",
+		"url": null
+	},
 	"Flammie": {
 		"name": "Flammie",
 		"damage": "2,525,716,097",
@@ -888,13 +965,6 @@
 		"type": "finisher",
 		"url": null
 	},
-	"Emperor": {
-		"name": "Emperor",
-		"damage": "792,803,875",
-		"turns": "7",
-		"type": "finisher",
-		"url": null
-	},
 	"Arngrim": {
 		"name": "Arngrim",
 		"damage": "691,976,928",
@@ -920,13 +990,6 @@
 		"name": "Luneth",
 		"damage": "453,689,170",
 		"turns": "3",
-		"type": "finisher",
-		"url": null
-	},
-	"Livid Shantotto": {
-		"name": "Livid Shantotto",
-		"damage": "448,609,990",
-		"turns": "4",
 		"type": "finisher",
 		"url": null
 	},

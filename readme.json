@@ -27,8 +27,12 @@
             "value": "- **?unit** *[name] [optional | parameter]*\n- optional: Add parameters to shorten the results for only desired information **contained in quotes**\n- example: **?unit Malphasie \"STMR\"**  | this will only return malphasie's STMR\n- parameters: \"Name\", \"Limited\", \"Exclusive\", \"Job\", \"Role\", \"Origin\",\n\"Gender\", \"STMR\", \"Trust\", \"Race\", \"Number\", \"Chain\", \"Rarity\""
         },
         {
-            "name": "Get Unit Skill Information",
-            "value": "- **?unitname** *search*\n- **?kit** [unit name] \"[search terms]* (will return both passives and actives)\n- **?ability** [unit name] \"[search terms]\" (will return only active abilities)\n- **?passive** [unit name] \"[search terms]\" (will return only passive abilities)\n- Search a units skill set for any keywords to return the skills that match.\n- example: **?noctis fire**\n- parameters: keywords can be separated by the pipe character (|).\nOr separated into quotes for each, \"one\" \"two\" \"three\""
+            "name": "Search Unit Skill Set",
+            "value": "- **?kit** [unit name] \"[search terms]* (will return both passives and actives)\n- Search a units skill set for any keywords to return the skills that match.\n- example: **?kit noctis \"fire\"**\n- parameters: keywords can be separated by the pipe character (|).\nOr separated into quotes for each, \"one\" \"two\" \"three\"\n- some shortcut keywords exist: \"mitigate\", \"imperil\", \"imbue\", \"resist\", \"buff\", \"aoe\""
+        },
+        {
+            "name": "Get Muspels Unit Ranking",
+            "value": "- **?rank** *[name]*\n- example: **?rank Elena**"
         },
         {
             "name": "Get Skill Information",
@@ -47,8 +51,12 @@
             "value": "- **?gif** *[name]* \"[parameter]\"\n- parameters: 'attack', 'dead', 'dying', 'idle', 'jump', 'limit', 'win',\n'magic attack', 'magic standby', 'move','standby', 'win before'\n- example: **?gif Esther \"attack\"**"
         },
         {
-            "name": "Get Unit Calculations",
+            "name": "Get Furcula Unit Calculations",
             "value": "- **?dpt** *[unit name -or- category]* \"[limit]\"\n- **?burst** *[unit name -or- category]* \"[limit]\"\n- optional: the amount of results to return, default is 5.\n- example: **?dpt Esther**\nYou can search for multiple units at once by separating the names with a pipe( | ) character."
+        },
+        {
+            "name": "Get Muspels Damage Calculation",
+            "value": "- **?muspel** *[name]*\n- example: **?muspel elena**\nMuch like the above command, it will return a units damage calculated using Muspels criteria."
         },
         {
             "name": "Get Unit Rotation",

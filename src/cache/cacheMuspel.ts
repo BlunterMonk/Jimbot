@@ -8,6 +8,7 @@
 const fs = require('fs');
 const readline = require('readline');
 import {google} from 'googleapis';
+import { log } from "../global.js";
 
 ////////////////////////////////////////////////////////////
 

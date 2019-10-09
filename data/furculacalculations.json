@@ -202,9 +202,9 @@
 			""
 		]
 	},
-	"Dark Knight Leon (pending)": {
-		"name": "Dark Knight Leon (pending)",
-		"damage": "13,210,755,486",
+	"Dark Knight Leon": {
+		"name": "Dark Knight Leon",
+		"damage": "12,749,284,061",
 		"turns": "8",
 		"type": "physical",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#821f8060-e69c-11e9-b677-3b8586bd2e6d",
@@ -213,14 +213,14 @@
 		"burstTurn": "6",
 		"wiki": "https://exvius.gamepedia.com/Dark_Knight_Leon",
 		"rotation": [
-			"Black Executioner (CD) + Spread of Darkness II + Dark Knight Charge",
-			"Dark Corruption x 3",
+			"Black Executioner (CD) + Spread of Darkness II",
 			"Dark Knight Charge + Dark Corruption x 2",
-			"Spread of Darkness II + Dark Corruption",
-			"Dark Knight Charge + Dark Corruption",
+			"Dark Corruption x 3",
+			"Spread of Darkness II + Dark Knight Charge",
+			"Dark Corruption x 2",
 			"Dark Servant's Blade (CD)",
 			"Spread of Darkness II + Dark Knight Charge",
-			"Dark Corruption",
+			"Dark Corruption x 2",
 			"",
 			"",
 			"",
@@ -376,9 +376,9 @@
 			""
 		]
 	},
-	"Shadow Lord (pending)": {
-		"name": "Shadow Lord (pending)",
-		"damage": "9,690,980,168",
+	"Shadow Lord": {
+		"name": "Shadow Lord",
+		"damage": "10,056,153,459",
 		"turns": "10",
 		"type": "physical",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#bb0bcea0-e60c-11e9-b677-3b8586bd2e6d",
@@ -579,8 +579,8 @@
 			""
 		]
 	},
-	"Wild Rose Swordsman Firion (pending)": {
-		"name": "Wild Rose Swordsman Firion (pending)",
+	"Wild Rose Swordsman Firion": {
+		"name": "Wild Rose Swordsman Firion",
 		"damage": "7,646,903,961",
 		"turns": "13",
 		"type": "physical",
@@ -747,6 +747,35 @@
 			"Subjection to Equity - Rainfall (LB)",
 			"Absolute Mirror of Equity x 3",
 			"Blazing Heat - Ash + True Mirror of Equity (CD) + Mirror of Equit - Supremacy",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"Nalu": {
+		"name": "Nalu",
+		"damage": "6,821,064,419",
+		"turns": "10",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#c73023c0-e9a4-11e9-b677-3b8586bd2e6d",
+		"jp": false,
+		"burst": "7,376,167,611",
+		"burstTurn": "2",
+		"wiki": "https://exvius.gamepedia.com/Nalu",
+		"rotation": [
+			"Lightning Spear Jab+2 + Thunder Spear+2 x 2",
+			"Thunder Spear+2 x 3",
+			"Thunder Spear+2 x 3",
+			"Thunder Spear+2 x 3",
+			"Thunder Spear+2 x 3",
+			"Lightning Spear Jab+2 + Thunder Spear+2 x 2",
+			"Thunder Spear+2 x 3",
+			"Thunder Spear+2 x 3",
+			"Thunder Spear+2 x 3",
+			"Thunder Spear+2 x 3",
+			"",
+			"",
 			"",
 			"",
 			"",
@@ -1773,27 +1802,8 @@
 		"damage": "18,124,794,338",
 		"turns": "12",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=JP#bf6409c0-cb74-11e9-a7ee-83d283e1de8e",
-		"jp": true,
-		"wiki": "https://exvius.gamepedia.com/Onion_Knight_(CG)/JP",
-		"rotation": [
-			"ジョブチェンジアタック (LB)       ",
-			"ウォータスライス + ウォータシュレッダー        ",
-			"したごしらえ (CD) + 水の熟練技        ",
-			"ウォータシュレッダー   x 3",
-			"ウォータシュレッダー   x 3",
-			"ウォータスライス +  オニオンディセクト (CD)       ",
-			"ジョブチェンジアタック (LB)  ",
-			"ウォータスライス + ウォータシュレッダー        ",
-			"したごしらえ (CD) + 水の熟練技        ",
-			"ウォータシュレッダー   x 3",
-			"ウォータシュレッダー   x 3",
-			"ウォータスライス + ウォータシュレッダー        ",
-			"",
-			"",
-			"",
-			""
-		]
+		"url": "",
+		"jp": true
 	},
 	"CG Rain (JP)": {
 		"name": "CG Rain (JP)",
@@ -1945,27 +1955,8 @@
 		"damage": "10,829,156,370",
 		"turns": "11",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#78220b60-cb75-11e9-a7ee-83d283e1de8e",
-		"jp": true,
-		"wiki": "https://exvius.gamepedia.com/Assassin_Shadow/JP",
-		"rotation": [
-			"影遁 x 2       ",
-			"影遁 x 2       ",
-			"影遁 + ハウンドタックル (CD)",
-			"ワイルドファング x 2",
-			"ワイルドファング x 2",
-			"影遁 + ハウンドタックル (CD)",
-			"ワイルドファング x 2",
-			"ワイルドファング x 2",
-			"影遁 + ハウンドタックル (CD)",
-			"ワイルドファング x 2",
-			"ワイルドファング x 2",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
+		"url": "",
+		"jp": true
 	},
 	"Treasure Hunter Locke (JP)": {
 		"name": "Treasure Hunter Locke (JP)",
@@ -2325,8 +2316,8 @@
 			""
 		]
 	},
-	"Livid Shantotto (pending)": {
-		"name": "Livid Shantotto (pending)",
+	"Livid Shantotto": {
+		"name": "Livid Shantotto",
 		"damage": "7,671,779,757",
 		"turns": "8",
 		"type": "magic",
@@ -2412,13 +2403,15 @@
 			""
 		]
 	},
-	"Emperor (finisher, pending)": {
-		"name": "Emperor (finisher, pending)",
+	"Emperor (finisher)": {
+		"name": "Emperor (finisher)",
 		"damage": "6,602,053,077",
 		"turns": "9",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#7d955c40-e60b-11e9-b677-3b8586bd2e6d",
 		"jp": false,
+		"burst": "16,357,036,741",
+		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Emperor",
 		"rotation": [
 			"Absolute Dominion II (CD)",
@@ -3396,8 +3389,8 @@
 			""
 		]
 	},
-	"A.I. Katy (pending)": {
-		"name": "A.I. Katy (pending)",
+	"A.I. Katy": {
+		"name": "A.I. Katy",
 		"damage": "7,793,181,087",
 		"turns": "10",
 		"type": "hybrid",

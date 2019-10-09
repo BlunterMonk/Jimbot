@@ -18,6 +18,18 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20191004
+|type  = Other
+|title = 40M DL Celebration Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019100440MDLCelebrationSummon.html
+}}
+{{Recent News
+|date  = 20191004
+|type  = Other
+|title = Exchange Shop (40M DL Celebration)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019100440MDLCelebrationSummonExchangeShopv1.html
+}}
+{{Recent News
 |date  = 20191003
 |type  = Maintenance
 |title = Post Maintenance Note

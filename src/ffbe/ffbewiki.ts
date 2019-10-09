@@ -673,9 +673,18 @@ class ffbe {
     }
 
     queryWikiForUnit(search, parameters, callback) {
+        for (let index = 0; index < parameters.length; index++) {
+            const param = parameters[index];
+            if (!parameters.includes(param)) {
+                callback(null)
+                return;
+            }
+        }
+
         wikiClient.getArticle(search, function (err, content, redirect) {
             if (err || !content) {
                 console.error(err);
+                callback(null, null, null)
                 return;
             }
             if (redirect) {

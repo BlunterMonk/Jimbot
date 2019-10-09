@@ -24,6 +24,7 @@ const skillsJson = 'data/skills.json';
 const limitburstsJson = 'data/limitbursts.json';
 const rankingFile = 'data/rankings.json';
 const unitKeysJson = "data/unitkeys.json";
+const unitIDsJson = "data/unitid.json";
 
 export class Cache {
     fullRankings: any;
@@ -35,6 +36,7 @@ export class Cache {
     limitbursts: any;
     rankings: any;
     unitsDump: any;
+    unitIDs: any;
     isUpdating: any;
     constructor() {
         this.init();
@@ -65,7 +67,8 @@ export class Cache {
 
         this.rankings = JSON.parse(fs.readFileSync(rankingFile).toString());
         this.unitsDump = JSON.parse(fs.readFileSync(unitKeysJson).toString());
-        
+        this.unitIDs = JSON.parse(fs.readFileSync(unitIDsJson).toString());
+
         var skills = JSON.parse(fs.readFileSync(skillsJson).toString());
         var lbs = JSON.parse(fs.readFileSync(limitburstsJson).toString());
         this.skillset = Object.assign({}, skills, lbs);
@@ -125,6 +128,9 @@ export class Cache {
         }
     }
 
+    isUnitKey(search) {
+        return this.unitsDump[search] != null;
+    }
     getUnitKey(search) {
         if (!this.unitsDump[search]) {
             return null
@@ -140,6 +146,22 @@ export class Cache {
             
             if (this.unitsDump[k] == id)
                 return k;
+        }
+
+        return null;
+    }
+    getUnitID(id: string) {
+
+        for (let index = 0; index < this.unitIDs.length; index++) {
+            const unit = this.unitIDs[index];
+            
+            var first = unit.entries[0];
+            for (let i = 0; i < unit.entries.length; i++) {
+                const e = unit.entries[i];
+                
+                if (e.dex == id || e.id == id)
+                   return first.id;
+            }
         }
 
         return null;

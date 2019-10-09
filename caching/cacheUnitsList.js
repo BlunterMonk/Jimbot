@@ -26,6 +26,11 @@ function main() {
     save = JSON.stringify(units, null, "\t");
     fs.writeFileSync("data/unitids.json", save);
 
+    var glKeys = getDexList("../ffbe/units.json");
+    var jpKeys = getDexList("../ffbe-jp/units.json");
+    save = JSON.stringify({gl: glKeys, jp: jpKeys}, null, "\t");
+    fs.writeFileSync("data/unitid.json", save);
+
     console.log("Units Cached");
 }
 
@@ -62,6 +67,33 @@ function getKeysList(source) {
             var entries = Object.keys(unit.entries);
             entries.forEach(entry => {
                 units[entry] = name;
+            });
+        }
+    });
+
+    return units
+}
+
+function getDexList(source) {
+    var units = [];
+
+    var data = fs.readFileSync(source);
+    const dump = JSON.parse(data);
+    
+    const keys = Object.keys(dump);
+    keys.forEach((k, i) =>{
+        var unit = dump[k];
+        if (unit.name && unit.entries) {
+            var name = unit.name.toLowerCase().replaceAll(" ", "_");
+            var ids = [];
+            var entries = Object.keys(unit.entries);
+            entries.forEach(entry => {
+                ids.push({ id: entry, dex: unit.entries[entry].compendium_id });
+            });
+
+            units.push({
+                name: name,
+                entries: ids
             });
         }
     });

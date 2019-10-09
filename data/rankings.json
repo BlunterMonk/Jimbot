@@ -14,9 +14,9 @@
 	},
 	"topunits": {
 		"physical_chainer": [
-			"zeno",
 			"radiant lightning",
-			"warrior of light bartz"
+			"warrior of light bartz",
+			"dark knight leon"
 		],
 		"physical_finisher": [
 			"regina",
@@ -61,11 +61,6 @@
 			"sylvie",
 			"yuraisha",
 			"maritime strategist nichol"
-		],
-		"support": [
-			"zargabaath",
-			"seaside nichol",
-			"lotus mage fina"
 		]
 	},
 	"physical_chainer": [

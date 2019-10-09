@@ -80,8 +80,7 @@
 		"cg_legs": "白百合の魔人フィーナ",
 		"leg": "rubicante",
 		"kfina": "晴れ着フィーナ",
-		"kayaka": "晴れ着アヤカ",
-		"kimono_ayaka": "晴れ着アヤカ",
+		"kayaka": "kimono ayaka",
 		"sweet_luka": "スウィートルルカ",
 		"sweet_nichol": "スウィートニコル",
 		"cg_onion_knight": "オニオンナイト",
@@ -141,7 +140,23 @@
 		"the_big_suk": "tsukiko",
 		"cg_shantotto": "連邦の黒い悪魔シャントット",
 		"pecil": "聖騎士セシル",
-		"overpowered": "rizer"
+		"overpowered": "rizer",
+		"sassmaster": "veronica",
+		"firionv2": "wild rose firion",
+		"lighting": "lightning",
+		"leonv2": "dark knight leon",
+		"vol": "veritas of the light",
+		"lv": "veritas of the light",
+		"dv": "veritas of the dark",
+		"fv": "veritas of the flame",
+		"cgnichol": "maritime strategist nichol",
+		"cg_lightning": "radiant lightning",
+		"cg_bartz": "warrior of light bartz",
+		"cg_firion": "wild rose firion",
+		"best_cg": "wild rose firion",
+		"galufv2": "暁の四戦士ガラフ",
+		"wolv2": "ウォーリア オブ ライト",
+		"swol": "ウォーリア オブ ライト"
 	},
 	"filetypes": [
 		".jpg",
@@ -206,6 +221,10 @@
 		"bestcg": {
 			"command": "cg",
 			"search": "firion"
+		},
+		"glossary": {
+			"command": "whatis",
+			"search": "glossary"
 		}
 	},
 	"authorizedUsers": {

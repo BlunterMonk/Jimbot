@@ -60,7 +60,8 @@ const userId = (msg) => msg.author.id;
 const gifAliases = {
     "lb": "limit",
     "limit burst": "limit",
-    "victory": "win before"
+    "victory": "win before",
+    "cast": "magic attack",
 }
 
 ////////////////////////////////////////////////////////////
@@ -69,14 +70,21 @@ const gifAliases = {
 // WIKI 
 function handleUnit(receivedMessage, search, parameters) {
 
+    let original = search;
+    
     search = search.toTitleCase("_");
     search = search.capitalizeWords(".");
     if (search.includes("(kh)"))
         search = search.replace("(kh)", "(KH)");
 
     log("Searching Units For: " + search);
-
+    
     FFBE.queryWikiForUnit(search, parameters, function (pageName, imgurl, description, limited, fields) {
+        if (pageName == null) {
+            handleKit(receivedMessage, original, ["tmr|stmr"], "All");
+            return;
+        }
+
         pageName = pageName.replaceAll("_", " ");
 
         var embed = {
@@ -110,6 +118,8 @@ function handleUnit(receivedMessage, search, parameters) {
 
         Client.sendMessage(receivedMessage, embed);
     });
+
+    
 }
 function handleEquip(receivedMessage, search, parameters) {
 
@@ -1348,7 +1358,7 @@ function handleK(receivedMessage, search, id) {
     Client.sendMessage(receivedMessage, embed);
 }
 
-function handleKit(receivedMessage, search, parameters, active) {
+function handleKit(receivedMessage, search, parameters, type: string) {
     log(`handleKit(${search})`);
 
     var id = getUnitKey(search);
@@ -1360,27 +1370,42 @@ function handleKit(receivedMessage, search, parameters, active) {
     if (parameters.length == 0)
         parameters[0] = "";
         
-    var unit = unitSearchWithParameters(id, active, parameters);
-    if (!unit) return;
+    var unit = unitSearchWithParameters(id, type, parameters);
+    if (!unit) {
+        log("unitSearchWithParameters: No Unit information was found: ", JSON.stringify(parameters))
+        return;
+    }
 
+    log("hanleKit Output: ", JSON.stringify(unit))
+
+    //var img = `unit_ills_${getMaxRarity(id)}.png`;
     var name = unit.name.toTitleCase();
     var embed = {
         color: pinkHexCode,
-        thumbnail: {
-             url: sprite(getMaxRarity(id))
-        },
+        //thumbnail: {
+        //     url: `attachment://${img}`
+        //},
         title: name,
         url: "https://exvius.gamepedia.com/" + name.replaceAll(" ", "_"),
         fields: unit.fields
     };
 
     Client.sendMessage(receivedMessage, embed);
+    /*
+    Client.sendMessage(receivedMessage, {
+        embed:embed,
+        files: [{
+            attachment:`./icons/units/${img}`,
+            name:`${img}`
+        }]
+    });
+    */
 }
 function handleAbility(receivedMessage, search, parameters) {
-    handleKit(receivedMessage, search, parameters, true);
+    handleKit(receivedMessage, search, parameters, "Active");
 }
 function handlePassive(receivedMessage, search, parameters) {
-    handleKit(receivedMessage, search, parameters, false);
+    handleKit(receivedMessage, search, parameters, "Passive");
 }
 
 function handleData(receivedMessage, search, parameters) {
@@ -1577,7 +1602,12 @@ function isLetter(str) {
 }
 
 function getUnitKey(search) {
-    return cache.getUnitKey(search);
+
+    let id = cache.getUnitKey(search);
+    if (id)
+        return id;
+
+    return cache.getUnitID(search);
 }
 function getUnitNameFromKey(search) {
     return cache.getUnitName(search);

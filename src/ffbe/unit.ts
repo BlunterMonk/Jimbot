@@ -7,7 +7,7 @@
 import "../util/string-extension.js";
 import * as fs from "fs";
 import * as constants from "../constants.js";
-import { log, checkString, trace } from "../global.js";
+import { log, checkString, trace, debug } from "../global.js";
 
 ////////////////////////////////////////////////////////////
 
@@ -23,7 +23,8 @@ const searchAliases = [
     { reg: /evoke/i, value: "evoke|evocation"},
     { reg: /tdh/i, value: "armed with a single weapon"},
     { reg: /tdw/i, value: "armed with two weapons"},
-    { reg: /killers/i, value: "damage against"}
+    { reg: /killers/i, value: "damage against"},
+    { reg: /aoe/i, value: "all enemies|all allies"}
 ]
 var unitDefaultSearch = "tmr|stmr";
 
@@ -292,8 +293,26 @@ function collectSkillEffects(key, skills, keyword, total) {
 }
 
 // Search unit data for skill information
-function searchUnitSkills(unit, keyword: RegExp, active: boolean) {
-    log(`Search Unit Skills: ${keyword}, active: ${active}`)
+function searchUnitSkills(unit, keyword: RegExp, type: string) {
+    log(`Search Unit Skills: ${keyword}, type: ${type}`)
+
+    var actives = false;
+    var passives = false;
+    switch (type) {
+        case "All":
+            actives = true;
+            passives = true;
+            break;
+        case "Passive":
+        case "None":
+            passives = true;
+            break;
+        case "Active":
+        case "Physical":
+        case "Magical":
+            actives = true;
+            break;
+    }
 
     var reg = /\([^\)]+\)/g;
     const LB = unit.LB;
@@ -302,8 +321,11 @@ function searchUnitSkills(unit, keyword: RegExp, active: boolean) {
     var keys = Object.keys(skills);
     keys.forEach(key => {
         var skill = skills[key];
-        var isPassive = skill.attack_type != "None" && !skill.cost;
-        if ((active === false && !isPassive) || (active === true && isPassive)) {
+        var isPassive = skill.attack_type == "None" && !skill.cost;
+
+        if (type != "All" && // if there's a type to check
+            ((actives && isPassive) || (passives && !isPassive))
+            ) {
             log(`Skipping Skill: ${skill.name} - ${skill.attack_type}`);
             return;
         }
@@ -335,7 +357,7 @@ function searchUnitSkills(unit, keyword: RegExp, active: boolean) {
     });
         
     // Search LB
-    if (LB && (active === undefined || active == true)) {
+    if (LB && actives) {
         let n = found.length;
         let s = "";
         let f = false;
@@ -405,6 +427,7 @@ function searchUnitItems(unit, keyword: RegExp) {
         found = found.concat(equipToString(STMR));
     }
 
+    debug("Item Search Results: ", JSON.stringify(found));
     return found;
 }
 
@@ -509,10 +532,10 @@ export function unitSearch(id: string, search: string): any {
         fields = searchUnitFrames(unit);
     } else if (checkString(search, /enhancement/i)) {
         log(`Search Unit Enhancemenents`)
-        fields = searchUnitSkills(unit, /\+2$|\+1$/i, undefined);
+        fields = searchUnitSkills(unit, /\+2$|\+1$/i, "All");
     } else if (checkString(search, /cd/i)) {
         log(`Search Unit CD`)
-        fields = searchUnitSkills(unit, /one.*use.*every.*turns/i, undefined);
+        fields = searchUnitSkills(unit, /one.*use.*every.*turns/i, "All");
     } else {
         log(`Search Unit Kit`)
         
@@ -521,7 +544,7 @@ export function unitSearch(id: string, search: string): any {
         var key = convertToSkillSearch(search);
         var keyword = new RegExp(key.replace(/_/g,".*"), "i");
         var items = searchUnitItems(unit, keyword);
-        var skills = searchUnitSkills(unit, keyword, true);
+        var skills = searchUnitSkills(unit, keyword, "Active");
         
         fields = skills.concat(items);
     }
@@ -533,7 +556,7 @@ export function unitSearch(id: string, search: string): any {
 
     return { name: unit.name, fields: fields };
 }
-export function unitSearchWithParameters(id: string, active: boolean, parameters): any {
+export function unitSearchWithParameters(id: string, type: string, parameters): any {
     
     var unit = getUnitData(id);
     if (!unit) {
@@ -541,9 +564,31 @@ export function unitSearchWithParameters(id: string, active: boolean, parameters
         return null;
     }
 
-    var key = convertParametersToSkillSearch(parameters);
-    var keyword = new RegExp(key.replace(/_/g,".*"), "i");
-    var fields = searchUnitSkills(unit, keyword, active);
+    let search = parameters[0];
+
+    var fields = null;
+    if (checkString(search, /frames|chain/i)) {
+        log(`Search Unit Frames: `, search)
+        fields = searchUnitFrames(unit);
+    } else if (checkString(search, /enhancement/i)) {
+        log(`Search Unit Enhancemenents: `, search)
+        fields = searchUnitSkills(unit, /\+2$|\+1$/i, "All");
+    } else if (checkString(search, /cd/i)) {
+        log(`Search Unit CD: `, search)
+        fields = searchUnitSkills(unit, /one.*use.*every.*turns/i, "All");
+    } else {
+        log(`Search Unit Kit: `, search)
+        
+        // Resolve search string
+
+        var key = convertParametersToSkillSearch(parameters);
+        var keyword = new RegExp(key.replace(/_/g,".*"), "i");
+        var items = searchUnitItems(unit, keyword);
+        var skills = searchUnitSkills(unit, keyword, type);
+        
+        fields = skills.concat(items);
+    }
+
     if (!fields || fields.length == 0) {
         log(`Failed to get unit skill list: ${keyword}`);
         return null;
