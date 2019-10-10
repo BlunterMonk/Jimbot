@@ -254,11 +254,30 @@
 	},
 	"Wild Rose Firion": {
 		"name": "Wild Rose Firion",
-		"damage": "13,062,820,084",
+		"damage": "13,497,141,513",
 		"turns": "13",
 		"type": "physical",
-		"url": "",
-		"jp": false
+		"url": "https://ffbeEquip.com/builder.html?server=GL#aac6e570-e6ed-11e9-b677-3b8586bd2e6d",
+		"jp": false,
+		"wiki": "https://exvius.gamepedia.com/Wild_Rose_Firion",
+		"rotation": [
+			"Pride of the Resistance (CD) + Shining Blade",
+			"Weaponmaster (LB)",
+			"Lord of Arms II (CD) + Bloody Rose (CD) + Flynn's Blossom",
+			"Weaponmaster (LB)",
+			"Fynn's Blossom x 3",
+			"Shining Blade + Lord of Arms II (CD) + Bloody Rose (CD)",
+			"Weaponmaster (LB)",
+			"Pride of the Resistance (CD) + Fynn's Blossom + Saber of Adversity (CD)",
+			"Lord of Arms II (CD) + Bloody Rose (CD) + Flynn's Blossom",
+			"Weaponmaster (LB)",
+			"Shining Blade + Fynn's Blossom x 2",
+			"Lord of Arms II (CD) + Bloody Rose (CD) + Flynn's Blossom",
+			"Weaponmaster (LB)",
+			"",
+			"",
+			""
+		]
 	},
 	"Esther": {
 		"name": "Esther",

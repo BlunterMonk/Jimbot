@@ -25,7 +25,8 @@ function log(data) {
 log("loading units list")
 //cacheUnit("401001405");
 //cacheUnit("401006805");
-cacheAll();
+cacheAll(`data/units/`);
+
 log("Finished Updating Skills");
 
 function cacheUnit(id) {
@@ -39,7 +40,7 @@ function cacheUnit(id) {
     }
 }
 
-function cacheAll() {
+function cacheAll(destination) {
     var data = fs.readFileSync("data/unitkeys.json");
     var unitsDump = JSON.parse(String(data));
     
@@ -69,15 +70,17 @@ function cacheAll() {
         }
     }
 
+    var fileName = `units-${cat}.json`;
+    var filePath = destination + fileName;
     var cats = Object.keys(grandTotal);
     cats.forEach(cat => {
-        if (!fs.existsSync(`data/units/`))
-            fs.mkdirSync( `data/units/`, { recursive: true});
-        if (!fs.existsSync(`data/units/units-${cat}.json`)) {
-            fs.createWriteStream(`data/units/units-${cat}.json`);
+        if (!fs.existsSync(destination))
+            fs.mkdirSync(destination, { recursive: true});
+        if (!fs.existsSync(filePath)) {
+            fs.createWriteStream(filePath);
         }
         
-        fs.writeFileSync(`data/units/units-${cat}.json`, JSON.stringify(grandTotal[cat]));
+        fs.writeFileSync(filePath, JSON.stringify(grandTotal[cat]));
     });
 
     // log("Units unique to JP");

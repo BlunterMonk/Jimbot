@@ -150,10 +150,16 @@ export class Cache {
 
         return null;
     }
-    getUnitID(id: string) {
+    getUnitIDJP(id: string) {
+        return this.getUnitID(id, this.unitIDs.jp);
+    }
+    getUnitIDGL(id: string) {
+        return this.getUnitID(id, this.unitIDs.gl);
+    }
+    getUnitID(id: string, source: any[]) {
 
-        for (let index = 0; index < this.unitIDs.length; index++) {
-            const unit = this.unitIDs[index];
+        for (let index = 0; index < source.length; index++) {
+            const unit = source[index];
             
             var first = unit.entries[0];
             for (let i = 0; i < unit.entries.length; i++) {

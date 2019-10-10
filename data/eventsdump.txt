@@ -18,6 +18,67 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20191010
+|type  = Other
+|title = FINAL FANTASY BRAVE EXVIUS x KINGDOM HEARTS Union χ (Update)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190917FFBEKHUxCollaborationUpdate.html
+}}
+{{Recent News
+|date  = 20191010
+|type  = Other
+|title = KINGDOM HEARTS Union χ Collab Login Bonus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191008KingdomHeartsUnionXLoginBonus.html
+}}
+{{Recent News
+|date  = 20191010
+|type  = Other
+|title = KINGDOM HEARTS Union χ Collab Celebratory Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191008KHUxCollabRewardSummon.html
+}}
+{{Recent News
+|date  = 20191010
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191010PostMaintenance.html
+}}
+{{Recent News
+|date  = 20191008
+|type  = Event
+|title = Barrier Tower
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191008FFVRaidBarrierTower.jpg
+}}
+{{Recent News
+|date  = 20191008
+|type  = Unit
+|title = Featured Summon FINAL FANTASY V
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191008FFVFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20191008
+|type  = Trial
+|title = Series Boss Battles: Emperor
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191008SBBEmperor.jpg
+}}
+{{Recent News
+|date  = 20191008
+|type  = Event
+|title = Castle Palamecia - Exploration
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191008FF2PalameciaExploration.jpg
+}}
+{{Recent News
+|date  = 20191008
+|type  = Event
+|title = Vault of Hidden Treasures
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191008VaultofHiddenTreasures.html
+}}
+{{Recent News
+|date  = 20191008
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191009Maintenance.html
+}}
+</onlyinclude>
+{{Recent News
 |date  = 20191004
 |type  = Other
 |title = 40M DL Celebration Summon
@@ -89,7 +150,6 @@
 |title = Guaranteed 5★ Special Summon Ticket
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201910015StarGuaranteedTicket.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20191001
 |type  = Maintenance

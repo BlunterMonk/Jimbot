@@ -9,7 +9,7 @@ import * as gs from "./config/guild.js";
 import * as fs from "fs";
 import { config } from "./config/config.js";
 import { getCommandString, getSearchString } from "./commands/commands.js";
-import { log } from "./global.js";
+import { log, debug, trace, error } from "./global.js";
 
 ////////////////////////////////////////////////////////////
 
@@ -274,10 +274,10 @@ class client {
 
             if (content.includes("ffbeequip.com") && this.validate(receivedMessage, "autobuild")) {
                 var URL = receivedMessage.content.match(/(https.*?(\s|$))/g)
-                log(URL);
+                //log(URL);
                 if (URL) {
                     var url = URL[0].trim();
-                    log(url);
+                    //log(url);
 
                     this.onMessageCallback(receivedMessage, `build ${url}`);
                 }
@@ -303,7 +303,6 @@ class client {
         // Replace shortcuts if requested
         const shortcut = this.getShortcut(guildId, command.toLowerCase());
         if (shortcut) {
-            log(`Replacing Shortcut with new command, shortcut: `, shortcut);
 
             let param = "";
             if (shortcut.parameters) {
@@ -318,7 +317,7 @@ class client {
             }
 
             content = `${shortcut.command} ${s} ${param}`;
-            log(`New Content: (${content})`);
+            log(`Replacing Shortcut with new command, shortcut: `, shortcut, " Content: ", content);
             command = getCommandString(content);
         }
 
@@ -336,7 +335,7 @@ class client {
 
     // Delete bot generated messages if the user deleted their request
     onMessageDelete(deletedMessage) {
-        log("Message Deleted: ", deletedMessage.id);
+        log(`Message Deleted, Author: ${deletedMessage.author.username}, Server: (${deletedMessage.guild.name}), Content: ${deletedMessage.content}`);
     
         for (var i = 0; i < this.botMessages.length; i++) {
             var msg = this.botMessages[i];
@@ -346,7 +345,7 @@ class client {
                     .fetchMessage(msg.sent)
                     .then(sent => {
                         if (sent) {
-                            log("Deleted Message");
+                            log("Deleted Cached Message");
                             sent.delete();
     
                             this.botMessages.splice(i, 1);
@@ -419,10 +418,10 @@ class client {
         var roles = receivedMessage.member.roles.array();
         var guildId = receivedMessage.channel.guild.id;
     
-        log("Attempt to validate: " + command);
+        trace("Attempt to validate: " + command);
         for (var i = 0; i < roles.length; i++) {
             if (this.validateCommand(guildId, roles[i].name, command)) {
-                log("Role Validated");
+                trace("Role Validated");
                 return true;
             }
         }

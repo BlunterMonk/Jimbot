@@ -15,7 +15,7 @@ import "../util/string-extension.js";
 import * as Build from "../ffbe/build.js";
 import * as BuildImage from "../ffbe/buildimage.js";
 import * as Commands from "./commands.js";
-import { log, logData, error, escapeString } from "../global.js";
+import { log, logData, error, escapeString, debug } from "../global.js";
 import { cache } from "../cache/cache.js";
 import { config } from "../config/config.js";
 import { Client } from "../discord.js";
@@ -1052,6 +1052,7 @@ function handleAddemo(receivedMessage, search, parameters) {
             });
         }
     } else {
+       
         downloadImage(name, url, result => {
             log(result);
             respondSuccess(receivedMessage);
@@ -1607,7 +1608,23 @@ function getUnitKey(search) {
     if (id)
         return id;
 
-    return cache.getUnitID(search);
+    id = cache.getUnitIDGL(search);
+    if (id)
+        return id;
+
+    return cache.getUnitIDJP(search);
+}
+function getJPKey(search) {
+
+    let id = cache.getUnitKey(search);
+    if (id)
+        return id;
+
+    id = cache.getUnitIDGL(search);
+    if (id)
+        return id;
+
+    return cache.getUnitIDJP(search);
 }
 function getUnitNameFromKey(search) {
     return cache.getUnitName(search);
@@ -1625,13 +1642,11 @@ function getMaxRarity(unit) {
     return unit;
 }
 async function getGif(search, param, callback) {
-    log("getGif: " + search + `(${param})`);
 
     var unitName = search;
     unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
-    log(`unitName: (${unitName})`);
     unitName = unitName.capitalizeWords(".");
-    log(`unitName: (${unitName})`);
+    log("getGif: " + unitName + `(${param})`);
 
     var animationName = param;
     animationName = animationName.toTitleCase().replaceAll(" ", "%20");
@@ -1639,7 +1654,7 @@ async function getGif(search, param, callback) {
     const filename = `tempgifs/${search}/${param}.gif`;
     if (fs.existsSync(filename)) {
         callback(filename);
-        log("Returning cached gif");
+        debug("Returning cached gif");
         return;
     }
 
@@ -1648,7 +1663,7 @@ async function getGif(search, param, callback) {
         unitID = search;
 
     var id = unitID.substring(0, unitID.length-1);
-    log("Unit ID: " + unitID);
+    debug("Unit ID: " + unitID);
     
     var unitL = null; // ignore using othet source if JP
     if (isLetter(search[0])) {
@@ -1665,7 +1680,7 @@ async function getGif(search, param, callback) {
 
             source.get(url, function(response) {
                 if (response.statusCode !== 200) {
-                    log("Unit Animation not found");
+                    error("Unit Animation not found");
                     reject("Unit Animation not found");
                     return;
                 }
@@ -1680,12 +1695,12 @@ async function getGif(search, param, callback) {
     
     for (let rarity = 7; rarity > 2; rarity--) {
         var direct = `http://www.ffbegif.com/${unitName}/${id}${rarity}%20${animationName}.gif`;
-        log(`Searching for: ${direct}`);
+        debug(`Searching for: ${direct}`);
         await saveGif(direct).then((p) =>{
             callback(p);
             rarity = 0;
         }).catch((e) => {
-            log("failed to get gif");
+            error("failed to get gif");
         });
     }
 }
@@ -1830,10 +1845,7 @@ function downloadImage(name, link, callback) {
     }
 
     const file = fs.createWriteStream("emotes/" + name + ext);
-    const request = https.get(link, function (response) {
-        response.pipe(file);
-        callback("success");
-    });
+    downloadFile(file, link).then(callback);
 }
 
 
@@ -1841,7 +1853,7 @@ function downloadImage(name, link, callback) {
 
 export function handle(receivedMessage, com: Commands.CommandObject): boolean {
     
-    log("Handle Command Object", com);
+    log("Handle Command Object: ", JSON.stringify(com));
 
     if (handleUnitQuery(receivedMessage, com.command, com.search)) {
         return;
