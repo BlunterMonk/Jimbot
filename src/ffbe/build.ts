@@ -7,7 +7,7 @@
 import "../util/string-extension.js";
 import * as request from "request";
 import * as Constants from "../constants.js";
-import { log, debug, trace } from "../global.js";
+import { log, debug, trace, error } from "../global.js";
 import { Builder } from "./builder.js";
 import { LoginTicket } from "google-auth-library/build/src/auth/loginticket";
 
@@ -1353,32 +1353,50 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
 }
 
 export function getBuildID(buildURL: string) {
-    return buildURL.match(/#(.*)/)[0];
+    let m = buildURL.match(/#(.*)/);
+    if (!m || m.length == 0)
+        return null;
+    return m[0];
 }
 export function getBuildRegion(buildURL: string) {
-    return buildURL.match(/server=(.*)#/)[1];
+    let m = buildURL.match(/server=(.*)#/);
+    if (!m || m.length < 2)
+        return null;
+    return m[1];
 }
-export function requestBuildData(buildURL: string, callback) {
+export function requestBuildData(buildURL: string): Promise<any> {
 
-    log(`Request Build Data URL: ${buildURL}`);
-    var region = getBuildRegion(buildURL).toLowerCase();
-    var id = getBuildID(buildURL);
-    id = id.slice(1, id.length);
-    // log(region);
-    // log(id);
-
-    request(
-        { uri: `https://firebasestorage.googleapis.com/v0/b/ffbeequip.appspot.com/o/PartyBuilds%2F${id}.json?alt=media` },
-        function(error, response, body) {
-            if (error || response.statusCode != 200 || body.empty()) {
-                error(`Build Not Found: ${id}`);
-                return;
-            }
-
-            log(`Build Found: (${region}) - ${id}`);
-            callback(id, region, body);
+    return new Promise<any>((resolve, reject) => {
+    
+        log(`Request Build Data URL: ${buildURL}`);
+        var region = getBuildRegion(buildURL);
+        if (region == null) {
+            error("Could not get region from build URL: ", buildURL);
+            reject("Could not get region from build URL: " + buildURL);
+            return;
         }
-    );
+        region = region.toLowerCase();
+        var id = getBuildID(buildURL);
+        if (id == null) {
+            error("Could not get ID from build URL: ", buildURL);
+            reject("Could not get ID from build URL: " + buildURL);
+            return;
+        }
+        id = id.slice(1, id.length);
+
+        request(
+            { uri: `https://firebasestorage.googleapis.com/v0/b/ffbeequip.appspot.com/o/PartyBuilds%2F${id}.json?alt=media` },
+            function(error, response, body) {
+                if (error || response.statusCode != 200 || body.empty()) {
+                    error(`Build Not Found: ${id}`);
+                    return;
+                }
+
+                log(`Build Found: (${region}) - ${id}`);
+                resolve({id: id, region: region, data: body});
+            }
+        );
+    });
 }
 export function getBuildText(id: string, region: string, buildData) {
 

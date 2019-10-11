@@ -1,3 +1,14 @@
 {
-    
+	"309497668802052096": {
+		"autobuild": true,
+		"builds": {
+			"cute_regina": "https://ffbeequip.com/builder.html?server=GL#51237d00-ebe1-11e9-8f21-29aab363c1db"
+		}
+	},
+	"131139508421918721": {
+		"autobuild": true,
+		"builds": {
+			"turtle": "https://ffbeequip.com/builder.html?server=gl#cf349130-cade-11e9-a7ee-83d283e1de8e"
+		}
+	}
 }

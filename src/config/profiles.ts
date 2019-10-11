@@ -8,13 +8,20 @@
 import "../util/string-extension.js";
 import * as fs from "fs";
 import { log } from "../global.js";
+import { userInfo } from "os";
+import { UserProfile } from "discord.js";
 
 ////////////////////////////////////////////////////////////
 
 const filename = './data/profiles.json';
 
-export class Profile {
-    configuration: any;
+interface userProfile {
+    autobuild: boolean;
+    builds: {[key: string]: string};
+}
+
+export class profile {
+    configuration: {[key: string]: userProfile};
     constructor() {
         this.init();
     }
@@ -31,32 +38,52 @@ export class Profile {
     }
 
     // ALIASES
-    getProfile(name: string) {
-        if (this.configuration[name]) {
-            return this.configuration[name];
-        } else {
-            return null;
-        }
+    getProfile(id: string): userProfile {
+        return this.configuration[id];
     }
-    
-    addProfile(name: string, value: any) {
-        this.configuration[name] = value;
-    }
+    addProfile(id: string) {
+        this.configuration[id] = {
+            autobuild: false,
+            builds: {}
+        };
 
-    setProfileField(name: string, field: string, value: any) {
-        if (!this.configuration[name])
-            return;
-            
-        this.configuration[name][field.toLowerCase()] = value;
         this.save()
     }
-    getProfileField(name: string, field: string) {
-        if (!this.configuration[name])
+
+    setAutoBuild(id: string, enable: boolean) {
+        if (!this.configuration[id])
             return;
-            
-        return this.configuration[name][field.toLowerCase()];
+
+        this.configuration[id].autobuild = enable;
+        this.save()
+    }
+    getAutoBuild(id: string): boolean {
+        if (!this.configuration[id])
+            return false;
+
+        return this.configuration[id].autobuild;
     }
 
+    addBuild(id: string, name: string, url: string) {
+        if (!this.configuration[id])
+            return;
+
+        this.configuration[id].builds[name] = url;
+        this.save()
+    }
+    
+
+    // setProfileField(name: string, field: string, value: any) {
+    //     if (!this.configuration[name])
+    //         return;
+    //     this.configuration[name][field.toLowerCase()] = value;
+    //     this.save()
+    // }
+    // getProfileField(name: string, field: string) {
+    //     if (!this.configuration[name])
+    //         return;
+    //     return this.configuration[name][field.toLowerCase()];
+    // }
 };
 
-export const profiles = new Profile();
+export const Profiles = new profile();
