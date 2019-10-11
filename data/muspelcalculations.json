@@ -720,6 +720,20 @@
 		"type": "magic",
 		"url": null
 	},
+	"Dark Mage Exdeath": {
+		"name": "Dark Mage Exdeath",
+		"damage": "8,547,009,081 ",
+		"turns": "13",
+		"type": "magic",
+		"url": null
+	},
+	"Warrior of Light Krile": {
+		"name": "Warrior of Light Krile",
+		"damage": "8714044612",
+		"turns": "10",
+		"type": "magic",
+		"url": null
+	},
 	"Elena": {
 		"name": "Elena",
 		"damage": "10,278,846,771 ",

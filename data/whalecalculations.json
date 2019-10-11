@@ -1540,6 +1540,35 @@
 			"Magic Burst x 3"
 		]
 	},
+	"Warrior of Light Krile": {
+		"name": "Warrior of Light Krile",
+		"damage": "13,903,801,496",
+		"turns": "10",
+		"type": "magic",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#26b43dc0-eb23-11e9-b677-3b8586bd2e6d",
+		"jp": false,
+		"burst": "16,667,177,516",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Warrior_of_Light_Krile",
+		"rotation": [
+			"Mysterious Power (CD) + Furious Thunder",
+			"Furious Thunder x 3",
+			"Furious Thunder x 3",
+			"Furious Thunder x 3",
+			"Furious Thunder x 3",
+			"Mysterious Power (CD) + Furious Thunder",
+			"Furious Thunder x 3",
+			"Furious Thunder x 3",
+			"Furious Thunder x 3",
+			"Furious Thunder x 3",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Circe": {
 		"name": "Circe",
 		"damage": "13,102,606,088",
@@ -1564,6 +1593,35 @@
 			"",
 			"",
 			"",
+			"",
+			"",
+			""
+		]
+	},
+	"Dark Mage Exdeath": {
+		"name": "Dark Mage Exdeath",
+		"damage": "",
+		"turns": "14",
+		"type": "magic",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#8ba651f0-eb1e-11e9-b677-3b8586bd2e6d",
+		"jp": true,
+		"burst": "",
+		"burstTurn": "6",
+		"wiki": "https://exvius.gamepedia.com/Dark_Mage_Exdeath",
+		"rotation": [
+			"Power of the Void (CD) + Aero Gust + Aero Spark",
+			"Ex-Holy + Aero Spark x 2",
+			"Ex-Meteor + Aero Spark x 2",
+			"Complete Void (CD) + Aero Spark x 2",
+			"Aero Spark x 4",
+			"Aero Spark x 4",
+			"Aero Spark x 4",
+			"Aero Spark x 4",
+			"Complete Void (CD) + Aero Spark x 2",
+			"Aero Spark x 4",
+			"Aero Spark x 4",
+			"Aero Spark x 4",
+			"Aero Spark x 4",
 			"",
 			"",
 			""
@@ -1911,8 +1969,6 @@
 		"type": "magic",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#6b87fb80-88db-11e9-a1b8-7b53378612e4",
 		"jp": false,
-		"burst": "",
-		"burstTurn": "7",
 		"wiki": "https://exvius.gamepedia.com/Black_Mage_Golbez",
 		"rotation": [
 			"Twin Moon (CD) + Abyssal Quasar",
@@ -1948,8 +2004,6 @@
 		"type": "magic",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#bdc488a0-88db-11e9-a1b8-7b53378612e4",
 		"jp": false,
-		"burst": "",
-		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Tiana",
 		"rotation": [
 			"Formula - Quaking Earth x 4",
@@ -1977,8 +2031,6 @@
 		"type": "magic",
 		"url": "http://ffbeEquip.com/builder.html?server=GL#5e58eea0-88dc-11e9-a1b8-7b53378612e4",
 		"jp": false,
-		"burst": "",
-		"burstTurn": "8",
 		"wiki": "https://exvius.gamepedia.com/Lulu",
 		"rotation": [
 			"Flare Fury + 2 (CD)",
@@ -1998,43 +2050,6 @@
 			"",
 			""
 		]
-	},
-	"Barbariccia (spark chain)": {
-		"name": "Barbariccia (spark chain)",
-		"damage": "",
-		"turns": "18",
-		"type": "magic",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#88be17a0-88dd-11e9-a1b8-7b53378612e4",
-		"jp": false,
-		"burst": "",
-		"burstTurn": "11",
-		"wiki": "https://exvius.gamepedia.com/Barbariccia",
-		"rotation": [
-			"Tempest Eye Wall (CD)",
-			"Looming Tempest (CD)",
-			"Tornado + Raging Wind x 2",
-			"Tornado + Raging Wind x 2",
-			"Tornado + Raging Wind x 2",
-			"Malestorm (LB)",
-			"Tempest Eye Wall (CD)",
-			"Looming Tempest (CD)",
-			"Tornado + Raging Wind x 2",
-			"Tornado + Raging Wind x 2",
-			"Tornado + Raging Wind x 2",
-			"Malestorm (LB)",
-			"Tempest Eye Wall (CD)",
-			"Looming Tempest (CD)",
-			"Tornado + Raging Wind x 2",
-			"Tornado + Raging Wind x 2"
-		]
-	},
-	"Lunera (spark chain)": {
-		"name": "Lunera (spark chain)",
-		"damage": "",
-		"turns": "15",
-		"type": "magic",
-		"url": "",
-		"jp": false
 	},
 	"Black Mage Vivi": {
 		"name": "Black Mage Vivi",
@@ -2148,35 +2163,6 @@
 			"",
 			"",
 			"",
-			"",
-			""
-		]
-	},
-	"Dark Mage Exdeath": {
-		"name": "Dark Mage Exdeath",
-		"damage": "",
-		"turns": "14",
-		"type": "magic",
-		"url": "http://ffbeEquip.com/builder.html?server=GL#76418750-8f37-11e9-a1b8-7b53378612e4",
-		"jp": true,
-		"burst": "",
-		"burstTurn": "6",
-		"wiki": "https://exvius.gamepedia.com/Dark_Mage_Exdeath/JP",
-		"rotation": [
-			"無の力 (CD) + エアロスパーク x 2",
-			"エアロスパーク x 3",
-			"エアロスパーク x 3",
-			"エアロスパーク x 3",
-			"全てを無へ (CD) + エアロスパーク x 2",
-			"エアロスパーク x 4",
-			"エアロスパーク x 4",
-			"エアロスパーク x 4",
-			"無の力 (CD) + エアロスパーク x 2",
-			"全てを無へ (CD) + エアロスパーク x 2",
-			"エアロスパーク x 4",
-			"エアロスパーク x 4",
-			"エアロスパーク x 4",
-			"エアロスパーク x 3",
 			"",
 			""
 		]
