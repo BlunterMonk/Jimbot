@@ -18,14 +18,6 @@ export const jsonWithTimestamp = combine(
     json()
 ); 
 
-function printChain(...msg: any[]): string {
-    let text = "";
-    msg.forEach((t,i) => {
-        text += JSON.stringify(t);
-    });
-    return text;
-}
-
 class Logger {
     logger: winston.Logger;
     constructor() {
@@ -64,19 +56,19 @@ class Logger {
         this.logger = winston.createLogger(options);
     }
 
-    info(...data: any[]) {
-        this.logger.info(printChain(data));
+    info(data: string) {
+        this.logger.info(data);
     }
-    debug(...data: any[]) {
-        this.logger.debug(printChain(data));
+    debug(data: string) {
+        this.logger.debug(data);
     }
-    silly(...data: any[]) {
-        this.logger.silly(printChain(data));
+    silly(data: string) {
+        this.logger.silly(data);
     }
-    error(...data: any[]) {
-        this.logger.error(printChain(data));
+    error(data: string) {
+        this.logger.error(data);
     }
-    trace(...data: any[]) {
+    trace(data: string) {
         this.silly(data);
     }
 }

@@ -8,31 +8,49 @@ import { logger } from "./util/logger.js";
 
 ////////////////////////////////////////////////////////////
 
+function printf(msg: any[]): string {
+    let text = "";
+    msg.forEach((t,i) => {
+        if (typeof t == "string") {
+            text += t;
+        } else {
+            let s = JSON.stringify(t);
+            text += s+" ";//.slice(1, s.length-1);
+        }
+    });
+    return text;
+}
+
 export function log(...data: any[]) {
-    logger.logger.info(data);
+    let s: string = printf(data);
+    logger.info(s);
 }
 export function logData(msg: string, data: any) {
-    logger.logger.info(`${msg}, ${JSON.stringify(data)}`);
+    logger.info(`${msg}, ${JSON.stringify(data)}`);
 }
 export function debug(...data: any[]) {
-    logger.logger.debug(data);
+    let s: string = printf(data);
+    logger.debug(s);
 }
 export function trace(...data: any[]) {
-    logger.logger.silly(data);
+    let s: string = printf(data);
+    logger.silly(s);
 }
 export function error(...data: any[]) {
-    logger.logger.error(data);
+    let s: string = printf(data);
+    logger.error(s);
 }
-export function logDataArray(data: any[]) {
-    if (data.length == 0) {
-        return log("[]");
-    }
-    log(`[`);
-    data.forEach((v,i) => {
-        log(`${i}: ${JSON.stringify(v)}`);
-    });
-    log(`]`);
-}
+// export function logDataArray(msg: string, data: any[]) {
+//     if (data.length == 0) {
+//         return log("[]");
+//     }
+//     let t = msg + "[\n";
+//     data.forEach((v,i) => {
+//         t += `  ${i}: ${JSON.stringify(v)}\n`;
+//     });
+//     t += "]";
+//     log(t);
+// }
 export function checkString(text: string, keyword: RegExp): boolean {
     // log(`${keyword}.test(${text.replace(/\s*/g,"")})`);
     // log(`${keyword.test(text.replace(/\s*/g,""))}`);

@@ -7,7 +7,7 @@
 import "../util/string-extension.js";
 import * as request from "request";
 import * as Constants from "../constants.js";
-import { log, logData, logDataArray, debug, trace } from "../global.js";
+import { log, debug, trace } from "../global.js";
 import { Builder } from "./builder.js";
 import { LoginTicket } from "google-auth-library/build/src/auth/loginticket";
 
@@ -388,11 +388,8 @@ class Build {
         // log("\n}\n");
         //var killers = addOtherStats(total.killers)
 
-        log("Total Stats");
-        log(totalStats);
-
-        log("Total Bonuses");
-        log(totalBonuses);
+        debug("Total Stats: ", totalStats);
+        debug("Total Bonuses: ", totalBonuses);
 
         return {
             stats: totalStats,
@@ -1253,8 +1250,7 @@ function applyEnchantments(item, enchantments) {
                 enhancementValue = Constants.itemEnhancementAbilities[enhancement];
             }
 
-            log("Adding Enchantment");
-            log(enhancementValue);
+            trace("Adding Enchantment: ", enhancementValue);
             if (enhancementValue) {
                 result = combineTwoItems(result, enhancementValue);
             }
@@ -1275,8 +1271,8 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
     }
 
     var item = itemWithVariation[0];
-    log("Find Best Item")
-    logData("Base Item", item)
+    trace("Find Best Item")
+    trace("Base Item: ", item)
 
     if (itemWithVariation.length == 1) {
         // if there are no variations of the item, it is fine
@@ -1285,7 +1281,7 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
             
             var enh = B.getItemEnchantments(slot);
             if (enh) {
-                log("has enhancements")
+                trace("Has Enhancements: ", enh)
                 return applyEnchantments(item, enh);
             }
 
@@ -1305,8 +1301,7 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
         //     return result;
         // }
     } else {
-        log("variations")
-        logDataArray(itemWithVariation)
+        trace("Variations: ", itemWithVariation)
 
         // sort the list of item variations by priority
         itemWithVariation.sort(function (item1, item2) {
@@ -1332,10 +1327,10 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
             if (isApplicable(itemWithVariation[index], B.loadedUnit) && areConditionOK(itemWithVariation[index], B)) {
                 var enh = B.getItemEnchantments(slot);
                 if (enh) {
-                    logData("Variant Item With Enchantments", itemWithVariation[index]);
+                    trace("Variant Item With Enchantments ", itemWithVariation[index]);
                     return applyEnchantments(itemWithVariation[index], enh);
                 } else {
-                    logData("Best Found", itemWithVariation[index]);
+                    trace("Best Found ", itemWithVariation[index]);
                     return itemWithVariation[index];
                 }
             }
@@ -1352,7 +1347,7 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
             result["special"] = ["notStackable"];
         }
         
-        logData("Default Found", item);
+        trace("Default Found", item);
         return result;
     }
 }
@@ -1375,16 +1370,12 @@ export function requestBuildData(buildURL: string, callback) {
     request(
         { uri: `https://firebasestorage.googleapis.com/v0/b/ffbeequip.appspot.com/o/PartyBuilds%2F${id}.json?alt=media` },
         function(error, response, body) {
-            log(`request response`);
-            log(error);
-            log(response.statusCode);
-
             if (error || response.statusCode != 200 || body.empty()) {
-                log(`Build Not Found: ${id}`);
+                error(`Build Not Found: ${id}`);
                 return;
             }
 
-            log(`${region} - Build Found: ${id}`);
+            log(`Build Found: (${region}) - ${id}`);
             callback(id, region, body);
         }
     );
@@ -1404,8 +1395,7 @@ export function CreateBuild(id: string, region: string, buildData): Build {
     if (!build)
         return null;
 
-    log("Create Build");
-    log(buildData);
+    log("Create Build: ", buildData);
 
     var allItems = [];
     buildData.items.forEach((element, ind) => {

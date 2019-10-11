@@ -68,6 +68,7 @@ const gifAliases = {
 // COMMANDS
 
 // WIKI 
+
 function handleUnit(receivedMessage, search, parameters) {
 
     let original = search;
@@ -511,6 +512,7 @@ function handleHelp(receivedMessage) {
 }
 
 // DAMAGE
+
 function handleDamage(receivedMessage, search, parameters) {
 
     search = search.replaceAll("_", " ");
@@ -777,26 +779,19 @@ export async function build(receivedMessage, url, calculation, force = false): P
             // log(data);
             var d = JSON.parse(data);
             if (!d || !d.units[0]) {
-                log("Could not parse build data");
+                error("Could not parse build data");
                 reject("Could not parse build data");
                 return;
             }      
             
             var b = d.units[0];
-            log(b.items);
-
-            // var name = getUnitNameFromKey(b.id).toTitleCase(" ");
-            // var text = Build.getBuildText(id, b);
-            // var desc = text.text.replaceAll("\\[", "**[");
-            // desc = desc.replaceAll("\\]:", "]:**");
             var build = Build.CreateBuild(id, region, b);
             if (!build) {
                 Client.send(receivedMessage, "Sorry hun, something went wrong.");
-                log("Could not build image");
+                error("Could not build image");
                 reject("Could not build unit");
                 return;
             }
-
 
             var sendImg = function(p) {
                 const attachment = new Discord.Attachment(p, 'build.png');
@@ -825,7 +820,7 @@ export async function build(receivedMessage, url, calculation, force = false): P
 
             BuildImage.BuildImage(build).then(sendImg).catch((e) => {
                 Client.send(receivedMessage, "Sorry hun, something went wrong.");
-                log("Could not build image");
+                error("Could not build image");
                 reject(e);
             });
         });
@@ -844,16 +839,15 @@ export function handleBuild(receivedMessage, search, parameters) {
             calc.source = "furcula";
             includeTitle = calc;
             search = calc.url;
-            log(`Loading Unit Build: ${calc.url}`);
+            log(`Loading Unit Calculation Build: ${calc.url}`);
         }
     }
 
     build(receivedMessage, search, includeTitle)
     .catch((e) => {
         console.error(e);
-        log("Build Failed");
-        error(e.message, e.stack);
-        log(`Unable to find build: ${search}`);    
+        error("Build Failed: ", e.message);
+        error(`Unable to find build: ${search}`);
     });
 }
 export function handleBis(receivedMessage, search, parameters) {
@@ -1853,7 +1847,7 @@ function downloadImage(name, link, callback) {
 
 export function handle(receivedMessage, com: Commands.CommandObject): boolean {
     
-    log("Handle Command Object: ", JSON.stringify(com));
+    log("Handle Command Object: ", com);
 
     if (handleUnitQuery(receivedMessage, com.command, com.search)) {
         return;
@@ -1868,9 +1862,8 @@ export function handle(receivedMessage, com: Commands.CommandObject): boolean {
 
         eval(com.run);
     } catch (e) {
-        log("Command doesn't exist", e);
+        error("Command doesn't exist: ", com.command, " error: ", e.message);
         console.log(e);
-        error(e)
 
         if (Client.validate(receivedMessage, "emote")) {
             handleEmote(receivedMessage);

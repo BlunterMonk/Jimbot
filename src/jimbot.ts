@@ -111,8 +111,7 @@ function onMessage(receivedMessage, content) {
     try {
         handle(receivedMessage, com);
     } catch (e) {
-        log("Command doesn't exist: ", e);
+        error("Command doesn't exist: ", com.command, " error: ", e.message);
         console.log(e);
-        error(e);
     }
 }

@@ -103,17 +103,16 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
     if (!command || command.empty())
         return null;
 
-    if (guildSettings) {
-
-        var shortcut = guildSettings.getShortcut(command);
-        if (shortcut) {
-            log("Found Command Shortcut");
-            copy = shortcut;
-            command = getCommandString(copy);
-            log(`New Command: ${command}`);
-            log(`New Content: ${copy}`);
-        }
-    }
+    // if (guildSettings) {
+    //     var shortcut = guildSettings.getShortcut(command);
+    //     if (shortcut) {
+    //         log("Found Command Shortcut");
+    //         copy = shortcut;
+    //         command = getCommandString(copy);
+    //         log(`New Command: ${command}`);
+    //         log(`New Content: ${copy}`);
+    //     }
+    // }
 
     const alias = config.getCommandAlias(command);
     if (alias) {

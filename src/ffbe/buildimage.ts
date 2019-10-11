@@ -9,7 +9,7 @@ import * as fs from "fs";
 import * as Canvas from 'canvas';
 import * as Build from './build.js';
 import * as Download from '../util/download.js';
-import { log, logDataArray } from "../global.js";
+import { log, debug, error, trace } from "../global.js";
 const sizeOf = require('image-size');
 
 ////////////////////////////////////////////////////////////
@@ -60,9 +60,7 @@ function processBuild(search) {
 export async function BuildImage(build: any): Promise<string> {
     
     var equipped = build.getEquipment();
-    log("Equipment:");
-    // log(equipped);
-    logDataArray(equipped);
+    debug("Equipment: ", equipped);
 
     return new Promise<string>((resolve, reject) => {
         
@@ -185,8 +183,7 @@ interface statRow {
 
 function getKillers(options: statRow, values: any) {
 
-    log("Total Values");
-    log(values);
+    trace("Total Values: ", values);
 
     var images = [];
     var labels = [];
@@ -266,13 +263,9 @@ function getResistsByValue(totalStats, list): any {
     if (!totalStats.resist) {
         return resist;
     }
-
-    log("CONVERTING RESIST")
-    log(totalStats.resist);
         
     list.forEach((k, i) => {
         const r = totalStats.resist[k];
-        log(`${k}: ${r}`);
 
         if (r) {
             const i = list.indexOf(k)
@@ -280,7 +273,6 @@ function getResistsByValue(totalStats, list): any {
                 return;
 
             var v = r.percent;
-            log(v);
             if (!resist[`${v}`]) 
                 resist[`${v}`] = [];
 
@@ -293,7 +285,7 @@ function getResistsByValue(totalStats, list): any {
         }
     });
 
-    log(resist);
+    trace("Resists: ", resist);
     return resist;
 }
 
@@ -310,8 +302,6 @@ function getResists(totalStats, list): string[] {
         return resist;
     }
         
-    log("GET RESISTS")
-    log(totalStats.resist)
     var values = {};
     var totalKeys = Object.keys(totalStats.resist)
     totalKeys.forEach((k, i) => {
@@ -332,9 +322,6 @@ function getResists(totalStats, list): string[] {
             resist[i] = `${v + r.percent}`;
         }
     });
-
-    // log("Resist Values");
-    // log(resist);
     
     return resist;
 }
@@ -432,9 +419,6 @@ interface mainStatsOptions {
 function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wieldingBonus) {
     var labels = [];
 
-    log("wield")
-    log(wieldingBonus);
-    
     let x0 = options.xCol1;
     let x1 = options.xCol2;
     let x2 = options.xCol3;
@@ -684,7 +668,6 @@ function buildCompactImage(unit, imageOptions: UnitBox, build, callback) {
         h: imageHeight
     }];
     if (unit && unit.path && unit.path != "") {
-        log("Unit Image");
         let ui = {
             src: unit.path,
             x: imageOptions.xStart + 6,
@@ -692,7 +675,7 @@ function buildCompactImage(unit, imageOptions: UnitBox, build, callback) {
             w: unit.w*3,
             h: unit.h*3
         };
-        log(ui);
+        trace("Unit Image: ", ui);
         images[images.length] = ui;
         images[images.length] = {
             src: `${imgCacheDir}unit-icon-frame.png`,
@@ -747,7 +730,7 @@ function buildCompactImage(unit, imageOptions: UnitBox, build, callback) {
     // Add Esper
     var esper = build.getEsperId();
     var esperPath = `${imgCacheDir}espers/${esper}.png`;
-    log(`Esper Path: ${esperPath}`);
+    trace(`Esper Path: ${esperPath}`);
     if (esper && fs.existsSync(esperPath)) {
         images[images.length] = {
             src: esperPath,
@@ -791,7 +774,6 @@ function buildImage(unit, itemImages, build, callback) {
         h: canvasHeight
     }];
     if (unit && unit.path && unit.path != "") {
-        log("Unit Image");
         let ui = {
             src: unit.path,
             x: 72 - ((unit.w)),//56 - (unit.w * 0.5),//6,//150 - ((unit.w * 2.5) / 2),
@@ -799,13 +781,13 @@ function buildImage(unit, itemImages, build, callback) {
             w: unit.w*1.5,
             h: unit.h*1.5
         };
-        log(ui);
+        trace("Unit Image: ", ui);
         images[images.length] = ui;
     }
 
     var esper = build.getEsperId();
     var esperPath = `${imgCacheDir}espers/${esper}.png`;
-    log(`Esper Path: ${esperPath}`);
+    trace(`Esper Path: ${esperPath}`);
     if (esper && fs.existsSync(esperPath)) {
         images[images.length] = {
             src: esperPath,
@@ -899,7 +881,7 @@ function finalizeImage(saveLocation: string, images: any[], labels: any[], cWidt
         callback(saveLocation);
     }).catch((e) =>{
         console.error(e);
-        log("Failed to make image");
+        error("Failed to make image: ", e.message);
     });
 }
 
@@ -940,7 +922,6 @@ function downloadImages(slots, items, unitId, callback) {
     unitId = unitId.replaceAll(" ", "_");
     var filename = `unit_icon_${unitId}.png`;
     var path = `${imgCacheDir}units/${filename}`;
-    log(`Image Path: ${path}`);
     if (fs.existsSync(path))
         foundUnit(path);
     else {
@@ -949,60 +930,12 @@ function downloadImages(slots, items, unitId, callback) {
             log(`Image Donloaded: ${source}`);
             foundUnit(p);
         }).catch((e) => {
-            log(`Image Failed to Donload: ${source}`);
+            error(`Image Failed to Donload: ${source}`);
             queryEnd(null, null, null);
         });
     }
-    /*
-        var resizeIcon = function(p2) {
-            Canvas.loadImage(p2).then((image) => {
-
-                // canvas.width = canvasWidth;
-                // canvas.height = canvasHeight;
-                ctx.drawImage(image, 0, 0);
-    
-                var trimmed =  mergeImages.trim(ctx, image);
-    
-                var fs = require('fs');
-                var string = trimmed.toDataURL();
-                // log(string);
-                var regex = /^data:.+\/(.+);base64,(.*)$/;
-                
-                var matches = string.match(regex);
-                var ext = matches[1];
-                var data = matches[2];
-                var buffer = Buffer.alloc(data.length, data, 'base64');
-        
-                fs.writeFileSync(path, buffer);
-            
-                foundUnit(path);
-            }).catch((e) => {
-                console.error(e);
-                log(`Failed to load image: ${p2}`);
-            });
-        }
-
-        let p2 = `${imgCacheDir}units-uncropped/${filename}`;
-        if (!fs.existsSync(p2)) {
-            FFBE.queryWikiForUnitIcon(unitId, (o) => {
-                if (o) {
-                    Download.downloadFile(p2, o, (r) => {
-                        resizeIcon(r);
-                    });
-                } else {
-                    queryEnd(null, null, null);
-                }
-            });
-        } else {
-            resizeIcon(p2);
-        }
-    } else {*/
-    //}
-
 
     slots.forEach(slot => {
-
-        // log(slot)
 
         var item = null;
         for (let index = 0; index < items.length; index++) {
@@ -1026,39 +959,13 @@ function downloadImages(slots, items, unitId, callback) {
             h: 112
         };
 
-        // log(`Image Path: ${imagePath}`);
         if (fs.existsSync(path)) {
             queryEnd(slot.slot, item.id, image);
         } else {
             Download.downloadFile(path, imagePath).then((p) =>{
-            // log(`Image Donloaded: ${id}`);
+                log(`Image Donloaded: ${p}`);
                 queryEnd(slot.slot, item.id, image);
             });
         };
     });
 }
-
-/* long names
-diamond enlightenment key
-aldore special ops sword
-Black Fox Shapeshifter Mask
-The Lord of the Underworld
-Shield of the Chosen King
-Two-Headed Dragon's Harp
-Castle Exdeath - Illusion Perception
-tactician magician's wand
-ayaka's crimson umbrella
-The Divine Art of War
-Explosive Spear - Blast Off
-
-[
-0: {"id":"303002600","name":"Tonitrus","type":"greatSword","atk":120,"element":["lightning"],"special":["Gain at the start of a battle: [Bravery (Auto)|ability_77.png]: Increase ATK by 20% for this fight to one ally"],"tmrUnit":"100008903","access":["TMR-3*"],"icon":"item_10231.png","sortId":572,"rarity":7,"enhancements":["rare_4"],"hp%":20,"atk%":20}
-1: {"id":"308004800","name":"Longinus (FFBE)","type":"spear","atk":190,"killers":[{"name":"spirit","physical":75,"magical":75}],"access":["trial"],"maxNumber":1,"icon":"item_11044.png","sortId":1216,"rarity":9,"enhancements":["rare_4"],"hp%":20,"atk%":20}
-2: {"id":"403042000","name":"Prishe's Hairpin","type":"hat","hp%":10,"mp%":10,"atk":45,"tmrUnit":"211000405","access":["TMR-5*"],"icon":"item_30129.png","sortId":522,"rarity":8}
-3: {"id":"405004900","name":"Hyoh's Clothes","type":"clothes","atk":28,"atk%":30,"def":42,"equipedConditions":["greatSword"],"tmrUnit":"100016205","access":["TMR-5*"],"icon":"item_20145.png","sortId":949,"rarity":8}
-4: {"id":"409029600","name":"Hermes Sandals (FFV)","type":"accessory","atk":40,"dualWielding":{"atk":50},"lbPerTurn":{"min":2,"max":2},"tmrUnit":"205001105","access":["TMR-5*"],"icon":"item_50418.png","sortId":1276,"rarity":8}
-5: {"id":"409026900","name":"Seraph Comb","type":"accessory","mp%":20,"atk":50,"atk%":10,"tmrUnit":"207000505","access":["TMR-5*"],"icon":"item_50389.png","sortId":1184,"rarity":8}
-6: {"id":"504230370","name":"Dual Form","type":"materia","dualWielding":{"atk":100},"special":["notStackable"],"tmrUnit":"213001005","access":["TMR-5*"],"icon":"ability_72.png","sortId":939}
-7: {"id":"504229861","name":"A Hero's Bond","type":"materia","atk%":60,"special":["notStackable"],"equipedConditions":["greatSword","clothes"],"tmrUnit":"100020605","access":["TMR-5*"],"icon":"ability_95.png","sortId":911}
-]
-*/
