@@ -17,7 +17,8 @@
 		"emote",
 		"addresponse",
 		"response",
-		"autobuild"
+		"autobuild",
+		"addbuild"
 	],
 	"editors": [
 		"159846139124908032",
@@ -27,40 +28,6 @@
 		"114545824989446149"
 	],
 	"response": {},
-	"shortcuts": {
-		"tips": {
-			"command": "whatis",
-			"search": "new player"
-		},
-		"noob": {
-			"command": "whatis",
-			"search": "new player info"
-		},
-		"eletetris": {
-			"command": "whatis",
-			"search": "elemental tetris"
-		},
-		"bunnies": {
-			"command": "gif",
-			"search": "sylvie",
-			"parameters": [
-				"win"
-			]
-		},
-		"festunits": {
-			"command": "whatis",
-			"search": "festunits"
-		},
-		"zenorot": {
-			"command": "whatis zeno rotation",
-			"search": "zeno rotation",
-			"parameters": []
-		},
-		"fudgingcurrency": {
-			"command": "whatis",
-			"search": "currency",
-			"parameters": []
-		}
-	},
+	"shortcuts": {},
 	"name": "/r/FFBraveExvius"
 }

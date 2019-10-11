@@ -18,6 +18,7 @@ import * as Commands from "./commands.js";
 import { log, logData, error, escapeString, debug } from "../global.js";
 import { cache } from "../cache/cache.js";
 import { config } from "../config/config.js";
+import { Profiles } from "../config/profiles.js";
 import { Client } from "../discord.js";
 import { Builder } from "../ffbe/builder.js";
 import { FFBE } from "../ffbe/ffbewiki.js";
@@ -775,9 +776,9 @@ export async function build(receivedMessage, url, calculation, force = false): P
 
     return new Promise<string>((resolve, reject) => {
 
-        Build.requestBuildData(url, (id, region, data) => {
+        Build.requestBuildData(url).then(response => {
             // log(data);
-            var d = JSON.parse(data);
+            var d = JSON.parse(response.data);
             if (!d || !d.units[0]) {
                 error("Could not parse build data");
                 reject("Could not parse build data");
@@ -785,7 +786,7 @@ export async function build(receivedMessage, url, calculation, force = false): P
             }      
             
             var b = d.units[0];
-            var build = Build.CreateBuild(id, region, b);
+            var build = Build.CreateBuild(response.id, response.region, b);
             if (!build) {
                 Client.send(receivedMessage, "Sorry hun, something went wrong.");
                 error("Could not build image");
@@ -813,8 +814,8 @@ export async function build(receivedMessage, url, calculation, force = false): P
                 resolve();
             }
 
-            if (!force && fs.existsSync(`./tempbuilds/${id}.png`)) {
-                sendImg(`./tempbuilds/${id}.png`);
+            if (!force && fs.existsSync(`./tempbuilds/${response.id}.png`)) {
+                sendImg(`./tempbuilds/${response.id}.png`);
                 return;
             }
 
@@ -823,6 +824,9 @@ export async function build(receivedMessage, url, calculation, force = false): P
                 error("Could not build image");
                 reject(e);
             });
+        }).catch(e => {
+            error(e);
+            reject(e);
         });
     });
 }
@@ -873,12 +877,13 @@ export function handleBis(receivedMessage, search, parameters) {
     });
 }
 async function buildText(receivedMessage, url) {
-    Build.requestBuildData(url, (id, region, data) => {
+
+    Build.requestBuildData(url).then(response => {
         // log(data);
-        var b = JSON.parse(data).units[0];
+        var b = JSON.parse(response.data).units[0];
 
         var name = getUnitNameFromKey(b.id).toTitleCase(" ");
-        var text = Build.getBuildText(id, region, b);
+        var text = Build.getBuildText(response.id, response.region, b);
         if (!text) {
             Client.send(receivedMessage, "Sorry hun, something went wrong.");
             log("Could not build text");
@@ -901,6 +906,8 @@ async function buildText(receivedMessage, url) {
 
         // log(text);
         Client.sendMessage(receivedMessage, embed);
+    }).catch(e => {
+        error(e);
     });
 }
 export function handleBuildtext(receivedMessage, search, parameters) {
@@ -1332,7 +1339,100 @@ function handleClear(receivedMessage, search, parameters) {
     }
 }
 
+
+// PROFILES
+
+var welcomePhrases = [
+    "Hurray, welcome new cute banana!",
+    "Banzai, atarashī kawaī banana ni yōkoso!",
+    "Bravo, bienvenue à bord d'une nouvelle banane mignonne!",
+    "Hurra, bienvenido a bordo del nuevo plátano lindo!",
+    "Hurra, willkommen an Bord der neuen süßen Banane!",
+];
+function handleRegister(receivedMessage, search, parameters) {
+
+    let id = receivedMessage.author.id;
+    log("Register: ", id);
+    if (Profiles.getProfile(id))
+        return;
+
+    log("Registering New User: ", id);
+    Profiles.addProfile(id);
+
+    var msg = welcomePhrases[getRandomInt(welcomePhrases.length)]
+
+    Client.send(receivedMessage, msg);
+}
+function handleAddbuild(receivedMessage, search, parameters) {
+
+    let id = receivedMessage.author.id;
+    if (!Profiles.getProfile(id))
+        return;
+
+    if (!parameters || parameters.length < 2) {
+        Client.send(receivedMessage, "sorry hun, you're missing some info")
+    }
+
+    let name = parameters[0];
+    let url = parameters[1];
+
+    Build.requestBuildData(url).then(response => {
+        var d = JSON.parse(response.data);
+        if (!d || !d.units[0]) {
+            error("Could not parse build data");
+            Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
+            return;
+        }
+
+        Profiles.addBuild(id, name, url);
+        log("Stored New Build: ", name, " Unit: ", `(${d.id})`, " URL: ", url)
+    }).catch(e => {
+        error(e);
+        Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
+    });
+}
+function handleMybuild(receivedMessage, search, parameters) {
+
+    let profile = Profiles.getProfile(receivedMessage.author.id);
+    if (!profile)
+        return;
+
+    var url = profile.builds[search];
+    if (!url) {
+        error("Could not find build with name: ", search, " for user: ", receivedMessage.author.id);
+        return;
+    }
+
+    search = search.replaceAll("_", " ").toTitleCase(" ");
+
+    build(receivedMessage, url, null)
+    .catch((e) => {
+        console.error(e);
+        error("Build Failed: ", e.message);
+        error(`Unable to find build: ${search}`);
+    });
+}
+function handleEnableautobuild(receivedMessage, search, parameters) {
+    
+    let id = receivedMessage.author.id;
+    if (!Profiles.getProfile(id))
+        return;
+
+    log("Enabling Auto Build For User: ", id);
+    Profiles.setAutoBuild(id, true);
+}
+function handleDisableautobuild(receivedMessage, search, parameters) {
+    
+    let id = receivedMessage.author.id;
+    if (!Profiles.getProfile(id))
+        return;
+
+    log("Enabling Auto Build For User: ", id);
+    Profiles.setAutoBuild(id, false);
+}
+
 // UNIT DATAMINE INFORMATION
+
 function handleK(receivedMessage, search, id) {
     log(`handleKit(${search})`);
 

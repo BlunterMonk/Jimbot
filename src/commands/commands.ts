@@ -81,6 +81,10 @@ function convertCommand(command, content) {
     return null;
 }
 
+const aliasIgnoreList = [
+    "dpt", "mybuild"
+]
+
 export interface CommandObject {
     attachment: any;
     command: string;
@@ -134,7 +138,7 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
     var parameters = params.parameters;
     
     // Get search string for command.
-    const search = getSearchString(copy, (command !== "Dpt"));
+    const search = getSearchString(copy, !aliasIgnoreList.includes(command.toLowerCase()));
     
     if (command.toLowerCase() === `addemo` && parameters.length === 0) {
         if (attachment) {

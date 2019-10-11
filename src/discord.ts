@@ -10,6 +10,7 @@ import * as fs from "fs";
 import { config } from "./config/config.js";
 import { getCommandString, getSearchString } from "./commands/commands.js";
 import { log, debug, trace, error } from "./global.js";
+import { Profiles } from "./config/profiles.js";
 
 ////////////////////////////////////////////////////////////
 
@@ -272,12 +273,14 @@ class client {
         const prefix = this.guildSettings[guildId].getPrefix();
         if (contentPrefix != prefix) {
 
-            if (content.includes("ffbeequip.com") && this.validate(receivedMessage, "autobuild")) {
+            debug("User Enabled Autobuild: ", Profiles.getAutoBuild(receivedMessage.author.id));
+            if (content.includes("ffbeequip.com") 
+                && (this.validate(receivedMessage, "autobuild") || Profiles.getAutoBuild(receivedMessage.author.id))) {
                 var URL = receivedMessage.content.match(/(https.*?(\s|$))/g)
-                //log(URL);
+                trace("Received URL for Autobuild: ", url);
                 if (URL) {
                     var url = URL[0].trim();
-                    //log(url);
+                    log("Beginning Autobuild: ", URL);
 
                     this.onMessageCallback(receivedMessage, `build ${url}`);
                 }

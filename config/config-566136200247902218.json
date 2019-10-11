@@ -21,35 +21,6 @@
 		"i love hentai too": "i love hentai too",
 		"hi jake": "darkness"
 	},
-	"shortcuts": {
-		"tips": {
-			"command": "whatis",
-			"search": "new player"
-		},
-		"noob": {
-			"command": "whatis",
-			"search": "new player info"
-		},
-		"eletetris": {
-			"command": "whatis",
-			"search": "elemental tetris"
-		},
-		"bunnies": {
-			"command": "gif",
-			"search": "sylvie",
-			"parameters": [
-				"win"
-			]
-		},
-		"festunits": {
-			"command": "whatis",
-			"search": "festunits"
-		},
-		"zenorot": {
-			"command": "whatis",
-			"search": "zeno rotation",
-			"parameters": []
-		}
-	},
+	"shortcuts": {},
 	"name": "Jimbot-Env"
 }
