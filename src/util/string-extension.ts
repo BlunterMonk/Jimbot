@@ -151,5 +151,8 @@ String.prototype.closestMatchIn = function (list: string[], threshold: number): 
 
     return null;
 }
+String.prototype.isNumber = function(){
+    return /^\d+$/.test(this);
+}
 
 module.exports = String;

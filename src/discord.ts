@@ -172,6 +172,9 @@ class client {
             if (error) error(e);
         });
     }
+    fetchUser(authorId: string): Promise<Discord.User> {
+        return this.discordClient.fetchUser(authorId);
+    }
 
     respondSuccess(receivedMessage, toUser = false) {
 

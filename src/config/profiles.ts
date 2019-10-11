@@ -8,8 +8,6 @@
 import "../util/string-extension.js";
 import * as fs from "fs";
 import { log } from "../global.js";
-import { userInfo } from "os";
-import { UserProfile } from "discord.js";
 
 ////////////////////////////////////////////////////////////
 
@@ -17,6 +15,7 @@ const filename = './data/profiles.json';
 
 interface userProfile {
     autobuild: boolean;
+    friendcode: string; 
     builds: {[key: string]: string};
 }
 
@@ -41,9 +40,10 @@ export class profile {
     getProfile(id: string): userProfile {
         return this.configuration[id];
     }
-    addProfile(id: string) {
+    addProfile(id: string, code: string) {
         this.configuration[id] = {
             autobuild: false,
+            friendcode: code,
             builds: {}
         };
 
@@ -72,6 +72,19 @@ export class profile {
         this.save()
     }
     
+    setFriendCode(id: string, code: string) {
+        if (!this.configuration[id])
+            return;
+
+        this.configuration[id].friendcode = code;
+        this.save()
+    }
+    getFriendCode(id: string) {
+        if (!this.configuration[id])
+            return;
+
+        return this.configuration[id].friendcode;
+    }
 
     // setProfileField(name: string, field: string, value: any) {
     //     if (!this.configuration[name])

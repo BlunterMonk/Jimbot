@@ -1343,21 +1343,72 @@ function handleClear(receivedMessage, search, parameters) {
 // PROFILES
 
 var welcomePhrases = [
-    "Hurray, welcome new cute banana!",
+    "Hurray, a new cutie patootie, welcome!",
     "Banzai, atarashī kawaī banana ni yōkoso!",
     "Bravo, bienvenue à bord d'une nouvelle banane mignonne!",
     "Hurra, bienvenido a bordo del nuevo plátano lindo!",
     "Hurra, willkommen an Bord der neuen süßen Banane!",
 ];
+function handleProfile(receivedMessage, search, parameters) {
+
+    let id = receivedMessage.author.id;
+    let profile = Profiles.getProfile(id);
+    if (!profile) {
+        Client.send(receivedMessage, `oh, ${receivedMessage.author.username} baby, you gotta Register first 'kay?`);
+        return;
+    }
+
+    log("Attempting to display profile for user: ", id);
+    Client.fetchUser(id).then(user => {
+
+        let text = "Builds:\n";
+        let keys = Object.keys(profile.builds);
+        keys.forEach((key, i) => {
+            if (i > 0) text += ", ";
+            text += key;            
+        });
+        text += "\n";
+
+        let embed = {
+            title: `${user.username} Profile${profile.friendcode.empty() ? "" : ": " + profile.friendcode}`,
+            description: text,
+            thumbnail: {
+                url: user.avatarURL
+            }
+        }
+
+        Client.sendMessage(receivedMessage, embed);
+    }).catch(e => {
+        error("Failed to fetch user information: ", e.message);
+        Client.send(receivedMessage, "sorry, I messed up");
+    })
+}
 function handleRegister(receivedMessage, search, parameters) {
 
     let id = receivedMessage.author.id;
     log("Register: ", id);
-    if (Profiles.getProfile(id))
+    if (Profiles.getProfile(id)) {
+        Client.send(receivedMessage, "silly billy, you're already registered");
         return;
+    }
+
+    let code  = "";
+    if (!search.empty()) {
+        search = search.replaceAll(",", "").trim();
+
+        let c = parseInt(search);
+        log("Attempting to add friend code: ", c);
+        if (search.length > 9 || Number.isNaN(c) || !search.isNumber()) {
+            Client.send(receivedMessage, "no can do boss, make sure you just send the numbers 'kay?");
+            return;
+        }
+    
+        code = search;
+    }
+
 
     log("Registering New User: ", id);
-    Profiles.addProfile(id);
+    Profiles.addProfile(id, code);
 
     var msg = welcomePhrases[getRandomInt(welcomePhrases.length)]
 
@@ -1384,7 +1435,9 @@ function handleAddbuild(receivedMessage, search, parameters) {
             return;
         }
 
-        Profiles.addBuild(id, name, url);
+        Profiles.addBuild(id, name.replaceAll(" ", "_"), url);
+    Client.send(receivedMessage, `OK, i'll remember that, ${name}`);
+
         log("Stored New Build: ", name, " Unit: ", `(${d.id})`, " URL: ", url)
     }).catch(e => {
         error(e);
@@ -1420,6 +1473,8 @@ function handleEnableautobuild(receivedMessage, search, parameters) {
 
     log("Enabling Auto Build For User: ", id);
     Profiles.setAutoBuild(id, true);
+
+    Client.send(receivedMessage, "all set, auto build engage!");
 }
 function handleDisableautobuild(receivedMessage, search, parameters) {
     
@@ -1429,6 +1484,55 @@ function handleDisableautobuild(receivedMessage, search, parameters) {
 
     log("Enabling Auto Build For User: ", id);
     Profiles.setAutoBuild(id, false);
+
+    Client.send(receivedMessage, "okay, no more auto builds...");
+}
+function handleFriendcode(receivedMessage, search, parameters) {
+    
+    let id = receivedMessage.author.id;
+    if (!Profiles.getProfile(id))
+        return;
+
+    if (!search || search.empty())
+        return;
+
+    search = search.replaceAll(",", "").trim();
+
+    let code = parseInt(search);
+    log("Attempting to add friend code: ", code);
+    if (search.length > 9 || Number.isNaN(code) || !search.isNumber()) {
+        Client.send(receivedMessage, "no can do boss, make sure you just send the numbers 'kay?");
+        return;
+    }
+
+    log("Added Friend Code For User: ", id, " Code: ", search);
+    Profiles.setFriendCode(id, search);
+
+    Client.send(receivedMessage, "so exciting! I love making new friends!");
+}
+function handleFriend(receivedMessage, search, parameters) {
+    
+    let id = receivedMessage.author.id;
+    if (!Profiles.getProfile(id))
+        return;
+
+    if (!search.empty()) {
+        log("Getting friend code for mentioned user: ", search);
+        search = search.replace("<", "");
+        search = search.replace(">", "");
+        search = search.replace("!", "");
+        search = search.replace("@", "");
+        id = search;
+    }
+
+    let code = Profiles.getFriendCode(id);
+    if (!code || code.empty()) {
+        Client.send(receivedMessage, "looks like we aren't friends yet, sad...");
+        return;
+    }
+    log("Retrieving Friend Code For User: ", id, " Code: ", code);
+
+    Client.send(receivedMessage, `${code}`);
 }
 
 // UNIT DATAMINE INFORMATION

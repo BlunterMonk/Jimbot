@@ -10,6 +10,7 @@ declare interface String {
     indexOfAfterIndex (search, start): string;
     matches (other): boolean;
     closestMatchIn (list, threshold): string;
+    isNumber(): boolean;
 }
 
 declare function log(data: any);

@@ -17,8 +17,7 @@
 		"emote",
 		"addresponse",
 		"response",
-		"autobuild",
-		"addbuild"
+		"autobuild"
 	],
 	"editors": [
 		"159846139124908032",
