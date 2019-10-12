@@ -4,11 +4,15 @@
     "fields": [
         {
             "name": "Register With Jimbot",
-            "value": "- **?register** *[friend_code | optional]*\nRegister as a user to Jimbot. Accepts an optional friend code when registering. This can be changed later.\n\u200B\n"
+            "value": "- **?register** *[friend_code | optional]* \"*[nickname | optional | parameter]*\"\nRegister as a user to Jimbot. Accepts an optional friend code when registering.\nAccepts an optional parameter as a nickname\nThese can be changed later.\n-example: **?register 311530529 \"Queen Banana\"**\u200B\n"
         },
         {
             "name": "\n\nSet Friend Code",
             "value": "- **?friendcode** *[friend_code]*\nAdd your friend code to your profile. Friend code must be the 9 digit friend code and nothing more.\n\u200B\n"
+        },
+        {
+            "name": "Set Nickname",
+            "value": "- **?nickname** *[nickname]*\nSet the nickname of your profile to make finding you easier.\n- example: **?nickname Queen Banana**\n\u200B\n"
         },
         {
             "name": "Add Build",
@@ -19,19 +23,19 @@
             "value": "- **?removebuild** *[build_name]*\nRemove a build from your profile.\n- example: **?removebuild turtle**\n\u200B\n"
         },
         {
-            "name": "\n\nEnable Auto Builds",
+            "name": "Enable Auto Builds",
             "value": "- **?enableautobuild**\nActivating this option will make Jimbot create a build image whenever you post an FFBEEquip build URL.\n\u200B\n"
         },
         {
-            "name": "\n\nDisable Auto Builds",
+            "name": "Disable Auto Builds",
             "value": "- **?disableautobuild**\nDisabling this option will prevent Jimbot from automatically building an image with your URL.\n\u200B\n"
         },
         {
-            "name": "\n\nView User Profile",
+            "name": "View User Profile",
             "value": "- **?profile** *[user_id | optional]*\nView the profile of yourself, or of another user when using a mention.\n- example: **?profile @Jimoori#2006**\n\u200B\n"
         },
         {
-            "name": "\n\nView User Friend Code",
+            "name": "View User Friend Code",
             "value": "- **?friend** *[user_id | optional]*\nView the friend code of yourself, or of another user when using a mention.\n- example: **?friend @Jimoori#2006**\n\u200B\n"
         },
         {

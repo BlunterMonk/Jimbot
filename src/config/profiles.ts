@@ -15,7 +15,8 @@ const filename = './data/profiles.json';
 
 interface userProfile {
     autobuild: boolean;
-    friendcode: string; 
+    friendcode: string;
+    nickname: string;
     builds: {[key: string]: string};
 }
 
@@ -40,10 +41,11 @@ export class profile {
     getProfile(id: string): userProfile {
         return this.configuration[id];
     }
-    addProfile(id: string, code: string) {
+    addProfile(id: string, code: string, name: string) {
         this.configuration[id] = {
             autobuild: false,
             friendcode: code,
+            nickname: name,
             builds: {}
         };
 
@@ -100,6 +102,28 @@ export class profile {
             return;
 
         return this.configuration[id].friendcode;
+    }
+
+    nicknameTaken(name: string): boolean {
+
+        var keys = Object.keys(this.configuration);
+        for (let index = 0; index < keys.length; index++) {
+            const key = keys[index];
+            const user = this.configuration[key];
+
+            if (name == user.nickname) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    saveNickname(id: string, name: string) {
+        if (!this.configuration[id])
+            return;
+
+        this.configuration[id].nickname = name;
+        this.save()
     }
 
     // setProfileField(name: string, field: string, value: any) {

@@ -1530,11 +1530,11 @@ function getMentionID(search): string {
 }
 
 var welcomePhrases = [
-    "Hurray, a new cutie patootie, welcome!",
-    "Banzai, atarashī kawaī banana ni yōkoso!",
-    "Bravo, bienvenue à bord d'une nouvelle banane mignonne!",
-    "Hurra, bienvenido a bordo del nuevo plátano lindo!",
-    "Hurra, willkommen an Bord der neuen süßen Banane!",
+    "Hurray, a new cutie patootie, welcome %v!",
+    "Banzai, atarashī kawaī %v ni yōkoso!",
+    "Bravo, bienvenue à bord d'une nouvelle %v mignonne!",
+    "Hurra, bienvenido a bordo del nuevo %v lindo!",
+    "Hurra, willkommen an Bord der neuen süßen %v!",
 ];
 
 function handleProfilehelp(receivedMessage) {
@@ -1593,9 +1593,10 @@ function handleProfile(receivedMessage, search, parameters) {
         }
         text += tempText + "\n";
 
+        let name = (profile.nickname.empty()) ? user.username : profile.nickname.replaceAll("_", " ").toTitleCase(" ");
         let code = (profile.friendcode.empty()) ? "" : ": " + profile.friendcode.numberWithCommas();
         let embed = {
-            title: `${user.username}'s Profile${code}`,
+            title: `${name}'s Profile${code}`,
             description: text,
             color: pinkHexCode,
             thumbnail: {
@@ -1611,6 +1612,11 @@ function handleProfile(receivedMessage, search, parameters) {
 }
 function handleFriend(receivedMessage, search, parameters) {
     
+    if (search == "help") {
+        handleProfilehelp(receivedMessage);
+        return;
+    }
+
     let id = receivedMessage.author.id;
     if (!Profiles.getProfile(id))
         return;
@@ -1630,6 +1636,11 @@ function handleFriend(receivedMessage, search, parameters) {
     Client.send(receivedMessage, `${code}`);
 }
 function handleUserbuild(receivedMessage, search, parameters) {
+
+    if (search == "help") {
+        handleProfilehelp(receivedMessage);
+        return;
+    }
 
     let id = receivedMessage.author.id;
     if (!parameters || parameters.length < 1) {
@@ -1658,6 +1669,11 @@ function handleUserbuild(receivedMessage, search, parameters) {
 }
 
 function handleMybuild(receivedMessage, search, parameters) {
+
+    if (search == "help") {
+        handleProfilehelp(receivedMessage);
+        return;
+    }
 
     let profile = Profiles.getProfile(receivedMessage.author.id);
     if (!profile)
@@ -1691,25 +1707,47 @@ function handleRegister(receivedMessage, search, parameters) {
     }
 
     let code  = "";
+    let name = "";
     if (search && !search.empty()) {
         search = search.replaceAll(",", "").trim();
 
+        if (parameters.length > 0) {
+            let n = parameters[0].toLowerCase().replaceAll(" ", "_");
+            debug("Attempting to add nickname: ", n);
+            if (Profiles.nicknameTaken(n)) {
+                log("Registration cancelled, Nickname in use: ", n);
+                Client.send(receivedMessage, "seems like that nickname is already taken, try another ok?");
+                return;
+            } else {
+                name = n;
+            }
+        } 
+        
         let c = parseInt(search);
-        log("Attempting to add friend code: ", c);
+        debug("Attempting to add friend code: ", c);
         if (search.length > 9 || Number.isNaN(c) || !search.isNumber()) {
+            log("Registration cancelled, friend code invalid: ", c);
             Client.send(receivedMessage, "no can do boss, make sure you just send the numbers 'kay?");
             return;
         }
-    
+
         code = search;
     }
 
     log("Registering New User: ", id);
-    Profiles.addProfile(id, code);
+    Client.fetchUser(id).then(user => {
+        
+        if (Profiles.nicknameTaken(user.username)) {
+            name = "";
+        }
+        
+        Profiles.addProfile(id, code, name);
 
-    var msg = welcomePhrases[getRandomInt(welcomePhrases.length)]
-
-    Client.send(receivedMessage, msg);
+        var msg = welcomePhrases[getRandomInt(welcomePhrases.length)]
+        msg = msg.replaceAll("%v", name.replaceAll("_", " ").toTitleCase(" "));
+        
+        Client.send(receivedMessage, msg);
+    });
 }
 function handleAddbuild(receivedMessage, search, parameters) {
 
@@ -1808,6 +1846,27 @@ function handleFriendcode(receivedMessage, search, parameters) {
     Profiles.setFriendCode(id, search);
 
     Client.send(receivedMessage, "so exciting! I love making new friends!");
+}
+function handleNickname(receivedMessage, search, parameters) {
+
+    if (search == "help") {
+        handleProfilehelp(receivedMessage);
+        return;
+    }
+
+    let id = receivedMessage.author.id;
+    if (!Profiles.getProfile(id))
+        return;
+
+    search = search.trim();
+    if (Profiles.nicknameTaken(search)) {
+        Client.send(receivedMessage, "that name is already taken, sorry!");
+        return;
+    }
+
+    Profiles.saveNickname(id, search);
+
+    Client.send(receivedMessage, `Got it, ${search.replaceAll("_", " ").toTitleCase(" ")}!`);
 }
 
 
