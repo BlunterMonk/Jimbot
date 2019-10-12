@@ -291,7 +291,6 @@ class client {
         const prefix = this.guildSettings[guildId].getPrefix();
         if (contentPrefix != prefix) {
 
-            debug("User Enabled Autobuild: ", Profiles.getAutoBuild(receivedMessage.author.id));
             if (content.includes("ffbeequip.com") 
                 && (this.validate(receivedMessage, "autobuild") || Profiles.getAutoBuild(receivedMessage.author.id))) {
                 var URL = receivedMessage.content.match(/(https.*?(\s|$))/g)

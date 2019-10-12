@@ -2,8 +2,6 @@
 	"309497668802052096": {
 		"autobuild": true,
 		"builds": {
-			"cute_regina": "https://ffbeequip.com/builder.html?server=GL#51237d00-ebe1-11e9-8f21-29aab363c1db",
-			"regina": "https://ffbeequip.com/builder.html?server=gl#b1909bf0-ebf5-11e9-8f21-29aab363c1db",
 			"regina_for_emperor": "https://ffbeequip.com/builder.html?server=gl#b1909bf0-ebf5-11e9-8f21-29aab363c1db",
 			"regina_for_demon_wall": "https://ffbeequip.com/builder.html?server=gl#db7c4330-ec7a-11e9-8f21-29aab363c1db"
 		},
@@ -43,8 +41,22 @@
 		"autobuild": false,
 		"friendcode": "311530529",
 		"builds": {
-			"turtle_killer": "https://ffbeequip.com/builder.html?server=gl#bb0bcea0-e60c-11e9-b677-3b8586bd2e6d",
-			"brkeak_tj_dsf": "https://ffbeequip.com/builder.html?server=gl#bb0bcea0-e60c-11e9-b677-3b8586bd2e6d"
+			"turtle_killer": "https://ffbeequip.com/builder.html?server=gl#bb0bcea0-e60c-11e9-b677-3b8586bd2e6d"
 		}
+	},
+	"189594200835096577": {
+		"autobuild": false,
+		"friendcode": "",
+		"builds": {}
+	},
+	"137266260202356736": {
+		"autobuild": false,
+		"friendcode": "",
+		"builds": {}
+	},
+	"248627497522954240": {
+		"autobuild": false,
+		"friendcode": "",
+		"builds": {}
 	}
 }

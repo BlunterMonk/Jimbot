@@ -1559,15 +1559,17 @@ function handleProfile(receivedMessage, search, parameters) {
     }
 
     let id = receivedMessage.author.id;
-    let profile = Profiles.getProfile(id);
-    if (!profile) {
-        Client.send(receivedMessage, `oh, ${receivedMessage.author.username} baby, you gotta Register first 'kay?`);
-        return;
-    }
 
     let mention = getMentionID(search);
     if (mention) {
+        log("Found mention: ", mention);
         id = mention;
+    }
+
+    let profile = Profiles.getProfile(id);
+    if (!profile) {
+        Client.send(receivedMessage, `oh, ${receivedMessage.author.username} baby, you gotta use "?Register" first 'kay?`);
+        return;
     }
 
     log("Attempting to display profile for user: ", id);
