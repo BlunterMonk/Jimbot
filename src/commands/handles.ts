@@ -1867,6 +1867,11 @@ function handleNickname(receivedMessage, search, parameters) {
         return;
 
     search = search.trim();
+    if (search.length > 64) {
+        Client.send(receivedMessage, "that's way too long to be a name, no can do.")
+        return;
+    }
+
     if (Profiles.nicknameTaken(search)) {
         Client.send(receivedMessage, "that name is already taken, sorry!");
         return;
