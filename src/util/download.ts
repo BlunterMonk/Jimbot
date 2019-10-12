@@ -7,7 +7,7 @@
 import "../util/string-extension.js";
 import * as fs from "fs";
 import * as https from "https";
-import { log } from "../global.js";
+import { log, error } from "../global.js";
 
 ////////////////////////////////////////////////////////////
 
@@ -23,6 +23,10 @@ export function downloadFile(path, link): Promise<string> {
                 return;
             }
             file = fs.createWriteStream(path);
+            file.on('error', function(e) {
+                error(`Error while downloading file: ${path}, " from: ", ${link}`, " error: ", e.message);
+                reject(`Failed to download file: ${link}, error: ${e.message}`);
+            });
             file.on('finish', function() {
                 log(`file downloaded: ${path}`);
                 resolve(path);

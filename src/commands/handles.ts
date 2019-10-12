@@ -17,7 +17,7 @@ import * as BuildImage from "../ffbe/buildimage.js";
 import * as Commands from "./commands.js";
 import { log, logData, error, escapeString, debug } from "../global.js";
 import { cache } from "../cache/cache.js";
-import { config } from "../config/config.js";
+import { config, Config } from "../config/config.js";
 import { Profiles } from "../config/profiles.js";
 import { Client } from "../discord.js";
 import { Builder } from "../ffbe/builder.js";
@@ -68,9 +68,37 @@ const gifAliases = {
 ////////////////////////////////////////////////////////////
 // COMMANDS
 
-// WIKI 
+function handleHelp(receivedMessage) {
+
+    handleDpthelp(receivedMessage);
+    handleBuildhelp(receivedMessage);
+    handleWikihelp(receivedMessage);
+    handleProfilehelp(receivedMessage);
+}
+
+
+// FFBE WIKI
+
+function handleWikihelp(receivedMessage) {
+    var data = fs.readFileSync("./data/help/help-wiki.json", "ASCII");
+    var readme = JSON.parse(data);
+
+    var embed = {
+        color: pinkHexCode,
+        description: readme.description,
+        fields: readme.fields,
+        title: readme.title
+    };
+
+    Client.sendPrivateMessage(receivedMessage, embed);
+}
 
 function handleUnit(receivedMessage, search, parameters) {
+
+    if (search == "help") {
+        handleWikihelp(receivedMessage);
+        return;
+    }
 
     let original = search;
     
@@ -125,6 +153,11 @@ function handleUnit(receivedMessage, search, parameters) {
 }
 function handleEquip(receivedMessage, search, parameters) {
 
+    if (search == "help") {
+        handleWikihelp(receivedMessage);
+        return;
+    }
+
     search = search.toTitleCase("_");
     log(`Searching Equipment For: ${search}...`);
 
@@ -146,6 +179,11 @@ function handleEquip(receivedMessage, search, parameters) {
     });
 }
 function handleSkill(receivedMessage, search, parameters) {
+
+    if (search == "help") {
+        handleWikihelp(receivedMessage);
+        return;
+    }
 
     search = search.toTitleCase("_");
     log(`Searching Skills For: ${search}...`);
@@ -210,6 +248,11 @@ function handleWiki(receivedMessage, search, parameters) {
 }
 
 function handleRank(receivedMessage, search, parameters) {
+    if (search == "help") {
+        handleWikihelp(receivedMessage);
+        return;
+    }
+
     log("\nSearching Rankings for: " + search);
 
     if (search) {
@@ -255,60 +298,12 @@ function handleRank(receivedMessage, search, parameters) {
         return;
     }
 }
-
-// FLUFF
-function handleReactions(receivedMessage) {
-    const content = receivedMessage.content.toLowerCase();
-    switch (content) {
-        case "hi majin":
-            receivedMessage.guild.emojis.forEach(customEmoji => {
-                if (
-                    customEmoji.name === "nuked" ||
-                    customEmoji.name === "tifapeek" ||
-                    customEmoji.name === "think"
-                ) {
-                    receivedMessage.react(customEmoji);
-                }
-            });
-            break;
-        case "hi jake":
-            receivedMessage.react("🌹");
-            receivedMessage.react("🛋");
-            break;
-        case "hi reberta":
-            receivedMessage.guild.emojis.forEach(customEmoji => {
-                if (
-                    customEmoji.name === "hugpweez" ||
-                    customEmoji.name === "yay" ||
-                    customEmoji.name === "praise"
-                ) {
-                    receivedMessage.react(customEmoji);
-                }
-            });
-        default:
-            break;
-    }
-}
-function handleEmote(receivedMessage) {
-    var img = receivedMessage.content.split(" ")[0];
-    img = img.toLowerCase().slice(1, img.length);
-
-    var filename = validateEmote(img);
-    if (!filename) return;
-
-    Client.sendImage(receivedMessage, filename);
-}
-function handleQuote(receivedMessage, search) {
-    //var s = getSearchString(quoteQueryPrefix, content).toLowerCase();
-    switch (search) {
-        case "morrow":
-            Client.send(receivedMessage, new Discord.Attachment("morrow0.png"));
-            break;
-        default:
-            break;
-    }
-}
 function handleGif(receivedMessage, search, parameters) {
+    if (search == "help") {
+        handleWikihelp(receivedMessage);
+        return;
+    }
+
     log("Searching gifs for: " + search);
 
     var bot = /^\d/.test(search)
@@ -329,6 +324,11 @@ function handleGif(receivedMessage, search, parameters) {
     });
 }
 function handleCg(receivedMessage, search, parameters) {
+    if (search == "help") {
+        handleWikihelp(receivedMessage);
+        return;
+    }
+
     log("Searching CG for: " + search);
     
     search = search.replaceAll("_", " ");
@@ -353,6 +353,10 @@ function handleCg(receivedMessage, search, parameters) {
     Client.send(receivedMessage, attachment);
 }
 function handleSprite(receivedMessage, search, parameters) {
+    if (search == "help") {
+        handleWikihelp(receivedMessage);
+        return;
+    }
 
     var unit = getUnitKey(search);
     if (!unit) {
@@ -376,32 +380,6 @@ function handleSprite(receivedMessage, search, parameters) {
     });
 }
 
-// INFORMATION
-
-function handleWhatis(receivedMessage, search, parameters) {
-
-    var info = cache.getInformation(search)
-    if (!info) {
-        return;
-    }
-    
-    var embed = {
-        color: pinkHexCode,
-        title: info.title,
-        description: info.description
-    };
-
-    Client.sendMessageWithAuthor(receivedMessage, embed, info.author);
-}
-function handleGuide(receivedMessage, search, parameters) {
-    handleWhatis(receivedMessage, search, parameters);
-}
-function handleG(receivedMessage, search, parameters) {
-    handleWhatis(receivedMessage, search, parameters);
-}
-function handleNoob(receivedMessage, search, parameters) {
-    handleWhatis(receivedMessage, "new_player", parameters);
-}
 function handleGlbestunits(receivedMessage, search, parameters) {
 
     const settings = cache.getTopUnits(search);
@@ -462,44 +440,16 @@ function handleGlbestunits(receivedMessage, search, parameters) {
         Client.sendMessage(receivedMessage, embed)
     });
 }
-function handleAddtopunit(receivedMessage, search, parameters) {
-    if (receivedMessage.guild) {
-        return;
-    }
- 
-    var cat = search;
-    var unit = parameters[0];
-    if (search.empty()) {
-        cat = parameters[0];
-        unit = parameters[1];
-    }
 
-    if (cache.addTopUnit(cat, unit)) {
-        respondSuccess(receivedMessage, true);
-    } else {
-        respondFailure(receivedMessage, true);
-    }
-}
-function handleRemovetopunit(receivedMessage, search, parameters) {
-    if (receivedMessage.guild) {
-        return;
-    }
 
-    var cat = search;
-    var unit = parameters[0];
-    if (search.empty()) {
-        cat = parameters[0];
-        unit = parameters[1];
-    }
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 
-    if (cache.removeTopUnit(cat, unit)) {
-        respondSuccess(receivedMessage, true);
-    } else {
-        respondFailure(receivedMessage, true);
-    }
-}
-function handleHelp(receivedMessage) {
-    var data = fs.readFileSync("readme.json", "ASCII");
+// FFBEEQUIP
+
+function handleBuildhelp(receivedMessage) {
+    var data = fs.readFileSync("./data/help/help-damage.json", "ASCII");
     var readme = JSON.parse(data);
 
     var embed = {
@@ -511,266 +461,6 @@ function handleHelp(receivedMessage) {
 
     Client.sendPrivateMessage(receivedMessage, embed);
 }
-
-// DAMAGE
-
-function handleDamage(receivedMessage, search, parameters) {
-
-    search = search.replaceAll("_", " ");
-    var calc = cache.getUnitCalculation("furcula", search);
-    if (!calc) {
-        log("Could not find calculations for: " + search);
-        return;
-    }
-    var text = "";
-    if (!calc.damage.empty()) {
-        text += `**Damage Per Turn:** ${calc.damage}\n`;
-    }
-    if (!calc.burst.empty()) {
-        text += `**Highest Burst:** ${calc.burst} on turn ${calc.burstTurn}\n`;
-    }
-    text += `\n[(spreadsheet)](${sheetURL}) - [(wiki)](${calc.wiki}) - [(build)](${calc.url})\n`;
-
-    var embed = <any>{
-        color: pinkHexCode,
-        title: `${calc.name}`,
-        url: sheetURL,
-        description: text,
-    }
-    
-    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
-}
-function buildDamageEmbed(search, isBurst, source) {
-    var calc = cache.getCalculations(source, search);
-    if (!calc) {
-        log("Could not find calculations for: " + search);
-        return null;
-    }
-
-    var text = "";
-        
-    const keys = Object.keys(calc);
-    for (let ind = 0; ind < keys.length; ind++) {
-        const key = keys[ind];
-        const element = calc[key];
-
-        if (isBurst && element.burst && !element.burst.empty()) {
-            text += `**${element.name}:** ${element.burst} on turn ${element.burstTurn}\n`;
-        } else if (element.damage && !element.damage.empty()) {
-            text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
-        }
-    }
-
-    var title = "";
-    var s = search.toTitleCase();
-    if (isBurst) {
-        title = `Burst damage for: ${s}. (damage on turn)`;
-    } else {
-        title = `DPT for: ${s}. (dpt - turns for rotation)`;
-    }
-
-    var embed = <any>{
-        color: pinkHexCode,
-        title: title,
-        url: sheetURL,
-        description: text,
-        footer: {
-            text: "visit the link provided for more calculations"
-        },
-    }
-
-    return embed
-}
-function handleDpt(receivedMessage, search, parameters, isBurst) {
-
-    if (receivedMessage.channel.name.includes("wiki")) {
-        handleMuspel(receivedMessage, search, parameters);
-        return;
-    }
-    
-    search = search.replaceAll("_", " ");
-
-    var embed = buildDamageEmbed(search, isBurst, "furcula");
-    
-    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
-}
-function handleWhale(receivedMessage, search, parameters, isBurst) {
-
-    search = search.replaceAll("_", " ");
-
-    var embed = buildDamageEmbed(search, isBurst, "whale");
-    embed.url = whaleSheet;
-
-    Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
-}
-function handleBurst(receivedMessage, search, parameters) {
-    handleDpt(receivedMessage, search, parameters, true);
-}
-function handleWhaleburst(receivedMessage, search, parameters) {
-    handleWhale(receivedMessage, search, parameters, true);
-}
-function buildRotationEmbed(search, source) {
-
-    var calc = cache.getUnitCalculation(source, search);
-    if (!calc || !calc.rotation) {
-        log("Could not find calculations for: " + search);
-        return;
-    }
-
-    var bturn = 0;
-    var text = `**Damage Per Turn: ${calc.damage}**\n`;
-    if (calc.burst && !calc.burst.empty()) {
-        text += `**Highest Burst: ${calc.burst} on turn ${calc.burstTurn}**\n`;
-        bturn = parseInt(calc.burstTurn);
-    }
-    text += `**[(spreadsheet)](${(source == "furcula") ? sheetURL : whaleSheet}) - [(wiki)](${calc.wiki}) - [(build)](${calc.url})**\n\n`;
-    calc.rotation.forEach((txt, ind) => {
-        if (txt.empty()) 
-            return;
-
-        if (ind+1 === bturn) {
-            text += `**[${ind+1}]: ${txt}**\n`;
-        } else {
-            text += `**[${ind+1}]**: ${txt}\n`;
-        }
-    });
-
-    var embed = <any>{
-        color: pinkHexCode,
-        title: `Optimal Rotation For: ${calc.name}`,
-        description: text,
-    }
-
-    return embed;
-}
-function handleRotation(receivedMessage, search, parameters) {
-
-    search = search.replaceAll("_", " ");
-
-    var embed = buildRotationEmbed(search, "furcula");
-    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
-}
-function handleWhaletation(receivedMessage, search, parameters) {
-
-    search = search.replaceAll("_", " ");
-
-    var embed = buildRotationEmbed(search, "whale");
-    embed.url = whaleSheet;
-
-    Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
-}
-function handleTopdps(receivedMessage, search, parameters) {
-
-    const calcs = cache.getAllCalculations();
-    const check = search && !search.empty();
-
-    const culled = [];
-    calcs.forEach(unit => {
-
-        if (unit.jp || unit.name.includes("(JP)"))
-            return;
-        if (check && !unit.type.includes(search))
-            return;
-        if (!unit.damage || unit.damage === undefined || unit.damage.empty())
-            return;
-
-        var ad = parseInt(unit.damage.replaceAll(",", ""));
-
-        if (Number.isNaN(ad)) return;
-
-        culled.push(unit);
-    });
-
-
-    const sorted = culled.sort((a, b) => {
-
-        var ad = parseInt(a.damage.replaceAll(",", ""));
-        var bd = parseInt(b.damage.replaceAll(",", ""));
-
-        if (Number.isNaN(ad)) {
-            return -1;
-        } else if (Number.isNaN(bd)) {
-            return 1;
-        }
-
-        if (bd < ad)
-            return -1;
-        else 
-            return 1;
-    });
-
-    var limit = 10;
-    var p = parseInt(parameters[0]);
-    if (!Number.isNaN(p))
-        limit = p;
-
-    var text = "";
-    var count = Math.min(limit, sorted.length);
-    for (let index = 0; index < count; index++) {
-        const unit = sorted[index];
-        
-        if (check)
-            text += `**${unit.name}:** ${unit.damage}\n`;
-        else 
-            text += `**${unit.name} (${unit.type}):** ${unit.damage}\n`;
-    }
-
-    var embed = <any>{
-        color: pinkHexCode,
-        title: `Top DPS`,
-        description: text,
-    }
-    
-    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
-}
-
-function buildMuspelDamageString(search) {
-    var calc = cache.getCalculations("muspel", search);
-    if (!calc) {
-        log("Could not find calculations for: " + search);
-        return;
-    }
-
-    var text = "";
-        
-    const keys = Object.keys(calc);
-    for (let ind = 0; ind < keys.length; ind++) {
-        const key = keys[ind];
-        const element = calc[key];
-
-        if (element.damage.empty())
-            continue;
-
-        if (element.type == "finisher") {
-            text += `**${element.name} (${element.type}):** ${element.damage} on turn ${element.turns}\n`;
-        } else {
-            text += `**${element.name} (${element.type}):** ${element.damage} : ${element.turns}\n`;
-        }
-    }
-
-    return text;
-}
-function handleMuspel(receivedMessage, search, parameters) {
-
-    search = search.replaceAll("_", " ");
-
-    var text = buildMuspelDamageString(search);
-
-    var s = search.toTitleCase();
-    var embed = <any>{
-        color: pinkHexCode,
-        title: `Muspel Damage Comparisons: ${s}`,
-        url: muspelURL,
-        description: text,
-        footer: {
-            text: "visit the link provided for more calculations"
-        },
-    }
-    
-    Client.sendMessageWithAuthor(receivedMessage, embed, muspelUserID);
-}
-
-// FFBEEQUIP
 
 export async function build(receivedMessage, url, calculation, force = false): Promise<string> {
 
@@ -831,6 +521,10 @@ export async function build(receivedMessage, url, calculation, force = false): P
     });
 }
 export function handleBuild(receivedMessage, search, parameters) {
+    if (search == "help") {
+        handleBuildhelp(receivedMessage);
+        return;
+    }
 
     var unitName = search;
     unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
@@ -855,7 +549,11 @@ export function handleBuild(receivedMessage, search, parameters) {
     });
 }
 export function handleBis(receivedMessage, search, parameters) {
-
+    if (search == "help") {
+        handleBuildhelp(receivedMessage);
+        return;
+    }
+    
     var unitName = search;
     unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
 
@@ -911,6 +609,10 @@ async function buildText(receivedMessage, url) {
     });
 }
 export function handleBuildtext(receivedMessage, search, parameters) {
+    if (search == "help") {
+        handleBuildhelp(receivedMessage);
+        return;
+    }
 
     var unitName = search;
     unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
@@ -927,6 +629,12 @@ export function handleBuildtext(receivedMessage, search, parameters) {
     buildText(receivedMessage, search);
 }
 export function handleBistext(receivedMessage, search, parameters) {
+
+    if (search == "help") {
+        handleBuildhelp(receivedMessage);
+        return;
+    }
+
     var unitName = search;
     unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
 
@@ -942,7 +650,458 @@ export function handleBistext(receivedMessage, search, parameters) {
     buildText(receivedMessage, search);
 }
 
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
+// DAMAGE
+
+function handleDpthelp(receivedMessage) {
+    var data = fs.readFileSync("./data/help/help-damage.json", "ASCII");
+    var readme = JSON.parse(data);
+
+    var embed = {
+        color: pinkHexCode,
+        description: readme.description,
+        fields: readme.fields,
+        title: readme.title
+    };
+
+    Client.sendPrivateMessage(receivedMessage, embed);
+}
+
+function buildDPTEmbed(search, isBurst, source) {
+    var calc = cache.getCalculations(source, search);
+    if (!calc) {
+        log("Could not find calculations for: " + search);
+        return null;
+    }
+
+    var text = "";
+        
+    const keys = Object.keys(calc);
+    for (let ind = 0; ind < keys.length; ind++) {
+        const key = keys[ind];
+        const element = calc[key];
+
+        if (isBurst && element.burst && !element.burst.empty()) {
+            text += `**${element.name}:** ${element.burst} on turn ${element.burstTurn}\n`;
+        } else if (element.damage && !element.damage.empty()) {
+            text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
+        }
+    }
+
+    var title = "";
+    var s = search.toTitleCase();
+    if (isBurst) {
+        title = `Burst damage for: ${s}. (damage on turn)`;
+    } else {
+        title = `DPT for: ${s}. (dpt - turns for rotation)`;
+    }
+
+    var embed = <any>{
+        color: pinkHexCode,
+        title: title,
+        url: sheetURL,
+        description: text,
+        footer: {
+            text: "visit the link provided for more calculations"
+        },
+    }
+
+    return embed
+}
+function buildRotationEmbed(search, source) {
+
+    var calc = cache.getUnitCalculation(source, search);
+    if (!calc || !calc.rotation) {
+        log("Could not find calculations for: " + search);
+        return;
+    }
+
+    var bturn = 0;
+    var text = `**Damage Per Turn: ${calc.damage}**\n`;
+    if (calc.burst && !calc.burst.empty()) {
+        text += `**Highest Burst: ${calc.burst} on turn ${calc.burstTurn}**\n`;
+        bturn = parseInt(calc.burstTurn);
+    }
+    text += `**[(spreadsheet)](${(source == "furcula") ? sheetURL : whaleSheet}) - [(wiki)](${calc.wiki}) - [(build)](${calc.url})**\n\n`;
+    calc.rotation.forEach((txt, ind) => {
+        if (txt.empty()) 
+            return;
+
+        if (ind+1 === bturn) {
+            text += `**[${ind+1}]: ${txt}**\n`;
+        } else {
+            text += `**[${ind+1}]**: ${txt}\n`;
+        }
+    });
+
+    var embed = <any>{
+        color: pinkHexCode,
+        title: `Optimal Rotation For: ${calc.name}`,
+        description: text,
+    }
+
+    return embed;
+}
+function buildMuspelDamageString(search) {
+    var calc = cache.getCalculations("muspel", search);
+    if (!calc) {
+        log("Could not find calculations for: " + search);
+        return;
+    }
+
+    var text = "";
+        
+    const keys = Object.keys(calc);
+    for (let ind = 0; ind < keys.length; ind++) {
+        const key = keys[ind];
+        const element = calc[key];
+
+        if (element.damage.empty())
+            continue;
+
+        if (element.type == "finisher") {
+            text += `**${element.name} (${element.type}):** ${element.damage} on turn ${element.turns}\n`;
+        } else {
+            text += `**${element.name} (${element.type}):** ${element.damage} : ${element.turns}\n`;
+        }
+    }
+
+    return text;
+}
+function buildDamageEmbed(search) {
+
+    search = search.replaceAll("_", " ");
+
+    var furc = cache.getUnitCalculation("furcula", search);
+    var whale = cache.getUnitCalculation("whale", search);
+    var musp = cache.getUnitCalculation("muspel", search);
+    if (!furc && !whale && !musp) {
+        log("Could not find calculations for: " + search);
+        return;
+    }
+
+    var text = "";
+    text += `**[(furcula sheet)](${sheetURL}) - [(shado sheet)](${whaleSheet}) - [(muspel sheet)](${muspelURL})**\n\u200B\n`;
+
+    if (furc && !furc.damage.empty()) {
+        
+        text += `**[Damage Per Turn:](${furc.url})** ${furc.damage} : ${furc.turns}\n`;
+        if (!furc.burst.empty()) {
+            text += `**[Highest Burst:](${furc.url})** ${furc.burst} on turn ${furc.burstTurn}\n`;
+        }
+    }
+
+    if (whale && !whale.damage.empty()) {
+        text += `**[Whale Damage Per Turn:](${whale.url})** ${whale.damage} : ${whale.turns}\n`;
+        if (!whale.burst.empty()) {
+            text += `**[Whale Highest Burst:](${whale.url})** ${whale.burst} on turn ${whale.burstTurn}\n`;
+        }
+    }
+
+    if (musp && !musp.damage.empty()) {
+        text += `**Muspels Damage Per Turn:** ${musp.damage} : ${musp.turns}\n`;
+    }
+
+    return <any>{
+        color: pinkHexCode,
+        title: `**__${furc.name}__**`,
+        url: furc.wiki,
+        description: text,
+    }
+}
+
+function handleTopdps(receivedMessage, search, parameters) {
+
+    const calcs = cache.getAllCalculations();
+    const check = search && !search.empty();
+
+    const culled = [];
+    calcs.forEach(unit => {
+
+        if (unit.jp || unit.name.includes("(JP)"))
+            return;
+        if (check && !unit.type.includes(search))
+            return;
+        if (!unit.damage || unit.damage === undefined || unit.damage.empty())
+            return;
+
+        var ad = parseInt(unit.damage.replaceAll(",", ""));
+
+        if (Number.isNaN(ad)) return;
+
+        culled.push(unit);
+    });
+
+    const sorted = culled.sort((a, b) => {
+
+        var ad = parseInt(a.damage.replaceAll(",", ""));
+        var bd = parseInt(b.damage.replaceAll(",", ""));
+
+        if (Number.isNaN(ad)) {
+            return -1;
+        } else if (Number.isNaN(bd)) {
+            return 1;
+        }
+
+        if (bd < ad)
+            return -1;
+        else 
+            return 1;
+    });
+
+    var limit = 10;
+    var p = parseInt(parameters[0]);
+    if (!Number.isNaN(p))
+        limit = p;
+
+    var text = "";
+    var count = Math.min(limit, sorted.length);
+    for (let index = 0; index < count; index++) {
+        const unit = sorted[index];
+        
+        if (check)
+            text += `**${unit.name}:** ${unit.damage}\n`;
+        else 
+            text += `**${unit.name} (${unit.type}):** ${unit.damage}\n`;
+    }
+
+    var embed = <any>{
+        color: pinkHexCode,
+        title: `Top DPS`,
+        description: text,
+    }
+    
+    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+}
+
+function handleDamage(receivedMessage, search, parameters) {
+    
+    if (search == "help") {
+        handleDpthelp(receivedMessage);
+        return;
+    }
+
+    let embed = buildDamageEmbed(search);
+    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+}
+
+function handleDpt(receivedMessage, search, parameters, isBurst) {
+
+    if (search == "help") {
+        handleDpthelp(receivedMessage);
+        return;
+    }
+
+    if (receivedMessage.channel.name.includes("wiki")) {
+        handleMuspel(receivedMessage, search, parameters);
+        return;
+    }
+    
+    search = search.replaceAll("_", " ");
+
+    var embed = buildDPTEmbed(search, isBurst, "furcula");
+    
+    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+}
+function handleWhale(receivedMessage, search, parameters, isBurst) {
+
+    if (search == "help") {
+        handleDpthelp(receivedMessage);
+        return;
+    }
+
+    search = search.replaceAll("_", " ");
+
+    var embed = buildDPTEmbed(search, isBurst, "whale");
+    embed.url = whaleSheet;
+
+    Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
+}
+function handleBurst(receivedMessage, search, parameters) {
+    handleDpt(receivedMessage, search, parameters, true);
+}
+function handleWhaleburst(receivedMessage, search, parameters) {
+    handleWhale(receivedMessage, search, parameters, true);
+}
+function handleRotation(receivedMessage, search, parameters) {
+
+    if (search == "help") {
+        handleDpthelp(receivedMessage);
+        return;
+    }
+
+    search = search.replaceAll("_", " ");
+
+    var embed = buildRotationEmbed(search, "furcula");
+    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+}
+function handleWhaletation(receivedMessage, search, parameters) {
+
+    if (search == "help") {
+        handleDpthelp(receivedMessage);
+        return;
+    }
+
+    search = search.replaceAll("_", " ");
+
+    var embed = buildRotationEmbed(search, "whale");
+    embed.url = whaleSheet;
+
+    Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
+}
+
+function handleMuspel(receivedMessage, search, parameters) {
+
+    if (search == "help") {
+        handleDpthelp(receivedMessage);
+        return;
+    }
+
+    search = search.replaceAll("_", " ");
+
+    var text = buildMuspelDamageString(search);
+
+    var s = search.toTitleCase();
+    var embed = <any>{
+        color: pinkHexCode,
+        title: `Muspel Damage Comparisons: ${s}`,
+        url: muspelURL,
+        description: text,
+        footer: {
+            text: "visit the link provided for more calculations"
+        },
+    }
+    
+    Client.sendMessageWithAuthor(receivedMessage, embed, muspelUserID);
+}
+
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
+
+// FLUFF
+
+function handleReactions(receivedMessage) {
+    const content = receivedMessage.content.toLowerCase();
+    switch (content) {
+        case "hi majin":
+            receivedMessage.guild.emojis.forEach(customEmoji => {
+                if (
+                    customEmoji.name === "nuked" ||
+                    customEmoji.name === "tifapeek" ||
+                    customEmoji.name === "think"
+                ) {
+                    receivedMessage.react(customEmoji);
+                }
+            });
+            break;
+        case "hi jake":
+            receivedMessage.react("🌹");
+            receivedMessage.react("🛋");
+            break;
+        case "hi reberta":
+            receivedMessage.guild.emojis.forEach(customEmoji => {
+                if (
+                    customEmoji.name === "hugpweez" ||
+                    customEmoji.name === "yay" ||
+                    customEmoji.name === "praise"
+                ) {
+                    receivedMessage.react(customEmoji);
+                }
+            });
+        default:
+            break;
+    }
+}
+function handleEmote(receivedMessage) {
+    var img = receivedMessage.content.split(" ")[0];
+    img = img.toLowerCase().slice(1, img.length);
+
+    var filename = validateEmote(img);
+    if (!filename) return;
+
+    Client.sendImage(receivedMessage, filename);
+}
+function handleQuote(receivedMessage, search) {
+    //var s = getSearchString(quoteQueryPrefix, content).toLowerCase();
+    switch (search) {
+        case "morrow":
+            Client.send(receivedMessage, new Discord.Attachment("morrow0.png"));
+            break;
+        default:
+            break;
+    }
+}
+
+
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
+
+// INFORMATION
+
+function handleWhatis(receivedMessage, search, parameters) {
+
+    var info = cache.getInformation(search)
+    if (!info) {
+        return;
+    }
+    
+    var embed = {
+        color: pinkHexCode,
+        title: info.title,
+        description: info.description
+    };
+
+    Client.sendMessageWithAuthor(receivedMessage, embed, info.author);
+}
+
+
 // ADDING RESOURCES
+
+function handleAddtopunit(receivedMessage, search, parameters) {
+    if (receivedMessage.guild) {
+        return;
+    }
+ 
+    var cat = search;
+    var unit = parameters[0];
+    if (search.empty()) {
+        cat = parameters[0];
+        unit = parameters[1];
+    }
+
+    if (cache.addTopUnit(cat, unit)) {
+        respondSuccess(receivedMessage, true);
+    } else {
+        respondFailure(receivedMessage, true);
+    }
+}
+function handleRemovetopunit(receivedMessage, search, parameters) {
+    if (receivedMessage.guild) {
+        return;
+    }
+
+    var cat = search;
+    var unit = parameters[0];
+    if (search.empty()) {
+        cat = parameters[0];
+        unit = parameters[1];
+    }
+
+    if (cache.removeTopUnit(cat, unit)) {
+        respondSuccess(receivedMessage, true);
+    } else {
+        respondFailure(receivedMessage, true);
+    }
+}
 function handleAddalias(receivedMessage, search, parameters) {
     if (receivedMessage.content.replace(/[^"]/g, "").length < 4) {
         log("Invalid Alias");
@@ -971,6 +1130,15 @@ function handleAddalias(receivedMessage, search, parameters) {
             });
         }
     });
+}
+function handleRemovealias(receivedMessage, search, parameters) {
+
+    let name = search;
+    if (parameters && parameters.length > 0)
+        name = parameters[0];
+
+    log("Removing Alias: ", name);
+    config.removeAlias(name);
 }
 function handleAddemo(receivedMessage, search, parameters) {
     var s = receivedMessage.content.split(" ");
@@ -1342,6 +1510,25 @@ function handleClear(receivedMessage, search, parameters) {
 
 // PROFILES
 
+function getMentionID(search): string {
+
+    if (search && !search.empty()) {
+        log("Getting friend code for mentioned user: ", search);
+
+        search = search.replace("<", "");
+        search = search.replace(">", "");
+        search = search.replace("!", "");
+        search = search.replace("@", "");
+
+        if (!search.isNumber())
+            return null;
+
+        return search;
+    }
+
+    return null;
+}
+
 var welcomePhrases = [
     "Hurray, a new cutie patootie, welcome!",
     "Banzai, atarashī kawaī banana ni yōkoso!",
@@ -1349,7 +1536,27 @@ var welcomePhrases = [
     "Hurra, bienvenido a bordo del nuevo plátano lindo!",
     "Hurra, willkommen an Bord der neuen süßen Banane!",
 ];
+
+function handleProfilehelp(receivedMessage) {
+    var data = fs.readFileSync("./data/help/help-profiles.json", "ASCII");
+    var readme = JSON.parse(data);
+
+    var embed = {
+        color: pinkHexCode,
+        description: readme.description,
+        fields: readme.fields,
+        title: readme.title
+    };
+
+    Client.sendPrivateMessage(receivedMessage, embed);
+}
+
 function handleProfile(receivedMessage, search, parameters) {
+
+    if (search == "help") {
+        handleProfilehelp(receivedMessage);
+        return;
+    }
 
     let id = receivedMessage.author.id;
     let profile = Profiles.getProfile(id);
@@ -1358,20 +1565,37 @@ function handleProfile(receivedMessage, search, parameters) {
         return;
     }
 
+    let mention = getMentionID(search);
+    if (mention) {
+        id = mention;
+    }
+
     log("Attempting to display profile for user: ", id);
     Client.fetchUser(id).then(user => {
 
-        let text = "Builds:\n";
+        let text = "\n\u200B\n**__Builds:__**\n\n";
         let keys = Object.keys(profile.builds);
+        let tempText = "";
         keys.forEach((key, i) => {
-            if (i > 0) text += ", ";
-            text += key;            
+            let n = key.replaceAll("_", " ").toTitleCase(" ");
+            let u = profile.builds[key];
+            tempText += `[${n}](${u})\n`;
         });
-        text += "\n";
+        if (tempText.length > 2000) {
+            debug("Build text too long, removing links: ", tempText.length);
 
+            tempText = "";
+            keys.forEach((key, i) => {
+                tempText += key.replaceAll("_", " ").toTitleCase(" ") + "\n";
+            });
+        }
+        text += tempText + "\n";
+
+        let code = (profile.friendcode.empty()) ? "" : ": " + profile.friendcode.numberWithCommas();
         let embed = {
-            title: `${user.username} Profile${profile.friendcode.empty() ? "" : ": " + profile.friendcode}`,
+            title: `${user.username}'s Profile${code}`,
             description: text,
+            color: pinkHexCode,
             thumbnail: {
                 url: user.avatarURL
             }
@@ -1383,67 +1607,54 @@ function handleProfile(receivedMessage, search, parameters) {
         Client.send(receivedMessage, "sorry, I messed up");
     })
 }
-function handleRegister(receivedMessage, search, parameters) {
-
-    let id = receivedMessage.author.id;
-    log("Register: ", id);
-    if (Profiles.getProfile(id)) {
-        Client.send(receivedMessage, "silly billy, you're already registered");
-        return;
-    }
-
-    let code  = "";
-    if (!search.empty()) {
-        search = search.replaceAll(",", "").trim();
-
-        let c = parseInt(search);
-        log("Attempting to add friend code: ", c);
-        if (search.length > 9 || Number.isNaN(c) || !search.isNumber()) {
-            Client.send(receivedMessage, "no can do boss, make sure you just send the numbers 'kay?");
-            return;
-        }
+function handleFriend(receivedMessage, search, parameters) {
     
-        code = search;
-    }
-
-
-    log("Registering New User: ", id);
-    Profiles.addProfile(id, code);
-
-    var msg = welcomePhrases[getRandomInt(welcomePhrases.length)]
-
-    Client.send(receivedMessage, msg);
-}
-function handleAddbuild(receivedMessage, search, parameters) {
-
     let id = receivedMessage.author.id;
     if (!Profiles.getProfile(id))
         return;
 
-    if (!parameters || parameters.length < 2) {
-        Client.send(receivedMessage, "sorry hun, you're missing some info")
+    let mention = getMentionID(search);
+    if (mention) {
+        id = mention;
     }
 
-    let name = parameters[0];
-    let url = parameters[1];
+    let code = Profiles.getFriendCode(id);
+    if (!code || code.empty()) {
+        Client.send(receivedMessage, "looks like we aren't friends yet, sad...");
+        return;
+    }
+    log("Retrieving Friend Code For User: ", id, " Code: ", code);
 
-    Build.requestBuildData(url).then(response => {
-        var d = JSON.parse(response.data);
-        if (!d || !d.units[0]) {
-            error("Could not parse build data");
-            Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
-            return;
-        }
+    Client.send(receivedMessage, `${code}`);
+}
+function handleUserbuild(receivedMessage, search, parameters) {
 
-        Profiles.addBuild(id, name.replaceAll(" ", "_"), url);
-    Client.send(receivedMessage, `OK, i'll remember that, ${name}`);
+    let id = receivedMessage.author.id;
+    if (!parameters || parameters.length < 1) {
+        Client.send(receivedMessage, "hmm, you didn't tell me which build to give you")
+    }
 
-        log("Stored New Build: ", name, " Unit: ", `(${d.id})`, " URL: ", url)
-    }).catch(e => {
-        error(e);
-        Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
+    let name = parameters[0].toLowerCase().replaceAll(" ", "_");
+    let mention = getMentionID(search);
+    if (mention) {
+        id = mention;
+    }
+
+    let buildUrl = Profiles.getBuild(id, name);
+    if (!buildUrl) {
+        error("No Build URL found with name: ", name, " For user: ", id);
+        // Client.send(receivedMessage, `looks like, ${receivedMessage.author.username} baby, you gotta Register first 'kay?`);
+        return;
+    }
+
+    build(receivedMessage, buildUrl, null)
+    .catch((e) => {
+        console.error(e);
+        error("Build Failed: ", e.message);
+        error(`Unable to find build: ${name}`);
     });
 }
+
 function handleMybuild(receivedMessage, search, parameters) {
 
     let profile = Profiles.getProfile(receivedMessage.author.id);
@@ -1464,6 +1675,92 @@ function handleMybuild(receivedMessage, search, parameters) {
         error("Build Failed: ", e.message);
         error(`Unable to find build: ${search}`);
     });
+}
+
+// PROFILE SETTINGS
+
+function handleRegister(receivedMessage, search, parameters) {
+
+    let id = receivedMessage.author.id;
+    log("Register: ", id);
+    if (Profiles.getProfile(id)) {
+        Client.send(receivedMessage, "silly billy, you're already registered");
+        return;
+    }
+
+    let code  = "";
+    if (search && !search.empty()) {
+        search = search.replaceAll(",", "").trim();
+
+        let c = parseInt(search);
+        log("Attempting to add friend code: ", c);
+        if (search.length > 9 || Number.isNaN(c) || !search.isNumber()) {
+            Client.send(receivedMessage, "no can do boss, make sure you just send the numbers 'kay?");
+            return;
+        }
+    
+        code = search;
+    }
+
+    log("Registering New User: ", id);
+    Profiles.addProfile(id, code);
+
+    var msg = welcomePhrases[getRandomInt(welcomePhrases.length)]
+
+    Client.send(receivedMessage, msg);
+}
+function handleAddbuild(receivedMessage, search, parameters) {
+
+    let id = receivedMessage.author.id;
+    if (!Profiles.getProfile(id))
+        return;
+
+    if (!parameters || parameters.length < 2) {
+        Client.send(receivedMessage, "sorry hun, you're missing some info")
+    }
+
+    let name = parameters[0];
+    name = name.replace(/[^\w\s]/gi, '')
+    if (name.length > 128) {
+        Client.send(receivedMessage, "stop stop stop, that name is way too long!")
+        return;
+    }
+    let url = parameters[1];
+
+    Build.requestBuildData(url).then(response => {
+        var d = JSON.parse(response.data);
+        if (!d || !d.units[0]) {
+            error("Could not parse build data");
+            Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
+            return;
+        }
+
+        Profiles.addBuild(id, name.replaceAll(" ", "_"), url);
+        Client.send(receivedMessage, `OK, i'll remember that, ${name}`);
+
+        log("Stored New Build: ", name, " Unit: ", `(${d.id})`, " URL: ", url)
+    }).catch(e => {
+        error(e);
+        Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
+    });
+}
+function handleRemovebuild(receivedMessage, search, parameters) {
+
+    let id = receivedMessage.author.id;
+    if (!Profiles.getProfile(id))
+        return;
+    if (!search || search.empty()) {
+        return;
+    }
+
+    debug("Attempting to remove build: ", search, " From user: ", id);
+    
+    let name = search.replaceAll(" ", "_")
+    let removed = Profiles.removeBuild(id, name);
+    if (removed) {
+        log("Removed Build: ", name, " From User: ", id);
+        Client.send(receivedMessage, `if you insist... *jimbot forgot "${search.toTitleCase().replaceAll("_", " ")}"*`);
+    } 
 }
 function handleEnableautobuild(receivedMessage, search, parameters) {
     
@@ -1510,30 +1807,7 @@ function handleFriendcode(receivedMessage, search, parameters) {
 
     Client.send(receivedMessage, "so exciting! I love making new friends!");
 }
-function handleFriend(receivedMessage, search, parameters) {
-    
-    let id = receivedMessage.author.id;
-    if (!Profiles.getProfile(id))
-        return;
 
-    if (!search.empty()) {
-        log("Getting friend code for mentioned user: ", search);
-        search = search.replace("<", "");
-        search = search.replace(">", "");
-        search = search.replace("!", "");
-        search = search.replace("@", "");
-        id = search;
-    }
-
-    let code = Profiles.getFriendCode(id);
-    if (!code || code.empty()) {
-        Client.send(receivedMessage, "looks like we aren't friends yet, sad...");
-        return;
-    }
-    log("Retrieving Friend Code For User: ", id, " Code: ", code);
-
-    Client.send(receivedMessage, `${code}`);
-}
 
 // UNIT DATAMINE INFORMATION
 

@@ -71,7 +71,23 @@ export class profile {
         this.configuration[id].builds[name] = url;
         this.save()
     }
-    
+    getBuild(id: string, name: string): string {
+        if (!this.configuration[id])
+            return null;
+
+        return this.configuration[id].builds[name];
+    }
+    removeBuild(id: string, name: string): boolean  {
+        if (!this.configuration[id])
+            return false;
+        if (!this.configuration[id].builds[name])
+            return false;
+
+        delete this.configuration[id].builds[name];
+        this.save()
+        return true;
+    }
+
     setFriendCode(id: string, code: string) {
         if (!this.configuration[id])
             return;

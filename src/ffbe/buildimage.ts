@@ -82,67 +82,6 @@ interface UnitBox {
     yStart: number;
 }
 
-// // Write "Awesome!"
-// ctx.font = '30px Impact'
-// ctx.fillStyle = 'rgba(255,255,255,1)'
-// ctx.strokeStyle = 'rgba(255,255,255,0.5)'
-// ctx.strokeText('3000', 50, 100)
-// ctx.fillText('3000', 50, 100)
-
-
-// Draw line under text
-// var text = ctx.measureText('AWESOME!')
-// ctx.beginPath()
-// ctx.lineTo(50, 102)
-// ctx.lineTo(50 + text.width, 102)
-// ctx.stroke()
-
-// Draw cat with lime helmet
-
-/*
-Canvas.loadImage('tempimg/Unit-Esther-7.png').then((image) => {
-    var fs = require('fs');
-    var string = canvas.toDataURL();
-    var regex = /^data:.+\/(.+);base64,(.*)$/;
-    
-    var matches = string.match(regex);
-    var ext = matches[1];
-    var data = matches[2];
-    var buffer = new Buffer(data, 'base64');
-    fs.writeFileSync('textimage.' + ext, buffer);
-}).catch(console.error);
-
-mergeImages([
-    { src: 'tempimg/Unit-Esther-7.png', x:  0, y:0 }, 
-    { src: 'tempimg/Unit-Sylvie-7.png', x:100, y:0, w: 100, h: 100 }, 
-    { src: 'tempimg/Unit-Aiden-5.png' , x:200, y:0 }, 
-    { src: 'tempimg/Unit-Xon-6.png'   , x:300, y:0 } ], 
-    {
-        width: 717,
-        height: 1000,
-        Canvas: Canvas
-    })
-.then(b64 => {
-
-    fs.writeFileSync("image.txt", b64);
-}).catch(console.error);
-
-frame url
-https://exvius.gamepedia.com/skins/Exvius/resources/images/frame-equipment.png?c70d8
-
-TODO:
-
-create esper icons
-fix text for % stats
-shrink text if it exceeds 2 lines
-add purple text for enhancements
-mess with ultra compact build sheet, only item names and total stats/resistances
-*/
-
-/*
-
-*/
-
 function sortKillersByValue(killers) {
 
     var values = {};
@@ -964,6 +903,9 @@ function downloadImages(slots, items, unitId, callback) {
         } else {
             Download.downloadFile(path, imagePath).then((p) =>{
                 log(`Image Donloaded: ${p}`);
+                queryEnd(slot.slot, item.id, image);
+            }).catch(e => {
+                error(e);
                 queryEnd(slot.slot, item.id, image);
             });
         };

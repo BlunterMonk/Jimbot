@@ -3,11 +3,10 @@
 	"defaultPrefix": "!",
 	"defaultSuccessEmote": "✅",
 	"defaultFailureEmote": "❌",
-	"loglevel": "info",
+	"loglevel": "debug",
 	"unitAliases": {
 		"11": "eleven",
 		"hot_gay_dad": "ignacio",
-		"turtle": "ryunan",
 		"asswell": "Aloha Lasswell",
 		"best_waifu": "Sieghard",
 		"best_husbando": "Malphasie",
@@ -154,7 +153,7 @@
 		"cg_bartz": "warrior of light bartz",
 		"cg_firion": "wild rose firion",
 		"best_cg": "wild rose firion",
-		"galufv2": "暁の四戦士ガラフ",
+		"galufv2": "warrior of dawn galuf",
 		"wolv2": "ウォーリア オブ ライト",
 		"swol": "ウォーリア オブ ライト"
 	},
@@ -172,7 +171,8 @@
 		"whalerot": "whaletation",
 		"furcula": "dpt",
 		"jimoori": "jimooriview",
-		"jim": "jimooriview"
+		"jim": "jimooriview",
+		"guide": "whatis"
 	},
 	"shortcuts": {
 		"tips": {

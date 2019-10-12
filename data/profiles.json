@@ -9,13 +9,6 @@
 		},
 		"friendcode": "301603908"
 	},
-	"131139508421918721": {
-		"autobuild": true,
-		"builds": {
-			"turtle": "https://ffbeequip.com/builder.html?server=gl#cf349130-cade-11e9-a7ee-83d283e1de8e"
-		},
-		"friendcode": "311530529"
-	},
 	"220659180623757312": {
 		"autobuild": false,
 		"friendcode": "",
@@ -45,5 +38,13 @@
 		"autobuild": false,
 		"friendcode": "055341012",
 		"builds": {}
+	},
+	"131139508421918721": {
+		"autobuild": false,
+		"friendcode": "311530529",
+		"builds": {
+			"turtle_killer": "https://ffbeequip.com/builder.html?server=gl#bb0bcea0-e60c-11e9-b677-3b8586bd2e6d",
+			"brkeak_tj_dsf": "https://ffbeequip.com/builder.html?server=gl#bb0bcea0-e60c-11e9-b677-3b8586bd2e6d"
+		}
 	}
 }

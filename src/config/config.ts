@@ -51,6 +51,13 @@ export class Config {
     setAlias(name: string, value: any) {
         this.configuration.unitAliases[name.toLowerCase()] = value;
     }
+    removeAlias(name: string) {
+        if (!this.configuration.unitAliases[name])
+            return;
+
+        delete this.configuration.unitAliases[name];
+        this.save();
+    }
 
     // COMMAND ALIASES
     getCommandAlias(name: string) {

@@ -160,6 +160,21 @@ class client {
             });
         });
     }
+    sendPrivate(receivedMessage, msg): Promise<Discord.Message> {
+        return new Promise<Discord.Message>((resolve, reject) => {
+
+            receivedMessage.author
+            .send(msg)
+            .then(message => {
+                trace("Message Sent To: ", receivedMessage.author.username, " ID: ", receivedMessage.author.id);
+                resolve(message);
+            })
+            .catch(e => {
+                error(e.message);
+                reject(e.message);
+            });
+        });
+    }
     sendPrivateMessage(receivedMessage, embed, callback = null, error = null) {
         receivedMessage.author
         .send({embed: embed})

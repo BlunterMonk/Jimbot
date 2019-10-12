@@ -11,6 +11,7 @@ declare interface String {
     matches (other): boolean;
     closestMatchIn (list, threshold): string;
     isNumber(): boolean;
+    numberWithCommas(): string;
 }
 
 declare function log(data: any);
