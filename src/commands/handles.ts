@@ -1564,6 +1564,14 @@ function handleProfile(receivedMessage, search, parameters) {
     if (mention) {
         log("Found mention: ", mention);
         id = mention;
+    } else if (!search.empty()) {
+        let newId = Profiles.getProfileID(search);
+        if (!newId) {
+            return;
+        }
+
+        log("Found User ID: ", newId, " from Nickname: ", search);
+        id = newId;
     }
 
     let profile = Profiles.getProfile(id);
