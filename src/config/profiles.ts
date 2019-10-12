@@ -66,6 +66,20 @@ export class profile {
         return this.configuration[id].autobuild;
     }
 
+    getProfileID(nickname: string): string {
+        var keys = Object.keys(this.configuration);
+        for (let index = 0; index < keys.length; index++) {
+            const key = keys[index];
+            const user = this.configuration[key];
+
+            if (nickname == user.nickname) {
+                return key;
+            }
+        }
+
+        return null;
+    }
+
     addBuild(id: string, name: string, url: string) {
         if (!this.configuration[id])
             return;
