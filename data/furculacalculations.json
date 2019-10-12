@@ -2144,12 +2144,12 @@
 	},
 	"Mordegon": {
 		"name": "Mordegon",
-		"damage": "11,863,912,923",
+		"damage": "11,761,076,924",
 		"turns": "15",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#1f9771b0-e19b-11e9-b677-3b8586bd2e6d",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#53a24950-ec89-11e9-8f21-29aab363c1db",
 		"jp": false,
-		"burst": "17,610,825,100",
+		"burst": "17,461,224,927",
 		"burstTurn": "9",
 		"wiki": "https://exvius.gamepedia.com/Mordegon",
 		"rotation": [
