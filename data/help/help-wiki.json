@@ -1,0 +1,50 @@
+{
+    "title": "Jimbot Wiki Related Commands",
+    "description": "(replace ? with your servers prefix)\nQuotations are required around parameters\n\u200B\n",
+    "fields": [
+        {
+            "name": "Get Muspels Unit Ranking",
+            "value": "- **?rank** *[name]*\nGet Muspels Unit Ranking for the given unit.\n- example: **?rank Elena**\n\u200B\n"
+        },
+        {
+            "name": "Get CG Animation",
+            "value": "- **?cg** *[unit_name]*\n- example: **?cg shantotto**\n\u200B\n"
+        },
+        {
+            "name": "Get Unit GIFs",
+            "value": "- **?gif** *[name]* \"[parameter]\"\n- parameters: 'attack', 'dead', 'dying', 'idle', 'jump', 'limit', 'win',\n'magic attack', 'magic standby', 'move','standby', 'win before'\n- example: **?gif Esther \"attack\"**\n\u200B\n"
+        },
+        {
+            "name": "Get Unit Information",
+            "value": "- **?unit** *[name] [optional | parameter]*\n- optional: Add parameters to shorten the results for only desired information **contained in quotes**\n- example: **?unit Malphasie \"STMR\"**  | this will only return malphasie's STMR\n- parameters: \"Name\", \"Limited\", \"Exclusive\", \"Job\", \"Role\", \"Origin\",\n\"Gender\", \"STMR\", \"Trust\", \"Race\", \"Number\", \"Chain\", \"Rarity\"\n\u200B\n"
+        },
+        {
+            "name": "Search Unit Skill Set",
+            "value": "- **?kit** [unit_name -or- unit_dex_number] \"[search terms]* (will return both passives and actives)\n- Search a units skill set for any keywords to return the skills that match.\n- example: **?kit noctis \"fire\"**\n- parameters: keywords can be separated by the pipe character (|).\nOr separated into quotes for each, \"one\" \"two\" \"three\"\n- some shortcut keywords exist: \"mitigate\", \"imperil\", \"imbue\", \"resist\", \"buff\", \"aoe\"\n\u200B\n"
+        },
+        {
+            "name": "Get Skill Information",
+            "value": "- **?skill** *[name]*\n- example: **?skill Bolting Strike**\n\u200B\n"
+        },
+        {
+            "name": "Get Equipment Information",
+            "value": "- **?equip** *[name]*\n- example: **?equip Asterisk**\n\u200B\n"
+        },
+        {
+            "name": "View Recently Released Units",
+            "value": "- **?recentunits** *[term]*\n\u200B\n"
+        },
+        {
+            "name": "Search Wiki",
+            "value": "- **?search** *[term]*\n- **?wiki** *[term]*\n\u200B\n"
+        },
+        {
+            "name": "Get Best Units",
+            "value": "- **?glbestunits**"
+        },
+        {
+            "name": "Get Information",
+            "value": "- **?whatis** *[search]*\n- example: **?whatis ele tetris**"
+        }
+    ]
+}

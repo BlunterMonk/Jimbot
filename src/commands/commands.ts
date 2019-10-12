@@ -82,7 +82,7 @@ function convertCommand(command, content) {
 }
 
 const aliasIgnoreList = [
-    "dpt", "mybuild"
+    "dpt", "mybuild", "userbuild", "removealias"
 ]
 
 export interface CommandObject {

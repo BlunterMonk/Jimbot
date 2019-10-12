@@ -5,7 +5,7 @@
 //////////////////////////////////////////
 
 import * as fs from 'fs';
-import { log } from "../global.js";
+import { log, error } from "../global.js";
 
 ////////////////////////////////////////////////////////////
 
@@ -143,7 +143,7 @@ export var mergeImages = function (sources, options) {
 
 			// Resolve source and img when loaded
 			var img = new Image();
-			img.onerror = function () { return /*reject(new Error*/log('Couldn\'t load image'); };
+			img.onerror = function () { return /*reject(new Error*/error('Couldn\'t load image: ', source.src); };
 			img.onload = function () { return resolve(Object.assign({}, source, { img: img })); };
 
 			img.src = source.src;

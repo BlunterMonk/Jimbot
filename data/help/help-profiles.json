@@ -1,0 +1,46 @@
+{
+    "title": "Jimbot Profile Commands",
+    "description": "(replace ? with your servers prefix)\nQuotations are required around parameters\n\u200B\n",
+    "fields": [
+        {
+            "name": "Register With Jimbot",
+            "value": "- **?register** *[friend_code | optional]*\nRegister as a user to Jimbot. Accepts an optional friend code when registering. This can be changed later.\n\u200B\n"
+        },
+        {
+            "name": "\n\nSet Friend Code",
+            "value": "- **?friendcode** *[friend_code]*\nAdd your friend code to your profile. Friend code must be the 9 digit friend code and nothing more.\n\u200B\n"
+        },
+        {
+            "name": "Add Build",
+            "value": "- **?addbuild** *[build_name | parameter] [build_url | parameter]*\nAdd a build to your profile. Build name and Build URL must be passed as parameters respectively.\n- example: **?addbuild \"turtle\" \"https://ffbeequip.com/builder.html?server=gl#bb0bcea0-e60c-11e9-b677-3b8586bd2e6d\"**\n\u200B\n"
+        },
+        {
+            "name": "Remove Build",
+            "value": "- **?removebuild** *[build_name]*\nRemove a build from your profile.\n- example: **?removebuild turtle**\n\u200B\n"
+        },
+        {
+            "name": "\n\nEnable Auto Builds",
+            "value": "- **?enableautobuild**\nActivating this option will make Jimbot create a build image whenever you post an FFBEEquip build URL.\n\u200B\n"
+        },
+        {
+            "name": "\n\nDisable Auto Builds",
+            "value": "- **?disableautobuild**\nDisabling this option will prevent Jimbot from automatically building an image with your URL.\n\u200B\n"
+        },
+        {
+            "name": "\n\nView User Profile",
+            "value": "- **?profile** *[user_id | optional]*\nView the profile of yourself, or of another user when using a mention.\n- example: **?profile @Jimoori#2006**\n\u200B\n"
+        },
+        {
+            "name": "\n\nView User Friend Code",
+            "value": "- **?friend** *[user_id | optional]*\nView the friend code of yourself, or of another user when using a mention.\n- example: **?friend @Jimoori#2006**\n\u200B\n"
+        },
+        {
+            "name": "View User Build",
+            "value": "- **?userbuild** *[user_id | optional]* \"*[build_name | parameter]*\"\nView the builds of yourself, or of another user when using a mention. The name of the build must be passed as a parameter.\n- example: **?userbuild @Jimoori#2006 \"turtle\"**\n\u200B\n"
+        },
+        {
+            "name": "View Personal Build",
+            "value": "- **?mybuild** *[build_name]*\nView a build registered to yourself.\n- example: **?userbuild turtle**"
+        }
+    ]
+}

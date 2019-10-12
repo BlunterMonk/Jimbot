@@ -234,6 +234,8 @@ export class Cache {
             case "whale":
             case "shado":
                 return getUnitCalc(searchTerm, this.whaleCalculations);
+            case "muspel":
+                return getUnitCalc(searchTerm, this.muspelCalculations);
             default:
                 return null;
         }

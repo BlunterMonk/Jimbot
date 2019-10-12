@@ -154,5 +154,8 @@ String.prototype.closestMatchIn = function (list: string[], threshold: number): 
 String.prototype.isNumber = function(){
     return /^\d+$/.test(this);
 }
+String.prototype.numberWithCommas = function(): string {
+    return this.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 module.exports = String;

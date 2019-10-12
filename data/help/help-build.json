@@ -1,0 +1,14 @@
+{
+    "title": "Jimbot Build Commands",
+    "description": "(replace ? with your servers prefix)\nQuotations are required around parameters\n\u200B\n",
+    "fields": [
+        {
+            "name": "Post FFBEEquip Build",
+            "value": "- **?build** *[build_url]*\nDisplay the build provided with the share URL from www.FFBEEquip.com\n- example: **?build https://ffbeequip.com/builder.html?server=GL#219122f0-ced0-11e9-a7ee-83d283e1de8e**\n\u200B\n"
+        },
+        {
+            "name": "Post FFBEEquip Build As Text",
+            "value": "- **?buildtext** *[build_url]*\nDisplay the build provided with the share URL from www.FFBEEquip.com\n- example: **?buildtext https://ffbeequip.com/builder.html?server=GL#219122f0-ced0-11e9-a7ee-83d283e1de8e**\n\u200B\n"
+        }
+    ]
+}
