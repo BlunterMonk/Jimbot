@@ -182,7 +182,8 @@
 		"buildc": "buildcompact",
 		"bisc": "biscompact",
 		"teamc": "team",
-		"mybuildc": "mybuildcompac"
+		"mybuildc": "mybuildcompac",
+		"new": "whatsnew"
 	},
 	"shortcuts": {
 		"tips": {

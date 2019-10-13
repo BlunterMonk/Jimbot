@@ -1,0 +1,17 @@
+{
+    "title": "What's New with Jimbot",
+    "fields": [
+        {
+            "name": "Register With Jimbot",
+            "value": "Jimbot has a new profiles feature. You can store FFBEEquip builds, status, and friend code. (More feautures coming soon?).\n\u200B\n__New Commands Include:__\n- **?friendcode** *[friend_code]*\n- **?nickname** *[nickname]*\n- **?setstatus** \"*[status | parameter]\"*\n- **?addbuild** *[build_name | parameter] [build_url | parameter]*\n- **?removebuild** *[build_name]*\n- **?setlead** *[build_name -or- build_url]*\n- **?enableautobuild**\n- **?disableautobuild**\n- **?profile** *[user_id | optional]*\n- **?friend** *[user_id | optional]*\n- **?userbuild** *[user_id | optional]* \"*[build_name | parameter]*\"\n- **?mybuild** *[build_name]*\n\u200B\n"
+        },
+        {
+            "name": "Compact Builds",
+            "value": "All build related commands can now be displayed in compact mode. To do this, simpley append the letter 'c' to the end of the command used.\n\u200B\n"
+        },
+        {
+            "name": "Team Builds",
+            "value": "An entire team can now be displayed when using FFBEEquip builds. This will **display builds in compact mode** and is limited to 5 units only.\n\u200B\n__New Commands Include:__\n- **?team** *[build_url]*"
+        }
+    ]
+}

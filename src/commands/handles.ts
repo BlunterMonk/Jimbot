@@ -76,6 +76,21 @@ function handleHelp(receivedMessage) {
     handleProfilehelp(receivedMessage);
 }
 
+function handleWhatsnew(receivedMessage) {
+    var data = fs.readFileSync("./data/help/new.json", "ASCII");
+    var readme = JSON.parse(data);
+
+    var embed = {
+        color: pinkHexCode,
+        fields: readme.fields,
+        title: readme.title,
+        foorer: {
+            text: "For more information please use the '?help' command"
+        }
+    };
+
+    Client.sendMessage(receivedMessage, embed);
+}
 
 // FFBE WIKI
 
