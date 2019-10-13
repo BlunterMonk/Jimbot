@@ -9,6 +9,14 @@
         {
             "name": "Post FFBEEquip Build As Text",
             "value": "- **?buildtext** *[build_url]*\nDisplay the build provided with the share URL from www.FFBEEquip.com\n- example: **?buildtext https://ffbeequip.com/builder.html?server=GL#219122f0-ced0-11e9-a7ee-83d283e1de8e**\n\u200B\n"
+        },
+        {
+            "name": "Post FFBEEquip Compact Build",
+            "value": "Append the leter 'c' to any build related command to make it compact.\n- example: **?buildc elena**"
+        },
+        {
+            "name": "Post FFBEEquip Team",
+            "value": "- **?team** *[build_url]*\nDisplay an entire team from an FFBEEquip build URL. Due to the size of the images, teams will **ONLY** be displayed in compact mode.**Be warned this can take a long time to complete.\n- example: **?team https://ffbeequip.com/builder.html?server=gl#58d637d0-ed63-11e9-8f21-29aab363c1db**\n\u200B\n"
         }
     ]
 }

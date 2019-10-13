@@ -17,6 +17,8 @@ interface userProfile {
     autobuild: boolean;
     friendcode: string;
     nickname: string;
+    status: string;
+    lead: string; // url for lead build
     builds: {[key: string]: string};
 }
 
@@ -46,6 +48,8 @@ export class profile {
             autobuild: false,
             friendcode: code,
             nickname: name,
+            status: "",
+            lead: null,
             builds: {}
         };
 
@@ -137,6 +141,40 @@ export class profile {
             return;
 
         this.configuration[id].nickname = name;
+        this.save()
+    }
+
+    getStatus(id: string): string {
+        if (!this.configuration[id])
+            return "";
+        if (!this.configuration[id].status)
+            return "";
+        
+        return this.configuration[id].status;
+    }
+    setStatus(id: string, status: string) {
+        if (!this.configuration[id])
+            return;
+
+        status = status.limitTo(64);
+
+        this.configuration[id].status = status;
+        this.save()
+    }
+
+    getLead(id: string): string {
+        if (!this.configuration[id])
+            return "";
+        if (!this.configuration[id].lead)
+            return "";
+        
+        return this.configuration[id].lead;
+    }
+    setLead(id: string, url: string) {
+        if (!this.configuration[id])
+            return;
+
+        this.configuration[id].lead = url;
         this.save()
     }
 

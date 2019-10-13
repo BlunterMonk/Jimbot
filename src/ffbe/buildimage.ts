@@ -33,28 +33,6 @@ const enhancementsStroke = "255,255,255,0.5";
 const killersFontFamily = "Arial Black";
 const killerssStroke = "0,0,0,0";
 
-/*
-function sprite(n) { return `https://gamepedia.cursecdn.com/exvius_gamepedia_en/1/15/Unit-${n}-7.png`; }
-
-// var buildURL = "https://ffbeequip.com/builder.html?server=GL#cd1db650-d52a-11e9-a314-1b650a2e0160"; 
-// var buildURL = `https://ffbeEquip.com/builder.html?server=GL#797f9a00-d772-11e9-a314-1b650a2e0160`; // elena
-// var buildURL = `https://ffbeEquip.com/builder.html?server=GL#97a018b0-d7cd-11e9-a314-1b650a2e0160`; // elena
-//var buildURL = "http://ffbeEquip.com/builder.html?server=GL#beffeb70-4ba9-11e9-9e10-93b8df10f245"; // 2b
-var buildURL = "https://ffbeequip.com/builder.html?server=GL#d0eeb330-cf92-11e9-8c4d-8d394a9d768d";
-processBuild(buildURL);
-function processBuild(search) {
-
-    Build.requestBuild(search, (data) => {
-        // log(data);
-        var b = JSON.parse(data);
-
-        var build = Build.CreateBuild(b);
-        // var text = build.getText();
-        // var desc = text.text.replaceAll("\\[", "**[");
-        // desc = desc.replaceAll("\\]:", "]:**");
-    });
-}*/
-
 function downloadImageIfNotExist(path: string, source: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
 
@@ -77,84 +55,125 @@ function downloadImageIfNotExist(path: string, source: string): Promise<string> 
 }
 function downloadImages(slots, items, unitId): Promise<any>[] {
 
-    var images = slots.map(slot => {
-        new Promise<any>((resolve, reject) => {
+    var images : Promise<any>[] = [];
 
-            var item = null;
-            for (let index = 0; index < items.length; index++) {
-                const element = items[index];
-                if (element.id === slot.id) {
-                    item = element;
-                    break;
-                }
+    // Add Equipment Icons
+    slots.forEach(slot => {
+
+        var item = null;
+        for (let index = 0; index < items.length; index++) {
+            const element = items[index];
+            if (element.id === slot.id) {
+                item = element;
+                break;
             }
+        }
 
-            if (!item)
-                return;
-            
-            var filename = `items/${item.icon}`;
-            var imagePath = imageEndpoint + filename;
-            var path = `${imgCacheDir}${filename}`;
-
-            if (fs.existsSync(path)) {
-                resolve(path);
-                return;
-            }
-            
-            trace("File Does Not Exists: ", path, " attempting to download");
-            Download.downloadFile(path, imagePath).then((p) =>{
-                log(`Image Donloaded: ${p}`);
-                resolve(p);
-            }).catch(e => {
-                error(e);
-                resolve(null);
-            });
-        });
+        if (!item)
+            return;
+        
+        var filename = `items/${item.icon}`;
+        var imagePath = imageEndpoint + filename;
+        var path = `${imgCacheDir}${filename}`;
+        
+        images.push(downloadImageIfNotExist(path, imagePath));
     });
-
-    images.push(new Promise<any>((resolve, reject) => {
-
-        var filename = `unit_icon_${unitId}.png`;
-        var path = `${imgCacheDir}units/${filename}`;
-        let source = `https://ffbeequip.com/img/units/${filename}`;
-
-        downloadImageIfNotExist(path, source).then(resolve).catch(reject);
-    }));
+    
+    // Add Unit Icon
+    var filename = `unit_icon_${unitId}.png`;
+    var path = `${imgCacheDir}units/${filename}`;
+    let source = `https://ffbeequip.com/img/units/${filename}`;
+    
+    images.push(downloadImageIfNotExist(path, source));
 
     return images;
 }
 
-export async function BuildImage(build: any, isCompact: boolean): Promise<string> {
+export async function BuildImage(saveLocation: string, build: any, isCompact: boolean): Promise<string> {
     
     var equipped = build.getEquipment();
     debug("Equipment: ", equipped);
 
-    return new Promise<string>((resolve, reject) => {
+    return new Promise<string>(async (resolve, reject) => {
         
-        var downloads = downloadImages(build.getSlots(), equipped, build.loadedUnit.id);
+        var downloads = await downloadImages(build.getSlots(), equipped, build.loadedUnit.id);
         Promise.all(downloads).then(() => {
 
             if (isCompact) {
-
                 let compactCanvas = {
                     xStart: 0,
                     yStart: 0
                 }
                 
-                buildCompactImage(compactCanvas, build).then((p) => {
+                buildCompactImage(saveLocation, compactCanvas, build).then((p) => {
                     resolve(p);
                 }).catch(reject);
             } else {
 
-                buildImage(build).then((p) => {
+                buildImage(saveLocation, build).then((p) => {
                     resolve(p);
                 }).catch(reject);
             }
+        }).catch(e => {
+            console.error(e);
+            error("Failed to download an image", e);
         });
     });
 }
+export async function BuildTeamImage(saveLocation: string, builds: Build.Build[]): Promise<string> {
 
-function buildImage(build: Build.Build): Promise<string> {
+    log("Building Team Image");
+
+    let imageBuilds : Promise<string>[] = await builds.map((build, index) => {
+        if (!build) {
+            return Promise.reject("Build Null");
+        }
+
+        let id = build.buildID;
+        let imgPath = `./tempbuilds/${id}/${id}_${index}.png`;
+        if (fs.existsSync(imgPath)) {
+            log("Returning Existing Image: ", imgPath);
+            return Promise.resolve(imgPath);
+        }
+
+        log("Building Image: ", imgPath);
+        return BuildImage(imgPath, build, true);
+    });
+
+    log("Finished Starting Builds List");
+
+    return new Promise<string>(async (resolve, reject) => {
+
+        Promise.all(imageBuilds).then(images => {
+            log("Building Team Image: ", images);
+
+            let cW = 1300;
+            let cH = 350 * images.length;
+            var imgOpts : mergeImages.imageOptions[] = [];
+
+            images.forEach((img, ind) => {
+                log("Adding Build To Team Image: ", img);
+                imgOpts.push({
+                    src: img,
+                    x: 0,
+                    y: 350 * ind,
+                    w: 1300,
+                    h: 350
+                });
+            });
+
+            finalizeImage(saveLocation, imgOpts, null, cW, cH).then(p => {
+                log("Successfully Built Team Image: ", p);
+                resolve(p);
+            }).catch(e => {
+                error("Failed to build team image: ", e);
+                reject(e);
+            });
+        })
+    });
+}
+
+function buildImage(saveLocation: string, build: Build.Build): Promise<string> {
 
     let canvasWidth = 1200;
     let canvasHeight = 1576;
@@ -164,8 +183,8 @@ function buildImage(build: Build.Build): Promise<string> {
     var totalBonuses = buildTotal.bonuses;
     var wieldBonus = getWieldBonus(totalStats, build);
 
-    // log("Total Stats");
-    // log(totalStats);
+    debug("Build Compact Image: ", build.buildID);
+    trace("Total Stats: ", totalStats, " Total Bonuses: ", totalBonuses);
 
     var labels : mergeImages.labelOptions[] = [];
     var images = [{
@@ -211,10 +230,9 @@ function buildImage(build: Build.Build): Promise<string> {
     labels = labels.concat(killers.labels);
     images = images.concat(killers.images);
 
-    var saveLocation = `./tempbuilds/${build.buildID}.png`;
     return finalizeImage(saveLocation, images, labels, canvasWidth, canvasHeight);
 }
-function buildCompactImage(canvasOptions: UnitBox, build: Build.Build): Promise<string> {
+function buildCompactImage(saveLocation: string, canvasOptions: CanvasOptions, build: Build.Build): Promise<string> {
 
     let imageWidth = 1300;
     let imageHeight = 350;
@@ -222,11 +240,13 @@ function buildCompactImage(canvasOptions: UnitBox, build: Build.Build): Promise<
     var buildTotal = build.getTotalStats();
     var totalStats = buildTotal.stats;
     var totalBonuses = buildTotal.bonuses;
-    log("Build Compact Image");
-    debug("Total Stats: ", totalStats, " Total Bonuses: ", totalBonuses);
+    var wieldingBonus = getWieldBonus(totalBonuses, build);
 
-    var labels = [];
-    var images = [{
+    debug("Build Compact Image: ", build.buildID);
+    trace("Total Stats: ", totalStats, " Total Bonuses: ", totalBonuses);
+
+    var labels : mergeImages.labelOptions[] = [];
+    var images : mergeImages.imageOptions[] = [{
         src: `${imgCacheDir}unit-overview-background.png`,
         x: canvasOptions.xStart,
         y: canvasOptions.yStart,
@@ -244,26 +264,8 @@ function buildCompactImage(canvasOptions: UnitBox, build: Build.Build): Promise<
         h: 38*3
     });
 
-    var wieldingBonus = null;
-    if (totalStats.singleWielding && build.isDoublehanding())
-        wieldingBonus = totalStats.singleWielding;
-    else if (totalStats.dualWielding && build.isDualWielding())
-        wieldingBonus = totalStats.dualWielding;
-
     // Add main stats
-    let mainStats = {
-        xStart: canvasOptions.xStart + 250,//400,
-        xSpace: 275,
-        yStart: canvasOptions.yStart + 55,
-        ySpace: 50,
-        statOrder: [ "hp",  "atk", "def", "mp",  "mag", "spr" ],
-        rows: 3,
-        fontSize: 40,
-        bonusSize: 20,
-        align: "left"
-    };
-    labels = labels.concat(getMainStats(mainStats, totalStats, totalBonuses, wieldingBonus));
-
+    labels = labels.concat(addCompactMainStats(totalStats, totalBonuses, wieldingBonus, canvasOptions));
 
     // Add equipment
     var equips = addCompactEquipment(build, canvasOptions);
@@ -280,46 +282,21 @@ function buildCompactImage(canvasOptions: UnitBox, build: Build.Build): Promise<
             x: canvasOptions.xStart + 1050,
             y: canvasOptions.yStart + 300,
             align: "left",
+            strokeColor: "255,255,255,1",
             maxWidth: 200,
-            strokeColor: "255,255,255,1"
+            color: null,
+            anchorTop: false,
+            wrap: false
         };
     }
 
-    let killerOptions = { // compact mode settings
-        xStart: canvasOptions.xStart + 20,
-        yStart: canvasOptions.yStart + 270,
-        dimensions: 50,
-        maxWide: 14, // max amount of icons that can fit horizontally
-        maxTall: 1, // max amount of icons that can fit vertically
-        fontSize: 22,
-        distance: 1,
-        spacing: 0,
-        align: "left"
-    }
+    // Add killers
+    var killers = addCompactKillers(totalStats, canvasOptions);
+    labels = labels.concat(killers.labels);
+    images = images.concat(killers.images);
 
-    if (totalStats.killers) {
-        var values = sortKillersByValue(totalStats.killers);
-        var killers = getKillers(killerOptions, values);
-        labels = labels.concat(killers.labels);
-        images = images.concat(killers.images);
-    }
-
-    // Add Ailment Resistances
-    let resistOptions = { // compact mode settings
-        xStart: canvasOptions.xStart + 50,
-        yStart: canvasOptions.yStart + 215,
-        dimensions: 1,
-        maxWide: 15, // max amount of icons that can fit horizontally
-        maxTall: 1, // max amount of icons that can fit vertically
-        fontSize: 20,
-        distance: 1,
-        spacing: 90,
-        align: "left"
-    };
-    labels = labels.concat(getAilmentResistances(resistOptions, totalStats));
-    resistOptions.yStart = canvasOptions.yStart + 265;
-    labels = labels.concat(getElementResistances(resistOptions, totalStats));
-
+    // Add Resistances
+    labels = labels.concat(addCompactResistances(totalStats, canvasOptions));
 
     // Add Evade
     if (totalStats.evade && totalStats.evade.physical) {
@@ -331,7 +308,11 @@ function buildCompactImage(canvasOptions: UnitBox, build: Build.Build): Promise<
             x: canvasOptions.xStart + 55,
             y: canvasOptions.yStart + 165,
             align: "left",
-            strokeColor: "255,255,255,1"
+            strokeColor: "255,255,255,1",
+            maxWidth: null,
+            color: null,
+            anchorTop: false,
+            wrap: false
         };
     }
 
@@ -344,8 +325,6 @@ function buildCompactImage(canvasOptions: UnitBox, build: Build.Build): Promise<
         h: imageHeight
     };
 
-    var saveLocation = `./tempbuilds/compact/${build.buildID}.png`;
-    
     return finalizeImage(saveLocation, images, labels, imageWidth, imageHeight);
 }
 function finalizeImage(saveLocation: string, images: mergeImages.imageOptions[], labels: mergeImages.labelOptions[], cWidth, cHeight): Promise<string> {
@@ -369,6 +348,10 @@ function finalizeImage(saveLocation: string, images: mergeImages.imageOptions[],
             var data = matches[2];
             var buffer = Buffer.alloc(data.length, data, 'base64');
 
+            var path = saveLocation.slice(0, saveLocation.lastIndexOf("/"));
+            if (!fs.existsSync(path))
+                fs.mkdirSync(path, { recursive: true });
+
             fs.writeFileSync(saveLocation, buffer);
 
             log(`Build Saved: ${saveLocation}`);
@@ -379,7 +362,6 @@ function finalizeImage(saveLocation: string, images: mergeImages.imageOptions[],
         });
     });
 }
-
 
 class ImageBuild {
     build: Build.Build;
@@ -458,7 +440,7 @@ function addResistances(totalStats) {
         spacing: 122,
         align: "center"
     };
-    labels = labels.concat(getAilmentResistances(resistOptions, totalStats));
+    labels = labels.concat(getAilmentResistances(resistOptions, totalStats, false));
     
     resistOptions.yStart = 1545;//772,
     labels = labels.concat(getElementResistances(resistOptions, totalStats));
@@ -467,11 +449,8 @@ function addResistances(totalStats) {
 }
 function addKillers(totalStats) {
 
-    let labels : mergeImages.labelOptions[] = [];
-    let images : mergeImages.imageOptions[] = [];
-
     if (!totalStats.killers) {
-        return { labels: labels, images: images };
+        return { labels: [], images: [] };
     }
 
     let killerOptions = { // Normal sheet settings
@@ -528,13 +507,93 @@ function addEquipment(build: Build.Build) {
    
     return getEquipment(equipOptions, firstSlotLeft, firstSlotRight, build);
 }
-function addCompactEquipment(build: Build.Build, canvasOptions: UnitBox) {
+
+function addCompactMainStats(totalStats, totalBonuses, wieldBonus, canvasOptions: CanvasOptions) {
+
+    let mainStats = {
+        xStart: canvasOptions.xStart + 250,//400,
+        xSpace: 275,
+        yStart: canvasOptions.yStart + 55,
+        ySpace: 50,
+        statOrder: [ "hp",  "atk", "def", "mp",  "mag", "spr" ],
+        rows: 3,
+        fontSize: 40,
+        bonusSize: 20,
+        align: "left"
+    };
+
+    return getMainStats(mainStats, totalStats, totalBonuses, wieldBonus);
+}
+function addCompactKillers(totalStats, canvasOptions: CanvasOptions) {
+
+    if (!totalStats.killers) {
+        return { labels: [], images: [] };
+    }
+
+    let killerOptions = { // compact mode settings
+        xStart: canvasOptions.xStart + 20,
+        yStart: canvasOptions.yStart + 270,
+        dimensions: 50,
+        maxWide: 14, // max amount of icons that can fit horizontally
+        maxTall: 1, // max amount of icons that can fit vertically
+        fontSize: 22,
+        distance: 1,
+        spacing: 0,
+        align: "left"
+    }
+
+    var values = sortKillersByValue(totalStats.killers);
+    return getKillers(killerOptions, values);
+}
+function addCompactResistances(totalStats, canOpts: CanvasOptions): mergeImages.labelOptions[] {
+
+    let labels : mergeImages.labelOptions[] = [];
+    let resistOptions = { // compact mode settings
+        xStart: canOpts.xStart + 50,
+        yStart: canOpts.yStart + 215,
+        dimensions: 1,
+        maxWide: 15, // max amount of icons that can fit horizontally
+        maxTall: 1, // max amount of icons that can fit vertically
+        fontSize: 20,
+        distance: 1,
+        spacing: 90,
+        align: "left"
+    };
+    labels = labels.concat(getAilmentResistances(resistOptions, totalStats, true));
+
+    if (totalStats.resist && totalStats.resist.death) {
+        const v = parseInt(totalStats.resist.death);
+
+        var f = (v >= 100) ? resistFontFamily : fontFamily;
+        var t = (v >= 100) ? "Null" : "-";
+
+        labels[labels.length] = { 
+            text: t,
+            font: f, 
+            size: 20, 
+            x: 145, 
+            y: 215,
+            align: "left",
+            color: null,
+            maxWidth: null,
+            strokeColor: null,
+            anchorTop: false,
+            wrap: false
+        };
+    }
+
+    resistOptions.yStart = canOpts.yStart + 265;
+    labels = labels.concat(getElementResistances(resistOptions, totalStats));
+
+    return labels;
+}
+function addCompactEquipment(build: Build.Build, canOpts: CanvasOptions): Batch {
     
     let equipOptions = {
-        xCol1: canvasOptions.xStart + 800,
-        xCol2: canvasOptions.xStart + 1050,
-        yTop: canvasOptions.yStart + 20,
-        yText: canvasOptions.yStart + 55,
+        xCol1: canOpts.xStart + 800,
+        xCol2: canOpts.xStart + 1050,
+        yTop: canOpts.yStart + 20,
+        yText: canOpts.yStart + 55,
         ySpacing: 50,
         dimension: 50,
         maxWidth: 200,
@@ -547,8 +606,11 @@ function addCompactEquipment(build: Build.Build, canvasOptions: UnitBox) {
 }
 
 
-
-interface UnitBox {
+interface Batch {
+    labels: mergeImages.labelOptions[];
+    images: mergeImages.imageOptions[];
+}
+interface CanvasOptions {
     xStart: number;
     yStart: number;
 }
@@ -672,6 +734,10 @@ function getWieldBonus(totalStats, build: Build.Build) {
     return wieldingBonus;
 }
 
+
+//////////////////////////////////////////////
+
+
 function getKillers(options: statRow, values: any) {
 
     trace("Total Values: ", values);
@@ -783,7 +849,7 @@ function getResists(totalStats, list): string[] {
     
     return resist;
 }
-function getAilmentResistances(options: statRow, totalStats) {
+function getAilmentResistances(options: statRow, totalStats, excludeDeath) {
     
     var labels = [];
 
@@ -792,8 +858,8 @@ function getAilmentResistances(options: statRow, totalStats) {
     var spacing = options.spacing;
 
     var ailments = getResists(totalStats, Build.ailmentList);
-
-    for (let index = 0; index < ailments.length; index++) {
+    var len = (excludeDeath) ? 8 : ailments.length;
+    for (let index = 0; index < len; index++) {
         const e = ailments[index];
         const v = parseInt(e);
 
@@ -859,92 +925,6 @@ function getElementResistances(options: statRow, totalStats) {
 
     return labels;
 }
-
-
-/*
-interface mainStatsOptions {
-    xCol1: number,
-    xCol2: number,
-    xCol3: number,
-    yMainRow1: number,
-    yMainRow2: number,
-    yStatBonus: number,
-    yEquipBonus: number,
-    fontSize: number,
-    bonusSize: number
-    align: string
-}
-function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wieldingBonus) {
-    var labels = [];
-
-    let x0 = options.xCol1;
-    let x1 = options.xCol2;
-    let x2 = options.xCol3;
-    let y0 = options.yMainRow1;
-    let y1 = options.yMainRow2; 
-    let fs = options.fontSize;
-    
-    labels[labels.length] = { text: totalStats.hp   , font: mainStatFontFamily, size: fs, x: x0, y: y0 , align: options.align, strokeColor: statStroke }; // HP
-    labels[labels.length] = { text: totalStats.mp   , font: mainStatFontFamily, size: fs, x: x0, y: y1 , align: options.align, strokeColor: statStroke };
-    labels[labels.length] = { text: totalStats.atk  , font: mainStatFontFamily, size: fs, x: x1, y: y0 , align: options.align, strokeColor: statStroke };
-    labels[labels.length] = { text: totalStats.mag  , font: mainStatFontFamily, size: fs, x: x1, y: y1 , align: options.align, strokeColor: statStroke };
-    labels[labels.length] = { text: totalStats.def  , font: mainStatFontFamily, size: fs, x: x2, y: y0 , align: options.align, strokeColor: statStroke };
-    labels[labels.length] = { text: totalStats.spr  , font: mainStatFontFamily, size: fs, x: x2, y: y1 , align: options.align, strokeColor: statStroke };
-
-    var bonuses = [];
-    for (let index = 0; index < labels.length; index++) {
-        const element = labels[index];
-        const stat = statValues[index];
-        const key = `${stat}%`;
-        var v = totalBonuses[key];
-        var t = "0";
-
-        var color = `255,255,255,1`;
-        if (v) {
-            color = `0,255,0,1`;
-            if (parseInt(v) > 400)
-                color = `255,0,0,1`;
-
-            t = `+${v}`;
-        }
-
-        t = `${t}%`;
-        
-        let l = mergeImages.measureText(ctx, element.text, `${fs}px ${mainStatFontFamily}`)
-        let x : number = (options.align == "right") ? element.x : element.x + l.width;
-        log("X: ", x, " L: ", l.width, " Element: ", element.x);
-
-        if (wieldingBonus && wieldingBonus[stat]) {
-            var tdh = wieldingBonus[stat];
-            // log(tdh)
-
-            bonuses[bonuses.length] = { 
-                text: `+${tdh}%`,
-                font: fontFamily, 
-                size: options.bonusSize,
-                x: x,
-                y: ((index % 2) ? y1 : y0) - options.bonusSize,
-                align: "left",
-                color: `255,223,0,1`,
-                strokeColor: `125,125,125,0.5`
-            };
-            // log(bonuses[bonuses.length-1]);
-        }
-
-        bonuses[bonuses.length] = { 
-            text: t,
-            font: fontFamily, 
-            size: options.bonusSize,
-            x: x,
-            y: (index % 2) ? y1 : y0,
-            align: "left",
-            color: color
-        };
-    }
-
-    return labels.concat(bonuses);
-}
-*/
 
 function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wieldingBonus) {
     var labels = [];
@@ -1030,13 +1010,7 @@ function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wield
     return labels;
 }
 
-
-
-
-
-
-
-function getCompactEquipment(equipOptions: equipmentOptions, build) {
+function getCompactEquipment(equipOptions: equipmentOptions, build): Batch {
     
     var labels = [];
     var images = [];
@@ -1057,18 +1031,26 @@ function getCompactEquipment(equipOptions: equipmentOptions, build) {
 
         // log(`Equipment in slot: ${index}`);
         // log(equip);
-        
+                
+        var xName = equipOptions.xCol1;
+        if (odd) {
+            xName = equipOptions.xCol2;
+        }
+
         if (!equip) {
+            images[images.length] = {
+                src: `${imgCacheDir}equipment/emptyIcon.png`,
+                x: xName - dimensions,
+                y: yType,
+                w: dimensions,
+                h: dimensions
+            }
+
             if (odd) {
                 yType = yType + spacing;
                 yName = yName + spacing;
             }
             continue;    
-        }
-        
-        var xName = equipOptions.xCol1;
-        if (odd) {
-            xName = equipOptions.xCol2;
         }
     
         // Item name
@@ -1106,7 +1088,6 @@ function getCompactEquipment(equipOptions: equipmentOptions, build) {
         images: images
     };
 }
-
 
 function getEquipment(options: equipmentOptions, firstSlotLeft: equipOptions, firstSlotRight: equipOptions, build) {
 

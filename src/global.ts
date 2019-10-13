@@ -13,6 +13,8 @@ function printf(msg: any[]): string {
     msg.forEach((t,i) => {
         if (typeof t == "string") {
             text += t;
+        } else if (t instanceof Error) {
+            text += t.message;
         } else {
             let s = JSON.stringify(t);
             text += s+" ";//.slice(1, s.length-1);
@@ -39,6 +41,13 @@ export function trace(...data: any[]) {
 export function error(...data: any[]) {
     let s: string = printf(data);
     logger.error(s);
+
+    // Log any exceptions to the console.
+    data.forEach(e => {
+        if (e instanceof Error) {
+            console.error(e);
+        }
+    });
 }
 // export function logDataArray(msg: string, data: any[]) {
 //     if (data.length == 0) {

@@ -183,9 +183,9 @@ export function measureText(ctx, text, font) {
 
 // Return Promise
 export var mergeImages = function (imgOpts : imageOptions[], labelOpts : labelOptions[], options) {
-	if ( imgOpts === void 0 ) imgOpts = [];
-	if ( labelOpts === void 0 ) labelOpts = [];
-	if ( options === void 0 ) options = {};
+	if ( !imgOpts || imgOpts === void 0 ) imgOpts = [];
+	if ( !labelOpts || labelOpts === void 0 ) labelOpts = [];
+	if ( !options || options === void 0 ) options = {};
 
 	return new Promise(function (resolve) {
 	options = Object.assign({}, defaultOptions, options);

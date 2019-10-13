@@ -173,10 +173,13 @@
 		"jimoori": "jimooriview",
 		"jim": "jimooriview",
 		"guide": "whatis",
+		"b": "build",
 		"c": "buildcompact",
-		"buildc": "buildcompact",
 		"bc": "buildcompact",
-		"bisc": "biscompact"
+		"buildc": "buildcompact",
+		"bisc": "biscompact",
+		"teamc": "team",
+		"mybuildc": "mybuildcompac"
 	},
 	"shortcuts": {
 		"tips": {

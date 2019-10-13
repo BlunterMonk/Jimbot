@@ -462,7 +462,7 @@ function handleBuildhelp(receivedMessage) {
     Client.sendPrivateMessage(receivedMessage, embed);
 }
 
-export async function build(receivedMessage, url, calculation, isCompact: boolean, force = false): Promise<string> {
+export async function build(receivedMessage, url, unitIndex, calculation, isCompact: boolean, force = false): Promise<string> {
 
     return new Promise<string>((resolve, reject) => {
 
@@ -475,7 +475,8 @@ export async function build(receivedMessage, url, calculation, isCompact: boolea
                 return;
             }      
             
-            var b = d.units[0];
+            var ind = Math.max(unitIndex, d.units.length - 1);
+            var b = d.units[ind];
             var build = Build.CreateBuild(response.id, response.region, b);
             if (!build) {
                 Client.send(receivedMessage, "Sorry hun, something went wrong.");
@@ -500,24 +501,99 @@ export async function build(receivedMessage, url, calculation, isCompact: boolea
                 } else {
                     Client.sendMessage(receivedMessage, embed);
                 }
-                resolve();
-            }
 
-            if (!force && fs.existsSync(`./tempbuilds/${response.id}.png`)) {
-                sendImg(`./tempbuilds/${response.id}.png`);
+                resolve(p);
+            }
+        
+            let cmpt = `${(isCompact) ? "compact/" : ""}`;
+            let imgPath = `./tempbuilds/${cmpt}${response.id}.png`;
+            if (fs.existsSync(imgPath)) {
+                sendImg(imgPath);
                 return;
             }
-
-            BuildImage.BuildImage(build, isCompact).then(sendImg).catch((e) => {
+        
+            BuildImage.BuildImage(imgPath, build, isCompact).then(sendImg).catch((e) => {
                 Client.send(receivedMessage, "Sorry hun, something went wrong.");
                 error("Could not build image");
                 reject(e);
             });
+            
         }).catch(e => {
             error(e);
             reject(e);
         });
     });
+}
+function handleTeam(receivedMessage, search, parameters) {
+    if (search == "help") {
+        handleBuildhelp(receivedMessage);
+        return;
+    }
+
+    Build.requestBuildData(search).then(response => {
+
+        var d = JSON.parse(response.data);
+        if (!d || !d.units[0]) {
+            error("Could not parse build data");
+            return;
+        }
+        
+        var sendImg = function(p) {
+            const attachment = new Discord.Attachment(p, 'build.png');
+            var embed = new Discord.RichEmbed()
+                    .attachFile(attachment)
+                    .setColor(pinkHexCode)
+                    .setImage(`attachment://build.png`);
+                
+            Client.sendMessage(receivedMessage, embed);
+        }
+
+        let imgPath = `./tempbuilds/${response.id}.png`;
+        if (fs.existsSync(imgPath)) {
+            sendImg(imgPath);
+            return;
+        }
+
+        Client.send(receivedMessage, "oof, ok, this may take a while!");
+
+        let team : Build.Build[] = d.units.map((buildData, index) => {
+            return Build.CreateBuild(response.id, response.region, buildData);
+        });
+
+        BuildImage.BuildTeamImage(imgPath, team).then(sendImg).catch(e => {
+            Client.send(receivedMessage, "Sorry hun, something went wrong.");
+            error("Could not build image");
+        })
+
+        /*
+        let imageBuilds : Promise<string>[] = d.units.map((buildData, index) => {
+            return new Promise<string>((resolve, reject) => {
+
+                let imgPath = `./tempbuilds/${response.id}/${response.id}_${index}.png`;
+                if (fs.existsSync(imgPath)) {
+                    sendImg(imgPath);
+                    return;
+                }
+
+                var build = Build.CreateBuild(response.id, response.region, buildData);
+                if (!build) {
+                    Client.send(receivedMessage, "Sorry hun, something went wrong.");
+                    error("Could not build image");
+                    return;
+                }
+
+                BuildImage.BuildImage(imgPath, build, true).then(sendImg).catch((e) => {
+                    Client.send(receivedMessage, "Sorry hun, something went wrong.");
+                    error("Could not build image");
+                    reject(e);
+                });
+            })
+        });
+        */
+
+    }).catch(e => {
+        error(e);
+    });    
 }
 export function handleBuild(receivedMessage, search, parameters, isCompact: boolean) {
     if (search == "help") {
@@ -539,8 +615,14 @@ export function handleBuild(receivedMessage, search, parameters, isCompact: bool
             log(`Loading Unit Calculation Build: ${calc.url}`);
         }
     }
+    
+    var ind = 0;
+    if (parameters && parameters.length > 0 && parameters[0].isNumber()) {
+        ind = parseInt(parameters[0]);
+        log("Parameter used for build: ", ind);
+    }
 
-    build(receivedMessage, search, includeTitle, isCompact)
+    build(receivedMessage, search, ind, includeTitle, isCompact)
     .catch((e) => {
         console.error(e);
         error("Build Failed: ", e.message);
@@ -570,8 +652,14 @@ export function handleBis(receivedMessage, search, parameters, isCompact: boolea
             log(`Loading Unit Build: ${calc.url}`);
         }
     //}
-     
-    build(receivedMessage, search, includeTitle, isCompact)
+         
+    var ind = 0;
+    if (parameters && parameters.length > 0 && parameters[0].isNumber()) {
+        ind = parseInt(parameters[0]);
+        log("Parameter used for build: ", ind);
+    }
+
+    build(receivedMessage, search, ind, includeTitle, isCompact)
     .catch((e) => {
         log(`Unable to find build: ${search}`);    
     });
@@ -654,6 +742,7 @@ export function handleBistext(receivedMessage, search, parameters) {
 
     buildText(receivedMessage, search);
 }
+
 
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -1585,18 +1674,36 @@ function handleProfile(receivedMessage, search, parameters) {
         return;
     }
 
+    var sendMsg = function(embed) {
+        Client.sendMessage(receivedMessage, embed);
+    }
+
     log("Attempting to display profile for user: ", id);
     Client.fetchUser(id).then(user => {
 
-        let text = "\n\u200B\n**__Builds:__**\n\n";
+        var embed = new Discord.RichEmbed()
+                .setColor(pinkHexCode)
+                .setImage(`attachment://build.png`)
+                .setThumbnail(user.avatarURL);
+
+        let text = "\n\u200B\n";
+        text += Profiles.getStatus(id) + "\n\u200B";
+        
         let keys = Object.keys(profile.builds);
+        if (keys.length == 0) {
+            text += "**__Builds:__**\n\n";
+        } else {
+            text += "**__No Builds Added__**\n\n";
+        }
+
+        // Add builds
         let tempText = "";
         keys.forEach((key, i) => {
             let n = key.replaceAll("_", " ").toTitleCase(" ");
             let u = profile.builds[key];
             tempText += `[${n}](${u})\n`;
         });
-        if (tempText.length > 2000) {
+        if (tempText.length + text.length > 2048) {
             debug("Build text too long, removing links: ", tempText.length);
 
             tempText = "";
@@ -1606,18 +1713,41 @@ function handleProfile(receivedMessage, search, parameters) {
         }
         text += tempText + "\n";
 
+        // Add username and friend code
         let name = (profile.nickname.empty()) ? user.username : profile.nickname.replaceAll("_", " ").toTitleCase(" ");
         let code = (profile.friendcode.empty()) ? "" : ": " + profile.friendcode.numberWithCommas();
-        let embed = {
-            title: `${name}'s Profile${code}`,
-            description: text,
-            color: pinkHexCode,
-            thumbnail: {
-                url: user.avatarURL
-            }
+
+        embed.setTitle(`${name}'s Profile${code}`)
+             .setDescription(text);
+            
+
+        // add lead image
+        let leadURL = profile.lead;
+        if (leadURL) {
+            Build.requestBuildData(leadURL).then(response => {
+                var d = JSON.parse(response.data);
+                if (!d || !d.units[0]) {
+                    error("Could not parse build data");
+                    Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
+                    return;
+                }
+        
+                let imgPath = `./tempbuilds/compact/${response.id}.png`;
+                BuildImage.BuildImage(imgPath, build, true)
+                    .then(p => {
+                        const attachment = new Discord.Attachment(p, 'build.png');
+                        embed.attachFile(attachment);
+                        sendMsg(embed);
+                    })
+                    .catch((e) => {
+                        error("Could not build lead image: ", e);
+                        sendMsg(embed);
+                    });
+            });
+        } else {
+            sendMsg(embed);
         }
 
-        Client.sendMessage(receivedMessage, embed);
     }).catch(e => {
         error("Failed to fetch user information: ", e.message);
         Client.send(receivedMessage, "sorry, I messed up");
@@ -1673,7 +1803,7 @@ function handleUserbuild(receivedMessage, search, parameters) {
         return;
     }
 
-    build(receivedMessage, buildUrl, null, false)
+    build(receivedMessage, buildUrl, 0, null, false)
     .catch((e) => {
         console.error(e);
         error("Build Failed: ", e.message);
@@ -1699,14 +1829,84 @@ function handleMybuild(receivedMessage, search, parameters) {
     }
 
     search = search.replaceAll("_", " ").toTitleCase(" ");
+         
+    var ind = 0;
+    if (parameters && parameters.length > 0 && parameters[0].isNumber()) {
+        ind = parseInt(parameters[0]);
+        log("Parameter used for build: ", ind);
+    }
 
-    build(receivedMessage, url, null, false)
+    build(receivedMessage, url, ind, null, false)
     .catch((e) => {
         console.error(e);
         error("Build Failed: ", e.message);
         error(`Unable to find build: ${search}`);
     });
 }
+function handleMybuildcompact(receivedMessage, search, parameters) {
+}
+function handleSetstatus(receivedMessage, search, parameters) {
+
+    if (search == "help") {
+        handleProfilehelp(receivedMessage);
+        return;
+    }
+
+    let id = receivedMessage.author.id;
+    let profile = Profiles.getProfile(id);
+    if (!profile)
+        return;
+    
+    if (!parameters || parameters.length == 0 || parameters[0].empty()) {
+        return;
+    }
+
+    let status = parameters[0];
+
+    Profiles.setStatus(id, status);
+    Client.send(receivedMessage, "Got it! Your profile has been updated");
+}
+function handleSetlead(receivedMessage, search, parameters) {
+
+    let id = receivedMessage.author.id;
+    if (!Profiles.getProfile(id))
+        return;
+
+    if (!search || search.empty()) {
+        Client.send(receivedMessage, "you forgot to tell me which build");
+    }
+
+    let url = search;
+    let b = Profiles.getBuild(id, search);
+    if (b) {
+        url = b;
+        log("Got Stored build from user: ", search);
+    }
+
+    Build.requestBuildData(url).then(response => {
+        var d = JSON.parse(response.data);
+        if (!d || !d.units[0]) {
+            error("Could not parse build data");
+            Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
+            return;
+        }
+
+        Profiles.setLead(id, url);
+
+        build(receivedMessage, url, 0, null, true)
+        .then(p => {
+            Client.send(receivedMessage, `lookin good, I'm sure everyone will like it!`);
+            log("Stored New Lea Build: ", " Unit: ", `(${d.id})`, " URL: ", url)
+        })
+        .catch((e) => {
+            error("Build Failed: ", e);
+        });
+    }).catch(e => {
+        error(e);
+        Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
+    });
+}
+
 
 // PROFILE SETTINGS
 

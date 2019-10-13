@@ -19,6 +19,10 @@
             "value": "- **?buildtext**, **?bistext**\nSame as above, but output the build as text\n\u200B\n"
         },
         {
+            "name": "Compact Build",
+            "value": "Append the leter 'c' to any build related command to make it compact.\n- example: **?buildc elena**\n\u200B\n"
+        },
+        {
             "name": "Get Unit Calculations",
             "value": "- **?damage** *[unit name -or- category]*\nReturn all damage calculations for a single unit.\n- example: **?dpt Elena**\n\u200B\n"
         },
