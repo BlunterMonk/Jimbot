@@ -880,23 +880,27 @@ function buildDamageEmbed(search) {
     var text = "";
     text += `**[(furcula sheet)](${sheetURL}) - [(shado sheet)](${whaleSheet}) - [(muspel sheet)](${muspelURL})**\n\u200B\n`;
 
-    if (furc && !furc.damage.empty()) {
+    if (furc && furc.damage && !furc.damage.empty()) {
         
         text += `**[Damage Per Turn:](${furc.url})** ${furc.damage} : ${furc.turns}\n`;
-        if (!furc.burst.empty()) {
+        if (furc.burst && !furc.burst.empty()) {
             text += `**[Highest Burst:](${furc.url})** ${furc.burst} on turn ${furc.burstTurn}\n`;
         }
     }
 
-    if (whale && !whale.damage.empty()) {
+    if (whale && whale.damage && !whale.damage.empty()) {
         text += `**[Whale Damage Per Turn:](${whale.url})** ${whale.damage} : ${whale.turns}\n`;
-        if (!whale.burst.empty()) {
+        if (whale.burst && !whale.burst.empty()) {
             text += `**[Whale Highest Burst:](${whale.url})** ${whale.burst} on turn ${whale.burstTurn}\n`;
         }
     }
 
-    if (musp && !musp.damage.empty()) {
-        text += `**Muspels Damage Per Turn:** ${musp.damage} : ${musp.turns}\n`;
+    if (musp && musp.damage && !musp.damage.empty()) {
+        if (musp.type == "finisher") {
+            text += `**Muspel's Calc (${musp.type}):** ${musp.damage} on turn ${musp.turns}\n`;
+        } else {
+            text += `**Muspel's Calc (${musp.type}):** ${musp.damage} : ${musp.turns}\n`;
+        }
     }
 
     return <any>{
@@ -979,7 +983,7 @@ function handleDamage(receivedMessage, search, parameters) {
     }
 
     let embed = buildDamageEmbed(search);
-    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+    Client.sendMessage(receivedMessage, embed);
 }
 
 function handleDpt(receivedMessage, search, parameters, isBurst) {
@@ -1658,7 +1662,7 @@ function handleProfile(receivedMessage, search, parameters) {
     if (mention) {
         log("Found mention: ", mention);
         id = mention;
-    } else if (!search.empty()) {
+    } else if (search && !search.empty()) {
         let newId = Profiles.getProfileID(search);
         if (!newId) {
             return;
@@ -1794,6 +1798,14 @@ function handleUserbuild(receivedMessage, search, parameters) {
     let mention = getMentionID(search);
     if (mention) {
         id = mention;
+    } else if (search && !search.empty()) {
+        let newId = Profiles.getProfileID(search);
+        if (!newId) {
+            return;
+        }
+
+        log("Found User ID: ", newId, " from Nickname: ", search);
+        id = newId;
     }
 
     let buildUrl = Profiles.getBuild(id, name);
