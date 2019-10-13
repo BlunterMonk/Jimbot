@@ -69,7 +69,9 @@
 		"builds": {
 			"f2p_galwuf": "https://ffbeequip.com/builder.html?server=gl#7fe07d70-ec9d-11e9-8f21-29aab363c1db",
 			"moon_squad": "https://ffbeequip.com/builder.html?server=gl#58d637d0-ed63-11e9-8f21-29aab363c1db"
-		}
+		},
+		"status": "my banana milkshakes bring all the boys to the yard",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#a18394f0-ed81-11e9-8f21-29aab363c1db"
 	},
 	"210949383896694795": {
 		"autobuild": false,

@@ -16,7 +16,7 @@
         },
         {
             "name": "Add Build",
-            "value": "- **?addbuild** *[build_name | parameter] [build_url | parameter]*\nAdd a build to your profile. Build name and Build URL must be passed as parameters respectively.\n- example: **?addbuild \"turtle\" \"https://ffbeequip.com/builder.html?server=gl#bb0bcea0-e60c-11e9-b677-3b8586bd2e6d\"**\n\u200B\n"
+            "value": "- **?addbuild** *[build_name | parameter] [build_url | parameter]*\nAdd a build to your profile. Build name and Build URL must be passed as parameters respectively.\n- example: **?addbuild \"turtle\"** \"https://ffbeequip.com/builder.html?server=gl#bb0bcea0-e60c-11e9-b677-3b8586bd2e6d\"\n\u200B\n"
         },
         {
             "name": "Remove Build",
@@ -44,7 +44,15 @@
         },
         {
             "name": "View Personal Build",
-            "value": "- **?mybuild** *[build_name]*\nView a build registered to yourself.\n- example: **?userbuild turtle**"
+            "value": "- **?mybuild** *[build_name]*\nView a build registered to yourself.\n- example: **?userbuild turtle**\n\u200B\n"
+        },
+        {
+            "name": "Set Lead",
+            "value": "- **?setlead** *[build_name -or- build_url]*\nSet a build to appear on your profile. Accepts either an FFBEEquip build URL, or the name of a build registered to your profile.\n- example: **?setlead f2p galwuf**\n- example: **?setlead** https://ffbeequip.com/builder.html?server=gl#7fe07d70-ec9d-11e9-8f21-29aab363c1db\n\u200B\n"
+        },
+        {
+            "name": "Set Status",
+            "value": "- **?setstatus** \"*[status | parameter]\"*\nSet a short status for your profile. The status cannot exceed 64 characters.\n- example: **?setstatus \"Fighting Emperor SBB\"**"
         }
     ]
 }

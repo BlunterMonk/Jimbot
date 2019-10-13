@@ -1690,8 +1690,8 @@ function handleProfile(receivedMessage, search, parameters) {
                 .setImage(`attachment://build.png`)
                 .setThumbnail(user.avatarURL);
 
-        let text = "\n\u200B\n";
-        text += Profiles.getStatus(id) + "\n\u200B";
+        let text = "";
+        text += "**__Status:__** " + Profiles.getStatus(id).capitalize() + "\n\u200B\n";
         
         let keys = Object.keys(profile.builds);
         if (keys.length == 0) {
@@ -1707,7 +1707,7 @@ function handleProfile(receivedMessage, search, parameters) {
             let u = profile.builds[key];
             tempText += `[${n}](${u})\n`;
         });
-        if (tempText.length + text.length > 2048) {
+        if (tempText.length + text.length > 2000) {
             debug("Build text too long, removing links: ", tempText.length);
 
             tempText = "";
@@ -1723,11 +1723,11 @@ function handleProfile(receivedMessage, search, parameters) {
 
         embed.setTitle(`${name}'s Profile${code}`)
              .setDescription(text);
-            
 
         // add lead image
         let leadURL = profile.lead;
         if (leadURL) {
+            embed.setDescription(text + "\u200B\n**__Lead:__**")
             Build.requestBuildData(leadURL).then(response => {
                 var d = JSON.parse(response.data);
                 if (!d || !d.units[0]) {
@@ -1737,6 +1737,20 @@ function handleProfile(receivedMessage, search, parameters) {
                 }
         
                 let imgPath = `./tempbuilds/compact/${response.id}.png`;
+                if (fs.existsSync(imgPath)) {
+                    const attachment = new Discord.Attachment(imgPath, 'build.png');
+                    embed.attachFile(attachment);
+                    sendMsg(embed);
+                    return;
+                }
+
+                var build = Build.CreateBuild(response.id, response.region, d.units[0]);
+                if (!build) {
+                    error("Could not build image");
+                    sendMsg(embed);
+                    return;
+                }
+        
                 BuildImage.BuildImage(imgPath, build, true)
                     .then(p => {
                         const attachment = new Discord.Attachment(p, 'build.png');
@@ -1857,66 +1871,24 @@ function handleMybuild(receivedMessage, search, parameters) {
 }
 function handleMybuildcompact(receivedMessage, search, parameters) {
 }
-function handleSetstatus(receivedMessage, search, parameters) {
+function handleMyteam(receivedMessage, search, parameters) {
 
     if (search == "help") {
         handleProfilehelp(receivedMessage);
         return;
     }
 
-    let id = receivedMessage.author.id;
-    let profile = Profiles.getProfile(id);
+    let profile = Profiles.getProfile(receivedMessage.author.id);
     if (!profile)
         return;
-    
-    if (!parameters || parameters.length == 0 || parameters[0].empty()) {
+
+    var url = profile.builds[search];
+    if (!url) {
+        error("Could not find build with name: ", search, " for user: ", receivedMessage.author.id);
         return;
     }
 
-    let status = parameters[0];
-
-    Profiles.setStatus(id, status);
-    Client.send(receivedMessage, "Got it! Your profile has been updated");
-}
-function handleSetlead(receivedMessage, search, parameters) {
-
-    let id = receivedMessage.author.id;
-    if (!Profiles.getProfile(id))
-        return;
-
-    if (!search || search.empty()) {
-        Client.send(receivedMessage, "you forgot to tell me which build");
-    }
-
-    let url = search;
-    let b = Profiles.getBuild(id, search);
-    if (b) {
-        url = b;
-        log("Got Stored build from user: ", search);
-    }
-
-    Build.requestBuildData(url).then(response => {
-        var d = JSON.parse(response.data);
-        if (!d || !d.units[0]) {
-            error("Could not parse build data");
-            Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
-            return;
-        }
-
-        Profiles.setLead(id, url);
-
-        build(receivedMessage, url, 0, null, true)
-        .then(p => {
-            Client.send(receivedMessage, `lookin good, I'm sure everyone will like it!`);
-            log("Stored New Lea Build: ", " Unit: ", `(${d.id})`, " URL: ", url)
-        })
-        .catch((e) => {
-            error("Build Failed: ", e);
-        });
-    }).catch(e => {
-        error(e);
-        Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
-    });
+    handleTeam(receivedMessage, url, parameters);
 }
 
 
@@ -2097,6 +2069,67 @@ function handleNickname(receivedMessage, search, parameters) {
     Profiles.saveNickname(id, search);
 
     Client.send(receivedMessage, `Got it, ${search.replaceAll("_", " ").toTitleCase(" ")}!`);
+}
+function handleSetstatus(receivedMessage, search, parameters) {
+
+    if (search == "help") {
+        handleProfilehelp(receivedMessage);
+        return;
+    }
+
+    let id = receivedMessage.author.id;
+    let profile = Profiles.getProfile(id);
+    if (!profile)
+        return;
+    
+    if (!parameters || parameters.length == 0 || parameters[0].empty()) {
+        return;
+    }
+
+    let status = parameters[0];
+
+    Profiles.setStatus(id, status);
+    Client.send(receivedMessage, "Got it! Your profile has been updated");
+}
+function handleSetlead(receivedMessage, search, parameters) {
+
+    let id = receivedMessage.author.id;
+    if (!Profiles.getProfile(id))
+        return;
+
+    if (!search || search.empty()) {
+        Client.send(receivedMessage, "you forgot to tell me which build");
+    }
+
+    let url = search;
+    let b = Profiles.getBuild(id, search);
+    if (b) {
+        url = b;
+        log("Got Stored build from user: ", search);
+    }
+
+    Build.requestBuildData(url).then(response => {
+        var d = JSON.parse(response.data);
+        if (!d || !d.units[0]) {
+            error("Could not parse build data");
+            Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
+            return;
+        }
+
+        Profiles.setLead(id, url);
+
+        build(receivedMessage, url, 0, null, true)
+        .then(p => {
+            Client.send(receivedMessage, `lookin good, I'm sure everyone will like it!`);
+            log("Stored New Lea Build: ", " Unit: ", `(${d.id})`, " URL: ", url)
+        })
+        .catch((e) => {
+            error("Build Failed: ", e);
+        });
+    }).catch(e => {
+        error(e);
+        Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
+    });
 }
 
 
