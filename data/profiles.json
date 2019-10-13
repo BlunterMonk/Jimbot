@@ -1,7 +1,7 @@
 {
 	"309497668802052096": {
 		"autobuild": true,
-		"nickname": "",
+		"nickname": "wikami",
 		"builds": {
 			"regina_for_emperor": "https://ffbeequip.com/builder.html?server=gl#b1909bf0-ebf5-11e9-8f21-29aab363c1db",
 			"regina_for_demon_wall": "https://ffbeequip.com/builder.html?server=gl#db7c4330-ec7a-11e9-8f21-29aab363c1db"
@@ -10,9 +10,13 @@
 	},
 	"220659180623757312": {
 		"autobuild": false,
-		"friendcode": "",
+		"friendcode": "770484550",
 		"nickname": "",
-		"builds": {}
+		"builds": {
+			"faisalith": "https://ffbeequip.com/builder.html?server=gl#3a426a40-ecce-11e9-8f21-29aab363c1db",
+			"morgana": "https://ffbeequip.com/builder.html?server=gl#bf05d780-ecce-11e9-8f21-29aab363c1db",
+			"kayaka": "https://ffbeequip.com/builder.html?server=gl#d98a8f40-ecd0-11e9-8f21-29aab363c1db"
+		}
 	},
 	"97837550491664384": {
 		"autobuild": false,
@@ -23,20 +27,22 @@
 	"48410351376531456": {
 		"autobuild": false,
 		"nickname": "",
-		"friendcode": "",
+		"friendcode": "428736735",
 		"builds": {}
 	},
 	"453189007640100864": {
 		"autobuild": false,
-		"nickname": "",
+		"nickname": "king_snuggly",
 		"friendcode": "",
 		"builds": {}
 	},
 	"243041029316542474": {
 		"autobuild": false,
-		"nickname": "",
+		"nickname": "ray",
 		"friendcode": "722466530",
-		"builds": {}
+		"builds": {
+			"cg_lightning_for_moose": "https://ffbeequip.com/builder.html?server=gl#3b8a7aa0-ecce-11e9-8f21-29aab363c1db"
+		}
 	},
 	"103785126026043392": {
 		"autobuild": false,
@@ -60,6 +66,83 @@
 		"autobuild": false,
 		"friendcode": "311530529",
 		"nickname": "queen_banana",
+		"builds": {
+			"f2p_galwuf": "https://ffbeequip.com/builder.html?server=gl#7fe07d70-ec9d-11e9-8f21-29aab363c1db",
+			"moon_squad": "https://ffbeequip.com/builder.html?server=gl#58d637d0-ed63-11e9-8f21-29aab363c1db"
+		}
+	},
+	"210949383896694795": {
+		"autobuild": false,
+		"friendcode": "756781162",
+		"nickname": "sir_render",
+		"builds": {
+			"awful": "https://ffbeequip.com/builder.html?server=gl#943f23d0-ec9c-11e9-8f21-29aab363c1db"
+		}
+	},
+	"297441098060660739": {
+		"autobuild": false,
+		"friendcode": "032206654",
+		"nickname": "duke",
+		"builds": {
+			"waluf": "https://ffbeequip.com/builder.html?server=gl#f1753f30-eca6-11e9-8f21-29aab363c1db"
+		}
+	},
+	"168606170389413889": {
+		"autobuild": false,
+		"friendcode": "133366562",
+		"nickname": "athenya",
+		"builds": {}
+	},
+	"324904806332497932": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "",
+		"builds": {}
+	},
+	"234947922792415232": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "",
+		"builds": {
+			"kfinabulk": "https://ffbeequip.com/builder.html?server=gl#d47ed940-eca6-11e9-8f21-29aab363c1db",
+			"whythisoldmannotdying": "https://ffbeequip.com/builder.html?server=gl#eb688560-eca7-11e9-8f21-29aab363c1db",
+			"shinryuzenonoimbue": "https://ffbeequip.com/builder.html?server=gl#bf6247d0-ecac-11e9-8f21-29aab363c1db"
+		}
+	},
+	"275251634001674241": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "",
+		"builds": {}
+	},
+	"236293298254381057": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "tentacles",
+		"builds": {}
+	},
+	"350621713823825920": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "desclipse",
+		"builds": {}
+	},
+	"270590245781766144": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "majin",
+		"builds": {}
+	},
+	"82186933786116096": {
+		"autobuild": false,
+		"friendcode": "396581499",
+		"nickname": "",
+		"builds": {}
+	},
+	"297483915416043520": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "",
 		"builds": {}
 	}
 }
