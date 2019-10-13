@@ -462,7 +462,7 @@ function handleBuildhelp(receivedMessage) {
     Client.sendPrivateMessage(receivedMessage, embed);
 }
 
-export async function build(receivedMessage, url, calculation, force = false): Promise<string> {
+export async function build(receivedMessage, url, calculation, isCompact: boolean, force = false): Promise<string> {
 
     return new Promise<string>((resolve, reject) => {
 
@@ -483,7 +483,6 @@ export async function build(receivedMessage, url, calculation, force = false): P
                 reject("Could not build unit");
                 return;
             }
-
             var sendImg = function(p) {
                 const attachment = new Discord.Attachment(p, 'build.png');
                 var embed = new Discord.RichEmbed()
@@ -509,7 +508,7 @@ export async function build(receivedMessage, url, calculation, force = false): P
                 return;
             }
 
-            BuildImage.BuildImage(build).then(sendImg).catch((e) => {
+            BuildImage.BuildImage(build, isCompact).then(sendImg).catch((e) => {
                 Client.send(receivedMessage, "Sorry hun, something went wrong.");
                 error("Could not build image");
                 reject(e);
@@ -520,7 +519,7 @@ export async function build(receivedMessage, url, calculation, force = false): P
         });
     });
 }
-export function handleBuild(receivedMessage, search, parameters) {
+export function handleBuild(receivedMessage, search, parameters, isCompact: boolean) {
     if (search == "help") {
         handleBuildhelp(receivedMessage);
         return;
@@ -541,14 +540,17 @@ export function handleBuild(receivedMessage, search, parameters) {
         }
     }
 
-    build(receivedMessage, search, includeTitle)
+    build(receivedMessage, search, includeTitle, isCompact)
     .catch((e) => {
         console.error(e);
         error("Build Failed: ", e.message);
         error(`Unable to find build: ${search}`);
     });
 }
-export function handleBis(receivedMessage, search, parameters) {
+export function handleBuildcompact(receivedMessage, search, parameters) {
+    handleBuild(receivedMessage, search, parameters, true);
+}
+export function handleBis(receivedMessage, search, parameters, isCompact: boolean) {
     if (search == "help") {
         handleBuildhelp(receivedMessage);
         return;
@@ -569,10 +571,13 @@ export function handleBis(receivedMessage, search, parameters) {
         }
     //}
      
-    build(receivedMessage, search, includeTitle)
+    build(receivedMessage, search, includeTitle, isCompact)
     .catch((e) => {
         log(`Unable to find build: ${search}`);    
     });
+}
+export function handleBiscompact(receivedMessage, search, parameters) {
+    handleBuild(receivedMessage, search, parameters, true);
 }
 async function buildText(receivedMessage, url) {
 
@@ -1668,7 +1673,7 @@ function handleUserbuild(receivedMessage, search, parameters) {
         return;
     }
 
-    build(receivedMessage, buildUrl, null)
+    build(receivedMessage, buildUrl, null, false)
     .catch((e) => {
         console.error(e);
         error("Build Failed: ", e.message);
@@ -1695,7 +1700,7 @@ function handleMybuild(receivedMessage, search, parameters) {
 
     search = search.replaceAll("_", " ").toTitleCase(" ");
 
-    build(receivedMessage, url, null)
+    build(receivedMessage, url, null, false)
     .catch((e) => {
         console.error(e);
         error("Build Failed: ", e.message);

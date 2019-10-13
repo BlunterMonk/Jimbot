@@ -4,8 +4,10 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
+import "../util/string-extension.js";
 import * as fs from 'fs';
 import { log, error } from "../global.js";
+import * as Canvas from 'canvas';
 
 ////////////////////////////////////////////////////////////
 
@@ -17,6 +19,54 @@ var defaultOptions = {
 	height: undefined,
 	Canvas: undefined
 };
+
+export interface mergeImageOptions {
+	width: number;
+	height: number;
+	Canvas: Canvas.Canvas;
+	text: labelOptions[];
+}
+export interface labelOptions {
+	x: number;
+	y: number;
+	text: string;
+	font: string;
+	size: number;
+	align: string; // "left", "right", "center"
+	anchorTop: boolean; // text should position based on the top of the text
+	color: string; // RGBA format: 0,0,0,1 
+	strokeColor: string; // RGBA format: 0,0,0,1 
+	wrap: boolean; // Should text wrap when max width is hit
+	maxWidth: number; // Max horizontal length a label will be before wrapping
+}
+export interface imageOptions {
+	src: string; // image path
+	x: number;
+	y: number;
+	w: number; // image width
+	h: number; // image heigt
+}
+
+interface label {
+	text: string;
+	font: string; 
+	x: number; 
+	y: number;
+	align: string; // "left", "right", "center"
+	fill: string;
+	stroke: string;
+}
+/*
+Measurement: {"width":108.046875,
+"actualBoundingBoxLeft":0,
+"actualBoundingBoxRight":108.046875,
+"actualBoundingBoxAscent":17.21484375,
+"actualBoundingBoxDescent":3.5625, 
+"emHeightAscent":18.48046875, 
+"emHeightDescent":5.51953125, 
+"alphabeticBaseline":0} 
+*/
+////////////////////////////////////////////////////////////
 
 export function trim(ctx, c){//}: Promise<any> {
 	var copy = ctx;
@@ -72,9 +122,14 @@ export function trim(ctx, c){//}: Promise<any> {
     return copy.canvas;
 }
 
-export function getLines(ctx, text, maxWidth, font = null) {
+interface textLine {
+	text: string;
+	width: number;
+	height: number;
+}
+export function getLines(ctx, text, maxWidth, font = null): textLine[] {
     var words = text.split(" ");
-    var lines = [];
+    var lines : textLine[] = [];
 	var currentLine = words[0];
 	var cacheFont = ctx.font;
 
@@ -83,17 +138,28 @@ export function getLines(ctx, text, maxWidth, font = null) {
 	}
 
     for (var i = 1; i < words.length; i++) {
-        var word = words[i];
-        var width = ctx.measureText(currentLine + " " + word).width;
+		var word = words[i];
+		var measure = ctx.measureText(currentLine + " " + word);
+		var width = measure.width;
+		
         if (width < maxWidth) {
             currentLine += " " + word;
         } else {
-            lines.push(currentLine);
+            lines.push({
+				text:currentLine,
+				width: measure.width,
+				height: measure.emHeightAscent
+			});
             currentLine = word;
         }
 	}
 	
-	lines.push(currentLine);
+	var measure = ctx.measureText(currentLine + " " + word);
+	lines.push({
+		text:currentLine,
+		width: measure.width,
+		height: measure.emHeightAscent
+	});
 	
 	ctx.font = cacheFont;
 
@@ -114,9 +180,11 @@ export function measureText(ctx, text, font) {
     return size;
 }
 
+
 // Return Promise
-export var mergeImages = function (sources, options) {
-	if ( sources === void 0 ) sources = [];
+export var mergeImages = function (imgOpts : imageOptions[], labelOpts : labelOptions[], options) {
+	if ( imgOpts === void 0 ) imgOpts = [];
+	if ( labelOpts === void 0 ) labelOpts = [];
 	if ( options === void 0 ) options = {};
 
 	return new Promise(function (resolve) {
@@ -129,21 +197,18 @@ export var mergeImages = function (sources, options) {
 		options.quality *= 100;
 	}
 
-	// Load sources
-	var images = sources.map(function (source) { 
+	// Load Images
+	var images = imgOpts.map(function (source) { 
 		return new Promise(function (resolve, reject) {
-			// Convert sources to objects
+
 			// log("Loading Image:");
 			// log(source);
-			if (source.constructor.name !== 'Object') {
-				source = { src: source };
-			}
 			if (!fs.existsSync(source.src))
 				resolve(Object.assign({}, source, { img: null }));
 
 			// Resolve source and img when loaded
 			var img = new Image();
-			img.onerror = function () { return /*reject(new Error*/error('Couldn\'t load image: ', source.src); };
+			img.onerror = function () { return /*reject(new Error*/error('Could not load image: ', source.src); };
 			img.onload = function () { return resolve(Object.assign({}, source, { img: img })); };
 
 			img.src = source.src;
@@ -152,6 +217,62 @@ export var mergeImages = function (sources, options) {
 
 	// Get canvas context
 	var ctx = canvas.getContext('2d');
+
+	// Add Labels to Image
+	var labels : label[] = [];
+	labelOpts.forEach(function (entry) { 
+		// Convert labelOptions to lebels
+		
+		let font = `${entry.size}px ${entry.font}`;
+		let align = (entry.align && !entry.align.empty()) ? entry.align : "left";
+		let color = (entry.color && !entry.color.empty()) ? `rgba(${entry.color})` : 'rgba(255,255,255,1)';
+		let stroke = (entry.strokeColor && !entry.strokeColor.empty()) ? `rgba(${entry.strokeColor})` : 'rgba(0,0,0,1)';
+		
+		let x = entry.x;
+		let y = (entry.anchorTop) ? (entry.y * entry.size) : entry.y;
+		if (entry.wrap && entry.maxWidth) {
+						
+			var lines = getLines(ctx, entry.text, entry.maxWidth, `${entry.size}px ${entry.font}`);
+			// log("Lines: ", lines.length, " Entry Height: ", lines.length * entry.size);
+
+			if (entry.anchorTop) {
+				y = entry.y + lines[0].height;
+				// log("Total Line Height: ", lines[0].height, " New Y: ", y);
+			} else {
+				y -= ((lines.length - 1) * entry.size) * 0.5;
+			}
+
+			for (let ind = 0; ind < lines.length; ind++) {
+				const line = lines[ind];
+				const space = (ind * entry.size);
+
+				let extra : label = {
+					text: line.text,
+					font: font, 
+					x: x,
+					y: y + space,
+					align: align,
+					fill: color,
+					stroke: stroke
+				}
+
+				labels.push(extra);
+			}
+		} else {
+
+			let line : label = {
+				text: entry.text,
+				font: font, 
+				x: x,
+				y: y,
+				align: align,
+				fill: color,
+				stroke: stroke
+			}
+
+			labels.push(line);
+		}
+	});
 
 	// When sources have loaded
 	resolve(Promise.all(images)
@@ -180,47 +301,15 @@ export var mergeImages = function (sources, options) {
 			});
 
 			// Add text here
-			if (options.text) {
-				ctx.fillStyle = 'rgba(255,255,255,1)'
-				ctx.strokeStyle = 'rgba(0,0,0,0.5)'//'rgba(125,125,125,1)'
-				
-				options.text.forEach((entry, index) => {
-					ctx.font = `${entry.size}px ${entry.font}`;
-					                    
-                    var align = "left";
-                    if (entry.align)
-                        align = entry.align;
-                    
-					ctx.textAlign = align;
+			labels.forEach(label => {
+				ctx.fillStyle = label.fill;
+				ctx.strokeStyle = label.stroke;
+				ctx.textAlign = label.align;
+				ctx.font = label.font;
 
-					if (entry.color) {
-						ctx.fillStyle = `rgba(${entry.color})`;
-					} else {
-						ctx.fillStyle = 'rgba(255,255,255,1)'
-					} 
-
-					if (entry.strokeColor) {
-						ctx.strokeStyle = `rgba(${entry.color})`;
-					} else {
-						ctx.strokeStyle = 'rgba(0,0,0,1)'
-					} 
-					
-					if (entry.wrap && entry.maxWidth) {
-						            
-						var lines = getLines(ctx, entry.text, entry.maxWidth, `${entry.size}px ${entry.font}`);
-						for (let ind = 0; ind < lines.length; ind++) {
-							const line = lines[ind];
-							const space = (ind * entry.size);
-
-							ctx.strokeText(line, entry.x, entry.y + space, entry.maxWidth);
-							ctx.fillText(line, entry.x, entry.y + space, entry.maxWidth);
-						}
-					} else {
-						ctx.strokeText(entry.text, entry.x, entry.y);
-						ctx.fillText(entry.text, entry.x, entry.y);
-					}
-				});
-			}
+				ctx.strokeText(label.text, label.x, label.y);
+				ctx.fillText(label.text, label.x, label.y);
+			})
 
 			if (options.Canvas && options.format === 'image/jpeg') {
 				// Resolve data URI for node-canvas jpeg async

@@ -19,8 +19,8 @@ const ctx = canvas.getContext('2d')
 
 const imageEndpoint = `https://ffbeequip.com/img/`;
 const imgCacheDir = "./icons/";
-const canvasWidth = 600;
-const canvasHeight = 788;
+const canvasWidth = 1200;
+const canvasHeight = 1576;
 const mainStatFontFamily = "Arial Black";
 const resistFontFamily = "Arial Black";
 const fontFamily = "Meiryo";
@@ -55,31 +55,550 @@ function processBuild(search) {
     });
 }*/
 
+function downloadImageIfNotExist(path: string, source: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
 
+        if (fs.existsSync(path)) {
+            trace("File Exists: ", path);
 
-export async function BuildImage(build: any): Promise<string> {
+            resolve(path);
+        } else {
+            trace("File Does Not Exists: ", path, " attempting to download");
+
+            Download.downloadFile(path, source).then((p) =>{
+                log(`Image Downloaded: ${source}`);
+                resolve(p);
+            }).catch((e) => {
+                error(`Image Failed to Download: ${source}`);
+                resolve(null);
+            });
+        }
+    });
+}
+function downloadImages(slots, items, unitId): Promise<any>[] {
+
+    var images = slots.map(slot => {
+        new Promise<any>((resolve, reject) => {
+
+            var item = null;
+            for (let index = 0; index < items.length; index++) {
+                const element = items[index];
+                if (element.id === slot.id) {
+                    item = element;
+                    break;
+                }
+            }
+
+            if (!item)
+                return;
+            
+            var filename = `items/${item.icon}`;
+            var imagePath = imageEndpoint + filename;
+            var path = `${imgCacheDir}${filename}`;
+
+            if (fs.existsSync(path)) {
+                resolve(path);
+                return;
+            }
+            
+            trace("File Does Not Exists: ", path, " attempting to download");
+            Download.downloadFile(path, imagePath).then((p) =>{
+                log(`Image Donloaded: ${p}`);
+                resolve(p);
+            }).catch(e => {
+                error(e);
+                resolve(null);
+            });
+        });
+    });
+
+    images.push(new Promise<any>((resolve, reject) => {
+
+        var filename = `unit_icon_${unitId}.png`;
+        var path = `${imgCacheDir}units/${filename}`;
+        let source = `https://ffbeequip.com/img/units/${filename}`;
+
+        downloadImageIfNotExist(path, source).then(resolve).catch(reject);
+    }));
+
+    return images;
+}
+
+export async function BuildImage(build: any, isCompact: boolean): Promise<string> {
     
     var equipped = build.getEquipment();
     debug("Equipment: ", equipped);
 
     return new Promise<string>((resolve, reject) => {
         
-        downloadImages(build.getSlots(), equipped, build.loadedUnit.id, (unit, list) => {
+        var downloads = downloadImages(build.getSlots(), equipped, build.loadedUnit.id);
+        Promise.all(downloads).then(() => {
 
-            let compactOptions = {
-                xStart: 0,
-                yStart: 0
+            if (isCompact) {
+
+                let compactCanvas = {
+                    xStart: 0,
+                    yStart: 0
+                }
+                
+                buildCompactImage(compactCanvas, build).then((p) => {
+                    resolve(p);
+                }).catch(reject);
+            } else {
+
+                buildImage(build).then((p) => {
+                    resolve(p);
+                }).catch(reject);
             }
-            buildImage(unit, list, build, (p) => {
-                resolve(p);
-            });
         });
     });
 }
 
+function buildImage(build: Build.Build): Promise<string> {
+
+    let canvasWidth = 1200;
+    let canvasHeight = 1576;
+
+    var buildTotal = build.getTotalStats();
+    var totalStats = buildTotal.stats;
+    var totalBonuses = buildTotal.bonuses;
+    var wieldBonus = getWieldBonus(totalStats, build);
+
+    // log("Total Stats");
+    // log(totalStats);
+
+    var labels : mergeImages.labelOptions[] = [];
+    var images = [{
+        src: `${imgCacheDir}build-template-x2.png`,
+        x: 0,
+        y: 0,
+        w: canvasWidth,
+        h: canvasHeight
+    }];
+
+    // Add Unit Icon
+    images.push(addUnitIcon(build.unitID, 2.5, 50, 105));
+
+    // Add Esper ICon
+    var esper = build.getEsperId();
+    var esperPath = `${imgCacheDir}espers/${esper}.png`;
+    trace(`Esper Path: ${esperPath}`);
+    if (esper) {
+        let scale = 2;
+        let dim = 112 * scale;
+        images[images.length] = {
+            src: esperPath,
+            x: canvasWidth - dim,
+            y: 40,
+            w: dim,
+            h: dim
+        };
+    }
+
+    // Add Main Stats
+    labels = labels.concat(addMainStats(totalStats, totalBonuses, wieldBonus));
+
+    // Add Resistances
+    labels = labels.concat(addResistances(totalStats));
+
+    // Add equipment
+    let equips = addEquipment(build);
+    labels = labels.concat(equips.labels);
+    images = images.concat(equips.images);
+
+    // Add killers
+    let killers = addKillers(totalStats);
+    labels = labels.concat(killers.labels);
+    images = images.concat(killers.images);
+
+    var saveLocation = `./tempbuilds/${build.buildID}.png`;
+    return finalizeImage(saveLocation, images, labels, canvasWidth, canvasHeight);
+}
+function buildCompactImage(canvasOptions: UnitBox, build: Build.Build): Promise<string> {
+
+    let imageWidth = 1300;
+    let imageHeight = 350;
+
+    var buildTotal = build.getTotalStats();
+    var totalStats = buildTotal.stats;
+    var totalBonuses = buildTotal.bonuses;
+    log("Build Compact Image");
+    debug("Total Stats: ", totalStats, " Total Bonuses: ", totalBonuses);
+
+    var labels = [];
+    var images = [{
+        src: `${imgCacheDir}unit-overview-background.png`,
+        x: canvasOptions.xStart,
+        y: canvasOptions.yStart,
+        w: imageWidth,
+        h: imageHeight
+    }];
+
+    // Add Unit Icon
+    images.push(addUnitIcon(build.unitID, 3, canvasOptions.xStart + 6, canvasOptions.yStart + 5));
+    images.push({
+        src: `${imgCacheDir}unit-icon-frame.png`,
+        x: canvasOptions.xStart + 6,
+        y: canvasOptions.yStart + 5,
+        w: 56*3,
+        h: 38*3
+    });
+
+    var wieldingBonus = null;
+    if (totalStats.singleWielding && build.isDoublehanding())
+        wieldingBonus = totalStats.singleWielding;
+    else if (totalStats.dualWielding && build.isDualWielding())
+        wieldingBonus = totalStats.dualWielding;
+
+    // Add main stats
+    let mainStats = {
+        xStart: canvasOptions.xStart + 250,//400,
+        xSpace: 275,
+        yStart: canvasOptions.yStart + 55,
+        ySpace: 50,
+        statOrder: [ "hp",  "atk", "def", "mp",  "mag", "spr" ],
+        rows: 3,
+        fontSize: 40,
+        bonusSize: 20,
+        align: "left"
+    };
+    labels = labels.concat(getMainStats(mainStats, totalStats, totalBonuses, wieldingBonus));
+
+
+    // Add equipment
+    var equips = addCompactEquipment(build, canvasOptions);
+    labels = labels.concat(equips.labels);
+    images = images.concat(equips.images);
+
+    // Add Esper
+    var esper = build.getEsperId();
+    if (esper) {
+        labels[labels.length] = {
+            text: esper,
+            font: fontFamily,
+            size: 22,
+            x: canvasOptions.xStart + 1050,
+            y: canvasOptions.yStart + 300,
+            align: "left",
+            maxWidth: 200,
+            strokeColor: "255,255,255,1"
+        };
+    }
+
+    let killerOptions = { // compact mode settings
+        xStart: canvasOptions.xStart + 20,
+        yStart: canvasOptions.yStart + 270,
+        dimensions: 50,
+        maxWide: 14, // max amount of icons that can fit horizontally
+        maxTall: 1, // max amount of icons that can fit vertically
+        fontSize: 22,
+        distance: 1,
+        spacing: 0,
+        align: "left"
+    }
+
+    if (totalStats.killers) {
+        var values = sortKillersByValue(totalStats.killers);
+        var killers = getKillers(killerOptions, values);
+        labels = labels.concat(killers.labels);
+        images = images.concat(killers.images);
+    }
+
+    // Add Ailment Resistances
+    let resistOptions = { // compact mode settings
+        xStart: canvasOptions.xStart + 50,
+        yStart: canvasOptions.yStart + 215,
+        dimensions: 1,
+        maxWide: 15, // max amount of icons that can fit horizontally
+        maxTall: 1, // max amount of icons that can fit vertically
+        fontSize: 20,
+        distance: 1,
+        spacing: 90,
+        align: "left"
+    };
+    labels = labels.concat(getAilmentResistances(resistOptions, totalStats));
+    resistOptions.yStart = canvasOptions.yStart + 265;
+    labels = labels.concat(getElementResistances(resistOptions, totalStats));
+
+
+    // Add Evade
+    if (totalStats.evade && totalStats.evade.physical) {
+        debug("Has Evade: ", totalStats.evade);
+        labels[labels.length] = {
+            text: `${totalStats.evade.physical}%`,
+            font: fontFamily,
+            size: 20,
+            x: canvasOptions.xStart + 55,
+            y: canvasOptions.yStart + 165,
+            align: "left",
+            strokeColor: "255,255,255,1"
+        };
+    }
+
+    // Finish frame
+    images[images.length] = {
+        src: `${imgCacheDir}unit-overview-top-frame-short.png`,
+        x: canvasOptions.xStart,
+        y: canvasOptions.yStart,
+        w: imageWidth,
+        h: imageHeight
+    };
+
+    var saveLocation = `./tempbuilds/compact/${build.buildID}.png`;
+    
+    return finalizeImage(saveLocation, images, labels, imageWidth, imageHeight);
+}
+function finalizeImage(saveLocation: string, images: mergeImages.imageOptions[], labels: mergeImages.labelOptions[], cWidth, cHeight): Promise<string> {
+
+
+    return new Promise<string>((resolve, reject) => {
+
+        mergeImages.mergeImages(images, labels,
+            {
+                width: cWidth,
+                height: cHeight,
+                Canvas: Canvas
+            })
+        .then(b64 => {
+            var fs = require('fs');
+            var str = `${b64}`;
+            var regex = /^data:.+\/(.+);base64,(.*)$/;
+            
+            var matches = str.match(regex);
+            var ext = matches[1];
+            var data = matches[2];
+            var buffer = Buffer.alloc(data.length, data, 'base64');
+
+            fs.writeFileSync(saveLocation, buffer);
+
+            log(`Build Saved: ${saveLocation}`);
+            resolve(saveLocation);
+        }).catch((e) =>{
+            error("Failed to make image: ", e.message);
+            reject(e.message);
+        });
+    });
+}
+
+
+class ImageBuild {
+    build: Build.Build;
+    labels: mergeImages.labelOptions[];
+    images: mergeImages.imageOptions[];
+    constructor(build: Build.Build) {
+        this.build = build;
+
+        var unit = build.loadedUnit.id;
+        var slots = build.getSlots();
+        var equipped = build.getEquipment();
+        debug("Equipment: ", equipped);
+    
+        var downloads = downloadImages(slots, equipped, unit);
+        Promise.all(downloads).then();
+    }
+
+    addUnitIcon(scale: number, x: number, y: number): ImageBuild {
+
+        this.images.push(addUnitIcon(this.build.unitID, scale, x, y));
+
+        return this;
+    }
+    addEquipment(): ImageBuild {
+
+        let equips = addEquipment(this.build);
+        this.labels = this.labels.concat(equips.labels);
+        this.images = this.images.concat(equips.images);
+    
+        return this;
+    }
+}
+function addUnitIcon(unitId: string, scale: number, x: number, y: number): mergeImages.imageOptions {
+
+    const path = `${imgCacheDir}units/unit_icon_${unitId}.png`;
+    const iconW = 56;
+    const iconH = 38;
+    let ui = {
+        src: path,
+        x: x,
+        y: y,
+        w: iconW * scale,
+        h: iconH * scale
+    };
+
+    trace("Unit Image: ", ui);
+    return ui;
+}
+function addMainStats(totalStats, totalBonuses, wieldBonus) {
+
+    let mainStats = {
+        xStart: 300,//400,
+        xSpace: 250,
+        yStart: 70,
+        ySpace: 70,
+        rows: 2,
+        statOrder: [ "hp",  "mp",  "atk", "mag", "def", "spr" ],
+        fontSize: 36,
+        bonusSize: 18,
+        align: "left"
+    };
+        
+    return getMainStats(mainStats, totalStats, totalBonuses, wieldBonus);
+}
+function addResistances(totalStats) {
+
+    let labels : mergeImages.labelOptions[] = [];
+    let resistOptions = {
+        xStart: 130,//62,
+        yStart: 1420,//712,
+        dimensions: 0,
+        maxWide: 9,
+        maxTall: 1,
+        fontSize: 24,
+        distance: 2,
+        spacing: 122,
+        align: "center"
+    };
+    labels = labels.concat(getAilmentResistances(resistOptions, totalStats));
+    
+    resistOptions.yStart = 1545;//772,
+    labels = labels.concat(getElementResistances(resistOptions, totalStats));
+
+    return labels;
+}
+function addKillers(totalStats) {
+
+    let labels : mergeImages.labelOptions[] = [];
+    let images : mergeImages.imageOptions[] = [];
+
+    if (!totalStats.killers) {
+        return { labels: labels, images: images };
+    }
+
+    let killerOptions = { // Normal sheet settings
+        xStart: 225,//112,
+        yStart: 165,//84,
+        dimensions: 50,
+        maxWide: 15, // max amount of icons that can fit horizontally
+        maxTall: 2, // max amount of icons that can fit vertically
+        fontSize: 22,
+        distance: 1,
+        spacing: 0,
+        align: "left"
+    };
+
+    var values = sortKillersByValue(totalStats.killers);
+    return getKillers(killerOptions, values);
+}
+function addEquipment(build: Build.Build) {
+
+    let scale = 2;
+    let dim = 112 * scale;
+    var equipOptions : equipmentOptions = {
+        xCol1: 0,
+        xCol2: canvasWidth - dim,
+        yTop: 264,
+        ySpacing: 200,
+        dimension: dim,
+        maxWidth: 355,
+        fontSize: 32,
+        shrunkFontSize: 24,
+        yText: 0, // unused
+        align: "left" // unused
+    }
+    var firstSlotLeft : equipOptions = {
+        icon: {x: -12, y: 264},
+        name: {x: 250, y: 340},
+        desc: {x: 210, y: 360},
+        desMaxWidth: 250,
+        iconDim: dim,
+        fontSize: 24,
+        shrunkFontSize: 18,
+        align: "left",
+    }
+    var firstSlotRight : equipOptions = {
+        icon: {x: canvasWidth - dim, y: 264},
+        name: {x: canvasWidth - 250, y: 340},
+        desc: {x: canvasWidth - 210, y: 360},
+        desMaxWidth: 350,
+        iconDim: dim,
+        fontSize: 24,
+        shrunkFontSize: 18,
+        align: "right",
+    }
+   
+    return getEquipment(equipOptions, firstSlotLeft, firstSlotRight, build);
+}
+function addCompactEquipment(build: Build.Build, canvasOptions: UnitBox) {
+    
+    let equipOptions = {
+        xCol1: canvasOptions.xStart + 800,
+        xCol2: canvasOptions.xStart + 1050,
+        yTop: canvasOptions.yStart + 20,
+        yText: canvasOptions.yStart + 55,
+        ySpacing: 50,
+        dimension: 50,
+        maxWidth: 200,
+        fontSize: 22,
+        shrunkFontSize: 18,
+        align: "left"
+    };
+
+    return getCompactEquipment(equipOptions, build);
+}
+
+
+
 interface UnitBox {
     xStart: number;
     yStart: number;
+}
+interface statRow {
+    xStart: number;
+    yStart: number;
+    dimensions: number; // dimension of the images
+    maxWide: number; // how many columns
+    maxTall: number; // how many rows
+    fontSize: number;
+    distance: number; // number columns to use when adding text
+    spacing: number; // distance between each image
+    align: string; // text alignment
+}
+interface mainStatsOptions {
+    xStart: number;
+    xSpace: number;
+    yStart: number;
+    ySpace: number;
+    rows: number;
+    fontSize: number;
+    bonusSize: number;
+    statOrder: string[];
+    align: string;
+}
+interface equipmentOptions {
+    xCol1: number;
+    xCol2: number;
+    yTop: number;
+    yText: number;
+    ySpacing: number;
+    dimension: number;
+    maxWidth: number;
+    fontSize: number;
+    shrunkFontSize: number;
+    align: string;
+}
+interface position {
+    x: number;
+    y: number;
+}
+interface equipOptions {
+    icon: position; // item icon position
+    name: position; // item label position
+    desc: position; // description text position
+    desMaxWidth: number; // max length of description text
+    iconDim: number;
+    fontSize: number;
+    shrunkFontSize: number;
+    align: string;
 }
 
 function sortKillersByValue(killers) {
@@ -109,15 +628,48 @@ function sortKillersByValue(killers) {
 
     return values;
 }
+function getResistsByValue(totalStats, list): any {
 
-interface statRow {
-    xStart: number,
-    yStart: number,
-    dimensions: number,
-    maxWide: number,
-    maxTall: number,
-    fontSize: number,
-    spacing: number
+    var resist = {};
+                              
+    if (!totalStats.resist) {
+        return resist;
+    }
+        
+    list.forEach((k, i) => {
+        const r = totalStats.resist[k];
+
+        if (r) {
+            const i = list.indexOf(k)
+            if (i < 0)
+                return;
+
+            var v = r.percent;
+            if (!resist[`${v}`]) 
+                resist[`${v}`] = [];
+
+            resist[`${v}`].push(`${k}`);
+        } else {
+            if (!resist[`0`]) 
+                resist[`0`] = [];
+
+            resist[`0`].push(`${k}`);
+        }
+    });
+
+    trace("Resists: ", resist);
+    return resist;
+}
+
+function getWieldBonus(totalStats, build: Build.Build) {
+
+    var wieldingBonus = null;
+    if (totalStats.singleWielding && build.isDoublehanding())
+        wieldingBonus = totalStats.singleWielding;
+    else if (totalStats.dualWielding && build.isDualWielding())
+        wieldingBonus = totalStats.dualWielding;
+
+    return wieldingBonus;
 }
 
 function getKillers(options: statRow, values: any) {
@@ -178,11 +730,11 @@ function getKillers(options: statRow, values: any) {
             font: killersFontFamily, 
             size: options.fontSize, 
             x: x + options.dimensions, 
-            y: y + options.dimensions - 8,
+            y: (y + options.dimensions * 0.5) + (options.fontSize * 0.5),
             align: "left",
             strokeColor: killerssStroke
         };
-        across += 2;
+        across += options.distance;
         if (across >= options.maxWide) {
             across = 0;
             down++;
@@ -193,39 +745,6 @@ function getKillers(options: statRow, values: any) {
         images: images,
         labels: labels
     }
-}
-
-function getResistsByValue(totalStats, list): any {
-
-    var resist = {};
-                              
-    if (!totalStats.resist) {
-        return resist;
-    }
-        
-    list.forEach((k, i) => {
-        const r = totalStats.resist[k];
-
-        if (r) {
-            const i = list.indexOf(k)
-            if (i < 0)
-                return;
-
-            var v = r.percent;
-            if (!resist[`${v}`]) 
-                resist[`${v}`] = [];
-
-            resist[`${v}`].push(`${k}`);
-        } else {
-            if (!resist[`0`]) 
-                resist[`0`] = [];
-
-            resist[`0`].push(`${k}`);
-        }
-    });
-
-    trace("Resists: ", resist);
-    return resist;
 }
 
 function getResists(totalStats, list): string[] {
@@ -264,7 +783,6 @@ function getResists(totalStats, list): string[] {
     
     return resist;
 }
-
 function getAilmentResistances(options: statRow, totalStats) {
     
     var labels = [];
@@ -286,7 +804,7 @@ function getAilmentResistances(options: statRow, totalStats) {
             t = "Null"
             f = fontFamily;
         } else if (v == 0) {
-            t = "-"
+            t = (options.dimensions) ? "0%" : "-";
         } else if (v > 0) {
             c = "0,255,0,1";
         } else if (v < 0) {
@@ -299,7 +817,7 @@ function getAilmentResistances(options: statRow, totalStats) {
             size: options.fontSize, 
             x: x0 + (spacing * index), 
             y: y0,
-            align: "center" 
+            align: options.align
         };
     }
 
@@ -325,7 +843,7 @@ function getElementResistances(options: statRow, totalStats) {
         } else if (v < 0) {
             c = "255,0,0,1";
         } else {
-            t = "-"
+            t = "0%"
         }
 
         labels[labels.length] = { 
@@ -334,7 +852,7 @@ function getElementResistances(options: statRow, totalStats) {
             size: options.fontSize, 
             x: x0 + (spacing * index), 
             y: y0,
-            align: "center",
+            align: options.align,
             color: c
         };
     }
@@ -342,9 +860,8 @@ function getElementResistances(options: statRow, totalStats) {
     return labels;
 }
 
-const statValues = [
-    "hp",  "mp",  "atk", "mag", "def", "spr",
-];
+
+/*
 interface mainStatsOptions {
     xCol1: number,
     xCol2: number,
@@ -352,9 +869,11 @@ interface mainStatsOptions {
     yMainRow1: number,
     yMainRow2: number,
     yStatBonus: number,
-    yEquipBonus: number
+    yEquipBonus: number,
+    fontSize: number,
+    bonusSize: number
+    align: string
 }
-
 function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wieldingBonus) {
     var labels = [];
 
@@ -363,15 +882,14 @@ function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wield
     let x2 = options.xCol3;
     let y0 = options.yMainRow1;
     let y1 = options.yMainRow2; 
-    let y2 = options.yStatBonus;
-    let y3 = options.yEquipBonus;
+    let fs = options.fontSize;
     
-    labels[labels.length] = { text: totalStats.hp   , font: mainStatFontFamily, size: 18, x: x0, y: y0 , align: "right", strokeColor: statStroke }; // HP
-    labels[labels.length] = { text: totalStats.mp   , font: mainStatFontFamily, size: 18, x: x0, y: y1 , align: "right", strokeColor: statStroke };
-    labels[labels.length] = { text: totalStats.atk  , font: mainStatFontFamily, size: 18, x: x1, y: y0 , align: "right", strokeColor: statStroke };
-    labels[labels.length] = { text: totalStats.mag  , font: mainStatFontFamily, size: 18, x: x1, y: y1 , align: "right", strokeColor: statStroke };
-    labels[labels.length] = { text: totalStats.def  , font: mainStatFontFamily, size: 18, x: x2, y: y0 , align: "right", strokeColor: statStroke };
-    labels[labels.length] = { text: totalStats.spr  , font: mainStatFontFamily, size: 18, x: x2, y: y1 , align: "right", strokeColor: statStroke };
+    labels[labels.length] = { text: totalStats.hp   , font: mainStatFontFamily, size: fs, x: x0, y: y0 , align: options.align, strokeColor: statStroke }; // HP
+    labels[labels.length] = { text: totalStats.mp   , font: mainStatFontFamily, size: fs, x: x0, y: y1 , align: options.align, strokeColor: statStroke };
+    labels[labels.length] = { text: totalStats.atk  , font: mainStatFontFamily, size: fs, x: x1, y: y0 , align: options.align, strokeColor: statStroke };
+    labels[labels.length] = { text: totalStats.mag  , font: mainStatFontFamily, size: fs, x: x1, y: y1 , align: options.align, strokeColor: statStroke };
+    labels[labels.length] = { text: totalStats.def  , font: mainStatFontFamily, size: fs, x: x2, y: y0 , align: options.align, strokeColor: statStroke };
+    labels[labels.length] = { text: totalStats.spr  , font: mainStatFontFamily, size: fs, x: x2, y: y1 , align: options.align, strokeColor: statStroke };
 
     var bonuses = [];
     for (let index = 0; index < labels.length; index++) {
@@ -392,7 +910,9 @@ function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wield
 
         t = `${t}%`;
         
-        let l = mergeImages.measureText(ctx, t, `10px ${fontFamily}`)
+        let l = mergeImages.measureText(ctx, element.text, `${fs}px ${mainStatFontFamily}`)
+        let x : number = (options.align == "right") ? element.x : element.x + l.width;
+        log("X: ", x, " L: ", l.width, " Element: ", element.x);
 
         if (wieldingBonus && wieldingBonus[stat]) {
             var tdh = wieldingBonus[stat];
@@ -401,10 +921,10 @@ function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wield
             bonuses[bonuses.length] = { 
                 text: `+${tdh}%`,
                 font: fontFamily, 
-                size: 12,
-                x: element.x - l.width - 6,
-                y: (index % 2) ? y3 : y2,
-                align: "right",
+                size: options.bonusSize,
+                x: x,
+                y: ((index % 2) ? y1 : y0) - options.bonusSize,
+                align: "left",
                 color: `255,223,0,1`,
                 strokeColor: `125,125,125,0.5`
             };
@@ -414,165 +934,263 @@ function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wield
         bonuses[bonuses.length] = { 
             text: t,
             font: fontFamily, 
-            size: 12,
-            x: element.x, 
-            y: (index % 2) ? y3 : y2,
-            align: "right",
+            size: options.bonusSize,
+            x: x,
+            y: (index % 2) ? y1 : y0,
+            align: "left",
             color: color
         };
     }
 
     return labels.concat(bonuses);
 }
+*/
 
-function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align) {
-
+function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wieldingBonus) {
     var labels = [];
 
-    var fontSize = 12;
-    var font =  `${fontSize}px ${fontFamily}`;
-    var itemText = Build.itemToString(equip).toUpperCase();
-    var enhText = Build.itemEnhancementsToString(equip);
-    var lines = mergeImages.getLines(ctx, itemText, maxWidth, font);
-    var infoY = yInfo;
-    if (enhText != "") { // weapons
-        // var end = mergeImages.measureText(ctx, lines[lines.length-1], font).width;
-        // var start = xInfo + end + 2;
-        // log(`Enhance Text: start(${start}), end(${end})`);
-        var y2 = 212;
-        let fs2 = 10;
+    let x0 = options.xStart;
+    let y0 = options.yStart;
 
-        infoY = yInfo - 10;
-        if (lines.length > 2) {
-            fontSize = 10;
-            fs2 = 9;
-            y2 = 214;
-        }
-        var enl = mergeImages.getLines(ctx, enhText, maxWidth, font);
-        if (enl.length > 1) {
-            fs2 = 9;
-            y2 = 207;
+    let fs = options.fontSize;
+
+    
+    for (let index = 0; index < options.statOrder.length; index++) {
+        const key = options.statOrder[index];
+        const bonusKey = `${key}%`;
+
+        var posX = Math.floor(index / options.rows);
+        var posY = index % options.rows;
+                            
+        // log("pos[" + posX + "][" + posY + "]");
+                    
+        let x = x0 + (options.xSpace * posX);
+        let y = y0 + (options.ySpace * posY);
+        // log("Stat: ", key, " X: ", x, " Mod: ", posX);
+        // log("Stat: ", key, " Y: ", y, " Mod: ", posY);
+
+        let statValue = totalStats[key];
+        labels[labels.length] = { 
+            text: statValue,
+            font: mainStatFontFamily, 
+            size: fs, 
+            x: x, 
+            y: y, 
+            align: options.align,
+            strokeColor: statStroke
+        };
+
+        let l = mergeImages.measureText(ctx, statValue, `${fs}px ${mainStatFontFamily}`)
+        x = (options.align == "right") ? x : x + l.width;
+        // log("X: ", x, " L: ", l.width);
+        // log("Y: ", y, " Mod: ", index % 3);
+
+        var v = totalBonuses[bonusKey];
+        var t = "0";
+
+        var color = `255,255,255,1`;
+        if (v) {
+            color = `0,255,0,1`;
+            if (parseInt(v) > 400)
+                color = `255,0,0,1`;
+
+            t = `+${v}`;
         }
 
-        labels[labels.length] = {
-            text: enhText,
-            font: enhancementsFontFamily,
-            size: 10,
-            x: xInfo, //start,
-            y: y2,
-            align: align,
-            color: enhancementsColor,
-            strokeColor: enhancementsStroke,
-            maxWidth: maxWidth,
-            wrap: true
+        t = `${t}%`;
+        if (wieldingBonus && wieldingBonus[key]) {
+            var tdh = wieldingBonus[key];
+            // log(tdh)
+
+            labels[labels.length] = { 
+                text: `+${tdh}%`,
+                font: fontFamily, 
+                size: options.bonusSize,
+                x: x,
+                y: y,
+                align: "left",
+                color: `255,223,0,1`,
+                strokeColor: `125,125,125,0.5`
+            };
+
+            // log(bonuses[bonuses.length-1]);
+        }
+
+        labels[labels.length] = { 
+            text: t,
+            font: fontFamily, 
+            size: options.bonusSize,
+            x: x,
+            y: y - options.bonusSize,
+            align: "left",
+            color: color
         };
     }
-
-    if (lines.length > 3) {
-        fontSize = 10;
-        infoY = yInfo - 10;
-    }
-
-    labels[labels.length] = {
-        text: itemText,
-        font: textFontFamily,
-        size: fontSize,
-        x: xInfo,
-        y: infoY,
-        strokeColor: textStroke,
-        align: align,
-        maxWidth: maxWidth,
-        wrap: true
-    };
 
     return labels;
 }
 
-function getEquipment(itemImages, build) {
 
+
+
+
+
+
+function getCompactEquipment(equipOptions: equipmentOptions, build) {
+    
     var labels = [];
     var images = [];
 
-    var dimensions = 112;
-    var yspace = 100;
-    var yIcon = 135;
-    var yType = 154;
-    var yName = 170;
-    var yInfo = 195;
-    var maxWidth = 160;
+    var yName = equipOptions.yText;
+    var yType = equipOptions.yTop;
+    
+    var spacing = equipOptions.ySpacing;
+    var dimensions = equipOptions.dimension;
+
+    var maxWidth = equipOptions.maxWidth;
+
+    var align = equipOptions.align;
+
     for (let index = 0; index < 10; index++) {
-        const image = itemImages[index];
         const odd = index % 2;
         const equip = build.getEquipmentInSlot(index);
 
         // log(`Equipment in slot: ${index}`);
         // log(equip);
         
-        if (equip && image) {
-            // log(image)
-      
-            var xIcon = -6;
-            var xType = 106;
-            var xInfo = 105;
-            var xName = 125;
-            var align = "left";
+        if (!equip) {
             if (odd) {
-                xIcon = 606 - image.w;
-                xName = 475;
-                xType = 475;
-                xInfo = 488;
-                align = "right";
+                yType = yType + spacing;
+                yName = yName + spacing;
             }
-      
-            // Item name
-            labels[labels.length] = {
-                text: image.name.limitTo(25),
-                font: fontFamily,
-                size: 14,
-                x: xName,
-                y: yName,
-                align: align,
-                maxWidth: 155,
-                strokeColor: "255,255,255,1"
-            };
+            continue;    
+        }
+        
+        var xName = equipOptions.xCol1;
+        if (odd) {
+            xName = equipOptions.xCol2;
+        }
+    
+        // Item name
+        labels[labels.length] = {
+            text: equip.name.limitTo(25),
+            font: fontFamily,
+            size: equipOptions.fontSize,
+            x: xName,
+            y: yName,
+            align: align,
+            maxWidth: maxWidth,
+            wrap: true,
+            strokeColor: "255,255,255,1"
+        };
 
-            // type 
-            if (equip.type) {
-                images[images.length] = {
-                    src: `${imgCacheDir}equipment/${equip.type}.png`,
-                    x: xType,
-                    y: yType,
-                    w: 20,
-                    h: 20
-                }
-            }    
-            
-            // Item text
-            labels = labels.concat(getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align));
-
-            // Item image
+        // type 
+        if (equip.type) {
             images[images.length] = {
-                src: image.path,
-                x: xIcon,// + (xspace * (index % 2))),// - (image.w * 0.5),
-                y:  yIcon,// - (image.h * 0.5),
+                src: `${imgCacheDir}equipment/${equip.type}.png`,
+                x: xName - dimensions,
+                y: yType,
                 w: dimensions,
                 h: dimensions
             }
+        }    
 
-            // 2 handed
-            if (equip.special && equip.special.includes("twoHanded")) {
-                let hx = 72;
-                let hy = 150;
-                if (odd) hx = 600 - hx;
-                images[images.length] = {
-                    src: `${imgCacheDir}equipment/twoHanded.png`,
-                    x: hx,
-                    y: hy,
-                    w: 20,
-                    h: 20
-                }
-            }
+        if (odd) {
+            yType = yType + spacing;
+            yName = yName + spacing;
+        }
+    }
+
+    return {
+        labels: labels,
+        images: images
+    };
+}
+
+
+function getEquipment(options: equipmentOptions, firstSlotLeft: equipOptions, firstSlotRight: equipOptions, build) {
+
+    var labels = [];
+    var images = [];
+
+    var yspace = options.ySpacing;
+    var maxWidth = options.maxWidth;
+
+    var dimensions = firstSlotLeft.iconDim;
+    
+    var yIcon = firstSlotLeft.icon.y;
+    var yType = firstSlotLeft.name.y - 30;
+    var yName = firstSlotLeft.name.y;
+    var yInfo = firstSlotLeft.desc.y;
+
+    for (let index = 0; index < 10; index++) {
+        const odd = index % 2;
+        const equip = build.getEquipmentInSlot(index);
+        debug("Slot: ", index, "Equip: ", equip);
+
+        if (!equip)
+            continue;
+
+        var xIcon = firstSlotLeft.icon.x;
+        var xType = firstSlotLeft.name.x - 40;
+        var xInfo = firstSlotLeft.desc.x;
+        var xName = firstSlotLeft.name.x;
+        var align = "left";
+        if (odd) {
+            xIcon = firstSlotRight.icon.x;
+            xName = firstSlotRight.name.x;
+            xType = firstSlotRight.name.x;
+            xInfo = firstSlotRight.desc.x;
+            align = "right";
+        }
+    
+        // Item name
+        labels.push({
+            text: equip.name.limitTo(25),
+            font: fontFamily,
+            size: options.fontSize,
+            x: xName,
+            y: yName,
+            align: align,
+            maxWidth: 155,
+            strokeColor: "255,255,255,1"
+        });
+
+        // type 
+        if (equip.type) {
+            images.push({
+                src: `${imgCacheDir}equipment/${equip.type}.png`,
+                x: xType,
+                y: yType,
+                w: 40,
+                h: 40
+            });
+        }    
         
+        // Item text
+        labels = labels.concat(getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align));
+
+        // Item image
+        var path = `${imgCacheDir}items/${equip.icon}`;
+        images.push({
+            src: path,
+            x: xIcon,// + (xspace * (index % 2))),// - (image.w * 0.5),
+            y: yIcon,// - (image.h * 0.5),
+            w: dimensions,
+            h: dimensions
+        });
+
+        // 2 handed
+        if (equip.special && equip.special.includes("twoHanded")) {
+            let hx = ((odd) ? firstSlotLeft.icon.x : firstSlotRight.icon.x) + dimensions - 50;
+            let hy = ((odd) ? firstSlotLeft.icon.y : firstSlotRight.icon.y) - 50;
+            images.push({
+                src: `${imgCacheDir}equipment/twoHanded.png`,
+                x: hx,
+                y: hy,
+                w: 40,
+                h: 40
+            });
         }
 
         if (odd) {
@@ -588,326 +1206,51 @@ function getEquipment(itemImages, build) {
         images: images
     };
 }
+function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align) {
 
-function buildCompactImage(unit, imageOptions: UnitBox, build, callback) {
+    var labels: mergeImages.labelOptions[] = [];
 
-    let imageWidth = 1300;
-    let imageHeight = 336;
-
-    var buildTotal = build.getTotalStats();
-    var totalStats = buildTotal.stats;
-    var totalBonuses = buildTotal.bonuses;
-
-    var labels = [];
-    var images = [{
-        src: `${imgCacheDir}unit-overview-background.png`,
-        x: imageOptions.xStart,
-        y: imageOptions.yStart,
-        w: imageWidth,
-        h: imageHeight
-    }];
-    if (unit && unit.path && unit.path != "") {
-        let ui = {
-            src: unit.path,
-            x: imageOptions.xStart + 6,
-            y: imageOptions.yStart + 5,
-            w: unit.w*3,
-            h: unit.h*3
-        };
-        trace("Unit Image: ", ui);
-        images[images.length] = ui;
-        images[images.length] = {
-            src: `${imgCacheDir}unit-icon-frame.png`,
-            x: imageOptions.xStart + 6,
-            y: imageOptions.yStart + 5,
-            w: unit.w*3,
-            h: unit.h*3
-        };
-    }
-
-
-    let killerOptions = { // compact mode settings
-        xStart: imageOptions.xStart + 40,
-        yStart: imageOptions.yStart + 270,
-        dimensions: 50,
-        maxWide: 14, // max amount of icons that can fit horizontally
-        maxTall: 2, // max amount of icons that can fit vertically
-        fontSize: 32,
-        spacing: 0
-    }
-
-    if (totalStats.killers) {
-        var values = sortKillersByValue(totalStats.killers);
-        var killers = getKillers(killerOptions, values);
-        labels = labels.concat(killers.labels);
-        images = images.concat(killers.images);
-    }
-
-    // Add Ailment Resistances
-    let resistOptions = { // compact mode settings
-        xStart: imageOptions.xStart + 40,
-        yStart: imageOptions.yStart + 120,
-        dimensions: 50,
-        maxWide: 15, // max amount of icons that can fit horizontally
-        maxTall: 1, // max amount of icons that can fit vertically
-        fontSize: 32,
-        spacing: 100
-    };
-    var ailments = getResistsByValue(totalStats, Build.ailmentList);
-    var ailmentDisplay = getKillers(resistOptions, ailments);
-    labels = labels.concat(ailmentDisplay.labels);
-    images = images.concat(ailmentDisplay.images);
-
-    // Add Elemental Resistances
-    resistOptions.xStart = imageOptions.xStart + 65;
-    resistOptions.yStart = imageOptions.yStart + 200;
-    resistOptions.spacing = 50;
-    var elements = getResistsByValue(totalStats, Build.elementList);
-    var elementDisplay = getElementResistances(resistOptions, elements);
-    labels = labels.concat(elementDisplay);
-
-    // Add Esper
-    var esper = build.getEsperId();
-    var esperPath = `${imgCacheDir}espers/${esper}.png`;
-    trace(`Esper Path: ${esperPath}`);
-    if (esper && fs.existsSync(esperPath)) {
-        images[images.length] = {
-            src: esperPath,
-            x: imageWidth - 224,
-            y: 0,
-            w: 224,
-            h: 224
-        };
-    }
-
-    // Finish frame
-    images[images.length] = {
-        src: `${imgCacheDir}unit-overview-top-frame-short.png`,
-        x: 0,
-        y: 0,
-        w: imageWidth,
-        h: imageHeight
-    };
-
-    var saveLocation = `./tempbuilds/compact/${build.buildID}.png`;
-    finalizeImage(saveLocation, images, labels, imageWidth, imageHeight, callback);
-}
-
-function buildImage(unit, itemImages, build, callback) {
-
-    var buildTotal = build.getTotalStats();
-    var totalStats = buildTotal.stats;
-    var totalBonuses = buildTotal.bonuses;
-
-    // log("Total Stats");
-    // log(totalStats);
-
-    // log("Unit Image")
-    // log(unit)
-    var labels = [];
-    var images = [{
-        src: `${imgCacheDir}build-template.png`,
-        x: 0,
-        y: 0,
-        w: canvasWidth,
-        h: canvasHeight
-    }];
-    if (unit && unit.path && unit.path != "") {
-        let ui = {
-            src: unit.path,
-            x: 72 - ((unit.w)),//56 - (unit.w * 0.5),//6,//150 - ((unit.w * 2.5) / 2),
-            y: 104 - (unit.h*1.5),//42,//150 + ((unit.h * 2.5)),
-            w: unit.w*1.5,
-            h: unit.h*1.5
-        };
-        trace("Unit Image: ", ui);
-        images[images.length] = ui;
-    }
-
-    var esper = build.getEsperId();
-    var esperPath = `${imgCacheDir}espers/${esper}.png`;
-    trace(`Esper Path: ${esperPath}`);
-    if (esper && fs.existsSync(esperPath)) {
-        images[images.length] = {
-            src: esperPath,
-            x: 488,
-            y: 15,
-            w: 112,
-            h: 112
-        };
-    }
-
-    var wieldingBonus = null;
-    if (totalStats.singleWielding && build.isDoublehanding())
-        wieldingBonus = totalStats.singleWielding;
-    else if (totalStats.dualWielding && build.isDualWielding())
-        wieldingBonus = totalStats.dualWielding;
-
-    // Add main stats
-    let mainStats = {
-        xCol1: 230,
-        xCol2: 357,
-        xCol3: 488,
-        yMainRow1: 38,
-        yMainRow2: 76,
-        yStatBonus: 22,
-        yEquipBonus: 58,
-    };
-    labels = labels.concat(getMainStats(mainStats, totalStats, totalBonuses, wieldingBonus));
-
-    // Add Resistances
-    let resistOptions = {
-        xStart: 62,
-        yStart: 712,
-        dimensions: 772,
-        maxWide: 9,
-        maxTall: 1,
-        fontSize: 16,
-        spacing: 61
-    };
-    labels = labels.concat(getAilmentResistances(resistOptions, totalStats));
-    resistOptions.yStart = 772,
-    labels = labels.concat(getElementResistances(resistOptions, totalStats));
-
-    // Add equipment
-    var equips = getEquipment(itemImages, build);
-    labels = labels.concat(equips.labels);
-    images = images.concat(equips.images);
-
-    // Add killers
-    let killerOptions = { // Normal sheet settings
-        xStart: 112,
-        yStart: 84,
-        dimensions: 25,
-        maxWide: 15, // max amount of icons that can fit horizontally
-        maxTall: 2, // max amount of icons that can fit vertically
-        fontSize: 16,
-        spacing: 0
-    };
-    if (totalStats.killers) {
-        var values = sortKillersByValue(totalStats.killers);
-        var killers = getKillers(killerOptions, values);
-        labels = labels.concat(killers.labels);
-        images = images.concat(killers.images);
-    }
-
-    var saveLocation = `./tempbuilds/${build.buildID}.png`;
-    finalizeImage(saveLocation, images, labels, canvasWidth, canvasHeight, callback);
-}
-
-function finalizeImage(saveLocation: string, images: any[], labels: any[], cWidth, cHeight, callback) {
-
-    mergeImages.mergeImages(images, 
-        {
-            width: cWidth,
-            height: cHeight,
-            Canvas: Canvas,
-            text: labels
-        })
-    .then(b64 => {
-        var fs = require('fs');
-        var str = `${b64}`;
-        var regex = /^data:.+\/(.+);base64,(.*)$/;
+    var fontSize = 24;
+    var font =  `${fontSize}px ${fontFamily}`;
+    var itemText = Build.itemToString(equip).toUpperCase();
+    var enhText = Build.itemEnhancementsToString(equip);
+    // var lines = mergeImages.getLines(ctx, itemText, maxWidth, font);
+    var infoY = yInfo;
+    if (enhText != "") { // weapons
+        var y2 = 430;
         
-        var matches = str.match(regex);
-        var ext = matches[1];
-        var data = matches[2];
-        var buffer = Buffer.alloc(data.length, data, 'base64');
+        var lines = mergeImages.getLines(ctx, itemText + enhText, maxWidth, font);
+        if (lines.length > 3)
+            fontSize = 22;
 
-        fs.writeFileSync(saveLocation, buffer);
-
-        log(`Build Saved: ${saveLocation}`);
-        callback(saveLocation);
-    }).catch((e) =>{
-        console.error(e);
-        error("Failed to make image: ", e.message);
-    });
-}
-
-function downloadImages(slots, items, unitId, callback) {
-
-    var imageList = {};
-    // log(`initial images`);
-    // log(imageList);
-
-    var unit = null;
-    var count = items.length + 1;
-    var queryEnd = function(slot, id, image) {
-        count--;
-        
-        imageList[slot] = image;
-
-        if (count <= 0) {
-            // log(`Done downloading images`);
-            // log(imageList);
-
-            callback(unit, imageList);
-        }
-    }
-
-    var foundUnit = function(p) {
-        sizeOf(p, function (err, dimensions) {
-
-            unit = {
-                path: p,
-                w: dimensions.width,
-                h: dimensions.height
-            };
-
-            queryEnd(null, null, null);
-        });
-    }
-
-    unitId = unitId.replaceAll(" ", "_");
-    var filename = `unit_icon_${unitId}.png`;
-    var path = `${imgCacheDir}units/${filename}`;
-    if (fs.existsSync(path))
-        foundUnit(path);
-    else {
-        let source = `https://ffbeequip.com/img/units/${filename}`;
-        Download.downloadFile(path, source).then((p) =>{
-            log(`Image Donloaded: ${source}`);
-            foundUnit(p);
-        }).catch((e) => {
-            error(`Image Failed to Donload: ${source}`);
-            queryEnd(null, null, null);
-        });
-    }
-
-    slots.forEach(slot => {
-
-        var item = null;
-        for (let index = 0; index < items.length; index++) {
-            const element = items[index];
-            if (element.id === slot.id) {
-                item = element;
-                break;
-            }
-        }
-
-        if (!item)
-            return;
-        
-        var filename = `items/${item.icon}`;
-        var imagePath = imageEndpoint + filename;
-        var path = `${imgCacheDir}${filename}`;
-        var image = {
-            name: item.name,
-            path: path,
-            w: 112,
-            h: 112
+        labels[labels.length] = {
+            text: enhText,
+            font: enhancementsFontFamily,
+            size: fontSize,
+            x: xInfo,
+            y: y2,
+            align: align,
+            color: enhancementsColor,
+            strokeColor: enhancementsStroke,
+            maxWidth: maxWidth,
+            wrap: true,
+            anchorTop: false
         };
+    }
 
-        if (fs.existsSync(path)) {
-            queryEnd(slot.slot, item.id, image);
-        } else {
-            Download.downloadFile(path, imagePath).then((p) =>{
-                log(`Image Donloaded: ${p}`);
-                queryEnd(slot.slot, item.id, image);
-            }).catch(e => {
-                error(e);
-                queryEnd(slot.slot, item.id, image);
-            });
-        };
-    });
+    labels[labels.length] = {
+        text: itemText,
+        font: textFontFamily,
+        size: fontSize,
+        x: xInfo,
+        y: infoY,
+        color: null,
+        strokeColor: textStroke,
+        align: align,
+        maxWidth: maxWidth,
+        wrap: true,
+        anchorTop: true
+    };
+
+    return labels;
 }

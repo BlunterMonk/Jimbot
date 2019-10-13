@@ -160,7 +160,7 @@ class Item {
     lbFillRate: any;
 }
 
-class Build {
+export class Build {
     loadedItems: Item[]; // list of items loaded from data sheet
     loadedUnit: Unit; // unit information loaded from data sheet
 

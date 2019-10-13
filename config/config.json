@@ -172,7 +172,11 @@
 		"furcula": "dpt",
 		"jimoori": "jimooriview",
 		"jim": "jimooriview",
-		"guide": "whatis"
+		"guide": "whatis",
+		"c": "buildcompact",
+		"buildc": "buildcompact",
+		"bc": "buildcompact",
+		"bisc": "biscompact"
 	},
 	"shortcuts": {
 		"tips": {
