@@ -52,7 +52,7 @@
         },
         {
             "name": "Set Status",
-            "value": "- **?setstatus** \"*[status | parameter]\"*\nSet a short status for your profile. The status cannot exceed 64 characters.\n- example: **?setstatus \"Fighting Emperor SBB\"**"
+            "value": "- **?setstatus** \"*[status | parameter]\"*\nSet a short status for your profile. The status cannot exceed 128 characters.\n- example: **?setstatus \"Fighting Emperor SBB\"**"
         }
     ]
 }

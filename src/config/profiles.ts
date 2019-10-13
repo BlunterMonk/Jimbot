@@ -156,7 +156,7 @@ export class profile {
         if (!this.configuration[id])
             return;
 
-        status = status.limitTo(64);
+        status = status.limitTo(128);
 
         this.configuration[id].status = status;
         this.save()
