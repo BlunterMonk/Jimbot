@@ -4,9 +4,12 @@
 		"nickname": "wikami",
 		"builds": {
 			"regina_for_emperor": "https://ffbeequip.com/builder.html?server=gl#b1909bf0-ebf5-11e9-8f21-29aab363c1db",
-			"regina_for_demon_wall": "https://ffbeequip.com/builder.html?server=gl#db7c4330-ec7a-11e9-8f21-29aab363c1db"
+			"regina_for_demon_wall": "https://ffbeequip.com/builder.html?server=gl#db7c4330-ec7a-11e9-8f21-29aab363c1db",
+			"regina_base": "https://ffbeequip.com/builder.html?server=gl#6f232df0-ed94-11e9-8f21-29aab363c1db"
 		},
-		"friendcode": "301603908"
+		"friendcode": "301603908",
+		"status": "wikami here, my ign is noise, if you need a unit/build let me know",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#6f232df0-ed94-11e9-8f21-29aab363c1db"
 	},
 	"220659180623757312": {
 		"autobuild": false,
@@ -16,7 +19,8 @@
 			"faisalith": "https://ffbeequip.com/builder.html?server=gl#3a426a40-ecce-11e9-8f21-29aab363c1db",
 			"morgana": "https://ffbeequip.com/builder.html?server=gl#bf05d780-ecce-11e9-8f21-29aab363c1db",
 			"kayaka": "https://ffbeequip.com/builder.html?server=gl#d98a8f40-ecd0-11e9-8f21-29aab363c1db"
-		}
+		},
+		"status": "may the flames guide thee"
 	},
 	"97837550491664384": {
 		"autobuild": false,
@@ -65,7 +69,7 @@
 	"131139508421918721": {
 		"autobuild": false,
 		"friendcode": "311530529",
-		"nickname": "queen_banana",
+		"nickname": "queen_supreme_banana",
 		"builds": {
 			"f2p_galwuf": "https://ffbeequip.com/builder.html?server=gl#7fe07d70-ec9d-11e9-8f21-29aab363c1db",
 			"moon_squad": "https://ffbeequip.com/builder.html?server=gl#58d637d0-ed63-11e9-8f21-29aab363c1db"
@@ -79,7 +83,8 @@
 		"nickname": "sir_render",
 		"builds": {
 			"awful": "https://ffbeequip.com/builder.html?server=gl#943f23d0-ec9c-11e9-8f21-29aab363c1db"
-		}
+		},
+		"status": "dying"
 	},
 	"297441098060660739": {
 		"autobuild": false,
@@ -109,7 +114,8 @@
 			"kfinabulk": "https://ffbeequip.com/builder.html?server=gl#d47ed940-eca6-11e9-8f21-29aab363c1db",
 			"whythisoldmannotdying": "https://ffbeequip.com/builder.html?server=gl#eb688560-eca7-11e9-8f21-29aab363c1db",
 			"shinryuzenonoimbue": "https://ffbeequip.com/builder.html?server=gl#bf6247d0-ecac-11e9-8f21-29aab363c1db"
-		}
+		},
+		"status": "i identify myself as an h"
 	},
 	"275251634001674241": {
 		"autobuild": false,
@@ -127,7 +133,8 @@
 		"autobuild": false,
 		"friendcode": "",
 		"nickname": "desclipse",
-		"builds": {}
+		"builds": {},
+		"status": "if anyone needs me for anything ill just be slowly dying inside"
 	},
 	"270590245781766144": {
 		"autobuild": false,
@@ -145,6 +152,74 @@
 		"autobuild": false,
 		"friendcode": "",
 		"nickname": "",
+		"builds": {}
+	},
+	"349315950127874048": {
+		"autobuild": false,
+		"friendcode": "176679642",
+		"nickname": "marbros",
+		"status": "i am the bone of my sword ...\nsteel is my body and fire is my blood. unknown to\ndeath, nor known to life those hands will never\n...",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#2a970db0-edca-11e9-8f21-29aab363c1db",
+		"builds": {
+			"chow_vs_emperor": "https://ffbeequip.com/builder.html?server=gl#40db39c0-edc5-11e9-8f21-29aab363c1db"
+		}
+	},
+	"315621208777555968": {
+		"autobuild": true,
+		"friendcode": "285592847",
+		"nickname": "luminium",
+		"status": "doing absolutely nothing right now",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#b0029410-edc5-11e9-8f21-29aab363c1db",
+		"builds": {
+			"lightning_vs_emperor": "https://ffbeequip.com/builder.html?server=gl#319429b0-edc3-11e9-8f21-29aab363c1db"
+		}
+	},
+	"597197135217164308": {
+		"autobuild": true,
+		"friendcode": "924110837",
+		"nickname": "laisa",
+		"status": "<:kannaconfuse:621492068535238687> ",
+		"lead": null,
+		"builds": {}
+	},
+	"328018723158097920": {
+		"autobuild": false,
+		"friendcode": "666101275",
+		"nickname": "neo",
+		"status": "get ready, the show is about to begin!!",
+		"lead": null,
+		"builds": {}
+	},
+	"468997735090225163": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "Chivisuka",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"149857867279761408": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "windfoxie",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"416050581988179978": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "Pumpkin Spice",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"144503275486576641": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "Skyrazor",
+		"status": "randi > everything else",
+		"lead": null,
 		"builds": {}
 	}
 }
