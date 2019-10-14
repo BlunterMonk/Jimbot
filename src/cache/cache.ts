@@ -26,7 +26,7 @@ const rankingFile = 'data/rankings.json';
 const unitKeysJson = "data/unitkeys.json";
 const unitIDsJson = "data/unitid.json";
 
-export class Cache {
+export class cache {
     fullRankings: any;
     calculations: any;
     muspelCalculations: any;
@@ -364,4 +364,4 @@ function getUnitCalc(searchTerm: string, source: any) {
     return source[match];
 }
 
-export const cache = new Cache();
+export const Cache = new cache();

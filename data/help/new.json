@@ -3,7 +3,7 @@
     "fields": [
         {
             "name": "Register With Jimbot",
-            "value": "Jimbot has a new profiles feature. You can store FFBEEquip builds, status, and friend code. (More feautures coming soon?).\n\u200B\n__New Commands Include:__\n- **?friendcode** *[friend_code]*\n- **?nickname** *[nickname]*\n- **?setstatus** \"*[status | parameter]\"*\n- **?addbuild** *[build_name | parameter] [build_url | parameter]*\n- **?removebuild** *[build_name]*\n- **?setlead** *[build_name -or- build_url]*\n- **?enableautobuild**\n- **?disableautobuild**\n- **?profile** *[user_id | optional]*\n- **?friend** *[user_id | optional]*\n- **?userbuild** *[user_id | optional]* \"*[build_name | parameter]*\"\n- **?mybuild** *[build_name]*\n\u200B\n"
+            "value": "Jimbot has a new profiles feature. You can store FFBEEquip builds, status, and friend code. (More feautures coming soon?).\n\u200B\n__New Commands Include:__\n- **?register** *[friend_code]* *\"[nickname | parameter]\"*\n- **?profile** *[user_id | optional]*\n- **?setfriendcode** *[friend_code]*\n- **?setnickname** *[nickname]*\n- **?userbuild** *[user_id | optional]* \"*[build_name | parameter]*\"\n- **?mybuild** *[build_name]*\n- **?setstatus** \"*[status | parameter]\"*\n- **?addbuild** *[build_name | parameter] [build_url | parameter]*\n- **?removebuild** *[build_name]*\n- **?setlead** *[build_name -or- build_url]*\n- **?enableautobuild**\n- **?disableautobuild**\n\u200B\n"
         },
         {
             "name": "Compact Builds",

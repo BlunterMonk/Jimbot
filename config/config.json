@@ -183,7 +183,16 @@
 		"bisc": "biscompact",
 		"teamc": "team",
 		"mybuildc": "mybuildcompac",
-		"new": "whatsnew"
+		"ub": "userbuild",
+		"userbuildc": "userbuildcompact",
+		"ubc": "userbuildcompact",
+		"new": "whatsnew",
+		"friendcode": "setfriendcode",
+		"setcode": "setfriendcode",
+		"nickname": "setnickname",
+		"setname": "setnickname",
+		"code": "friend",
+		"status": "setstatus"
 	},
 	"shortcuts": {
 		"tips": {

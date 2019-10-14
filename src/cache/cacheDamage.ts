@@ -125,7 +125,7 @@ function authorize(credentials, forced, sourceID, saveLocation, callback, finish
 
             setTimeout(() => {
                 GetBuildLink(oAuth2Client, sourceID, index, range, queryEnd2);
-            }, timer * 1000);
+            }, timer * 1500);
 
             timer++;
             // sleep(1000)//sleep for 1 seconds

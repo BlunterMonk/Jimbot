@@ -8,7 +8,7 @@
 import "../util/string-extension.js";
 import * as gs from "../config/guild.js";
 import { log } from "../global.js";
-import { config } from "../config/config.js";
+import { Config } from "../config/config.js";
 
 ////////////////////////////////////////////////////////////
 
@@ -30,7 +30,7 @@ export function getSearchString(msg, replace = true) {
 
     if (replace == undefined || replace) { 
         var s = search;
-        var alias = config.getAlias(s.replaceAll(" ", "_"));
+        var alias = Config.getAlias(s.replaceAll(" ", "_"));
         if (alias) {
             log("Found Alias: " + alias);
             return alias.replaceAll(" ", "_");
@@ -41,6 +41,7 @@ export function getSearchString(msg, replace = true) {
     search = search.replaceAll(" ", "_");
     return search;
 }
+
 export function getCommandString(msg) {
     var split = regexCommand.exec(msg);
 
@@ -50,6 +51,7 @@ export function getCommandString(msg) {
 
     return split[0].capitalize();
 }
+
 function getParameters(msg) {
 
     var parameters = [];
@@ -118,7 +120,7 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
     //     }
     // }
 
-    const alias = config.getCommandAlias(command);
+    const alias = Config.getCommandAlias(command);
     if (alias) {
         command = alias.capitalize();
     }

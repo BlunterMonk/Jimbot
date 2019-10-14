@@ -4,13 +4,13 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
-import { config } from "./config/config.js";
 import "./util/string-extension.js";
 import * as Editor from "./editor/Edit.js";
 import * as Commands from "./commands/commands.js";
 import { log, logData, error } from "./global.js";
 import { Client } from "./discord.js";
-import { cache } from "./cache/cache.js";
+import { Config } from "./config/config.js";
+import { Cache } from "./cache/cache.js";
 import { handle } from "./commands/handles.js";
 
 ////////////////////////////////////////////////////////////
@@ -30,8 +30,8 @@ Client.init(() => {
     editor = new Editor.Edit();
     editor.init((msg, key, file) => {
         log("Response From Editor");
-        cache.reload();
-        config.reload();
+        Cache.reload();
+        Config.reload();
 
         Client.respondSuccess(msg, true);
 
