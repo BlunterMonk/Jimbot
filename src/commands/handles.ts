@@ -24,6 +24,7 @@ import { Builder } from "../ffbe/builder.js";
 import { FFBE } from "../ffbe/ffbewiki.js";
 import { unitSearch, unitSearchWithParameters } from "../ffbe/unit.js";
 import { downloadFile } from "../util/download.js";
+import { resolve } from "url";
 
 ////////////////////////////////////////////////////////////
 
@@ -477,28 +478,57 @@ function handleBuildhelp(receivedMessage) {
     Client.sendPrivateMessage(receivedMessage, embed);
 }
 
+// createBuildImage - returns the path for the build image
+function createBuildImage(build: Build.Build, isCompact: boolean): Promise<string> {
+
+    let cmpt = `${(isCompact) ? "compact/" : ""}`;
+    let imgPath = `./tempbuilds/${cmpt}${build.unitID}.png`;
+    if (fs.existsSync(imgPath)) {
+        return Promise.resolve(imgPath);
+    }
+
+    return BuildImage.BuildImage(imgPath, build, isCompact);
+}
+async function buildImageEmbed(url: string, unitIndex, calculation, isCompact: boolean): Promise<Discord.RichEmbed> {
+    return new Promise<Discord.RichEmbed>((resolve, reject) => {
+
+        var sendImg = function(p) {
+            const attachment = new Discord.Attachment(p, 'build.png');
+            var embed = new Discord.RichEmbed()
+                    .attachFile(attachment)
+                    .setColor(pinkHexCode)
+                    .setImage(`attachment://build.png`);
+                
+            if (calculation) {
+                var text = `**[${calculation.name.trim()}](${calculation.wiki})\n[(sheet)](${(calculation.source == "furcula") ? sheetURL : whaleSheet}) - [(wiki)](${calculation.wiki}) - [(build)](${calculation.url})**\n`;
+            
+                embed.setDescription(text);
+            }
+
+            resolve
+        }
+
+        Build.requestBuildData(url).then(response => {
+            var d = response.buildData;
+            
+            var ind = Math.max(unitIndex, d.units.length - 1);
+            var b = d.units[ind];
+            var build = Build.CreateBuild(response.id, response.region, b);
+            
+            createBuildImage(build, isCompact);
+            
+        }).catch(e => {
+            error(e);
+            reject(e);
+        });    
+    })
+}
 export async function build(receivedMessage, url, unitIndex, calculation, isCompact: boolean, force = false): Promise<string> {
 
     return new Promise<string>((resolve, reject) => {
 
         Build.requestBuildData(url).then(response => {
-            // log(data);
-            var d = JSON.parse(response.data);
-            if (!d || !d.units[0]) {
-                error("Could not parse build data");
-                reject("Could not parse build data");
-                return;
-            }      
-            
-            var ind = Math.max(unitIndex, d.units.length - 1);
-            var b = d.units[ind];
-            var build = Build.CreateBuild(response.id, response.region, b);
-            if (!build) {
-                Client.send(receivedMessage, "Sorry hun, something went wrong.");
-                error("Could not build image");
-                reject("Could not build unit");
-                return;
-            }
+
             var sendImg = function(p) {
                 const attachment = new Discord.Attachment(p, 'build.png');
                 var embed = new Discord.RichEmbed()
@@ -546,12 +576,7 @@ function handleTeam(receivedMessage, search, parameters) {
     }
 
     Build.requestBuildData(search).then(response => {
-
-        var d = JSON.parse(response.data);
-        if (!d || !d.units[0]) {
-            error("Could not parse build data");
-            return;
-        }
+        let d = response.buildData;
         
         var sendImg = function(p) {
             const attachment = new Discord.Attachment(p, 'build.png');
@@ -686,7 +711,7 @@ async function buildText(receivedMessage, url) {
 
     Build.requestBuildData(url).then(response => {
         // log(data);
-        var b = JSON.parse(response.data).units[0];
+        var b = response.buildData[0];
 
         var name = getUnitNameFromKey(b.id).toTitleCase(" ");
         var text = Build.getBuildText(response.id, response.region, b);
@@ -1744,12 +1769,6 @@ function handleProfile(receivedMessage, search, parameters) {
         if (leadURL) {
             embed.setDescription(text + "\u200B\n**__Lead:__**")
             Build.requestBuildData(leadURL).then(response => {
-                var d = JSON.parse(response.data);
-                if (!d || !d.units[0]) {
-                    error("Could not parse build data");
-                    Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
-                    return;
-                }
         
                 let imgPath = `./tempbuilds/compact/${response.id}.png`;
                 if (fs.existsSync(imgPath)) {
@@ -1759,7 +1778,7 @@ function handleProfile(receivedMessage, search, parameters) {
                     return;
                 }
 
-                var build = Build.CreateBuild(response.id, response.region, d.units[0]);
+                var build = Build.CreateBuild(response.id, response.region, response.buildData.units[0]);
                 if (!build) {
                     error("Could not build image");
                     sendMsg(embed);
@@ -1980,17 +1999,11 @@ function handleAddbuild(receivedMessage, search, parameters) {
     let url = parameters[1];
 
     Build.requestBuildData(url).then(response => {
-        var d = JSON.parse(response.data);
-        if (!d || !d.units[0]) {
-            error("Could not parse build data");
-            Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
-            return;
-        }
 
         Profiles.addBuild(id, name.replaceAll(" ", "_"), url);
         Client.send(receivedMessage, `OK, i'll remember that, ${name}`);
 
-        log("Stored New Build: ", name, " Unit: ", `(${d.id})`, " URL: ", url)
+        log("Stored New Build: ", name, " Unit: ", `(${response.buildData.id})`, " URL: ", url)
     }).catch(e => {
         error(e);
         Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
@@ -2124,12 +2137,7 @@ function handleSetlead(receivedMessage, search, parameters) {
     }
 
     Build.requestBuildData(url).then(response => {
-        var d = JSON.parse(response.data);
-        if (!d || !d.units[0]) {
-            error("Could not parse build data");
-            Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
-            return;
-        }
+        let d = response.buildData;
 
         Profiles.setLead(id, url);
 

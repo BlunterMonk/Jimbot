@@ -1202,7 +1202,7 @@ function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align) {
         
         var lines = mergeImages.getLines(ctx, itemText + enhText, maxWidth, font);
         if (lines.length > 3)
-            fontSize = 22;
+            fontSize = 18;
 
         labels[labels.length] = {
             text: enhText,
