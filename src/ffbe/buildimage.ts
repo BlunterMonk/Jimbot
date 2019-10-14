@@ -89,10 +89,20 @@ function downloadImages(slots, items, unitId): Promise<any>[] {
     return images;
 }
 
-export async function BuildImage(saveLocation: string, build: any, isCompact: boolean): Promise<string> {
-    
+export async function BuildImage(build: Build.Build, isCompact: boolean, destination?: string): Promise<string> {
+
+    let c = (isCompact) ? "compact/" : "";
+    let saveLocation = `./tempbuilds/${c}${build.buildID}.png`;
+    if (destination && !destination.empty()) {
+        saveLocation = destination;
+    } else if (fs.existsSync(saveLocation)) {
+        return Promise.resolve(saveLocation);
+    }
+
+    log("Building Image: ", saveLocation);
+    // log("Build: ", build);
+
     var equipped = build.getEquipment();
-    debug("Equipment: ", equipped);
 
     return new Promise<string>(async (resolve, reject) => {
         
@@ -115,8 +125,8 @@ export async function BuildImage(saveLocation: string, build: any, isCompact: bo
                 }).catch(reject);
             }
         }).catch(e => {
-            console.error(e);
-            error("Failed to download an image", e);
+            error("Failed to download an image: ", e);
+            reject("Failed to download an image");
         });
     });
 }
@@ -137,7 +147,7 @@ export async function BuildTeamImage(saveLocation: string, builds: Build.Build[]
         }
 
         log("Building Image: ", imgPath);
-        return BuildImage(imgPath, build, true);
+        return BuildImage(build, true, imgPath);
     });
 
     log("Finished Starting Builds List");
@@ -358,7 +368,7 @@ function finalizeImage(saveLocation: string, images: mergeImages.imageOptions[],
             resolve(saveLocation);
         }).catch((e) =>{
             error("Failed to make image: ", e.message);
-            reject(e.message);
+            reject("Failed to make image: " + e.message);
         });
     });
 }
@@ -479,7 +489,7 @@ function addEquipment(build: Build.Build) {
         ySpacing: 200,
         dimension: dim,
         maxWidth: 355,
-        fontSize: 32,
+        fontSize: 24,
         shrunkFontSize: 24,
         yText: 0, // unused
         align: "left" // unused
@@ -1109,8 +1119,15 @@ function getEquipment(options: equipmentOptions, firstSlotLeft: equipOptions, fi
         const equip = build.getEquipmentInSlot(index);
         debug("Slot: ", index, "Equip: ", equip);
 
-        if (!equip)
+        if (!equip) {
+            if (odd) {
+                yIcon = yIcon + yspace;
+                yType = yType + yspace;
+                yName = yName + yspace;
+                yInfo = yInfo + yspace;
+            }
             continue;
+        }
 
         var xIcon = firstSlotLeft.icon.x;
         var xType = firstSlotLeft.name.x - 40;
@@ -1191,7 +1208,7 @@ function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, align) {
 
     var labels: mergeImages.labelOptions[] = [];
 
-    var fontSize = 24;
+    var fontSize = 20;
     var font =  `${fontSize}px ${fontFamily}`;
     var itemText = Build.itemToString(equip).toUpperCase();
     var enhText = Build.itemEnhancementsToString(equip);

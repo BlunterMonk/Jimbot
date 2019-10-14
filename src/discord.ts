@@ -7,7 +7,7 @@
 import * as Discord from "discord.js";
 import * as gs from "./config/guild.js";
 import * as fs from "fs";
-import { config } from "./config/config.js";
+import { Config } from "./config/config.js";
 import { getCommandString, getSearchString } from "./commands/commands.js";
 import { log, debug, trace, error } from "./global.js";
 import { Profiles } from "./config/profiles.js";
@@ -21,6 +21,7 @@ class client {
     onMessageCallback: any;
     onPrivateMessageCallback: any;
     credentials: any;
+    embedColor: any;
     constructor() {
         this.guildSettings = {};
         this.botMessages = [];
@@ -45,6 +46,8 @@ class client {
 
         this.discordClient = new Discord.Client();
         this.discordClient.login(this.credentials.token);
+
+        this.embedColor = 0xffd1dc;
 
         this.on("message", this.onMessage.bind(this));
         this.on("messageDelete", this.onMessageDelete.bind(this));
@@ -119,12 +122,14 @@ class client {
         }
     }
     sendMessage(receivedMessage, embed, callback = null, error = null) {
+        embed.color = this.embedColor;
         this.send(receivedMessage, {embed: embed}, callback, error);
     }
     sendMessageWithAuthor(receivedMessage, embed, authorId, callback = null, error = null) {
         this.discordClient.fetchUser(authorId)
         .then(author => {
 
+            embed.color = this.embedColor;
             embed.author = {
                 name: author.username,
                 icon_url: author.avatarURL
@@ -176,6 +181,8 @@ class client {
         });
     }
     sendPrivateMessage(receivedMessage, embed, callback = null, error = null) {
+        embed.color = this.embedColor;
+
         receivedMessage.author
         .send({embed: embed})
         .then(message => {
@@ -380,7 +387,7 @@ class client {
     // HELPER
 
     isAuthorized(author): boolean {
-        return config.isIDAuthorized(author.id);
+        return Config.isIDAuthorized(author.id);
     }
 
 
@@ -413,7 +420,7 @@ class client {
             return s;
         }
         
-        return config.getShortcut(command);
+        return Config.getShortcut(command);
     }
     setShortcut(guildId: string, name: string, command: string) {
         return this.guildSettings[guildId].setShortcut(name, command);

@@ -13,7 +13,7 @@ import { log } from "../global.js";
 
 const filename = './data/profiles.json';
 
-interface userProfile {
+export interface UserProfile {
     autobuild: boolean;
     friendcode: string;
     nickname: string;
@@ -23,7 +23,7 @@ interface userProfile {
 }
 
 export class profile {
-    configuration: {[key: string]: userProfile};
+    configuration: {[key: string]: UserProfile};
     constructor() {
         this.init();
     }
@@ -40,7 +40,7 @@ export class profile {
     }
 
     // ALIASES
-    getProfile(id: string): userProfile {
+    getProfile(id: string): UserProfile {
         return this.configuration[id];
     }
     addProfile(id: string, code: string, name: string) {

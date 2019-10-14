@@ -49,7 +49,7 @@ String.prototype.similarity = function (s2) {
     );
 }
     
-String.prototype.toTitleCase = function (splitter) {
+String.prototype.toTitleCase = function (splitter?: string) {
     if (!splitter) {
         splitter = " ";
     }
@@ -59,16 +59,9 @@ String.prototype.toTitleCase = function (splitter) {
         else 
             return word;
     }).join(splitter);
-    /*
-    return this
-        .toLowerCase()
-        .split(splitter)
-        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(splitter);
-        */
 }
     
-String.prototype.capitalizeWords = function (splitter) {
+String.prototype.capitalizeWords = function (splitter?: string) {
     if (!splitter) {
         splitter = " ";
     }
@@ -78,13 +71,6 @@ String.prototype.capitalizeWords = function (splitter) {
         else 
             return word;
     }).join(splitter);
-    /*
-    return this
-        .toLowerCase()
-        .split(splitter)
-        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(splitter);
-        */
 }
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
