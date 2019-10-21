@@ -15,7 +15,7 @@ import "../util/string-extension.js";
 import * as Build from "../ffbe/build.js";
 import * as BuildImage from "../ffbe/buildimage.js";
 import * as Commands from "./commands.js";
-import { log, logData, error, escapeString, debug } from "../global.js";
+import { log, logData, error, escapeString, debug, logCommand } from "../global.js";
 import { Cache } from "../cache/cache.js";
 import { Config } from "../config/config.js";
 import { Profiles } from "../config/profiles.js";
@@ -42,11 +42,6 @@ const muspelURL = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg5
 const whaleSheet = "https://docs.google.com/spreadsheets/d/1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
 
 const jimooriUserID = "131139508421918721";
-const furculaUserID = "344500120827723777";
-const cottonUserID  = "324904806332497932";
-const muspelUserID  = "114545824989446149";
-const shadoUserID   = "103785126026043392";
-
 
 
 ////////////////////////////////////////////////////////////
@@ -214,6 +209,7 @@ function handleGrab(receivedMessage: Discord.Message, search: string, parameters
 export function handle(receivedMessage: Discord.Message, com: Commands.CommandObject): boolean {
     
     log("Handle Command Object: ", com);
+    logCommand(com);
 
     if (handleUnitQuery(receivedMessage, com.command, com.search)) {
         return;
@@ -232,7 +228,7 @@ export function handle(receivedMessage: Discord.Message, com: Commands.CommandOb
         try {
             eval(com.run);
         } catch (e) {
-            error("Command doesn't exist: ", com.command, " error: ", e);
+            error("Command doesn't exist: ", com.command, ", error: ", e);
             if (Client.validate(receivedMessage, "emote")) {
                 handleEmote(receivedMessage, com.command.toLowerCase());
             } else {

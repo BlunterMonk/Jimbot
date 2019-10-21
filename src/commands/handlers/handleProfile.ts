@@ -169,7 +169,7 @@ export function handleFriend(receivedMessage: Discord.Message, search: string, p
         return;
     }
     
-    log("Retrieving Friend Code For User: ", id, " Code: ", code);
+    log("Friend Code success: (", id, "), Code: ", code);
 
     Client.send(receivedMessage, `${code}`);
 }
@@ -181,8 +181,10 @@ export function handleUserbuild(receivedMessage: Discord.Message, search: string
         return;
     }
 
+    let username = receivedMessage.author.username;
     let id = receivedMessage.author.id;
     if (!parameters || parameters.length < 1) {
+        debug(`User Build cancelled: ${username}(${id}), No parameter`);
         Client.send(receivedMessage, "hmm, you didn't tell me which build to give you")
     }
 
@@ -201,7 +203,7 @@ export function handleUserbuild(receivedMessage: Discord.Message, search: string
     }
     let buildUrl = Profiles.getBuild(id, name);
     if (!buildUrl) {
-        error("No Build URL found with name: ", name, " For user: ", id);
+        debug(`User Build cancelled: ${username}(${id}), No Build URL found with name: ${name}`);
         return;
     }
 
@@ -209,27 +211,33 @@ export function handleUserbuild(receivedMessage: Discord.Message, search: string
 
     buildBuildImageEmbed(name, buildUrl, isCompact)
     .then(embed => {
+        log(`User Build success: ${username}(${id}), Build: ${buildUrl}`);
         Client.sendMessage(receivedMessage, embed);
     })
-    .catch(error);
+    .catch(e => {
+        log(`User Build failed: ${username}(${id}), Error: `, e);
+        Client.sendMessage(receivedMessage, "sorry, something went haywire in the mathamatification process");
+    });
 }
 
 export function handleUserbuildcompact(receivedMessage: Discord.Message, search: string, parameters: string[]) {
     handleUserbuild(receivedMessage, search, parameters, true)
 }
 
-export function handleMybuild(receivedMessage: Discord.Message, search: string, parameters: string[], isCompact: boolean = false) {
+export function handleMybuild(receivedMessage: Discord.Message, search: string, parameters: string[], isCompact: boolean) {
 
     if (search == "help") {
         handleProfilehelp(receivedMessage);
         return;
     }
-    let profile = Profiles.getProfile(receivedMessage.author.id);
+    let username = receivedMessage.author.username;
+    let id = receivedMessage.author.id;
+    let profile = Profiles.getProfile(id);
     if (!profile)
         return;
     var url = profile.builds[search];
     if (!url) {
-        error("Could not find build with name: ", search, " for user: ", receivedMessage.author.id);
+        debug(`Mybuild cancelled: ${username}(${id}), Could not find build with name: ${search}`);
         return;
     }
 
@@ -241,9 +249,9 @@ export function handleMybuild(receivedMessage: Discord.Message, search: string, 
         log("Parameter used for build: ", ind);
     }
 
-    buildBuildImageEmbed(search, url, false, ind)
+    buildBuildImageEmbed(search, url, isCompact, ind)
     .then(embed => {
-        log("Sent user build for: ", receivedMessage.author.id, " Build: ", search);
+        log(`Mybuild success: ${username}(${id}), Build: ${search}(${url})`);
         Client.sendMessage(receivedMessage, embed);
     })
     .catch(error);
@@ -280,8 +288,8 @@ export function handleMyteam(receivedMessage: Discord.Message, search: string, p
 
 export function handleRegister(receivedMessage: Discord.Message, search: string, parameters: string[]) {
 
+    let username = receivedMessage.author.username;
     let id = receivedMessage.author.id;
-    log("Register: ", id);
     if (Profiles.getProfile(id)) {
         Client.send(receivedMessage, "silly billy, you're already registered");
         return;
@@ -296,7 +304,7 @@ export function handleRegister(receivedMessage: Discord.Message, search: string,
             let n = parameters[0].toLowerCase().replaceAll(" ", "_");
             debug("Attempting to add nickname: ", n);
             if (Profiles.nicknameTaken(n)) {
-                log("Registration cancelled, Nickname in use: ", n);
+                error(`Register cancelled: ${username}(${id}), Nickname in use: `, n);
                 Client.send(receivedMessage, "seems like that nickname is already taken, try another ok?");
                 return;
             } else {
@@ -307,7 +315,7 @@ export function handleRegister(receivedMessage: Discord.Message, search: string,
         let c = parseInt(search);
         debug("Attempting to add friend code: ", c);
         if (search.length > 9 || Number.isNaN(c) || !search.isNumber()) {
-            log("Registration cancelled, friend code invalid: ", c);
+            error(`Register cancelled: ${username}(${id}), friend code invalid: `, c);
             Client.send(receivedMessage, "no can do boss, make sure you just send the numbers 'kay?");
             return;
         }
@@ -322,6 +330,7 @@ export function handleRegister(receivedMessage: Discord.Message, search: string,
             name = user.username;
         }
         
+        log(`Register success: ${username}(${id})`);
         Profiles.addProfile(id, code, name);
 
         var msg = welcomePhrases[getRandomInt(welcomePhrases.length)]
@@ -333,36 +342,45 @@ export function handleRegister(receivedMessage: Discord.Message, search: string,
 
 export function handleAddbuild(receivedMessage: Discord.Message, search: string, parameters: string[]) {
 
+    let username = receivedMessage.author.username;
     let id = receivedMessage.author.id;
     if (!Profiles.getProfile(id))
         return;
 
-    if (!parameters || parameters.length < 2) {
-        Client.send(receivedMessage, "sorry hun, you're missing some info")
+    if (!parameters || parameters.length < 1) {
+        debug(`Add Build cancelled: ${username}(${id}), not enough parameters: `);
+        Client.send(receivedMessage, "sorry hun, you're missing some info, follow this format ok?\n```\n?addbuild \"name\" \"url\"\n```");
     }
 
-    let name = parameters[0];
+    let name = parameters[0].trim();
     name = name.replace(/[^\w\s]/gi, '')
     if (name.length > 128) {
-        Client.send(receivedMessage, "stop stop stop, that name is way too long!")
+        debug(`Add Build cancelled: ${username}(${id}), name too long`);
+        Client.send(receivedMessage, "stop stop stop, that name is way too long!");
         return;
     }
-    let url = parameters[1];
+    let url = "";
+    if (search && !search.empty() && parameters.length < 2) {
+        url = search.trim();
+    } else {
+        url = parameters[1].trim();
+    }
 
     Build.requestBuildData(url).then(response => {
 
         Profiles.addBuild(id, name.replaceAll(" ", "_"), url);
         Client.send(receivedMessage, `OK, i'll remember that, ${name}`);
 
-        log("Stored New Build: ", name, " Unit: ", `(${response.buildData.id})`, " URL: ", url)
+        log(`Add Build success:  ${username}(${id}), Unit: (${response.buildData.id}), URL: ${url}`);
     }).catch(e => {
-        error(e);
-        Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
+        error(`Add Build failed: ${username}(${id}), Error: `, e);
+        Client.send(receivedMessage, "looks like the build you sent isn't quite right");
     });
 }
 
 export function handleRemovebuild(receivedMessage: Discord.Message, search: string, parameters: string[]) {
 
+    let username = receivedMessage.author.username;
     let id = receivedMessage.author.id;
     if (!Profiles.getProfile(id))
         return;
@@ -375,18 +393,19 @@ export function handleRemovebuild(receivedMessage: Discord.Message, search: stri
     let name = search.replaceAll(" ", "_")
     let removed = Profiles.removeBuild(id, name);
     if (removed) {
-        log("Removed Build: ", name, " From User: ", id);
+        log(`Remove Build success: ${username}(${id}), Build: ${search}`);
         Client.send(receivedMessage, `if you insist... *jimbot forgot "${search.replaceAll("_", " ").toTitleCase(" ")}"*`);
     } 
 }
 
 export function handleEnableautobuild(receivedMessage: Discord.Message, search: string, parameters: string[]) {
     
+    let username = receivedMessage.author.username;
     let id = receivedMessage.author.id;
     if (!Profiles.getProfile(id))
         return;
 
-    log("Enabling Auto Build For User: ", id);
+    log(`Enable Auto Build success: ${username}(${id})`);
     Profiles.setAutoBuild(id, true);
 
     Client.send(receivedMessage, "all set, auto build engage!");
@@ -394,18 +413,47 @@ export function handleEnableautobuild(receivedMessage: Discord.Message, search: 
 
 export function handleDisableautobuild(receivedMessage: Discord.Message, search: string, parameters: string[]) {
     
+    let username = receivedMessage.author.username;
     let id = receivedMessage.author.id;
     if (!Profiles.getProfile(id))
         return;
 
-    log("Enabling Auto Build For User: ", id);
+    log(`Disable Auto Build success: ${username}(${id})`);
     Profiles.setAutoBuild(id, false);
 
     Client.send(receivedMessage, "okay, no more auto builds...");
 }
 
+export function handleEnableprefercompact(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+    
+    let username = receivedMessage.author.username;
+    let id = receivedMessage.author.id;
+    if (!Profiles.getProfile(id))
+        return;
+
+    log(`Enable Prefer Compact success: ${username}(${id})`);
+    Profiles.setPreferCompact(id, true);
+
+    Client.send(receivedMessage, "okie dokie, your default auto builds will be compact!");
+}
+
+export function handleDisableprefercompact(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+    
+    let username = receivedMessage.author.username;
+    let id = receivedMessage.author.id;
+    if (!Profiles.getProfile(id))
+        return;
+
+    log(`Disable Prefer Compact success: ${username}(${id})`);
+    Profiles.setPreferCompact(id, false);
+
+    Client.send(receivedMessage, "okay, bigger is better right?");
+}
+
+
 export function handleSetfriendcode(receivedMessage: Discord.Message, search: string, parameters: string[]) {
     
+    let username = receivedMessage.author.username;
     let id = receivedMessage.author.id;
     if (!Profiles.getProfile(id))
         return;
@@ -418,11 +466,12 @@ export function handleSetfriendcode(receivedMessage: Discord.Message, search: st
     let code = parseInt(search);
     log("Attempting to add friend code: ", code);
     if (search.length > 9 || Number.isNaN(code) || !search.isNumber()) {
+        error(`Set Friendcode cancelled: ${username}(${id}), code invalid: `, search);
         Client.send(receivedMessage, "no can do boss, make sure you just send the numbers 'kay?");
         return;
     }
 
-    log("Added Friend Code For User: ", id, " Code: ", search);
+    log(`Set Friendcode success: ${username}(${id}), Code: ${search}`);
     Profiles.setFriendCode(id, search);
 
     Client.send(receivedMessage, "so exciting! I love making new friends!");
@@ -435,24 +484,30 @@ export function handleSetnickname(receivedMessage: Discord.Message, search: stri
         return;
     }
 
+    let username = receivedMessage.author.username;
     let id = receivedMessage.author.id;
     if (!Profiles.getProfile(id))
         return;
 
     search = search.trim();
     if (search.length > 64) {
+        debug(`Set Nickname cancelled: ${username}(${id}), name too long`);
         Client.send(receivedMessage, "that's way too long to be a name, no can do.")
         return;
     }
 
     if (Profiles.nicknameTaken(search)) {
+        debug(`Set Nickname cancelled: ${username}(${id}), name taken`);
         Client.send(receivedMessage, "that name is already taken, sorry!");
         return;
     }
 
     Profiles.saveNickname(id, search);
 
-    Client.send(receivedMessage, `Got it, ${search.replaceAll("_", " ").toTitleCase(" ")}!`);
+    let newName = search.replaceAll("_", " ").toTitleCase(" ");
+
+    log(`Set Nickname success: ${username}(${id}), Nickname: ${newName}`);
+    Client.send(receivedMessage, `Got it, ${newName}!`);
 }
 
 export function handleSetstatus(receivedMessage: Discord.Message, search: string, parameters: string[]) {
@@ -462,6 +517,7 @@ export function handleSetstatus(receivedMessage: Discord.Message, search: string
         return;
     }
 
+    let username = receivedMessage.author.username;
     let id = receivedMessage.author.id;
     let profile = Profiles.getProfile(id);
     if (!profile)
@@ -473,18 +529,25 @@ export function handleSetstatus(receivedMessage: Discord.Message, search: string
 
     let status = parameters[0];
 
+    log(`Set Status success: ${username}(${id}), Status: ${status}`);
     Profiles.setStatus(id, status);
+
     Client.send(receivedMessage, "Got it! Your profile has been updated");
 }
 
 export function handleSetlead(receivedMessage: Discord.Message, search: string, parameters: string[]) {
 
+    let uname = receivedMessage.author.username;
     let id = receivedMessage.author.id;
     let profile = Profiles.getProfile(id);
     if (!profile)
         return;
     if (!search || search.empty()) {
-        Client.send(receivedMessage, "you forgot to tell me which build");
+        if (parameters && parameters.length > 0) {
+            search = parameters[0];
+        } else {
+            Client.send(receivedMessage, "you forgot to tell me which build");
+        }
     }
 
     let url = search;
@@ -503,14 +566,15 @@ export function handleSetlead(receivedMessage: Discord.Message, search: string, 
 
         buildBuildImageEmbed(`${username}'s Lead`, url, true)
         .then(embed => {
-            log("Stored New Lead Build: ", " Unit: ", `(${d.id})`, " URL: ", url)
+            log(`Set Lead success: ${username}(${id}), Unit: (${d.id}), URL: ${url}`);
+
             Client.send(receivedMessage, `lookin good, I'm sure everyone will like it!`);
             Client.sendMessage(receivedMessage, embed);
         })
         .catch(error);
 
     }).catch(e => {
-        error(e);
+        error(`Set Lead failed: ${username}(${id}), Error: `, e);
         Client.send(receivedMessage, "sorry hun, looks like the build you sent isn't quite right")
     });
 }

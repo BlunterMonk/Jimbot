@@ -253,7 +253,7 @@ class client {
     // ON MESSAGE
     // Filter out messages and route them to the apporpriate place.
     // Also validate commands based on server settings and configuration for aliases.
-    onMessage(receivedMessage) {
+    onMessage(receivedMessage: Discord.Message) {
 
         // Prevent bot from responding to its own messages
         if (receivedMessage.author == this.discordClient.user) {
@@ -261,34 +261,15 @@ class client {
         }
 
         var contentPrefix : string = receivedMessage.content.charAt(0);
+        var oriContent : string = receivedMessage.content.slice(1, receivedMessage.content.length);
         var content : string = receivedMessage.content.toLowerCase().slice(1, receivedMessage.content.length);
-        /*
-        if (content.includes("ffbeequip.com") && this.validate(receivedMessage, "autobuild")) {
-            var URL = receivedMessage.content.match(/(https.*?(\s|$))/g)
-            log(URL);
-            if (URL) {
-                var url = URL[0].trim();
-                log(url);
-
-                this.onMessageCallback(receivedMessage, `build ${url}`);
-            }
-            return;
-        } else {
-            var command = getCommandString(content);
-            if (command == "build" || command == "bis") {
-                if (this.onMessageCallback)
-                    this.onMessageCallback(receivedMessage, content);
-            }
-            return;
-        }
-        */
 
         // Send private message results to authorized users
         if (!receivedMessage.guild) {
             if (this.isAuthorized(receivedMessage.author)) {
 
                 if (this.onPrivateMessageCallback)
-                    this.onPrivateMessageCallback(receivedMessage, content);
+                    this.onPrivateMessageCallback(receivedMessage, content, receivedMessage.author);
             }
             return;
         }
@@ -306,20 +287,10 @@ class client {
                     var url = URL[0].trim();
                     log("Beginning Autobuild: ", URL);
 
-                    this.onMessageCallback(receivedMessage, `build ${url}`);
+                    let c = (Profiles.getAutoBuild(receivedMessage.author.id)) ? "c" : "";
+                    this.onMessageCallback(receivedMessage, `build${c} ${url}`, receivedMessage.author, receivedMessage.guild);
                 }
                 return;
-            } else {
-
-                // Handle Reactions;
-                // let res = this.getResponse(guildId, receivedMessage.content);
-                // if (res) {
-                //     if (this.validate(receivedMessage, "response")) {
-                //         this.send(receivedMessage, res);
-                //     } else {
-                //         log(`Permission Denied, User: ${receivedMessage.author.id}, Command: ${command}`);
-                //     }
-                // }
             }
             
             return;
@@ -343,9 +314,9 @@ class client {
                 s = shortcut.search;
             }
 
-            content = `${shortcut.command} ${s} ${param}`;
+            oriContent = `${shortcut.command} ${s} ${param}`;
             log(`Replacing Shortcut with new command, shortcut: `, shortcut, " Content: ", content);
-            command = getCommandString(content);
+            command = shortcut.command;
         }
 
         // Validate the user 
@@ -356,8 +327,9 @@ class client {
 
         // Send results
         log(`Message Received From: ${receivedMessage.guild.name}, ${receivedMessage.author.username}`)
-        if (this.onMessageCallback)
-            this.onMessageCallback(receivedMessage, content);
+        if (this.onMessageCallback) {
+            this.onMessageCallback(receivedMessage, oriContent, receivedMessage.author, receivedMessage.guild);
+        }
     }
 
     // Delete bot generated messages if the user deleted their request

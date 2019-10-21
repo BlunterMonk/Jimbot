@@ -81,11 +81,9 @@ export class GuildSettings {
 
     getShortcut(name: string) {
         name = name.toLowerCase();
-        log(`Searching For Shortcut: ${name}`);
         if (!this.settings.shortcuts || !this.settings.shortcuts[name])
             return null;
             
-        log(`Found Shortcut: ${this.settings.shortcuts[name]}`);
         return this.settings.shortcuts[name];
     }
     setShortcut(name: string, command: string) {
@@ -121,7 +119,7 @@ export class GuildSettings {
         var filtered = this.settings.adminOnlyCommands.filter(r => r.toLowerCase() === command);
         var includes = this.settings.disabledCommands.includes(command);
         if (filtered.length > 0 || includes) {
-            log("Command is Admin only");
+            //log("Command is Admin only");
             return this.validateAdminRole(userRole);
         }
         return true;

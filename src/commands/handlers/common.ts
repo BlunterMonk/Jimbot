@@ -85,10 +85,10 @@ export function buildBuildImage(buildUrl: string, isCompact: boolean, unitIndex:
             unitIndex = Math.max(unitIndex, builds.length - 1);
             BuildImage.BuildImage(builds[unitIndex], isCompact)
             .then(p => {
-                    resolve(p);
-                })
-                .catch(reject);
-        }).catch(reject);
+                resolve(p);
+            })
+            .catch(reject);
+        }).catch(error);
     });
 }
 

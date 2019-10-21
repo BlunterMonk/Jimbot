@@ -7,8 +7,10 @@
 
 import "../util/string-extension.js";
 import * as gs from "../config/guild.js";
+import * as Discord from "discord.js";
 import { log } from "../global.js";
 import { Config } from "../config/config.js";
+import { auth } from "googleapis/build/src/apis/vault";
 
 ////////////////////////////////////////////////////////////
 
@@ -85,7 +87,10 @@ function convertCommand(command, content) {
 
 const aliasIgnoreList = [
     "dpt", "mybuild", "userbuild", "removealias"
-]
+];
+const textEntryCommands = [
+    "setnickname", "setstatus", "set"
+];
 
 export interface CommandObject {
     attachment: any;
@@ -93,14 +98,18 @@ export interface CommandObject {
     search: string;
     parameters: string[];
     run: string;
+    authorName: string;
+    authorID: string;
+    authorGuild: string;
+    authorGuildID: string;
+    timestamp: any;
 }
-export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSettings): CommandObject {
+export var getCommandObject = function(msg, attach, author: Discord.User, guild: Discord.Guild): CommandObject {
 
     var attachment = null;
-    var copy = msg.toLowerCase();
+    var copy = msg;
     if (attach) {
-        log("Message Attachments");
-        log(attach.url);
+        log("Message Attachments: ", attach.url);
         attachment = attach.url;
     }
 
@@ -108,6 +117,9 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
     var command = getCommandString(copy);
     if (!command || command.empty())
         return null;
+
+    if (!textEntryCommands.includes(command.toLowerCase()))
+        copy = copy.toLowerCase();
 
     // if (guildSettings) {
     //     var shortcut = guildSettings.getShortcut(command);
@@ -140,7 +152,9 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
     var parameters = params.parameters;
     
     // Get search string for command.
-    const search = getSearchString(copy, !aliasIgnoreList.includes(command.toLowerCase()));
+    var search = getSearchString(copy, !aliasIgnoreList.includes(command.toLowerCase()));
+    if (!search)
+        search = "";
     
     if (command.toLowerCase() === `addemo` && parameters.length === 0) {
         if (attachment) {
@@ -150,11 +164,23 @@ export var getCommandObject = function(msg, attach, guildSettings: gs.GuildSetti
 
     var run = "handle" + command + "(receivedMessage, search, parameters)";
 
+    var guildID = null;
+    var guildName = null;
+    if (guild) {
+        guildID = guild.id;
+        guildName = guild.name;
+    }
+
     return {
         attachment: attachment,
         command: command,
         search: search,
         parameters: parameters,
-        run: run
+        run: run,
+        authorID: author.id,
+        authorName: author.username,
+        authorGuild: guildName,
+        authorGuildID: guildID,
+        timestamp: Date.now()
     }
 }

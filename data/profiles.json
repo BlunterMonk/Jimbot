@@ -5,7 +5,8 @@
 		"builds": {
 			"regina_for_emperor": "https://ffbeequip.com/builder.html?server=gl#b1909bf0-ebf5-11e9-8f21-29aab363c1db",
 			"regina_for_demon_wall": "https://ffbeequip.com/builder.html?server=gl#db7c4330-ec7a-11e9-8f21-29aab363c1db",
-			"regina_base": "https://ffbeequip.com/builder.html?server=gl#6f232df0-ed94-11e9-8f21-29aab363c1db"
+			"regina_base": "https://ffbeequip.com/builder.html?server=gl#6f232df0-ed94-11e9-8f21-29aab363c1db",
+			"regina_for_moose": "https://ffbeequip.com/builder.html?server=gl#cb9705a0-ef5d-11e9-8f21-29aab363c1db"
 		},
 		"friendcode": "301603908",
 		"status": "wikami here, my ign is noise, if you need a unit/build let me know",
@@ -18,9 +19,11 @@
 		"builds": {
 			"faisalith": "https://ffbeequip.com/builder.html?server=gl#3a426a40-ecce-11e9-8f21-29aab363c1db",
 			"morgana": "https://ffbeequip.com/builder.html?server=gl#bf05d780-ecce-11e9-8f21-29aab363c1db",
-			"kayaka": "https://ffbeequip.com/builder.html?server=gl#d98a8f40-ecd0-11e9-8f21-29aab363c1db"
+			"kayaka": "https://ffbeequip.com/builder.html?server=gl#d98a8f40-ecd0-11e9-8f21-29aab363c1db",
+			"feener_and_boko": "https://ffbeequip.com/builder.html?server=gl#4900fb80-ef64-11e9-8f21-29aab363c1db"
 		},
-		"status": "may the flames guide thee"
+		"status": "may the flames guide thee",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#4900fb80-ef64-11e9-8f21-29aab363c1db"
 	},
 	"97837550491664384": {
 		"autobuild": false,
@@ -46,7 +49,9 @@
 		"friendcode": "722466530",
 		"builds": {
 			"cg_lightning_for_moose": "https://ffbeequip.com/builder.html?server=gl#3b8a7aa0-ecce-11e9-8f21-29aab363c1db"
-		}
+		},
+		"status": "heeya rayster here, the neus guy. thanks!",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#e82adc60-ef61-11e9-8f21-29aab363c1db"
 	},
 	"103785126026043392": {
 		"autobuild": false,
@@ -67,15 +72,18 @@
 		"builds": {}
 	},
 	"131139508421918721": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "311530529",
-		"nickname": "queen_supreme_banana",
+		"nickname": "queen_banana",
 		"builds": {
 			"f2p_galwuf": "https://ffbeequip.com/builder.html?server=gl#7fe07d70-ec9d-11e9-8f21-29aab363c1db",
-			"moon_squad": "https://ffbeequip.com/builder.html?server=gl#58d637d0-ed63-11e9-8f21-29aab363c1db"
+			"moon_squad": "https://ffbeequip.com/builder.html?server=gl#58d637d0-ed63-11e9-8f21-29aab363c1db",
+			"stolen_cid": "https://ffbeequip.com/builder.html?server=gl#3b0fe1b0-ef66-11e9-8f21-29aab363c1db",
+			"moose_killers": "https://ffbeequip.com/builder.html?server=gl#b89ebdd0-f0a2-11e9-8f21-29aab363c1db"
 		},
-		"status": "my banana milkshakes bring all the boys to the yard",
-		"lead": "https://ffbeequip.com/builder.html?server=gl#a18394f0-ed81-11e9-8f21-29aab363c1db"
+		"status": "Sorry I couldnt clear Moon, i was busy thinkin about boys",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#b89ebdd0-f0a2-11e9-8f21-29aab363c1db",
+		"compact": true
 	},
 	"210949383896694795": {
 		"autobuild": false,
@@ -98,7 +106,8 @@
 		"autobuild": false,
 		"friendcode": "133366562",
 		"nickname": "athenya",
-		"builds": {}
+		"builds": {},
+		"status": "EAT SHIT ASSHOLE FALL OFF YOUR HORSE"
 	},
 	"324904806332497932": {
 		"autobuild": false,
@@ -125,15 +134,21 @@
 	},
 	"236293298254381057": {
 		"autobuild": false,
-		"friendcode": "",
+		"friendcode": "298250846",
 		"nickname": "tentacles",
-		"builds": {}
+		"builds": {
+			"cid_on_moose": "https://ffbeequip.com/builder.html?server=gl#0301da30-ef61-11e9-8f21-29aab363c1db"
+		},
+		"status": "i love tentacles",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#f3b9ff70-ef61-11e9-8f21-29aab363c1db"
 	},
 	"350621713823825920": {
 		"autobuild": false,
-		"friendcode": "",
+		"friendcode": "69420",
 		"nickname": "desclipse",
-		"builds": {},
+		"builds": {
+			"33knopiratekanon": "https://ffbeequip.com/builder.html?server=gl#021126b0-ef63-11e9-8f21-29aab363c1db"
+		},
 		"status": "if anyone needs me for anything ill just be slowly dying inside"
 	},
 	"270590245781766144": {
@@ -146,12 +161,14 @@
 		"autobuild": false,
 		"friendcode": "396581499",
 		"nickname": "",
-		"builds": {}
+		"builds": {},
+		"lead": "https://ffbeequip.com/builder.html?server=gl#0a082450-ef62-11e9-8f21-29aab363c1db",
+		"status": "dont foget to do your daily pp mission!"
 	},
 	"297483915416043520": {
 		"autobuild": false,
-		"friendcode": "",
-		"nickname": "",
+		"friendcode": "784356609",
+		"nickname": "F2Pvegan",
 		"builds": {}
 	},
 	"349315950127874048": {
@@ -188,7 +205,10 @@
 		"nickname": "neo",
 		"status": "get ready, the show is about to begin!!",
 		"lead": null,
-		"builds": {}
+		"builds": {
+			"super_char": "https://ffbeequip.com/builder.html?server=gl#e27fae10-ef63-11e9-8f21-29aab363c1db",
+			"call_animal_control": "https://ffbeequip.com/builder.html?server=gl#3b0fe1b0-ef66-11e9-8f21-29aab363c1db"
+		}
 	},
 	"468997735090225163": {
 		"autobuild": false,
@@ -219,6 +239,162 @@
 		"friendcode": "",
 		"nickname": "Skyrazor",
 		"status": "randi > everything else",
+		"lead": null,
+		"builds": {}
+	},
+	"260513002367746049": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "Haltimer",
+		"status": "pro noob",
+		"lead": null,
+		"builds": {}
+	},
+	"368355945606021120": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "NexusRev",
+		"status": "2sxy4u",
+		"lead": null,
+		"builds": {}
+	},
+	"207344998495027201": {
+		"autobuild": false,
+		"friendcode": "442493582",
+		"nickname": "Will Box",
+		"status": "spoopy",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#63326a80-ef63-11e9-8f21-29aab363c1db",
+		"builds": {
+			"moose_on_cid": "https://ffbeequip.com/builder.html?server=gl#63326a80-ef63-11e9-8f21-29aab363c1db"
+		}
+	},
+	"180578908566061057": {
+		"autobuild": false,
+		"friendcode": "462831977",
+		"nickname": "Harrison Wells",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"288172441333792768": {
+		"autobuild": false,
+		"friendcode": "285803960",
+		"nickname": "rgxgamer",
+		"status": "2weeb4u",
+		"lead": null,
+		"builds": {}
+	},
+	"127870783744770048": {
+		"autobuild": false,
+		"friendcode": "562799475",
+		"nickname": "Laxaeus",
+		"status": "5 apron dresses and counting",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#f15b3170-ef6d-11e9-8f21-29aab363c1db",
+		"builds": {
+			"kill_da_moose": "https://ffbeequip.com/builder.html?server=gl#2ee341f0-ef6d-11e9-8f21-29aab363c1db"
+		}
+	},
+	"468731984034660352": {
+		"autobuild": false,
+		"friendcode": "137106787",
+		"nickname": "Loki123",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"522430782229315596": {
+		"autobuild": false,
+		"friendcode": "085310663",
+		"nickname": "aleister",
+		"status": "trabajo muy duro, como un esclavo 🎵",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#c3d0c730-f06a-11e9-8f21-29aab363c1db",
+		"builds": {
+			"tropical": "https://ffbeequip.com/builder.html?server=gl#c3d0c730-f06a-11e9-8f21-29aab363c1db"
+		}
+	},
+	"604305086188879872": {
+		"autobuild": false,
+		"friendcode": "979837011",
+		"nickname": "lloyd",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"501940960268386310": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "Daltania",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"563352427139563545": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "🔥◇Francisco◇🔥  (XFRANCOX)",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"333110981620269057": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "Unbane",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"528217281092780042": {
+		"autobuild": false,
+		"friendcode": "175036867",
+		"nickname": "Enraitsu",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"556578409929637892": {
+		"autobuild": false,
+		"friendcode": "",
+		"nickname": "loligoXD",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"346716524209504258": {
+		"autobuild": false,
+		"friendcode": "882193932",
+		"nickname": "carlos",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"277516779381587970": {
+		"autobuild": true,
+		"friendcode": "942217789",
+		"nickname": "whtfang",
+		"status": "escaping from shikishi hell.",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#99158210-f1e1-11e9-8f21-29aab363c1db",
+		"builds": {
+			"malph": "https://ffbeequip.com/builder.html?server=gl#99158210-f1e1-11e9-8f21-29aab363c1db"
+		}
+	},
+	"316654316377210880": {
+		"autobuild": false,
+		"friendcode": "285963004",
+		"nickname": "salien",
+		"status": "",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#39b36880-f1e3-11e9-8f21-29aab363c1db",
+		"builds": {
+			"cidmoose": "https://ffbeequip.com/builder.html?server=gl#39b36880-f1e3-11e9-8f21-29aab363c1db",
+			"reginaemperor": "https://ffbeequip.com/builder.html?server=gl#f5588f10-f1e4-11e9-8f21-29aab363c1db",
+			"alassdodge": "https://ffbeequip.com/builder.html?server=gl#8630f130-f1e5-11e9-8f21-29aab363c1db"
+		}
+	},
+	"341661855888179200": {
+		"autobuild": false,
+		"friendcode": "174435246",
+		"nickname": "winter",
+		"status": "",
 		"lead": null,
 		"builds": {}
 	}

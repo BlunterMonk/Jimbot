@@ -164,7 +164,7 @@ export async function handleBis(receivedMessage: Discord.Message, search: string
 }
 
 export async function handleBiscompact(receivedMessage: Discord.Message, search: string, parameters: string[]) {
-    handleBuild(receivedMessage, search, parameters, true);
+    handleBis(receivedMessage, search, parameters, true);
 }
 
 export async function handleBuildtext(receivedMessage: Discord.Message, search: string, parameters: string[]) {
@@ -243,6 +243,9 @@ export async function handleTeam(receivedMessage: Discord.Message, search: strin
         let team : Build.Build[] = d.units.map((buildData, index) => {
             return Build.CreateBuild(response.id, response.region, buildData);
         });
+        if (team.length > 5) {
+            team = team.slice(0, Math.min(5, team.length-1));
+        }
 
         BuildImage.BuildTeamImage(imgPath, team).then(sendImg).catch(e => {
             Client.send(receivedMessage, "Sorry hun, something went wrong.");
