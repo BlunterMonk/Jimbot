@@ -105,7 +105,7 @@ export async function BuildImage(saveLocation: string, build: any, isCompact: bo
                     yStart: 0
                 }
                 
-                buildCompactImage(saveLocation, compactCanvas, build).then((p) => {
+                buildSuperCompactImage(saveLocation, compactCanvas, build).then((p) => {
                     resolve(p);
                 }).catch(reject);
             } else {
@@ -248,6 +248,101 @@ function buildCompactImage(saveLocation: string, canvasOptions: CanvasOptions, b
     var labels : mergeImages.labelOptions[] = [];
     var images : mergeImages.imageOptions[] = [{
         src: `${imgCacheDir}unit-overview-background.png`,
+        x: canvasOptions.xStart,
+        y: canvasOptions.yStart,
+        w: imageWidth,
+        h: imageHeight
+    }];
+
+    // Add Unit Icon
+    images.push(addUnitIcon(build.unitID, 3, canvasOptions.xStart + 6, canvasOptions.yStart + 5));
+    images.push({
+        src: `${imgCacheDir}unit-icon-frame.png`,
+        x: canvasOptions.xStart + 6,
+        y: canvasOptions.yStart + 5,
+        w: 56*3,
+        h: 38*3
+    });
+
+    // Add main stats
+    labels = labels.concat(addCompactMainStats(totalStats, totalBonuses, wieldingBonus, canvasOptions));
+
+    // Add equipment
+    var equips = addCompactEquipment(build, canvasOptions);
+    labels = labels.concat(equips.labels);
+    images = images.concat(equips.images);
+
+    // Add Esper
+    var esper = build.getEsperId();
+    if (esper) {
+        labels[labels.length] = {
+            text: esper,
+            font: fontFamily,
+            size: 22,
+            x: canvasOptions.xStart + 1050,
+            y: canvasOptions.yStart + 300,
+            align: "left",
+            strokeColor: "255,255,255,1",
+            maxWidth: 200,
+            color: null,
+            anchorTop: false,
+            wrap: false
+        };
+    }
+
+    // Add killers
+    var killers = addCompactKillers(totalStats, canvasOptions);
+    labels = labels.concat(killers.labels);
+    images = images.concat(killers.images);
+
+    // Add Resistances
+    labels = labels.concat(addCompactResistances(totalStats, canvasOptions));
+
+    // Add Evade
+    if (totalStats.evade && totalStats.evade.physical) {
+        debug("Has Evade: ", totalStats.evade);
+        labels[labels.length] = {
+            text: `${totalStats.evade.physical}%`,
+            font: fontFamily,
+            size: 20,
+            x: canvasOptions.xStart + 55,
+            y: canvasOptions.yStart + 165,
+            align: "left",
+            strokeColor: "255,255,255,1",
+            maxWidth: null,
+            color: null,
+            anchorTop: false,
+            wrap: false
+        };
+    }
+
+    // Finish frame
+    images[images.length] = {
+        src: `${imgCacheDir}unit-overview-top-frame-short.png`,
+        x: canvasOptions.xStart,
+        y: canvasOptions.yStart,
+        w: imageWidth,
+        h: imageHeight
+    };
+
+    return finalizeImage(saveLocation, images, labels, imageWidth, imageHeight);
+}
+function buildSuperCompactImage(saveLocation: string, canvasOptions: CanvasOptions, build: Build.Build): Promise<string> {
+
+    let imageWidth = 850;
+    let imageHeight = 350;
+
+    var buildTotal = build.getTotalStats();
+    var totalStats = buildTotal.stats;
+    var totalBonuses = buildTotal.bonuses;
+    var wieldingBonus = getWieldBonus(totalBonuses, build);
+
+    debug("Build Compact Image: ", build.buildID);
+    trace("Total Stats: ", totalStats, " Total Bonuses: ", totalBonuses);
+
+    var labels : mergeImages.labelOptions[] = [];
+    var images : mergeImages.imageOptions[] = [{
+        src: `${imgCacheDir}template/unit-build-stats.png`,
         x: canvasOptions.xStart,
         y: canvasOptions.yStart,
         w: imageWidth,
