@@ -13,8 +13,9 @@ import { log } from "../global.js";
 
 const filename = './data/profiles.json';
 
-interface userProfile {
+export interface UserProfile {
     autobuild: boolean;
+    compact: boolean; // if set, auto builds will display in compact mode
     friendcode: string;
     nickname: string;
     status: string;
@@ -23,7 +24,7 @@ interface userProfile {
 }
 
 export class profile {
-    configuration: {[key: string]: userProfile};
+    configuration: {[key: string]: UserProfile};
     constructor() {
         this.init();
     }
@@ -40,12 +41,13 @@ export class profile {
     }
 
     // ALIASES
-    getProfile(id: string): userProfile {
+    getProfile(id: string): UserProfile {
         return this.configuration[id];
     }
     addProfile(id: string, code: string, name: string) {
         this.configuration[id] = {
             autobuild: false,
+            compact: false,
             friendcode: code,
             nickname: name,
             status: "",
@@ -69,14 +71,28 @@ export class profile {
 
         return this.configuration[id].autobuild;
     }
+    setPreferCompact(id: string, enable: boolean) {
+        if (!this.configuration[id])
+            return;
+
+        this.configuration[id].compact = enable;
+        this.save()
+    }
+    getPreferCompact(id: string): boolean {
+        if (!this.configuration[id])
+            return false;
+
+        return this.configuration[id].compact;
+    }
 
     getProfileID(nickname: string): string {
+        nickname = nickname.toLowerCase();
         var keys = Object.keys(this.configuration);
         for (let index = 0; index < keys.length; index++) {
             const key = keys[index];
             const user = this.configuration[key];
 
-            if (nickname == user.nickname) {
+            if (nickname == user.nickname.toLowerCase()) {
                 return key;
             }
         }
@@ -129,7 +145,7 @@ export class profile {
             const key = keys[index];
             const user = this.configuration[key];
 
-            if (name == user.nickname) {
+            if (name.toLowerCase() == user.nickname.toLowerCase()) {
                 return true;
             }
         }

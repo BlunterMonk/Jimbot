@@ -1352,6 +1352,12 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
     }
 }
 
+interface BuildResponse {
+    id: string;
+    region: string;
+    buildData: any;
+}
+
 export function getBuildID(buildURL: string) {
     let m = buildURL.match(/#(.*)/);
     if (!m || m.length == 0)
@@ -1364,7 +1370,7 @@ export function getBuildRegion(buildURL: string) {
         return null;
     return m[1];
 }
-export function requestBuildData(buildURL: string): Promise<any> {
+export function requestBuildData(buildURL: string): Promise<BuildResponse> {
 
     return new Promise<any>((resolve, reject) => {
     
@@ -1393,11 +1399,36 @@ export function requestBuildData(buildURL: string): Promise<any> {
                 }
 
                 log(`Build Found: (${region}) - ${id}`);
-                resolve({id: id, region: region, data: body});
+
+                var d = JSON.parse(body);
+                if (!d || !d.units[0]) {
+                    reject("Could not parse build data");
+                    return;
+                }
+
+                resolve({id: id, region: region, buildData: d});
             }
         );
     });
 }
+export async function CreateBuildsFromURL(buildURL: string): Promise<Build[]> {
+
+    let builds : Promise<Build>[] = null;
+    let buildData = null;
+    
+    await requestBuildData(buildURL)
+    .then((response) => {
+        builds = response.buildData.units.map(unitData => {
+            return CreateBuild(response.id, response.region, unitData);
+        });
+    })
+    .catch(e => {
+        error("Failed to create builds from URL: ", buildURL, " Error: ", e);
+    });
+
+    return Promise.all(builds);
+}
+
 export function getBuildText(id: string, region: string, buildData) {
 
     var build = CreateBuild(id, region, buildData);

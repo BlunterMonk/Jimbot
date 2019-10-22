@@ -57,7 +57,7 @@ function authorize(credentials, forced, sourceID, saveLocation, callback, finish
 
     // Add unit page info to data
     var queryEnd2 = function (wiki, url, rotation, index) {
-        log(`[${totalUnits}] ${index}: ${url}`)
+        //log(`[${totalUnits}] ${index}: ${url}`)
         totalUnits--;
 
         if (index) {
@@ -95,6 +95,7 @@ function authorize(credentials, forced, sourceID, saveLocation, callback, finish
 
         log("Unit Fields");
         log("Total: " + totalUnits);
+        log("Forced Update: ", forced);
 
         // Start getting unit pages
         var timer = 1;
@@ -106,7 +107,7 @@ function authorize(credentials, forced, sourceID, saveLocation, callback, finish
                 && units[key].burst == oldUnits[key].burst
                 && units[key].url == oldUnits[key].url) {
                     
-                log(`Skipping Unit: ${key}`);
+                //log(`Skipping Unit: ${key}`);
                 units[key] = oldUnits[key];
                 queryEnd2(null, null, null, null);
                 return;
@@ -125,7 +126,7 @@ function authorize(credentials, forced, sourceID, saveLocation, callback, finish
 
             setTimeout(() => {
                 GetBuildLink(oAuth2Client, sourceID, index, range, queryEnd2);
-            }, timer * 1000);
+            }, timer * 1500);
 
             timer++;
             // sleep(1000)//sleep for 1 seconds
@@ -225,7 +226,7 @@ function GetUnitComparison(auth, sourceID, range, callback) {
                 if (pName) {
                     if (!pName.includes("Unreleased")) {
                         phy[pName] = {
-                            name: pName,
+                            name: pName.trim(),
                             damage: row[2],
                             turns: row[3],
                             type: "physical",
@@ -240,7 +241,7 @@ function GetUnitComparison(auth, sourceID, range, callback) {
                 if (mName) {
                     if (!mName.includes("Unreleased")) {
                         mag[mName] = {
-                            name: mName,
+                            name: mName.trim(),
                             damage: row[7],
                             turns: row[8],
                             type: "magic",
@@ -255,7 +256,7 @@ function GetUnitComparison(auth, sourceID, range, callback) {
                 if (hName) {
                     if (!hName.includes("Unreleased")) {
                         hyb[hName] = {
-                            name: hName,
+                            name: hName.trim(),
                             damage: row[12],
                             turns: row[13],
                             type: "hybrid",

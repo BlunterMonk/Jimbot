@@ -4,8 +4,6 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
-import { log } from "../global.js";
-
 ////////////////////////////////////////////////////////////
 
 function editDistance(s1, s2) {
@@ -49,7 +47,7 @@ String.prototype.similarity = function (s2) {
     );
 }
     
-String.prototype.toTitleCase = function (splitter) {
+String.prototype.toTitleCase = function (splitter?: string) {
     if (!splitter) {
         splitter = " ";
     }
@@ -59,16 +57,9 @@ String.prototype.toTitleCase = function (splitter) {
         else 
             return word;
     }).join(splitter);
-    /*
-    return this
-        .toLowerCase()
-        .split(splitter)
-        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(splitter);
-        */
 }
     
-String.prototype.capitalizeWords = function (splitter) {
+String.prototype.capitalizeWords = function (splitter?: string) {
     if (!splitter) {
         splitter = " ";
     }
@@ -78,13 +69,6 @@ String.prototype.capitalizeWords = function (splitter) {
         else 
             return word;
     }).join(splitter);
-    /*
-    return this
-        .toLowerCase()
-        .split(splitter)
-        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(splitter);
-        */
 }
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
@@ -123,7 +107,6 @@ String.prototype.closestMatchIn = function (list: string[], threshold: number): 
 
         var txt = list[i].toLowerCase();
         var match = txt.similarity(search);
-        log(`Comparing: ${search} -vs- ${txt}, match: ${match}`);
         if (match >= threshold) {
             similar[similar.length] = {
                 txt: list[i],
@@ -136,15 +119,10 @@ String.prototype.closestMatchIn = function (list: string[], threshold: number): 
         }
     }
 
-    log("Similar Matches");
-    log(similar);
     if (similar.length > 0) {
         var highest = similar.sort((a, b) => {
             return b.similarity - a.similarity;
         })[0];
-
-        // log("Highest");
-        // log(highest);
 
         return highest.txt;
     }

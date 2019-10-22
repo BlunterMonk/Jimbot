@@ -1,9 +1,9 @@
 declare interface String {
     similarity (s2): any;
-    toTitleCase (splitter): string;
+    toTitleCase (splitter?: string): string;
     replaceAll (search, replacement): string;
     capitalize (): string
-    capitalizeWords (splitter): string
+    capitalizeWords (splitter?: string): string
     limitTo (limit): string;
     empty (): boolean;
     indexOfAfter (search, start): string;

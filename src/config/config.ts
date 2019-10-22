@@ -12,7 +12,7 @@ import "../util/string-extension.js";
 
 const filename = './config/config.json';
 
-export class Config {
+export class config {
     configuration: any;
     serverSettings: any;
     constructor() {
@@ -126,4 +126,4 @@ export class Config {
     }
 };
 
-export const config = new Config();
+export const Config = new config();

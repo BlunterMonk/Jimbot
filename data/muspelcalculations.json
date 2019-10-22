@@ -8,7 +8,7 @@
 	},
 	"Dark Knight Leon": {
 		"name": "Dark Knight Leon",
-		"damage": "14,046,981,149",
+		"damage": "13,846,095,241 ",
 		"turns": "8",
 		"type": "physical",
 		"url": null
@@ -114,6 +114,13 @@
 	"Wild Rose Firion": {
 		"name": "Wild Rose Firion",
 		"damage": "6,534,021,629 ",
+		"turns": "10",
+		"type": "physical",
+		"url": null
+	},
+	"Chocobo Fina": {
+		"name": "Chocobo Fina",
+		"damage": "6,302,687,645 ",
 		"turns": "10",
 		"type": "physical",
 		"url": null
@@ -552,6 +559,20 @@
 		"type": "magic",
 		"url": null
 	},
+	"Warrior of Light Krile": {
+		"name": "Warrior of Light Krile",
+		"damage": "8,714,044,612 ",
+		"turns": "10",
+		"type": "magic",
+		"url": null
+	},
+	"Dark Mage Exdeath": {
+		"name": "Dark Mage Exdeath",
+		"damage": "8,649,117,615 ",
+		"turns": "13",
+		"type": "magic",
+		"url": null
+	},
 	"Tsukiko": {
 		"name": "Tsukiko",
 		"damage": "8,607,745,691 ",
@@ -717,20 +738,6 @@
 		"name": "Immortal Flame Katy",
 		"damage": "626,607,910 ",
 		"turns": "1",
-		"type": "magic",
-		"url": null
-	},
-	"Dark Mage Exdeath": {
-		"name": "Dark Mage Exdeath",
-		"damage": "8,547,009,081 ",
-		"turns": "13",
-		"type": "magic",
-		"url": null
-	},
-	"Warrior of Light Krile": {
-		"name": "Warrior of Light Krile",
-		"damage": "8714044612",
-		"turns": "10",
 		"type": "magic",
 		"url": null
 	},

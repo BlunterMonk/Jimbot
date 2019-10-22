@@ -158,7 +158,13 @@
 		"swol": "ウォーリア オブ ライト",
 		"ultima": "high seraph ultima",
 		"decil": "dark knight cecil",
-		"dkc": "dark knight cecil"
+		"dkc": "dark knight cecil",
+		"krile_v2": "warrior of light krile",
+		"krilev2": "warrior of light krile",
+		"galuf_v2": "warrior of dawn galuf",
+		"tree": "dark mage exdeath",
+		"groot": "dark mage exdeath",
+		"barium_silicon_carbon_bismuth__technetium_hydrogen": "radiant lightning"
 	},
 	"filetypes": [
 		".jpg",
@@ -182,8 +188,16 @@
 		"buildc": "buildcompact",
 		"bisc": "biscompact",
 		"teamc": "team",
-		"mybuildc": "mybuildcompac",
-		"new": "whatsnew"
+		"mybuildc": "mybuildcompact",
+		"ub": "userbuild",
+		"userbuildc": "userbuildcompact",
+		"ubc": "userbuildcompact",
+		"new": "whatsnew",
+		"friendcode": "friend",
+		"setcode": "setfriendcode",
+		"nickname": "setnickname",
+		"setname": "setnickname",
+		"code": "friend"
 	},
 	"shortcuts": {
 		"tips": {

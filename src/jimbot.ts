@@ -4,13 +4,14 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
-import { config } from "./config/config.js";
 import "./util/string-extension.js";
 import * as Editor from "./editor/Edit.js";
 import * as Commands from "./commands/commands.js";
+import * as Discord from "discord.js";
 import { log, logData, error } from "./global.js";
 import { Client } from "./discord.js";
-import { cache } from "./cache/cache.js";
+import { Config } from "./config/config.js";
+import { Cache } from "./cache/cache.js";
 import { handle } from "./commands/handles.js";
 
 ////////////////////////////////////////////////////////////
@@ -30,12 +31,12 @@ Client.init(() => {
     editor = new Editor.Edit();
     editor.init((msg, key, file) => {
         log("Response From Editor");
-        cache.reload();
-        config.reload();
+        Cache.reload();
+        Config.reload();
 
         Client.respondSuccess(msg, true);
 
-        const com = Commands.getCommandObject(`whatis ${key}`, null, null);
+        const com = Commands.getCommandObject(`whatis ${key}`, null, msg.author, null);
         handle(msg, com);
     }, (msg) =>{
         log("Response From Editor");
@@ -48,7 +49,7 @@ Client.init(() => {
     Client.setPrivateMessageCallback(onPrivateMessage.bind(this));
 });
 
-function onPrivateMessage(receivedMessage, content) {
+function onPrivateMessage(receivedMessage, content, author: Discord.User) {
 
     var id = receivedMessage.author.id;
     
@@ -63,7 +64,7 @@ function onPrivateMessage(receivedMessage, content) {
     
     log("Settings Change Allowed");
 
-    const com = Commands.getCommandObject(content, null, null);
+    const com = Commands.getCommandObject(content, null, author, null);
     logData("Command Obect", com);
 
     const command = com.command;
@@ -93,7 +94,7 @@ function onPrivateMessage(receivedMessage, content) {
         Client.respondFailure(receivedMessage, true);
     }
 }
-function onMessage(receivedMessage, content) {
+function onMessage(receivedMessage, content, author: Discord.User, guild: Discord.Guild) {
     
     const guildId = receivedMessage.guild.id;
 
@@ -103,7 +104,7 @@ function onMessage(receivedMessage, content) {
     }
 
     // Get command information
-    var com = Commands.getCommandObject(content, attachment, Client.guildSettings[guildId]);
+    var com = Commands.getCommandObject(content, attachment, author, guild);
     if (!com) {
         return;
     }

@@ -18,6 +18,85 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20191017
+|type  = Other
+|title = Select Exchange Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191018SelectExchangeSummon1.html
+}}
+{{Recent News
+|date  = 20191017
+|type  = Other
+|title = 40M DL Celebration Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019101740MDLCelebrationSummon.html
+}}
+{{Recent News
+|date  = 20191017
+|type  = Other
+|title = Exchange Shop (40M DL Celebration)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019101740MDLExchangeShop.html
+}}
+{{Recent News
+|date  = 20191017
+|type  = Other
+|title = 40M DL Mountain of Treasure 1 and 2!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2019101440MDLMountainofTreasures.html
+}}
+{{Recent News
+|date  = 20191017
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191017PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20191016
+|type  = Other
+|title = Half Energy
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191015TrialChamberHalfEnergyCampaign.html
+}}
+{{Recent News
+|date  = 20191015
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191015ChocoboFinaGacha.jpg
+}}
+{{Recent News
+|date  = 20191015
+|type  = Event
+|title = Holiday Road
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191015TrialMarathonHolidayRoad.jpg
+}}
+{{Recent News
+|date  = 20191015
+|type  = Event
+|title = Fork Tower - Black Tower
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191015FFVForkTowerBlackTower.jpg
+}}
+{{Recent News
+|date  = 20191015
+|type  = Event
+|title = Steel Castle Melfikya
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191017WeaponEnhancement.html
+}}
+{{Recent News
+|date  = 20191015
+|type  = Trial
+|title = Scorn of the Legendary Stag
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191015ScornoftheLegendaryStag.jpg
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20191015
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191017Maintenance.html
+}}
+{{Recent News
+|date  = 20191011
+|type  = Issue
+|title = Update to event start/end dates
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191011AnnouncementonReleaseDates.html
+}}
+{{Recent News
 |date  = 20191010
 |type  = Other
 |title = FINAL FANTASY BRAVE EXVIUS x KINGDOM HEARTS Union χ (Update)
@@ -77,7 +156,6 @@
 |title = Maintenance
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191009Maintenance.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20191004
 |type  = Other

@@ -202,8 +202,8 @@
 			""
 		]
 	},
-	"Dark Knight Leon": {
-		"name": "Dark Knight Leon",
+	"Dark Knight Leon (pending)": {
+		"name": "Dark Knight Leon (pending)",
 		"damage": "12,749,284,061",
 		"turns": "8",
 		"type": "physical",
@@ -543,6 +543,35 @@
 			"",
 			"",
 			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"Chocobo Fina (pending)": {
+		"name": "Chocobo Fina (pending)",
+		"damage": "8,783,947,481",
+		"turns": "11",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#c80c1100-f098-11e9-8f21-29aab363c1db",
+		"jp": false,
+		"burst": "13,184,884,557",
+		"burstTurn": "4",
+		"wiki": "https://exvius.gamepedia.com/Fina_%26_Chocobo/JP",
+		"rotation": [
+			"Limit Ray x 2",
+			"Chocobo Fever! II (CD) + Spiratual Meditation",
+			"ChocoMeteor (LB)",
+			"Super Choco Dash x 3",
+			"Spiratual Meditation + Super Choco Dash x 2",
+			"Super Choco Dash x 3",
+			"ChocoMeteor (LB)",
+			"Spiritual Meditation + Super Choco Dash + Choco Reraise (CD)",
+			"Super Choco Dash x 3",
+			"Super Choco Dash x 3",
+			"ChocoMeteor (LB)",
 			"",
 			"",
 			"",
@@ -1802,8 +1831,29 @@
 		"damage": "18,124,794,338",
 		"turns": "12",
 		"type": "physical",
-		"url": "",
-		"jp": true
+		"url": "https://ffbeEquip.com/builder.html?server=JP#bf6409c0-cb74-11e9-a7ee-83d283e1de8e",
+		"jp": true,
+		"burst": "37,480,727,626",
+		"burstTurn": "4",
+		"wiki": "https://exvius.gamepedia.com/Onion_Knight_(CG)/JP",
+		"rotation": [
+			"ジョブチェンジアタック (LB)       ",
+			"ウォータスライス + ウォータシュレッダー        ",
+			"したごしらえ (CD) + 水の熟練技        ",
+			"ウォータシュレッダー   x 3",
+			"ウォータシュレッダー   x 3",
+			"ウォータスライス +  オニオンディセクト (CD)       ",
+			"ジョブチェンジアタック (LB)  ",
+			"ウォータスライス + ウォータシュレッダー        ",
+			"したごしらえ (CD) + 水の熟練技        ",
+			"ウォータシュレッダー   x 3",
+			"ウォータシュレッダー   x 3",
+			"ウォータスライス + ウォータシュレッダー        ",
+			"",
+			"",
+			"",
+			""
+		]
 	},
 	"CG Rain (JP)": {
 		"name": "CG Rain (JP)",
@@ -1987,35 +2037,6 @@
 			""
 		]
 	},
-	"Fina & Chocobo (JP)": {
-		"name": "Fina & Chocobo (JP)",
-		"damage": "8,749,290,358",
-		"turns": "11",
-		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#b91d7b40-cb75-11e9-a7ee-83d283e1de8e",
-		"jp": true,
-		"burst": "13,132,407,457",
-		"burstTurn": "4",
-		"wiki": "https://exvius.gamepedia.com/Fina_%26_Chocobo/JP",
-		"rotation": [
-			"リミットレイ x 2",
-			"チョコボフィーバー！ (CD) + メディテーション",
-			"チョコメテオ (LB)",
-			"スーパーチョコダッシュ x 3       ",
-			"メディテーション + スーパーチョコダッシュ x 2       ",
-			"スーパーチョコダッシュ x 3       ",
-			"チョコメテオ (LB)",
-			"メディテーション + スーパーチョコダッシュ x 2       ",
-			"スーパーチョコダッシュ x 3       ",
-			"スーパーチョコダッシュ x 3       ",
-			"チョコメテオ (LB)",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
 	"Lid & Jake (finisher, JP)": {
 		"name": "Lid & Jake (finisher, JP)",
 		"damage": "7,205,392,026",
@@ -2113,44 +2134,15 @@
 			""
 		]
 	},
-	"Veronica (spark chain)": {
-		"name": "Veronica (spark chain)",
-		"damage": "12,728,099,086",
-		"turns": "18",
-		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#0241ba40-e186-11e9-b677-3b8586bd2e6d",
-		"jp": false,
-		"burst": "22,205,557,465",
-		"burstTurn": "6",
-		"wiki": "https://exvius.gamepedia.com/Veronica",
-		"rotation": [
-			"Echo Aura (CD) + Kaboomle",
-			"Kaboomle x 3",
-			"Kaboomle x 3",
-			"Ring of Wrack and Ruin (CD) + Kaboomle",
-			"Mighty Magic Burst (LB)",
-			"Magic Burst x 3",
-			"Echo Aura (CD) + Magic Burst",
-			"Magic Burst x 3",
-			"Magic Burst x 3",
-			"Magic Burst x 3",
-			"Ring of Wrack and Ruin (CD) + Magic Burst x 2",
-			"Mighty Magic Burst (LB)",
-			"Echo Aura (CD) + Magic Burst x 2",
-			"Magic Burst x 3",
-			"Magic Burst x 3",
-			"Magic Burst x 3"
-		]
-	},
 	"Mordegon": {
 		"name": "Mordegon",
-		"damage": "11,761,076,924",
+		"damage": "12,260,199,863",
 		"turns": "15",
 		"type": "magic",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#53a24950-ec89-11e9-8f21-29aab363c1db",
 		"jp": false,
-		"burst": "17,461,224,927",
-		"burstTurn": "9",
+		"burst": "17,610,825,100",
+		"burstTurn": "13",
 		"wiki": "https://exvius.gamepedia.com/Mordegon",
 		"rotation": [
 			"Uncanny Strength + Winter's Might (CD) + Cold Cloud",
@@ -2169,6 +2161,35 @@
 			"Freeze Out x 3",
 			"Freeze Out x 3",
 			""
+		]
+	},
+	"Veronica (spark chain)": {
+		"name": "Veronica (spark chain)",
+		"damage": "12,259,310,454",
+		"turns": "18",
+		"type": "magic",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#0241ba40-e186-11e9-b677-3b8586bd2e6d",
+		"jp": false,
+		"burst": "23,105,154,964",
+		"burstTurn": "14",
+		"wiki": "https://exvius.gamepedia.com/Veronica",
+		"rotation": [
+			"Echo Aura (CD) + Kaboomle",
+			"Kaboomle x 3",
+			"Kaboomle x 3",
+			"Ring of Wrack and Ruin (CD) + Kaboomle",
+			"Mighty Magic Burst (LB)",
+			"Magic Burst x 3",
+			"Echo Aura (CD) + Magic Burst",
+			"Magic Burst x 3",
+			"Magic Burst x 3",
+			"Magic Burst x 3",
+			"Ring of Wrack and Ruin (CD) + Magic Burst x 2",
+			"Mighty Magic Burst (LB)",
+			"Echo Aura (CD) + Magic Burst x 2",
+			"Magic Burst x 3",
+			"Magic Burst x 3",
+			"Magic Burst x 3"
 		]
 	},
 	"Sol": {
@@ -2229,12 +2250,12 @@
 			"Snow Burial + Piercing Chill x 3"
 		]
 	},
-	"Dark Mage Exdeath (pending)": {
-		"name": "Dark Mage Exdeath (pending)",
+	"Dark Mage Exdeath": {
+		"name": "Dark Mage Exdeath",
 		"damage": "8,996,867,442",
 		"turns": "13",
 		"type": "magic",
-		"url": "https://ffbeequip.com/builder.html?server=GL#0c66f110-eb1e-11e9-b677-3b8586bd2e6d",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#32f529f0-f0dc-11e9-8f21-29aab363c1db",
 		"jp": false,
 		"burst": "13,497,458,737",
 		"burstTurn": "5",
@@ -2258,12 +2279,12 @@
 			""
 		]
 	},
-	"Warrior of Light Krile (pending)": {
-		"name": "Warrior of Light Krile (pending)",
+	"Warrior of Light Krile": {
+		"name": "Warrior of Light Krile",
 		"damage": "8,987,270,479",
 		"turns": "10",
 		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#e0f5c790-eb22-11e9-b677-3b8586bd2e6d",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#8f817c50-f0dc-11e9-8f21-29aab363c1db",
 		"jp": false,
 		"burst": "10,773,487,560",
 		"burstTurn": "3",

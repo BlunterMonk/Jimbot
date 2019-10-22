@@ -49,17 +49,9 @@ export function error(...data: any[]) {
         }
     });
 }
-// export function logDataArray(msg: string, data: any[]) {
-//     if (data.length == 0) {
-//         return log("[]");
-//     }
-//     let t = msg + "[\n";
-//     data.forEach((v,i) => {
-//         t += `  ${i}: ${JSON.stringify(v)}\n`;
-//     });
-//     t += "]";
-//     log(t);
-// }
+export function logCommand(data: any) {
+    log(data);
+}
 export function checkString(text: string, keyword: RegExp): boolean {
     // log(`${keyword}.test(${text.replace(/\s*/g,"")})`);
     // log(`${keyword.test(text.replace(/\s*/g,""))}`);
