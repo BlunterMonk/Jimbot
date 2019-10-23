@@ -1,0 +1,77 @@
+{
+    "canvasWidth": 850,
+    "canvasHeight": 1450,
+    "mainStatOptions": {
+        "xStart": 280,
+        "xSpace": 300,
+        "yStart": 55,
+        "ySpace": 50,
+        "statOrder": [ "hp",  "atk", "def", "mp",  "mag", "spr" ],
+        "rows": 3,
+        "fontSize": 40,
+        "bonusSize": 20,
+        "align": "left"
+    },
+    "killerOptions": {
+        "xStart": 20,
+        "yStart": 270,
+        "dimensions": 50,
+        "maxWide": 14,
+        "maxTall": 1,
+        "fontSize": 18,
+        "distance": 1,
+        "spacing": 0,
+        "align": "left"
+    },
+    "elementOptions": {
+        "xStart": 55,
+        "yStart": 260,
+        "dimensions": 50,
+        "maxWide": 15,
+        "maxTall": 1,
+        "fontSize": 20,
+        "distance": 1,
+        "spacing": 100,
+        "align": "left"
+    },
+    "ailmentOptions": {
+        "xStart": 55,
+        "yStart": 210,
+        "dimensions": 50,
+        "maxWide": 15,
+        "maxTall": 1,
+        "fontSize": 20,
+        "distance": 1,
+        "spacing": 100,
+        "align": "left"
+    },
+    "equipmentOptions": {
+        "equipOptions": {
+            "iconDimension": 112,
+            "ySpacing": 220,
+            "maxWidth": 260,
+            "fontSize": 20,
+            "shrunkFontSize": 19
+        },
+        "firstSlotLeft": {
+            "icon": {"x": 12, "y": 375},
+            "type": {"x": 350, "y": 370},
+            "name": {"x": 230, "y": 407},
+            "desc": {"x": 125, "y": 425},
+            "desMaxWidth": 380,
+            "fontSize": 24,
+            "shrunkFontSize": 18,
+            "align": "left"
+        },
+        "firstSlotRight": {
+            "icon": {"x": 720, "y": 375},
+            "type": {"x": 450, "y": 370},
+            "name": {"x": 620, "y": 402},
+            "desc": {"x": 725, "y": 425},
+            "desMaxWidth": 380,
+            "fontSize": 24,
+            "shrunkFontSize": 18,
+            "align": "right"
+        }
+    }
+}

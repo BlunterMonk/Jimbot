@@ -47,6 +47,7 @@ export interface imageOptions {
 	h: number; // image heigt
 }
 
+type CanvasTextAlign = "start" | "end" | "left" | "right" | "center";
 interface label {
 	text: string;
 	font: string; 
@@ -191,7 +192,7 @@ export var mergeImages = function (imgOpts : imageOptions[], labelOpts : labelOp
 	options = Object.assign({}, defaultOptions, options);
 
 	// Setup browser/Node.js specific variables
-	var canvas = options.Canvas ? new options.Canvas.Canvas() : window.document.createElement('canvas');
+	var canvas: Canvas.Canvas = options.Canvas ? new options.Canvas.Canvas() : window.document.createElement('canvas');
 	var Image = options.Canvas ? options.Canvas.Image : window["Image"];
 	if (options.Canvas) {
 		options.quality *= 100;
@@ -216,7 +217,7 @@ export var mergeImages = function (imgOpts : imageOptions[], labelOpts : labelOp
 	});
 
 	// Get canvas context
-	var ctx = canvas.getContext('2d');
+	var ctx: Canvas.CanvasRenderingContext2D = canvas.getContext('2d');
 
 	// Add Labels to Image
 	var labels : label[] = [];
@@ -304,7 +305,7 @@ export var mergeImages = function (imgOpts : imageOptions[], labelOpts : labelOp
 			labels.forEach(label => {
 				ctx.fillStyle = label.fill;
 				ctx.strokeStyle = label.stroke;
-				ctx.textAlign = label.align;
+				ctx.textAlign = label.align as CanvasTextAlign;
 				ctx.font = label.font;
 
 				ctx.strokeText(label.text, label.x, label.y);

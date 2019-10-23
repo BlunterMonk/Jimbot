@@ -45,8 +45,15 @@ const itemEffects = [
     "partialDualWield",
     "singleWieldingOneHanded",
     "singleWielding",
-    "dualWielding",
+    "dualWielding"
 ];
+const extraStats = [
+    "lbFillRate",
+    "lbDamage",
+    "evoMag",
+    "drawAttacks"
+    // "allowUseOf"
+]
 const complexStats = [
     "ailments", "element", "killers",
     "evade", "notStackableSkills",
@@ -823,6 +830,7 @@ function itemEffectToString(key: string, item: any): string {
     t = t.replace(/,/gi, ", ");
     // log("Effect Text:" + t)
     t = t.replace(/accuracy.*?(|\w+|\n)(,|\S+)/g, " ");
+    t = t.replaceAll(",", "%,");
     t = t.trim();
     // log("Edited Text: " + t)
     if (t.lastIndexOf(",") == t.length-1)
@@ -839,18 +847,37 @@ export function itemToString(item: any): string {
 
     var v = "";
     var text = [];
+    // log("Item To String: ", item);
 
     var stats = Object.keys(item);
     stats.forEach((s, i) => {
 
         if (statValues.includes(s) && item[s] != null) {
             if (s.includes("%"))
-                text[text.length] = `${s.replace("%", "")} ${item[s]}%`;
+                text.push(`${s.replace("%", "")} ${item[s]}%`);
             else
-                text[text.length] = `${s} ${item[s]}`;
+                text.push(`${s} ${item[s]}`);
+
         } else if (itemEffects.includes(s)) {
-            text[text.length] = `${itemEffectToString(s, item[s])}`;
-        } else {
+            
+            text.push(`${itemEffectToString(s, item[s])}`);
+        } else if (extraStats.includes(s)) {
+            let substat = item[s];
+            // log("Item Extra Stat: ", s);
+            // log(substat);
+            switch (s) {
+                case "lbPerTurn": 
+                    text.push(`LB/T ${Math.floor(substat.max)}`);
+                    break;
+                case "resist":
+                    substat.forEach(sub => {
+                        text.push(`${sub.name} ${sub.percent}%`);
+                    });
+                    break;
+                default:
+                    text.push(`${s} ${substat}%`);
+                    break;
+            }
             // log(`${itemInfo.name}: [${s}]`)
             // log(itemInfo[s]);
         }
@@ -1414,7 +1441,6 @@ export function requestBuildData(buildURL: string): Promise<BuildResponse> {
 export async function CreateBuildsFromURL(buildURL: string): Promise<Build[]> {
 
     let builds : Promise<Build>[] = null;
-    let buildData = null;
     
     await requestBuildData(buildURL)
     .then((response) => {

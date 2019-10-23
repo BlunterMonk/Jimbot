@@ -1,0 +1,48 @@
+{
+    "canvasWidth": 850,
+    "canvasHeight": 350,
+    "mainStatOptions": {
+        "xStart": 280,
+        "xSpace": 300,
+        "yStart": 55,
+        "ySpace": 50,
+        "statOrder": [ "hp",  "atk", "def", "mp",  "mag", "spr" ],
+        "rows": 3,
+        "fontSize": 40,
+        "bonusSize": 20,
+        "align": "left"
+    },
+    "killerOptions": {
+        "xStart": 20,
+        "yStart": 270,
+        "dimensions": 50,
+        "maxWide": 14,
+        "maxTall": 1,
+        "fontSize": 18,
+        "distance": 1,
+        "spacing": 0,
+        "align": "left"
+    },
+    "elementOptions": {
+        "xStart": 20,
+        "yStart": 220,
+        "dimensions": 50,
+        "maxWide": 14,
+        "maxTall": 1,
+        "fontSize": 18,
+        "distance": 1,
+        "spacing": 0,
+        "align": "left"
+    },
+    "ailmentOptions": {
+        "xStart": 20,
+        "yStart": 170,
+        "dimensions": 50,
+        "maxWide": 14,
+        "maxTall": 1,
+        "fontSize": 18,
+        "distance": 1,
+        "spacing": 0,
+        "align": "left"
+    }
+}

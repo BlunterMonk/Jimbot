@@ -287,7 +287,7 @@ class client {
                     var url = URL[0].trim();
                     log("Beginning Autobuild: ", URL);
 
-                    let c = (Profiles.getAutoBuild(receivedMessage.author.id)) ? "c" : "";
+                    let c = (Profiles.getPreferCompact(receivedMessage.author.id)) ? "c" : "";
                     this.onMessageCallback(receivedMessage, `build${c} ${url}`, receivedMessage.author, receivedMessage.guild);
                 }
                 return;
