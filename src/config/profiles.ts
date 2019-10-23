@@ -46,7 +46,7 @@ export class profile {
     }
     addProfile(id: string, code: string, name: string) {
         this.configuration[id] = {
-            autobuild: false,
+            autobuild: true,
             compact: false,
             friendcode: code,
             nickname: name,

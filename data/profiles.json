@@ -13,7 +13,7 @@
 		"lead": "https://ffbeequip.com/builder.html?server=gl#6f232df0-ed94-11e9-8f21-29aab363c1db"
 	},
 	"220659180623757312": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "770484550",
 		"nickname": "",
 		"builds": {
@@ -26,25 +26,25 @@
 		"lead": "https://ffbeequip.com/builder.html?server=gl#4900fb80-ef64-11e9-8f21-29aab363c1db"
 	},
 	"97837550491664384": {
-		"autobuild": false,
+		"autobuild": true,
 		"nickname": "",
 		"friendcode": "",
 		"builds": {}
 	},
 	"48410351376531456": {
-		"autobuild": false,
+		"autobuild": true,
 		"nickname": "",
 		"friendcode": "428736735",
 		"builds": {}
 	},
 	"453189007640100864": {
-		"autobuild": false,
+		"autobuild": true,
 		"nickname": "king_snuggly",
 		"friendcode": "",
 		"builds": {}
 	},
 	"243041029316542474": {
-		"autobuild": false,
+		"autobuild": true,
 		"nickname": "ray",
 		"friendcode": "722466530",
 		"builds": {
@@ -54,19 +54,19 @@
 		"lead": "https://ffbeequip.com/builder.html?server=gl#e82adc60-ef61-11e9-8f21-29aab363c1db"
 	},
 	"103785126026043392": {
-		"autobuild": false,
+		"autobuild": true,
 		"nickname": "",
 		"friendcode": "055341012",
 		"builds": {}
 	},
 	"189594200835096577": {
-		"autobuild": false,
+		"autobuild": true,
 		"nickname": "",
 		"friendcode": "",
 		"builds": {}
 	},
 	"137266260202356736": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "861268031",
 		"nickname": "",
 		"builds": {}
@@ -87,7 +87,7 @@
 		"compact": true
 	},
 	"210949383896694795": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "756781162",
 		"nickname": "sir_render",
 		"builds": {
@@ -96,7 +96,7 @@
 		"status": "dying"
 	},
 	"297441098060660739": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "032206654",
 		"nickname": "duke",
 		"builds": {
@@ -104,20 +104,20 @@
 		}
 	},
 	"168606170389413889": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "133366562",
 		"nickname": "athenya",
 		"builds": {},
 		"status": "EAT SHIT ASSHOLE FALL OFF YOUR HORSE"
 	},
 	"324904806332497932": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "",
 		"builds": {}
 	},
 	"234947922792415232": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "",
 		"builds": {
@@ -128,13 +128,13 @@
 		"status": "i identify myself as an h"
 	},
 	"275251634001674241": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "",
 		"builds": {}
 	},
 	"236293298254381057": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "298250846",
 		"nickname": "tentacles",
 		"builds": {
@@ -144,7 +144,7 @@
 		"lead": "https://ffbeequip.com/builder.html?server=gl#f3b9ff70-ef61-11e9-8f21-29aab363c1db"
 	},
 	"350621713823825920": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "69420",
 		"nickname": "desclipse",
 		"builds": {
@@ -153,13 +153,13 @@
 		"status": "if anyone needs me for anything ill just be slowly dying inside"
 	},
 	"270590245781766144": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "majin",
 		"builds": {}
 	},
 	"82186933786116096": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "396581499",
 		"nickname": "",
 		"builds": {},
@@ -167,13 +167,13 @@
 		"status": "dont foget to do your daily pp mission!"
 	},
 	"297483915416043520": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "784356609",
 		"nickname": "F2Pvegan",
 		"builds": {}
 	},
 	"349315950127874048": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "176679642",
 		"nickname": "marbros",
 		"status": "i am the bone of my sword ...\nsteel is my body and fire is my blood. unknown to\ndeath, nor known to life those hands will never\n...",
@@ -201,7 +201,7 @@
 		"builds": {}
 	},
 	"328018723158097920": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "666101275",
 		"nickname": "neo",
 		"status": "get ready, the show is about to begin!!",
@@ -212,7 +212,7 @@
 		}
 	},
 	"468997735090225163": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "Chivisuka",
 		"status": "",
@@ -220,7 +220,7 @@
 		"builds": {}
 	},
 	"149857867279761408": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "windfoxie",
 		"status": "",
@@ -228,7 +228,7 @@
 		"builds": {}
 	},
 	"416050581988179978": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "Pumpkin Spice",
 		"status": "",
@@ -236,7 +236,7 @@
 		"builds": {}
 	},
 	"144503275486576641": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "Skyrazor",
 		"status": "randi > everything else",
@@ -244,7 +244,7 @@
 		"builds": {}
 	},
 	"260513002367746049": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "Haltimer",
 		"status": "pro noob",
@@ -252,7 +252,7 @@
 		"builds": {}
 	},
 	"368355945606021120": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "NexusRev",
 		"status": "2sxy4u",
@@ -260,7 +260,7 @@
 		"builds": {}
 	},
 	"207344998495027201": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "442493582",
 		"nickname": "Will Box",
 		"status": "spoopy",
@@ -270,7 +270,7 @@
 		}
 	},
 	"180578908566061057": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "462831977",
 		"nickname": "Harrison Wells",
 		"status": "",
@@ -278,7 +278,7 @@
 		"builds": {}
 	},
 	"288172441333792768": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "285803960",
 		"nickname": "rgxgamer",
 		"status": "2weeb4u",
@@ -286,7 +286,7 @@
 		"builds": {}
 	},
 	"127870783744770048": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "562799475",
 		"nickname": "Laxaeus",
 		"status": "5 apron dresses and counting",
@@ -296,7 +296,7 @@
 		}
 	},
 	"468731984034660352": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "137106787",
 		"nickname": "Loki123",
 		"status": "",
@@ -304,7 +304,7 @@
 		"builds": {}
 	},
 	"522430782229315596": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "085310663",
 		"nickname": "aleister",
 		"status": "trabajo muy duro, como un esclavo 🎵",
@@ -314,7 +314,7 @@
 		}
 	},
 	"604305086188879872": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "979837011",
 		"nickname": "lloyd",
 		"status": "",
@@ -322,7 +322,7 @@
 		"builds": {}
 	},
 	"501940960268386310": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "Daltania",
 		"status": "",
@@ -330,7 +330,7 @@
 		"builds": {}
 	},
 	"563352427139563545": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "🔥◇Francisco◇🔥  (XFRANCOX)",
 		"status": "",
@@ -338,7 +338,7 @@
 		"builds": {}
 	},
 	"333110981620269057": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "Unbane",
 		"status": "",
@@ -346,7 +346,7 @@
 		"builds": {}
 	},
 	"528217281092780042": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "175036867",
 		"nickname": "Enraitsu",
 		"status": "",
@@ -354,7 +354,7 @@
 		"builds": {}
 	},
 	"556578409929637892": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "",
 		"nickname": "loligoXD",
 		"status": "",
@@ -362,7 +362,7 @@
 		"builds": {}
 	},
 	"346716524209504258": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "882193932",
 		"nickname": "carlos",
 		"status": "",
@@ -380,7 +380,7 @@
 		}
 	},
 	"316654316377210880": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "285963004",
 		"nickname": "salien",
 		"status": "",
@@ -392,7 +392,7 @@
 		}
 	},
 	"341661855888179200": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "174435246",
 		"nickname": "winter",
 		"status": "",
@@ -400,7 +400,7 @@
 		"builds": {}
 	},
 	"484558890416209920": {
-		"autobuild": false,
+		"autobuild": true,
 		"compact": false,
 		"friendcode": "",
 		"nickname": "🎃andres🎃",
@@ -409,7 +409,7 @@
 		"builds": {}
 	},
 	"467787307051646986": {
-		"autobuild": false,
+		"autobuild": true,
 		"compact": false,
 		"friendcode": "",
 		"nickname": "Quincho",
