@@ -164,7 +164,9 @@
 		"galuf_v2": "warrior of dawn galuf",
 		"tree": "dark mage exdeath",
 		"groot": "dark mage exdeath",
-		"barium_silicon_carbon_bismuth__technetium_hydrogen": "radiant lightning"
+		"barium_silicon_carbon_bismuth__technetium_hydrogen": "radiant lightning",
+		"exdeath_v2": "dark mage exdeath",
+		"exdeathv2": "dark mage exdeath"
 	},
 	"filetypes": [
 		".jpg",
