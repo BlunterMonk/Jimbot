@@ -35,6 +35,8 @@
 		"type": "physical",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#b6ac2480-e6fd-11e9-b677-3b8586bd2e6d",
 		"jp": false,
+		"burst": "26,788,958,827",
+		"burstTurn": "4",
 		"wiki": "https://exvius.gamepedia.com/Radiant_Lightning",
 		"rotation": [
 			"Paradigm Shift: Commando (CD) + Defying Destiny (Lightning)",
@@ -91,6 +93,8 @@
 		"type": "physical",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#352d9300-e160-11e9-b677-3b8586bd2e6d",
 		"jp": false,
+		"burst": "26,372,963,741",
+		"burstTurn": "2",
 		"wiki": "https://exvius.gamepedia.com/Eleven",
 		"rotation": [
 			"The Luminary Awakens (CD) + Gigaslash (CD)/Gigagash (CD) + Falcon Slash/Gigaslash (CD)",
@@ -526,6 +530,8 @@
 		"type": "physical",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#adde18f0-e61b-11e9-b677-3b8586bd2e6d",
 		"jp": false,
+		"burst": "16,648,676,229",
+		"burstTurn": "2",
 		"wiki": "https://exvius.gamepedia.com/Shadow_Lord",
 		"rotation": [
 			"Blood Weapon+2 (CD) + Cross Smash+2 + Doom Arc+2",

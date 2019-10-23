@@ -79,7 +79,8 @@
 			"f2p_galwuf": "https://ffbeequip.com/builder.html?server=gl#7fe07d70-ec9d-11e9-8f21-29aab363c1db",
 			"moon_squad": "https://ffbeequip.com/builder.html?server=gl#58d637d0-ed63-11e9-8f21-29aab363c1db",
 			"stolen_cid": "https://ffbeequip.com/builder.html?server=gl#3b0fe1b0-ef66-11e9-8f21-29aab363c1db",
-			"moose_killers": "https://ffbeequip.com/builder.html?server=gl#b89ebdd0-f0a2-11e9-8f21-29aab363c1db"
+			"moose_killers": "https://ffbeequip.com/builder.html?server=gl#b89ebdd0-f0a2-11e9-8f21-29aab363c1db",
+			"stolen_charlotte": "https://ffbeequip.com/builder.html?server=gl#f406d190-f4e0-11e9-8f21-29aab363c1db"
 		},
 		"status": "Sorry I couldnt clear Moon, i was busy thinkin about boys",
 		"lead": "https://ffbeequip.com/builder.html?server=gl#b89ebdd0-f0a2-11e9-8f21-29aab363c1db",
@@ -394,6 +395,24 @@
 		"autobuild": false,
 		"friendcode": "174435246",
 		"nickname": "winter",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"484558890416209920": {
+		"autobuild": false,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "🎃andres🎃",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"467787307051646986": {
+		"autobuild": false,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "Quincho",
 		"status": "",
 		"lead": null,
 		"builds": {}

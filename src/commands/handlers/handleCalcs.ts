@@ -259,6 +259,12 @@ export function handleDamage(receivedMessage: Discord.Message, search: string, p
         handleDpthelp(receivedMessage);
         return;
     }
+    if (search.empty()) {
+        var text = "";
+        text += `Furcula sheet: <${sheetURL}>\nShado sheet: <${whaleSheet}>\nMuspel sheet: <${muspelURL}>\n`;
+        Client.send(receivedMessage, text);
+        return;
+    }
 
     let embed = buildDamageEmbed(search);
     Client.sendMessage(receivedMessage, embed);
