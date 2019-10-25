@@ -78,12 +78,12 @@ export function respondFailure(receivedMessage, toUser = false) {
     Client.respondFailure(receivedMessage, toUser);
 }
 
-export function buildBuildImage(buildUrl: string, isCompact: boolean, unitIndex: number = 0): Promise<string> {
+export function buildBuildImage(buildUrl: string, style: string, unitIndex: number = 0): Promise<string> {
     return new Promise<string>((resolve, reject) => {
         Build.CreateBuildsFromURL(buildUrl)
         .then(builds => {
             unitIndex = Math.max(unitIndex, builds.length - 1);
-            BuildImage.BuildImage(builds[unitIndex], isCompact)
+            BuildImage.BuildImage(builds[unitIndex], style)
             .then(p => {
                 resolve(p);
             })
@@ -92,9 +92,9 @@ export function buildBuildImage(buildUrl: string, isCompact: boolean, unitIndex:
     });
 }
 
-export function buildBuildImageEmbed(name: string, buildUrl: string, isCompact: boolean, unitIndex: number = 0) {
+export function buildBuildImageEmbed(name: string, buildUrl: string, style: string, unitIndex: number = 0) {
     return new Promise<Discord.RichEmbed>((resolve, reject) => {
-        buildBuildImage(buildUrl, isCompact, unitIndex) 
+        buildBuildImage(buildUrl, style, unitIndex) 
         .then(p => {
             const attachment = new Discord.Attachment(p, 'build.png');
             var embed = new Discord.RichEmbed()

@@ -188,6 +188,7 @@
 		"b": "build",
 		"c": "buildcompact",
 		"bc": "buildcompact",
+		"bb": "buildbox",
 		"buildc": "buildcompact",
 		"bisc": "biscompact",
 		"teamc": "team",

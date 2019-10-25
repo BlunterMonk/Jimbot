@@ -51,7 +51,8 @@ const extraStats = [
     "lbFillRate",
     "lbDamage",
     "evoMag",
-    "drawAttacks"
+    "drawAttacks",
+    "jumpDamage"
     // "allowUseOf"
 ]
 const complexStats = [
@@ -850,6 +851,9 @@ export function itemToString(item: any): string {
     // log("Item To String: ", item);
 
     var stats = Object.keys(item);
+    log("Item To String Keys: ", item);
+    stats = sortStats(stats);
+    log("Item To String Sorted Keys: ", item);
     stats.forEach((s, i) => {
 
         if (statValues.includes(s) && item[s] != null) {
@@ -874,12 +878,21 @@ export function itemToString(item: any): string {
                         text.push(`${sub.name} ${sub.percent}%`);
                     });
                     break;
+                // case "allowUseOf":
+                //     let temp = "";
+                //     substat.forEach((sub, ind) => {
+                //         if (ind > 0) temp += ", ";
+                //         temp += sub;
+                //     });
+                //     text.push(`${s} ${temp}`);
                 default:
                     text.push(`${s} ${substat}%`);
                     break;
             }
             // log(`${itemInfo.name}: [${s}]`)
             // log(itemInfo[s]);
+        } else if (complexStats.includes(s)) {
+            log("Item Extra Stat: ", s, " Item: ", item[s]);
         }
     });
 
@@ -888,6 +901,72 @@ export function itemToString(item: any): string {
 
     text = sortStats(text);
     text.forEach((s, i) => {
+        if (i > 0)
+            v += `, `;
+
+        v += s;
+    });
+
+    return v;
+}
+export function itemToStringDivided(item: any) {
+
+    var v = "";
+    var main = [];
+    var effects = [];
+    var extra = [];
+    // log("Item To String: ", item);
+
+    var stats = Object.keys(item);
+    stats.forEach((s, i) => {
+
+        if (statValues.includes(s) && item[s] != null) {
+            if (s.includes("%"))
+                main.push(`${s.replace("%", "")} ${item[s]}%`);
+            else
+                main.push(`${s} ${item[s]}`);
+
+        } else if (itemEffects.includes(s)) {
+            
+            effects.push(`${itemEffectToString(s, item[s])}`);
+        } else if (extraStats.includes(s)) {
+            let substat = item[s];
+            // log("Item Extra Stat: ", s);
+            // log(substat);
+            switch (s) {
+                case "lbPerTurn": 
+                    extra.push(`LB/T ${Math.floor(substat.max)}`);
+                    break;
+                case "resist":
+                    substat.forEach(sub => {
+                        extra.push(`${sub.name} ${sub.percent}%`);
+                    });
+                    break;
+                case "allowUseOf":
+                    let temp = "";
+                    substat.forEach((sub, ind) => {
+                        if (ind > 0) temp += ", ";
+                        temp += sub;
+                    });
+                    extra.push(`${s} ${temp}`);
+                default:
+                    extra.push(`${s} ${substat}%`);
+                    break;
+            }
+            // log(`${itemInfo.name}: [${s}]`)
+            // log(itemInfo[s]);
+        } else if (complexStats.includes(s)) {
+            log("Item Extra Stat: ", s, " Item: ", item[s]);
+        }
+    });
+
+    // log("unsorted");
+    // log(text);
+
+    main = sortStats(main);
+    effects = sortStats(effects);
+    extra = sortStats(extra);
+    main.forEach((s, i) => {
         if (i > 0)
             v += `, `;
 
