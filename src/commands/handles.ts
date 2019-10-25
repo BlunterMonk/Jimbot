@@ -211,9 +211,9 @@ export function handle(receivedMessage: Discord.Message, com: Commands.CommandOb
     log("Handle Command Object: ", com);
     logCommand(com);
 
-    if (handleUnitQuery(receivedMessage, com.command, com.search)) {
-        return;
-    }
+    // if (handleUnitQuery(receivedMessage, com.command, com.search)) {
+    //     return;
+    // }
 
     try {
         var search = com.search;

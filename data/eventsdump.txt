@@ -18,6 +18,85 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20191023
+|type  = Other
+|title = Slots de Chocobo
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191022HalloweenMiniGame.html
+}}
+{{Recent News
+|date  = 20191023
+|type  = Trial
+|title = Demon Matsuri
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/DemonMatsuri.jpg
+}}
+{{Recent News
+|date  = 20191022
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191023Maintenance2.html
+}}
+{{Recent News
+|date  = 20191021
+|type  = Event
+|title = Elemental Battle - Grave Hexvius
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191021GraveHexvius.jpg
+}}
+{{Recent News
+|date  = 20191021
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191021KartenGodreaFeaturedBanner.jpg
+}}
+{{Recent News
+|date  = 20191021
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191021HalloweenRerunBanner.jpg
+}}
+{{Recent News
+|date  = 20191021
+|type  = Other
+|title = Exchange Shop (Karten/Godrea)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191022KartenGodreaExchangeShop.html
+}}
+{{Recent News
+|date  = 20191021
+|type  = Other
+|title = Introducing the 5★ Guaranteed (20% Featured) Ticket (K/G) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191022KartenGodreaGuaranteed20FeaturedBanner.html
+}}
+{{Recent News
+|date  = 20191021
+|type  = Other
+|title = Exchange Shop (Spooktacular)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191022SpooktacularExchangeShop2.html
+}}
+{{Recent News
+|date  = 20191021
+|type  = Other
+|title = Spooktacular Login Bonus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191022SpooktacularLoginBonus.html
+}}
+{{Recent News
+|date  = 20191020
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191020KHUsummongate.html
+}}
+{{Recent News
+|date  = 20191017
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191018IssueReportConnectionError.html
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20191017
+|type  = Other
+|title = Exchange Shop (Select Exchange Summon)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191018SelectExchangeSummonExchangeShop.html
+}}
+{{Recent News
 |date  = 20191017
 |type  = Other
 |title = Select Exchange Summon
@@ -83,7 +162,6 @@
 |title = Scorn of the Legendary Stag
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191015ScornoftheLegendaryStag.jpg
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20191015
 |type  = Maintenance

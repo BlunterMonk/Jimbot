@@ -26,13 +26,13 @@
 		"lead": "https://ffbeequip.com/builder.html?server=gl#4900fb80-ef64-11e9-8f21-29aab363c1db"
 	},
 	"97837550491664384": {
-		"autobuild": true,
+		"autobuild": false,
 		"nickname": "",
 		"friendcode": "",
 		"builds": {}
 	},
 	"48410351376531456": {
-		"autobuild": true,
+		"autobuild": false,
 		"nickname": "",
 		"friendcode": "428736735",
 		"builds": {}
@@ -54,19 +54,19 @@
 		"lead": "https://ffbeequip.com/builder.html?server=gl#e82adc60-ef61-11e9-8f21-29aab363c1db"
 	},
 	"103785126026043392": {
-		"autobuild": true,
+		"autobuild": false,
 		"nickname": "",
 		"friendcode": "055341012",
 		"builds": {}
 	},
 	"189594200835096577": {
-		"autobuild": true,
+		"autobuild": false,
 		"nickname": "",
 		"friendcode": "",
 		"builds": {}
 	},
 	"137266260202356736": {
-		"autobuild": true,
+		"autobuild": false,
 		"friendcode": "861268031",
 		"nickname": "",
 		"builds": {}
@@ -111,7 +111,7 @@
 		"status": "EAT SHIT ASSHOLE FALL OFF YOUR HORSE"
 	},
 	"324904806332497932": {
-		"autobuild": true,
+		"autobuild": false,
 		"friendcode": "",
 		"nickname": "",
 		"builds": {}
@@ -128,7 +128,7 @@
 		"status": "i identify myself as an h"
 	},
 	"275251634001674241": {
-		"autobuild": true,
+		"autobuild": false,
 		"friendcode": "",
 		"nickname": "",
 		"builds": {}
@@ -208,7 +208,8 @@
 		"lead": null,
 		"builds": {
 			"super_char": "https://ffbeequip.com/builder.html?server=gl#e27fae10-ef63-11e9-8f21-29aab363c1db",
-			"call_animal_control": "https://ffbeequip.com/builder.html?server=gl#3b0fe1b0-ef66-11e9-8f21-29aab363c1db"
+			"call_animal_control": "https://ffbeequip.com/builder.html?server=gl#3b0fe1b0-ef66-11e9-8f21-29aab363c1db",
+			"the_big_kahuna": "https://ffbeequip.com/builder.html?server=gl#cf337fa0-f5e7-11e9-8f21-29aab363c1db"
 		}
 	},
 	"468997735090225163": {
@@ -228,7 +229,7 @@
 		"builds": {}
 	},
 	"416050581988179978": {
-		"autobuild": true,
+		"autobuild": false,
 		"friendcode": "",
 		"nickname": "Pumpkin Spice",
 		"status": "",
@@ -236,7 +237,7 @@
 		"builds": {}
 	},
 	"144503275486576641": {
-		"autobuild": true,
+		"autobuild": false,
 		"friendcode": "",
 		"nickname": "Skyrazor",
 		"status": "randi > everything else",
@@ -244,7 +245,7 @@
 		"builds": {}
 	},
 	"260513002367746049": {
-		"autobuild": true,
+		"autobuild": false,
 		"friendcode": "",
 		"nickname": "Haltimer",
 		"status": "pro noob",
@@ -252,7 +253,7 @@
 		"builds": {}
 	},
 	"368355945606021120": {
-		"autobuild": true,
+		"autobuild": false,
 		"friendcode": "",
 		"nickname": "NexusRev",
 		"status": "2sxy4u",
@@ -270,7 +271,7 @@
 		}
 	},
 	"180578908566061057": {
-		"autobuild": true,
+		"autobuild": false,
 		"friendcode": "462831977",
 		"nickname": "Harrison Wells",
 		"status": "",
@@ -278,7 +279,7 @@
 		"builds": {}
 	},
 	"288172441333792768": {
-		"autobuild": true,
+		"autobuild": false,
 		"friendcode": "285803960",
 		"nickname": "rgxgamer",
 		"status": "2weeb4u",
@@ -286,7 +287,7 @@
 		"builds": {}
 	},
 	"127870783744770048": {
-		"autobuild": true,
+		"autobuild": false,
 		"friendcode": "562799475",
 		"nickname": "Laxaeus",
 		"status": "5 apron dresses and counting",
@@ -314,7 +315,7 @@
 		}
 	},
 	"604305086188879872": {
-		"autobuild": true,
+		"autobuild": false,
 		"friendcode": "979837011",
 		"nickname": "lloyd",
 		"status": "",
@@ -322,7 +323,7 @@
 		"builds": {}
 	},
 	"501940960268386310": {
-		"autobuild": true,
+		"autobuild": false,
 		"friendcode": "",
 		"nickname": "Daltania",
 		"status": "",
@@ -413,6 +414,24 @@
 		"compact": false,
 		"friendcode": "",
 		"nickname": "Quincho",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"118198473995583492": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "John Prodigy",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"465497353747693579": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "943727989",
+		"nickname": "mane",
 		"status": "",
 		"lead": null,
 		"builds": {}

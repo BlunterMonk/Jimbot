@@ -1207,7 +1207,7 @@ function getCompactEquipment(equipOptions: equipmentOptions, build): Batch {
     };
 }
 
-function getEquipment(options: any, firstSlotLeft: equipSlotOptions, firstSlotRight: equipSlotOptions, build) {
+function getEquipment(options: any, firstSlotLeft: equipSlotOptions, firstSlotRight: equipSlotOptions, build: Build.Build) {
 
     var labels: mergeImages.labelOptions[] = [];
     var images = [];
@@ -1251,7 +1251,7 @@ function getEquipment(options: any, firstSlotLeft: equipSlotOptions, firstSlotRi
         }
 
         // 2 handed
-        if (equip.special && equip.special.includes("twoHanded")) {
+        if (build.isDoublehanding() && equip.special && equip.special.includes("twoHanded")) {
             images.push({
                 src: `${imgCacheDir}equipment/twoHanded.png`,
                 x: firstSlotLeft.type.x + 150,
@@ -1266,7 +1266,7 @@ function getEquipment(options: any, firstSlotLeft: equipSlotOptions, firstSlotRi
             xName = 325;
             xInfo = firstSlotLeft.desc.x;
             align = "left";
-                        
+            
             // Item text
             labels = labels.concat(getEquipmentInfoText(equip, xInfo, yInfo, maxWidth + 200, fontSize, align));
         } else {

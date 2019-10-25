@@ -454,6 +454,7 @@ export function handleReload(receivedMessage: Discord.Message, search: string, p
         Config.reload();
         Client.reload();
         Builder.reload();
+        Profiles.reload();
     } catch(e) {
         log(e);
         respondFailure(receivedMessage, true);
