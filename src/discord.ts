@@ -279,15 +279,17 @@ class client {
         const prefix = this.guildSettings[guildId].getPrefix();
         if (contentPrefix != prefix) {
 
+            let guildAllowed = this.validate(receivedMessage, "autobuild");
+            let userAllowed = Profiles.getAutoBuild(receivedMessage.author.id);
             if (content.includes("ffbeequip.com") 
-                && (this.validate(receivedMessage, "autobuild") || Profiles.getAutoBuild(receivedMessage.author.id))) {
+                && (guildAllowed || userAllowed)) {
                 var URL = receivedMessage.content.match(/(https.*?(\s|$))/g)
                 trace("Received URL for Autobuild: ", url);
                 if (URL) {
                     var url = URL[0].trim();
                     log("Beginning Autobuild: ", URL);
 
-                    let c = (Profiles.getPreferCompact(receivedMessage.author.id)) ? "c" : "";
+                    let c = (!guildAllowed) ? "c" : "";
                     this.onMessageCallback(receivedMessage, `build${c} ${url}`, receivedMessage.author, receivedMessage.guild);
                 }
                 return;

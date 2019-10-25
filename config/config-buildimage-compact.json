@@ -1,6 +1,6 @@
 {
-    "canvasWidth": 850,
-    "canvasHeight": 600,
+    "canvasWidth": 1300,
+    "canvasHeight": 350,
     "mainStatOptions": {
         "xStart": 280,
         "xSpace": 300,
@@ -47,14 +47,14 @@
     },
     "equipmentOptions": {
         "equipOptions": {
-            "xCol1": 120,
-            "xCol2": 520,
-            "yTop": 320,
-            "yText": 350,
+            "xCol1": 870,
+            "xCol2": 1070,
+            "yTop": 20,
+            "yText": 50,
             "ySpacing": 50,
             "dimension": 50,
-            "maxWidth": 300,
-            "fontSize": 22,
+            "maxWidth": 150,
+            "fontSize": 18,
             "shrunkFontSize": 18,
             "align": "left"
         }

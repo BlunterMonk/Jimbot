@@ -24,25 +24,25 @@
         "align": "left"
     },
     "elementOptions": {
-        "xStart": 20,
-        "yStart": 220,
+        "xStart": 55,
+        "yStart": 260,
         "dimensions": 50,
-        "maxWide": 14,
+        "maxWide": 15,
         "maxTall": 1,
-        "fontSize": 18,
+        "fontSize": 20,
         "distance": 1,
-        "spacing": 0,
+        "spacing": 100,
         "align": "left"
     },
     "ailmentOptions": {
-        "xStart": 20,
-        "yStart": 170,
+        "xStart": 55,
+        "yStart": 210,
         "dimensions": 50,
-        "maxWide": 14,
+        "maxWide": 15,
         "maxTall": 1,
-        "fontSize": 18,
+        "fontSize": 20,
         "distance": 1,
-        "spacing": 0,
+        "spacing": 100,
         "align": "left"
     }
 }

@@ -76,7 +76,7 @@ function buildProfileEmbed(profile: UserProfile, user): Promise<Discord.RichEmbe
     return new Promise<Discord.RichEmbed>((resolve, reject) => {
         Build.CreateBuildsFromURL(leadURL)
         .then(builds => {
-            BuildImage.BuildImage(builds[0], true)
+            BuildImage.BuildImage(builds[0], "compact")
                 .then(p => {
                     const attachment = new Discord.Attachment(p, 'build.png');
                     embed.attachFile(attachment);
@@ -209,7 +209,7 @@ export function handleUserbuild(receivedMessage: Discord.Message, search: string
 
     name = name.replaceAll("_", " ").toTitleCase(" ");
 
-    buildBuildImageEmbed(name, buildUrl, isCompact)
+    buildBuildImageEmbed(name, buildUrl, isCompact ? "compact" : "full")
     .then(embed => {
         log(`User Build success: ${username}(${id}), Build: ${buildUrl}`);
         Client.sendMessage(receivedMessage, embed);
@@ -249,7 +249,7 @@ export function handleMybuild(receivedMessage: Discord.Message, search: string, 
         log("Parameter used for build: ", ind);
     }
 
-    buildBuildImageEmbed(search, url, isCompact, ind)
+    buildBuildImageEmbed(search, url, isCompact ? "compact" : "full", ind)
     .then(embed => {
         log(`Mybuild success: ${username}(${id}), Build: ${search}(${url})`);
         Client.sendMessage(receivedMessage, embed);
@@ -564,7 +564,7 @@ export function handleSetlead(receivedMessage: Discord.Message, search: string, 
 
         Profiles.setLead(id, url);
 
-        buildBuildImageEmbed(`${username}'s Lead`, url, true)
+        buildBuildImageEmbed(`${username}'s Lead`, url, "compact")
         .then(embed => {
             log(`Set Lead success: ${username}(${id}), Unit: (${d.id}), URL: ${url}`);
 

@@ -54,10 +54,10 @@ export async function sendBuildText(receivedMessage: Discord.Message, url) {
     });
 }
 
-export async function sendBuild(receivedMessage: Discord.Message, url: string, unitIndex: number, calculation, isCompact: boolean, force = false): Promise<string> {
+export async function sendBuild(receivedMessage: Discord.Message, url: string, unitIndex: number, calculation, style: string, force = false): Promise<string> {
     return new Promise<string>((resolve, reject) => {
 
-        buildBuildImage(url, isCompact, unitIndex)
+        buildBuildImage(url, style, unitIndex)
         .then(imagePath => {
 
             const attachment = new Discord.Attachment(imagePath, 'build.png');
@@ -101,7 +101,29 @@ export async function handleBuildhelp(receivedMessage: Discord.Message) {
     Client.sendPrivateMessage(receivedMessage, embed);
 }
 
-export async function handleBuild(receivedMessage: Discord.Message, search: string, parameters: string[], isCompact: boolean) {
+export async function handleStats(receivedMessage: Discord.Message, search: string, parameters: string[], isCompact: boolean) {
+    if (search == "help") {
+        handleBuildhelp(receivedMessage);
+        return;
+    }
+
+    var unitName = search;
+    unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
+
+    var ind = 0;
+    if (parameters && parameters.length > 0 && parameters[0].isNumber()) {
+        ind = parseInt(parameters[0]);
+        log("Parameter used for build: ", ind);
+    }
+
+    sendBuild(receivedMessage, search, ind, null, "stats")
+    .catch((e) => {
+        error("Build Failed: ", e);
+    });
+}
+
+
+export async function handleBuild(receivedMessage: Discord.Message, search: string, parameters: string[], style: string = "") {
     if (search == "help") {
         handleBuildhelp(receivedMessage);
         return;
@@ -128,17 +150,21 @@ export async function handleBuild(receivedMessage: Discord.Message, search: stri
         log("Parameter used for build: ", ind);
     }
 
-    sendBuild(receivedMessage, search, ind, includeTitle, isCompact)
+    sendBuild(receivedMessage, search, ind, includeTitle, !style.empty() ? style : "full")
     .catch((e) => {
         error("Build Failed: ", e);
     });
 }
 
 export async function handleBuildcompact(receivedMessage: Discord.Message, search: string, parameters: string[]) {
-    handleBuild(receivedMessage, search, parameters, true);
+    handleBuild(receivedMessage, search, parameters, "compact");
 }
 
-export async function handleBis(receivedMessage: Discord.Message, search: string, parameters: string[], isCompact: boolean) {
+export async function handleBuildbox(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+    handleBuild(receivedMessage, search, parameters, "box");
+}
+
+export async function handleBis(receivedMessage: Discord.Message, search: string, parameters: string[], style: string) {
     if (search == "help") {
         handleBuildhelp(receivedMessage);
         return;
@@ -157,14 +183,18 @@ export async function handleBis(receivedMessage: Discord.Message, search: string
     calc.source = "whale";
 
     log(`Loading Unit Build: ${calc.url}`);
-    sendBuild(receivedMessage, calc.url, ind, calc, isCompact)
+    sendBuild(receivedMessage, calc.url, ind, calc, !style.empty() ? style : "full")
     .catch((e) => {
         error(`Unable to find build: ${search}`);    
     });
 }
 
 export async function handleBiscompact(receivedMessage: Discord.Message, search: string, parameters: string[]) {
-    handleBis(receivedMessage, search, parameters, true);
+    handleBis(receivedMessage, search, parameters, "compact");
+}
+
+export async function handleBisbox(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+    handleBis(receivedMessage, search, parameters, "box");
 }
 
 export async function handleBuildtext(receivedMessage: Discord.Message, search: string, parameters: string[]) {

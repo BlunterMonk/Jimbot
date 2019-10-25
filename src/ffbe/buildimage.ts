@@ -88,27 +88,13 @@ function downloadImages(slots, items, unitId): Promise<any>[] {
 
     return images;
 }
-export async function BuildStatsImage(build: Build.Build, destination?: string): Promise<string> {
 
-    let saveLocation = `./tempbuilds/stats/${build.buildID}.png`;
-    if (destination && !destination.empty()) {
-        saveLocation = destination;
-    } else if (fs.existsSync(saveLocation)) {
-        return Promise.resolve(saveLocation);
-    }
+export async function BuildImage(build: Build.Build, style: string, destination?: string): Promise<string> {
 
-    let compactCanvas = {
-        xStart: 0,
-        yStart: 0
-    }
-        
-    log("Building Stats Image");
-    return buildSuperCompactImage(saveLocation, compactCanvas, build);
-}
+    if (style.empty())
+       style = "full";
 
-export async function BuildImage(build: Build.Build, isCompact: boolean, destination?: string): Promise<string> {
-
-    let c = (isCompact) ? "compact/" : "";
+    let c = `${style}/`;
     let saveLocation = `./tempbuilds/${c}${build.buildID}.png`;
     if (destination && !destination.empty()) {
         saveLocation = destination;
@@ -117,34 +103,13 @@ export async function BuildImage(build: Build.Build, isCompact: boolean, destina
     }
 
     log("Building Image: ", saveLocation);
-    // log("Build: ", build);
 
-    var equipped = build.getEquipment();
-
-    return new Promise<string>(async (resolve, reject) => {
-        
-        var downloads = await downloadImages(build.getSlots(), equipped, build.loadedUnit.id);
-        Promise.all(downloads).then(() => {
-
-            let compactCanvas = {
-                xStart: 0,
-                yStart: 0
-            }
+    let compactCanvas = {
+        xStart: 0,
+        yStart: 0
+    }
             
-            if (isCompact) {
-                buildCompactImage(saveLocation, compactCanvas, build).then((p) => {
-                    resolve(p);
-                }).catch(reject);
-            } else {
-                buildImage(saveLocation, compactCanvas, build).then((p) => {
-                    resolve(p);
-                }).catch(reject);
-            }
-        }).catch(e => {
-            error("Failed to download an image: ", e);
-            reject("Failed to download an image");
-        });
-    });
+    return buildImage(saveLocation, style, compactCanvas, build);
 }
 export async function BuildTeamImage(saveLocation: string, builds: Build.Build[]): Promise<string> {
 
@@ -163,7 +128,7 @@ export async function BuildTeamImage(saveLocation: string, builds: Build.Build[]
         }
 
         log("Building Image: ", imgPath);
-        return BuildImage(build, true, imgPath);
+        return BuildImage(build, "compact", imgPath);
     });
 
     log("Finished Starting Builds List");
@@ -199,124 +164,15 @@ export async function BuildTeamImage(saveLocation: string, builds: Build.Build[]
     });
 }
 
-function buildCompactImageT(saveLocation: string, canvasOptions: CanvasOptions, build: Build.Build): Promise<string> {
 
-    let imageWidth = 1300;
-    let imageHeight = 350;
+function buildImage(saveLocation: string, style: string, canvasOptions: CanvasOptions, build: Build.Build): Promise<string> {
 
-    var buildTotal = build.getTotalStats();
-    var totalStats = buildTotal.stats;
-    var totalBonuses = buildTotal.bonuses;
-    var wieldingBonus = getWieldBonus(totalBonuses, build);
-
-    debug("Build Compact Image: ", build.buildID);
-    trace("Total Stats: ", totalStats, " Total Bonuses: ", totalBonuses);
-
-    var labels : mergeImages.labelOptions[] = [];
-    var images : mergeImages.imageOptions[] = [{
-        src: `${imgCacheDir}template/unit-build-compact.png`,
-        x: canvasOptions.xStart,
-        y: canvasOptions.yStart,
-        w: imageWidth,
-        h: imageHeight
-    }];
-
-    // Add Unit Icon
-    images.push(addUnitIcon(build.unitID, 3, canvasOptions.xStart + 6, canvasOptions.yStart + 5));
-    images.push({
-        src: `${imgCacheDir}unit-icon-frame.png`,
-        x: canvasOptions.xStart + 6,
-        y: canvasOptions.yStart + 5,
-        w: 56*3,
-        h: 38*3
-    });
-
-    // Add main stats
-    labels = labels.concat(addCompactMainStats(totalStats, totalBonuses, wieldingBonus, canvasOptions));
-
-    // Add equipment
-    var equips = addCompactEquipment(build, canvasOptions);
-    labels = labels.concat(equips.labels);
-    images = images.concat(equips.images);
-
-    // Add Esper
-    var esper = build.getEsperId();
-    if (esper) {
-        labels[labels.length] = {
-            text: esper,
-            font: fontFamily,
-            size: 22,
-            x: canvasOptions.xStart + 1050,
-            y: canvasOptions.yStart + 300,
-            align: "left",
-            strokeColor: "255,255,255,1",
-            maxWidth: 200,
-            color: null,
-            anchorTop: false,
-            wrap: false
-        };
-    }
-
-    // Add killers
-    var killers = addCompactKillers(totalStats, canvasOptions);
-    labels = labels.concat(killers.labels);
-    images = images.concat(killers.images);
-
-    // Add Resistances
-    labels = labels.concat(addCompactResistances(totalStats, canvasOptions));
-
-    // Add Evade
-    if (totalStats.evade && totalStats.evade.physical) {
-        debug("Has Evade: ", totalStats.evade);
-        labels[labels.length] = {
-            text: `${totalStats.evade.physical}%`,
-            font: fontFamily,
-            size: 20,
-            x: canvasOptions.xStart + 55,
-            y: canvasOptions.yStart + 165,
-            align: "left",
-            strokeColor: "255,255,255,1",
-            maxWidth: null,
-            color: null,
-            anchorTop: false,
-            wrap: false
-        };
-    }
-
-    // Finish frame
-    images[images.length] = {
-        src: `${imgCacheDir}unit-overview-top-frame-short.png`,
-        x: canvasOptions.xStart,
-        y: canvasOptions.yStart,
-        w: imageWidth,
-        h: imageHeight
-    };
-
-    return finalizeImage(saveLocation, images, labels, imageWidth, imageHeight);
-}
-function buildImage(saveLocation: string, canvasOptions: CanvasOptions, build: Build.Build): Promise<string> {
-
-    var builder = new ImageBuild("./config/config-buildimage.json", false, canvasOptions, build);
-    builder.buildImage();
-
-    return builder.finalize(saveLocation);
-}
-function buildCompactImage(saveLocation: string, canvasOptions: CanvasOptions, build: Build.Build): Promise<string> {
-
-    var builder = new ImageBuild("./config/config-buildimage-compact-long.json", true, canvasOptions, build);
-    builder.buildImage();
-
-    return builder.finalize(saveLocation);
-}
-function buildSuperCompactImage(saveLocation: string, canvasOptions: CanvasOptions, build: Build.Build): Promise<string> {
-
-    var builder = new ImageBuild("./config/config-buildimage-stats.json", true, canvasOptions, build);
+    var builder = new ImageBuild(`./config/config-buildimage-${style}.json`, style, canvasOptions, build);
     builder.buildImage();
 
     return builder.finalize(saveLocation);
 }
 function finalizeImage(saveLocation: string, images: mergeImages.imageOptions[], labels: mergeImages.labelOptions[], cWidth, cHeight): Promise<string> {
-
 
     return new Promise<string>((resolve, reject) => {
 
@@ -353,7 +209,7 @@ function finalizeImage(saveLocation: string, images: mergeImages.imageOptions[],
 
 class ImageBuild {
     config: any; // loaded config file
-    isCompact: boolean;
+    style: string; // style of build image
     canvasOptions: CanvasOptions;
     build: Build.Build;
     totalStats: any; // total main stats from build
@@ -361,10 +217,10 @@ class ImageBuild {
     wieldingBonus: any; // wielding bonus from build
     labels: mergeImages.labelOptions[];
     images: mergeImages.imageOptions[];
-    constructor(configFile: string, isCompact: boolean, canvasOptions: CanvasOptions, build: Build.Build) {
+    constructor(configFile: string, style: string, canvasOptions: CanvasOptions, build: Build.Build) {
         this.config = JSON.parse(fs.readFileSync(configFile).toString());
         this.build = build;
-        this.isCompact = isCompact;
+        this.style = style;
         this.canvasOptions = canvasOptions;
         this.labels = [];
         this.images = [];
@@ -376,14 +232,29 @@ class ImageBuild {
     }
     buildImage() {
         let src = "";
-        if (!this.isCompact) {
+        let frame = "unit-build-frame.png";
+        let frameH = 350;
+        switch (this.style) {
+            case "compact":
+                src = "unit-build-compact-long.png";
+                frame = "unit-build-compact-long-frame.png";
+                break;
+            case "box":
+                src = "unit-build-compact.png";
+                frame = "unit-build-compact-frame.png";
+                frameH = 600;
+                break;
+            case "stats":
+                src = "unit-build-stats.png";
+                break;
+            case "full":
+            default:
             if (this.totalStats.singleWielding && this.build.isDoublehanding()) {
                 src = "unit-build-full-tdh.png";
             } else {
                 src = "unit-build-full.png";
             }
-        } else {
-            src = "unit-build-compact-long.png";
+            break;
         }
 
         this.images.push({
@@ -406,11 +277,11 @@ class ImageBuild {
         this.addEsper(this.build.getEsperId());
 
         this.images.push({
-            src: `${imgCacheDir}template/unit-build${(this.isCompact ? "-compact-long" : "")}-frame.png`,
+            src: `${imgCacheDir}template/${frame}`,
             x: this.canvasOptions.xStart,
             y: this.canvasOptions.yStart,
             w: this.config.canvasWidth,
-            h: 350
+            h: frameH
         });
     }
     finalize(saveLocation: string): Promise<string> {
@@ -425,6 +296,10 @@ class ImageBuild {
         Promise.all(downloads);
 
         return finalizeImage(saveLocation, this.images, this.labels, this.config.canvasWidth, this.config.canvasHeight);
+    }
+
+    isCompact(): boolean {
+        return (this.style == "compact" || this.style == "box");
     }
 
     addMainStats(mainStatOptions: mainStatsOptions) {
@@ -473,9 +348,11 @@ class ImageBuild {
         return this;
     }
     addEquipment(options: any): ImageBuild {
+        if (!options)
+            return this;
 
         let equips = null;
-        if (this.isCompact) {
+        if (this.isCompact()) {
             equips = getCompactEquipment(options.equipOptions, this.build);
         } else {
             equips = getEquipment(options.equipOptions, options.firstSlotLeft, options.firstSlotRight, this.build);
@@ -1044,6 +921,7 @@ function getElementResistances(options: statRow, totalStats) {
     return labels;
 }
 
+const statOrder = [ "hp",  "atk", "def", "mp",  "mag", "spr" ];
 function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wieldingBonus) {
     var labels = [];
 
@@ -1051,10 +929,9 @@ function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wield
     let y0 = options.yStart;
 
     let fs = options.fontSize;
-
     
-    for (let index = 0; index < options.statOrder.length; index++) {
-        const key = options.statOrder[index];
+    for (let index = 0; index < statOrder.length; index++) {
+        const key = statOrder[index];
         const bonusKey = `${key}%`;
 
         var posX = Math.floor(index / options.rows);
