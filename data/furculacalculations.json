@@ -1,4 +1,33 @@
 {
+	"Karten (pending)": {
+		"name": "Karten (pending)",
+		"damage": "15,122,611,351",
+		"turns": "10",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#291c4a10-f6c9-11e9-8f21-29aab363c1db",
+		"jp": false,
+		"burst": "33,370,231,553",
+		"burstTurn": "4",
+		"wiki": "https://exvius.gamepedia.com/Karten",
+		"rotation": [
+			"Full Moon - Savage Awakening (CD) + Full Moon - Terrifying Howl + Full Moon - Wild Slash",
+			"Full Moon - Crimson Blitz (CD) + Full Moon - Bestial Barrage x 2",
+			"Full Moon - Bestial Barrage x 3",
+			"Frenzied Rampage (CD)",
+			"Full Moon - Wild Slash + Full Moon - Bestial Barrage x 2",
+			"Full Moon - Savage Awakening (CD) + Full Moon - Terrifying Howl + Full Moon - Bestial Barrage",
+			"Full Moon - Bestial Barrage x 3",
+			"Full Moon - Wild Slash + Full Moon - Crimson Blitz (CD) + Full Moon - Bestial Barrage",
+			"Full Moon - Bestial Barrage x 2",
+			"Moonlit Strike (LB)",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Riku": {
 		"name": "Riku",
 		"damage": "14,615,047,069",
@@ -25,6 +54,35 @@
 			"",
 			"",
 			"",
+			""
+		]
+	},
+	"Godrea (pending)": {
+		"name": "Godrea (pending)",
+		"damage": "14,547,149,677",
+		"turns": "15",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#7bce2d70-f6f9-11e9-8f21-29aab363c1db",
+		"jp": false,
+		"burst": "23,658,652,446",
+		"burstTurn": "8",
+		"wiki": "https://exvius.gamepedia.com/Godrea",
+		"rotation": [
+			"Activate - Photonised Nitrogen Cartridge (CD) + Activate - Nitrogen Cartridge",
+			"Activate - GE - 98 Photon Cartridge (CD) + Activate - Photonised Radioactive Cartridge",
+			"Charge - Plasma Laser x 4",
+			"Charge - Plasma Laser x 4",
+			"Charge - Plasma Laser x 4",
+			"Ectoplasm Extermination (LB)",
+			"Activate - GE - 98 Photon Catridge (CD) + Activate - Nitrogen Catridge + Charge - Plasma Laser",
+			"Charge - Plasma Laser x 4",
+			"Charge - Plasma Laser x 4",
+			"Charge - Plasma Laser x 4",
+			"Ectoplasm Extermination (LB)",
+			"Activate - GE - 98 Photon Catridge (CD) + Activate - Nitrogen Catridge + Charge - Plasma Laser",
+			"Charge - Plasma Laser x 4",
+			"Charge - Plasma Laser x 4",
+			"Charge - Plasma Laser x 4",
 			""
 		]
 	},

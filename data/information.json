@@ -90,6 +90,11 @@
 	"lantern": {
 		"author": "131139508421918721",
 		"title": "Lantern Guide",
-		"description": "Fire res on the party, at least 50% base + buff.\nPhysical cover with provoke\nBarriers help against the DoT\nCan bring 3 DPS just fine.\nBoss is resistant to non-ele\nCan't be broken, very tanky.\n80% ele res to everything but water.\nMake sure to have ailment resistance.\nDoes Fixed type AOE, bring mitigation, inflicts petrification.\nDon't let 3 Paper Oni's stay alive, damage increases, DoT's stack.\nSealing Shard spawns when Lantern takes Fire damage.\nKilling 5 Sealing Shard gets you a skill for big damage."
+		"description": "Fire res on the party, at least 50% base + buff.\nPhysical cover with provoke\nCan bring 3 DPS just fine.\nCan't be broken, very tanky.\n80% ele res to everything but water.\nBoss is resistant to non-ele\nMake sure to have ailment resistance.\nDoes Fixed type AOE, bring mitigation, inflicts petrification.\nDon't let 3 Paper Oni's stay alive, damage increases, DoT's stack.\nSealing Shard spawns when Lantern takes Fire damage.\nKilling 5 Sealing Shard gets you a skill for big damage skill added to your units.\nUsing this skill will deal 50% HP damage to the boss, only one unit needs to use it."
+	},
+	"connection": {
+		"author": "564579480396627988",
+		"title": "Fix for Connection Issues",
+		"description": "VPN Option:\n- Press re-download, exit the game;\n- Clear cache;\n- Install the windscribe, no need for the 10gb (but it's 10gb free tho);\n- Connect to VPN, Cub - Chicago \n\nworked for others;\nDownload until the 182mb pack;\nWhen asked to download the 1.6gb, just disconnect the VPN and finish the download.\n\nDNS Option:\n- Open the Settings on the device.\n- Select “Wi-Fi”.\n- Long press your current network, then select “Modify network”.\n- Mark “Show advanced options” check box.\n- Change “IP settings” to “Static”\n- Change DNS 1 to 8.8.8.8"
 	}
 }
