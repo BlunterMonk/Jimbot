@@ -32,6 +32,7 @@ function buildProfileEmbed(profile: UserProfile, user): Promise<Discord.RichEmbe
 
     let text = "";
     let keys = Object.keys(profile.builds);
+    keys = keys.sort();
     let status = (profile.status) ? profile.status : "";
 
     var embed = new Discord.RichEmbed()
@@ -71,7 +72,7 @@ function buildProfileEmbed(profile: UserProfile, user): Promise<Discord.RichEmbe
     if (!leadURL)
         return Promise.resolve(embed);
 
-    embed.setDescription(text + "\u200B\n**__Lead:__**");
+    embed.setDescription(text + "**__Lead:__**");
 
     return new Promise<Discord.RichEmbed>((resolve, reject) => {
         Build.CreateBuildsFromURL(leadURL)

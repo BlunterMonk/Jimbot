@@ -148,6 +148,7 @@ interface BuildData {
 class Item {
     id: string;
     name: string;
+    jpname?: string;
     type: string;
     hp:  number; "hp%":  number;
     mp:  number; "mp%":  number;
@@ -155,7 +156,9 @@ class Item {
     def: number; "def%": number;
     mag: number; "mag%": number;
     spr: number; "spr%": number;
-    equipedConditions: string[];
+    enhancements?: any[];
+    equipedConditions?: string[];
+    exclusiveUnits?: string[];
     access: string[];
     maxNumber: number;
     icon: string; 
@@ -166,6 +169,7 @@ class Item {
     special: any[];
     lbPerTurn: any;
     lbFillRate: any;
+    levelCondition?: number;
 }
 
 export class Build {
@@ -347,6 +351,8 @@ export class Build {
                 this.loadedConditions.push(item.type)
             }
         });
+
+        log("Loaded Items: ", this.loadedItems);
 
         this.loadedItems.forEach((item, ind) => {
             
@@ -548,15 +554,17 @@ function isApplicable(item, unit: Unit) {
     }
     return true;
 }
-function areConditionOK(item, B: Build, equipList: any[], level = 0) {
+function areConditionOK(B: Build, item: Item, equipList: any[], level = 0) {
     if (level && item.levelCondition && item.levelCondition > level) {
         debug(`Item fails to meet level condition`);
         return false;
     }
     if (item.equipedConditions) {
-        for (var conditionIndex = item.equipedConditions.length; conditionIndex--;) {
-            if (!isEquipedConditionOK(B, equipList, item.equipedConditions[conditionIndex])) {
-                debug(`Item fails to meet equipment conditions: `, item.equipedConditions[conditionIndex]);
+        debug("\nCHECKING ITEM CONDITIONS: ", item);
+        for (var ind = item.equipedConditions.length; ind--;) {
+            log("Index: ", ind);
+            if (!isEquipedConditionOK(B, equipList, item.equipedConditions[ind])) {
+                debug(`Item fails to meet equipment conditions: `, item.equipedConditions[ind]);
                 return false;
             }
         }
@@ -564,8 +572,7 @@ function areConditionOK(item, B: Build, equipList: any[], level = 0) {
     return true;
 }
 function isEquipedConditionOK(B: Build, equipList: any[], condition) {
-    debug("isEuipedConditionOk: ", condition);
-    debug("Loaded Conditions: ", B.loadedConditions);
+    debug("isEuipedConditionOk: ", condition, ", Loaded Conditions: ", B.loadedConditions);
 
     if (Array.isArray(condition)) {
         return condition.some(c => isEquipedConditionOK(B, equipList, c));
@@ -575,7 +582,7 @@ function isEquipedConditionOK(B: Build, equipList: any[], condition) {
             if ((equipList[0] && equipList[0].element && equipList[0].element.includes(condition)) || (equipList[1] && equipList[1].element && equipList[1].element.includes(condition))) {
                 return true;
             }
-        } else if (B.loadedConditions && B.loadedConditions.includes(condition)) {
+        } else if (B.loadedConditions.includes(condition)) {
             debug("Checking Equipment Condition");
             for (var equipedIndex = 0; equipedIndex < 10; equipedIndex++) {
                 if (equipList[equipedIndex] && equipList[equipedIndex].type == condition) {
@@ -590,7 +597,6 @@ function isEquipedConditionOK(B: Build, equipList: any[], condition) {
                 return true;
             }
         } else {
-            debug("Checking Remaining Conditions: ", equipList);
             for (var equipedIndex = 0; equipedIndex < 10; equipedIndex++) {
                 if (equipList[equipedIndex] && equipList[equipedIndex].id == condition) {
                     return true;
@@ -628,15 +634,11 @@ function getTotalBonuses(passives: any, equipmentTotal: any, esper: any) {
 function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: any, esper: any, build: Build): any {
 
     debug("getUnitMaxStats:");
-    debug("pots");
-    debug(pots);
-    debug("equipmentTotal");
-    debug(equipmentTotal);
-    debug("passives");
-    debug(passives);
+    debug("Pots:", pots);
+    debug("Equipment Total: ", equipmentTotal);
+    debug("Passives: ", passives);
     if (esper) {
-        debug("esper");
-        debug(esper);
+        debug("Esper: ", esper);
     }
 
     var bonus = getTotalBonuses(passives, equipmentTotal, esper);
@@ -660,8 +662,7 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
         });
     }
 
-    debug("total bonuses");
-    debug(bonus);
+    debug("total bonuses: ", bonus);
 
     debug("Applying Base Stats, Pots, and Bonus %");
     var total = {};
@@ -792,39 +793,44 @@ function getUnitPassiveStats(B: Build, unit: Unit): any {
 
     var passives = [];
     unit.skills.forEach((skill, i) => {
-        //log("\nTesting Passive");
-        //logData(skill);
+        trace("\nTesting Passive: ", skill);
 
         if (skill.equipedConditions && !isEquipedConditionOK(B, B.equipment, skill.equipedConditions)) {
             //log("Passive Skill Not Activated");
             return;
         }
+        
         passives.push(skill);
-        //log("Passive Passed\n");
+        trace("Passive Passed\n");
     });
 
     passives.forEach((p, i) => {
+        trace("Adding Passive Stat: ", p);
         stats = addToTotal(stats, p);
     });
 
     if (unit.enhancements) {
 
         unit.enhancements.forEach(element => {
-            //og("\nTesting Enhancement");
-            //logData(element);
             if (element.levels && element.levels[2]) {
                 let enh = element.levels[2];
-                //logData(enh);
+                trace("Testing Enhancement: ", enh, " Conditions: ", enh.equipedConditions);
 
-                if (enh.equipedConditions && !isEquipedConditionOK(B, B.equipment, enh.equipedConditions)) {
-                    //log("Passive Enhancement Not Activated");
-                    return;
+                if (enh.equipedConditions && isEquipedConditionOK(B, B.equipment, enh.equipedConditions)) {
+                    enh.forEach(e => {
+                        stats = addToTotal(stats, e);
+                    });
+
+                    debug("Enhancement Passed");
+                } else if (!enh.equipedConditions) {
+                    enh.forEach(substat => {
+                        if (substat.equipedConditions && isEquipedConditionOK(B, B.equipment, substat.equipedConditions)) {
+                            stats = addToTotal(stats, substat);
+                            debug("Passive Enhancement Activated");
+                        } 
+                    });
                 }
-
-                enh.forEach(e => {
-                    stats = addToTotal(stats, e);
-                });
-                //log("Enhancement Passed\n");
+                
             }
         });
     }
@@ -875,9 +881,9 @@ export function itemToString(item: any): string {
     // log("Item To String: ", item);
 
     var stats = Object.keys(item);
-    log("Item To String Keys: ", item);
+    // log("Item To String Keys: ", item);
     stats = sortStats(stats);
-    log("Item To String Sorted Keys: ", item);
+    // log("Item To String Sorted Keys: ", item);
     stats.forEach((s, i) => {
 
         if (statValues.includes(s) && item[s] != null) {
@@ -916,7 +922,7 @@ export function itemToString(item: any): string {
             // log(`${itemInfo.name}: [${s}]`)
             // log(itemInfo[s]);
         } else if (complexStats.includes(s)) {
-            log("Item Extra Stat: ", s, " Item: ", item[s]);
+            // log("Item Extra Stat: ", s, " Item: ", item[s]);
         }
     });
 
@@ -1438,7 +1444,7 @@ function applyEnchantments(item, enchantments) {
         return item;
     }
 }
-function findBestItemVersion(B: Build, equipList: any[], slot, itemWithVariation: any[]) {
+function findBestItemVersion(B: Build, equipList: any[], slot, itemWithVariation: Item[]) {
 
     if (itemWithVariation.length == 0) {
         log(`Error, could not find item in slot, ${slot}`);
@@ -1447,7 +1453,7 @@ function findBestItemVersion(B: Build, equipList: any[], slot, itemWithVariation
 
     var item = itemWithVariation[0];
     trace("Find Best Item")
-    trace("Base Item: ", item)
+    trace("Base Item: ", item, " Variations: ", itemWithVariation.length);
 
     if (itemWithVariation.length == 1) {
         // if there are no variations of the item, it is fine
@@ -1499,7 +1505,7 @@ function findBestItemVersion(B: Build, equipList: any[], slot, itemWithVariation
         
         // Check to see if each item is valid
         for (var index in itemWithVariation) {
-            if (isApplicable(itemWithVariation[index], B.loadedUnit) && areConditionOK(itemWithVariation[index], B, equipList)) {
+            if (isApplicable(itemWithVariation[index], B.loadedUnit) && areConditionOK(B, itemWithVariation[index], equipList)) {
                 var enh = B.getItemEnchantments(slot);
                 if (enh) {
                     trace("Variant Item With Enchantments ", itemWithVariation[index]);

@@ -103,65 +103,52 @@ class client {
     }
 
     // Send message to the destination based on the reqested location
-    send(receivedMessage, msg, callback = null, error = null) {
-        receivedMessage.channel
-        .send(msg)
-        .then(message => {
-            this.cacheBotMessage(receivedMessage.id, message.id);
-            if (callback) callback(message);
-        })
-        .catch(e => {
-            console.error(e);
-            if (error) error(e);
+    send(receivedMessage: Discord.Message, msg: any): Promise<Discord.Message> {
+        return new Promise<Discord.Message>((resolve, reject) => {
+
+            receivedMessage.channel
+            .send(msg)
+            .then((message: Discord.Message) => {
+                this.cacheBotMessage(receivedMessage.id, message.id);
+                resolve(message);
+            })
+            .catch(e => {
+                error(e);
+                reject(e);
+            });
         });
     }
-    sendImage(receivedMessage, filename, callback = null) {
+    sendImage(receivedMessage, filename): Promise<Discord.Message> {
         var Attachment = new Discord.Attachment(filename);
         if (Attachment) {
-            Client.send(receivedMessage, Attachment);
+            return Client.send(receivedMessage, Attachment);
         }
     }
-    sendMessage(receivedMessage, embed, callback = null, error = null) {
+    sendMessage(receivedMessage, embed): Promise<Discord.Message> {
         embed.color = this.embedColor;
-        this.send(receivedMessage, {embed: embed}, callback, error);
+        return this.send(receivedMessage, {embed: embed});
     }
-    sendMessageWithAuthor(receivedMessage, embed, authorId, callback = null, error = null) {
-        this.discordClient.fetchUser(authorId)
-        .then(author => {
+    sendMessageWithAuthor(receivedMessage, embed, authorId): Promise<Discord.Message> {
+        return new Promise<Discord.Message>((resolve, reject) => {
+            this.discordClient.fetchUser(authorId)
+            .then(author => {
 
-            embed.color = this.embedColor;
-            embed.author = {
-                name: author.username,
-                icon_url: author.avatarURL
-            };
+                embed.color = this.embedColor;
+                embed.author = {
+                    name: author.username,
+                    icon_url: author.avatarURL
+                };
 
-            receivedMessage.channel
-            .send({embed: embed})
-            .then(message => {
-                this.cacheBotMessage(receivedMessage.id, message.id);
-                if (callback) callback(message);
+                this.send(receivedMessage, {embed: embed}).then(resolve).catch(reject);
             })
-            .catch(e => {
-                console.error(e);
-                if (error) error(e);
-            });
-        })
-        .catch(reason =>{
-            console.error(reason);
+            .catch(reason =>{
+                error(reason);
 
-            embed.author = {
-                name: `From: ${authorId}`,
-            };
+                embed.author = {
+                    name: `From: ${authorId}`,
+                };
 
-            receivedMessage.channel
-            .send({embed: embed})
-            .then(message => {
-                this.cacheBotMessage(receivedMessage.id, message.id);
-                if (callback) callback(message);
-            })
-            .catch(e => {
-                console.error(e);
-                if (error) error(e);
+                this.send(receivedMessage, {embed: embed}).then(resolve).catch(reject);
             });
         });
     }
@@ -180,18 +167,20 @@ class client {
             });
         });
     }
-    sendPrivateMessage(receivedMessage, embed, callback = null, error = null) {
-        embed.color = this.embedColor;
+    sendPrivateMessage(receivedMessage, embed): Promise<Discord.Message> {
+        return new Promise<Discord.Message>((resolve, reject) => {
+            embed.color = this.embedColor;
 
-        receivedMessage.author
-        .send({embed: embed})
-        .then(message => {
-            this.cacheBotMessage(receivedMessage.id, message.id);
-            if (callback) callback(message);
-        })
-        .catch(e => {
-            console.error(e);
-            if (error) error(e);
+            receivedMessage.author
+            .send({embed: embed})
+            .then(message => {
+                this.cacheBotMessage(receivedMessage.id, message.id);
+                resolve(message);
+            })
+            .catch(e => {
+                error(e);
+                reject(e);
+            });
         });
     }
     fetchUser(authorId: string): Promise<Discord.User> {
