@@ -169,7 +169,6 @@ export async function handleBis(receivedMessage: Discord.Message, search: string
         handleBuildhelp(receivedMessage);
         return;
     }
-    
 
     search = search.replaceAll("_", " ");
     var calc = Cache.getUnitCalculation("whale", search)
@@ -261,6 +260,7 @@ export async function handleTeam(receivedMessage: Discord.Message, search: strin
                      .setURL(search);
             }
 
+            Client.send(receivedMessage, `Hey <@${receivedMessage.author.id}>, build finished!`);
             Client.sendMessage(receivedMessage, embed);
         }
 
@@ -270,19 +270,21 @@ export async function handleTeam(receivedMessage: Discord.Message, search: strin
             return;
         }
 
-        Client.send(receivedMessage, "oof, ok, this may take a while!");
+        Client.send(receivedMessage, "oof, ok, this may take a while!")
+        .then(m => {
 
-        let team : Build.Build[] = d.units.map((buildData, index) => {
-            return Build.CreateBuild(response.id, response.region, buildData);
+            let team : Build.Build[] = d.units.map((buildData, index) => {
+                return Build.CreateBuild(response.id, response.region, buildData);
+            });
+            if (team.length > 5) {
+                team = team.slice(0, Math.min(5, team.length-1));
+            }
+
+            BuildImage.BuildTeamImage(imgPath, team).then(sendImg).catch(e => {
+                Client.send(receivedMessage, "Sorry hun, something went wrong.");
+                error("Could not build image");
+            })
         });
-        if (team.length > 5) {
-            team = team.slice(0, Math.min(5, team.length-1));
-        }
-
-        BuildImage.BuildTeamImage(imgPath, team).then(sendImg).catch(e => {
-            Client.send(receivedMessage, "Sorry hun, something went wrong.");
-            error("Could not build image");
-        })
 
         /*
         let imageBuilds : Promise<string>[] = d.units.map((buildData, index) => {

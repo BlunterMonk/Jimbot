@@ -177,7 +177,8 @@ export function handleAddemo(receivedMessage: Discord.Message, search: string, p
                 files: [{ attachment: `${existing}`, name: existing }]
             };
 
-            Client.sendMessage(receivedMessage, embed, message => {
+            Client.sendMessage(receivedMessage, embed)
+            .then(message => {
                 
                 message.react(okEmoji);
                 message.react(cancelEmoji);

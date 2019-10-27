@@ -433,7 +433,8 @@ export function handleGlbestunits(receivedMessage: Discord.Message, search: stri
         description: list,
     };
 
-    Client.sendMessage(receivedMessage, embed, null, (e) => {
+    Client.sendMessage(receivedMessage, embed)
+    .catch((e) => {
         log("Message too big, removing links")
 
         list = "";
