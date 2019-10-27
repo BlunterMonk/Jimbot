@@ -170,6 +170,8 @@ export async function handleBis(receivedMessage: Discord.Message, search: string
         return;
     }
     
+
+    search = search.replaceAll("_", " ");
     var calc = Cache.getUnitCalculation("whale", search)
     if (!calc)
         return;

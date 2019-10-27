@@ -183,6 +183,7 @@ export class Build {
     equipment: any[]; // list of valid equipment
     // Extra boons from equipment
     equipedConditions: string[]; // Criteria that has been met based on the items given
+    loadedConditions: string[]; // Criteria that has been set by the loaded items
     allowUseOf: string[]; // equipment types allowed to be used by current items
     killers: any; // total killers, {name:{physical:number,magical:number}}
     resist: any; // total resistances, {percent:number}
@@ -340,11 +341,26 @@ export class Build {
     }
     setItemData(items: any[]) {
         this.loadedItems = items;
-        // this.loadedItems.forEach((item, ind) => {
-        //     if (!this.equipedConditions.includes(item.type)) {
-        //         this.equipedConditions.push(item.type)
-        //     }
-        // });
+        this.loadedConditions = [];
+        this.loadedItems.forEach((item, ind) => {
+            if (!this.loadedConditions.includes(item.type)) {
+                this.loadedConditions.push(item.type)
+            }
+        });
+
+        this.loadedItems.forEach((item, ind) => {
+            
+            var itemInfo = Builder.getItems(this.buildRegion, item.id);
+            var best = findBestItemVersion(this, this.loadedItems, ind, itemInfo);
+            if (best == null)
+                return;
+            // log("Best Item Found");
+            // log(best);
+            
+            this.addItem(best);
+        });
+
+        log("Loaded Equipment: \n", this.equipment, "\n");
     }
 
     getItemEnchantments(slot: number): any[] {
@@ -532,54 +548,51 @@ function isApplicable(item, unit: Unit) {
     }
     return true;
 }
-function areConditionOK(item, B: Build, level = 0) {
+function areConditionOK(item, B: Build, equipList: any[], level = 0) {
     if (level && item.levelCondition && item.levelCondition > level) {
         debug(`Item fails to meet level condition`);
         return false;
     }
     if (item.equipedConditions) {
         for (var conditionIndex = item.equipedConditions.length; conditionIndex--;) {
-            if (!isEquipedConditionOK(B, item.equipedConditions[conditionIndex])) {
-                debug(`Item fails to meet equipment conditions`);
-                debug(item.equipedConditions[conditionIndex]);
+            if (!isEquipedConditionOK(B, equipList, item.equipedConditions[conditionIndex])) {
+                debug(`Item fails to meet equipment conditions: `, item.equipedConditions[conditionIndex]);
                 return false;
             }
         }
     }
     return true;
 }
-function isEquipedConditionOK(B: Build, condition) {
-    var equiped = B.equipment;
-    debug("isEuipedConditionOk: Condition");
-    debug(condition);
+function isEquipedConditionOK(B: Build, equipList: any[], condition) {
+    debug("isEuipedConditionOk: ", condition);
+    debug("Loaded Conditions: ", B.loadedConditions);
 
     if (Array.isArray(condition)) {
-        return condition.some(c => isEquipedConditionOK(B, c));
+        return condition.some(c => isEquipedConditionOK(B, equipList, c));
     } else {
         if (elementList.includes(condition)) {
             debug("Checking Equipment Element Condition");
-            if ((equiped[0] && equiped[0].element && equiped[0].element.includes(condition)) || (equiped[1] && equiped[1].element && equiped[1].element.includes(condition))) {
+            if ((equipList[0] && equipList[0].element && equipList[0].element.includes(condition)) || (equipList[1] && equipList[1].element && equipList[1].element.includes(condition))) {
                 return true;
             }
-        } else if (B.equipedConditions.includes(condition)) {
+        } else if (B.loadedConditions && B.loadedConditions.includes(condition)) {
             debug("Checking Equipment Condition");
             for (var equipedIndex = 0; equipedIndex < 10; equipedIndex++) {
-                if (equiped[equipedIndex] && equiped[equipedIndex].type == condition) {
+                if (equipList[equipedIndex] && equipList[equipedIndex].type == condition) {
                     debug("Passed Equipment Condition");
                     return true;
                 }
             }
         } else if (condition == "unarmed") {
             debug("Checking Unarmed Condition")
-            if (!equiped[0] && ! equiped[1]) {
+            if (!equipList[0] && ! equipList[1]) {
                 debug("Passed Unarmed Condition");
                 return true;
             }
         } else {
-            debug("Checking Remaining Conditions");
-            debug(equiped);
+            debug("Checking Remaining Conditions: ", equipList);
             for (var equipedIndex = 0; equipedIndex < 10; equipedIndex++) {
-                if (equiped[equipedIndex] && equiped[equipedIndex].id == condition) {
+                if (equipList[equipedIndex] && equipList[equipedIndex].id == condition) {
                     return true;
                 }
             }
@@ -782,7 +795,7 @@ function getUnitPassiveStats(B: Build, unit: Unit): any {
         //log("\nTesting Passive");
         //logData(skill);
 
-        if (skill.equipedConditions && !isEquipedConditionOK(B, skill.equipedConditions)) {
+        if (skill.equipedConditions && !isEquipedConditionOK(B, B.equipment, skill.equipedConditions)) {
             //log("Passive Skill Not Activated");
             return;
         }
@@ -803,7 +816,7 @@ function getUnitPassiveStats(B: Build, unit: Unit): any {
                 let enh = element.levels[2];
                 //logData(enh);
 
-                if (enh.equipedConditions && !isEquipedConditionOK(B, enh.equipedConditions)) {
+                if (enh.equipedConditions && !isEquipedConditionOK(B, B.equipment, enh.equipedConditions)) {
                     //log("Passive Enhancement Not Activated");
                     return;
                 }
@@ -825,22 +838,33 @@ function getUnitPassiveStats(B: Build, unit: Unit): any {
 
 function itemEffectToString(key: string, item: any): string {
 
+    /*
     var t = JSON.stringify(item);
     t = t.replace(/[\[\]\(\"\{\}\"\)]/gi,'');
     t = t.replace(/:/gi, " ");
     t = t.replace(/,/gi, ", ");
     // log("Effect Text:" + t)
     t = t.replace(/accuracy.*?(|\w+|\n)(,|\S+)/g, " ");
-    t = t.replaceAll(",", "%,");
+    t = t.replace(/[0-9]/gi, "%,");
     t = t.trim();
     // log("Edited Text: " + t)
     if (t.lastIndexOf(",") == t.length-1)
         t = t.slice(0, t.length - 1);
-
+    */
     var k = key.replace(/partialDualWield/g, "dw");
     k = k.replace(/singleWieldingOneHanded/g, "DH");
     k = k.replace(/singleWielding/g, "TDH");
     k = k.replace(/dualWielding/g, "TDW");
+
+    var t = "";
+    var keys = Object.keys(item);
+    log("EFFECT KEYS: ", keys);
+    keys.forEach((e, i) => {
+        if (e.toLowerCase() == "accuracy")
+            return;
+        if (i > 0) t += ", ";
+        t += `${e} ${item[e]}%`;
+    });
 
     return `${k}(${t})`;
 }
@@ -858,7 +882,7 @@ export function itemToString(item: any): string {
 
         if (statValues.includes(s) && item[s] != null) {
             if (s.includes("%"))
-                text.push(`${s.replace("%", "")} ${item[s]}%`);
+                text.push(`${s.replace("%", "")} +${item[s]}%`);
             else
                 text.push(`${s} ${item[s]}`);
 
@@ -899,7 +923,7 @@ export function itemToString(item: any): string {
     // log("unsorted");
     // log(text);
 
-    text = sortStats(text);
+    // text = sortStats(text);
     text.forEach((s, i) => {
         if (i > 0)
             v += `, `;
@@ -911,20 +935,21 @@ export function itemToString(item: any): string {
 }
 export function itemToStringDivided(item: any) {
 
-    var v = "";
     var main = [];
+    var bonus = [];
     var effects = [];
     var extra = [];
     // log("Item To String: ", item);
 
     var stats = Object.keys(item);
+    stats = sortStats(stats);
     stats.forEach((s, i) => {
 
         if (statValues.includes(s) && item[s] != null) {
             if (s.includes("%"))
-                main.push(`${s.replace("%", "")} ${item[s]}%`);
+                bonus.push(`${s.replace("%", "")}+${item[s]}%`);
             else
-                main.push(`${s} ${item[s]}`);
+                main.push(`${s}${item[s]}`);
 
         } else if (itemEffects.includes(s)) {
             
@@ -963,17 +988,61 @@ export function itemToStringDivided(item: any) {
     // log("unsorted");
     // log(text);
 
-    main = sortStats(main);
-    effects = sortStats(effects);
-    extra = sortStats(extra);
+log("\nItem To String: ", item.name);
+log("Main: ", main);
+log("Bonus: ", bonus);
+log("Effects: ", effects);
+log("Extra: ", extra);
+
+    // main = sortStats(main);
+    // effects = sortStats(effects);
+    // extra = sortStats(extra);
+    let final = "";
     main.forEach((s, i) => {
-        if (i > 0)
-            v += `, `;
-
-        v += s;
+        if (i > 0) {
+            if (i % 3 == 0)
+                final += "\n";
+            else
+                final += `, `;
+        }
+        final += s;
     });
+    if (bonus.length > 0) {
+        if (!final.empty()) final += "\n";
+        bonus.forEach((s, i) => {
+            if (i > 0) {
+                if (i % 3 == 0)
+                    final += "\n";
+                else
+                    final += `, `;
+            }
+            final += s;
+        });
+    }
+    if (effects.length > 0) {
+        if (!final.empty()) final += "\n";
+        effects.forEach((s, i) => {
+            if (i > 0) {
+                final += `, `;
+            }
+            final += s;
+        });
+    }
+    /*
+    if (extra.length > 0) {
+        final += "\n";
+        extra.forEach((s, i) => {
+            if ((i+1) % 3 == 0) {
+                final += "\n";
+            } else if (i > 0) {
+                final += `, `;
+            }
+            final += s;
+        });
+    }
+    */
 
-    return v;
+    return final;
 }
 export function itemEnhancementsToString(item: any): string {
 
@@ -1369,7 +1438,7 @@ function applyEnchantments(item, enchantments) {
         return item;
     }
 }
-function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
+function findBestItemVersion(B: Build, equipList: any[], slot, itemWithVariation: any[]) {
 
     if (itemWithVariation.length == 0) {
         log(`Error, could not find item in slot, ${slot}`);
@@ -1383,7 +1452,7 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
     if (itemWithVariation.length == 1) {
         // if there are no variations of the item, it is fine
         if (isApplicable(item, B.loadedUnit) 
-            && (!item.equipedConditions || areConditionOK(item, B))) {
+            && (!item.equipedConditions || areConditionOK(B, item, equipList))) {
             
             var enh = B.getItemEnchantments(slot);
             if (enh) {
@@ -1430,7 +1499,7 @@ function findBestItemVersion(B: Build, slot, itemWithVariation: any[]) {
         
         // Check to see if each item is valid
         for (var index in itemWithVariation) {
-            if (isApplicable(itemWithVariation[index], B.loadedUnit) && areConditionOK(itemWithVariation[index], B)) {
+            if (isApplicable(itemWithVariation[index], B.loadedUnit) && areConditionOK(itemWithVariation[index], B, equipList)) {
                 var enh = B.getItemEnchantments(slot);
                 if (enh) {
                     trace("Variant Item With Enchantments ", itemWithVariation[index]);
@@ -1549,22 +1618,19 @@ export function CreateBuild(id: string, region: string, buildData): Build {
     if (!build)
         return null;
 
-    log("Create Build: ", buildData);
+    log("Create Build: ", id, " Region: ", region, " Build Data: ", buildData);
 
     var allItems = [];
     buildData.items.forEach((element, ind) => {
         
         // If only one item is found, equip it right away, otherwise wait for validation
         var itemInfo = Builder.getItems(region, element.id);
-        var best = findBestItemVersion(build, ind, itemInfo);
-        if (best == null)
+        if (itemInfo.length == 0) {
+            log("Failed to find item");
             return;
-        // log("Best Item Found");
-        // log(best);
+        }
 
-        build.addItem(best);
-
-        allItems = allItems.concat(itemInfo);
+        allItems = allItems.concat(itemInfo[0]);
     });
 
     build.setItemData(allItems);
