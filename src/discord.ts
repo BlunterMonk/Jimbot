@@ -280,7 +280,7 @@ class client {
         if (contentPrefix != prefix) {
 
             if (content.includes("ffbeequip.com") 
-                && (this.validate(receivedMessage, "autobuild") || Profiles.getProfile(receivedMessage.author.id))) {
+                && (this.validate(receivedMessage, "autobuild") || Profiles.getAutoBuild(receivedMessage.author.id))) {
                 var URL = receivedMessage.content.match(/(https.*?(\s|$))/g)
                 trace("Received URL for Autobuild: ", url);
                 if (URL) {
