@@ -1172,8 +1172,8 @@ function getEquipment(options: any, firstSlotLeft: equipSlotOptions, firstSlotRi
                 src: `${imgCacheDir}equipment/${equip.type}.png`,
                 x: xType,
                 y: yType,
-                w: 50,
-                h: 50
+                w: 45,
+                h: 45
             });
         }    
 
@@ -1231,8 +1231,8 @@ function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, fontSize, align) {
             text: enhText,
             font: enhancementsFontFamily,
             size: fontSize,
-            x: odd ? 810 : 40,
-            y: 550,
+            x: odd ? 830 : 20,
+            y: 510,
             align: align,
             color: enhancementsColor,
             strokeColor: enhancementsStroke,
@@ -1253,7 +1253,8 @@ function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, fontSize, align) {
         align: align,
         maxWidth: maxWidth,
         wrap: true,
-        anchorTop: true
+        anchorTop: true,
+        splitter: ", "
     };
 
     if (!remainingText.empty()) {

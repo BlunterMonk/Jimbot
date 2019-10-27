@@ -38,6 +38,7 @@ export interface labelOptions {
 	strokeColor: string; // RGBA format: 0,0,0,1 
 	wrap: boolean; // Should text wrap when max width is hit
 	maxWidth: number; // Max horizontal length a label will be before wrapping
+	splitter?: string; // character used to split text when wrapping
 }
 export interface imageOptions {
 	src: string; // image path
@@ -128,8 +129,8 @@ interface textLine {
 	width: number;
 	height: number;
 }
-export function getLines(ctx, text, maxWidth, font = null): textLine[] {
-    var words = text.split(" ");
+export function getLines(ctx, text, maxWidth, font, splitter: string = " "): textLine[] {
+    var words = text.split(splitter);
     var lines : textLine[] = [];
 	var currentLine = words[0];
 	var cacheFont = ctx.font;
@@ -140,11 +141,11 @@ export function getLines(ctx, text, maxWidth, font = null): textLine[] {
 
     for (var i = 1; i < words.length; i++) {
 		var word = words[i];
-		var measure = ctx.measureText(currentLine + " " + word);
+		var measure = ctx.measureText(currentLine + splitter + word);
 		var width = measure.width;
 		
         if (width < maxWidth) {
-            currentLine += " " + word;
+            currentLine += splitter + word;
         } else {
             lines.push({
 				text:currentLine,
@@ -155,7 +156,7 @@ export function getLines(ctx, text, maxWidth, font = null): textLine[] {
         }
 	}
 	
-	var measure = ctx.measureText(currentLine + " " + word);
+	var measure = ctx.measureText(currentLine + splitter + word);
 	lines.push({
 		text:currentLine,
 		width: measure.width,
@@ -167,7 +168,7 @@ export function getLines(ctx, text, maxWidth, font = null): textLine[] {
     return lines;
 }
 
-export function measureText(ctx, text, font) {
+export function measureText(ctx: Canvas.CanvasRenderingContext2D, text, font) {
 	var cacheFont = ctx.font;
 
 	if (font) {
@@ -230,12 +231,12 @@ export var mergeImages = function (imgOpts : imageOptions[], labelOpts : labelOp
 		let stroke = (entry.strokeColor && !entry.strokeColor.empty()) ? `rgba(${entry.strokeColor})` : 'rgba(0,0,0,1)';
 		
 		let x = entry.x;
-		let y = (entry.anchorTop) ? (entry.y * entry.size) : entry.y;
+		let y = entry.y;
 		if (entry.wrap && entry.maxWidth) {
 						
-			var lines = getLines(ctx, entry.text, entry.maxWidth, `${entry.size}px ${entry.font}`);
 			// log("Lines: ", lines.length, " Entry Height: ", lines.length * entry.size);
 
+			var lines = getLines(ctx, entry.text, entry.maxWidth, `${entry.size}px ${entry.font}`, (entry.splitter || " "));
 			if (entry.anchorTop) {
 				y = entry.y + lines[0].height;
 				// log("Total Line Height: ", lines[0].height, " New Y: ", y);
