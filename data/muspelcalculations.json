@@ -20,6 +20,13 @@
 		"type": "physical",
 		"url": null
 	},
+	"Godrea": {
+		"name": "Godrea",
+		"damage": "13,640,978,850 ",
+		"turns": "14",
+		"type": "physical",
+		"url": null
+	},
 	"Eleven": {
 		"name": "Eleven",
 		"damage": "13,020,073,389 ",
@@ -38,6 +45,13 @@
 		"name": "Reberta (jump chain)",
 		"damage": "11,747,548,103 ",
 		"turns": "12",
+		"type": "physical",
+		"url": null
+	},
+	"Karten": {
+		"name": "Karten",
+		"damage": "11,688,344,765",
+		"turns": "11",
 		"type": "physical",
 		"url": null
 	},

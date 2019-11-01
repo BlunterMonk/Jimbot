@@ -20,10 +20,12 @@
 			"faisalith": "https://ffbeequip.com/builder.html?server=gl#3a426a40-ecce-11e9-8f21-29aab363c1db",
 			"morgana": "https://ffbeequip.com/builder.html?server=gl#bf05d780-ecce-11e9-8f21-29aab363c1db",
 			"kayaka": "https://ffbeequip.com/builder.html?server=gl#d98a8f40-ecd0-11e9-8f21-29aab363c1db",
-			"feener_and_boko": "https://ffbeequip.com/builder.html?server=gl#4900fb80-ef64-11e9-8f21-29aab363c1db"
+			"feener_and_boko": "https://ffbeequip.com/builder.html?server=gl#4900fb80-ef64-11e9-8f21-29aab363c1db",
+			"a2_for_majinpoi": "https://ffbeequip.com/builder.html?server=gl#ff614bb0-fc15-11e9-937b-ad48d5c58d17",
+			"2best_girl": "https://ffbeequip.com/builder.html?server=gl#613516a0-fc16-11e9-937b-ad48d5c58d17"
 		},
 		"status": "may the flames guide thee",
-		"lead": "https://ffbeequip.com/builder.html?server=gl#4900fb80-ef64-11e9-8f21-29aab363c1db"
+		"lead": "https://ffbeequip.com/builder.html?server=gl#613516a0-fc16-11e9-937b-ad48d5c58d17"
 	},
 	"97837550491664384": {
 		"autobuild": false,
@@ -78,10 +80,9 @@
 		"builds": {
 			"f2p_galwuf": "https://ffbeequip.com/builder.html?server=gl#7fe07d70-ec9d-11e9-8f21-29aab363c1db",
 			"moon_squad": "https://ffbeequip.com/builder.html?server=gl#58d637d0-ed63-11e9-8f21-29aab363c1db",
-			"stolen_cid": "https://ffbeequip.com/builder.html?server=gl#3b0fe1b0-ef66-11e9-8f21-29aab363c1db",
 			"moose_killers": "https://ffbeequip.com/builder.html?server=gl#b89ebdd0-f0a2-11e9-8f21-29aab363c1db",
 			"stolen_charlotte": "https://ffbeequip.com/builder.html?server=gl#f406d190-f4e0-11e9-8f21-29aab363c1db",
-			"moon_murderers": "https://ffbeequip.com/builder.html?server=gl#534213a0-f88c-11e9-8f21-29aab363c1db"
+			"moon_murderers": "https://ffbeequip.com/builder.html?server=gl#07b66990-f8cd-11e9-8f21-29aab363c1db"
 		},
 		"status": "Sorry I couldnt clear Moon, i was busy thinkin about boys",
 		"lead": "https://ffbeequip.com/builder.html?server=gl#b89ebdd0-f0a2-11e9-8f21-29aab363c1db",
@@ -163,7 +164,9 @@
 		"autobuild": true,
 		"friendcode": "396581499",
 		"nickname": "",
-		"builds": {},
+		"builds": {
+			"moon_moon": "https://ffbeequip.com/builder.html?server=gl#9af41410-f89a-11e9-8f21-29aab363c1db"
+		},
 		"lead": "https://ffbeequip.com/builder.html?server=gl#0a082450-ef62-11e9-8f21-29aab363c1db",
 		"status": "dont foget to do your daily pp mission!"
 	},
@@ -288,13 +291,21 @@
 		"builds": {}
 	},
 	"127870783744770048": {
-		"autobuild": false,
+		"autobuild": true,
 		"friendcode": "562799475",
 		"nickname": "Laxaeus",
 		"status": "5 apron dresses and counting",
-		"lead": "https://ffbeequip.com/builder.html?server=gl#f15b3170-ef6d-11e9-8f21-29aab363c1db",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#21120470-f8ec-11e9-8f21-29aab363c1db",
 		"builds": {
-			"kill_da_moose": "https://ffbeequip.com/builder.html?server=gl#2ee341f0-ef6d-11e9-8f21-29aab363c1db"
+			"kill_da_moose": "https://ffbeequip.com/builder.html?server=gl#2ee341f0-ef6d-11e9-8f21-29aab363c1db",
+			"lantern_elena": "https://ffbeequip.com/builder.html?server=gl#21120470-f8ec-11e9-8f21-29aab363c1db",
+			"tanky_ai_katy": "https://ffbeequip.com/builder.html?server=gl#36a2c230-f8eb-11e9-8f21-29aab363c1db",
+			"elementless_bartz": "https://ffbeequip.com/builder.html?server=gl#5e271cf0-f8ed-11e9-8f21-29aab363c1db",
+			"wind_bartz": "https://ffbeequip.com/builder.html?server=gl#d0100840-f8ed-11e9-8f21-29aab363c1db",
+			"100_draw_magical_ehp_ss_charlotte": "https://ffbeequip.com/builder.html?server=gl#b28602f0-f8ef-11e9-8f21-29aab363c1db",
+			"100_draw_100_evade_mag_ehp_sieghart": "https://ffbeequip.com/builder.html?server=gl#503ecad0-f8f1-11e9-8f21-29aab363c1db",
+			"lead": "https://ffbeequip.com/builder.html?server=gl#c3e4ef20-f8f4-11e9-8f21-29aab363c1db",
+			"chocobo_fina_max_spr": "https://ffbeequip.com/builder.html?server=gl#63647cf0-f9a9-11e9-8f21-29aab363c1db"
 		}
 	},
 	"468731984034660352": {
@@ -433,6 +444,51 @@
 		"compact": false,
 		"friendcode": "943727989",
 		"nickname": "mane",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"107672281127346176": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "450427744",
+		"nickname": "semi",
+		"status": "DQXI is gud",
+		"lead": null,
+		"builds": {}
+	},
+	"182182285255114752": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "169377712",
+		"nickname": "shin",
+		"status": "",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#6e490200-fb73-11e9-98a4-67ecd4c00597",
+		"builds": {}
+	},
+	"302969686679748609": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "JaysusXD",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"411957089989296131": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "fiora",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"154650599017807873": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "static",
 		"status": "",
 		"lead": null,
 		"builds": {}

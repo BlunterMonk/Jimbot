@@ -18,6 +18,103 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20191031
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191031PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20191031
+|type  = Other
+|title = FINAL FANTASY Portal App event!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191031FFPortalAppEvent.html
+}}
+{{Recent News
+|date  = 20191030
+|type  = Other
+|title = STMR Value Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191031STMRValueSummon.html
+}}
+{{Recent News
+|date  = 20191029
+|type  = Event
+|title = Floating Continent: Skies
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191029FFVIFloatingContinentRaid.jpg
+}}
+{{Recent News
+|date  = 20191029
+|type  = Issue
+|title = Issue Report (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191025ConnectionIssueReportUpdatev4.html
+}}
+{{Recent News
+|date  = 20191029
+|type  = Unit
+|title = Featured Summon FINAL FANTASY VI
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191029ArchmageKefkaFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20191029
+|type  = Other
+|title = 5★ Guaranteed (30% Featured) Ticket (A.Kefka/A.Shadow) Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191031AKefkaAShadow30FeaturedBanner.html
+}}
+{{Recent News
+|date  = 20191029
+|type  = Other
+|title = Exchange Shop (A.Kefka/A.Shadow)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191031AKefkaAShadowExchangeShop.html
+}}
+{{Recent News
+|date  = 20191029
+|type  = Event
+|title = Mean Ghouls
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191029HalloweenTrialMeanGhouls.jpg
+}}
+{{Recent News
+|date  = 20191029
+|type  = Other
+|title = Important Notice
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191025LatentAbilitiesAnnouncement.html
+}}
+{{Recent News
+|date  = 20191029
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191031Maintenance.html
+}}
+{{Recent News
+|date  = 20191028
+|type  = Unit
+|title = Ability Awakening Update!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191028AbilityAwakeningBatch33.html
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20191024
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191024PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20191024
+|type  = Issue
+|title = Version 3.8.5
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190926GL380PatchNotes.html
+}}
+{{Recent News
+|date  = 20191024
+|type  = Other
+|title = Mountain of Trust Moogles!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191024MountainofTM.html
+}}
+{{Recent News
+|date  = 20191024
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191024SlotsdeChocoboIssue.html
+}}
+{{Recent News
 |date  = 20191023
 |type  = Other
 |title = Slots de Chocobo
@@ -89,7 +186,6 @@
 |title = Issue Report
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191018IssueReportConnectionError.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20191017
 |type  = Other

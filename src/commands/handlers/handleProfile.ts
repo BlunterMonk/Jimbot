@@ -225,7 +225,7 @@ export function handleUserbuildcompact(receivedMessage: Discord.Message, search:
     handleUserbuild(receivedMessage, search, parameters, true)
 }
 
-export function handleMybuild(receivedMessage: Discord.Message, search: string, parameters: string[], isCompact: boolean) {
+export function handleMybuild(receivedMessage: Discord.Message, search: string, parameters: string[], isFull: boolean) {
 
     if (search == "help") {
         handleProfilehelp(receivedMessage);
@@ -250,7 +250,7 @@ export function handleMybuild(receivedMessage: Discord.Message, search: string, 
         log("Parameter used for build: ", ind);
     }
 
-    buildBuildImageEmbed(search, url, isCompact ? "compact" : "full", ind)
+    buildBuildImageEmbed(search, url, isFull ? "full" : "compact", ind)
     .then(embed => {
         log(`Mybuild success: ${username}(${id}), Build: ${search}(${url})`);
         Client.sendMessage(receivedMessage, embed);
@@ -258,7 +258,7 @@ export function handleMybuild(receivedMessage: Discord.Message, search: string, 
     .catch(error);
 }
 
-export function handleMybuildcompact(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+export function handleMybuildfull(receivedMessage: Discord.Message, search: string, parameters: string[]) {
     handleMybuild(receivedMessage, search, parameters, true);
 }
 
@@ -389,7 +389,7 @@ export function handleRemovebuild(receivedMessage: Discord.Message, search: stri
         return;
     }
 
-    debug("Attempting to remove build: ", search, " From user: ", id);
+    log("Attempting to remove build: ", search, " From user: ", id);
     
     let name = search.replaceAll(" ", "_")
     let removed = Profiles.removeBuild(id, name);

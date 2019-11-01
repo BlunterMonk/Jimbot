@@ -14,6 +14,7 @@ import { Cache } from "../../cache/cache.js";
 import { Client } from "../../discord.js";
 import { Builder } from "../../ffbe/builder.js";
 import { getUnitKey, getUnitNameFromKey, buildBuildImageEmbed, buildBuildImage } from "./common.js";
+import { start } from "repl";
 
 ////////////////////////////////////////////////////////////////////
 
@@ -56,14 +57,17 @@ export async function sendBuildText(receivedMessage: Discord.Message, url) {
 
 export async function sendBuild(receivedMessage: Discord.Message, url: string, unitIndex: number, calculation, style: string, force = false): Promise<string> {
     return new Promise<string>((resolve, reject) => {
+        var fail = function(e) {
+            Client.send(receivedMessage, "Sorry hun, something went wrong.");
+            error("Could not build image");
+            reject(e);
+        }
 
-        buildBuildImage(url, style, unitIndex)
-        .then(imagePath => {
-
+        var sendImage = function(imagePath) {
             const attachment = new Discord.Attachment(imagePath, 'build.png');
             var embed = new Discord.RichEmbed()
             embed.setImage(`attachment://build.png`)
-                 .attachFile(attachment);
+                .attachFile(attachment);
 
             if (calculation) {
                 var text = `**[${calculation.name.trim()}](${calculation.wiki})\n[(sheet)](${(calculation.source == "furcula") ? sheetURL : whaleSheet}) - [(wiki)](${calculation.wiki}) - [(build)](${calculation.url})**\n`;
@@ -77,12 +81,28 @@ export async function sendBuild(receivedMessage: Discord.Message, url: string, u
             }
 
             resolve(url);
-        })
-        .catch(e => {
-            Client.send(receivedMessage, "Sorry hun, something went wrong.");
-            error("Could not build image");
-            reject(e);
-        })        
+        }
+
+        var id = Build.getBuildID(url);
+        if (id == null)
+            return;
+        
+        let p = `./tempbuilds/full/${id.slice(1, id.length)}.png`;
+        if (fs.existsSync(p)) {
+            sendImage(p);
+        } else if (style == "full") {
+            Client.send(receivedMessage, "Ok let me get that for you, just a minute!")
+            .then(m =>{
+                buildBuildImage(url, style, unitIndex)
+                .then(sendImage)
+                .catch(fail);
+            })
+            .catch(fail);
+        } else {
+            buildBuildImage(url, style, unitIndex)
+            .then(sendImage)
+            .catch(fail);
+        }
     });
 }
 
@@ -132,13 +152,13 @@ export async function handleBuild(receivedMessage: Discord.Message, search: stri
     var unitName = search;
     unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
 
-    var includeTitle = null;
+    var calculation = null;
     var unitID = getUnitKey(search);
     if (unitID) {
         var calc = Cache.getUnitCalculation("furcula", search)
         if (calc) {
             calc.source = "furcula";
-            includeTitle = calc;
+            calculation = calc;
             search = calc.url;
             log(`Loading Unit Calculation Build: ${calc.url}`);
         }
@@ -150,7 +170,12 @@ export async function handleBuild(receivedMessage: Discord.Message, search: stri
         log("Parameter used for build: ", ind);
     }
 
-    sendBuild(receivedMessage, search, ind, includeTitle, !style.empty() ? style : "full")
+    var buildStyle = (style && !style.empty()) ? style : "full";
+    sendBuild(receivedMessage, search, ind, calculation, buildStyle)
+    .then(m => {
+        if (calculation && unitName.toLowerCase().replaceAll(" ", "_") != calculation.name.toLowerCase().replaceAll(" ", "_"))
+            Client.send(receivedMessage, "```" + `Sorry I couldn't find "${unitName}" in Furcula's damage sheet, maybe you meant ${calc.name}?` + "```");
+    })
     .catch((e) => {
         error("Build Failed: ", e);
     });
@@ -171,10 +196,13 @@ export async function handleBis(receivedMessage: Discord.Message, search: string
     }
 
     search = search.replaceAll("_", " ");
+    var original = search;
     var calc = Cache.getUnitCalculation("whale", search)
-    if (!calc)
+    if (!calc) {
+        Client.send(receivedMessage, "Sorry, no build was found for " + search);
         return;
-         
+    }
+
     var ind = 0;
     if (parameters && parameters.length > 0 && parameters[0].isNumber()) {
         ind = parseInt(parameters[0]);
@@ -184,7 +212,11 @@ export async function handleBis(receivedMessage: Discord.Message, search: string
     calc.source = "whale";
 
     log(`Loading Unit Build: ${calc.url}`);
-    sendBuild(receivedMessage, calc.url, ind, calc, !style.empty() ? style : "full")
+    sendBuild(receivedMessage, calc.url, ind, calc, (style && !style.empty()) ? style : "full")
+    .then(m => {
+        if (original.toLowerCase().replaceAll(" ", "_") != calc.name.toLowerCase().replaceAll(" ", "_"))
+            Client.send(receivedMessage, "```" + `Sorry I couldn't find "${original}" in ShadoWalker's damage sheet, maybe you meant ${calc.name}?` + "```");
+    })
     .catch((e) => {
         error(`Unable to find build: ${search}`);    
     });

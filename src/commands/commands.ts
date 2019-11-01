@@ -44,6 +44,23 @@ export function getSearchString(msg, replace = true) {
     return search;
 }
 
+function parameterToSearchString(parameter: string, replace = true) {
+    var search = parameter;
+
+    if (replace == undefined || replace) { 
+        var s = search;
+        var alias = Config.getAlias(s.replaceAll(" ", "_"));
+        if (alias) {
+            log("Found Alias: " + alias);
+            return alias.replaceAll(" ", "_");
+        }
+    }
+
+    search = search.toLowerCase();
+    search = search.replaceAll(" ", "_");
+    return search;
+}
+
 export function getCommandString(msg) {
     var split = regexCommand.exec(msg);
 
@@ -160,6 +177,10 @@ export var getCommandObject = function(msg, attach, author: Discord.User, guild:
         if (attachment) {
             parameters[0] = attachment;
         }
+    }
+
+    if (parameters.length == 1 && search.empty()) {
+        search = parameterToSearchString(parameters[0]);
     }
 
     var run = "handle" + command + "(receivedMessage, search, parameters)";

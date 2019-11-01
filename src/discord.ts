@@ -11,6 +11,7 @@ import { Config } from "./config/config.js";
 import { getCommandString, getSearchString } from "./commands/commands.js";
 import { log, debug, trace, error } from "./global.js";
 import { Profiles } from "./config/profiles.js";
+import * as Build from "./ffbe/build.js";
 
 ////////////////////////////////////////////////////////////
 
@@ -274,9 +275,10 @@ class client {
                 trace("Received URL for Autobuild: ", url);
                 if (URL) {
                     var url = URL[0].trim();
-                    log("Beginning Autobuild: ", URL);
-
-                    this.onMessageCallback(receivedMessage, `buildbox ${url}`, receivedMessage.author, receivedMessage.guild);
+                    Build.requestBuildData(url).then(response => {
+                        log("Beginning Autobuild: ", URL);
+                        this.onMessageCallback(receivedMessage, `buildc ${url}`, receivedMessage.author, receivedMessage.guild);
+                    });
                 }
                 return;
             }

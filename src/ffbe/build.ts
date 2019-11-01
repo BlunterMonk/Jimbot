@@ -352,7 +352,7 @@ export class Build {
             }
         });
 
-        log("Loaded Items: ", this.loadedItems);
+        // log("Loaded Items: ", this.loadedItems);
 
         this.loadedItems.forEach((item, ind) => {
             
@@ -366,7 +366,7 @@ export class Build {
             this.addItem(best);
         });
 
-        log("Loaded Equipment: \n", this.equipment, "\n");
+        // log("Loaded Equipment: \n", this.equipment, "\n");
     }
 
     getItemEnchantments(slot: number): any[] {

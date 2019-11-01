@@ -96,5 +96,10 @@
 		"author": "564579480396627988",
 		"title": "Fix for Connection Issues",
 		"description": "VPN Option:\n- Press re-download, exit the game;\n- Clear cache;\n- Install the windscribe, no need for the 10gb (but it's 10gb free tho);\n- Connect to VPN, Cub - Chicago \n\nworked for others;\nDownload until the 182mb pack;\nWhen asked to download the 1.6gb, just disconnect the VPN and finish the download.\n\nDNS Option:\n- Open the Settings on the device.\n- Select “Wi-Fi”.\n- Long press your current network, then select “Modify network”.\n- Mark “Show advanced options” check box.\n- Change “IP settings” to “Static”\n- Change DNS 1 to 8.8.8.8"
+	},
+	"make_boss_dead": {
+		"author": "131139508421918721",
+		"title": "How Make Boss Commit Unalive",
+		"description": "attac"
 	}
 }
