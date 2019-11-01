@@ -401,7 +401,9 @@ export class Build {
         // log("\nStat Totals\n{\n");
 
         var totalBonuses = unitStats.bonuses;// getTotalBonuses(passives, equipped, esper);
+        debug("Total Bonuses: ", totalBonuses);
         var totalStats = addOtherStats(unitStats.stats, passives);
+        debug("Total Stats: ", totalStats);
         // log("\n{\nUnit Stats + Pasives");
         // log(total);
 
@@ -418,8 +420,6 @@ export class Build {
         // log("\n}\n");
         //var killers = addOtherStats(total.killers)
 
-        debug("Total Stats: ", totalStats);
-        debug("Total Bonuses: ", totalBonuses);
 
         return {
             stats: totalStats,
@@ -560,7 +560,6 @@ function areConditionOK(B: Build, item: Item, equipList: any[], level = 0) {
         return false;
     }
     if (item.equipedConditions) {
-        debug("\nCHECKING ITEM CONDITIONS: ", item);
         for (var ind = item.equipedConditions.length; ind--;) {
             log("Index: ", ind);
             if (!isEquipedConditionOK(B, equipList, item.equipedConditions[ind])) {
@@ -793,7 +792,7 @@ function getUnitPassiveStats(B: Build, unit: Unit): any {
 
     var passives = [];
     unit.skills.forEach((skill, i) => {
-        trace("\nTesting Passive: ", skill);
+        trace("Testing Passive: ", skill);
 
         if (skill.equipedConditions && !isEquipedConditionOK(B, B.equipment, skill.equipedConditions)) {
             //log("Passive Skill Not Activated");
@@ -801,7 +800,7 @@ function getUnitPassiveStats(B: Build, unit: Unit): any {
         }
         
         passives.push(skill);
-        trace("Passive Passed\n");
+        trace("Passive Passed");
     });
 
     passives.forEach((p, i) => {
@@ -814,7 +813,7 @@ function getUnitPassiveStats(B: Build, unit: Unit): any {
         unit.enhancements.forEach(element => {
             if (element.levels && element.levels[2]) {
                 let enh = element.levels[2];
-                trace("Testing Enhancement: ", enh, " Conditions: ", enh.equipedConditions);
+                trace("Testing Enhancement: ", element.name, " Conditions: ", enh.equipedConditions, ", data: ", enh);
 
                 if (enh.equipedConditions && isEquipedConditionOK(B, B.equipment, enh.equipedConditions)) {
                     enh.forEach(e => {
@@ -823,14 +822,28 @@ function getUnitPassiveStats(B: Build, unit: Unit): any {
 
                     debug("Enhancement Passed");
                 } else if (!enh.equipedConditions) {
-                    enh.forEach(substat => {
+                    // look for any substats that have conditions because sometimes an enhancement has multiple parameters
+                    // if no substats are found with conditions then it's safe to assume the enhancemnt has none at all.
+                    let foundSubstat = false;
+                    for (let sub = 0; sub < enh.length; sub++) {
+                        const substat = enh[sub];
+                        
                         if (substat.equipedConditions && isEquipedConditionOK(B, B.equipment, substat.equipedConditions)) {
+                            trace("Adding Enhancement Substat: ", substat);
                             stats = addToTotal(stats, substat);
+                            foundSubstat = true;
                             debug("Passive Enhancement Activated");
-                        } 
-                    });
+                        }
+                    }
+
+                    if (!foundSubstat) {
+                        enh.forEach(e => {
+                            stats = addToTotal(stats, e);
+                        });
+    
+                        debug("Enhancement Passed By Default, no substats with requirements.");
+                    }
                 }
-                
             }
         });
     }
@@ -1437,8 +1450,7 @@ function applyEnchantments(item, enchantments) {
             }
         }
 
-        // log("Final Item");
-        // log(result);
+        debug("Final Item: ", result);
         return result;
     } else {
         return item;
@@ -1462,7 +1474,7 @@ function findBestItemVersion(B: Build, equipList: any[], slot, itemWithVariation
             
             var enh = B.getItemEnchantments(slot);
             if (enh) {
-                trace("Has Enhancements: ", enh)
+                trace("Item With Enhancements: ", enh)
                 return applyEnchantments(item, enh);
             }
 
