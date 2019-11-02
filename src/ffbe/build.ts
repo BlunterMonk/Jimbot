@@ -760,6 +760,10 @@ function getUnitMaxStats(unit: Unit, passives: any, pots: any, equipmentTotal: a
             var b = 0;
             if (bonus.esperStatsBonus && bonus.esperStatsBonus[k]) {
                 b = e * (bonus.esperStatsBonus[k] / 100);
+                trace(`${k}: e * unit_esper_stats_bonus_${k}% = b`);
+            }
+            if (esper.esperStatsBonus && esper.esperStatsBonus.all[k]) {
+                b += e * (esper.esperStatsBonus.all[k] / 100);
                 trace(`${k}: e * esper_stats_bonus_${k}% = b`);
             }
             
