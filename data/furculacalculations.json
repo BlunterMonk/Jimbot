@@ -1,13 +1,13 @@
 {
-	"Godrea (pending)": {
-		"name": "Godrea (pending)",
-		"damage": "15,880,376,488",
+	"Godrea": {
+		"name": "Godrea",
+		"damage": "16,393,448,304",
 		"turns": "10",
 		"type": "physical",
 		"url": "https://ffbeEquip.com/builder.html?server=GL#7bce2d70-f6f9-11e9-8f21-29aab363c1db",
 		"jp": false,
-		"burst": "27,982,736,584",
-		"burstTurn": "8",
+		"burst": "32,646,526,015",
+		"burstTurn": "10",
 		"wiki": "https://exvius.gamepedia.com/Godrea",
 		"rotation": [
 			"Activate - Photonised Nitrogen Cartridge (CD) + Activate - Nitrogen Cartridge",
@@ -16,7 +16,7 @@
 			"Charge - Plasma Laser x 4",
 			"Charge - Plasma Laser x 4",
 			"Ectoplasm Extermination (LB)",
-			"Activate - GE - 98 Photon Catridge (CD) + Activate - Nitrogen Catridge + Charge - Plasma Laser",
+			"Activate - GE - 98 Photon Catridge (CD) + Activate - Activate - Atomic Energy",
 			"Charge - Plasma Laser x 4",
 			"Charge - Plasma Laser x 4",
 			"Charge - Plasma Laser x 4",
@@ -28,8 +28,8 @@
 			""
 		]
 	},
-	"Karten (pending)": {
-		"name": "Karten (pending)",
+	"Karten": {
+		"name": "Karten",
 		"damage": "15,122,611,351",
 		"turns": "10",
 		"type": "physical",
@@ -57,27 +57,27 @@
 			""
 		]
 	},
-	"Lucius (pending)": {
-		"name": "Lucius (pending)",
-		"damage": "14,655,688,681",
+	"Lucius": {
+		"name": "Lucius",
+		"damage": "15,001,202,119",
 		"turns": "10",
 		"type": "physical",
-		"url": "",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#c7b04dc0-fc0f-11e9-937b-ad48d5c58d17",
 		"jp": false,
-		"burst": "20,507,224,883",
+		"burst": "21,758,222,810",
 		"burstTurn": "7",
 		"wiki": "https://exvius.gamepedia.com/Lucius",
 		"rotation": [
 			"Dawn Barrage+2 + Midnight Corruption II (CD) + Piercing Barrage+2",
 			"Crushing Barrage+2 x 3",
-			"Immortal Demon+2 (CD)",
+			"Piercing Barrage+2 x 2 + Immortal Demon+2 (CD)",
 			"Crushing Barrage+2 x 3",
 			"Sinisher Fury (upgraded LB)",
 			"Dawn Barrage+2 + Midnight Corruption II (CD) + Aggressive Presence+2 (CD)",
-			"Immortal Demon+2 (CD)",
+			"Piercing Barrage+2 x 2 + Immortal Demon+2 (CD)",
 			"Crushing Barrage+2 x 3",
 			"Sinisher Fury (upgraded LB)",
-			"Immortal Demon+2 (CD)",
+			"Piercing Barrage+2 x 2 + Immortal Demon+2 (CD)",
 			"",
 			"",
 			"",
@@ -318,16 +318,16 @@
 			""
 		]
 	},
-	"Assassin Shadow (pending)": {
-		"name": "Assassin Shadow (pending)",
-		"damage": "12,472,375,317",
+	"Assassin Shadow": {
+		"name": "Assassin Shadow",
+		"damage": "12,693,260,658",
 		"turns": "11",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#a2e9a0f0-fba0-11e9-98a4-67ecd4c00597",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#2f9bea70-fcdd-11e9-937b-ad48d5c58d17",
 		"jp": false,
-		"burst": "15,294,848,430",
+		"burst": "15,565,719,673",
 		"burstTurn": "5",
-		"wiki": "https://exvius.gamepedia.com/Assassin_Shadow/JP",
+		"wiki": "https://exvius.gamepedia.com/Assassin_Shadow",
 		"rotation": [
 			"Shadow Dart x 2",
 			"Shadow Dart x 2",
@@ -2590,6 +2590,35 @@
 			""
 		]
 	},
+	"Archmage Kefka": {
+		"name": "Archmage Kefka",
+		"damage": "8,465,413,475",
+		"turns": "12",
+		"type": "magic",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#69bd7760-fcdc-11e9-937b-ad48d5c58d17",
+		"jp": false,
+		"burst": "12,057,695,485",
+		"burstTurn": "8",
+		"wiki": "https://exvius.gamepedia.com/Archmage_Kefka",
+		"rotation": [
+			"I hate, hate, hate, hate, HATE YOU! (CD) + Guffawing Ice",
+			"Frenzied Ice x 4",
+			"Frenzied Ice x 4",
+			"Frenzied Ice x 4",
+			"Frenzied Ice x 3 + Forsaken (CD)",
+			"Havoc Wing (CD) + Frenzied Ice x 3",
+			"I hate, hate, hate, hate, HATE YOU! (CD) + Frenzied Ice x 3",
+			"Frenzied Ice x 4",
+			"Frenzied Ice x 4",
+			"Guffawing Ice + Frenzied Ice x 3",
+			"Frenzied Ice x 3 + Forsaken (CD)",
+			"Havoc Wing (CD) + Frenzied Ice x 3",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Circe": {
 		"name": "Circe",
 		"damage": "8,263,106,987",
@@ -2613,35 +2642,6 @@
 			"",
 			"",
 			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
-	"Archmage Kefka (pending)": {
-		"name": "Archmage Kefka (pending)",
-		"damage": "8,083,372,847",
-		"turns": "12",
-		"type": "magic",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#3d3c3030-fb9e-11e9-98a4-67ecd4c00597",
-		"jp": false,
-		"burst": "11,250,454,930",
-		"burstTurn": "8",
-		"wiki": "https://exvius.gamepedia.com/Great_Mage_Kefka/JP",
-		"rotation": [
-			"I hate, hate, hate, hate, HATE YOU! (CD) + Guffawing Ice + Frenzied Ice",
-			"Frenzied Ice x 4",
-			"Frenzied Ice x 4",
-			"Frenzied Ice x 4",
-			"Frenzied Ice x 3 + Forsaken (CD)",
-			"Havoc Wing (CD) + Frenzied Ice x 3",
-			"I hate, hate, hate, hate, HATE YOU! (CD) + Frenzied Ice x 3",
-			"Frenzied Ice x 4",
-			"Frenzied Ice x 4",
-			"Guffawing Ice + Frenzied Ice x 3",
-			"Frenzied Ice x 3 + Forsaken (CD)",
-			"Havoc Wing (CD) + Frenzied Ice x 3",
 			"",
 			"",
 			"",

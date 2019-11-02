@@ -8,11 +8,11 @@
         },
         {
             "name": "\n\nSet Friend Code",
-            "value": "- **?friendcode** *[friend_code]*\nAdd your friend code to your profile. Friend code must be the 9 digit friend code and nothing more.\n\u200B\n"
+            "value": "- **?setfriendcode** *[friend_code]*\nAdd your friend code to your profile. Friend code must be the 9 digit friend code and nothing more.\n\u200B\n"
         },
         {
             "name": "Set Nickname",
-            "value": "- **?nickname** *[nickname]*\nSet the nickname of your profile to make finding you easier.\n- example: **?nickname Queen Banana**\n\u200B\n"
+            "value": "- **?setnickname** *[nickname]*\nSet the nickname of your profile to make finding you easier.\n- example: **?nickname Queen Banana**\n\u200B\n"
         },
         {
             "name": "Add Build",
