@@ -169,7 +169,10 @@
 		"exdeathv2": "dark mage exdeath",
 		"karen": "karten",
 		"feener_and_boko": "chocobo fina",
-		"boko_no_pico": "chocobo fina"
+		"boko_no_pico": "chocobo fina",
+		"sleeves": "tiana",
+		"blue_sleeves": "vesvia",
+		"cg_rain": "aldore king rain"
 	},
 	"filetypes": [
 		".jpg",
@@ -251,7 +254,7 @@
 		},
 		"bestcg": {
 			"command": "cg",
-			"search": "firion"
+			"search": "shantotto"
 		},
 		"glossary": {
 			"command": "whatis",
@@ -264,6 +267,7 @@
 		"324904806332497932": "cotton",
 		"114545824989446149": "muspel",
 		"316654316377210880": "muspel",
-		"103785126026043392": "shado"
+		"103785126026043392": "shado",
+		"243041029316542474": "shado"
 	}
 }

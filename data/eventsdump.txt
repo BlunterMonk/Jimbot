@@ -18,6 +18,115 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20191107
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191107ConnectionIssueCompensation.html
+}}
+{{Recent News
+|date  = 20191107
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191107PostMaintenance.html
+}}
+{{Recent News
+|date  = 20191105
+|type  = Other
+|title = 5★ Select Ticket Lapis Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod/en/content/201911045StarSelectTicketLapisSummon.html
+}}
+{{Recent News
+|date  = 20191105
+|type  = Other
+|title = 5★ Rate Up Commemorative 10+1 Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod/en/content/201911045StarRateUpCommemorativeSummon.html
+}}
+{{Recent News
+|date  = 20191105
+|type  = Other
+|title = 5★ Rate Up Commemorative Login Bonus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod/en/content/201911045StarRateUpCommemorativeLoginBonus.html
+}}
+{{Recent News
+|date  = 20191105
+|type  = Event
+|title = Running Through Daybreak
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod/en/img/RunningThroughDaybreak.jpg
+}}
+{{Recent News
+|date  = 20191105
+|type  = Event
+|title = Aldore King Rain
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod/en/img/20191105CGAldoreKingRainTrialQuest.jpg
+}}
+{{Recent News
+|date  = 20191105
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod/en/img/20191105CGAldoreKingRainFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20191105
+|type  = Event
+|title = Floating Continent: Ultima Weapon Battle
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod/en/img/UltimaWeaponTrial.jpg
+}}
+{{Recent News
+|date  = 20191105
+|type  = Unit
+|title = Ability Awakening Update!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod/en/content/20191104AbilityAwakeningBatch33Part2.html
+}}
+{{Recent News
+|date  = 20191105
+|type  = Event
+|title = Steel Castle Melfikya
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod/en/content/20191105WeaponEnhancement.html
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20191105
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod/en/content/20191106Maintenance.html
+}}
+{{Recent News
+|date  = 20191104
+|type  = Other
+|title = Updates to Select Summon and Rainbow Summon Rates
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191105UpdateSelectSummonPoolRainbowRates.html
+}}
+{{Recent News
+|date  = 20191101
+|type  = Other
+|title = NYC Livestream Lapis Giveaway
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191101NYLivestreamLotteryCampaign.html
+}}
+{{Recent News
+|date  = 20191101
+|type  = Other
+|title = Free Daily Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191102FreeSummon.html
+}}
+{{Recent News
+|date  = 20191101
+|type  = Other
+|title = Monthly 5★ Select Summon Tickets
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191101NovemberFreeSelectSummonTicket.html
+}}
+{{Recent News
+|date  = 20191101
+|type  = Other
+|title = Guaranteed 5★ Special Summon Ticket
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191101GuaranteedSummonTicket.html
+}}
+{{Recent News
+|date  = 20191031
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191031AKefkaAShadowPrismsIssueReport.html
+}}
+{{Recent News
 |date  = 20191031
 |type  = Maintenance
 |title = Post Maintenance Note
@@ -45,7 +154,7 @@
 |date  = 20191029
 |type  = Issue
 |title = Issue Report (Updated!)
-|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191025ConnectionIssueReportUpdatev4.html
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191025ConnectionIssueReportUpdatev5.html
 }}
 {{Recent News
 |date  = 20191029
@@ -89,7 +198,6 @@
 |title = Ability Awakening Update!
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191028AbilityAwakeningBatch33.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20191024
 |type  = Maintenance
@@ -98,7 +206,7 @@
 }}
 {{Recent News
 |date  = 20191024
-|type  = Issue
+|type  = Other
 |title = Version 3.8.5
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190926GL380PatchNotes.html
 }}
@@ -266,7 +374,7 @@
 }}
 {{Recent News
 |date  = 20191011
-|type  = Issue
+|type  = Other
 |title = Update to event start/end dates
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191011AnnouncementonReleaseDates.html
 }}
@@ -410,7 +518,7 @@
 }}
 {{Recent News
 |date  = 20190929
-|type  = Issue
+|type  = Other
 |title = Version 3.8.1
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190930GL381PatchNotes.html
 }}
@@ -566,7 +674,7 @@
 }}
 {{Recent News
 |date  = 20190917
-|type  = Issue
+|type  = Other
 |title = Kingdom Hearts Collaboration
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190917KHAdvisory.html
 }}
@@ -674,7 +782,7 @@
 }}
 {{Recent News
 |date  = 20190905
-|type  = Issue
+|type  = Other
 |title = Version 3.7.6
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190905GL376PatchNotes.html
 }}

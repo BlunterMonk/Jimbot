@@ -22,8 +22,8 @@
 			"morgana": "https://ffbeequip.com/builder.html?server=gl#bf05d780-ecce-11e9-8f21-29aab363c1db",
 			"kayaka": "https://ffbeequip.com/builder.html?server=gl#d98a8f40-ecd0-11e9-8f21-29aab363c1db",
 			"feener_and_boko": "https://ffbeequip.com/builder.html?server=gl#4900fb80-ef64-11e9-8f21-29aab363c1db",
-			"a2_for_majinpoi": "https://ffbeequip.com/builder.html?server=gl#ff614bb0-fc15-11e9-937b-ad48d5c58d17",
-			"2best_girl": "https://ffbeequip.com/builder.html?server=gl#613516a0-fc16-11e9-937b-ad48d5c58d17"
+			"2best_girl": "https://ffbeequip.com/builder.html?server=gl#613516a0-fc16-11e9-937b-ad48d5c58d17",
+			"a2_": "https://ffbeequip.com/builder.html?server=gl#e710e550-ffd2-11e9-937b-ad48d5c58d17"
 		},
 		"status": "may the flames guide thee",
 		"lead": "https://ffbeequip.com/builder.html?server=gl#613516a0-fc16-11e9-937b-ad48d5c58d17"
@@ -522,6 +522,15 @@
 		"friendcode": "804260701",
 		"nickname": "12Neji12",
 		"status": "waiting for edoado elrikju",
+		"lead": null,
+		"builds": {}
+	},
+	"201846897101635584": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "El pejerrete",
+		"status": "",
 		"lead": null,
 		"builds": {}
 	}

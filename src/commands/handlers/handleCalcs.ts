@@ -200,7 +200,7 @@ export function handleTopdps(receivedMessage: Discord.Message, search: string, p
 
         if (unit.jp || unit.name.includes("(JP)"))
             return;
-        if (check && !unit.type.includes(search))
+        if (check && !unit.type.startsWith(search[0]))
             return;
         if (!unit.damage || unit.damage === undefined || unit.damage.empty())
             return;
