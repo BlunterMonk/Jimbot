@@ -172,7 +172,13 @@
 		"boko_no_pico": "chocobo fina",
 		"sleeves": "tiana",
 		"blue_sleeves": "vesvia",
-		"cg_rain": "aldore king rain"
+		"cg_rain": "aldore king rain",
+		"hess_king_lasswell": "ヘス王ラスウェル",
+		"hong_kong_lasswell": "ヘス王ラスウェル",
+		"deez": "diezell",
+		"denzel": "diezell",
+		"diesel": "diezell",
+		"dog": "chow"
 	},
 	"filetypes": [
 		".jpg",

@@ -5,13 +5,12 @@
 		"builds": {
 			"regina_for_emperor": "https://ffbeequip.com/builder.html?server=gl#b1909bf0-ebf5-11e9-8f21-29aab363c1db",
 			"regina_for_demon_wall": "https://ffbeequip.com/builder.html?server=gl#db7c4330-ec7a-11e9-8f21-29aab363c1db",
-			"regina_base": "https://ffbeequip.com/builder.html?server=gl#6f232df0-ed94-11e9-8f21-29aab363c1db",
 			"regina_for_moose": "https://ffbeequip.com/builder.html?server=gl#cb9705a0-ef5d-11e9-8f21-29aab363c1db",
-			"demon_rain_ehp": "https://ffbeequip.com/builder.html?server=gl#98c04f00-fc1a-11e9-937b-ad48d5c58d17"
+			"regina_base": "https://ffbeequip.com/builder.html?server=gl#97c5cf70-021a-11ea-b162-b1af580bcfd9"
 		},
 		"friendcode": "301603908",
 		"status": "wikami here, my ign is noise, if you need a unit/build let me know",
-		"lead": "https://ffbeequip.com/builder.html?server=gl#6f232df0-ed94-11e9-8f21-29aab363c1db"
+		"lead": "https://ffbeequip.com/builder.html?server=gl#97c5cf70-021a-11ea-b162-b1af580bcfd9"
 	},
 	"220659180623757312": {
 		"autobuild": true,
@@ -51,11 +50,14 @@
 		"nickname": "ray",
 		"friendcode": "722466530",
 		"builds": {
-			"cg_lightning_for_moose": "https://ffbeequip.com/builder.html?server=gl#3b8a7aa0-ecce-11e9-8f21-29aab363c1db",
-			"best_boi": "https://ffbeequip.com/builder.html?server=gl#6cd97bb0-fca0-11e9-937b-ad48d5c58d17"
+			"best_boi": "https://ffbeequip.com/builder.html?server=gl#8faf7ff0-034d-11ea-b162-b1af580bcfd9",
+			"lucii_for_aigaion": "https://ffbeequip.com/builder.html?server=gl#2eafb6a0-0278-11ea-b162-b1af580bcfd9",
+			"rightning_for_aigaion": "https://ffbeequip.com/builder.html?server=gl#44a9de30-026f-11ea-b162-b1af580bcfd9",
+			"solly_for_aigaion": "https://ffbeequip.com/builder.html?server=gl#4cad22c0-026c-11ea-b162-b1af580bcfd9",
+			"elena_for_aigaion": "https://ffbeequip.com/builder.html?server=gl#83716a20-034b-11ea-b162-b1af580bcfd9"
 		},
 		"status": "heeya rayster here, the neus guy. thanks!",
-		"lead": "https://ffbeequip.com/builder.html?server=gl#6cd97bb0-fca0-11e9-937b-ad48d5c58d17"
+		"lead": "https://ffbeequip.com/builder.html?server=gl#8faf7ff0-034d-11ea-b162-b1af580bcfd9"
 	},
 	"103785126026043392": {
 		"autobuild": false,
@@ -203,8 +205,11 @@
 		"friendcode": "924110837",
 		"nickname": "laisa",
 		"status": "<:kannaconfuse:621492068535238687> ",
-		"lead": null,
-		"builds": {}
+		"lead": "https://ffbeequip.com/builder.html?server=gl#da757a50-035f-11ea-b162-b1af580bcfd9",
+		"builds": {
+			"aluminio_wapo": "https://ffbeequip.com/builder.html?server=gl#67ada4e0-0358-11ea-b162-b1af580bcfd9",
+			"forfrdeligt_aluminio": "https://ffbeequip.com/builder.html?server=gl#84fcca70-035e-11ea-b162-b1af580bcfd9"
+		}
 	},
 	"328018723158097920": {
 		"autobuild": true,
@@ -417,9 +422,9 @@
 	"484558890416209920": {
 		"autobuild": true,
 		"compact": false,
-		"friendcode": "",
-		"nickname": "🎃andres🎃",
-		"status": "",
+		"friendcode": "085492196",
+		"nickname": "astram",
+		"status": "hay cosas que son bellas por el simple hecho de no poder poseerlas",
 		"lead": null,
 		"builds": {}
 	},
@@ -465,7 +470,7 @@
 		"friendcode": "169377712",
 		"nickname": "shin",
 		"status": "",
-		"lead": "https://ffbeequip.com/builder.html?server=gl#6e490200-fb73-11e9-98a4-67ecd4c00597",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#e18a1a10-01a4-11ea-b162-b1af580bcfd9",
 		"builds": {}
 	},
 	"302969686679748609": {
@@ -530,6 +535,60 @@
 		"compact": false,
 		"friendcode": "",
 		"nickname": "El pejerrete",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"159846139124908032": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "Renaulte",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"318973929467281411": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "507700848",
+		"nickname": "bigchung",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"213053551637692416": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "254988131",
+		"nickname": "Incinerate",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"408340812745801728": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "523500000",
+		"nickname": "Mackjo wind",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"620396987732328450": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "875999575",
+		"nickname": "vicdrak",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"574752720481681438": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "406260753",
+		"nickname": "zephir",
 		"status": "",
 		"lead": null,
 		"builds": {}

@@ -1,0 +1,21 @@
+{
+	"name": "global-discussion3",
+	"prefix": "?",
+	"successEmote": "✅",
+	"failureEmote": "❌",
+	"adminRoles": [
+		"admin",
+		"mod",
+		"Gumdrop",
+		"Member"
+	],
+	"adminOnlyCommands": [
+		"prefix",
+		"getsettings",
+		"addemo",
+		"addalias"
+	],
+	"disabledCommands": [],
+	"shortcuts": {},
+	"response": {}
+}

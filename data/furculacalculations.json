@@ -30,12 +30,12 @@
 	},
 	"Aldore King Rain (pending)": {
 		"name": "Aldore King Rain (pending)",
-		"damage": "15,732,497,368",
+		"damage": "15,771,213,625",
 		"turns": "12",
 		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#f937ca00-0117-11ea-937b-ad48d5c58d17",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#a58e5610-017d-11ea-b162-b1af580bcfd9",
 		"jp": false,
-		"burst": "31,200,748,581",
+		"burst": "31,088,020,864",
 		"burstTurn": "2",
 		"wiki": "https://exvius.gamepedia.com/Aldore_King_Rain",
 		"rotation": [
@@ -45,11 +45,11 @@
 			"Crimson Nova (LB)       ",
 			"Soul Blood (CD) + Blaze Saber + Extra Saber (CD)",
 			"Crimson Nova (LB)       ",
-			"Complete Awakening [Aldore King] + King's Saber",
+			"Complete Awakening [Aldore King] + Extra Saber (CD)",
 			"Crimson Nova (LB)       ",
 			"Soul Blood (CD) + Blaze Saber + Extra Saber (CD)",
 			"Crimson Nova (LB)       ",
-			"Grandshelt Saber + Royal Saber (CD) + Extra Saber (CD)",
+			"Royal Saber (CD) + Extra Saber (CD) + King's Saber (CD)",
 			"Crimson Nova (LB)       ",
 			"",
 			"",
@@ -463,12 +463,12 @@
 			""
 		]
 	},
-	"Hyoh (pending)": {
-		"name": "Hyoh (pending)",
+	"Hyoh": {
+		"name": "Hyoh",
 		"damage": "11,583,111,910",
 		"turns": "10",
 		"type": "physical",
-		"url": "",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#10e42b70-017d-11ea-b162-b1af580bcfd9",
 		"jp": false,
 		"burst": "19,543,724,733",
 		"burstTurn": "3",
@@ -1999,6 +1999,16 @@
 			"ワールドクラッシャー +  天殴地壊",
 			"天殴地壊 x 2       "
 		]
+	},
+	"Cloud (FFVII AC) (JP)": {
+		"name": "Cloud (FFVII AC) (JP)",
+		"damage": "25,352,847,991",
+		"turns": "12",
+		"type": "physical",
+		"url": "",
+		"jp": true,
+		"burst": "41,415,554,489",
+		"burstTurn": "2"
 	},
 	"Ifrit Rain (JP)": {
 		"name": "Ifrit Rain (JP)",
