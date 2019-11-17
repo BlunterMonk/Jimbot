@@ -18,10 +18,89 @@
 -->
 <onlyinclude>
 {{Recent News
-|date  = 20191107
+|date  = 20191114
 |type  = Issue
 |title = Issue Report
-|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191107ConnectionIssueCompensation.html
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191114RTDExtraStageIssueReportFIX.html
+}}
+{{Recent News
+|date  = 20191114
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191114PostMaintenance.html
+}}
+{{Recent News
+|date  = 20191113
+|type  = Event
+|title = FFBE NYC Livestream - Raid
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191113FFBENYCLivestreamRaid.jpg
+}}
+{{Recent News
+|date  = 20191112
+|type  = Event
+|title = Narshe
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191112FFVIEventNarshe.jpg
+}}
+{{Recent News
+|date  = 20191112
+|type  = Event
+|title = Magitek Warrior Terra
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191112MWTerraCGTrialQuest.jpg
+}}
+{{Recent News
+|date  = 20191112
+|type  = Unit
+|title = Featured Summon FINAL FANTASY VI
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191112MWTerraALockeFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20191112
+|type  = Trial
+|title = Scorn of the Machina of Destruction
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/201911219ScornoftheMachinaDestruction.jpg
+}}
+{{Recent News
+|date  = 20191112
+|type  = Event
+|title = Running Through Daybreak EXTRA STAGES
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191112RunningThroughDaybreakExtraStages.jpg
+}}
+{{Recent News
+|date  = 20191112
+|type  = Other
+|title = Exchange Shop (M.W. Terra/A. Locke)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191112MWTerraALockeExchangeShop.html
+}}
+{{Recent News
+|date  = 20191112
+|type  = Other
+|title = Introducing the 5★ Guaranteed (20% Featured) Ticket (M.W.Terra/A.Locke) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191112MWTerraALocke5StarGuaranteed20FeaturedTicket.html
+}}
+{{Recent News
+|date  = 20191112
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191114Maintenance.html
+}}
+{{Recent News
+|date  = 20191109
+|type  = Other
+|title = FFBE NYC LIVESTREAM EVENT 2019
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191109NewYorkFanFesta.html
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20191107
+|type  = Issue
+|title = Issue Report (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191108AKRainStepUpIssueReport2.html
+}}
+{{Recent News
+|date  = 20191107
+|type  = Issue
+|title = Issue Report (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191107ConnectionIssueCompensation5.html
 }}
 {{Recent News
 |date  = 20191107
@@ -83,7 +162,6 @@
 |title = Steel Castle Melfikya
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod/en/content/20191105WeaponEnhancement.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20191105
 |type  = Maintenance

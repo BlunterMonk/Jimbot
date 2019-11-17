@@ -394,9 +394,10 @@
 		"friendcode": "942217789",
 		"nickname": "whtfang",
 		"status": "escaping from shikishi hell.",
-		"lead": "https://ffbeequip.com/builder.html?server=gl#99158210-f1e1-11e9-8f21-29aab363c1db",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#eeaf1990-047c-11ea-b162-b1af580bcfd9",
 		"builds": {
-			"malph": "https://ffbeequip.com/builder.html?server=gl#99158210-f1e1-11e9-8f21-29aab363c1db"
+			"malph": "https://ffbeequip.com/builder.html?server=gl#99158210-f1e1-11e9-8f21-29aab363c1db",
+			"krain": "https://ffbeequip.com/builder.html?server=gl#eeaf1990-047c-11ea-b162-b1af580bcfd9"
 		}
 	},
 	"316654316377210880": {
@@ -589,6 +590,33 @@
 		"compact": false,
 		"friendcode": "406260753",
 		"nickname": "zephir",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"165617884762996736": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "410432463",
+		"nickname": "beams",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"393232077195051023": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "SupportYourHearts♡♡♡",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"251865995419975690": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "Mitsuri Kanroji",
 		"status": "",
 		"lead": null,
 		"builds": {}

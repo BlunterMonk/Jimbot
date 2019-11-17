@@ -1,4 +1,11 @@
 {
+	"Aldore King Rain": {
+		"name": "Aldore King Rain",
+		"damage": "15,470,889,238 ",
+		"turns": "12",
+		"type": "physical",
+		"url": null
+	},
 	"Radiant Lightning": {
 		"name": "Radiant Lightning",
 		"damage": "14,787,206,587 ",
@@ -69,9 +76,23 @@
 		"type": "physical",
 		"url": null
 	},
+	"Hyoh": {
+		"name": "Hyoh",
+		"damage": "11,361,333,281",
+		"turns": "10",
+		"type": "physical",
+		"url": null
+	},
 	"Godrea": {
 		"name": "Godrea",
 		"damage": "11,108,489,206 ",
+		"turns": "10",
+		"type": "physical",
+		"url": null
+	},
+	"Shadow Lord": {
+		"name": "Shadow Lord",
+		"damage": "10,181,319,816",
 		"turns": "10",
 		"type": "physical",
 		"url": null
@@ -80,13 +101,6 @@
 		"name": "Assassin Shadow",
 		"damage": "10,173,390,321 ",
 		"turns": "11",
-		"type": "physical",
-		"url": null
-	},
-	"Shadow Lord": {
-		"name": "Shadow Lord",
-		"damage": "10,181,319,816",
-		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
@@ -101,6 +115,13 @@
 		"name": "Esther",
 		"damage": "8,907,029,045 ",
 		"turns": "9",
+		"type": "physical",
+		"url": null
+	},
+	"Adventurer Locke": {
+		"name": "Adventurer Locke",
+		"damage": "8,790,627,951 ",
+		"turns": "7",
 		"type": "physical",
 		"url": null
 	},
@@ -370,20 +391,6 @@
 		"type": "physical",
 		"url": null
 	},
-	"Hyoh (LB focus)": {
-		"name": "Hyoh (LB focus)",
-		"damage": "1,337,401,465 ",
-		"turns": "8",
-		"type": "physical",
-		"url": null
-	},
-	"Hyoh": {
-		"name": "Hyoh",
-		"damage": "1,247,812,764",
-		"turns": "8",
-		"type": "physical",
-		"url": null
-	},
 	"Bart": {
 		"name": "Bart",
 		"damage": "1,118,154,545 ",
@@ -570,6 +577,13 @@
 		"name": "Christine",
 		"damage": "9,849,341,871 ",
 		"turns": "16",
+		"type": "magic",
+		"url": null
+	},
+	"Magitek Warrior Terra": {
+		"name": "Magitek Warrior Terra",
+		"damage": "9,525,998,434 ",
+		"turns": "7",
 		"type": "magic",
 		"url": null
 	},
