@@ -42,7 +42,7 @@
 	"453189007640100864": {
 		"autobuild": true,
 		"nickname": "king_snuggly",
-		"friendcode": "",
+		"friendcode": "694202496",
 		"builds": {}
 	},
 	"243041029316542474": {
@@ -205,7 +205,7 @@
 		"friendcode": "924110837",
 		"nickname": "laisa",
 		"status": "<:kannaconfuse:621492068535238687> ",
-		"lead": "https://ffbeequip.com/builder.html?server=gl#da757a50-035f-11ea-b162-b1af580bcfd9",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#9a1979e0-10b4-11ea-a37a-9f6834db757d",
 		"builds": {
 			"aluminio_wapo": "https://ffbeequip.com/builder.html?server=gl#67ada4e0-0358-11ea-b162-b1af580bcfd9",
 			"forfrdeligt_aluminio": "https://ffbeequip.com/builder.html?server=gl#84fcca70-035e-11ea-b162-b1af580bcfd9"
@@ -220,7 +220,8 @@
 		"builds": {
 			"super_char": "https://ffbeequip.com/builder.html?server=gl#e27fae10-ef63-11e9-8f21-29aab363c1db",
 			"call_animal_control": "https://ffbeequip.com/builder.html?server=gl#3b0fe1b0-ef66-11e9-8f21-29aab363c1db",
-			"the_big_kahuna": "https://ffbeequip.com/builder.html?server=gl#cf337fa0-f5e7-11e9-8f21-29aab363c1db"
+			"the_big_kahuna": "https://ffbeequip.com/builder.html?server=gl#cf337fa0-f5e7-11e9-8f21-29aab363c1db",
+			"baelena": "https://ffbeequip.com/builder.html?server=gl#5c005a10-15f1-11ea-9f71-fbb311f0fb55"
 		}
 	},
 	"468997735090225163": {
@@ -405,11 +406,12 @@
 		"friendcode": "285963004",
 		"nickname": "salien",
 		"status": "",
-		"lead": "https://ffbeequip.com/builder.html?server=gl#39b36880-f1e3-11e9-8f21-29aab363c1db",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#87afb480-114b-11ea-9f71-fbb311f0fb55",
 		"builds": {
 			"cidmoose": "https://ffbeequip.com/builder.html?server=gl#39b36880-f1e3-11e9-8f21-29aab363c1db",
 			"reginaemperor": "https://ffbeequip.com/builder.html?server=gl#f5588f10-f1e4-11e9-8f21-29aab363c1db",
-			"alassdodge": "https://ffbeequip.com/builder.html?server=gl#8630f130-f1e5-11e9-8f21-29aab363c1db"
+			"alassdodge": "https://ffbeequip.com/builder.html?server=gl#8630f130-f1e5-11e9-8f21-29aab363c1db",
+			"veronica_moon": "https://ffbeequip.com/builder.html?server=gl#87afb480-114b-11ea-9f71-fbb311f0fb55"
 		}
 	},
 	"341661855888179200": {
@@ -620,5 +622,37 @@
 		"status": "",
 		"lead": null,
 		"builds": {}
+	},
+	"187261526644621312": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "459139799",
+		"nickname": "Trifecta",
+		"status": "",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#149cdcd0-0ce5-11ea-b959-9b5568739fdf",
+		"builds": {
+			"hyoh": "https://ffbeequip.com/builder.html?server=gl#149cdcd0-0ce5-11ea-b959-9b5568739fdf"
+		}
+	},
+	"516437886334402567": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "AKARUU",
+		"status": "UwU🐷",
+		"lead": null,
+		"builds": {}
+	},
+	"472492619012767754": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "932694382",
+		"nickname": "anubis",
+		"status": "",
+		"lead": null,
+		"builds": {
+			"esther": "https://ffbeequip.com/builder.html?server=gl#c44eb880-1021-11ea-b959-9b5568739fdf",
+			"king_rain": "https://ffbeequip.com/builder.html?server=gl#fed1b470-1022-11ea-b959-9b5568739fdf"
+		}
 	}
 }

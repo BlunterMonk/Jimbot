@@ -268,7 +268,7 @@ class client {
         const guildId = receivedMessage.guild.id;
         const prefix = this.guildSettings[guildId].getPrefix();
         if (contentPrefix != prefix) {
-
+/*
             if (content.includes("ffbeequip.com") 
                 && (this.validate(receivedMessage, "autobuild") || Profiles.getAutoBuild(receivedMessage.author.id))) {
                 var URL = receivedMessage.content.match(/(https.*?(\s|$))/g)
@@ -281,7 +281,7 @@ class client {
                     });
                 }
                 return;
-            }
+            }*/
             
             return;
         }

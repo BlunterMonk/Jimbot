@@ -18,6 +18,193 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20191201
+|type  = Other
+|title = Monthly 5★ Select Summon Tickets
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191201FreeSelectSummonTicket.html
+}}
+{{Recent News
+|date  = 20191201
+|type  = Other
+|title = Guaranteed 5★ Special Summon Ticket
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191201GuaranteedSummonTicket.html
+}}
+{{Recent News
+|date  = 20191128
+|type  = Other
+|title = Version 3.8.8
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191128GL388PatchNotes.html
+}}
+{{Recent News
+|date  = 20191128
+|type  = Maintenance
+|title = Post Maintenace Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191128PostMaintenance.html
+}}
+{{Recent News
+|date  = 20191128
+|type  = Unit
+|title = Ability Awakening Update!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191126AbilityAwakeningBatch34.html
+}}
+{{Recent News
+|date  = 20191128
+|type  = Other
+|title = Exchange Shop
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191125AOliveMXonOZyrusDAidenExchangeShop.html
+}}
+{{Recent News
+|date  = 20191128
+|type  = Other
+|title = 5★ Guaranteed Flexible Ticket (A.Olive/M.Xon) & 5★ Guaranteed Flexible Ticket (O.Zyrus/D.Aiden)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191125AOliveMXonOZyrusDAidenGuaranteedFeaturedTicket.html
+}}
+{{Recent News
+|date  = 20191126
+|type  = Other
+|title = 7★ Guaranteed (Re)summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/201911257StarGuaranteedReSummon.html
+}}
+{{Recent News
+|date  = 20191126
+|type  = Event
+|title = Vs. Lord of Shadows
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191126DQXISLordofShadowsTrial.jpg
+}}
+{{Recent News
+|date  = 20191126
+|type  = Event
+|title = Vault of Hidden Treasures
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191126VaultofHiddenTreasures.html
+}}
+{{Recent News
+|date  = 20191126
+|type  = Trial
+|title = Series Boss Battles - Kefka
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/201912126SBBKefka.jpg
+}}
+{{Recent News
+|date  = 20191126
+|type  = Other
+|title = All Rainbow 11 Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191125AllRainbowsSummon.html
+}}
+{{Recent News
+|date  = 20191126
+|type  = Other
+|title = NY Livestream 2019 Free 10+1 Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191126NYLivestreamFree10Plus1.html
+}}
+{{Recent News
+|date  = 20191126
+|type  = Other
+|title = Friend Point Trust Moogle Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191129FPSummon.html
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20191126
+|type  = Other
+|title = Half Energy
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191126SpecialHalfEnergyCampaign.html
+}}
+{{Recent News
+|date  = 20191126
+|type  = Other
+|title = NYC Livestream Login Bonus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191126NYCLivestreamLoginBonus.html
+}}
+{{Recent News
+|date  = 20191126
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191127Maintenance.html
+}}
+{{Recent News
+|date  = 20191125
+|type  = Event
+|title = The Quest for the Chest
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191125TheQuestforTheChest.jpg
+}}
+{{Recent News
+|date  = 20191125
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191125BlackFridayFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20191125
+|type  = Other
+|title = Black Friday Treasure Special!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191125FountainofBlackFriday.html
+}}
+{{Recent News
+|date  = 20191122
+|type  = Issue
+|title = Important Notice
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191121APIVersion3Important.html
+}}
+{{Recent News
+|date  = 20191121
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191121XonArenaBonusIssueReport.html
+}}
+{{Recent News
+|date  = 20191121
+|type  = Other
+|title = NYC Livestream Rewards
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191121NYCLivestreamRewardsDistribution.html
+}}
+{{Recent News
+|date  = 20191121
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191121PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20191119
+|type  = Event
+|title = Vs. Mordegon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191119DQXISVsMordegonRaid.jpg
+}}
+{{Recent News
+|date  = 20191119
+|type  = Unit
+|title = Featured Summon DRAGON QUEST XI S
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191119DQXISFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20191119
+|type  = Other
+|title = Box Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191119DQXISBoxSummons.html
+}}
+{{Recent News
+|date  = 20191119
+|type  = Other
+|title = Exchange Shop (DQXI S) (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191112DQXISpecialLimitedKeyExchangePart2v3.html
+}}
+{{Recent News
+|date  = 20191119
+|type  = Event
+|title = Narshe - Exploration
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191119FFVINarsheExploration.jpg
+}}
+{{Recent News
+|date  = 20191119
+|type  = Other
+|title = FINAL FANTASY Portal App event!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191031FFPortalAppEvent.html
+}}
+{{Recent News
+|date  = 20191119
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191120Maintenance.html
+}}
+{{Recent News
 |date  = 20191114
 |type  = Issue
 |title = Issue Report
@@ -89,7 +276,6 @@
 |title = FFBE NYC LIVESTREAM EVENT 2019
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191109NewYorkFanFesta.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20191107
 |type  = Issue
@@ -260,8 +446,8 @@
 }}
 {{Recent News
 |date  = 20191029
-|type  = Other
-|title = Important Notice
+|type  = Issue
+|title = Important Notice - Latents
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191025LatentAbilitiesAnnouncement.html
 }}
 {{Recent News
@@ -669,7 +855,7 @@
 {{Recent News
 |date  = 20190924
 |type  = Other
-|title = Introducing the DQ XI S Special Unit Summoning Key (Silver) and DQ XI S Special Unit Summoning Key (Gold)
+|title = Introducing the DQXI S Special Unit Summoning Key (Silver) and DQXI S Special Unit Summoning Key (Gold)
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190924DQXISpecialLimitedKeyExchange.html
 }}
 {{Recent News
@@ -1166,7 +1352,7 @@
 }}
 {{Recent News
 |date  = 20190813
-|type  = Issue Report
+|type  = Issue
 |title = Important Notice
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190813EnlightenmentKeysImprovementsv2.html
 }}

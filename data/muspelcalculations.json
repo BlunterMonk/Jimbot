@@ -1,4 +1,18 @@
 {
+	"Erik": {
+		"name": "Erik",
+		"damage": "18,430,725,418 ",
+		"turns": "9",
+		"type": "physical",
+		"url": null
+	},
+	"Jasper Unbound": {
+		"name": "Jasper Unbound",
+		"damage": "16,313,651,170 ",
+		"turns": "10",
+		"type": "physical",
+		"url": null
+	},
 	"Aldore King Rain": {
 		"name": "Aldore King Rain",
 		"damage": "15,470,889,238 ",
@@ -10,6 +24,13 @@
 		"name": "Radiant Lightning",
 		"damage": "14,787,206,587 ",
 		"turns": "10",
+		"type": "physical",
+		"url": null
+	},
+	"Agent Olive": {
+		"name": "Agent Olive",
+		"damage": "14,438,832,137 ",
+		"turns": "15",
 		"type": "physical",
 		"url": null
 	},
@@ -48,6 +69,20 @@
 		"type": "physical",
 		"url": null
 	},
+	"Jade": {
+		"name": "Jade",
+		"damage": "12,022,019,955 ",
+		"turns": "12",
+		"type": "physical",
+		"url": null
+	},
+	"Mastermind Xon": {
+		"name": "Mastermind Xon",
+		"damage": "11,772,984,208 ",
+		"turns": "2",
+		"type": "physical",
+		"url": null
+	},
 	"Reberta (jump chain)": {
 		"name": "Reberta (jump chain)",
 		"damage": "11,747,548,103 ",
@@ -72,6 +107,13 @@
 	"Sephiroth (KH)": {
 		"name": "Sephiroth (KH)",
 		"damage": "11,408,167,378 ",
+		"turns": "10",
+		"type": "physical",
+		"url": null
+	},
+	"The Lord of Shadows": {
+		"name": "The Lord of Shadows",
+		"damage": "11,398,446,776 ",
 		"turns": "10",
 		"type": "physical",
 		"url": null
@@ -108,6 +150,13 @@
 		"name": "Aloha Lasswell",
 		"damage": "9,721,994,395 ",
 		"turns": "10",
+		"type": "physical",
+		"url": null
+	},
+	"Machina (damage rotation)": {
+		"name": "Machina (damage rotation)",
+		"damage": "9,222,099,377 ",
+		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
@@ -192,6 +241,13 @@
 		"name": "Nalu",
 		"damage": "5,866,801,764 ",
 		"turns": "5",
+		"type": "physical",
+		"url": null
+	},
+	"Machina (breaks rotation)": {
+		"name": "Machina (breaks rotation)",
+		"damage": "6,025,168,180 ",
+		"turns": "6",
 		"type": "physical",
 		"url": null
 	},
@@ -412,13 +468,6 @@
 		"type": "physical",
 		"url": null
 	},
-	"Machina (Damage Rotation)": {
-		"name": "Machina (Damage Rotation)",
-		"damage": "1,007,967,357 ",
-		"turns": "7",
-		"type": "physical",
-		"url": null
-	},
 	"Cloud": {
 		"name": "Cloud",
 		"damage": "971,288,941 ",
@@ -496,13 +545,6 @@
 		"type": "physical",
 		"url": null
 	},
-	"Machina (Utility Rotation)": {
-		"name": "Machina (Utility Rotation)",
-		"damage": "831,385,373",
-		"turns": "7",
-		"type": "physical",
-		"url": null
-	},
 	"Vincent": {
 		"name": "Vincent",
 		"damage": "827,418,215",
@@ -550,6 +592,20 @@
 		"damage": "419,354,584",
 		"turns": "10",
 		"type": "physical",
+		"url": null
+	},
+	"Operative Zyrus (with Magnus)": {
+		"name": "Operative Zyrus (with Magnus)",
+		"damage": "15,903,051,055 ",
+		"turns": "10",
+		"type": "magic",
+		"url": null
+	},
+	"Operative Zyrus": {
+		"name": "Operative Zyrus",
+		"damage": "13,796,449,957 ",
+		"turns": "10",
+		"type": "magic",
 		"url": null
 	},
 	"Kimono Fina": {
@@ -783,10 +839,38 @@
 		"type": "magic",
 		"url": null
 	},
+	"Aurora Fryevia": {
+		"name": "Aurora Fryevia",
+		"damage": "15,025,191,642 ",
+		"turns": "12",
+		"type": "hybrid",
+		"url": null
+	},
+	"Kurasame": {
+		"name": "Kurasame",
+		"damage": "14,709,513,753 ",
+		"turns": "12",
+		"type": "hybrid",
+		"url": null
+	},
+	"Rab": {
+		"name": "Rab",
+		"damage": "14,291,506,354 ",
+		"turns": "11",
+		"type": "hybrid",
+		"url": null
+	},
 	"Elena": {
 		"name": "Elena",
 		"damage": "10,278,846,771 ",
 		"turns": "10",
+		"type": "hybrid",
+		"url": null
+	},
+	"Fryevia": {
+		"name": "Fryevia",
+		"damage": "8,805,474,629 ",
+		"turns": "5",
 		"type": "hybrid",
 		"url": null
 	},
@@ -811,23 +895,9 @@
 		"type": "hybrid",
 		"url": null
 	},
-	"Kurasame": {
-		"name": "Kurasame",
-		"damage": "2,412,126,857 ",
-		"turns": "10",
-		"type": "hybrid",
-		"url": null
-	},
 	"Felix": {
 		"name": "Felix",
 		"damage": "2,379,948,061 ",
-		"turns": "7",
-		"type": "hybrid",
-		"url": null
-	},
-	"Aurora Fryevia": {
-		"name": "Aurora Fryevia",
-		"damage": "1,893,003,177 ",
 		"turns": "7",
 		"type": "hybrid",
 		"url": null
@@ -836,13 +906,6 @@
 		"name": "Karlette",
 		"damage": "1,739,646,566 ",
 		"turns": "8",
-		"type": "hybrid",
-		"url": null
-	},
-	"Fryevia": {
-		"name": "Fryevia",
-		"damage": "1,466,223,144 ",
-		"turns": "7",
 		"type": "hybrid",
 		"url": null
 	},

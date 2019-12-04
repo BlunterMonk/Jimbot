@@ -15,11 +15,11 @@ import { log } from "../global.js";
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 //const calcSheet = "https://docs.google.com/spreadsheets/d/1cPQPPjOVZ1dQqLHX6nICOtMmI1bnlDnei9kDU4xaww0";
-const calcSheet = "https://docs.google.com/spreadsheets/d/1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
+const calcSheet = "https://docs.google.com/spreadsheets/d/1o-q9G1I1Z1QArbzrTySjjNs-OvmLE-sBRYljCX6EKUo";
 const whaleSheet = "https://docs.google.com/spreadsheets/d/1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
 const sheetName = "Damage comparison";
 const burstSheetName = "Burst comparison";
-const sheetID = "1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
+const sheetID = "1o-q9G1I1Z1QArbzrTySjjNs-OvmLE-sBRYljCX6EKUo";
 const whaleSheetID = "1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
 const furculaSaveLocation = "data/furculacalculations.json";
 const whaleSaveLocation = "data/whalecalculations.json";
