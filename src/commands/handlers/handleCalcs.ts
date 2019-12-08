@@ -19,8 +19,8 @@ import { convertSearchTerm, convertValueToLink, isLetter } from "../helper.js";
 
 ////////////////////////////////////////////////////////////////////
 
-const sheetURL = "https://docs.google.com/spreadsheets/d/1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
-const muspelURL = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU/edit#gid=558725580";
+const sheetURL = "https://docs.google.com/spreadsheets/d/1o-q9G1I1Z1QArbzrTySjjNs-OvmLE-sBRYljCX6EKUo";
+const muspelURL = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU";
 const whaleSheet = "https://docs.google.com/spreadsheets/d/1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
 const furculaUserID = "344500120827723777";
 const muspelUserID  = "114545824989446149";
@@ -198,7 +198,7 @@ export function handleTopdps(receivedMessage: Discord.Message, search: string, p
     const culled = [];
     calcs.forEach(unit => {
 
-        if (unit.jp || unit.name.includes("(JP)"))
+        if (unit.name.includes("(JP)"))
             return;
         if (check && !unit.type.startsWith(search[0]))
             return;

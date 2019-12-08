@@ -43,7 +43,7 @@ class client {
     }
     
     init(callback) {
-        this.credentials = JSON.parse(String(fs.readFileSync("./discord-cred.json")));
+        this.credentials = JSON.parse(String(fs.readFileSync("./credentials/discord.json")));
 
         this.discordClient = new Discord.Client();
         this.discordClient.login(this.credentials.token);

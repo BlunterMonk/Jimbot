@@ -112,7 +112,8 @@ export class cache {
             break;
 
         case "furcula":
-            await furcDamage.UpdateFurculaCalculations(force, () =>{
+            await furcDamage.UpdateFurculaCalculations(force)
+            .then(calcs => {
                 this.calculations = JSON.parse(fs.readFileSync(furcCalc).toString());
                 success()
             }).catch(fail);
@@ -120,7 +121,8 @@ export class cache {
 
         case "whale":
         case "shado":
-            await furcDamage.UpdateWhaleCalculations(force, () =>{
+            await furcDamage.UpdateWhaleCalculations(force)
+            .then(calcs =>{
                 this.whaleCalculations = JSON.parse(fs.readFileSync(whaleCalc).toString());
                 success()
             }).catch(fail);

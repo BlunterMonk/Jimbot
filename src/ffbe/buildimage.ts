@@ -306,8 +306,12 @@ class ImageBuild {
         if (!mainStatOptions)
             return;
 
-        let stats = getMainStats(mainStatOptions, this.totalStats, this.totalBonuses, this.wieldingBonus);
-        this.labels = this.labels.concat(stats);
+        let stats = this.build.getTotal();
+        if (stats) {
+            this.labels = this.labels.concat(getMainStats(mainStatOptions, stats));
+        } else {
+            this.labels = this.labels.concat(getMainStatsOldMethod(mainStatOptions, this.totalStats, this.totalBonuses, this.wieldingBonus));
+        }
     }
     addKillers(killerOptions: statRow) {
         if (!this.totalStats.killers) {
@@ -325,7 +329,7 @@ class ImageBuild {
         }
     
         // let eleVal = getResistsByValue(this.totalStats.resist, Build.elementList);
-        let ele = getElementResistances(elementOptions, this.totalStats);
+        let ele = getElementResistances(elementOptions, this.totalStats.elementResists);
         // let ele = getKillers(elementOptions, eleVal);
         this.labels = this.labels.concat(ele);
         // this.images = this.images.concat(ele.images);
@@ -336,7 +340,7 @@ class ImageBuild {
         }
 
         // let ailVal = getResistsByValue(this.totalStats.resist, Build.ailmentList);
-        let ail = getAilmentResistances(ailmentOptions, this.totalStats);
+        let ail = getAilmentResistances(ailmentOptions, this.totalStats.ailmentResists);
         // let ail = getKillers(ailmentOptions, ailVal);
         this.labels = this.labels.concat(ail);
         // this.images = this.images.concat(ail.images); 
@@ -412,7 +416,7 @@ function addMainStats(totalStats, totalBonuses, wieldBonus) {
         align: "left"
     };
         
-    return getMainStats(mainStats, totalStats, totalBonuses, wieldBonus);
+    return getMainStatsOldMethod(mainStats, totalStats, totalBonuses, wieldBonus);
 }
 function addResistances(totalStats) {
 
@@ -428,10 +432,10 @@ function addResistances(totalStats) {
         spacing: 122,
         align: "center"
     };
-    labels = labels.concat(getAilmentResistances(resistOptions, totalStats));
+    labels = labels.concat(getAilmentResistances(resistOptions, totalStats.ailmentResists));
     
     resistOptions.yStart = 1545;//772,
-    labels = labels.concat(getElementResistances(resistOptions, totalStats));
+    labels = labels.concat(getElementResistances(resistOptions, totalStats.elementResists));
 
     return labels;
 }
@@ -506,7 +510,7 @@ function addCompactMainStats(totalStats, totalBonuses, wieldBonus, canvasOptions
         align: "left"
     };
 
-    return getMainStats(mainStats, totalStats, totalBonuses, wieldBonus);
+    return getMainStatsOldMethod(mainStats, totalStats, totalBonuses, wieldBonus);
 }
 function addCompactKillers(totalStats, canvasOptions: CanvasOptions) {
 
@@ -543,7 +547,7 @@ function addCompactResistances(totalStats, canOpts: CanvasOptions): mergeImages.
         spacing: 100,
         align: "left"
     };
-    labels = labels.concat(getAilmentResistances(resistOptions, totalStats));
+    labels = labels.concat(getAilmentResistances(resistOptions, totalStats.ailmentResists));
 
     /*
     if (totalStats.resist && totalStats.resist.death) {
@@ -569,7 +573,7 @@ function addCompactResistances(totalStats, canOpts: CanvasOptions): mergeImages.
     */
 
     resistOptions.yStart = canOpts.yStart + 265;
-    labels = labels.concat(getElementResistances(resistOptions, totalStats));
+    labels = labels.concat(getElementResistances(resistOptions, totalStats.elementResists));
 
     return labels;
 }
@@ -803,43 +807,7 @@ function getKillers(options: statRow, values: any) {
     }
 }
 
-function getResists(totalStats, list): string[] {
-
-    var keys = Object.keys(list);
-
-    var resist : string[] = [];
-    for (let index = 0; index < keys.length; index++) {
-        resist.push("0");
-    }
-                              
-    if (!totalStats.resist) {
-        return resist;
-    }
-        
-    var values = {};
-    var totalKeys = Object.keys(totalStats.resist)
-    totalKeys.forEach((k, i) => {
-        const r = totalStats.resist[k];
-
-        if (r) {
-            const i = list.indexOf(k)
-            if (i < 0)
-                return;
-
-            var v = parseInt(resist[i]);
-
-            if (Number.isNaN(v)) {
-                resist[i] = "";
-                v = 0;
-            }
-
-            resist[i] = `${v + r.percent}`;
-        }
-    });
-    
-    return resist;
-}
-function getAilmentResistances(options: statRow, totalStats) {
+function getAilmentResistances(options: statRow, ailments: any) {
     
     var labels = [];
 
@@ -847,12 +815,13 @@ function getAilmentResistances(options: statRow, totalStats) {
     var y0 = options.yStart;
     var spacing = options.spacing;
 
-    var ailments = getResists(totalStats, Build.ailmentList);
-    for (let index = 0; index < 8; index++) {
-        const e = ailments[index];
-        const v = parseInt(e);
+    var keys = Object.keys(ailments);
+    keys.forEach((k, i) => {
+        const e = ailments[k];
+        const index = Build.ailmentList.indexOf(k);
+        const v = e;
         if (v == 0) {
-            continue;
+            return;
         }
 
         var f = resistFontFamily;
@@ -877,24 +846,25 @@ function getAilmentResistances(options: statRow, totalStats) {
             y: y0,
             align: options.align
         };
-    }
+    });
 
     return labels;
 }
-function getElementResistances(options: statRow, totalStats) {
+function getElementResistances(options: statRow, elements) {
     
     var labels = [];
-    var elements = getResists(totalStats, Build.elementList);
 
     var x0 = options.xStart;
     var y0 = options.yStart;
     var spacing = options.spacing;
 
-    for (let index = 0; index < elements.length; index++) {
-        const e = elements[index];
-        const v = parseInt(e);
+    var keys = Object.keys(elements);
+    keys.forEach((k, i) => {
+        const e = elements[k];
+        const index = Build.elementList.indexOf(k);
+        const v = e;
         if (v == 0) {
-            continue;
+            return;
         }
 
         var t = `${v}%`;
@@ -916,13 +886,13 @@ function getElementResistances(options: statRow, totalStats) {
             align: options.align,
             color: c
         };
-    }
+    });
 
     return labels;
 }
 
 const statOrder = [ "hp",  "atk", "def", "mp",  "mag", "spr" ];
-function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wieldingBonus) {
+function getMainStatsOldMethod(options: mainStatsOptions, totalStats, totalBonuses, wieldingBonus) {
     var labels = [];
 
     let x0 = options.xStart;
@@ -1004,6 +974,79 @@ function getMainStats(options: mainStatsOptions, totalStats, totalBonuses, wield
 
     return labels;
 }
+
+function getMainStats(options: mainStatsOptions, stats) {
+    var labels = [];
+
+    let x0 = options.xStart;
+    let y0 = options.yStart;
+    let fs = options.fontSize;
+    
+    for (let index = 0; index < statOrder.length; index++) {
+        const key = statOrder[index];
+
+        var posX = Math.floor(index / options.rows);
+        var posY = index % options.rows;
+                            
+        let x = x0 + (options.xSpace * posX);
+        let y = y0 + (options.ySpace * posY);
+
+        let statValue = stats[key];
+        labels[labels.length] = { 
+            text: statValue.value,
+            font: mainStatFontFamily, 
+            size: fs, 
+            x: x, 
+            y: y, 
+            align: options.align,
+            strokeColor: statStroke
+        };
+
+        let l = mergeImages.measureText(ctx, statValue.value, `${fs}px ${mainStatFontFamily}`)
+        x = (options.align == "right") ? x : x + l.width;
+
+        var v = statValue.bonus;
+        var t = "0";
+
+        var color = `255,255,255,1`;
+        if (v) {
+            color = `0,255,0,1`;
+            if (parseInt(v) > 400)
+                color = `255,0,0,1`;
+
+            t = `+${v}`;
+        }
+
+        t = `${t}%`;
+        if (statValue.flatStatBonus > 0) {
+            var tdh = statValue.flatStatBonus;
+
+            labels[labels.length] = { 
+                text: `+${tdh}%`,
+                font: fontFamily, 
+                size: options.bonusSize,
+                x: x,
+                y: y,
+                align: "left",
+                color: `255,223,0,1`,
+                strokeColor: `125,125,125,0.5`
+            };
+        }
+
+        labels[labels.length] = { 
+            text: t,
+            font: fontFamily, 
+            size: options.bonusSize,
+            x: x,
+            y: y - options.bonusSize,
+            align: "left",
+            color: color
+        };
+    }
+
+    return labels;
+}
+
 
 function getCompactEquipment(equipOptions: equipmentOptions, build): Batch {
     

@@ -25,6 +25,7 @@ import { resolve } from "url";
 import * as handlers from "./index.js";
 import { getUnitKey, respondSuccess, respondFailure, validateUnit, validateEmote } from "./common.js";
 import { convertSearchTerm, convertValueToLink, getRandomInt } from "../helper.js";
+import { UpdateWikiPage } from "../../cache/cacheToWiki.js";
 
 ////////////////////////////////////////////////////////////////////
 
@@ -425,6 +426,16 @@ export function handleUpdate(receivedMessage: Discord.Message, search: string, p
         if (success) {
             Client.send(receivedMessage, "done!");
             respondSuccess(receivedMessage, true);
+            
+            UpdateWikiPage()
+            .then(r => {
+                log("Successfully updated wiki");
+                Client.send(receivedMessage, "wiki was updated successfully!");
+            })
+            .catch(e => {
+                error("Failed to update wiki: ", e);
+                Client.send(receivedMessage, `failed to update wiki, ${e}`);
+            })
         } else {
             Client.send(receivedMessage, `Something went wrong, give it another try in a few minutes. ${error}`);
             respondFailure(receivedMessage, true);

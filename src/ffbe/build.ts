@@ -210,19 +210,8 @@ export class Build {
         if (!this.loadedUnit)
             return null;
 
-        // log("this.loadedUnit");
-        // log(this.loadedUnit);
-        // log("this.buildData");
-        // log(this.buildData);
-
-        this.total = {
-            "hp":  "0", "hp%":  "0",
-            "mp":  "0", "mp%":  "0",
-            "atk": "0", "atk%": "0",
-            "def": "0", "def%": "0",
-            "mag": "0", "mag%": "0",
-            "spr": "0", "spr%": "0"
-        };
+    
+        this.total = buildData.calculatedValues;
 
         this.TDW = {
             "atk": "0",
@@ -288,22 +277,16 @@ export class Build {
         return ((s0 && !s1) || (s1 && !s0))
     }
 
-    // Finalize the item as equipment and add its stats to the build total
-    addToTotal(item2: any) {
-        this.total = addToTotal(this.total, item2);
+    // Get pre-calculated total stats
+    getTotal() {
+        return this.total;
     }
+
     addToEquipmentTotal(item2: any) {
         this.equipmentTotal = addToTotal(this.equipmentTotal, item2);
     }
     addItem(item: any) {
 
-        var stats = Object.keys(this.total);
-        stats.forEach(s => {
-            if (item[s] != null) {
-                this.total[s] = parseInt(this.total[s]) + parseInt(item[s]);
-            }
-        });
-        
         if (!this.equipedConditions.includes(item.type)) {
             this.equipedConditions.push(item.type)
         }
@@ -383,43 +366,21 @@ export class Build {
     getTotalStats() {
      
         var passives = getUnitPassiveStats(this, this.loadedUnit);
-        // log("\nUnit Passive Stats");
-        // log(passives);
         var esper = Builder.getEsper(this.buildRegion, this.buildData.esperId);
-        // log("\nEsper");
-        // log(esper);
-        var equipped = this.equipmentTotal;
 
         var unitStats = getUnitMaxStats(this.loadedUnit, passives, this.buildData.pots, 
             this.equipmentTotal, esper, this);
-        // log("\nUnit Stats");
-        // log(unitStats);
 
-        // log("\nEquipment Total");
-        // log(this.equipmentTotal);
-
-        // log("\nStat Totals\n{\n");
-
-        var totalBonuses = unitStats.bonuses;// getTotalBonuses(passives, equipped, esper);
+        var totalBonuses = unitStats.bonuses;
         debug("Total Bonuses: ", totalBonuses);
         var totalStats = addOtherStats(unitStats.stats, passives);
         debug("Total Stats: ", totalStats);
-        // log("\n{\nUnit Stats + Pasives");
-        // log(total);
 
-        // total = addOtherStats(total, this.equipmentTotal);
-        // log("Unit Stats + Pasives + Equipment Total");
-        // log(total);
-        
-        // if (esper)
-            // total = addOtherStats(total, esper);
+        var eleres = getResists(totalStats, elementList);
+        var ailres = getResists(totalStats, ailmentList);
 
-        // log("Unit Stats + Pasives + Equipment Total + Esper");
-        // log(total);
-
-        // log("\n}\n");
-        //var killers = addOtherStats(total.killers)
-
+        totalStats.ailmentResists = ailres;
+        totalStats.elementResists = eleres;
 
         return {
             stats: totalStats,
@@ -536,7 +497,6 @@ export class Build {
             text: text
         };
     }
-
 }
 
 /////////////////////////////////////////////
@@ -1387,6 +1347,36 @@ function getKillerTotal(killerList: any[]): any {
     });
 
     return killers;
+}
+
+function getResists(totalStats, list): {[key: string]: number} {
+
+    var keys = Object.keys(list);
+
+    var resist : {[key: string]: number} = {};
+    if (!totalStats.resist) {
+        return resist;
+    }
+        
+    var totalKeys = Object.keys(totalStats.resist)
+    totalKeys.forEach((k, i) => {
+        const r = totalStats.resist[k];
+
+        if (r) {
+            if (list.indexOf(k) < 0)
+                return;
+
+            var v = resist[k];
+            if (!v) {
+                resist[k] = 0;
+                v = 0;
+            }
+
+            resist[k] = v + r.percent;
+        }
+    });
+    
+    return resist;
 }
 
 // Combine two item sets, usually for item enhancements
