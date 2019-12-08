@@ -681,6 +681,7 @@ class ffbe {
             }
         }
 
+        const self = this;
         wikiClient.getArticle(search, function (err, content, redirect) {
             if (err || !content) {
                 console.error(err);
@@ -697,7 +698,7 @@ class ffbe {
                 const redirectRegex = /(?:.*)\[(.*)\]]/g;
                 const page = redirectRegex.exec(content);
                 log("Redirect To: " + page[1]);
-                this.queryWikiForUnit(page[1], parameters, callback);
+                self.queryWikiForUnit(page[1], parameters, callback);
                 return;
             }
 

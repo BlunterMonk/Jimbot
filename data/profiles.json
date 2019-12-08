@@ -464,7 +464,7 @@
 		"friendcode": "450427744",
 		"nickname": "semi",
 		"status": "DQXI is gud",
-		"lead": "https://ffbeequip.com/builder.html?server=gl#16fd8a70-fcd1-11e9-937b-ad48d5c58d17",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#752755c0-1894-11ea-9f71-fbb311f0fb55",
 		"builds": {}
 	},
 	"182182285255114752": {
@@ -512,7 +512,8 @@
 		"lead": "https://ffbeequip.com/builder.html?server=gl#7d46c700-fcc8-11e9-937b-ad48d5c58d17",
 		"builds": {
 			"exorcist_karten": "https://ffbeequip.com/builder.html?server=gl#236df480-fccb-11e9-937b-ad48d5c58d17",
-			"luddite_regina": "https://ffbeequip.com/builder.html?server=gl#76e751f0-fccc-11e9-937b-ad48d5c58d17"
+			"luddite_regina": "https://ffbeequip.com/builder.html?server=gl#76e751f0-fccc-11e9-937b-ad48d5c58d17",
+			"daemon_x_machina_physalis": "https://ffbeequip.com/builder.html?server=gl#bd53a220-1959-11ea-9f71-fbb311f0fb55"
 		}
 	},
 	"319251204989386762": {
@@ -654,5 +655,23 @@
 			"esther": "https://ffbeequip.com/builder.html?server=gl#c44eb880-1021-11ea-b959-9b5568739fdf",
 			"king_rain": "https://ffbeequip.com/builder.html?server=gl#fed1b470-1022-11ea-b959-9b5568739fdf"
 		}
+	},
+	"350018451831783425": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "889129464",
+		"nickname": "lilac",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"225735924179402753": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "662790347",
+		"nickname": "Aldemar",
+		"status": "",
+		"lead": null,
+		"builds": {}
 	}
 }

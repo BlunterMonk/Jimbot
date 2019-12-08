@@ -1589,9 +1589,9 @@ export function requestBuildData(buildURL: string): Promise<BuildResponse> {
 
         request(
             { uri: `https://firebasestorage.googleapis.com/v0/b/ffbeequip.appspot.com/o/PartyBuilds%2F${id}.json?alt=media` },
-            function(error, response, body) {
-                if (error || response.statusCode != 200 || body.empty()) {
-                    error(`Build Not Found: ${id}`);
+            function(err, response, body) {
+                if (err || response.statusCode != 200 || body.empty()) {
+                    error(`Build Not Found (${id}): error: `, err, ` response: `, response.statusCode);
                     return;
                 }
 
