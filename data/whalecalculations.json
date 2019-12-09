@@ -55,6 +55,35 @@
 			""
 		]
 	},
+	"Erik": {
+		"name": "Erik",
+		"damage": "22,837,495,524",
+		"turns": "10",
+		"type": "physical",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#ff1c7980-0fa8-11ea-b959-9b5568739fdf",
+		"jp": false,
+		"burst": "46,912,637,882",
+		"burstTurn": "4",
+		"wiki": "https://exvius.gamepedia.com/Erik",
+		"rotation": [
+			"Divide (CD) + Ridgeraiser",
+			"Fatal Flash (CD)",
+			"Critical Claim (LB)       ",
+			"Fatal Flash (CD)",
+			"Ridgeraiser + Double Rubblerouser",
+			"Divid (CD) + Fatal Flash (CD)",
+			"Double Rubblerouser",
+			"Fatal Flash (CD)",
+			"Ridgeraiser + Double Rubblerouser",
+			"Fatal Flash (CD)",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Aldore King Rain": {
 		"name": "Aldore King Rain",
 		"damage": "23,157,997,928",

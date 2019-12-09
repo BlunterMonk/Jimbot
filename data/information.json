@@ -101,5 +101,10 @@
 		"author": "131139508421918721",
 		"title": "How Make Boss Commit Unalive",
 		"description": "attac"
+	},
+	"caps": {
+		"author": "131139508421918721",
+		"title": "caps",
+		"description": "Stat Passives       | 400%\nEQ Stat (DH/TDH)    | 300%\nEQ Stat w/ DW (TDW) | 200%\nLB/Turn             | 12\nReduce MP Costs     | 80%\nSlayers             | 300%\nJump Damage         | 800%\nStats from Espers   | 200%\nEsper Damage        | 300%\nEvo Mag             | 300%\nLB Fill Rate        | None\nLB Damage           | 300%\nItem Drop Rate      | 100%"
 	}
 }

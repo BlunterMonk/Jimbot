@@ -16,7 +16,8 @@
 		"physical_chainer": [
 			"radiant lightning",
 			"warrior of light bartz",
-			"aldore king rain"
+			"aldore king rain",
+			"agent olive"
 		],
 		"physical_finisher": [
 			"regina",
@@ -26,15 +27,16 @@
 		"magical_chainer": [
 			"kimono fina",
 			"sol",
+			"operative zyrus",
 			"magitek warrior terra"
 		],
 		"magical_finisher": [
-			"cg sakura",
-			"emperor"
+			"n/a"
 		],
 		"hybrid_chainer": [
-			"malphasie",
-			"elena"
+			"elena",
+			"kurasame",
+			"aurora fryevia"
 		],
 		"physical_tank": [
 			"sieghard",
@@ -50,13 +52,15 @@
 			"aerith",
 			"folka",
 			"myra",
-			"warrior of light lenna"
+			"warrior of light lenna",
+			"doctor aiden"
 		],
 		"breaker": [
 			"fid",
 			"cg lid",
 			"king edgar of figaro",
-			"adventurer locke"
+			"adventurer locke",
+			"machina"
 		],
 		"buffer": [
 			"sylvie",
