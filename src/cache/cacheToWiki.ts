@@ -9,6 +9,8 @@ import * as fs from "fs";
 const wiki = require("nodemw");
 const wikiClient = new wiki(`./credentials/wiki.json`);
 const conf = JSON.parse(fs.readFileSync(`./credentials/wiki.json`).toString());
+const testPage = "User:Bluntermonk/Unitcalctestpage";
+const mainPage = "Damage Calculations by Furcula";
 const info = `
 {{User Content
 |creator = Bluntermonk
@@ -61,7 +63,7 @@ function writeToPage(text): Promise<any> {
             log("Login Success: ", r);
     
             log("Attempting to edit wiki page");
-            wikiClient.edit("Damage Calculations by Furcula", text, "", true, (e, r) => {
+            wikiClient.edit(mainPage, text, "", true, (e, r) => {
                 if (e != null) {
                     reject(e);
                     return;
@@ -84,18 +86,41 @@ export function UpdateWikiPage(): Promise<any> {
 
     var units = "";
     var jpunits = "";
+
+    // sort units by damage done
     var keys = Object.keys(calculations);
+    keys = keys.sort((a, b) => {
+
+        var ac = calculations[a].damage.replace(/,/g, "");
+        var bc = calculations[b].damage.replace(/,/g, "");
+        var ad = parseInt(ac);
+        var bd = parseInt(bc);
+
+        if (Number.isNaN(ad)) {
+            return -1;
+        } else if (Number.isNaN(bd)) {
+            return 1;
+        }
+
+        if (bd < ad)
+            return -1;
+        else 
+            return 1;
+    });
+
     keys.forEach(k => {
         let unit = calculations[k];
         let whaleUnit = whaleCalcs[k];
-        let key = k.toLowerCase().replace(/\(.*\)/g, "").trim().replace(/\s/g,"_");
+        let key = k.replace(/(?!\(FFVII AC\))(?!\(KH\))(?!\(Xenogears\))\(.*\)/, "");
+        key = key.toLowerCase();
+        key = key.trim().replace(/\s/g,"_");
 
         let img = "N/A";
         let id = unitKeys[key];
         if (id != null) {
             img = `[[File:unit_icon_${id}.png|thumb]]`;
         } else {
-            console.log("NO ID: " + key);
+            // log("NO ID: " + key);
         }
 
         let url = unit.name;

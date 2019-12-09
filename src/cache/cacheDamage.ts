@@ -207,21 +207,18 @@ function parseDamageSheet(def: slotDef, damageList, burstList): UnitCalculations
         
         if (pName && phy[pName] && !pName.includes("Unreleased")) {
             pName = pName.trim();
-            console.log(`Burst for: '${pName}'`);
             phy[pName].burst = row[def.pdpt];
             phy[pName].burstTurn = row[def.pturns];
         }
 
         if (mName && mag[mName] && !mName.includes("Unreleased")) {
             mName = mName.trim();
-            console.log(`Burst for: '${mName}'`);
             mag[mName].burst = row[def.mdpt];
             mag[mName].burstTurn = row[def.mturns];
         }
 
         if (hName && hyb[hName] && !hName.includes("Unreleased")) {
             hName = hName.trim();
-            console.log(`Burst for: '${hName}'`);
             hyb[hName].burst = row[def.hdpt];
             hyb[hName].burstTurn = row[def.hturns];
         }
@@ -326,10 +323,7 @@ function queryUnitPages(oAuth: any, sourceID: string, units: UnitCalculations, o
         }
         
         var index = key;
-        if (!index.includes("(KH)") && !index.includes("(FFVII AC)")) {
-            index = index.replace(/\(.*\)/, "");
-        }
-
+        index = index.replace(/(?!\(FFVII AC\))(?!\(KH\))(?!\(Xenogears\))\(.*\)/, "");
         index = index.replace(/\(\J\P\)/, "");
         index = index.trim();
 
