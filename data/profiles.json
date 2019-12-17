@@ -513,16 +513,18 @@
 		"builds": {
 			"exorcist_karten": "https://ffbeequip.com/builder.html?server=gl#236df480-fccb-11e9-937b-ad48d5c58d17",
 			"luddite_regina": "https://ffbeequip.com/builder.html?server=gl#76e751f0-fccc-11e9-937b-ad48d5c58d17",
-			"daemon_x_machina_physalis": "https://ffbeequip.com/builder.html?server=gl#bd53a220-1959-11ea-9f71-fbb311f0fb55"
+			"daemon_x_machina_physalis": "https://ffbeequip.com/builder.html?server=gl#bd53a220-1959-11ea-9f71-fbb311f0fb55",
+			"old_spice_sieghard": "https://ffbeequip.com/builder.html?server=gl#af504e90-205b-11ea-9f71-fbb311f0fb55",
+			"just_veronica": "https://ffbeequip.com/builder.html?server=gl#953c19a0-205e-11ea-9f71-fbb311f0fb55"
 		}
 	},
 	"319251204989386762": {
 		"autobuild": true,
 		"compact": false,
 		"friendcode": "",
-		"nickname": "Oscarlira1",
+		"nickname": "yatogami",
 		"status": "",
-		"lead": null,
+		"lead": "https://ffbeequip.com/builder.html?server=gl#b2c9de60-202e-11ea-9f71-fbb311f0fb55",
 		"builds": {}
 	},
 	"576219166928011264": {
@@ -629,10 +631,14 @@
 		"compact": false,
 		"friendcode": "459139799",
 		"nickname": "Trifecta",
-		"status": "",
-		"lead": "https://ffbeequip.com/builder.html?server=gl#149cdcd0-0ce5-11ea-b959-9b5568739fdf",
+		"status": "LF more Afry/Erik friends and very active players",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#596fdf30-2039-11ea-9f71-fbb311f0fb55",
 		"builds": {
-			"hyoh": "https://ffbeequip.com/builder.html?server=gl#149cdcd0-0ce5-11ea-b959-9b5568739fdf"
+			"hyoh": "https://ffbeequip.com/builder.html?server=gl#149cdcd0-0ce5-11ea-b959-9b5568739fdf",
+			"moon_terra": "https://ffbeequip.com/builder.html?server=gl#1d187160-2038-11ea-9f71-fbb311f0fb55",
+			"afry": "https://ffbeequip.com/builder.html?server=gl#596fdf30-2039-11ea-9f71-fbb311f0fb55",
+			"erik": "https://ffbeequip.com/builder.html?server=gl#e68ebbc0-2039-11ea-9f71-fbb311f0fb55",
+			"circe": "https://ffbeequip.com/builder.html?server=gl#8d875f80-203b-11ea-9f71-fbb311f0fb55"
 		}
 	},
 	"516437886334402567": {
@@ -670,6 +676,24 @@
 		"compact": false,
 		"friendcode": "662790347",
 		"nickname": "Aldemar",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"356687572577026061": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "42069",
+		"nickname": "Aknizzy",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"274650864768253954": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "712419392",
+		"nickname": "Ariote",
 		"status": "",
 		"lead": null,
 		"builds": {}

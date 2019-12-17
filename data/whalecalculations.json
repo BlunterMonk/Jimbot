@@ -1,4 +1,32 @@
 {
+	"Crown Prince Noctis (finisher)": {
+		"name": "Crown Prince Noctis (finisher)",
+		"damage": "26,784,540,846",
+		"turns": "7",
+		"type": "physical",
+		"burst": "32,223,926,598",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/Crown_Prince_Noctis",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#538f31e0-204f-11ea-9f71-fbb311f0fb55",
+		"rotation": [
+			"Armiger Unleashed (LB)",
+			"True King Awakened (CD) + Crown Prince Noctis x 3 + Point-Blank Warp-Strike+",
+			"Armiger Unleashed (LB)",
+			"Crown Prince Noctis x 4 + Point-Blank Warp-Strike+",
+			"Armiger Unleashed (LB)",
+			"Crown Prince Noctis x 4 + Point-Blank Warp-Strike+",
+			"Armiger Unleashed (LB)",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Cid (finisher)": {
 		"name": "Cid (finisher)",
 		"damage": "29,774,165,989",
@@ -47,35 +75,6 @@
 			"Crushing Barrage+2 x 3",
 			"Piercing Barrage+2 x 2 + Immortal Demon+2 (CD)",
 			"Sinisher Fury (upgraded LB)",
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		]
-	},
-	"Erik": {
-		"name": "Erik",
-		"damage": "22,837,495,524",
-		"turns": "10",
-		"type": "physical",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#ff1c7980-0fa8-11ea-b959-9b5568739fdf",
-		"jp": false,
-		"burst": "46,912,637,882",
-		"burstTurn": "4",
-		"wiki": "https://exvius.gamepedia.com/Erik",
-		"rotation": [
-			"Divide (CD) + Ridgeraiser",
-			"Fatal Flash (CD)",
-			"Critical Claim (LB)       ",
-			"Fatal Flash (CD)",
-			"Ridgeraiser + Double Rubblerouser",
-			"Divid (CD) + Fatal Flash (CD)",
-			"Double Rubblerouser",
-			"Fatal Flash (CD)",
-			"Ridgeraiser + Double Rubblerouser",
-			"Fatal Flash (CD)",
 			"",
 			"",
 			"",
@@ -196,15 +195,15 @@
 			""
 		]
 	},
-	"Physalis (pending)": {
-		"name": "Physalis (pending)",
-		"damage": "20,798,347,465",
+	"Physalis": {
+		"name": "Physalis",
+		"damage": "21,253,597,444",
 		"turns": "7",
 		"type": "physical",
-		"burst": "34,662,797,016",
+		"burst": "35,421,202,388",
 		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Physalis",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#ea61b080-1798-11ea-9f71-fbb311f0fb55",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#5df568b0-1b96-11ea-9f71-fbb311f0fb55",
 		"rotation": [
 			"Frozen Bullet + Speed Type (CD) + Armored Anti-Ice Grenade",
 			"Lots of Training + Hunting Type (CD) + Premium Physalis Bullet",
@@ -1782,6 +1781,34 @@
 			"Snow Burial + Piercing Chill x 3"
 		]
 	},
+	"Gentiana (pending)": {
+		"name": "Gentiana (pending)",
+		"damage": "14,935,066,792",
+		"turns": "10",
+		"type": "magic",
+		"burst": "21,338,434,456",
+		"burstTurn": "8",
+		"wiki": "https://exvius.gamepedia.com/Gentiana",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#2224d7d0-1d3a-11ea-9f71-fbb311f0fb55",
+		"rotation": [
+			"Snow-Covered (CD) + Frozen Fractals",
+			"Frozen Fractals + Infinite Icebreaker (CD) + Frozen Fractals x 2",
+			"Frozen Fractals x 4",
+			"Frozen Fractals x 3 + Glacial Kiss (CD)",
+			"Diamond Dust (LB)",
+			"Snow-Covered (CD) + Frozen Fractals + Inifinite Icebreaker (CD) + Frozen Fractals",
+			"Frozen Fractals x 4",
+			"Frozen Fractals x 3 + Glacial Kiss (CD)",
+			"Frozen Fractals x 4",
+			"Diamond Dust (LB)",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Veronica (spark chain)": {
 		"name": "Veronica (spark chain)",
 		"damage": "14,932,441,275",
@@ -2560,7 +2587,7 @@
 	},
 	"A.I. Katy": {
 		"name": "A.I. Katy",
-		"damage": "no",
+		"damage": "spank me harder",
 		"turns": ")",
 		"type": "hybrid"
 	}

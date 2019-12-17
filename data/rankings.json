@@ -17,12 +17,13 @@
 			"radiant lightning",
 			"warrior of light bartz",
 			"aldore king rain",
-			"agent olive"
+			"agent olive",
+			"physalis"
 		],
 		"physical_finisher": [
 			"regina",
 			"cid",
-			"reberta"
+			"crown prince noctis"
 		],
 		"magical_chainer": [
 			"kimono fina",
@@ -66,7 +67,8 @@
 			"sylvie",
 			"yuraisha",
 			"maritime strategist nichol",
-			"ignis"
+			"ignis",
+			"lunafreya"
 		]
 	},
 	"physical_chainer": [

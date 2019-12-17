@@ -18,6 +18,145 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20191212
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191212PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20191211
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191212IssueReportCashSummonFix.html
+}}
+{{Recent News
+|date  = 20191210
+|type  = Event
+|title = Steyliff Grove
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191217FFXVSteyliffGrove.html
+}}
+{{Recent News
+|date  = 20191210
+|type  = Event
+|title = Crown Prince Noctis
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191210PrinceNoctisUnitIntroQuest.jpg
+}}
+{{Recent News
+|date  = 20191210
+|type  = Unit
+|title = Featured Summon FINAL FANTASY XV
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191210PrinceNoctisFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20191210
+|type  = Event
+|title = Fun With Physalis EXTRA STAGES
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191210FunWithPhysalisExtraStages.jpg
+}}
+{{Recent News
+|date  = 20191210
+|type  = Trial
+|title = Series Boss Battles Ardyn
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191210FFXVSBBArdyn.jpg
+}}
+{{Recent News
+|date  = 20191210
+|type  = Other
+|title = Holly Jolly Ticket Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191210HollyJollySummon.html
+}}
+{{Recent News
+|date  = 20191210
+|type  = Other
+|title = Premium 10+1 Summon (Holly Jolly)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191212PremiumSummon.html
+}}
+{{Recent News
+|date  = 20191210
+|type  = Other
+|title = Jolly Slots de Chocobo
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191210ChristmasMiniGame.html
+}}
+{{Recent News
+|date  = 20191210
+|type  = Other
+|title = Holly Jolly Login Bonus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191210HollyJollyLoginBonus.html
+}}
+{{Recent News
+|date  = 20191210
+|type  = Other
+|title = Exchange Shop (Popularity Contest)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191210UnitPopularityContestExchangeShop.html
+}}
+{{Recent News
+|date  = 20191210
+|type  = Event
+|title = Unit Popularity Contest
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191210UnitPopularityContest.html
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20191210
+|type  = Other
+|title = Exchange Shop (C.P.Noctis/Lunafreya)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191210ExchangeShopCPNoctisLunafreya.html
+}}
+{{Recent News
+|date  = 20191210
+|type  = Other
+|title = Introducing the 5★ Guaranteed Flexible Ticket (C.P.Noctis/Lunafreya)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191210CPNoctisLunafreyaFlexibleTicket.html
+}}
+{{Recent News
+|date  = 20191210
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191212Maintenance.html
+}}
+{{Recent News
+|date  = 20191205
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191205PostMaintenance.html
+}}
+{{Recent News
+|date  = 20191203
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod/en/content/201912037starGuaranteedResummonIssueReport.html
+}}
+{{Recent News
+|date  = 20191203
+|type  = Event
+|title = Fun With Physalis
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191203FunWithPhysalisStoryEvent.jpg
+}}
+{{Recent News
+|date  = 20191203
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191203PhysalisFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20191203
+|type  = Event
+|title = Moles in Black
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191203MolesinBlackTrial.jpg
+}}
+{{Recent News
+|date  = 20191203
+|type  = Event
+|title = Steel Castle Melfikya
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191203WeaponEnhancement.html
+}}
+{{Recent News
+|date  = 20191203
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191204Maintenance.html
+}}
+{{Recent News
 |date  = 20191201
 |type  = Other
 |title = Monthly 5★ Select Summon Tickets
@@ -38,7 +177,7 @@
 {{Recent News
 |date  = 20191128
 |type  = Maintenance
-|title = Post Maintenace Note
+|title = Post Maintenance Note
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191128PostMaintenance.html
 }}
 {{Recent News
@@ -101,7 +240,6 @@
 |title = Friend Point Trust Moogle Summon
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191129FPSummon.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20191126
 |type  = Other
