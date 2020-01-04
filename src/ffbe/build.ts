@@ -287,6 +287,9 @@ export class Build {
     }
     addItem(item: any) {
 
+        if (!this.equipedConditions)
+            this.equipedConditions = [];
+            
         if (!this.equipedConditions.includes(item.type)) {
             this.equipedConditions.push(item.type)
         }

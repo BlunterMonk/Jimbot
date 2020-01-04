@@ -20,6 +20,7 @@ import { resolve } from "url";
 import { getUnitKey, validateUnit } from "./common.js";
 import { convertSearchTerm, convertValueToLink, isLetter } from "../helper.js";
 import { buildMuspelDamageString } from "./handleCalcs.js";
+import { getSearchString } from "../commands.js";
 
 ////////////////////////////////////////////////////////////////////
 
@@ -42,7 +43,7 @@ function getMaxRarity(unit) {
     return unit;
 }
 
-async function getGif(search, param, callback) {
+async function getGif(search, unitID, param, callback) {
 
     var unitName = search;
     unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
@@ -59,17 +60,8 @@ async function getGif(search, param, callback) {
         return;
     }
 
-    var unitID = getUnitKey(search);
-    if (!unitID)
-        unitID = search;
-
     var id = unitID.substring(0, unitID.length-1);
     debug("Unit ID: " + unitID);
-    
-    var unitL = null; // ignore using othet source if JP
-    if (isLetter(search[0])) {
-        unitL = search.replaceAll("_", "+");
-    }
 
     var saveGif = function(url): Promise<string> {
         if (!fs.existsSync(`tempgifs/${search}/`))
@@ -315,6 +307,14 @@ export function handleGif(receivedMessage: Discord.Message, search: string, para
         return;
     }
 
+    // Get search alias
+    var s = search;
+    var alias = Config.getAlias(s.replaceAll(" ", "_"));
+    if (alias) {
+        log("Found Alias: " + alias);
+        alias.replaceAll(" ", "_");
+    }
+
     log("Searching gifs for: " + search);
 
     var bot = /^\d/.test(search)
@@ -327,8 +327,20 @@ export function handleGif(receivedMessage: Discord.Message, search: string, para
     if (gifAliases[param]) {
         param = gifAliases[param];
     }
+    
+    var unitID = "";
+    if (alias) {
+        if (isLetter(alias[0]))
+            search = alias;
+        unitID = getUnitKey(alias);
+    } else {
+        unitID = getUnitKey(search);
+    }
 
-    getGif(search, param, (filename) => {
+    if (!unitID)
+        unitID = search;
+
+    getGif(search, unitID, param, (filename) => {
         log("success");
 
         Client.sendImage(receivedMessage, filename);

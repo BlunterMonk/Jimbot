@@ -106,5 +106,20 @@
 		"author": "131139508421918721",
 		"title": "caps",
 		"description": "Stat Passives       | 400%\nEQ Stat (DH/TDH)    | 300%\nEQ Stat w/ DW (TDW) | 200%\nLB/Turn             | 12\nReduce MP Costs     | 80%\nSlayers             | 300%\nJump Damage         | 800%\nStats from Espers   | 200%\nEsper Damage        | 300%\nEvo Mag             | 300%\nLB Fill Rate        | None\nLB Damage           | 300%\nItem Drop Rate      | 100%"
+	},
+	"fixed_battles": {
+		"author": "131139508421918721",
+		"title": "Guides for Fixed Battles",
+		"description": "**Maw of Malice guide:**\nhttps://www.reddit.com/r/FFBraveExvius/comments/eg2sa6/guide_maw_of_malice_all_missions\n\n**Essence of Despair guide:**\nhttps://www.reddit.com/r/FFBraveExvius/comments/eg15qs/guide_essence_of_despair_all_missions"
+	},
+	"maw_of_malice": {
+		"author": "564579480396627988",
+		"title": "Maw of Malic",
+		"description": "https://www.reddit.com/r/FFBraveExvius/comments/eg2sa6/guide_maw_of_malice_all_missions"
+	},
+	"essence_of_despair": {
+		"author": "564579480396627988",
+		"title": "Essence of Despair",
+		"description": "https://www.reddit.com/r/FFBraveExvius/comments/eg15qs/guide_essence_of_despair_all_missions"
 	}
 }

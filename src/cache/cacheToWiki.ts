@@ -112,21 +112,22 @@ export function UpdateWikiPage(): Promise<any> {
         let unit = calculations[k];
         let whaleUnit = whaleCalcs[k];
         let key = k.replace(/(?!\(FFVII AC\))(?!\(KH\))(?!\(Xenogears\))\(.*\)/, "");
+        let unitname = key;
         key = key.toLowerCase();
         key = key.trim().replace(/\s/g,"_");
 
         let img = "N/A";
         let id = unitKeys[key];
         if (id != null) {
-            img = `[[File:unit_icon_${id}.png|thumb]]`;
+            img = `[[File:unit_icon_${id}.png]]`;
         } else {
             // log("NO ID: " + key);
         }
 
-        let url = unit.name;
-        if (unit.wiki && unit.wiki != "") {
-            url = `[${unit.wiki} ${unit.name}]`;
-        }
+        // let url = unit.name;
+        // if (unit.wiki && unit.wiki != "") {
+           let url = `[[${unitname} | ${unit.name}]]`;
+        // }
 
         let burst = "N/A";
         let turn = "N/A";
@@ -138,7 +139,10 @@ export function UpdateWikiPage(): Promise<any> {
         let wdpt = "N/A";
         let wburst = "N/A";
         let wbuild = "N/A";
-        let build = `[${unit.url} Normal]`;
+        let build = "N/A";
+        if (unit.url && !unit.url.empty()) {
+            build = `[${unit.url} Normal]`;
+        }
         if (whaleUnit && whaleUnit.damage != "" && whaleUnit.url) {
             wdpt = whaleUnit.damage;
             if (whaleUnit.burst) {
@@ -160,11 +164,11 @@ export function UpdateWikiPage(): Promise<any> {
        if (unit.name.includes("JP")) {
             jpunits += "\n|-\n";
             jpunits += `| ${img} || ${url} || ${unit.type} || ${unit.damage} || ${burst} || ${wdpt} || ${wburst} || `;
-            jpunits += `\n{| class="wikitable"\n| ${build}\n|-\n| ${wbuild}\n|}`;
+            jpunits += `\n${build}<br>${wbuild}`;
         } else {
             units += "\n|-\n";
             units += `| ${img} || ${url} || ${unit.type} || ${unit.damage} || ${burst} || ${wdpt} || ${wburst} || `;
-            units += `\n{| class="wikitable"\n| ${build}\n|-\n| ${wbuild}\n|}`;
+            units += `\n${build}\<br>${wbuild}`;
         }
 
     });

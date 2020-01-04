@@ -18,6 +18,181 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20191227
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191227IssueReportDoFinArenaBug.html
+}}
+{{Recent News
+|date  = 20191227
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191227SBBArdynIssueReport.html
+}}
+{{Recent News
+|date  = 20191226
+|type  = Event
+|title = Defiance of Fate
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191224DefianceofFate.html
+}}
+{{Recent News
+|date  = 20191226
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191226IssueReportBagOToys.html
+}}
+{{Recent News
+|date  = 20191226
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191226PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20191224
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191224WhiteLilyDarkFinaFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20191224
+|type  = Event
+|title = White Lily Bouquet
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191224WhiteLilyBouquetStoryEvent.jpg
+}}
+{{Recent News
+|date  = 20191224
+|type  = Event
+|title = White Lily Dark Fina
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191224CGWhiteLilyDarkFinaTrialQuest.jpg
+}}
+{{Recent News
+|date  = 20191224
+|type  = Event
+|title = Sleigh the Grinch
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191224SleightheGrinchTrial.jpg
+}}
+{{Recent News
+|date  = 20191224
+|type  = Other
+|title = New Year's Countdown Daily Giveaway
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191224NewYearDailyGiveaway.jpg
+}}
+{{Recent News
+|date  = 20191224
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191223Maintenance.html
+}}
+{{Recent News
+|date  = 20191220
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191220IssueReportVariousIssues.html
+}}
+{{Recent News
+|date  = 20191219
+|type  = Issue
+|title = Issue Report (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191212IssueReportCashSummonFixv3.html
+}}
+{{Recent News
+|date  = 20191219
+|type  = Other
+|title = Version 3.8.9
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191219GL389PatchNotes.html
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20191219
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191219PostMaintenance.html
+}}
+{{Recent News
+|date  = 20191217
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS (New)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/NewXmasUnitsFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20191217
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS (Old)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191217OldChristmasFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20191217
+|type  = Event
+|title = Save Your Elf
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191217SaveYourElfElementalBattle.jpg
+}}
+{{Recent News
+|date  = 20191217
+|type  = Event
+|title = Altissia, City on the Sea - Exploration
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191217AltissiaCityontheSeaExploration.jpg
+}}
+{{Recent News
+|date  = 20191217
+|type  = Other
+|title = Holy Night Amelia & Emilia Bundle! (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191217HolyNightAmeliaEmiliaBundlev2.html
+}}
+{{Recent News
+|date  = 20191217
+|type  = Other
+|title = Holly Jolly Lapis Bundles!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191217HollyJollyLapisBundles.html
+}}
+{{Recent News
+|date  = 20191217
+|type  = Other
+|title = Exchange Shop (Levinson/Lucas)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191217LevinsonLucasExchangeShop.html
+}}
+{{Recent News
+|date  = 20191217
+|type  = Other
+|title = Introducing the 5★ Guaranteed Flexible Ticket (Levinson/Lucas)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191217LevinsonLucasFlexibleTicket.html
+}}
+{{Recent News
+|date  = 20191217
+|type  = Other
+|title = Amazing Enhancements (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191217AmazingEnhancementsv2.html
+}}
+{{Recent News
+|date  = 20191217
+|type  = Unit
+|title = Awakened Warriors - Latents
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191217LatentAbility.html
+}}
+{{Recent News
+|date  = 20191217
+|type  = Trial
+|title = Scorn of the Armor of Oppression
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191217ScornoftheArmorofOppression.jpg
+}}
+{{Recent News
+|date  = 20191217
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191218Maintenance.html
+}}
+{{Recent News
+|date  = 20191213
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191213IssueReportKingMogLostMaps.html
+}}
+{{Recent News
+|date  = 20191213
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191213IssueReportSlotsDeChocobo.html
+}}
+{{Recent News
 |date  = 20191212
 |type  = Maintenance
 |title = Post Maintenance Note
@@ -95,7 +270,6 @@
 |title = Unit Popularity Contest
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191210UnitPopularityContest.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20191210
 |type  = Other

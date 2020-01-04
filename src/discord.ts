@@ -404,6 +404,9 @@ class client {
         return this.guildSettings[guildId].validateEditor(userId);
     }
     validate(receivedMessage: Discord.Message, command) {
+        if (!receivedMessage.member)
+            return false;
+
         var roles = receivedMessage.member.roles.array();
         var guildId = receivedMessage.guild.id;
     

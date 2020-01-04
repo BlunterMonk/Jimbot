@@ -127,14 +127,14 @@ function loadRankingsList(callback) {
                                                 .next()
                                                 .text();
                                         } else {
-                                            log(`Found '${escpaedName}', could not find notes.`);
+                                            //log(`Found '${escpaedName}', could not find notes.`);
                                         }
                                     } catch (f) {
-                                        log("Could not get notes for: " + escpaedName);
+                                        //log("Could not get notes for: " + escpaedName);
                                     }
                                 }
                             } catch (e) {
-                                log("Big Error: " + e);
+                                //log("Big Error: " + e);
                                 log("Could not get notes for: " + escpaedName);
                             }
 

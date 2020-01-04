@@ -1641,6 +1641,34 @@
 			""
 		]
 	},
+	"White Lily Dark Fina (pending)": {
+		"name": "White Lily Dark Fina (pending)",
+		"damage": "25,455,408,308",
+		"turns": "12",
+		"type": "magic",
+		"burst": "32,910,500,042",
+		"burstTurn": "3",
+		"wiki": "https://exvius.gamepedia.com/White_Lily_Dark_Fina",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#e4fbc2d0-2854-11ea-9f71-fbb311f0fb55",
+		"rotation": [
+			"End of Paradise (CD) + Doom Impact + Red Demise",
+			"Red Demise x 4",
+			"Red Demise x 4",
+			"Red Demise x 4",
+			"Doom Impact + Red Demise x 3",
+			"Red Demise x 3",
+			"End of Paradise (CD) + Red Demise x 2",
+			"Red Demise x 4",
+			"Doom Impact + Red Demise x 3",
+			"Red Demise x 4",
+			"Red Demise x 4",
+			"Red Demise x 3",
+			"",
+			"",
+			"",
+			""
+		]
+	},
 	"Operative Zyrus": {
 		"name": "Operative Zyrus",
 		"damage": "20,144,922,725",
@@ -1753,17 +1781,17 @@
 			""
 		]
 	},
-	"Christine": {
-		"name": "Christine",
+	"Christine (pending)": {
+		"name": "Christine (pending)",
 		"damage": "15,981,510,451",
 		"turns": "16",
 		"type": "magic",
 		"burst": "29,423,784,636",
 		"burstTurn": "3",
 		"wiki": "https://exvius.gamepedia.com/Christine",
-		"url": "https://ffbeEquip.com/builder.html?server=GL#129a2260-d597-11e9-a314-1b650a2e0160",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#4e6018c0-27a1-11ea-9f71-fbb311f0fb55",
 		"rotation": [
-			"Eternal Winder (CD) + Frostbite (CD)",
+			"Eternal Winder (CD) + Frostbite (CD) + Snow Burial + Cold Snap",
 			"Snow Surge (CD) + Snow Burial + Cold Snap x 2",
 			"Snow Burial + Piercing Chill x 3",
 			"Snow Burial + Cold Snap x 3",
@@ -1777,12 +1805,12 @@
 			"Snowbear Rampage (LB)",
 			"Snow Burial + Cold Snap x 3",
 			"Eternal Winter (CD) + Snow Surge (CD) + Absolute Zero + Cold Snap",
-			"Snow Burial + Piercing Chill x 3",
-			"Snow Burial + Piercing Chill x 3"
+			"Snow Burial + Cold Snap x 3",
+			"Snow Burial + Cold Snap x 3"
 		]
 	},
-	"Gentiana (pending)": {
-		"name": "Gentiana (pending)",
+	"Gentiana": {
+		"name": "Gentiana",
 		"damage": "14,935,066,792",
 		"turns": "10",
 		"type": "magic",
@@ -2365,6 +2393,33 @@
 			"Formula - Quaking Earth x 4",
 			"Formula - Quaking Earth x 4",
 			"Formula - Quaking Earth x 2",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"Levinson": {
+		"name": "Levinson",
+		"damage": "27,467,973,157",
+		"turns": "10",
+		"type": "hybrid",
+		"burst": "45,883,163,046",
+		"wiki": "https://exvius.gamepedia.com/Levinson",
+		"url": "https://ffbeEquip.com/builder.html?server=GL#f16539f0-236a-11ea-9f71-fbb311f0fb55",
+		"rotation": [
+			"Packed with Presents (CD) + Checking it twice (CD) + Be Merry",
+			"Toys for Everyone! (LB)",
+			"Ornaments - Snow Globe + Reveal Naughty List + Bag O' Toys - Toy Army",
+			"Bag O' Toys - Toy Army x 3",
+			"Bag O' Toys - Toy Army x 3",
+			"Packed with Presents (CD) + Bag O' Toys - Toy Army x 2",
+			"Bag O' Toys - Toy Army x 3",
+			"Ornaments - Snow Globe + Checking it twice (CD) + Bag O' Toys - Toy Army",
+			"Reveal Naughty List + Bag O' Toys - Toy Army x 2",
+			"Bag O' Toys - Toy Army x 3",
+			"",
+			"",
 			"",
 			"",
 			"",

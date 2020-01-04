@@ -306,6 +306,7 @@ function queryUnitPages(oAuth: any, sourceID: string, units: UnitCalculations, o
     log("Forced Update: ", forced);
 
     // Start getting unit pages
+    let counter = 0;
     let pages: Promise<CalcPair>[] = keys.map((key, ind) => {
         let old = oldUnits[key];
         let unit = units[key];
@@ -322,6 +323,8 @@ function queryUnitPages(oAuth: any, sourceID: string, units: UnitCalculations, o
             }
         }
         
+        counter++;
+
         var index = key;
         index = index.replace(/(?!\(FFVII AC\))(?!\(KH\))(?!\(Xenogears\))\(.*\)/, "");
         index = index.replace(/\(\J\P\)/, "");
@@ -352,7 +355,7 @@ function queryUnitPages(oAuth: any, sourceID: string, units: UnitCalculations, o
                         calc: units[key]
                     });
                 });
-            }, (ind+1) * 1500);
+            }, (counter) * 1500);
         });
     });
 

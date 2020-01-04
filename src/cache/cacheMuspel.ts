@@ -23,7 +23,7 @@ var Reject = null;
 
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first time.
-const TOKEN_PATH = 'token.json';
+const TOKEN_PATH = './credentials/token.json';
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -186,7 +186,7 @@ export var UpdateMuspelCalculations = function(callback) {
     return new Promise(function (resolve, reject) {
         Reject = reject;//(Error('I was never going to resolve.'))
         
-        fs.readFile('credentials.json', (err, content) => {
+        fs.readFile('./credentials/google.json', (err, content) => {
             if (err) 
                 return log('Error loading client secret file: ' + err);
             // Authorize a client with credentials, then call the Google Sheets API.
