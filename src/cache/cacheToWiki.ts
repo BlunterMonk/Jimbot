@@ -63,7 +63,7 @@ function writeToPage(text): Promise<any> {
             log("Login Success: ", r);
     
             log("Attempting to edit wiki page");
-            wikiClient.edit(mainPage, text, "", true, (e, r) => {
+            wikiClient.edit(testPage, text, "", true, (e, r) => {
                 if (e != null) {
                     reject(e);
                     return;
@@ -118,7 +118,7 @@ export function UpdateWikiPage(): Promise<any> {
         let img = "N/A";
         let id = unitKeys[key];
         if (id != null) {
-            img = `[[File:unit_icon_${id}.png|thumb]]`;
+            img = `[[File:unit_icon_${id}.png   ]]`;
         } else {
             // log("NO ID: " + key);
         }
@@ -160,11 +160,11 @@ export function UpdateWikiPage(): Promise<any> {
        if (unit.name.includes("JP")) {
             jpunits += "\n|-\n";
             jpunits += `| ${img} || ${url} || ${unit.type} || ${unit.damage} || ${burst} || ${wdpt} || ${wburst} || `;
-            jpunits += `\n{| class="wikitable"\n| ${build}\n|-\n| ${wbuild}\n|}`;
+            jpunits += `${build}<br>${wbuild}`;
         } else {
             units += "\n|-\n";
             units += `| ${img} || ${url} || ${unit.type} || ${unit.damage} || ${burst} || ${wdpt} || ${wburst} || `;
-            units += `\n{| class="wikitable"\n| ${build}\n|-\n| ${wbuild}\n|}`;
+            units += `${build}<br>${wbuild}`;
         }
 
     });
