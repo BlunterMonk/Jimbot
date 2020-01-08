@@ -103,7 +103,7 @@ function convertCommand(command, content) {
 }
 
 const aliasIgnoreList = [
-    "dpt", "mybuild", "userbuild", "removealias"
+    "dpt", "mybuild", "userbuild", "removealias", "gif"
 ];
 const textEntryCommands = [
     "setnickname", "setstatus", "set"

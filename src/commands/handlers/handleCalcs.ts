@@ -198,7 +198,7 @@ export function handleTopdps(receivedMessage: Discord.Message, search: string, p
     const culled = [];
     calcs.forEach(unit => {
 
-        if (unit.name.includes("(JP)"))
+        if (unit.name.includes("JP)"))
             return;
         if (check && !unit.type.startsWith(search[0]))
             return;

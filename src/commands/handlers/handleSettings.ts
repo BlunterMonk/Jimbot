@@ -433,7 +433,7 @@ export function handleUpdate(receivedMessage: Discord.Message, search: string, p
                 Client.send(receivedMessage, "wiki was updated successfully!");
             })
             .catch(e => {
-                error("Failed to update wiki: ", e);
+                log("Failed to update wiki: ", e);
                 Client.send(receivedMessage, `failed to update wiki, ${e}`);
             })
         } else {

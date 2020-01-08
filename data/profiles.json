@@ -221,7 +221,8 @@
 			"super_char": "https://ffbeequip.com/builder.html?server=gl#e27fae10-ef63-11e9-8f21-29aab363c1db",
 			"call_animal_control": "https://ffbeequip.com/builder.html?server=gl#3b0fe1b0-ef66-11e9-8f21-29aab363c1db",
 			"the_big_kahuna": "https://ffbeequip.com/builder.html?server=gl#cf337fa0-f5e7-11e9-8f21-29aab363c1db",
-			"baelena": "https://ffbeequip.com/builder.html?server=gl#5c005a10-15f1-11ea-9f71-fbb311f0fb55"
+			"baelena": "https://ffbeequip.com/builder.html?server=gl#5c005a10-15f1-11ea-9f71-fbb311f0fb55",
+			"wkn_mystic_mag_strats": "https://ffbeequip.com/builder.html?server=gl#79e90590-23a2-11ea-9f71-fbb311f0fb55"
 		}
 	},
 	"468997735090225163": {
@@ -513,16 +514,18 @@
 		"builds": {
 			"exorcist_karten": "https://ffbeequip.com/builder.html?server=gl#236df480-fccb-11e9-937b-ad48d5c58d17",
 			"luddite_regina": "https://ffbeequip.com/builder.html?server=gl#76e751f0-fccc-11e9-937b-ad48d5c58d17",
-			"daemon_x_machina_physalis": "https://ffbeequip.com/builder.html?server=gl#bd53a220-1959-11ea-9f71-fbb311f0fb55"
+			"daemon_x_machina_physalis": "https://ffbeequip.com/builder.html?server=gl#bd53a220-1959-11ea-9f71-fbb311f0fb55",
+			"old_spice_sieghard": "https://ffbeequip.com/builder.html?server=gl#af504e90-205b-11ea-9f71-fbb311f0fb55",
+			"just_veronica": "https://ffbeequip.com/builder.html?server=gl#953c19a0-205e-11ea-9f71-fbb311f0fb55"
 		}
 	},
 	"319251204989386762": {
 		"autobuild": true,
 		"compact": false,
 		"friendcode": "",
-		"nickname": "Oscarlira1",
+		"nickname": "yatogami",
 		"status": "",
-		"lead": null,
+		"lead": "https://ffbeequip.com/builder.html?server=gl#b2c9de60-202e-11ea-9f71-fbb311f0fb55",
 		"builds": {}
 	},
 	"576219166928011264": {
@@ -629,11 +632,9 @@
 		"compact": false,
 		"friendcode": "459139799",
 		"nickname": "Trifecta",
-		"status": "",
-		"lead": "https://ffbeequip.com/builder.html?server=gl#149cdcd0-0ce5-11ea-b959-9b5568739fdf",
-		"builds": {
-			"hyoh": "https://ffbeequip.com/builder.html?server=gl#149cdcd0-0ce5-11ea-b959-9b5568739fdf"
-		}
+		"status": "LF more Afry/Erik friends and very active players",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#596fdf30-2039-11ea-9f71-fbb311f0fb55",
+		"builds": {}
 	},
 	"516437886334402567": {
 		"autobuild": true,
@@ -647,13 +648,14 @@
 	"472492619012767754": {
 		"autobuild": true,
 		"compact": false,
-		"friendcode": "932694382",
+		"friendcode": "583079031",
 		"nickname": "anubis",
 		"status": "",
-		"lead": null,
+		"lead": "https://ffbeequip.com/builder.html?server=gl#b66b4db0-2484-11ea-9f71-fbb311f0fb55",
 		"builds": {
 			"esther": "https://ffbeequip.com/builder.html?server=gl#c44eb880-1021-11ea-b959-9b5568739fdf",
-			"king_rain": "https://ffbeequip.com/builder.html?server=gl#fed1b470-1022-11ea-b959-9b5568739fdf"
+			"king_rain": "https://ffbeequip.com/builder.html?server=gl#fed1b470-1022-11ea-b959-9b5568739fdf",
+			"elena": "https://ffbeequip.com/builder.html?server=gl#c43cc3c0-2541-11ea-9f71-fbb311f0fb55"
 		}
 	},
 	"350018451831783425": {
@@ -670,6 +672,60 @@
 		"compact": false,
 		"friendcode": "662790347",
 		"nickname": "Aldemar",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"356687572577026061": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "42069",
+		"nickname": "Aknizzy",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"274650864768253954": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "712419392",
+		"nickname": "Ariote",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"94698931404931072": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "002798471",
+		"nickname": "Aru",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"109059177531351040": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "540178428",
+		"nickname": "bato",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"486949697467187200": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "366672668",
+		"nickname": "llwlnk",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"368504777128017920": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "o0Nadie0o",
 		"status": "",
 		"lead": null,
 		"builds": {}

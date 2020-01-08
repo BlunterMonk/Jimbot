@@ -92,14 +92,13 @@
 		"best_character_ever": "tifa",
 		"zeno": "zeno of the beta star",
 		"cgmfina": "白百合の魔人フィーナ",
-		"lunafreya": "ルナフレーナ",
 		"primrose": "プリムロゼ",
 		"lorraine": "loren",
 		"madam_edel": "マダム・エーデル",
 		"edel": "マダム・エーデル",
 		"fid": "summer fina & lid",
-		"cutest_order": "ファイサリス",
-		"faisalith": "ファイサリス",
+		"cutest_order": "physalis",
+		"faisalith": "physalis",
 		"zode": "zolulu & delulu",
 		"wkn": "white knight noel",
 		"tt": "trance terra",
@@ -109,7 +108,7 @@
 		"sabinv2": "monk_sabin_of_kolts",
 		"lms": "liquid metal slime",
 		"cgwol": "ウォーリア オブ ライト",
-		"cg_wol": "ウォーリア オブ ライト",
+		"cg_wol": "awakened warrior of light",
 		"cglid": "heavenly technician lid",
 		"cilka": "summer folka & citra",
 		"best_sabin": "monk sabin of kolts",
@@ -154,7 +153,7 @@
 		"cg_firion": "wild rose firion",
 		"best_cg": "wild rose firion",
 		"galufv2": "warrior of dawn galuf",
-		"wolv2": "ウォーリア オブ ライト",
+		"wolv2": "awakened warrior of light",
 		"swol": "ウォーリア オブ ライト",
 		"ultima": "high seraph ultima",
 		"decil": "dark knight cecil",
@@ -194,7 +193,17 @@
 		"nueva_olive": "agent olive",
 		"nuevo_aiden": "doctor aiden",
 		"tony_tony_chopper": "doctor aiden",
-		"wikamis_love": "regina"
+		"wikamis_love": "regina",
+		"yunalesca": "ユウナレスカ",
+		"snacc": "christine",
+		"kefkav2": "archmage kefka",
+		"bad_dad": "jecht",
+		"garlandv2": "immortal knight garland",
+		"garland_v2": "immortal knight garland",
+		"knock_you_all_down": "immortal knight garland",
+		"awol": "awakened warrior of light",
+		"wol_v2": "awakened warrior of light",
+		"waifu_supreme": "sieghard"
 	},
 	"filetypes": [
 		".jpg",
@@ -228,7 +237,8 @@
 		"setcode": "setfriendcode",
 		"nickname": "setnickname",
 		"setname": "setnickname",
-		"code": "friend"
+		"code": "friend",
+		"topdpt": "topdps"
 	},
 	"shortcuts": {
 		"tips": {
