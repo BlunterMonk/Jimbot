@@ -287,7 +287,7 @@ export function handleRank(receivedMessage: Discord.Message, search: string, par
         };
 
         // Add damage if present
-        var calc = buildMuspelDamageString(search);
+        var calc = buildMuspelDamageString(search, false);
         if (calc && !calc.empty()) {
             embed.fields[embed.fields.length] = {
                 name: "Damage Calculation",

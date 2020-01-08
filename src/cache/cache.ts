@@ -257,12 +257,29 @@ export class cache {
                 return null;
         }
     }
-    getAllCalculations() {
+    getAllCalculations(source: string) {
         var total = [];
-        Object.keys(this.calculations).forEach(key => {
-            total[total.length] = this.calculations[key];
-        });
-        return total;
+
+        switch (source) {
+            case "muspel":
+                Object.keys(this.muspelCalculations).forEach(key => {
+                    total[total.length] = this.muspelCalculations[key];
+                });
+                return total;
+            case "furcula":
+                Object.keys(this.calculations).forEach(key => {
+                    total[total.length] = this.calculations[key];
+                });
+                return total;
+            case "whale":
+            case "shado":
+                Object.keys(this.whaleCalculations).forEach(key => {
+                    total[total.length] = this.whaleCalculations[key];
+                });
+                return total;
+            default:
+                return null;
+        }
     }
 
     // Information

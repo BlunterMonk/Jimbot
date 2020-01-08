@@ -238,7 +238,13 @@
 		"nickname": "setnickname",
 		"setname": "setnickname",
 		"code": "friend",
-		"topdpt": "topdps"
+		"topdpt": "topdps",
+		"mburst": "muspelburst",
+		"mdpt": "muspel",
+		"muspeltopdpt": "mtopdps",
+		"mtopdpt": "mtopdps",
+		"whaletopdpt": "wtopdps",
+		"wtopdpt": "wtopdps"
 	},
 	"shortcuts": {
 		"tips": {

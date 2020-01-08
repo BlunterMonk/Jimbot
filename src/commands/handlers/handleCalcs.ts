@@ -26,7 +26,7 @@ const furculaUserID = "344500120827723777";
 const muspelUserID  = "114545824989446149";
 const shadoUserID   = "103785126026043392";
 
-export function buildMuspelDamageString(search): string {
+export function buildMuspelDamageString(search: string, isBurst: boolean): string {
     var calc = Cache.getCalculations("muspel", search);
     if (!calc) {
         log("Could not find calculations for: " + search);
@@ -46,7 +46,11 @@ export function buildMuspelDamageString(search): string {
         if (element.type == "finisher") {
             text += `**${element.name} (${element.type}):** ${element.damage} on turn ${element.turns}\n`;
         } else {
-            text += `**${element.name} (${element.type}):** ${element.damage} : ${element.turns}\n`;
+            if (isBurst && element.burst) {
+                text += `**${element.name} (${element.type}):** ${element.burst}\n`;
+            } else {
+                text += `**${element.name} (${element.type}):** ${element.damage} : ${element.turns}\n`;
+            }
         }
     }
 
@@ -175,32 +179,16 @@ function buildDamageEmbed(search) {
     }
 }
 
-////////////////////////////////////////////////////////////////////
+function getTopDPSText(source: string, category: string, limit: number) {
 
-export function handleDpthelp(receivedMessage: Discord.Message) {
-    var data = fs.readFileSync("./data/help/help-damage.json", "ASCII");
-    var readme = JSON.parse(data);
-
-    var embed = {
-        description: readme.description,
-        fields: readme.fields,
-        title: readme.title
-    };
-
-    Client.sendPrivateMessage(receivedMessage, embed);
-}
-
-export function handleTopdps(receivedMessage: Discord.Message, search: string, parameters: string[]) {
-
-    const calcs = Cache.getAllCalculations();
-    const check = search && !search.empty();
+    const calcs = Cache.getAllCalculations(source);
 
     const culled = [];
     calcs.forEach(unit => {
 
         if (unit.name.includes("JP)"))
             return;
-        if (check && !unit.type.startsWith(search[0]))
+        if (category && !unit.type.startsWith(category))
             return;
         if (!unit.damage || unit.damage === undefined || unit.damage.empty())
             return;
@@ -229,28 +217,69 @@ export function handleTopdps(receivedMessage: Discord.Message, search: string, p
             return 1;
     });
 
-    var limit = 10;
-    var p = parseInt(parameters[0]);
-    if (!Number.isNaN(p))
-        limit = p;
-
     var text = "";
     var count = Math.min(limit, sorted.length);
     for (let index = 0; index < count; index++) {
         const unit = sorted[index];
         
-        if (check)
+        if (category)
             text += `**${unit.name}:** ${unit.damage}\n`;
         else 
             text += `**${unit.name} (${unit.type}):** ${unit.damage}\n`;
     }
 
+    return text;
+}
+
+////////////////////////////////////////////////////////////////////
+
+export function handleDpthelp(receivedMessage: Discord.Message) {
+    var data = fs.readFileSync("./data/help/help-damage.json", "ASCII");
+    var readme = JSON.parse(data);
+
+    var embed = {
+        description: readme.description,
+        fields: readme.fields,
+        title: readme.title
+    };
+
+    Client.sendPrivateMessage(receivedMessage, embed);
+}
+
+export function handleTopdps(receivedMessage: Discord.Message, search: string, parameters: string[], source = "furcula") {
+
+    var limit = 10;
+    var category = null;
+
+    // set limit to search term if it's a number, if not check parameters for a value
+    if (!search.empty()) {
+
+        var s = parseInt(search);
+        if (!Number.isNaN(s)) {
+            limit = s;
+        } else {
+            category = search[0];
+            
+            var p = parseInt(parameters[0]);
+            if (!Number.isNaN(p))
+                limit = p;
+        }
+    }
+
+    var text = getTopDPSText(source, category, limit);
+
     var embed = <any>{
-        title: `Top DPS`,
+        title: `Top DPT`,
         description: text,
     }
     
     Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+}
+export function handleWtopdps(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+    handleTopdps(receivedMessage, search, parameters, "whale");
+}
+export function handleMtopdps(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+    handleTopdps(receivedMessage, search, parameters, "muspel");
 }
 
 export function handleDamage(receivedMessage: Discord.Message, search: string, parameters: string[]) {
@@ -350,7 +379,31 @@ export function handleMuspel(receivedMessage: Discord.Message, search: string, p
 
     search = search.replaceAll("_", " ");
 
-    var text = buildMuspelDamageString(search);
+    var text = buildMuspelDamageString(search, false);
+
+    var s = search.toTitleCase();
+    var embed = <any>{
+        title: `Muspel Damage Comparisons: ${s}`,
+        url: muspelURL,
+        description: text,
+        footer: {
+            text: "visit the link provided for more calculations"
+        },
+    }
+    
+    Client.sendMessageWithAuthor(receivedMessage, embed, muspelUserID);
+}
+
+export function handleMuspelburst(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+
+    if (search == "help") {
+        handleDpthelp(receivedMessage);
+        return;
+    }
+
+    search = search.replaceAll("_", " ");
+
+    var text = buildMuspelDamageString(search, true);
 
     var s = search.toTitleCase();
     var embed = <any>{

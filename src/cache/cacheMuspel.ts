@@ -123,49 +123,57 @@ function GetUnitComparison(auth, range, callback) {
 
             rows.map((row) => {
                 var pName = row[0];
-                var mName = row[4];
-                var hName = row[8];
-                var fName = row[12];
-                log(`Row: {\n\tPhysical { ${pName}: ${row[1]} - ${row[2]} }\n\tMagic { ${mName}: ${row[5]} - ${row[6]} }\n\tHybrid { ${hName}: ${row[9]} - ${row[10]} }\n\tFinisher { ${fName}: ${row[13]} - ${row[14]} }}`);
+                var mName = row[5];
+                var hName = row[10];
+                var fName = row[14];
 
                 if (pName) {
                     phy[pName] = {
                         name: pName,
                         damage: row[1],
-                        turns: row[2],
+                        burst: row[2],
+                        turns: row[3],
                         type: "physical",
                         url: null
                     }
+                    log(phy[pName])
                 }
+                
 
                 if (mName) {
                     mag[mName] = {
                         name: mName,
-                        damage: row[5],
-                        turns: row[6],
+                        damage: row[6],
+                        burst: row[7],
+                        turns: row[8],
                         type: "magic",
                         url: null
                     }
+                    log(mag[pName])
                 }
 
                 if (hName) {
                     hyb[hName] = {
                         name: hName,
-                        damage: row[9],
-                        turns: row[10],
+                        damage: row[11],
+                        burst: row[12],
+                        turns: row[13],
                         type: "hybrid",
                         url: null
                     }
+                    log(hyb[pName])
                 }
                 
                 if (fName) {
                     fin[fName] = {
                         name: fName,
-                        damage: row[13],
-                        turns: row[14],
+                        damage: row[15],
+                        burst: row[15],
+                        turns: row[16],
                         type: "finisher",
                         url: null
                     }
+                    log(fin[pName])
                 }
             });
 
