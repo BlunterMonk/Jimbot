@@ -272,8 +272,21 @@ export function handleTopdps(receivedMessage: Discord.Message, search: string, p
         title: `Top DPT`,
         description: text,
     }
+
+    var author = "";
+    switch (source) {
+        case "furcula": 
+            author = furculaUserID;
+        break;
+        case "whale":
+            author = shadoUserID;
+        break;
+        case "muspel":
+            author = muspelUserID;
+        break;
+    }
     
-    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+    Client.sendMessageWithAuthor(receivedMessage, embed, author);
 }
 export function handleWtopdps(receivedMessage: Discord.Message, search: string, parameters: string[]) {
     handleTopdps(receivedMessage, search, parameters, "whale");
@@ -335,6 +348,13 @@ export function handleWhale(receivedMessage: Discord.Message, search: string, pa
 }
 
 export function handleBurst(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+
+    let channel: any = receivedMessage.channel;
+    if (channel.name.includes("wiki")) {
+        handleMuspelburst(receivedMessage, search, parameters);
+        return;
+    }
+
     handleDpt(receivedMessage, search, parameters, true);
 }
 
@@ -407,7 +427,7 @@ export function handleMuspelburst(receivedMessage: Discord.Message, search: stri
 
     var s = search.toTitleCase();
     var embed = <any>{
-        title: `Muspel Damage Comparisons: ${s}`,
+        title: `Muspel Burst Comparisons: ${s}`,
         url: muspelURL,
         description: text,
         footer: {
