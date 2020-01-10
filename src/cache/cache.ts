@@ -9,15 +9,17 @@ import "../util/string-extension.js";
 
 import * as furcDamage from "./cacheDamage.js";
 import * as muspDamage from "./cacheMuspel.js";
+import * as whatahDamage from "./cacheWhatah.js";
 import * as cacheWiki from "./cacheWiki.js";
 import { log } from "../global.js";
 
 ////////////////////////////////////////////////////////////
 
 const rankingDump = 'data/rankingsdump.json';
-const furcCalc = 'data/furculacalculations.json';
-const muspCalc = 'data/muspelcalculations.json';
-const whaleCalc = 'data/whalecalculations.json';
+const furcSaveLocation = 'data/furculacalculations.json';
+const muspSaveLocation = 'data/muspelcalculations.json';
+const whaleSaveLocation = 'data/whalecalculations.json';
+const whatahSaveLocation = 'data/whatahcalculations.json';
 
 const infoJson = 'data/information.json';
 const skillsJson = 'data/skills.json';
@@ -26,11 +28,26 @@ const rankingFile = 'data/rankings.json';
 const unitKeysJson = "data/unitkeys.json";
 const unitIDsJson = "data/unitid.json";
 
+
+export type UnitCalculations = {[key: string]: Calculation};
+export interface Calculation {
+    name: string;
+    type: string;
+    damage: string;
+    turns: string;
+    burst?: string;
+    burstTurn?: string;
+    url?: string;
+    wiki?: string;
+    rotation?: string[];
+}
+
 export class cache {
     fullRankings: any;
     calculations: any;
     muspelCalculations: any;
     whaleCalculations: any;
+    whatahCalculations: any;
     information: any;
     skillset: any;
     limitbursts: any;
@@ -61,9 +78,10 @@ export class cache {
         this.fullRankings = JSON.parse(fs.readFileSync(rankingDump).toString());
         this.information = JSON.parse(fs.readFileSync(infoJson).toString());
         
-        this.calculations = JSON.parse(fs.readFileSync(furcCalc).toString());
-        this.muspelCalculations = JSON.parse(fs.readFileSync(muspCalc).toString());
-        this.whaleCalculations = JSON.parse(fs.readFileSync(whaleCalc).toString());
+        this.calculations = JSON.parse(fs.readFileSync(furcSaveLocation).toString());
+        this.muspelCalculations = JSON.parse(fs.readFileSync(muspSaveLocation).toString());
+        this.whaleCalculations = JSON.parse(fs.readFileSync(whaleSaveLocation).toString());
+        this.whatahCalculations = JSON.parse(fs.readFileSync(whatahSaveLocation).toString());
 
         this.rankings = JSON.parse(fs.readFileSync(rankingFile).toString());
         this.unitsDump = JSON.parse(fs.readFileSync(unitKeysJson).toString());
@@ -96,7 +114,7 @@ export class cache {
         switch (source) {
         case "muspel":
             await muspDamage.UpdateMuspelCalculations(() =>{
-                this.muspelCalculations = JSON.parse(fs.readFileSync(muspCalc).toString());
+                this.muspelCalculations = JSON.parse(fs.readFileSync(muspSaveLocation).toString());
                 success()
             }).catch(fail);
             break;
@@ -114,7 +132,7 @@ export class cache {
         case "furcula":
             await furcDamage.UpdateFurculaCalculations(force)
             .then(calcs => {
-                this.calculations = JSON.parse(fs.readFileSync(furcCalc).toString());
+                this.calculations = JSON.parse(fs.readFileSync(furcSaveLocation).toString());
                 success()
             }).catch(fail);
             break;
@@ -123,7 +141,15 @@ export class cache {
         case "shado":
             await furcDamage.UpdateWhaleCalculations(force)
             .then(calcs =>{
-                this.whaleCalculations = JSON.parse(fs.readFileSync(whaleCalc).toString());
+                this.whaleCalculations = JSON.parse(fs.readFileSync(whaleSaveLocation).toString());
+                success()
+            }).catch(fail);
+            break;
+
+        case "whatah":
+            await whatahDamage.UpdateCalculations(force, whatahSaveLocation)
+            .then(calcs =>{
+                this.whatahCalculations = JSON.parse(fs.readFileSync(whatahSaveLocation).toString());
                 success()
             }).catch(fail);
             break;
@@ -253,11 +279,13 @@ export class cache {
             case "whale":
             case "shado":
                 return getCalc(searchTerm, this.whaleCalculations);
+            case "whatah":
+                return getCalc(searchTerm, this.whatahCalculations);
             default:
                 return null;
         }
     }
-    getAllCalculations(source: string) {
+    getAllCalculations(source: string): Calculation[] {
         var total = [];
 
         switch (source) {
@@ -275,6 +303,11 @@ export class cache {
             case "shado":
                 Object.keys(this.whaleCalculations).forEach(key => {
                     total[total.length] = this.whaleCalculations[key];
+                });
+                return total;
+            case "whatah":
+                Object.keys(this.whatahCalculations).forEach(key => {
+                    total[total.length] = this.whatahCalculations[key];
                 });
                 return total;
             default:

@@ -427,15 +427,17 @@ export function handleUpdate(receivedMessage: Discord.Message, search: string, p
             Client.send(receivedMessage, "done!");
             respondSuccess(receivedMessage, true);
             
-            UpdateWikiPage()
-            .then(r => {
-                log("Successfully updated wiki");
-                Client.send(receivedMessage, "wiki was updated successfully!");
-            })
-            .catch(e => {
-                log("Failed to update wiki: ", e);
-                Client.send(receivedMessage, `failed to update wiki, ${e}`);
-            })
+            if (source == "furcula" || source == "whale" || source == "shado") {
+                UpdateWikiPage()
+                .then(r => {
+                    log("Successfully updated wiki");
+                    Client.send(receivedMessage, "wiki was updated successfully!");
+                })
+                .catch(e => {
+                    log("Failed to update wiki: ", e);
+                    Client.send(receivedMessage, `failed to update wiki, ${e}`);
+                });
+            }
         } else {
             Client.send(receivedMessage, `Something went wrong, give it another try in a few minutes. ${error}`);
             respondFailure(receivedMessage, true);

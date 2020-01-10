@@ -245,7 +245,11 @@
 		"muspeltopdpt": "mtopdps",
 		"mtopdpt": "mtopdps",
 		"whaletopdpt": "wtopdps",
-		"wtopdpt": "wtopdps"
+		"wtopdpt": "wtopdps",
+		"jpdpt": "whatah",
+		"jpburst": "whatahburst",
+		"jptopdpt": "whatahtopdps",
+		"jptopdps": "whatahtopdps"
 	},
 	"shortcuts": {
 		"tips": {
@@ -307,6 +311,7 @@
 		"114545824989446149": "muspel",
 		"316654316377210880": "muspel",
 		"103785126026043392": "shado",
-		"243041029316542474": "shado"
+		"243041029316542474": "shado",
+		"147586823588151296": "whatah"
 	}
 }
