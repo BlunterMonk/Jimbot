@@ -1,1128 +1,1136 @@
 {
 	"Erik": {
 		"name": "Erik",
-		"damage": "18.43B",
-		"burst": "37.32B",
+		"damage": "18.43b",
+		"burst": "37.32b",
 		"turns": "9",
 		"type": "physical",
 		"url": null
 	},
 	"Physalis": {
 		"name": "Physalis",
-		"damage": "17.22B",
-		"burst": "37.16B",
+		"damage": "17.22b",
+		"burst": "37.16b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Aldore King Rain": {
 		"name": "Aldore King Rain",
-		"damage": "16.78B",
-		"burst": "41.22B",
+		"damage": "16.78b",
+		"burst": "41.22b",
 		"turns": "12",
 		"type": "physical",
 		"url": null
 	},
 	"Jasper Unbound": {
 		"name": "Jasper Unbound",
-		"damage": "16.31B",
-		"burst": "24.95B",
+		"damage": "16.31b",
+		"burst": "24.95b",
+		"turns": "10",
+		"type": "physical",
+		"url": null
+	},
+	"Ardyn": {
+		"name": "Ardyn",
+		"damage": "14.75b",
+		"burst": "25.01b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Radiant Lightning": {
 		"name": "Radiant Lightning",
-		"damage": "14.61B",
-		"burst": "20.66B",
+		"damage": "14.61b",
+		"burst": "20.66b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Agent Olive": {
 		"name": "Agent Olive",
-		"damage": "14.44B",
-		"burst": "47.30B",
+		"damage": "14.44b",
+		"burst": "47.30b",
 		"turns": "15",
 		"type": "physical",
 		"url": null
 	},
 	"Dark Knight Leon": {
 		"name": "Dark Knight Leon",
-		"damage": "13.85B",
-		"burst": "25.67B",
+		"damage": "13.85b",
+		"burst": "25.67b",
 		"turns": "8",
 		"type": "physical",
 		"url": null
 	},
 	"Godrea": {
 		"name": "Godrea",
-		"damage": "13.65B",
-		"burst": "28.89B",
+		"damage": "13.65b",
+		"burst": "28.89b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Riku": {
 		"name": "Riku",
-		"damage": "13.50B",
-		"burst": "20.23B",
+		"damage": "13.50b",
+		"burst": "20.23b",
 		"turns": "12",
 		"type": "physical",
 		"url": null
 	},
 	"Lucius": {
 		"name": "Lucius",
-		"damage": "13.41B",
-		"burst": "19.29B",
+		"damage": "13.41b",
+		"burst": "19.29b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Sephiroth (KH)": {
 		"name": "Sephiroth (KH)",
-		"damage": "13.38B",
-		"burst": "17.89B",
+		"damage": "13.38b",
+		"burst": "17.89b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Eleven": {
 		"name": "Eleven",
-		"damage": "13.01B",
-		"burst": "19.79B",
+		"damage": "13.01b",
+		"burst": "19.79b",
 		"turns": "14",
 		"type": "physical",
 		"url": null
 	},
 	"Warrior of Light Bartz": {
 		"name": "Warrior of Light Bartz",
-		"damage": "12.19B",
-		"burst": "33.16B",
+		"damage": "12.19b",
+		"burst": "33.16b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Jade": {
 		"name": "Jade",
-		"damage": "12.02B",
-		"burst": "25.17B",
+		"damage": "12.02b",
+		"burst": "25.17b",
 		"turns": "12",
 		"type": "physical",
 		"url": null
 	},
 	"Karten": {
 		"name": "Karten",
-		"damage": "12.00B",
-		"burst": "26.36B",
+		"damage": "12.00b",
+		"burst": "26.36b",
 		"turns": "12",
 		"type": "physical",
 		"url": null
 	},
 	"Reberta (jump chain)": {
 		"name": "Reberta (jump chain)",
-		"damage": "11.82B",
-		"burst": "32.76B",
+		"damage": "11.82b",
+		"burst": "32.76b",
 		"turns": "12",
 		"type": "physical",
 		"url": null
 	},
 	"Mastermind Xon": {
 		"name": "Mastermind Xon",
-		"damage": "11.77B",
-		"burst": "11.95B",
+		"damage": "11.77b",
+		"burst": "11.95b",
 		"turns": "2",
 		"type": "physical",
 		"url": null
 	},
 	"Monk Sabin of Kolts": {
 		"name": "Monk Sabin of Kolts",
-		"damage": "11.42B",
-		"burst": "27.70B",
+		"damage": "11.42b",
+		"burst": "27.70b",
 		"turns": "11",
 		"type": "physical",
 		"url": null
 	},
 	"The Lord of Shadows": {
 		"name": "The Lord of Shadows",
-		"damage": "11.40B",
-		"burst": "20.15B",
+		"damage": "11.40b",
+		"burst": "20.15b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Hyoh": {
 		"name": "Hyoh",
-		"damage": "11.37B",
-		"burst": "21.29B",
+		"damage": "11.37b",
+		"burst": "21.29b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Sora": {
 		"name": "Sora",
-		"damage": "10.63B",
-		"burst": "13.17B",
+		"damage": "10.63b",
+		"burst": "13.17b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Assassin Shadow": {
 		"name": "Assassin Shadow",
-		"damage": "10.49B",
-		"burst": "12.68B",
+		"damage": "10.49b",
+		"burst": "12.68b",
 		"turns": "11",
 		"type": "physical",
 		"url": null
 	},
 	"Aloha Lasswell": {
 		"name": "Aloha Lasswell",
-		"damage": "10.26B",
-		"burst": "13.60B",
+		"damage": "10.26b",
+		"burst": "13.60b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Shadow Lord": {
 		"name": "Shadow Lord",
-		"damage": "10.18B",
-		"burst": "13.11B",
+		"damage": "10.18b",
+		"burst": "13.11b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Zeno": {
 		"name": "Zeno",
-		"damage": "9.99B",
-		"burst": "23.37B",
+		"damage": "9.99b",
+		"burst": "23.37b",
 		"turns": "12",
 		"type": "physical",
 		"url": null
 	},
 	"Cloud (KH)": {
 		"name": "Cloud (KH)",
-		"damage": "9.62B",
-		"burst": "14.69B",
+		"damage": "9.62b",
+		"burst": "14.69b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Esther": {
 		"name": "Esther",
-		"damage": "9.43B",
-		"burst": "16.22B",
+		"damage": "9.43b",
+		"burst": "16.22b",
 		"turns": "11",
 		"type": "physical",
 		"url": null
 	},
 	"Machina (damage rotation)": {
 		"name": "Machina (damage rotation)",
-		"damage": "9.22B",
-		"burst": "12.01B",
+		"damage": "9.22b",
+		"burst": "12.01b",
 		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
 	"Pyro Glacial Lasswell": {
 		"name": "Pyro Glacial Lasswell",
-		"damage": "9.07B",
-		"burst": "12.81B",
+		"damage": "9.07b",
+		"burst": "12.81b",
 		"turns": "6",
 		"type": "physical",
 		"url": null
 	},
 	"Adventurer Locke": {
 		"name": "Adventurer Locke",
-		"damage": "8.79B",
-		"burst": "17.36B",
+		"damage": "8.79b",
+		"burst": "17.36b",
 		"turns": "7",
 		"type": "physical",
 		"url": null
 	},
 	"Chocobo Fina": {
 		"name": "Chocobo Fina",
-		"damage": "8.18B",
-		"burst": "13.01B",
+		"damage": "8.18b",
+		"burst": "13.01b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Holy Knight Amelia & Emilia": {
 		"name": "Holy Knight Amelia & Emilia",
-		"damage": "8.09B",
-		"burst": "11.87B",
+		"damage": "8.09b",
+		"burst": "11.87b",
 		"turns": "8",
 		"type": "physical",
 		"url": null
 	},
 	"Wild Rose Firion": {
 		"name": "Wild Rose Firion",
-		"damage": "8.03B",
-		"burst": "13.73B",
+		"damage": "8.03b",
+		"burst": "13.73b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Raegen": {
 		"name": "Raegen",
-		"damage": "7.73B",
-		"burst": "15.66B",
+		"damage": "7.73b",
+		"burst": "15.66b",
 		"turns": "11",
 		"type": "physical",
 		"url": null
 	},
 	"Red XIII": {
 		"name": "Red XIII",
-		"damage": "7.52B",
-		"burst": "12.98B",
+		"damage": "7.52b",
+		"burst": "12.98b",
 		"turns": "11",
 		"type": "physical",
 		"url": null
 	},
 	"Yuffie": {
 		"name": "Yuffie",
-		"damage": "7.44B",
-		"burst": "10.41B",
+		"damage": "7.44b",
+		"burst": "10.41b",
 		"turns": "7",
 		"type": "physical",
 		"url": null
 	},
 	"Akstar": {
 		"name": "Akstar",
-		"damage": "6.51B",
-		"burst": "16.73B",
+		"damage": "6.51b",
+		"burst": "16.73b",
 		"turns": "11",
 		"type": "physical",
 		"url": null
 	},
 	"Machina (breaks rotation)": {
 		"name": "Machina (breaks rotation)",
-		"damage": "5.99B",
-		"burst": "8.18B",
+		"damage": "5.99b",
+		"burst": "8.18b",
 		"turns": "6",
 		"type": "physical",
 		"url": null
 	},
 	"Regina": {
 		"name": "Regina",
-		"damage": "5.91B",
-		"burst": "10.94B",
+		"damage": "5.91b",
+		"burst": "10.94b",
 		"turns": "4",
 		"type": "physical",
 		"url": null
 	},
 	"Nalu": {
 		"name": "Nalu",
-		"damage": "5.87B",
-		"burst": "6.36B",
+		"damage": "5.87b",
+		"burst": "6.36b",
 		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
 	"Dressy Aileen": {
 		"name": "Dressy Aileen",
-		"damage": "5.73B",
-		"burst": "15.80B",
+		"damage": "5.73b",
+		"burst": "15.80b",
 		"turns": "9",
 		"type": "physical",
 		"url": null
 	},
 	"Ellesperis": {
 		"name": "Ellesperis",
-		"damage": "5.53B",
-		"burst": "8.40B",
+		"damage": "5.53b",
+		"burst": "8.40b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Squall": {
 		"name": "Squall",
-		"damage": "4.57B",
-		"burst": "6.82B",
+		"damage": "4.57b",
+		"burst": "6.82b",
 		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
 	"Immortal Knight Garland": {
 		"name": "Immortal Knight Garland",
-		"damage": "4.42B",
-		"burst": "20.64B",
+		"damage": "4.42b",
+		"burst": "20.64b",
 		"turns": "11",
 		"type": "physical",
 		"url": null
 	},
 	"Kimono Ayaka": {
 		"name": "Kimono Ayaka",
-		"damage": "4.02B",
-		"burst": "7.01B",
+		"damage": "4.02b",
+		"burst": "7.01b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Citan": {
 		"name": "Citan",
-		"damage": "3.73B",
-		"burst": "4.95B",
+		"damage": "3.73b",
+		"burst": "4.95b",
 		"turns": "6",
 		"type": "physical",
 		"url": null
 	},
 	"Atoning Dragoon Kain (chainer)": {
 		"name": "Atoning Dragoon Kain (chainer)",
-		"damage": "3.71B",
-		"burst": "4.70B",
+		"damage": "3.71b",
+		"burst": "4.70b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Randi": {
 		"name": "Randi",
-		"damage": "3.51B",
-		"burst": "7.69B",
+		"damage": "3.51b",
+		"burst": "7.69b",
 		"turns": "6",
 		"type": "physical",
 		"url": null
 	},
 	"Crimson": {
 		"name": "Crimson",
-		"damage": "3.38B",
-		"burst": "5.83B",
+		"damage": "3.38b",
+		"burst": "5.83b",
 		"turns": "12",
 		"type": "physical",
 		"url": null
 	},
 	"Yego": {
 		"name": "Yego",
-		"damage": "2.94B",
-		"burst": "3.61B",
+		"damage": "2.94b",
+		"burst": "3.61b",
 		"turns": "13",
 		"type": "physical",
 		"url": null
 	},
 	"Sephiroth": {
 		"name": "Sephiroth",
-		"damage": "2.91B",
-		"burst": "5.67B",
+		"damage": "2.91b",
+		"burst": "5.67b",
 		"turns": "9",
 		"type": "physical",
 		"url": null
 	},
 	"Jecht": {
 		"name": "Jecht",
-		"damage": "2.83B",
-		"burst": "4.98B",
+		"damage": "2.83b",
+		"burst": "4.98b",
 		"turns": "7",
 		"type": "physical",
 		"url": null
 	},
 	"Lila": {
 		"name": "Lila",
-		"damage": "2.63B",
-		"burst": "4.38B",
+		"damage": "2.63b",
+		"burst": "4.38b",
 		"turns": "8",
 		"type": "physical",
 		"url": null
 	},
 	"Fei": {
 		"name": "Fei",
-		"damage": "2.63B",
-		"burst": "3.74B",
+		"damage": "2.63b",
+		"burst": "3.74b",
 		"turns": "8",
 		"type": "physical",
 		"url": null
 	},
 	"2B": {
 		"name": "2B",
-		"damage": "2.43B",
-		"burst": "5.33B",
+		"damage": "2.43b",
+		"burst": "5.33b",
 		"turns": "7",
 		"type": "physical",
 		"url": null
 	},
 	"Bai Hu & Zhu Que (ATK)": {
 		"name": "Bai Hu & Zhu Que (ATK)",
-		"damage": "2.21B",
-		"burst": "4.21B",
+		"damage": "2.21b",
+		"burst": "4.21b",
 		"turns": "9",
 		"type": "physical",
 		"url": null
 	},
 	"Prompto (no breaks)": {
 		"name": "Prompto (no breaks)",
-		"damage": "2.11B",
-		"burst": "2.35B",
+		"damage": "2.11b",
+		"burst": "2.35b",
 		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
 	"Fayt": {
 		"name": "Fayt",
-		"damage": "1.87B",
-		"burst": "3.03B",
+		"damage": "1.87b",
+		"burst": "3.03b",
 		"turns": "11",
 		"type": "physical",
 		"url": null
 	},
 	"Tifa": {
 		"name": "Tifa",
-		"damage": "1.86B",
-		"burst": "2.58B",
+		"damage": "1.86b",
+		"burst": "2.58b",
 		"turns": "14",
 		"type": "physical",
 		"url": null
 	},
 	"Lenneth": {
 		"name": "Lenneth",
-		"damage": "1.85B",
-		"burst": "2.51B",
+		"damage": "1.85b",
+		"burst": "2.51b",
 		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
 	"Beatrix": {
 		"name": "Beatrix",
-		"damage": "1.68B",
-		"burst": "2.13B",
+		"damage": "1.68b",
+		"burst": "2.13b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Prompto (breaks)": {
 		"name": "Prompto (breaks)",
-		"damage": "1.68B",
-		"burst": "2.35B",
+		"damage": "1.68b",
+		"burst": "2.35b",
 		"turns": "9",
 		"type": "physical",
 		"url": null
 	},
 	"Yun": {
 		"name": "Yun",
-		"damage": "1.55B",
-		"burst": "2.21B",
+		"damage": "1.55b",
+		"burst": "2.21b",
 		"turns": "4",
 		"type": "physical",
 		"url": null
 	},
 	"A2": {
 		"name": "A2",
-		"damage": "1.48B",
-		"burst": "2.67B",
+		"damage": "1.48b",
+		"burst": "2.67b",
 		"turns": "12",
 		"type": "physical",
 		"url": null
 	},
 	"Onion Knight Refia": {
 		"name": "Onion Knight Refia",
-		"damage": "1.42B",
-		"burst": "2.57B",
+		"damage": "1.42b",
+		"burst": "2.57b",
 		"turns": "13",
 		"type": "physical",
 		"url": null
 	},
 	"Dracu Lasswell": {
 		"name": "Dracu Lasswell",
-		"damage": "1.36B",
-		"burst": "2.43B",
+		"damage": "1.36b",
+		"burst": "2.43b",
 		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
 	"Emperor Shera": {
 		"name": "Emperor Shera",
-		"damage": "1.34B",
-		"burst": "1.70B",
+		"damage": "1.34b",
+		"burst": "1.70b",
 		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
 	"Bart": {
 		"name": "Bart",
-		"damage": "1.12B",
-		"burst": "1.72B",
+		"damage": "1.12b",
+		"burst": "1.72b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Auron": {
 		"name": "Auron",
-		"damage": "1.11B",
-		"burst": "2.44B",
+		"damage": "1.11b",
+		"burst": "2.44b",
 		"turns": "7",
 		"type": "physical",
 		"url": null
 	},
 	"Queen": {
 		"name": "Queen",
-		"damage": "1.10B",
-		"burst": "1.31B",
+		"damage": "1.10b",
+		"burst": "1.31b",
 		"turns": "8",
 		"type": "physical",
 		"url": null
 	},
 	"Cloud": {
 		"name": "Cloud",
-		"damage": "971.29M",
-		"burst": "1.45B",
+		"damage": "0.97b",
+		"burst": "1.45b",
 		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
 	"Estark": {
 		"name": "Estark",
-		"damage": "945.95M",
-		"burst": "1.32B",
+		"damage": "0.95b",
+		"burst": "1.32b",
 		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
 	"Prishe": {
 		"name": "Prishe",
-		"damage": "939.03M",
-		"burst": "1.17B",
+		"damage": "0.94b",
+		"burst": "1.17b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Knight Delita": {
 		"name": "Knight Delita",
-		"damage": "928.45M",
-		"burst": "1.22B",
+		"damage": "0.93b",
+		"burst": "1.22b",
 		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
 	"Loren": {
 		"name": "Loren",
-		"damage": "871.90M",
-		"burst": "1.34B",
+		"damage": "0.87b",
+		"burst": "1.34b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"Onion Knight": {
 		"name": "Onion Knight",
-		"damage": "864.95M",
-		"burst": "1.11B",
+		"damage": "0.86b",
+		"burst": "1.11b",
 		"turns": "3",
 		"type": "physical",
 		"url": null
 	},
 	"Lightning": {
 		"name": "Lightning",
-		"damage": "857.03M",
-		"burst": "978.20M",
+		"damage": "0.86b",
+		"burst": "0.98b",
 		"turns": "4",
 		"type": "physical",
 		"url": null
 	},
 	"Adam Jensen": {
 		"name": "Adam Jensen",
-		"damage": "851.05M",
-		"burst": "2.27B",
+		"damage": "0.85b",
+		"burst": "2.27b",
 		"turns": "6",
 		"type": "physical",
 		"url": null
 	},
 	"Nyx": {
 		"name": "Nyx",
-		"damage": "842.24M",
-		"burst": "945.53M",
+		"damage": "0.84b",
+		"burst": "0.95b",
 		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
 	"Dark Veritas": {
 		"name": "Dark Veritas",
-		"damage": "834.91M",
-		"burst": "2.05B",
+		"damage": "0.83b",
+		"burst": "2.05b",
 		"turns": "5",
 		"type": "physical",
 		"url": null
 	},
 	"Tidus": {
 		"name": "Tidus",
-		"damage": "833.53M",
-		"burst": "2.26B",
+		"damage": "0.83b",
+		"burst": "2.26b",
 		"turns": "7",
 		"type": "physical",
 		"url": null
 	},
 	"Vincent": {
 		"name": "Vincent",
-		"damage": "827.42M",
-		"burst": "1.05B",
+		"damage": "0.83b",
+		"burst": "1.05b",
 		"turns": "6",
 		"type": "physical",
 		"url": null
 	},
 	"Marquis de Léon": {
 		"name": "Marquis de Léon",
-		"damage": "818.59M",
-		"burst": "2.37B",
+		"damage": "0.82b",
+		"burst": "2.37b",
 		"turns": "3",
 		"type": "physical",
 		"url": null
 	},
 	"Aileen": {
 		"name": "Aileen",
-		"damage": "808.37M",
-		"burst": "808.37M",
+		"damage": "0.81b",
+		"burst": "0.81b",
 		"turns": "1",
 		"type": "physical",
 		"url": null
 	},
 	"Delita": {
 		"name": "Delita",
-		"damage": "802.28M",
-		"burst": "983.64M",
+		"damage": "0.80b",
+		"burst": "0.98b",
 		"turns": "4",
 		"type": "physical",
 		"url": null
 	},
 	"Gilgamesh": {
 		"name": "Gilgamesh",
-		"damage": "693.39M",
-		"burst": "693.39M",
+		"damage": "0.69b",
+		"burst": "0.69b",
 		"turns": "1",
 		"type": "physical",
 		"url": null
 	},
 	"Orlandeau": {
 		"name": "Orlandeau",
-		"damage": "674.20M",
-		"burst": "898.93M",
+		"damage": "0.67b",
+		"burst": "0.90b",
 		"turns": "1",
 		"type": "physical",
 		"url": null
 	},
 	"Viktor ": {
 		"name": "Viktor ",
-		"damage": "419.35M",
-		"burst": "493.98M",
+		"damage": "0.42b",
+		"burst": "0.49b",
 		"turns": "10",
 		"type": "physical",
 		"url": null
 	},
 	"White Lily Dark Fina": {
 		"name": "White Lily Dark Fina",
-		"damage": "19.16B",
-		"burst": "25.32B",
+		"damage": "19.16b",
+		"burst": "25.32b",
 		"turns": "12",
 		"type": "magic",
 		"url": null
 	},
 	"Operative Zyrus (Magnus)": {
 		"name": "Operative Zyrus (Magnus)",
-		"damage": "15.90B",
-		"burst": "33.38B",
+		"damage": "15.90b",
+		"burst": "33.38b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Kimono Fina": {
 		"name": "Kimono Fina",
-		"damage": "13.92B",
-		"burst": "26.01B",
+		"damage": "13.92b",
+		"burst": "26.01b",
 		"turns": "11",
 		"type": "magic",
 		"url": null
 	},
 	"Operative Zyrus": {
 		"name": "Operative Zyrus",
-		"damage": "13.80B",
-		"burst": "18.62B",
+		"damage": "13.80b",
+		"burst": "18.62b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Christine (self-cap)": {
 		"name": "Christine (self-cap)",
-		"damage": "12.91B",
-		"burst": "24.05B",
+		"damage": "12.91b",
+		"burst": "24.05b",
 		"turns": "16",
 		"type": "magic",
 		"url": null
 	},
 	"Veronica": {
 		"name": "Veronica",
-		"damage": "11.60B",
-		"burst": "23.48B",
+		"damage": "11.60b",
+		"burst": "23.48b",
 		"turns": "14",
 		"type": "magic",
 		"url": null
 	},
 	"Mordegon": {
 		"name": "Mordegon",
-		"damage": "11.18B",
-		"burst": "16.30B",
+		"damage": "11.18b",
+		"burst": "16.30b",
 		"turns": "15",
 		"type": "magic",
 		"url": null
 	},
 	"Magitek Warrior Terra": {
 		"name": "Magitek Warrior Terra",
-		"damage": "9.81B",
-		"burst": "17.71B",
+		"damage": "9.81b",
+		"burst": "17.71b",
 		"turns": "14",
 		"type": "magic",
 		"url": null
 	},
 	"Gentiana": {
 		"name": "Gentiana",
-		"damage": "9.79B",
-		"burst": "16.09B",
+		"damage": "9.79b",
+		"burst": "16.09b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Sol": {
 		"name": "Sol",
-		"damage": "9.41B",
-		"burst": "17.14B",
+		"damage": "9.41b",
+		"burst": "17.14b",
 		"turns": "11",
 		"type": "magic",
 		"url": null
 	},
 	"Christine": {
 		"name": "Christine",
-		"damage": "9.32B",
-		"burst": "11.96B",
+		"damage": "9.32b",
+		"burst": "11.96b",
 		"turns": "7",
 		"type": "magic",
 		"url": null
 	},
 	"Warrior of Light Krile": {
 		"name": "Warrior of Light Krile",
-		"damage": "8.71B",
-		"burst": "10.45B",
+		"damage": "8.71b",
+		"burst": "10.45b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Dark Mage Exdeath": {
 		"name": "Dark Mage Exdeath",
-		"damage": "8.66B",
-		"burst": "12.81B",
+		"damage": "8.66b",
+		"burst": "12.81b",
 		"turns": "13",
 		"type": "magic",
 		"url": null
 	},
 	"Tsukiko": {
 		"name": "Tsukiko",
-		"damage": "8.58B",
-		"burst": "8.75B",
+		"damage": "8.58b",
+		"burst": "8.75b",
 		"turns": "12",
 		"type": "magic",
 		"url": null
 	},
 	"Archmage Kefka": {
 		"name": "Archmage Kefka",
-		"damage": "7.97B",
-		"burst": "11.19B",
+		"damage": "7.97b",
+		"burst": "11.19b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Circe": {
 		"name": "Circe",
-		"damage": "7.69B",
-		"burst": "13.02B",
+		"damage": "7.69b",
+		"burst": "13.02b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Grim Lord Sakura": {
 		"name": "Grim Lord Sakura",
-		"damage": "7.51B",
-		"burst": "9.92B",
+		"damage": "7.51b",
+		"burst": "9.92b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Livid Shantotto": {
 		"name": "Livid Shantotto",
-		"damage": "7.20B",
-		"burst": "9.42B",
+		"damage": "7.20b",
+		"burst": "9.42b",
 		"turns": "12",
 		"type": "magic",
 		"url": null
 	},
 	"Mediena": {
 		"name": "Mediena",
-		"damage": "6.18B",
-		"burst": "8.58B",
+		"damage": "6.18b",
+		"burst": "8.58b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Morgana": {
 		"name": "Morgana",
-		"damage": "5.86B",
-		"burst": "9.34B",
+		"damage": "5.86b",
+		"burst": "9.34b",
 		"turns": "12",
 		"type": "magic",
 		"url": null
 	},
 	"Blossom Sage Sakura": {
 		"name": "Blossom Sage Sakura",
-		"damage": "5.23B",
-		"burst": "6.59B",
+		"damage": "5.23b",
+		"burst": "6.59b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Seabreeze Dark Fina": {
 		"name": "Seabreeze Dark Fina",
-		"damage": "4.96B",
-		"burst": "6.19B",
+		"damage": "4.96b",
+		"burst": "6.19b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Summer Folka & Citra": {
 		"name": "Summer Folka & Citra",
-		"damage": "4.84B",
-		"burst": "6.82B",
+		"damage": "4.84b",
+		"burst": "6.82b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Dark Fina": {
 		"name": "Dark Fina",
-		"damage": "4.22B",
-		"burst": "5.79B",
+		"damage": "4.22b",
+		"burst": "5.79b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Elly": {
 		"name": "Elly",
-		"damage": "3.37B",
-		"burst": "8.04B",
+		"damage": "3.37b",
+		"burst": "8.04b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Maria (GC)": {
 		"name": "Maria (GC)",
-		"damage": "3.13B",
-		"burst": "5.05B",
+		"damage": "3.13b",
+		"burst": "5.05b",
 		"turns": "12",
 		"type": "magic",
 		"url": null
 	},
 	"Black Mage Golbez": {
 		"name": "Black Mage Golbez",
-		"damage": "3.08B",
-		"burst": "8.20B",
+		"damage": "3.08b",
+		"burst": "8.20b",
 		"turns": "8",
 		"type": "magic",
 		"url": null
 	},
 	"High Seraph Ultima": {
 		"name": "High Seraph Ultima",
-		"damage": "3.07B",
-		"burst": "3.89B",
+		"damage": "3.07b",
+		"burst": "3.89b",
 		"turns": "9",
 		"type": "magic",
 		"url": null
 	},
 	"Sophia": {
 		"name": "Sophia",
-		"damage": "3.01B",
-		"burst": "4.12B",
+		"damage": "3.01b",
+		"burst": "4.12b",
 		"turns": "7",
 		"type": "magic",
 		"url": null
 	},
 	"Maria (AT)": {
 		"name": "Maria (AT)",
-		"damage": "2.98B",
-		"burst": "3.78B",
+		"damage": "2.98b",
+		"burst": "3.78b",
 		"turns": "11",
 		"type": "magic",
 		"url": null
 	},
 	"Tiana": {
 		"name": "Tiana",
-		"damage": "2.62B",
-		"burst": "5.06B",
+		"damage": "2.62b",
+		"burst": "5.06b",
 		"turns": "12",
 		"type": "magic",
 		"url": null
 	},
 	"Citra": {
 		"name": "Citra",
-		"damage": "2.46B",
-		"burst": "2.63B",
+		"damage": "2.46b",
+		"burst": "2.63b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Lulu": {
 		"name": "Lulu",
-		"damage": "2.40B",
-		"burst": "4.02B",
+		"damage": "2.40b",
+		"burst": "4.02b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Barbariccia": {
 		"name": "Barbariccia",
-		"damage": "1.01B",
-		"burst": "2.77B",
+		"damage": "1.01b",
+		"burst": "2.77b",
 		"turns": "10",
 		"type": "magic",
 		"url": null
 	},
 	"Freya": {
 		"name": "Freya",
-		"damage": "933.79M",
-		"burst": "1.26B",
+		"damage": "0.93b",
+		"burst": "1.26b",
 		"turns": "4",
 		"type": "magic",
 		"url": null
 	},
 	"Lunera": {
 		"name": "Lunera",
-		"damage": "869.11M",
-		"burst": "1.92B",
+		"damage": "0.87b",
+		"burst": "1.92b",
 		"turns": "5",
 		"type": "magic",
 		"url": null
 	},
 	"Trance Terra": {
 		"name": "Trance Terra",
-		"damage": "839.91M",
-		"burst": "2.65B",
+		"damage": "0.84b",
+		"burst": "2.65b",
 		"turns": "7",
 		"type": "magic",
 		"url": null
 	},
 	"Immortal Flame Katy": {
 		"name": "Immortal Flame Katy",
-		"damage": "626.61M",
-		"burst": "1.27B",
+		"damage": "0.63b",
+		"burst": "1.27b",
 		"turns": "1",
 		"type": "magic",
 		"url": null
 	},
 	"Levinson": {
 		"name": "Levinson",
-		"damage": "19.58B",
-		"burst": "29.66B",
+		"damage": "19.58b",
+		"burst": "29.66b",
 		"turns": "10",
 		"type": "hybrid",
 		"url": null
 	},
 	"Aurora Fryevia": {
 		"name": "Aurora Fryevia",
-		"damage": "15.03B",
-		"burst": "19.66B",
+		"damage": "15.03b",
+		"burst": "19.66b",
 		"turns": "12",
 		"type": "hybrid",
 		"url": null
 	},
 	"Kurasame": {
 		"name": "Kurasame",
-		"damage": "14.71B",
-		"burst": "17.85B",
+		"damage": "14.71b",
+		"burst": "17.85b",
 		"turns": "12",
 		"type": "hybrid",
 		"url": null
 	},
 	"Rab": {
 		"name": "Rab",
-		"damage": "14.29B",
-		"burst": "27.33B",
+		"damage": "14.29b",
+		"burst": "27.33b",
 		"turns": "11",
 		"type": "hybrid",
 		"url": null
 	},
 	"Elena": {
 		"name": "Elena",
-		"damage": "10.27B",
-		"burst": "20.05B",
+		"damage": "10.27b",
+		"burst": "20.05b",
 		"turns": "10",
 		"type": "hybrid",
 		"url": null
 	},
 	"Fryevia": {
 		"name": "Fryevia",
-		"damage": "8.81B",
-		"burst": "10.43B",
+		"damage": "8.81b",
+		"burst": "10.43b",
 		"turns": "5",
 		"type": "hybrid",
 		"url": null
 	},
 	"A.I. Katy": {
 		"name": "A.I. Katy",
-		"damage": "7.77B",
-		"burst": "8.30B",
+		"damage": "7.77b",
+		"burst": "8.30b",
 		"turns": "10",
 		"type": "hybrid",
 		"url": null
 	},
 	"Malphasie": {
 		"name": "Malphasie",
-		"damage": "7.39B",
-		"burst": "11.93B",
+		"damage": "7.39b",
+		"burst": "11.93b",
 		"turns": "9",
 		"type": "hybrid",
 		"url": null
 	},
 	"Nagi": {
 		"name": "Nagi",
-		"damage": "2.50B",
-		"burst": "3.13B",
+		"damage": "2.50b",
+		"burst": "3.13b",
 		"turns": "5",
 		"type": "hybrid",
 		"url": null
 	},
 	"Felix": {
 		"name": "Felix",
-		"damage": "2.38B",
-		"burst": "4.12B",
+		"damage": "2.38b",
+		"burst": "4.12b",
 		"turns": "7",
 		"type": "hybrid",
 		"url": null
 	},
 	"Karlette": {
 		"name": "Karlette",
-		"damage": "1.74B",
-		"burst": "2.90B",
+		"damage": "1.74b",
+		"burst": "2.90b",
 		"turns": "8",
 		"type": "hybrid",
 		"url": null
 	},
 	"Beowulf": {
 		"name": "Beowulf",
-		"damage": "1.40B",
-		"burst": "4.27B",
+		"damage": "1.40b",
+		"burst": "4.27b",
 		"turns": "6",
 		"type": "hybrid",
 		"url": null
 	},
 	"Kunshira": {
 		"name": "Kunshira",
-		"damage": "1.15B",
-		"burst": "1.50B",
+		"damage": "1.15b",
+		"burst": "1.50b",
 		"turns": "9",
 		"type": "hybrid",
 		"url": null
 	},
 	"Jiraiya": {
 		"name": "Jiraiya",
-		"damage": "893.54M",
-		"burst": "1.46B",
+		"damage": "0.89b",
+		"burst": "1.46b",
 		"turns": "11",
 		"type": "hybrid",
 		"url": null
 	},
 	"Light Veritas": {
 		"name": "Light Veritas",
-		"damage": "650.00M",
-		"burst": "1.51B",
+		"damage": "0.65b",
+		"burst": "1.51b",
 		"turns": "5",
 		"type": "hybrid",
 		"url": null
