@@ -18,6 +18,109 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20200107
+|type  = Event
+|title = Homecoming
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200107FFXVBehemothRaid.jpg
+}}
+{{Recent News
+|date  = 20200107
+|type  = Unit
+|title = Featured Summon FINAL FANTASY XV
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200107ArdynRegisFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20200107
+|type  = Event
+|title = Flying Fortress - Exploration
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200107FFIFlyingFortressExploration.jpg
+}}
+{{Recent News
+|date  = 20200107
+|type  = Other
+|title = Exchange Shop (Ardyn/Regis)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200107ArdynRegisExchangeShop.html
+}}
+{{Recent News
+|date  = 20200107
+|type  = Other
+|title = Introducing the 5★ Guaranteed (20% Featured) Ticket (Ardyn/Regis) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200107ArdynRegis20FeaturedTicketBanner.html
+}}
+{{Recent News
+|date  = 20200107
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200109Maintenance2.html
+}}
+{{Recent News
+|date  = 20200102
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200102IssueReportDoFTLTEmblems.html
+}}
+{{Recent News
+|date  = 20200102
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200102PostMaintenance.html
+}}
+{{Recent News
+|date  = 20200101
+|type  = Other
+|title = Guaranteed 5★ Special Summon Ticket
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191231GuaranteedSummonTicket.html
+}}
+{{Recent News
+|date  = 20200101
+|type  = Other
+|title = Chances to get 5★ Select Summon Tickets this month!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191231FreeSelectSummonTicket.html
+}}
+{{Recent News
+|date  = 20191231
+|type  = Other
+|title = New Year's 2020 All Rainbow 11 Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191231NewYear2020AllRainbowsSummon.html
+}}
+{{Recent News
+|date  = 20191231
+|type  = Other
+|title = New Year's 2020 Login Bonus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191231NewYear2020LoginBonus.html
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20191231
+|type  = Event
+|title = Mirage Tower
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20191231FFIMirageTower.jpg
+}}
+{{Recent News
+|date  = 20191231
+|type  = Event
+|title = Awakened Warrior of Light
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/WoLUnitIntroQuest.png
+}}
+{{Recent News
+|date  = 20191231
+|type  = Unit
+|title = Featured Summon FINAL FANTASY I
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/CGWOLFeatureSummon.jpg
+}}
+{{Recent News
+|date  = 20191231
+|type  = Event
+|title = White Lily Bouquet EXTRA STAGES
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/WhiteLilyDarkFinaExtraStage.jpg
+}}
+{{Recent News
+|date  = 20191231
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200102Maintenance.html
+}}
+{{Recent News
 |date  = 20191227
 |type  = Issue
 |title = Issue Report
@@ -101,7 +204,6 @@
 |title = Version 3.8.9
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191219GL389PatchNotes.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20191219
 |type  = Maintenance

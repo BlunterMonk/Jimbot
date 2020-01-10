@@ -291,9 +291,6 @@ export function handleTopdps(receivedMessage: Discord.Message, search: string, p
 export function handleWtopdps(receivedMessage: Discord.Message, search: string, parameters: string[]) {
     handleTopdps(receivedMessage, search, parameters, "whale");
 }
-export function handleMtopdps(receivedMessage: Discord.Message, search: string, parameters: string[]) {
-    handleTopdps(receivedMessage, search, parameters, "muspel");
-}
 
 export function handleDamage(receivedMessage: Discord.Message, search: string, parameters: string[]) {
     
