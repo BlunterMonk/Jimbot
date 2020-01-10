@@ -9,7 +9,7 @@ import "../../util/string-extension.js";
 import * as Discord from "discord.js";
 import * as fs from "fs";
 import { log, logData, error, escapeString, debug } from "../../global.js";
-import { Cache } from "../../cache/cache.js";
+import { Cache, UnitCalculations, Calculation } from "../../cache/cache.js";
 import { Config } from "../../config/config.js";
 import { Client } from "../../discord.js";
 import { unitSearch, unitSearchWithParameters } from "../../ffbe/unit.js";
@@ -19,12 +19,14 @@ import { convertSearchTerm, convertValueToLink, isLetter } from "../helper.js";
 
 ////////////////////////////////////////////////////////////////////
 
-const sheetURL = "https://docs.google.com/spreadsheets/d/1o-q9G1I1Z1QArbzrTySjjNs-OvmLE-sBRYljCX6EKUo";
-const muspelURL = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU";
-const whaleSheet = "https://docs.google.com/spreadsheets/d/1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
+const furcSheetURL = "https://docs.google.com/spreadsheets/d/1o-q9G1I1Z1QArbzrTySjjNs-OvmLE-sBRYljCX6EKUo";
+const muspelSheetURL = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU";
+const whaleSheetURL = "https://docs.google.com/spreadsheets/d/1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
+const whatahSheetURL = "https://docs.google.com/spreadsheets/d/1bXWLfFu2ECQ3JR-5XAAALkhnnEUMr0pUxYxgI1QAgHw";
 const furculaUserID = "344500120827723777";
 const muspelUserID  = "114545824989446149";
 const shadoUserID   = "103785126026043392";
+const whatahUserID  = "147586823588151296";
 
 export function buildMuspelDamageString(search: string, isBurst: boolean): string {
     var calc = Cache.getCalculations("muspel", search);
@@ -66,6 +68,8 @@ function buildDPTEmbed(search, isBurst, source) {
         return null;
     }
 
+    log("Calc found: ", calc);
+
     var text = "";
         
     const keys = Object.keys(calc);
@@ -77,7 +81,8 @@ function buildDPTEmbed(search, isBurst, source) {
             if (element.burst && !element.burst.empty())
                 text += `**${element.name}:** ${element.burst} on turn ${element.burstTurn}\n`;
         } else if (element.damage && !element.damage.empty()) {
-            text += `**${element.name}:** ${element.damage} : ${element.turns}\n`;
+            let t = element.turns.empty() ? "" : ` : ${element.turns}`;
+            text += `**${element.name}:** ${element.damage}${t}\n`;
         }
     }
 
@@ -91,7 +96,7 @@ function buildDPTEmbed(search, isBurst, source) {
 
     var embed = <any>{
         title: title,
-        url: sheetURL,
+        url: furcSheetURL,
         description: text,
         footer: {
             text: "visit the link provided for more calculations"
@@ -114,7 +119,7 @@ function buildRotationEmbed(search, source) {
         text += `**Highest Burst: ${calc.burst} on turn ${calc.burstTurn}**\n`;
         bturn = parseInt(calc.burstTurn);
     }
-    text += `**[(spreadsheet)](${(source == "furcula") ? sheetURL : whaleSheet}) - [(wiki)](${calc.wiki}) - [(build)](${calc.url})**\n\n`;
+    text += `**[(spreadsheet)](${(source == "furcula") ? furcSheetURL : whaleSheetURL}) - [(wiki)](${calc.wiki}) - [(build)](${calc.url})**\n\n`;
     calc.rotation.forEach((txt, ind) => {
         if (txt.empty()) 
             return;
@@ -147,7 +152,7 @@ function buildDamageEmbed(search) {
     }
 
     var text = "";
-    text += `**[(furcula sheet)](${sheetURL}) - [(shado sheet)](${whaleSheet}) - [(muspel sheet)](${muspelURL})**\n\u200B\n`;
+    text += `**[(furcula sheet)](${furcSheetURL}) - [(shado sheet)](${whaleSheetURL}) - [(muspel sheet)](${muspelSheetURL})**\n\u200B\n`;
 
     if (furc && furc.damage && !furc.damage.empty()) {
         
@@ -181,9 +186,9 @@ function buildDamageEmbed(search) {
 
 function getTopDPSText(source: string, category: string, limit: number) {
 
-    const calcs = Cache.getAllCalculations(source);
+    const calcs: Calculation[] = Cache.getAllCalculations(source);
 
-    const culled = [];
+    const culled: Calculation[] = [];
     calcs.forEach(unit => {
 
         if (unit.name.includes("JP)"))
@@ -191,6 +196,8 @@ function getTopDPSText(source: string, category: string, limit: number) {
         if (category && !unit.type.startsWith(category))
             return;
         if (!unit.damage || unit.damage === undefined || unit.damage.empty())
+            return;
+        if (unit.damage.includes("M"))
             return;
 
         var ad = parseInt(unit.damage.replaceAll(",", ""));
@@ -202,8 +209,8 @@ function getTopDPSText(source: string, category: string, limit: number) {
 
     const sorted = culled.sort((a, b) => {
 
-        var ad = parseInt(a.damage.replaceAll(",", ""));
-        var bd = parseInt(b.damage.replaceAll(",", ""));
+        var ad = parseFloat(a.damage.replace(/[A-Za-z,]/g, ""));
+        var bd = parseFloat(b.damage.replace(/[A-Za-z,]/g, ""));
 
         if (Number.isNaN(ad)) {
             return -1;
@@ -283,6 +290,8 @@ export function handleTopdps(receivedMessage: Discord.Message, search: string, p
         break;
         case "muspel":
             author = muspelUserID;
+        case "whatah":
+            author = whatahUserID;
         break;
     }
     
@@ -290,6 +299,12 @@ export function handleTopdps(receivedMessage: Discord.Message, search: string, p
 }
 export function handleWtopdps(receivedMessage: Discord.Message, search: string, parameters: string[]) {
     handleTopdps(receivedMessage, search, parameters, "whale");
+}
+export function handleMtopdps(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+    handleTopdps(receivedMessage, search, parameters, "muspel");
+}
+export function handleWhatahtopdps(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+    handleTopdps(receivedMessage, search, parameters, "whatah");
 }
 
 export function handleDamage(receivedMessage: Discord.Message, search: string, parameters: string[]) {
@@ -300,7 +315,7 @@ export function handleDamage(receivedMessage: Discord.Message, search: string, p
     }
     if (search.empty()) {
         var text = "";
-        text += `Furcula sheet: <${sheetURL}>\nShado sheet: <${whaleSheet}>\nMuspel sheet: <${muspelURL}>\n`;
+        text += `Furcula sheet: <${furcSheetURL}>\nShado sheet: <${whaleSheetURL}>\nMuspel sheet: <${muspelSheetURL}>\n`;
         Client.send(receivedMessage, text);
         return;
     }
@@ -339,9 +354,25 @@ export function handleWhale(receivedMessage: Discord.Message, search: string, pa
     search = search.replaceAll("_", " ");
 
     var embed = buildDPTEmbed(search, isBurst, "whale");
-    embed.url = whaleSheet;
+    embed.url = whaleSheetURL;
 
     Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
+}
+
+export function handleWhatah(receivedMessage: Discord.Message, search: string, parameters: string[], isBurst) {
+
+    if (search == "help") {
+        handleDpthelp(receivedMessage);
+        return;
+    }
+
+    search = search.replaceAll("_", " ");
+
+    log("Building DPT Embed");
+    var embed = buildDPTEmbed(search, isBurst, "whatah");
+    embed.url = whatahSheetURL;
+
+    Client.sendMessageWithAuthor(receivedMessage, embed, whatahUserID);
 }
 
 export function handleBurst(receivedMessage: Discord.Message, search: string, parameters: string[]) {
@@ -357,6 +388,10 @@ export function handleBurst(receivedMessage: Discord.Message, search: string, pa
 
 export function handleWhaleburst(receivedMessage: Discord.Message, search: string, parameters: string[]) {
     handleWhale(receivedMessage, search, parameters, true);
+}
+
+export function handleWhatahburst(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+    handleWhatah(receivedMessage, search, parameters, true);
 }
 
 export function handleRotation(receivedMessage: Discord.Message, search: string, parameters: string[]) {
@@ -382,7 +417,7 @@ export function handleWhaletation(receivedMessage: Discord.Message, search: stri
     search = search.replaceAll("_", " ");
 
     var embed = buildRotationEmbed(search, "whale");
-    embed.url = whaleSheet;
+    embed.url = whaleSheetURL;
 
     Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
 }
@@ -401,7 +436,7 @@ export function handleMuspel(receivedMessage: Discord.Message, search: string, p
     var s = search.toTitleCase();
     var embed = <any>{
         title: `Muspel Damage Comparisons: ${s}`,
-        url: muspelURL,
+        url: muspelSheetURL,
         description: text,
         footer: {
             text: "visit the link provided for more calculations"
@@ -425,7 +460,7 @@ export function handleMuspelburst(receivedMessage: Discord.Message, search: stri
     var s = search.toTitleCase();
     var embed = <any>{
         title: `Muspel Burst Comparisons: ${s}`,
-        url: muspelURL,
+        url: muspelSheetURL,
         description: text,
         footer: {
             text: "visit the link provided for more calculations"
