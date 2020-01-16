@@ -27,18 +27,19 @@ function parseDamageSheet(damageList): UnitCalculations {
     damageList.map((row) => {
         log("Row: ", row);
         let name = row[0];
-        let damage = row[2];
-        let burst = row[3];
-        let turn = row[4];
+        let turns = row[3];
+        let damage = row[4];
+        let burst = row[5];
+        let bturn = row[6];
         
         if (name) {
             name = name.trim();
             calcs[name] = {
                 name: name,
                 damage: damage,
-                turns: "",
+                turns: turns,
                 burst: burst,
-                burstTurn: turn,
+                burstTurn: bturn,
                 type: "physical"
             }
         }
@@ -55,7 +56,7 @@ function queryDamageAndBurst(oAuth: any, sourceID: string, saveLocation: string,
     return new Promise<UnitCalculations>((resolve, reject) => {
 
         // Read main comparison page 
-        GetPage(oAuth, sourceID, `${sheetName}!F4:J`)
+        GetPage(oAuth, sourceID, `${sheetName}!F4:L`)
         .then(damageList => {
 
             log(`Finished reading ${sheetName} sheet.`);
