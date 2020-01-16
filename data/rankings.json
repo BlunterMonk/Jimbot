@@ -14,11 +14,11 @@
 	},
 	"topunits": {
 		"physical_chainer": [
-			"radiant lightning",
 			"warrior of light bartz",
 			"aldore king rain",
 			"agent olive",
-			"physalis"
+			"physalis",
+			"ardyn"
 		],
 		"physical_finisher": [
 			"regina",
@@ -64,10 +64,9 @@
 		],
 		"buffer": [
 			"sylvie",
-			"yuraisha",
-			"maritime strategist nichol",
 			"ignis",
-			"lunafreya"
+			"lunafreya",
+			"regis"
 		]
 	},
 	"physical_chainer": [

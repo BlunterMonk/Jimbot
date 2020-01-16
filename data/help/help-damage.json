@@ -39,8 +39,28 @@
             "value": "- **?wdpt** *[unit name]*\n- **?wburst** *[unit name]*\n- **?wrot** *[unit name]*\nDerived from Furculas sheet, all builds are instead geared with several STMR's in mind.\n\u200B\n"
         },
         {
+            "name": "Get ShadoWalker's List of Top DPT Units",
+            "value": "- **?wtopdpt** *[optional category]* *\"[optional limit]\"*\n- category: physical, magic, hybrid\n- example: **?mtopdpt physical**\n\u200B\n"
+        },
+        {
             "name": "Get Muspels Damage Calculation",
             "value": "- **?muspel** *[name]*\nMuch like the above command, it will return a units damage calculated using Muspels criteria.\n- example: **?muspel elena**"
+        },
+        {
+            "name": "Get Muspel's List of Top DPT Units",
+            "value": "- **?mtopdpt** *[optional category]* *\"[optional limit]\"*\n- category: physical, magic, hybrid\n- example: **?mtopdpt magical \"15\"**\n\u200B\n"
+        },
+        {
+            "name": "Get Whatah's Damage Calculations",
+            "value": "- **?jpdpt** *[name]*\nReturn the corresponding units' Damage Per Turn from Whatah's Damage Calculations sheet.\n- example: **?jpdpt cloud**"
+        },
+        {
+            "name": "Get Whatah's Burst Damage Calculations",
+            "value": "- **?jpburst** *[name]*\nReturn the corresponding units' Highest Burst Damage from Whatah's Damage Calculations shee.\n- example: **?jpburst cloud**"
+        },
+        {
+            "name": "Get Whatah's List of Top DPT Units",
+            "value": "- **?jptopdpt** *[optional category]* *\"[optional limit]\"*\n- category: physical, magic, hybrid\n- example: **?jptopdpt \"5\"**\n\u200B\n"
         }
     ]
 }
