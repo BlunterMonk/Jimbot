@@ -16,10 +16,10 @@ import { log } from "../global.js";
 ////////////////////////////////////////////////////////////
 
 const rankingDump = 'data/rankingsdump.json';
-const furcSaveLocation = 'data/furculacalculations.json';
-const muspSaveLocation = 'data/muspelcalculations.json';
-const whaleSaveLocation = 'data/whalecalculations.json';
-const whatahSaveLocation = 'data/whatahcalculations.json';
+const furcSaveLocation = 'data/calculations/furcula.json';
+const muspSaveLocation = 'data/calculations/muspel.json';
+const whaleSaveLocation = 'data/calculations/whale.json';
+const whatahSaveLocation = 'data/calculations/whatah.json';
 
 const infoJson = 'data/information.json';
 const skillsJson = 'data/skills.json';
@@ -27,7 +27,6 @@ const limitburstsJson = 'data/limitbursts.json';
 const rankingFile = 'data/rankings.json';
 const unitKeysJson = "data/unitkeys.json";
 const unitIDsJson = "data/unitid.json";
-
 
 export type UnitCalculations = {[key: string]: Calculation};
 export interface Calculation {
