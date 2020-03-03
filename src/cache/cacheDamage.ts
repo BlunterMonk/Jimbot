@@ -18,8 +18,6 @@ const sheetName = "Damage comparison";
 const burstSheetName = "Burst Comparison";
 const furcSheetID = "1o-q9G1I1Z1QArbzrTySjjNs-OvmLE-sBRYljCX6EKUo";
 const whaleSheetID = "1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
-const furculaSaveLocation = "data/furculacalculations.json";
-const whaleSaveLocation = "data/whalecalculations.json";
 
 type CalcPair = {key: string, calc: Calculation};
 interface slotDef {
@@ -274,7 +272,7 @@ export var UpdateCalculations = function(def: slotDef, forced: boolean, saveLoca
     })
 }
 
-export var UpdateFurculaCalculations = function(forced): Promise<UnitCalculations> {
+export var UpdateFurculaCalculations = function(forced, saveLocation): Promise<UnitCalculations> {
     var furcDef = {
         pn: 1,
         pdpt: 2,
@@ -290,10 +288,10 @@ export var UpdateFurculaCalculations = function(forced): Promise<UnitCalculation
         hturns: 16,
     }
 
-    return UpdateCalculations(furcDef, forced, "./data/furculacalculations.json", furcSheetID);
+    return UpdateCalculations(furcDef, forced, saveLocation, furcSheetID);
 }
 
-export var UpdateWhaleCalculations = function(forced): Promise<UnitCalculations> {
+export var UpdateWhaleCalculations = function(forced, saveLocation): Promise<UnitCalculations> {
     var shadDef = {
         pn: 1,
         pdpt: 2,
@@ -312,5 +310,5 @@ export var UpdateWhaleCalculations = function(forced): Promise<UnitCalculations>
         hgian: 19
     }
 
-    return UpdateCalculations(shadDef, forced, "./data/whalecalculations.json", whaleSheetID);
+    return UpdateCalculations(shadDef, forced, saveLocation, whaleSheetID);
 }

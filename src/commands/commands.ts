@@ -80,7 +80,7 @@ function getParameters(msg) {
 
         parameters.forEach((p, ind) => {
             msg = msg.replace(p, "");
-            parameters[ind] = p.replace(/'|"|‘|’|“|”/g, "");
+            parameters[ind] = p.replace(/'|"|“|”/g, "");
         });
         msg = msg.trim();
     }

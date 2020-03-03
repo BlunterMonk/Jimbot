@@ -97,6 +97,14 @@ export function handleWikihelp(receivedMessage) {
     Client.sendPrivateMessage(receivedMessage, embed);
 }
 
+export function handleUnitjp(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+    search = search.toTitleCase("_");
+    search = search.capitalizeWords(".");
+    if (search.includes("(kh)"))
+        search = search.replace("(kh)", "(KH)");
+
+    handleUnit(receivedMessage, search + "/JP", parameters);
+}
 export function handleUnit(receivedMessage: Discord.Message, search: string, parameters: string[]) {
 
     if (search == "help") {
@@ -105,12 +113,14 @@ export function handleUnit(receivedMessage: Discord.Message, search: string, par
     }
 
     let original = search;
-    
-    search = search.toTitleCase("_");
-    search = search.capitalizeWords(".");
-    if (search.includes("(kh)"))
-        search = search.replace("(kh)", "(KH)");
 
+    if (!search.includes("/JP")) {
+        search = search.toTitleCase("_");
+        search = search.capitalizeWords(".");
+        if (search.includes("(kh)"))
+            search = search.replace("(kh)", "(KH)");
+    }
+        
     log("Searching Units For: " + search);
     
     FFBE.queryWikiForUnit(search, parameters, function (pageName, imgurl, description, limited, fields) {
@@ -312,7 +322,7 @@ export function handleGif(receivedMessage: Discord.Message, search: string, para
     var alias = Config.getAlias(s.replaceAll(" ", "_"));
     if (alias) {
         log("Found Alias: " + alias);
-        alias.replaceAll(" ", "_");
+        alias = alias.replaceAll(" ", "_");
     }
 
     log("Searching gifs for: " + search);

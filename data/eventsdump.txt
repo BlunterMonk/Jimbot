@@ -18,6 +18,649 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20200227
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200228LanguagePackIssueReport.html
+}}
+{{Recent News
+|date  = 20200227
+|type  = Other
+|title = Version 4.0.5
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200227Ver405PatchNotes.html
+}}
+{{Recent News
+|date  = 20200227
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200227PostMaintenance.html
+}}
+{{Recent News
+|date  = 20200226
+|type  = Unit
+|title = Ability Awakening Update! (Also Latents)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200227AbilityAwakeningBatch36.html
+}}
+{{Recent News
+|date  = 20200225
+|type  = Event
+|title = Edel the Mole
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200225EdeltheMoleStoryEvent.jpg
+}}
+{{Recent News
+|date  = 20200225
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200225MadamEdelFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20200225
+|type  = Event
+|title = Goldor Manor - Exploration
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200225FFIIIGoldorMansionExploration.jpg
+}}
+{{Recent News
+|date  = 20200225
+|type  = Story
+|title = The Story Continues!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200225StoryArc312.png
+}}
+{{Recent News
+|date  = 20190528
+|type  = Story
+|title = Madam's Manor
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200225MadamsManorLevel4and5.jpg
+}}
+{{Recent News
+|date  = 20200225
+|type  = Other
+|title = World Revisit Quests (Part 2)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200225WorldRevisitQuestPart2.html
+}}
+{{Recent News
+|date  = 20200225
+|type  = Other
+|title = Spring Blossom Ticket Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200225SpringBlossomTicketSummon.html
+}}
+{{Recent News
+|date  = 20200225
+|type  = Other
+|title = Defiance of Fate Community Challenge Reward - Free Lapis Daily Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200225DefianceofFateFreeDailyLapis%20Summon.html
+}}
+{{Recent News
+|date  = 20200225
+|type  = Other
+|title = Leap Year 2020 All Rainbow 11 Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200224LeapYear2020AllRainbowSummon.html
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20200225
+|type  = Other
+|title = Introducing the 5★ Guaranteed (10% Featured) Ticket (M.Edel) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200225MadamEdel10FeaturedTicketBanner.html
+}}
+{{Recent News
+|date  = 20200225
+|type  = Other
+|title = Exchange Shop (M.Edel)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200225MadamEdelExchangeShop.html
+}}
+{{Recent News
+|date  = 20200225
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200226Maintenance.html
+}}
+{{Recent News
+|date  = 20200221
+|type  = Other
+|title = WAR OF THE VISIONS FINAL FANTASY BRAVE EXVIUS Pre-Registration Commences
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200221WoTVFFBEPreRegistration.html
+}}
+{{Recent News
+|date  = 20200220
+|type  = Issue
+|title = Issue Report (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200220FFIIIStepUpSummonIssueReportUpdate.html
+}}
+{{Recent News
+|date  = 20200220
+|type  = Other
+|title = 5★ Guaranteed (Re)summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/202002205StarGuaranteedReSummon.html
+}}
+{{Recent News
+|date  = 20200220
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200220PostMaintenance.html
+}}
+{{Recent News
+|date  = 20200218
+|type  = Event
+|title = Cave of Tides
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200218FFIIICaveofTides.jpg
+}}
+{{Recent News
+|date  = 20200218
+|type  = Event
+|title = Awakened Onion Knight
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200218CGOnionKnightUnitIntroQuest.jpg
+}}
+{{Recent News
+|date  = 20200218
+|type  = Unit
+|title = Featured Summon FINAL FANTASY III
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200218FFIIIFeaturedSummonAOKnightHein.jpg
+}}
+{{Recent News
+|date  = 20200218
+|type  = Trial
+|title = Scorn of the Demon Wall
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200218ScornoftheDemonWall.jpg
+}}
+{{Recent News
+|date  = 20200218
+|type  = Event
+|title = Broken Hearts and Bones
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200218BrokenHeartsandBones.jpg
+}}
+{{Recent News
+|date  = 20200218
+|type  = Other
+|title = Introducing Final Fantasy III Featured Unit Exchange Banners
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200218FFIIIFeaturedUnitExchange.html
+}}
+{{Recent News
+|date  = 20200218
+|type  = Other
+|title = Introducing the 5★ Guaranteed (20% Featured) Ticket (A.O.Knight/Hein) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200218AOKnightHein20FeaturedTicketBanner.html
+}}
+{{Recent News
+|date  = 20200218
+|type  = Other
+|title = Exchange Shop (A.O.Knight/Hein)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200218AOKnightHeinExchangeShop.html
+}}
+{{Recent News
+|date  = 20200218
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200218Maintenance.html
+}}
+{{Recent News
+|date  = 20200217
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/202002018IssueReportTMMagnusAbility2.html
+}}
+{{Recent News
+|date  = 20200217
+|type  = Other
+|title = Google Play Points now applicable!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200217GooglePlayPoints.html
+}}
+{{Recent News
+|date  = 20200213
+|type  = Other
+|title = Version 4.0.1
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200210Ver401PatchNotes.html
+}}
+{{Recent News
+|date  = 20200213
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200213PostMaintenance.html
+}}
+{{Recent News
+|date  = 20200213
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/202002013IssueReportBaiHuandZhuQue.html
+}}
+{{Recent News
+|date  = 20200213
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200213P10plus1SummonTicketLunarNewYearIssueReport.html
+}}
+{{Recent News
+|date  = 20200212
+|type  = Other
+|title = Premium 10+1 Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200211PermaPremium10plus1Summon.html
+}}
+{{Recent News
+|date  = 20200212
+|type  = Other
+|title = Sweet Sentiments 5+1 Ticket Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200211SweetSentiments5Plus1Summon.html
+}}
+{{Recent News
+|date  = 20200211
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200211SweetNicholSweetLukaFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20200211
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200211SISAFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20200211
+|type  = Event
+|title = Defiance of Fate - Vault of Hidden Treasures
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200211VaultofHiddenTreasures3.html
+}}
+{{Recent News
+|date  = 20200211
+|type  = Event
+|title = No Bed of Roses
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200211NoBedofRosesRaid.jpg
+}}
+{{Recent News
+|date  = 20200211
+|type  = Event
+|title = Tower of Zot - Exploration
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200211FFIVTowerofZot.jpg
+}}
+{{Recent News
+|date  = 20200211
+|type  = Trial
+|title = Series Boss Battles: Zeromus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200211SBBZeromus.jpg
+}}
+{{Recent News
+|date  = 20200211
+|type  = Other
+|title = Exchange Shop (S.Nichol/S.Luka)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200211SweetNicholandLukaExchangeShop.html
+}}
+{{Recent News
+|date  = 20200211
+|type  = Other
+|title = Exchange Shop (S&I/S&A)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200211SiegIgSakuAyaExchangeShop.html
+}}
+{{Recent News
+|date  = 20200211
+|type  = Other
+|title = Introducing the 5★ Guaranteed (20% Featured) Ticket (S.Nichol/S.Luka) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200211SweetNicholandLuka20FeaturedTicketBanner.html
+}}
+{{Recent News
+|date  = 20200211
+|type  = Other
+|title = Introducing the 5★ Guaranteed (20% Featured) Ticket (S&I/S&A) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200211SiegIgSakuAya20FeaturedTicketBanner.html
+}}
+{{Recent News
+|date  = 20200211
+|type  = Other
+|title = Sweet Dreams Login Bonus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200211SweetDreamsLoginBonus.html
+}}
+{{Recent News
+|date  = 20200211
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200211Maintenance.html
+}}
+{{Recent News
+|date  = 20200206
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200207FFIVIssueReport.html
+}}
+{{Recent News
+|date  = 20200206
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200206PostMaintenance.html
+}}
+{{Recent News
+|date  = 20200204
+|type  = Other
+|title = Unit Popularity Contest Results
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200204UnitPopularityContestResults.html
+}}
+{{Recent News
+|date  = 20200204
+|type  = Unit
+|title = Featured Summon FINAL FANTASY IV
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200204FFIVCGPaladinCecilPPCid.jpg
+}}
+{{Recent News
+|date  = 20200204
+|type  = Event
+|title = Mount Ordeals
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200204FFIVMountOrdeals.jpg
+}}
+{{Recent News
+|date  = 20200204
+|type  = Event
+|title = Paladin Cecil
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200204PaladinCecilUnitIntroQuest.png
+}}
+{{Recent News
+|date  = 20200204
+|type  = Event
+|title = Defiance of Fate: The Lightning Tyrant - Tyrant Unleashed
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200204DefianceofFateTyrantUnleashed.html
+}}
+{{Recent News
+|date  = 20200204
+|type  = Event
+|title = Steel Castle Melfikya
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200204WeaponEnhancement.html
+}}
+{{Recent News
+|date  = 20200204
+|type  = Event
+|title = Lord of the Beasts
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200204LordoftheBeastsRerun.jpg
+}}
+{{Recent News
+|date  = 20200204
+|type  = Other
+|title = Introducing the 5★ Guaranteed (20% Featured) Ticket (P.Cecil/P&P) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200204PCecilPP20FeaturedTicketBanner.html
+}}
+{{Recent News
+|date  = 20200204
+|type  = Other
+|title = Exchange Shop (P.Cecil/P&P)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200204PCecilPPExchangeShop.html
+}}
+{{Recent News
+|date  = 20200204
+|type  = Other
+|title = 『FFBE Fan Reception in Taiwan 2020』延期相關公告
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2020204TWFanMeetPostpone.html
+}}
+{{Recent News
+|date  = 20200204
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200204Maintenance.html
+}}
+{{Recent News
+|date  = 20200203
+|type  = Issue
+|title = Issue Report (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200203IssueReportFebDailyBundle2.html
+}}
+{{Recent News
+|date  = 20200201
+|type  = Other
+|title = Guaranteed 5★ Special Summon Ticket
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200201StarGuaranteedSpecialSummonTicket.html
+}}
+{{Recent News
+|date  = 20200201
+|type  = Other
+|title = Chances to get 5★ Select Summon Tickets this month!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200201FreeSelectSummonTicket.html
+}}
+{{Recent News
+|date  = 20200131
+|type  = Issue
+|title = Issue Report (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200131IssueReportVariousIssues2.html
+}}
+{{Recent News
+|date  = 20200130
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200130IssueReportGameCrash.html
+}}
+{{Recent News
+|date  = 20200130
+|type  = Other
+|title = Version 4.4.0
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200130PatchNotes.html
+}}
+{{Recent News
+|date  = 20200130
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200130PostMaintenance.html
+}}
+{{Recent News
+|date  = 20200128
+|type  = Event
+|title = Yearning for Peace
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200128YearningForPeaceRerun.jpg
+}}
+{{Recent News
+|date  = 20200128
+|type  = Event
+|title = An Eye for an Eye
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200128FFBETrialAnEyeForAnEye.jpg
+}}
+{{Recent News
+|date  = 20200128
+|type  = Other
+|title = World Revisit Quest (Part 1)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200128WorldRevisitQuest.html
+}}
+{{Recent News
+|date  = 20200128
+|type  = Other
+|title = Half Energy
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200128HalfEnergyCampaign.html
+}}
+{{Recent News
+|date  = 20200128
+|type  = Other
+|title = 3rd Season Commemorative Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/202001283rdSeasonCommemorativeSummon.html
+}}
+{{Recent News
+|date  = 20200128
+|type  = Other
+|title = 7★ Guaranteed (Re)summon (Compensation) Ticket
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/202001287StarGuaranteedReSummonCompensationTicket.html
+}}
+{{Recent News
+|date  = 20200128
+|type  = Other
+|title = 5★ Guaranteed (Re)summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/202001285StarGuaranteedReSummon.html
+}}
+{{Recent News
+|date  = 20200128
+|type  = Unit
+|title = Ability Awakening Update! (Also Latents)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200128AbilityAwakeningBatch35.html
+}}
+{{Recent News
+|date  = 20200128
+|type  = Story
+|title = The Story Continues!
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200128StoryArc311.jpg
+}}
+{{Recent News
+|date  = 20200128
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200129Maintenance.html
+}}
+{{Recent News
+|date  = 20200123
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200123PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20200123
+|type  = Issue
+|title = Important Notice
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/2020023AdvisoryforEvocationTypeAbilities2.html
+}}
+{{Recent News
+|date  = 20200123
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200123FFBECNYFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20200122
+|type  = Event
+|title = I Smell a Rat
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200122ISmellARat.jpg
+}}
+{{Recent News
+|date  = 20200122
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200122FFBECNY2020RerunFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20200122
+|type  = Other
+|title = Premium 10+1 Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200121Premium10plus1Summon.html
+}}
+{{Recent News
+|date  = 20200122
+|type  = Other
+|title = Lucky Year of the Rat Login Bonus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200121LuckyYearoftheRatLoginBonus.html
+}}
+{{Recent News
+|date  = 20200122
+|type  = Other
+|title = Lucky Year of the Rat Ticket Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200121LuckyYearoftheRatTicketSummon.html
+}}
+{{Recent News
+|date  = 20200122
+|type  = Other
+|title = Lunar Slots de Chocobo
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200121LunarSlotsdeChocobo.html
+}}
+{{Recent News
+|date  = 20200122
+|type  = Other
+|title = Introducing the 5★ Guaranteed (20% Featured) Ticket (X.W&Q.L/E.Foo) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200121XWQLEFoo20FeaturedTicketBanner.html
+}}
+{{Recent News
+|date  = 20200122
+|type  = Other
+|title = Exchange Shop (X.W&Q.L/E.Foo)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200121XWQLEFooExchangeShop.html
+}}
+{{Recent News
+|date  = 20200121
+|type  = Trial
+|title = Scorn of the Great Explosion Festival
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/ScornoftheGreatExplosionFestival.jpg
+}}
+{{Recent News
+|date  = 20200121
+|type  = Event
+|title = A Prayer for Hess EXTRA STAGES
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/APrayerforHessExtraStage.jpg
+}}
+{{Recent News
+|date  = 20200121
+|type  = Other
+|title = Trust Coin Item Exchange Update (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200121TrustCoinExchangeShopUpdate2.html
+}}
+{{Recent News
+|date  = 20200121
+|type  = Other
+|title = Free Daily 4★+ Guaranteed Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200121FreeDailyGuaranteed4StarandAboveSummon.html
+}}
+{{Recent News
+|date  = 20200121
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200122Maintenance.html
+}}
+{{Recent News
+|date  = 20200116
+|type  = Other
+|title = Defiance of Fate Community Challenge Update
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200114DoFCommunityChallengeUpdate.html
+}}
+{{Recent News
+|date  = 20200116
+|type  = Issue
+|title = Issue Report
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200116IssueReportRaid.html
+}}
+{{Recent News
+|date  = 20200116
+|type  = Other
+|title = (Updated!) New Year's 2020 7+4 Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200116NewYear7plus4Summon3.html
+}}
+{{Recent News
+|date  = 20200116
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200116PostMaintenance.html
+}}
+{{Recent News
+|date  = 20200114
+|type  = Unit
+|title = Featured Summon FINAL FANTASY BRAVE EXVIUS
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200114HessKingLasswellFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20200114
+|type  = Event
+|title = A Prayer for Hess
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200114APrayerForHessStoryEvent.jpg
+}}
+{{Recent News
+|date  = 20200114
+|type  = Event
+|title = Hess King Lasswell
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/LasswellUnitIntroQuest.png
+}}
+{{Recent News
+|date  = 20200114
+|type  = Event
+|title = The Treacherous Infernian
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200114FFXVTheTreacherousInfernian.jpg
+}}
+{{Recent News
+|date  = 20200114
+|type  = Trial
+|title = Series Boss Battles: Chaos
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200114SBBChaos.jpg
+}}
+{{Recent News
+|date  = 20200114
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200116Maintenance.html
+}}
+{{Recent News
+|date  = 20200109
+|type  = Other
+|title = Version 3.8.10
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200109PatchNotes.html
+}}
+{{Recent News
+|date  = 20200109
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200109PostMaintenanceExtended.html
+}}
+{{Recent News
 |date  = 20200107
 |type  = Event
 |title = Homecoming
@@ -56,8 +699,8 @@
 {{Recent News
 |date  = 20200102
 |type  = Issue
-|title = Issue Report
-|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200102IssueReportDoFTLTEmblems.html
+|title = Issue Report (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200102IssueReportDoFTLTEmblems3.html
 }}
 {{Recent News
 |date  = 20200102
@@ -89,7 +732,6 @@
 |title = New Year's 2020 Login Bonus
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20191231NewYear2020LoginBonus.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20191231
 |type  = Event
@@ -2388,7 +3030,6 @@
 |title = Trust Coin Item Exchange Update
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20190704TrustCoinExchangeUpdate.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20190703
 |type  = Other

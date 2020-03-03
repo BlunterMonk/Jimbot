@@ -62,6 +62,18 @@ function overwriteFile(existing: string, url: string): Promise<string> {
     });
 }
 
+function updateWiki(receivedMessage: Discord.Message) {
+    UpdateWikiPage()
+    .then(r => {
+        log("Successfully updated wiki");
+        Client.send(receivedMessage, "wiki was updated successfully!");
+    })
+    .catch(e => {
+        log("Failed to update wiki: ", e);
+        Client.send(receivedMessage, `failed to update wiki, ${e}`);
+    });
+}
+
 ////////////////////////////////////////////////////////////////////
 
 export function handleAddtopunit(receivedMessage: Discord.Message, search: string, parameters: string[]) {
@@ -396,6 +408,7 @@ export function handleUpdate(receivedMessage: Discord.Message, search: string, p
         "성은이 망극하옵니다 전하.",
         "deja que comience la actualización!",
         "Oh bountiful deity, deliver on to us a revalation!",
+        "Oh you're updating me? Instead of asking Jim you're updating straight through me?",
         "mettre à jour la feuille mettre à jour la feuille!",
         "고향을 위협하는 자들은 각오하라!"
     ]
@@ -403,6 +416,11 @@ export function handleUpdate(receivedMessage: Discord.Message, search: string, p
     var msg = phrases[getRandomInt(phrases.length)]
 
     Client.send(receivedMessage, msg);
+
+    if (source == "wiki") {
+        updateWiki(receivedMessage);
+        return;
+    }
 
     if (source == "lyregard") {
         
@@ -428,15 +446,7 @@ export function handleUpdate(receivedMessage: Discord.Message, search: string, p
             respondSuccess(receivedMessage, true);
             
             if (source == "furcula" || source == "whale" || source == "shado") {
-                UpdateWikiPage()
-                .then(r => {
-                    log("Successfully updated wiki");
-                    Client.send(receivedMessage, "wiki was updated successfully!");
-                })
-                .catch(e => {
-                    log("Failed to update wiki: ", e);
-                    Client.send(receivedMessage, `failed to update wiki, ${e}`);
-                });
+                updateWiki(receivedMessage);
             }
         } else {
             Client.send(receivedMessage, `Something went wrong, give it another try in a few minutes. ${error}`);

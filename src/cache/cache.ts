@@ -129,7 +129,7 @@ export class cache {
             break;
 
         case "furcula":
-            await furcDamage.UpdateFurculaCalculations(force)
+            await furcDamage.UpdateFurculaCalculations(force, furcSaveLocation)
             .then(calcs => {
                 this.calculations = JSON.parse(fs.readFileSync(furcSaveLocation).toString());
                 success()
@@ -138,7 +138,7 @@ export class cache {
 
         case "whale":
         case "shado":
-            await furcDamage.UpdateWhaleCalculations(force)
+            await furcDamage.UpdateWhaleCalculations(force, whaleSaveLocation)
             .then(calcs =>{
                 this.whaleCalculations = JSON.parse(fs.readFileSync(whaleSaveLocation).toString());
                 success()

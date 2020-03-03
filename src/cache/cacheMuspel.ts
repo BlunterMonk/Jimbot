@@ -18,7 +18,7 @@ const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const calcSheet = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU";
 const sheetName = "7* Damage Comparison";
 const sheetID = "14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU";
-const saveLocation = "data/muspelcalculations.json";
+const saveLocation = "data/calculations/muspel.json";
 var Reject = null;
 
 // The file token.json stores the user's access and refresh tokens, and is
@@ -56,7 +56,7 @@ function authorize(credentials, callback, finished) {
     };
 
     // Read main comparison page 
-    GetUnitComparison(oAuth2Client, `${sheetName}!A2:O`, queryEnd);
+    GetUnitComparison(oAuth2Client, `${sheetName}!A2:R`, queryEnd);
 }
 
 /**
@@ -125,7 +125,8 @@ function GetUnitComparison(auth, range, callback) {
                 var pName = row[0];
                 var mName = row[5];
                 var hName = row[10];
-                var fName = row[14];
+                var fName = row[15];
+                log(row);
 
                 if (pName) {
                     phy[pName] = {
@@ -149,7 +150,7 @@ function GetUnitComparison(auth, range, callback) {
                         type: "magic",
                         url: null
                     }
-                    log(mag[pName])
+                    log(mag[mName])
                 }
 
                 if (hName) {
@@ -161,19 +162,21 @@ function GetUnitComparison(auth, range, callback) {
                         type: "hybrid",
                         url: null
                     }
-                    log(hyb[pName])
+                    log(hyb[hName])
                 }
                 
                 if (fName) {
                     fin[fName] = {
                         name: fName,
-                        damage: row[15],
-                        burst: row[15],
-                        turns: row[16],
+                        damage: row[16],
+                        burst: row[16],
+                        turns: row[17],
                         type: "finisher",
                         url: null
                     }
-                    log(fin[pName])
+                    log(fin[fName])
+                } else {
+                    log("no finisher in row")
                 }
             });
 

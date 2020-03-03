@@ -729,5 +729,71 @@
 		"status": "",
 		"lead": null,
 		"builds": {}
+	},
+	"252613434787495936": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "NOG",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"551841239025319969": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "509916162",
+		"nickname": "blaze",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"308346205652647937": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "Crono",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"568986383612379136": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "Milo",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"338765365465317377": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "995428665",
+		"nickname": "maximus",
+		"status": "",
+		"lead": "https://ffbeequip.com/builder.html?server=gl#d14d65d0-5659-11ea-8e1c-0f5c05b763e9",
+		"builds": {
+			"physical_burst_rain": "https://ffbeequip.com/builder.html?server=gl#d14d65d0-5659-11ea-8e1c-0f5c05b763e9",
+			"white_goddess_dark_fina": "https://ffbeequip.com/builder.html?server=gl#5e88a400-565a-11ea-8e1c-0f5c05b763e9"
+		}
+	},
+	"172573865367568384": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "772868549",
+		"nickname": "nienharo",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"203202410854875136": {
+		"autobuild": false,
+		"compact": false,
+		"friendcode": "467113925",
+		"nickname": "reid",
+		"status": "",
+		"lead": null,
+		"builds": {}
 	}
 }

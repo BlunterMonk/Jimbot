@@ -14,21 +14,23 @@
 	},
 	"topunits": {
 		"physical_chainer": [
-			"warrior of light bartz",
-			"aldore king rain",
-			"agent olive",
 			"physalis",
-			"ardyn"
+			"ardyn",
+			"awakened onion knight",
+			"tifa",
+			"madam edel"
 		],
 		"physical_finisher": [
 			"regina",
 			"cid",
-			"crown prince noctis"
+			"crown prince noctis",
+			"olive"
 		],
 		"magical_chainer": [
-			"kimono fina",
 			"operative zyrus",
-			"white lily dark fina"
+			"white lily dark fina",
+			"sweet nichol",
+			"palom & porom"
 		],
 		"magical_finisher": [
 			"n/a"
@@ -45,8 +47,8 @@
 		],
 		"magical_tank": [
 			"awakened rain",
-			"basch",
-			"sacred shield charlotte"
+			"sacred shield charlotte",
+			"paladin cecil"
 		],
 		"healer": [
 			"aerith",
@@ -59,14 +61,14 @@
 			"fid",
 			"cg lid",
 			"king edgar of figaro",
-			"adventurer locke",
-			"machina"
+			"adventurer locke"
 		],
 		"buffer": [
 			"sylvie",
 			"ignis",
 			"lunafreya",
-			"regis"
+			"regis",
+			"sweet luka"
 		]
 	},
 	"physical_chainer": [

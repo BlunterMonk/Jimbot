@@ -58,7 +58,7 @@
 		"cg_sieghard": "sieghard",
 		"cg_folka": "folka",
 		"ss_nichol": "Seaside Nichol",
-		"cg_charlotte": "Holy Shield Knight Charlotte",
+		"cg_charlotte": "sacred shield charlotte",
 		"bignachos": "ignacio",
 		"dapper_dragoon": "duke",
 		"failsalith": "ファイサリス",
@@ -80,8 +80,6 @@
 		"leg": "rubicante",
 		"kfina": "晴れ着フィーナ",
 		"kayaka": "kimono ayaka",
-		"sweet_luka": "スウィートルルカ",
-		"sweet_nichol": "スウィートニコル",
 		"cg_onion_knight": "オニオンナイト",
 		"cgok": "オニオンナイト",
 		"okv2": "オニオンナイト",
@@ -105,7 +103,7 @@
 		"tm": "prishe",
 		"kedgar": "king edgar of figaro",
 		"edgarv2": "king_edgar_of_figaro",
-		"sabinv2": "monk_sabin_of_kolts",
+		"sabinv2": "monk sabin of kolts",
 		"lms": "liquid metal slime",
 		"cgwol": "ウォーリア オブ ライト",
 		"cg_wol": "awakened warrior of light",
@@ -137,7 +135,7 @@
 		"murder_g": "mordegon",
 		"the_big_suk": "tsukiko",
 		"cg_shantotto": "連邦の黒い悪魔シャントット",
-		"pecil": "聖騎士セシル",
+		"pecil": "paladin cecil",
 		"overpowered": "rizer",
 		"sassmaster": "veronica",
 		"firionv2": "wild rose firion",
@@ -172,8 +170,6 @@
 		"sleeves": "tiana",
 		"blue_sleeves": "vesvia",
 		"cg_rain": "aldore king rain",
-		"hess_king_lasswell": "ヘス王ラスウェル",
-		"hong_kong_lasswell": "ヘス王ラスウェル",
 		"deez": "diezell",
 		"denzel": "diezell",
 		"diesel": "diezell",
@@ -204,7 +200,37 @@
 		"awol": "awakened warrior of light",
 		"wol_v2": "awakened warrior of light",
 		"waifu_supreme": "sieghard",
-		"bharos": "qin"
+		"beautiful": "qin",
+		"kween": "hess king lasswell",
+		"yass_queen": "hess king lasswell",
+		"hess_queen_lasswell": "hess king lasswell",
+		"not_lila": "xuan wu & qing long",
+		"wulong": "xuan wu & qing long",
+		"lonk_and_zorldo": "xuan wu & qing long",
+		"xwql": "xuan wu & qing long",
+		"bhzq": "bai hu & zhu que",
+		"feener": "blue mage fina",
+		"bbq": "bai hu & zhu que",
+		"pp": "palom & porom",
+		"cg_cecil": "paladin cecil",
+		"wldf": "white lily dark fina",
+		"saber": "sacred shield charlotte",
+		"sakuyaka": "sakura & ayaka",
+		"siegnacho": "sieghard & ignacio",
+		"sayaka": "sakura & ayaka",
+		"siegnacio": "sieghard & ignacio",
+		"girls_love": "sakura & ayaka",
+		"boys_love": "sieghard & ignacio",
+		"bighard": "sieghard & ignacio",
+		"freya_vp": "freya (vp)",
+		"king_lasswell": "hess king lasswell",
+		"bharos": "qin",
+		"75k": "magitek warrior terra",
+		"teefer": "tifa",
+		"sabin_v2": "monk sabin of kolts",
+		"lotus_mage_feener": "lotus mage fina",
+		"sexdeath": "dark mage exdeath",
+		"ero-senin": "jiraiya"
 	},
 	"filetypes": [
 		".jpg",
@@ -302,6 +328,17 @@
 		"glossary": {
 			"command": "whatis",
 			"search": "glossary"
+		},
+		"spina": {
+			"command": "gif",
+			"search": "blue mage fina",
+			"parameters": [
+				"spin"
+			]
+		},
+		"tierlist": {
+			"command": "guide",
+			"search": "tier list"
 		}
 	},
 	"authorizedUsers": {

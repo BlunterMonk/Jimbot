@@ -1,0 +1,21 @@
+{
+	"name": "Tacos Sin Piña \"TSP\"",
+	"prefix": "?",
+	"successEmote": "✅",
+	"failureEmote": "❌",
+	"adminRoles": [
+		"admin",
+		"mod"
+	],
+	"adminOnlyCommands": [
+		"prefix",
+		"getsettings"
+	],
+	"disabledCommands": [
+		"addemo",
+		"addalias",
+		"emote"
+	],
+	"shortcuts": {},
+	"response": {}
+}

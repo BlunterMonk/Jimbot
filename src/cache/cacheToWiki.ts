@@ -63,7 +63,7 @@ function writeToPage(text): Promise<any> {
             log("Login Success: ", r);
     
             log("Attempting to edit wiki page");
-            wikiClient.edit(testPage, text, "", true, (e, r) => {
+            wikiClient.edit(mainPage, text, "", true, (e, r) => {
                 if (e != null) {
                     reject(e);
                     return;
@@ -76,8 +76,8 @@ function writeToPage(text): Promise<any> {
 }
 
 export function UpdateWikiPage(): Promise<any> {
-    const calculations = JSON.parse(fs.readFileSync("./data/furculacalculations.json").toString());
-    const whaleCalcs = JSON.parse(fs.readFileSync("./data/whalecalculations.json").toString());
+    const calculations = JSON.parse(fs.readFileSync("./data/calculations/furcula.json").toString());
+    const whaleCalcs = JSON.parse(fs.readFileSync("./data/calculations/whale.json").toString());
     const unitKeys = JSON.parse(fs.readFileSync("./data/unitkeys.json").toString());
 
     var title = "== Damage Calculations GL ==\n\n";
