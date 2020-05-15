@@ -6,8 +6,8 @@
 
 import "../../util/string-extension.js";
 import "../helper.js";
-import * as Build from "../../ffbe/build.js";
-import * as BuildImage from "../../ffbe/buildimage.js";
+import * as Build from "../../ffbeequip/build.js";
+import * as BuildImage from "../../ffbeequip/buildimage.js";
 import * as Discord from "discord.js";
 import * as fs from "fs";
 import { log, error, debug } from "../../global.js";

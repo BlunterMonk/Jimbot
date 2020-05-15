@@ -10,14 +10,14 @@ import * as fsextra from "fs-extra";
 import {spawn} from "cross-spawn"; 
 
 import "../../util/string-extension.js";
-import * as Build from "../../ffbe/build.js";
-import * as BuildImage from "../../ffbe/buildimage.js";
+import * as Build from "../../ffbeequip/build.js";
+import * as BuildImage from "../../ffbeequip/buildimage.js";
 import { log, logData, error, escapeString, debug } from "../../global.js";
 import { Cache } from "../../cache/cache.js";
 import { Config } from "../../config/config.js";
 import { Profiles } from "../../config/profiles.js";
 import { Client } from "../../discord.js";
-import { Builder } from "../../ffbe/builder.js";
+import { Builder } from "../../ffbeequip/builder.js";
 import { FFBE } from "../../ffbe/ffbewiki.js";
 import { unitSearch, unitSearchWithParameters } from "../../ffbe/unit.js";
 import { downloadFile } from "../../util/download.js";

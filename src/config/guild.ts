@@ -39,7 +39,7 @@ export class GuildSettings {
     }
 
     load() {
-        var filename = `./config/config-${this.guildId}.json`;
+        var filename = `./config/guilds/config-${this.guildId}.json`;
         if (fs.existsSync(filename)) {
             var data = fs.readFileSync(filename);
             this.settings = JSON.parse(String(data));
@@ -54,7 +54,7 @@ export class GuildSettings {
     }
 
     getFilename() {
-        return `config/config-${this.guildId}.json`;
+        return `config/guilds/config-${this.guildId}.json`;
     }
     getPrefix() {
         return this.settings.prefix;
@@ -125,6 +125,6 @@ export class GuildSettings {
         return true;
     }
     validateConfig(guildId: string) {
-        return fs.existsSync(`config/config-${guildId}.json`);
+        return fs.existsSync(`config/guilds/config-${guildId}.json`);
     }
 };

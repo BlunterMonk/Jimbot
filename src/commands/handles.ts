@@ -6,29 +6,16 @@
 
 import * as Discord from "discord.js";
 import * as fs from "fs";
-import * as fsextra from "fs-extra";
-import * as https from "https";
-import * as http from "http";
-import {spawn} from "cross-spawn"; 
 
 import "../util/string-extension.js";
-import * as Build from "../ffbe/build.js";
-import * as BuildImage from "../ffbe/buildimage.js";
 import * as Commands from "./commands.js";
-import { log, logData, error, escapeString, debug, logCommand } from "../global.js";
+import { log, error, debug, logCommand } from "../global.js";
 import { Cache } from "../cache/cache.js";
-import { Config } from "../config/config.js";
-import { Profiles } from "../config/profiles.js";
 import { Client } from "../discord.js";
-import { Builder } from "../ffbe/builder.js";
-import { FFBE } from "../ffbe/ffbewiki.js";
-import { unitSearch, unitSearchWithParameters } from "../ffbe/unit.js";
 import { downloadFile } from "../util/download.js";
-import { resolve } from "url";
 import * as handlers from "./handlers/index.js";
-import { getUnitKey, validateEmote } from "./handlers/common.js";
-import { convertSearchTerm, convertValueToLink } from "./helper.js";
-import { handleUnitQuery, handleWikihelp } from "./handlers/handleWiki.js";
+import { validateEmote } from "./handlers/common.js";
+import { handleWikihelp } from "./handlers/handleWiki.js";
 import { handleDpthelp } from "./handlers/handleCalcs.js";
 import { handleBuildhelp } from "./handlers/handleBuilds.js";
 import { handleProfilehelp } from "./handlers/index.js";
@@ -36,11 +23,6 @@ import { handleProfilehelp } from "./handlers/index.js";
 ////////////////////////////////////////////////////////////
 
 const pinkHexCode = 0xffd1dc;
-
-const sheetURL = "https://docs.google.com/spreadsheets/d/1RgfRNTHJ4qczJVBRLb5ayvCMy4A7A19U7Gs6aU4xtQE";
-const muspelURL = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fmeJjDg59fEJkqhkIbONPll5baPPvU/edit#gid=558725580";
-const whaleSheet = "https://docs.google.com/spreadsheets/d/1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
-
 const jimooriUserID = "131139508421918721";
 
 
@@ -211,10 +193,6 @@ export function handle(receivedMessage: Discord.Message, com: Commands.CommandOb
     log("Handle Command Object: ", com);
     logCommand(com);
 
-    // if (handleUnitQuery(receivedMessage, com.command, com.search)) {
-    //     return;
-    // }
-
     try {
         var search = com.search;
         var parameters = com.parameters;
@@ -225,6 +203,8 @@ export function handle(receivedMessage: Discord.Message, com: Commands.CommandOb
         let h = handlers;
         eval("h." + com.run);
     } catch (e) {
+        error("Command Failed Exception: ", e);
+        
         try {
             eval(com.run);
         } catch (e) {

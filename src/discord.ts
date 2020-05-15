@@ -11,7 +11,7 @@ import { Config } from "./config/config.js";
 import { getCommandString, getSearchString } from "./commands/commands.js";
 import { log, debug, trace, error } from "./global.js";
 import { Profiles } from "./config/profiles.js";
-import * as Build from "./ffbe/build.js";
+import * as Build from "./ffbeequip/build.js";
 
 ////////////////////////////////////////////////////////////
 
@@ -257,7 +257,6 @@ class client {
         // Send private message results to authorized users
         if (!receivedMessage.guild) {
             if (this.isAuthorized(receivedMessage.author)) {
-
                 if (this.onPrivateMessageCallback)
                     this.onPrivateMessageCallback(receivedMessage, content, receivedMessage.author);
             }

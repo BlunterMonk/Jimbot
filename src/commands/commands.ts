@@ -6,11 +6,9 @@
 
 
 import "../util/string-extension.js";
-import * as gs from "../config/guild.js";
 import * as Discord from "discord.js";
 import { log } from "../global.js";
 import { Config } from "../config/config.js";
-import { auth } from "googleapis/build/src/apis/vault";
 
 ////////////////////////////////////////////////////////////
 

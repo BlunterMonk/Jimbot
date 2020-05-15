@@ -9,11 +9,16 @@ import * as fs from 'fs';
 import { log, error } from "../global.js";
 import * as Canvas from 'canvas';
 
+const canvas = Canvas.createCanvas(600, 600);
+const ctx: Canvas.CanvasRenderingContext2D = canvas.getContext('2d');
+const quality = 0.92;
+const format = 'image/jpeg';
+
 ////////////////////////////////////////////////////////////
 
 // Defaults
 var defaultOptions = {
-	format: 'image/png',
+	format: 'image/jpeg',
 	quality: 0.92,
 	width: undefined,
 	height: undefined,
@@ -46,6 +51,10 @@ export interface imageOptions {
 	y: number;
 	w: number; // image width
 	h: number; // image heigt
+}
+export interface canvasOptions {
+	width?: number;
+	height?: number;
 }
 
 type CanvasTextAlign = "start" | "end" | "left" | "right" | "center";
@@ -129,7 +138,7 @@ interface textLine {
 	width: number;
 	height: number;
 }
-export function getLines(ctx, text, maxWidth, font, splitter: string = " "): textLine[] {
+export function getLines(text, maxWidth, font, splitter: string = " "): textLine[] {
     var words = text.split(splitter);
     var lines : textLine[] = [];
 	var currentLine = words[0];
@@ -168,7 +177,7 @@ export function getLines(ctx, text, maxWidth, font, splitter: string = " "): tex
     return lines;
 }
 
-export function measureText(ctx: Canvas.CanvasRenderingContext2D, text, font) {
+export function measureText(text, font) {
 	var cacheFont = ctx.font;
 
 	if (font) {
@@ -184,20 +193,19 @@ export function measureText(ctx: Canvas.CanvasRenderingContext2D, text, font) {
 
 
 // Return Promise
-export var mergeImages = function (imgOpts : imageOptions[], labelOpts : labelOptions[], options) {
+export var mergeImages = function (imgOpts : imageOptions[], labelOpts : labelOptions[], canvasOpts: canvasOptions) {
 	if ( !imgOpts || imgOpts === void 0 ) imgOpts = [];
 	if ( !labelOpts || labelOpts === void 0 ) labelOpts = [];
-	if ( !options || options === void 0 ) options = {};
+	if ( !canvasOpts || canvasOpts === void 0 ) canvasOpts = {};
 
 	return new Promise(function (resolve) {
-	options = Object.assign({}, defaultOptions, options);
+	canvasOpts = Object.assign({
+		Canvas: canvas,
+		quality: 100
+	}, defaultOptions, canvasOpts);
 
 	// Setup browser/Node.js specific variables
-	var canvas: Canvas.Canvas = options.Canvas ? new options.Canvas.Canvas() : window.document.createElement('canvas');
-	var Image = options.Canvas ? options.Canvas.Image : window["Image"];
-	if (options.Canvas) {
-		options.quality *= 100;
-	}
+	var Image = Canvas.Image;
 
 	// Load Images
 	var images = imgOpts.map(function (source) { 
@@ -218,7 +226,7 @@ export var mergeImages = function (imgOpts : imageOptions[], labelOpts : labelOp
 	});
 
 	// Get canvas context
-	var ctx: Canvas.CanvasRenderingContext2D = canvas.getContext('2d');
+	// var ctx: Canvas.CanvasRenderingContext2D = canvas.getContext('2d');
 
 	// Add Labels to Image
 	var labels : label[] = [];
@@ -236,7 +244,7 @@ export var mergeImages = function (imgOpts : imageOptions[], labelOpts : labelOp
 						
 			// log("Lines: ", lines.length, " Entry Height: ", lines.length * entry.size);
 
-			var lines = getLines(ctx, entry.text, entry.maxWidth, `${entry.size}px ${entry.font}`, (entry.splitter || " "));
+			var lines = getLines(entry.text, entry.maxWidth, `${entry.size}px ${entry.font}`, (entry.splitter || " "));
 			if (entry.anchorTop) {
 				y = entry.y + lines[0].height;
 				// log("Total Line Height: ", lines[0].height, " New Y: ", y);
@@ -281,7 +289,7 @@ export var mergeImages = function (imgOpts : imageOptions[], labelOpts : labelOp
 		.then(function (images) {
 			// Set canvas dimensions
 			var getSize = function (dim) {
-				return options[dim] || Math.max.apply(Math, images.map(function (image: any) { 
+				return canvasOpts[dim] || Math.max.apply(Math, images.map(function (image: any) { 
 					return image.img[dim]; 
 				})); 
 			};
@@ -313,23 +321,21 @@ export var mergeImages = function (imgOpts : imageOptions[], labelOpts : labelOp
 				ctx.fillText(label.text, label.x, label.y);
 			})
 
-			if (options.Canvas && options.format === 'image/jpeg') {
-				// Resolve data URI for node-canvas jpeg async
-				return new Promise(function (resolve) {
-					canvas.toDataURL(options.format, {
-						quality: options.quality,
-						progressive: false
-					}, function (err, jpeg) {
-						if (err) {
-							throw err;
-						}
-						resolve(jpeg);
-					});
+			// Resolve data URI for node-canvas jpeg async
+			return new Promise(function (resolve) {
+				canvas.toDataURL(format, {
+					quality: quality,
+					progressive: false
+				}, function (err, jpeg) {
+					if (err) {
+						throw err;
+					}
+					resolve(jpeg);
 				});
-			}
+			});
 
 			// Resolve all other data URIs sync
-			return canvas.toDataURL(options.format, options.quality);
+			// return canvas.toDataURL(format, quality);
 		}));
 	});
 }

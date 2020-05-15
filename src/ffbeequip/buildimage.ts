@@ -4,18 +4,14 @@
 // Jimbot: Discord Bot
 //////////////////////////////////////////
 
-import * as mergeImages from '../merge-images/merge-images.js';
+import * as mergeImages from '../image-canvas/image-canvas.js';
 import * as fs from "fs";
 import * as Canvas from 'canvas';
 import * as Build from './build.js';
 import * as Download from '../util/download.js';
 import { log, debug, error, trace } from "../global.js";
-const sizeOf = require('image-size');
 
 ////////////////////////////////////////////////////////////
-
-const canvas = Canvas.createCanvas(600, 600);
-const ctx = canvas.getContext('2d')
 
 const imageEndpoint = `https://ffbeequip.com/img/`;
 const imgCacheDir = "./icons/";
@@ -32,6 +28,75 @@ const enhancementsColor = "255,0,255,1";
 const enhancementsStroke = "255,255,255,0.5";
 const killersFontFamily = "Arial Black";
 const killerssStroke = "0,0,0,0";
+
+const statOrder = [ "hp",  "atk", "def", "mp",  "mag", "spr" ];
+
+////////////////////////////////////////////////////////////
+
+interface Batch {
+    labels: mergeImages.labelOptions[];
+    images: mergeImages.imageOptions[];
+}
+interface CanvasOptions {
+    xStart: number;
+    yStart: number;
+}
+interface statRow {
+    xStart: number;
+    yStart: number;
+    dimensions: number; // dimension of the images
+    maxWide: number; // how many columns
+    maxTall: number; // how many rows
+    fontSize: number;
+    distance: number; // number columns to use when adding text
+    spacing: number; // distance between each image
+    align: string; // text alignment
+}
+interface mainStatsOptions {
+    xStart: number;
+    xSpace: number;
+    yStart: number;
+    ySpace: number;
+    rows: number;
+    fontSize: number;
+    bonusSize: number;
+    statOrder: string[];
+    align: string;
+}
+interface equipmentOptions {
+    xCol1: number;
+    xCol2: number;
+    yTop: number;
+    yText: number;
+    ySpacing: number;
+    dimension: number;
+    maxWidth: number;
+    fontSize: number;
+    shrunkFontSize: number;
+    align: string;
+}
+interface position {
+    x: number;
+    y: number;
+}
+interface equipOptions {
+    desMaxWidth: number; // max length of description text
+    iconDim: number;
+    fontSize: number;
+    shrunkFontSize: number;
+}
+interface equipSlotOptions {
+    icon: position; // item icon position
+    type: position; // item type icon position
+    name: position; // item label position
+    desc: position; // description text position
+    desMaxWidth: number; // max length of description text
+    align: string;
+}
+
+////////////////////////////////////////////////////////////
+
+
 
 function downloadImageIfNotExist(path: string, source: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
@@ -179,8 +244,7 @@ function finalizeImage(saveLocation: string, images: mergeImages.imageOptions[],
         mergeImages.mergeImages(images, labels,
             {
                 width: cWidth,
-                height: cHeight,
-                Canvas: Canvas
+                height: cHeight
             })
         .then(b64 => {
             var fs = require('fs');
@@ -596,66 +660,6 @@ function addCompactEquipment(build: Build.Build, canOpts: CanvasOptions): Batch 
 }
 
 
-interface Batch {
-    labels: mergeImages.labelOptions[];
-    images: mergeImages.imageOptions[];
-}
-interface CanvasOptions {
-    xStart: number;
-    yStart: number;
-}
-interface statRow {
-    xStart: number;
-    yStart: number;
-    dimensions: number; // dimension of the images
-    maxWide: number; // how many columns
-    maxTall: number; // how many rows
-    fontSize: number;
-    distance: number; // number columns to use when adding text
-    spacing: number; // distance between each image
-    align: string; // text alignment
-}
-interface mainStatsOptions {
-    xStart: number;
-    xSpace: number;
-    yStart: number;
-    ySpace: number;
-    rows: number;
-    fontSize: number;
-    bonusSize: number;
-    statOrder: string[];
-    align: string;
-}
-interface equipmentOptions {
-    xCol1: number;
-    xCol2: number;
-    yTop: number;
-    yText: number;
-    ySpacing: number;
-    dimension: number;
-    maxWidth: number;
-    fontSize: number;
-    shrunkFontSize: number;
-    align: string;
-}
-interface position {
-    x: number;
-    y: number;
-}
-interface equipOptions {
-    desMaxWidth: number; // max length of description text
-    iconDim: number;
-    fontSize: number;
-    shrunkFontSize: number;
-}
-interface equipSlotOptions {
-    icon: position; // item icon position
-    type: position; // item type icon position
-    name: position; // item label position
-    desc: position; // description text position
-    desMaxWidth: number; // max length of description text
-    align: string;
-}
 
 function sortKillersByValue(killers) {
 
@@ -730,7 +734,7 @@ function getWieldBonus(totalStats, build: Build.Build) {
 
 
 //////////////////////////////////////////////
-
+// HELPERS
 
 function getKillers(options: statRow, values: any) {
 
@@ -806,7 +810,6 @@ function getKillers(options: statRow, values: any) {
         labels: labels
     }
 }
-
 function getAilmentResistances(options: statRow, ailments: any) {
     
     var labels = [];
@@ -890,8 +893,6 @@ function getElementResistances(options: statRow, elements) {
 
     return labels;
 }
-
-const statOrder = [ "hp",  "atk", "def", "mp",  "mag", "spr" ];
 function getMainStatsOldMethod(options: mainStatsOptions, totalStats, totalBonuses, wieldingBonus) {
     var labels = [];
 
@@ -925,7 +926,7 @@ function getMainStatsOldMethod(options: mainStatsOptions, totalStats, totalBonus
             strokeColor: statStroke
         };
 
-        let l = mergeImages.measureText(ctx, statValue, `${fs}px ${mainStatFontFamily}`)
+        let l = mergeImages.measureText(statValue, `${fs}px ${mainStatFontFamily}`)
         x = (options.align == "right") ? x : x + l.width;
         // log("X: ", x, " L: ", l.width);
         // log("Y: ", y, " Mod: ", index % 3);
@@ -974,7 +975,6 @@ function getMainStatsOldMethod(options: mainStatsOptions, totalStats, totalBonus
 
     return labels;
 }
-
 function getMainStats(options: mainStatsOptions, stats) {
     var labels = [];
 
@@ -1002,7 +1002,7 @@ function getMainStats(options: mainStatsOptions, stats) {
             strokeColor: statStroke
         };
 
-        let l = mergeImages.measureText(ctx, statValue.value, `${fs}px ${mainStatFontFamily}`)
+        let l = mergeImages.measureText(statValue.value, `${fs}px ${mainStatFontFamily}`)
         x = (options.align == "right") ? x : x + l.width;
 
         var v = statValue.bonus;
@@ -1046,8 +1046,6 @@ function getMainStats(options: mainStatsOptions, stats) {
 
     return labels;
 }
-
-
 function getCompactEquipment(equipOptions: equipmentOptions, build): Batch {
     
     var labels = [];
@@ -1126,7 +1124,6 @@ function getCompactEquipment(equipOptions: equipmentOptions, build): Batch {
         images: images
     };
 }
-
 function getEquipment(options: any, firstSlotLeft: equipSlotOptions, firstSlotRight: equipSlotOptions, build: Build.Build) {
 
     var labels: mergeImages.labelOptions[] = [];
@@ -1250,7 +1247,7 @@ function getEquipmentInfoText(equip, xInfo, yInfo, maxWidth, fontSize, align) {
     var font =  `${fontSize}px ${fontFamily}`;
     var itemText = Build.itemToString(equip).toUpperCase();
     var enhText = Build.itemEnhancementsToString(equip);
-    var lines = mergeImages.getLines(ctx, itemText, maxWidth, font);
+    var lines = mergeImages.getLines(itemText, maxWidth, font);
     var remainingText = "";
     if (lines.length > 2) {
         var remaining = lines.slice(2, lines.length);

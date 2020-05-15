@@ -7,12 +7,12 @@
 import "../../util/string-extension.js";
 import * as Discord from "discord.js";
 import * as fs from "fs";
-import * as Build from "../../ffbe/build.js";
-import * as BuildImage from "../../ffbe/buildimage.js";
+import * as Build from "../../ffbeequip/build.js";
+import * as BuildImage from "../../ffbeequip/buildimage.js";
 import { log, error } from "../../global.js";
 import { Cache } from "../../cache/cache.js";
 import { Client } from "../../discord.js";
-import { Builder } from "../../ffbe/builder.js";
+import { Builder } from "../../ffbeequip/builder.js";
 import { getUnitKey, getUnitNameFromKey, buildBuildImageEmbed, buildBuildImage } from "./common.js";
 import { start } from "repl";
 

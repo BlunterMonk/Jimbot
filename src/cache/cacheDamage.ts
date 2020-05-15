@@ -6,6 +6,7 @@
 
 import * as fs from "fs";
 import { google } from 'googleapis';
+import { safeLoadJSON, writeFile } from "../util/download.js";
 import { log, error } from "../global.js";
 import { UnitCalculations, Calculation } from "./cache.js";
 import { generateAuth, GetPage } from "./google.js";
@@ -155,7 +156,7 @@ function queryDamageAndBurst(oAuth: any, sourceID: string, saveLocation: string,
                 log("Finished reading burst sheet. Parsing Damage.");
 
                 let units = parseDamageSheet(def, damageList, burstList);
-                let oldUnits: UnitCalculations = JSON.parse(fs.readFileSync(saveLocation).toString());
+                let oldUnits: UnitCalculations = safeLoadJSON(saveLocation);
                 let parsed: UnitCalculations = {};
 
                 // Read through each units calculation page
@@ -263,7 +264,7 @@ export var UpdateCalculations = function(def: slotDef, forced: boolean, saveLoca
         // Read main comparison page 
         queryDamageAndBurst(oauth, sourceID, saveLocation, def, forced)
         .then(r => {
-            fs.writeFileSync(saveLocation, JSON.stringify(r, null, "\t"));
+            writeFile(saveLocation, JSON.stringify(r, null, "\t"));
             resolve(r);
         })
         .catch(e => {
