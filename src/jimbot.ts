@@ -97,11 +97,7 @@ function onPrivateMessage(receivedMessage, content, author: Discord.User) {
 function onMessage(receivedMessage, content, author: Discord.User, guild: Discord.Guild) {
     
     const guildId = receivedMessage.guild.id;
-
     const attachment = receivedMessage.attachments.first();
-    if (attachment) {
-        log("Message Attachments", attachment.url);
-    }
 
     // Get command information
     var com = Commands.getCommandObject(content, attachment, author, guild);

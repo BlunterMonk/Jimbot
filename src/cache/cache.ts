@@ -7,6 +7,7 @@
 import * as fs from "fs";
 import "../util/string-extension.js";
 
+import * as io from "../util/download.js";
 import * as furcDamage from "./cacheDamage.js";
 import * as muspDamage from "./cacheMuspel.js";
 import * as whatahDamage from "./cacheWhatah.js";
@@ -74,20 +75,21 @@ export class cache {
 
     reload() {
         log("Reloading Cached Data");
+
         this.fullRankings = JSON.parse(fs.readFileSync(rankingDump).toString());
-        this.information = JSON.parse(fs.readFileSync(infoJson).toString());
+        this.information  = JSON.parse(fs.readFileSync(infoJson).toString());
         
-        this.calculations = JSON.parse(fs.readFileSync(furcSaveLocation).toString());
-        this.muspelCalculations = JSON.parse(fs.readFileSync(muspSaveLocation).toString());
-        this.whaleCalculations = JSON.parse(fs.readFileSync(whaleSaveLocation).toString());
-        this.whatahCalculations = JSON.parse(fs.readFileSync(whatahSaveLocation).toString());
+        this.calculations       = io.safeLoadJSON(furcSaveLocation);
+        this.muspelCalculations = io.safeLoadJSON(muspSaveLocation);
+        this.whaleCalculations  = io.safeLoadJSON(whaleSaveLocation);
+        this.whatahCalculations = io.safeLoadJSON(whatahSaveLocation);
 
-        this.rankings = JSON.parse(fs.readFileSync(rankingFile).toString());
-        this.unitsDump = JSON.parse(fs.readFileSync(unitKeysJson).toString());
-        this.unitIDs = JSON.parse(fs.readFileSync(unitIDsJson).toString());
+        this.rankings   = JSON.parse(fs.readFileSync(rankingFile).toString());
+        this.unitsDump  = JSON.parse(fs.readFileSync(unitKeysJson).toString());
+        this.unitIDs    = JSON.parse(fs.readFileSync(unitIDsJson).toString());
 
-        var skills = JSON.parse(fs.readFileSync(skillsJson).toString());
-        var lbs = JSON.parse(fs.readFileSync(limitburstsJson).toString());
+        var skills    = JSON.parse(fs.readFileSync(skillsJson).toString());
+        var lbs       = JSON.parse(fs.readFileSync(limitburstsJson).toString());
         this.skillset = Object.assign({}, skills, lbs);
     }
 

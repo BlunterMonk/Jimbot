@@ -6,6 +6,7 @@
 
 import "../util/string-extension.js";
 import * as fs from "fs";
+import * as fse from "fs-extra";
 import * as https from "https";
 import * as http from "http";
 import { log, error } from "../global.js";
@@ -36,4 +37,16 @@ export function downloadFile(path, link): Promise<string> {
             return response.pipe(file);
         });
     });
+}
+
+// safeLoadJSON - load the JSON file, returns an empty JSON object if file does not exist
+export function safeLoadJSON(filename: string): any {
+    if (!fs.existsSync(filename))
+        return {};
+
+    return JSON.parse(fs.readFileSync(filename).toString());
+}
+
+export function writeFile(filename: string, content: any) {
+    fse.outputFileSync(filename, content);
 }
