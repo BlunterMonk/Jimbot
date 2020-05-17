@@ -106,7 +106,7 @@ const aliasIgnoreList = [
     "dpt", "mybuild", "userbuild", "removealias", "gif"
 ];
 const textEntryCommands = [
-    "setnickname", "setstatus", "set"
+    "setnickname", "setstatus", "set", "addcg"
 ];
 
 export interface CommandObject {

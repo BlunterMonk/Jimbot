@@ -24,7 +24,7 @@ const muspelSheetURL = "https://docs.google.com/spreadsheets/d/14EirlM0ejFfm3fme
 const whaleSheetURL = "https://docs.google.com/spreadsheets/d/1bpoErKiAqbJLjCYdGTBTom7n_NHGTuLK7EOr2r94v5o";
 const whatahSheetURL = "https://docs.google.com/spreadsheets/d/1bXWLfFu2ECQ3JR-5XAAALkhnnEUMr0pUxYxgI1QAgHw";
 const furculaUserID = "344500120827723777";
-const muspelUserID  = "114545824989446149";
+const muspelUserID  = "315007715506257921";
 const shadoUserID   = "103785126026043392";
 const whatahUserID  = "147586823588151296";
 
@@ -341,7 +341,7 @@ export function handleDpt(receivedMessage: Discord.Message, search: string, para
 
     var embed = buildDPTEmbed(search, isBurst, "furcula");
     
-    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+    Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
 }
 
 export function handleWhale(receivedMessage: Discord.Message, search: string, parameters: string[], isBurst) {
@@ -404,7 +404,7 @@ export function handleRotation(receivedMessage: Discord.Message, search: string,
     search = search.replaceAll("_", " ");
 
     var embed = buildRotationEmbed(search, "furcula");
-    Client.sendMessageWithAuthor(receivedMessage, embed, furculaUserID);
+    Client.sendMessageWithAuthor(receivedMessage, embed, shadoUserID);
 }
 
 export function handleWhaletation(receivedMessage: Discord.Message, search: string, parameters: string[]) {

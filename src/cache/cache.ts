@@ -399,6 +399,7 @@ function getUnitCalc(searchTerm: string, source: any) {
     log(`Searching Calculations For: ${searchTerm}`);
     
     var units = Object.keys(source);
+    units = units.sort();
     for (let index = 0; index < units.length; index++) {
         const unit = source[units[index]];
         const name = unit.name.toLowerCase();
