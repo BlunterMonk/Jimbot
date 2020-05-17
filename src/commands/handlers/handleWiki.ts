@@ -85,7 +85,7 @@ async function getGif(search, unitID, param, callback) {
 ////////////////////////////////////////////////////////////////////
 
 export function handleWikihelp(receivedMessage) {
-    var data = fs.readFileSync("./data/help/help-wiki.json", "ASCII");
+    var data = fs.readFileSync("./data/help/help-wiki.json").toString();
     var readme = JSON.parse(data);
 
     var embed = {
@@ -378,7 +378,7 @@ export function handleCg(receivedMessage: Discord.Message, search: string, param
     }
 
     const file = `${search}.mp4`;
-    const attachment = new Discord.Attachment(filename, file);
+    const attachment = new Discord.MessageAttachment(filename, file);
 
     Client.send(receivedMessage, attachment);
 }
@@ -404,9 +404,9 @@ export function handleSprite(receivedMessage: Discord.Message, search: string, p
             return;
         }
 
-        const attachment = new Discord.Attachment(path, 'sprite.png');
-        var embed = new Discord.RichEmbed()
-                .attachFile(attachment)
+        const attachment = new Discord.MessageAttachment(path, 'sprite.png');
+        var embed = new Discord.MessageEmbed()
+                .attachFiles([attachment])
                 .setImage(`attachment://sprite.png`);
 
         log("Found Unit Sprite: ", path)
@@ -481,7 +481,7 @@ export function handleK(receivedMessage, search, id) {
     if (!unit) return;
 
     var name = unit.name.toTitleCase();
-    var embed = new Discord.RichEmbed()
+    var embed = new Discord.MessageEmbed()
         .setTitle(name.toTitleCase())
         .setURL("https://exvius.gamepedia.com/" + name.replaceAll(" ", "_"))
 
@@ -513,14 +513,14 @@ export function handleKit(receivedMessage: Discord.Message, search: string, para
     log("hanleKit Output: ", JSON.stringify(unit))
 
     var name = unit.name.toTitleCase();
-    var embed = new Discord.RichEmbed()
+    var embed = new Discord.MessageEmbed()
         .setTitle(name)
         .setURL("https://exvius.gamepedia.com/" + name.replaceAll(" ", "_"))
 
     /*
     let path = `./icons/units/unit_ills_${getMaxRarity(id)}.png`;
     if (fs.existsSync(path)) {
-        const attachment = new Discord.Attachment(path, 'sprite.png');
+        const attachment = new Discord.MessageAttachment(path, 'sprite.png');
         embed.attachFile(attachment)
              .setThumbnail(`attachment://sprite.png`);
     }

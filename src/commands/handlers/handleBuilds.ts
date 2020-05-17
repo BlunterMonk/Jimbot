@@ -64,10 +64,10 @@ export async function sendBuild(receivedMessage: Discord.Message, url: string, u
         }
 
         var sendImage = function(imagePath) {
-            const attachment = new Discord.Attachment(imagePath, 'build.png');
-            var embed = new Discord.RichEmbed()
+            const attachment = new Discord.MessageAttachment(imagePath, 'build.png');
+            var embed = new Discord.MessageEmbed()
             embed.setImage(`attachment://build.png`)
-                .attachFile(attachment);
+                .attachFiles([attachment]);
 
             if (calculation) {
                 var text = `**[${calculation.name.trim()}](${calculation.wiki})\n[(sheet)](${(calculation.source == "furcula") ? sheetURL : whaleSheet}) - [(wiki)](${calculation.wiki}) - [(build)](${calculation.url})**\n`;
@@ -109,7 +109,7 @@ export async function sendBuild(receivedMessage: Discord.Message, url: string, u
 ////////////////////////////////////////////////////////////////////
 
 export async function handleBuildhelp(receivedMessage: Discord.Message) {
-    var data = fs.readFileSync("./data/help/help-damage.json", "ASCII");
+    var data = fs.readFileSync("./data/help/help-damage.json").toString();
     var readme = JSON.parse(data);
 
     var embed = {
@@ -282,9 +282,9 @@ export async function handleTeam(receivedMessage: Discord.Message, search: strin
         let d = response.buildData;
         
         var sendImg = function(p) {
-            const attachment = new Discord.Attachment(p, 'build.png');
-            var embed = new Discord.RichEmbed()
-                    .attachFile(attachment)
+            const attachment = new Discord.MessageAttachment(p, 'build.png');
+            var embed = new Discord.MessageEmbed()
+                    .attachFiles([attachment])
                     .setImage(`attachment://build.png`);
                 
             if (parameters && parameters.length > 0 && !parameters[0].empty()) {

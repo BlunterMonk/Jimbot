@@ -7,7 +7,7 @@
 
 import "discord.js";
 import * as Editor from"./Editor.js";
-import * as constants from "../../bin/constants.js";
+import * as constants from "../constants.js";
 import { log } from "../global.js";
 
 ////////////////////////////////////////////////////////////

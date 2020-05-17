@@ -6,7 +6,6 @@
 
 import * as mergeImages from '../image-canvas/image-canvas.js';
 import * as fs from "fs";
-import * as Canvas from 'canvas';
 import * as Build from './build.js';
 import * as Download from '../util/download.js';
 import { log, debug, error, trace } from "../global.js";

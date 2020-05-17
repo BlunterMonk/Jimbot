@@ -87,7 +87,7 @@ class client {
 
     // List servers the bot is connected to
     LoadGuilds() {
-        this.discordClient.guilds.forEach(guild => {
+        this.discordClient.guilds.cache.forEach(guild => {
             log("Loading Guild: " + guild.name);
             this.loadGuild(guild);
         });
@@ -120,7 +120,7 @@ class client {
         });
     }
     sendImage(receivedMessage, filename): Promise<Discord.Message> {
-        var Attachment = new Discord.Attachment(filename);
+        var Attachment = new Discord.MessageAttachment(filename);
         if (Attachment) {
             return Client.send(receivedMessage, Attachment);
         }
@@ -131,7 +131,7 @@ class client {
     }
     sendMessageWithAuthor(receivedMessage, embed, authorId): Promise<Discord.Message> {
         return new Promise<Discord.Message>((resolve, reject) => {
-            this.discordClient.fetchUser(authorId)
+            this.discordClient.users.fetch(authorId)
             .then(author => {
 
                 embed.color = this.embedColor;
@@ -185,7 +185,7 @@ class client {
         });
     }
     fetchUser(authorId: string): Promise<Discord.User> {
-        return this.discordClient.fetchUser(authorId);
+        return this.discordClient.users.fetch(authorId);
     }
 
     respondSuccess(receivedMessage, toUser = false) {
@@ -406,7 +406,7 @@ class client {
         if (!receivedMessage.member)
             return false;
 
-        var roles = receivedMessage.member.roles.array();
+        var roles = receivedMessage.member.roles.cache.array();
         var guildId = receivedMessage.guild.id;
     
         trace("Attempt to validate: " + command);

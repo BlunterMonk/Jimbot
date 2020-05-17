@@ -241,7 +241,7 @@ function getTopDPSText(source: string, category: string, limit: number) {
 ////////////////////////////////////////////////////////////////////
 
 export function handleDpthelp(receivedMessage: Discord.Message) {
-    var data = fs.readFileSync("./data/help/help-damage.json", "ASCII");
+    var data = fs.readFileSync("./data/help/help-damage.json").toString();
     var readme = JSON.parse(data);
 
     var embed = {

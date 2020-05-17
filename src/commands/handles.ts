@@ -37,7 +37,7 @@ function handleHelp(receivedMessage: Discord.Message) {
 }
 
 function handleWhatsnew(receivedMessage: Discord.Message) {
-    var data = fs.readFileSync("./data/help/new.json", "ASCII");
+    var data = fs.readFileSync("./data/help/new.json").toString();
     var readme = JSON.parse(data);
 
     var embed = {
@@ -77,7 +77,7 @@ function handleReactions(receivedMessage: Discord.Message) {
     const content = receivedMessage.content.toLowerCase();
     switch (content) {
         case "hi majin":
-            receivedMessage.guild.emojis.forEach(customEmoji => {
+            receivedMessage.guild.emojis.cache.forEach(customEmoji => {
                 if (
                     customEmoji.name === "nuked" ||
                     customEmoji.name === "tifapeek" ||
@@ -92,7 +92,7 @@ function handleReactions(receivedMessage: Discord.Message) {
             receivedMessage.react("🛋");
             break;
         case "hi reberta":
-            receivedMessage.guild.emojis.forEach(customEmoji => {
+            receivedMessage.guild.emojis.cache.forEach(customEmoji => {
                 if (
                     customEmoji.name === "hugpweez" ||
                     customEmoji.name === "yay" ||
@@ -149,7 +149,7 @@ function handleGrab(receivedMessage: Discord.Message, search: string, parameters
     //     })
     //     .catch(console.error);
 
-    receivedMessage.channel.fetchMessage(parameters[0])
+    receivedMessage.channel.messages.fetch(parameters[0])
         .then(startMessage => {
             log("Found Starting Message");
             log(startMessage.content);
@@ -159,7 +159,7 @@ function handleGrab(receivedMessage: Discord.Message, search: string, parameters
             log(`Grabbing Messages From: ${start}`);
         
             // Get messages and filter by user ID
-            receivedMessage.channel.fetchMessages({limit:100})
+            receivedMessage.channel.messages.fetch({limit:100})
                 .then(messages => {
                     var filtered = messages.filter(m => m.author.id === '350621713823825920' 
                         && m.attachments.first() != null && m.createdTimestamp >= start && m.createdTimestamp <= end);

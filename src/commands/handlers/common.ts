@@ -93,14 +93,14 @@ export function buildBuildImage(buildUrl: string, style: string, unitIndex: numb
 }
 
 export function buildBuildImageEmbed(name: string, buildUrl: string, style: string, unitIndex: number = 0) {
-    return new Promise<Discord.RichEmbed>((resolve, reject) => {
+    return new Promise<Discord.MessageEmbed>((resolve, reject) => {
         buildBuildImage(buildUrl, style, unitIndex) 
         .then(p => {
-            const attachment = new Discord.Attachment(p, 'build.png');
-            var embed = new Discord.RichEmbed()
+            const attachment = new Discord.MessageAttachment(p, 'build.png');
+            var embed = new Discord.MessageEmbed()
             embed.setColor(pinkHexCode)
                 .setImage(`attachment://build.png`)
-                .attachFile(attachment)
+                .attachFiles([attachment])
                 .setTitle(name)
                 .setURL(buildUrl);
 

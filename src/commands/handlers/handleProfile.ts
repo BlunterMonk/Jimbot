@@ -28,14 +28,14 @@ const welcomePhrases = [
     "Hurra, willkommen an Bord der neuen süßen %v!",
 ];
 
-function buildProfileEmbed(profile: UserProfile, user): Promise<Discord.RichEmbed> {
+function buildProfileEmbed(profile: UserProfile, user): Promise<Discord.MessageEmbed> {
 
     let text = "";
     let keys = Object.keys(profile.builds);
     keys = keys.sort();
     let status = (profile.status) ? profile.status : "";
 
-    var embed = new Discord.RichEmbed()
+    var embed = new Discord.MessageEmbed()
             .setColor(pinkHexCode)
             .setImage(`attachment://build.png`)
             .setThumbnail(user.avatarURL);
@@ -74,13 +74,13 @@ function buildProfileEmbed(profile: UserProfile, user): Promise<Discord.RichEmbe
 
     embed.setDescription(text + "**__Lead:__**");
 
-    return new Promise<Discord.RichEmbed>((resolve, reject) => {
+    return new Promise<Discord.MessageEmbed>((resolve, reject) => {
         Build.CreateBuildsFromURL(leadURL)
         .then(builds => {
             BuildImage.BuildImage(builds[0], "compact")
                 .then(p => {
-                    const attachment = new Discord.Attachment(p, 'build.png');
-                    embed.attachFile(attachment);
+                    const attachment = new Discord.MessageAttachment(p, 'build.png');
+                    embed.attachFiles([attachment]);
 
                     resolve(embed);
                 })
@@ -95,7 +95,7 @@ function buildProfileEmbed(profile: UserProfile, user): Promise<Discord.RichEmbe
 ////////////////////////////////////////////////////////////////////
 
 export function handleProfilehelp(receivedMessage: Discord.Message) {
-    var data = fs.readFileSync("./data/help/help-profiles.json", "ASCII");
+    var data = fs.readFileSync("./data/help/help-profiles.json").toString();
     var readme = JSON.parse(data);
 
     var embed = {

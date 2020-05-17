@@ -177,7 +177,7 @@ export function handleAddemo(receivedMessage: Discord.Message, search: string, p
 
     var existing = validateEmote(name);
     if (existing) {
-        var Attachment = new Discord.Attachment(existing);
+        var Attachment = new Discord.MessageAttachment(existing);
         if (Attachment) {
             
             var embed = {
@@ -211,14 +211,8 @@ export function handleAddemo(receivedMessage: Discord.Message, search: string, p
                             .then(result => {
                                 log("Successfully overwrote file: ", result);
 
-                                const guildId = receivedMessage.guild.id;
-                                receivedMessage.guild.emojis.forEach(customEmoji => {
-                                    if (customEmoji.name === Client.getSuccess(guildId)) {
-                                        message.delete();
-                                        //receivedMessage.reply(`Emote has been replaced. :${customEmoji}:`);
-                                        respondSuccess(receivedMessage);
-                                    }
-                                });
+                                message.delete();
+                                respondSuccess(receivedMessage);
                             })
                             .catch(e => {
                                 error("Failed to overwrite image: ", e);
@@ -363,8 +357,8 @@ export function handleAddinfo(receivedMessage: Discord.Message, search: string, 
 
 export function handlePrefix(receivedMessage: Discord.Message, search: string, parameters: string[]) {
     if (
-        receivedMessage.member.roles.find(r => r.name === "Admin") ||
-        receivedMessage.member.roles.find(r => r.name === "Mod")
+        receivedMessage.member.roles.cache.find(r => r.name === "Admin") ||
+        receivedMessage.member.roles.cache.find(r => r.name === "Mod")
     ) {
         // TODO: Add logic to change prefix to a valid character.
         log("User Is Admin");
