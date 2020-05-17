@@ -1,21 +1,23 @@
 const fs = require("fs");
 
-var unitsListGL = JSON.parse(fs.readFileSync('../ffbe/units.json').toString());
+var unitsListGL = JSON.parse(fs.readFileSync('../ffbe-gl/units.json').toString());
 var unitsListJP = JSON.parse(fs.readFileSync('../ffbe-jp/units.json').toString());
 
-var JP = "";
-var passives = JSON.parse(fs.readFileSync(`../ffbe${JP}/skills_passive.json`).toString());
-var abilities = JSON.parse(fs.readFileSync(`../ffbe${JP}/skills_ability.json`).toString());
-var magic = JSON.parse(fs.readFileSync(`../ffbe${JP}/skills_magic.json`).toString());
+const region = "-gl";
+const output = `data/units-${region}/`;
+
+var passives = JSON.parse(fs.readFileSync(`../ffbe${region}/skills_passive.json`).toString());
+var abilities = JSON.parse(fs.readFileSync(`../ffbe${region}/skills_ability.json`).toString());
+var magic = JSON.parse(fs.readFileSync(`../ffbe${region}/skills_magic.json`).toString());
 var skillList = Object.assign({}, passives, abilities, magic);
 passives = null;
 abilities = null;
 magic = null;
 
-var limitburstsList = JSON.parse(fs.readFileSync(`../ffbe${JP}/limitbursts.json`).toString());
-var enhList = JSON.parse(fs.readFileSync(`../ffbe${JP}/enhancements.json`).toString());
-var equipList = JSON.parse(fs.readFileSync(`../ffbe${JP}/equipment.json`).toString());
-var materiaList = JSON.parse(fs.readFileSync(`../ffbe${JP}/materia.json`).toString());
+var limitburstsList = JSON.parse(fs.readFileSync(`../ffbe${region}/limitbursts.json`).toString());
+var enhList = JSON.parse(fs.readFileSync(`../ffbe${region}/enhancements.json`).toString());
+var equipList = JSON.parse(fs.readFileSync(`../ffbe${region}/equipment.json`).toString());
+var materiaList = JSON.parse(fs.readFileSync(`../ffbe${region}/materia.json`).toString());
 // var equipList = Object.assign({}, passives, abilities, magic);
 
 function log(data) {
@@ -25,7 +27,7 @@ function log(data) {
 log("loading units list")
 //cacheUnit("401001405");
 //cacheUnit("401006805");
-cacheAll(`data/units/`);
+cacheAll(output);
 
 log("Finished Updating Skills");
 
@@ -60,20 +62,24 @@ function cacheAll(destination) {
         if (!grandTotal[cat][id]) {
             // log(`id(${id}), cat(${cat})`);
 
-            var data = getUnitData(unitsListGL, id);
-            if (data) {
-                grandTotal[cat][id] = data; 
-            } else {
-                // log(`JP: ${id}`);
-                jpUnits.push(id);
+            try {
+                var data = getUnitData(unitsListGL, id);
+                if (data) {
+                    grandTotal[cat][id] = data; 
+                } else {
+                    // log(`JP: ${id}`);
+                    jpUnits.push(id);
+                }
+            } catch(e) {
+                console.log("Failed to cache: " + id);
             }
         }
     }
 
-    var fileName = `units-${cat}.json`;
-    var filePath = destination + fileName;
     var cats = Object.keys(grandTotal);
     cats.forEach(cat => {
+    var fileName = `units-${cat}.json`;
+    var filePath = destination + fileName;
         if (!fs.existsSync(destination))
             fs.mkdirSync(destination, { recursive: true});
         if (!fs.existsSync(filePath)) {
@@ -85,22 +91,22 @@ function cacheAll(destination) {
 
     // log("Units unique to JP");
     // log(jpUnits);
-    cacheJP(jpUnits);
+    //cacheJP(jpUnits);
 }
 
 function cacheJP(units) {
-    JP = "-jp";
-    passives = JSON.parse(fs.readFileSync(`../ffbe${JP}/skills_passive.json`).toString());
-    abilities = JSON.parse(fs.readFileSync(`../ffbe${JP}/skills_ability.json`).toString());
-    magic = JSON.parse(fs.readFileSync(`../ffbe${JP}/skills_magic.json`).toString());
+    region = "-jp";
+    passives = JSON.parse(fs.readFileSync(`../ffbe${region}/skills_passive.json`).toString());
+    abilities = JSON.parse(fs.readFileSync(`../ffbe${region}/skills_ability.json`).toString());
+    magic = JSON.parse(fs.readFileSync(`../ffbe${region}/skills_magic.json`).toString());
     skillList = Object.assign({}, passives, abilities, magic);
     passives = null;
     abilities = null;
     magic = null;
-    limitburstsList = JSON.parse(fs.readFileSync(`../ffbe${JP}/limitbursts.json`).toString());
-    enhList = JSON.parse(fs.readFileSync(`../ffbe${JP}/enhancements.json`).toString());
-    equipList = JSON.parse(fs.readFileSync(`../ffbe${JP}/equipment.json`).toString());
-    materiaList = JSON.parse(fs.readFileSync(`../ffbe${JP}/materia.json`).toString());
+    limitburstsList = JSON.parse(fs.readFileSync(`../ffbe${region}/limitbursts.json`).toString());
+    enhList = JSON.parse(fs.readFileSync(`../ffbe${region}/enhancements.json`).toString());
+    equipList = JSON.parse(fs.readFileSync(`../ffbe${region}/equipment.json`).toString());
+    materiaList = JSON.parse(fs.readFileSync(`../ffbe${region}/materia.json`).toString());
 
     units = units.sort();
 
@@ -220,7 +226,7 @@ function getSkillsFromUnit(unit, unitId) {
         skillData[extra.key] = trimmed;
     });
 
-    let enhancements = getEnhancementsFromUnit(parseInt(unitId), skillList, JP);
+    let enhancements = getEnhancementsFromUnit(parseInt(unitId), skillList, region);
     if (enhancements.length > 0) {
         //log(enhancements);
         //skillKeys = skillKeys.concat(enhancements);

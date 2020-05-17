@@ -375,6 +375,13 @@ export function handlePrefix(receivedMessage: Discord.Message, search: string, p
     }
 }
 
+export function handleFupdate(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+    if (!Client.isAuthorized(receivedMessage.author)) {
+        return;
+    }
+
+    updateSheet(receivedMessage, "furcula", false);
+}
 export function handleUpdate(receivedMessage: Discord.Message, search: string, parameters: string[], forced = false) {
 
     if (!Client.isAuthorized(receivedMessage.author)) {
@@ -388,6 +395,26 @@ export function handleUpdate(receivedMessage: Discord.Message, search: string, p
         source = parameters[0];
     }
 
+    updateSheet(receivedMessage, source, forced);
+}
+
+export function handleAddcg(receivedMessage: Discord.Message, search: string, parameters: string[]) {
+    if (receivedMessage.author.id != jimooriUserID) {
+        return;
+    }
+
+    downloadFile(`./cg/${search}.mp4`, parameters[0])
+    .then(r => {
+        log("Successfully downloaded CG: ", r);
+        Client.send(receivedMessage, `CG added successfully: ${r}`);
+    })
+    .catch(e => {
+        error('CG download failed: ', e);
+        Client.send(receivedMessage, `CG Failed to download: (${e})`);
+    })
+}
+
+export function updateSheet(receivedMessage: Discord.Message, source: string, forced = false) {
     log(`Handle Update: ${source}`);
     if (Cache.isUpdating == true) {
         log("already updating");

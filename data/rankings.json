@@ -14,31 +14,34 @@
 	},
 	"topunits": {
 		"physical_chainer": [
-			"physalis",
-			"ardyn",
 			"awakened onion knight",
-			"tifa",
-			"madam edel"
+			"madam edel",
+			"rakish thief zidane",
+			"infernal fire rain",
+			"supreme deva akstar"
 		],
 		"physical_finisher": [
-			"regina",
 			"cid",
 			"crown prince noctis",
-			"olive"
+			"star player tidus",
+			"dragon knight freya"
 		],
 		"magical_chainer": [
-			"operative zyrus",
 			"white lily dark fina",
-			"sweet nichol",
-			"palom & porom"
+			"palom & porom",
+			"wizardess shantotto",
+			"yunalesca",
+			"dark spirit sol",
+			"draconian princess fina"
 		],
 		"magical_finisher": [
-			"n/a"
+			"black mage vivi",
+			"sakura of the delta star"
 		],
 		"hybrid_chainer": [
-			"elena",
 			"kurasame",
-			"aurora fryevia"
+			"aurora fryevia",
+			"nagi"
 		],
 		"physical_tank": [
 			"sieghard",
@@ -51,7 +54,6 @@
 			"paladin cecil"
 		],
 		"healer": [
-			"aerith",
 			"folka",
 			"myra",
 			"warrior of light lenna",
@@ -59,16 +61,17 @@
 		],
 		"breaker": [
 			"fid",
-			"cg lid",
 			"king edgar of figaro",
-			"adventurer locke"
+			"adventurer locke",
+			"rikku (ffx-2)",
+			"elephim"
 		],
 		"buffer": [
-			"sylvie",
 			"ignis",
 			"lunafreya",
 			"regis",
-			"sweet luka"
+			"nichol of the epsilon star",
+			"sylvie"
 		]
 	},
 	"physical_chainer": [

@@ -18,10 +18,119 @@
 -->
 <onlyinclude>
 {{Recent News
+|date  = 20200305
+|type  = Other
+|title = Version 4.0.6
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200305Ver406PatchNotes.html
+}}
+{{Recent News
+|date  = 20200305
+|type  = Maintenance
+|title = Post Maintenance Note
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200305PostMaintenanceExtended.html
+}}
+{{Recent News
+|date  = 20200303
+|type  = Event
+|title = Vanquish Lady Lilith
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200303FFXIVanquishLadyLilithRaidEvent.jpg
+}}
+{{Recent News
+|date  = 20200303
+|type  = Event
+|title = Wizardess Shantotto
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200303CGWizardessShantotto.jpg
+}}
+{{Recent News
+|date  = 20200303
+|type  = Unit
+|title = Featured Summon FINAL FANTASY XI
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200303FFXIWShantottoFeaturedSummon.jpg
+}}
+{{Recent News
+|date  = 20200303
+|type  = Event
+|title = Edel the Mole EXTRA STAGES
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200303EdelTheMoleStoryEventExtraStages.jpg
+}}
+{{Recent News
+|date  = 20200303
+|type  = Trial
+|title = Scorn of Tiamat
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/img/20200303ScornofTiamat.png
+}}
+{{Recent News
+|date  = 20200303
+|type  = Event
+|title = Return to the Fallen
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200303SpecialTrialRewardsCampaign.html
+}}
+{{Recent News
+|date  = 20200303
+|type  = Other
+|title = Free Daily Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200303FreeDailySummon.html
+}}
+{{Recent News
+|date  = 20200303
+|type  = Other
+|title = Magical March Ticket Summon
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200303MagicalMarchTicketSummon.html
+}}
+{{Recent News
+|date  = 20200303
+|type  = Other
+|title = Magical March Login Bonus
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200303MagicalMarchLoginBonus.html
+}}
+</onlyinclude>
+{{Recent News
+|date  = 20200303
+|type  = Other
+|title = Exchange Shop (W.Shantotto/Lilisette)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200303FFXIExchangeShop.html
+}}
+{{Recent News
+|date  = 20200303
+|type  = Other
+|title = Introducing the 5★ Guaranteed (20% Featured) Ticket (W.Shantotto/Lilisette) Summon Banner
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200303WShantottoLilisette20FeaturedTicketBanner2.html
+}}
+{{Recent News
+|date  = 20200303
+|type  = Other
+|title = Ticket Exchange (W.Shantotto/Lilisette)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200303WShantottoLilisetteExchange.html
+}}
+{{Recent News
+|date  = 20200303
+|type  = Maintenance
+|title = Maintenance
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200304Maintenance.html
+}}
+{{Recent News
+|date  = 20200302
+|type  = Issue
+|title = Issue Report (Updated!)
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200302IssueReportv2.html
+}}
+{{Recent News
+|date  = 20200301
+|type  = Other
+|title = Guaranteed 5★ Special Summon Ticket
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200301StarGuaranteedSpecialSummonTicket.html
+}}
+{{Recent News
+|date  = 20200301
+|type  = Other
+|title = Monthly 5★ Select Summon Tickets
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200301FreeSelectSummonTicket.html
+}}
+{{Recent News
 |date  = 20200227
 |type  = Issue
 |title = Issue Report
-|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200228LanguagePackIssueReport.html
+|url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200228LanguagePackIssueReport3.html
 }}
 {{Recent News
 |date  = 20200227
@@ -95,7 +204,6 @@
 |title = Leap Year 2020 All Rainbow 11 Summon
 |url   = https://lapis-prod-staticnews-gumi-sg.akamaized.net/prod//en/content/20200224LeapYear2020AllRainbowSummon.html
 }}
-</onlyinclude>
 {{Recent News
 |date  = 20200225
 |type  = Other

@@ -206,18 +206,19 @@ function queryUnitPages(oAuth: any, sourceID: string, units: UnitCalculations, o
             if (unit.damage == old.damage
                 && unit.burst == old.burst) {
                     
-                log(`Skipping Unit: ${key}`);
+                // log(`Skipping Unit [${ind}]: ${key}`);
                 return Promise.resolve({
                     key: key,
                     calc: old
                 });
             }
         }
+        // log(`Updating [${ind}]: ${key}`);
         
         counter++;
 
         var index = key;
-        index = index.replace(/(?!\(FFVII AC\))(?!\(KH\))(?!\(Xenogears\))\(.*\)/, "");
+        index = index.replace(/(?!\(FFVII AC\))(?!\(KH\))(?!\(Xenogears\))(?!\(WOTV\))\(.*\)/, "");
         index = index.replace(/\(\J\P\)/, "");
         index = index.trim();
 
@@ -268,7 +269,7 @@ export var UpdateCalculations = function(def: slotDef, forced: boolean, saveLoca
             resolve(r);
         })
         .catch(e => {
-            reject("Failed to cache damage caluclations: " + e);
+            reject("Failed to cache damage calculations: " + e);
         });
     })
 }

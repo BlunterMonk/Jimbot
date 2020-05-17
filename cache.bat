@@ -7,8 +7,8 @@ cd ../Jimbot
 
 node caching/cacheUnitsList.js
 node caching/cacheRankingsDump.js
-node caching/cacheEvents.js
-node caching/cacheUnitSkills.js
-node caching/cullSkills.js
+node cac8hing/cacheEvents.js
+REM node caching/cacheUnitSkills.js
+REM node caching/cullSkills.js
 
 echo 'update complete'

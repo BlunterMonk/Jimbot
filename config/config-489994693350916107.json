@@ -1,0 +1,21 @@
+{
+	"name": "Re: World D. V3.2 Beta",
+	"prefix": "?",
+	"successEmote": "✅",
+	"failureEmote": "❌",
+	"adminRoles": [
+		"admin",
+		"mod"
+	],
+	"adminOnlyCommands": [
+		"prefix",
+		"getsettings"
+	],
+	"disabledCommands": [
+		"addemo",
+		"addalias",
+		"emote"
+	],
+	"shortcuts": {},
+	"response": {}
+}
