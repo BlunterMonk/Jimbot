@@ -43,11 +43,14 @@ function getMaxRarity(unit) {
     return unit;
 }
 
-async function getGif(search, unitID, param, callback) {
+function getGif(search, unitID, param, callback, caseSensitive: boolean) {
 
     var unitName = search;
-    unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
-    unitName = unitName.capitalizeWords(".");
+    if (!caseSensitive) {
+        unitName = unitName.toTitleCase("_");
+        unitName = unitName.capitalizeWords(".");
+    }
+    unitName = unitName.replaceAll("_", "%20");
     log("getGif: " + unitName + `(${param})`);
 
     var animationName = param;
@@ -70,16 +73,27 @@ async function getGif(search, unitID, param, callback) {
         return downloadFile(filename, url);
     }
     
-    for (let rarity = 7; rarity > 2; rarity--) {
-        var direct = `http://www.ffbegif.com/${unitName}/${id}${rarity}%20${animationName}.gif`;
+    // TODO: fix this process
+    let rarity = 7;
+    var direct = `http://www.ffbegif.com/${unitName}/${id}${rarity}%20${animationName}.gif`;
+    debug(`Searching for: ${direct}`);
+    saveGif(direct).then(callback).catch((e) => {
+        error("failed to get gif, searching for 6*");
+
+        rarity = 6;
+        direct = `http://www.ffbegif.com/${unitName}/${id}${rarity}%20${animationName}.gif`;
         debug(`Searching for: ${direct}`);
-        await saveGif(direct).then((p) =>{
-            callback(p);
-            rarity = 0;
-        }).catch((e) => {
-            error("failed to get gif");
+        saveGif(direct).then(callback).catch((e) => {
+            error("failed to get gif, searching for 5*");
+
+            rarity = 5;
+            direct = `http://www.ffbegif.com/${unitName}/${id}${rarity}%20${animationName}.gif`;
+            debug(`Searching for: ${direct}`);
+            saveGif(direct).then(callback).catch((e) => {
+                error("failed to get gif, searching for 6*");
+            });
         });
-    }
+    });
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -114,11 +128,11 @@ export function handleUnit(receivedMessage: Discord.Message, search: string, par
 
     let original = search;
 
-    if (!search.includes("/JP")) {
+    if (parameters[parameters.length-1] != "true") {
         search = search.toTitleCase("_");
         search = search.capitalizeWords(".");
-        if (search.includes("(kh)"))
-            search = search.replace("(kh)", "(KH)");
+        //if (search.includes("(kh)"))
+        //    search = search.replace("(kh)", "(KH)");
     }
         
     log("Searching Units For: " + search);
@@ -317,6 +331,9 @@ export function handleGif(receivedMessage: Discord.Message, search: string, para
         return;
     }
 
+    //Client.send(receivedMessage, "currently disabled, remind daddy to fix it.");
+    //return;
+
     // Get search alias
     var s = search;
     var alias = Config.getAlias(s.replaceAll(" ", "_"));
@@ -331,11 +348,16 @@ export function handleGif(receivedMessage: Discord.Message, search: string, para
     if (bot)
         search = search.toUpperCase();
 
-    var title = search.toTitleCase("_");
-
     var param = parameters[0];
     if (gifAliases[param]) {
         param = gifAliases[param];
+    }
+
+    var cs = false;
+    debug(parameters);
+    if (parameters.length >= 2) {
+        cs = parameters[1] == "true";
+        debug("GETTING CASE SENSITIVE GIF")
     }
     
     var unitID = "";
@@ -354,7 +376,7 @@ export function handleGif(receivedMessage: Discord.Message, search: string, para
         log("success");
 
         Client.sendImage(receivedMessage, filename);
-    });
+    }, cs);
 }
 
 export function handleCg(receivedMessage: Discord.Message, search: string, parameters: string[]) {
@@ -366,10 +388,6 @@ export function handleCg(receivedMessage: Discord.Message, search: string, param
     log("Searching CG for: " + search);
     
     search = search.replaceAll("_", " ");
-    if (search == "rain")
-        search = "SPOILER_rain";
-    else if (search == "spoiler lasswell" || search == "king lasswell" || search == "chairman lasswell")
-        search = "SPOILER_lasswell";
 
     const filename = `./cg/${search}.mp4`;
     if (!fs.existsSync(filename)) {

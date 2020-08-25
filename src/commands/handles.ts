@@ -9,7 +9,7 @@ import * as fs from "fs";
 
 import "../util/string-extension.js";
 import * as Commands from "./commands.js";
-import { log, error, debug, logCommand } from "../global.js";
+import { log, error, debug, logCommand, trace } from "../global.js";
 import { Cache } from "../cache/cache.js";
 import { Client } from "../discord.js";
 import { downloadFile } from "../util/download.js";
@@ -114,6 +114,14 @@ function handleEmote(receivedMessage: Discord.Message, search: string) {
     Client.sendImage(receivedMessage, filename);
 }
 
+function handleWinner(receivedMessage: Discord.Message, search: string) {
+    var filename = validateEmote("robotda");
+    if (!filename) 
+        return;
+
+    Client.sendImage(receivedMessage, filename);
+}
+
 function handleWhatis(receivedMessage: Discord.Message, search: string, parameters: string[]) {
 
     var info = Cache.getInformation(search)
@@ -191,7 +199,7 @@ function handleGrab(receivedMessage: Discord.Message, search: string, parameters
 export function handle(receivedMessage: Discord.Message, com: Commands.CommandObject): boolean {
     
     log("Handle Command Object: ", com);
-    logCommand(com);
+    ///logCommand(com);
 
     try {
         var search = com.search;
@@ -212,7 +220,7 @@ export function handle(receivedMessage: Discord.Message, com: Commands.CommandOb
             if (Client.validate(receivedMessage, "emote")) {
                 handleEmote(receivedMessage, com.command.toLowerCase());
             } else {
-                log("Emotes are disabled for this user");
+                trace("Emotes are disabled for this user");
             }
         }
     }

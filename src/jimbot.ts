@@ -36,7 +36,7 @@ Client.init(() => {
 
         Client.respondSuccess(msg, true);
 
-        const com = Commands.getCommandObject(`whatis ${key}`, null, msg.author, null);
+        const com = Commands.getCommandObject(`whatis ${key}`, null, false, msg.author, null);
         handle(msg, com);
     }, (msg) =>{
         log("Response From Editor");
@@ -64,7 +64,7 @@ function onPrivateMessage(receivedMessage, content, author: Discord.User) {
     
     log("Settings Change Allowed");
 
-    const com = Commands.getCommandObject(content, null, author, null);
+    const com = Commands.getCommandObject(content, null, false, author, null);
     logData("Command Obect", com);
 
     const command = com.command;
@@ -94,13 +94,13 @@ function onPrivateMessage(receivedMessage, content, author: Discord.User) {
         Client.respondFailure(receivedMessage, true);
     }
 }
-function onMessage(receivedMessage, content, author: Discord.User, guild: Discord.Guild) {
+function onMessage(receivedMessage, content, caseSensitive: boolean, author: Discord.User, guild: Discord.Guild) {
     
     const guildId = receivedMessage.guild.id;
     const attachment = receivedMessage.attachments.first();
 
     // Get command information
-    var com = Commands.getCommandObject(content, attachment, author, guild);
+    var com = Commands.getCommandObject(content, attachment, caseSensitive, author, guild);
     if (!com) {
         return;
     }

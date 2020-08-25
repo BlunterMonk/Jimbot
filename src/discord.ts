@@ -119,17 +119,17 @@ class client {
             });
         });
     }
-    sendImage(receivedMessage, filename): Promise<Discord.Message> {
+    sendImage(receivedMessage: Discord.Message, filename): Promise<Discord.Message> {
         var Attachment = new Discord.MessageAttachment(filename);
         if (Attachment) {
             return Client.send(receivedMessage, Attachment);
         }
     }
-    sendMessage(receivedMessage, embed): Promise<Discord.Message> {
+    sendMessage(receivedMessage: Discord.Message, embed): Promise<Discord.Message> {
         embed.color = this.embedColor;
         return this.send(receivedMessage, {embed: embed});
     }
-    sendMessageWithAuthor(receivedMessage, embed, authorId): Promise<Discord.Message> {
+    sendMessageWithAuthor(receivedMessage: Discord.Message, embed, authorId): Promise<Discord.Message> {
         return new Promise<Discord.Message>((resolve, reject) => {
             this.discordClient.users.fetch(authorId)
             .then(author => {
@@ -153,7 +153,7 @@ class client {
             });
         });
     }
-    sendPrivate(receivedMessage, msg): Promise<Discord.Message> {
+    sendPrivate(receivedMessage: Discord.Message, msg): Promise<Discord.Message> {
         return new Promise<Discord.Message>((resolve, reject) => {
 
             receivedMessage.author
@@ -168,7 +168,7 @@ class client {
             });
         });
     }
-    sendPrivateMessage(receivedMessage, embed): Promise<Discord.Message> {
+    sendPrivateMessage(receivedMessage: Discord.Message, embed): Promise<Discord.Message> {
         return new Promise<Discord.Message>((resolve, reject) => {
             embed.color = this.embedColor;
 
@@ -188,7 +188,7 @@ class client {
         return this.discordClient.users.fetch(authorId);
     }
 
-    respondSuccess(receivedMessage, toUser = false) {
+    respondSuccess(receivedMessage: Discord.Message, toUser = false) {
 
         if (toUser) {
             receivedMessage.react("✅");
@@ -196,7 +196,7 @@ class client {
         }
     
         const guildId = receivedMessage.guild.id;
-        const emojis = receivedMessage.guild.emojis.array();
+        const emojis = receivedMessage.guild.emojis.cache.array();
         const custom = this.getSuccess(guildId);
     
         var customEmoji = emojis.find(e => {
@@ -210,7 +210,7 @@ class client {
             receivedMessage.react(custom);
         }
     }
-    respondFailure(receivedMessage, toUser = false) {
+    respondFailure(receivedMessage: Discord.Message, toUser = false) {
     
         if (toUser) {
             receivedMessage.react("❌");
@@ -218,7 +218,7 @@ class client {
         }
     
         const guildId = receivedMessage.guild.id;
-        const emojis = receivedMessage.guild.emojis.array();
+        const emojis = receivedMessage.guild.emojis.cache.array();
         const custom = this.getFailure(guildId);
     
         var customEmoji = emojis.find(e => {
@@ -250,9 +250,20 @@ class client {
             return;
         }
 
-        var contentPrefix : string = receivedMessage.content.charAt(0);
-        var oriContent : string = receivedMessage.content.slice(1, receivedMessage.content.length);
-        var content : string = receivedMessage.content.toLowerCase().slice(1, receivedMessage.content.length);
+        var messageText = receivedMessage.content;
+        var caseSensitive = false;
+        if (receivedMessage.content.startsWith(`??`)) {
+            caseSensitive = true;
+            messageText = messageText.slice(1, messageText.length);
+            log("User requested case sensetive search");
+        }
+
+        var contentPrefix : string = messageText.charAt(0);
+        var oriContent : string = messageText.slice(1, messageText.length);
+        var content : string = messageText.slice(1, messageText.length);
+        if (!caseSensitive) {
+            content = messageText.toLowerCase().slice(1, messageText.length);
+        }
 
         // Send private message results to authorized users
         if (!receivedMessage.guild) {
@@ -261,6 +272,12 @@ class client {
                     this.onPrivateMessageCallback(receivedMessage, content, receivedMessage.author);
             }
             return;
+        }
+
+        if (receivedMessage.channel.id == "643150066739314692") {
+            if (receivedMessage.content == "pls respond") {
+                this.send(receivedMessage, "pls respond");
+            }
         }
 
         // Check to see if the sender 
@@ -298,7 +315,7 @@ class client {
                 });
             }
 
-            let s = getSearchString(content, true);
+            let s = getSearchString(content, caseSensitive, true);
             if (shortcut.search && !shortcut.search.empty()) {
                 s = shortcut.search;
             }
@@ -317,20 +334,20 @@ class client {
         // Send results
         log(`Message Received From: ${receivedMessage.guild.name}, ${receivedMessage.author.username}`)
         if (this.onMessageCallback) {
-            this.onMessageCallback(receivedMessage, oriContent, receivedMessage.author, receivedMessage.guild);
+            this.onMessageCallback(receivedMessage, oriContent, caseSensitive, receivedMessage.author, receivedMessage.guild);
         }
     }
 
     // Delete bot generated messages if the user deleted their request
-    onMessageDelete(deletedMessage) {
+    onMessageDelete(deletedMessage: Discord.Message) {
         log(`Message Deleted, Author: ${deletedMessage.author.username}, Server: (${deletedMessage.guild.name}), Content: ${deletedMessage.content}`);
     
         for (var i = 0; i < this.botMessages.length; i++) {
             var msg = this.botMessages[i];
     
             if (msg.received === deletedMessage.id) {
-                var sent = deletedMessage.channel
-                    .fetchMessage(msg.sent)
+                var sent = deletedMessage.channel.messages
+                    .fetch(msg.sent)
                     .then(sent => {
                         if (sent) {
                             log("Deleted Cached Message");
@@ -409,7 +426,7 @@ class client {
         var roles = receivedMessage.member.roles.cache.array();
         var guildId = receivedMessage.guild.id;
     
-        trace("Attempt to validate: " + command);
+        trace("Attempt to validate: ", command, " user: ", receivedMessage.author.id, " guild: ", receivedMessage.guild.id);
         for (var i = 0; i < roles.length; i++) {
             if (this.validateCommand(guildId, roles[i].name, command)) {
                 trace("Role Validated");

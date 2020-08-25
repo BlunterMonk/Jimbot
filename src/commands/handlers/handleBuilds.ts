@@ -109,6 +109,7 @@ export async function sendBuild(receivedMessage: Discord.Message, url: string, u
 ////////////////////////////////////////////////////////////////////
 
 export async function handleBuildhelp(receivedMessage: Discord.Message) {
+
     var data = fs.readFileSync("./data/help/help-damage.json").toString();
     var readme = JSON.parse(data);
 
@@ -126,6 +127,9 @@ export async function handleStats(receivedMessage: Discord.Message, search: stri
         handleBuildhelp(receivedMessage);
         return;
     }
+    Client.sendPrivateMessage(receivedMessage, "sorry friend, build imagess are temporarily borked, daddy is working on it.");
+    return;
+
 
     var unitName = search;
     unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
@@ -148,6 +152,10 @@ export async function handleBuild(receivedMessage: Discord.Message, search: stri
         handleBuildhelp(receivedMessage);
         return;
     }
+    Client.sendPrivateMessage(receivedMessage, "sorry friend, build imagess are temporarily borked, daddy is working on it.");
+    handleBuildtext(receivedMessage, search, parameters);
+    return;
+
 
     var unitName = search;
     unitName = unitName.toTitleCase("_").replaceAll("_", "%20");
@@ -194,6 +202,9 @@ export async function handleBis(receivedMessage: Discord.Message, search: string
         handleBuildhelp(receivedMessage);
         return;
     }
+    Client.sendPrivateMessage(receivedMessage, "sorry friend, build imagess are temporarily borked, daddy is working on it.");
+    handleBistext(receivedMessage, search, parameters);
+    return;
 
     search = search.replaceAll("_", " ");
     var original = search;
@@ -276,7 +287,10 @@ export async function handleTeam(receivedMessage: Discord.Message, search: strin
         handleBuildhelp(receivedMessage);
         return;
     }
-    
+    Client.sendPrivateMessage(receivedMessage, "sorry friend, builds are temporarily borked, daddy is working on it.");
+    return;
+
+
     Build.requestBuildData(search)
     .then(response => {
         let d = response.buildData;

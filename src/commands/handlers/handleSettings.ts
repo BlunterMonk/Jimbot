@@ -403,6 +403,7 @@ export function handleAddcg(receivedMessage: Discord.Message, search: string, pa
         return;
     }
 
+    search = search.replaceAll("_", " ");
     downloadFile(`./cg/${search}.mp4`, parameters[0])
     .then(r => {
         log("Successfully downloaded CG: ", r);

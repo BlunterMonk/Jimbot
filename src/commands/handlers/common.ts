@@ -40,7 +40,8 @@ export function validateEmote(emote) {
     return file;
 }
 
-export function getUnitKey(search) {
+export function getUnitKey(search: string) {
+    search = search.toLowerCase();
 
     let id = Cache.getUnitKey(search);
     if (id)

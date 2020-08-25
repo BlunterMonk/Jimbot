@@ -8,7 +8,7 @@ import "discord.js";
 import "../../util/string-extension.js";
 import * as Discord from "discord.js";
 import * as fs from "fs";
-import { log, logData, error, escapeString, debug } from "../../global.js";
+import { log, logData, error, escapeString, debug, trace } from "../../global.js";
 import { Cache, UnitCalculations, Calculation } from "../../cache/cache.js";
 import { Config } from "../../config/config.js";
 import { Client } from "../../discord.js";
@@ -31,7 +31,7 @@ const whatahUserID  = "147586823588151296";
 export function buildMuspelDamageString(search: string, isBurst: boolean): string {
     var calc = Cache.getCalculations("muspel", search);
     if (!calc) {
-        log("Could not find calculations for: " + search);
+        debug("Could not find calculations for: " + search);
         return;
     }
 
@@ -64,11 +64,9 @@ export function buildMuspelDamageString(search: string, isBurst: boolean): strin
 function buildDPTEmbed(search, isBurst, source) {
     var calc = Cache.getCalculations(source, search);
     if (!calc) {
-        log("Could not find calculations for: " + search);
+        debug("Could not find calculations for: " + search);
         return null;
     }
-
-    log("Calc found: ", calc);
 
     var text = "";
         
@@ -109,7 +107,7 @@ function buildRotationEmbed(search, source) {
 
     var calc = Cache.getUnitCalculation(source, search);
     if (!calc || !calc.rotation) {
-        log("Could not find calculations for: " + search);
+        debug("Could not find calculations for: " + search);
         return;
     }
 
@@ -147,7 +145,7 @@ function buildDamageEmbed(search) {
     var whale = Cache.getUnitCalculation("whale", search);
     var musp = Cache.getUnitCalculation("muspel", search);
     if (!furc && !whale && !musp) {
-        log("Could not find calculations for: " + search);
+        debug("Could not find calculations for: " + search);
         return;
     }
 
@@ -368,7 +366,6 @@ export function handleWhatah(receivedMessage: Discord.Message, search: string, p
 
     search = search.replaceAll("_", " ");
 
-    log("Building DPT Embed");
     var embed = buildDPTEmbed(search, isBurst, "whatah");
     embed.url = whatahSheetURL;
 

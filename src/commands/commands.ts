@@ -17,7 +17,7 @@ const regexSearch = /^(?:.*?\s)(.*?)(?='|"|‘|’|“|”|$)/;
 const regexParameter = /"[^"]+"|‘[^‘]+‘|‘[^’]+’|“[^“]+“|”[^”]+”|“[^“^”]+”|'[^']+'/g;
 
 
-export function getSearchString(msg, replace = true) {
+export function getSearchString(msg, caseSensitive: boolean, replace: boolean) {
     var match = msg.match(regexSearch);
     if (!match) return;
 
@@ -37,7 +37,9 @@ export function getSearchString(msg, replace = true) {
         }
     }
 
-    search = search.toLowerCase();
+    if (!caseSensitive) {
+        search = search.toLowerCase();
+    }
     search = search.replaceAll(" ", "_");
     return search;
 }
@@ -112,6 +114,7 @@ export interface CommandObject {
     command: string;
     search: string;
     parameters: string[];
+    caseSensitive: boolean;
     run: string;
     authorName: string;
     authorID: string;
@@ -119,7 +122,7 @@ export interface CommandObject {
     authorGuildID: string;
     timestamp: any;
 }
-export var getCommandObject = function(msg, attach, author: Discord.User, guild: Discord.Guild): CommandObject {
+export var getCommandObject = function(msg, attach, caseSensitive: boolean, author: Discord.User, guild: Discord.Guild): CommandObject {
 
     var attachment = null;
     var copy = msg;
@@ -133,7 +136,7 @@ export var getCommandObject = function(msg, attach, author: Discord.User, guild:
     if (!command || command.empty())
         return null;
 
-    if (!textEntryCommands.includes(command.toLowerCase()))
+    if (!caseSensitive && !textEntryCommands.includes(command.toLowerCase()))
         copy = copy.toLowerCase();
 
     // if (guildSettings) {
@@ -167,7 +170,7 @@ export var getCommandObject = function(msg, attach, author: Discord.User, guild:
     var parameters = params.parameters;
     
     // Get search string for command.
-    var search = getSearchString(copy, !aliasIgnoreList.includes(command.toLowerCase()));
+    var search = getSearchString(copy, caseSensitive, !aliasIgnoreList.includes(command.toLowerCase()));
     if (!search)
         search = "";
     
@@ -190,11 +193,16 @@ export var getCommandObject = function(msg, attach, author: Discord.User, guild:
         guildName = guild.name;
     }
 
+    if (caseSensitive) {
+        parameters[parameters.length] = "true";
+    }
+
     return {
         attachment: attachment,
         command: command,
         search: search,
         parameters: parameters,
+        caseSensitive: caseSensitive,
         run: run,
         authorID: author.id,
         authorName: author.username,
