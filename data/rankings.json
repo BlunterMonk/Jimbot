@@ -14,44 +14,43 @@
 	},
 	"topunits": {
 		"physical_chainer": [
-			"awakened onion knight",
-			"madam edel",
-			"rakish thief zidane",
-			"infernal fire rain",
-			"supreme deva akstar"
+			"tifa (ffvii: ac)",
+			"mystical ice lasswell",
+			"war hero raegen",
+			"noel",
+			"lone lion squall"
 		],
 		"physical_finisher": [
-			"cid",
-			"crown prince noctis",
-			"star player tidus",
-			"dragon knight freya"
+			"dragon knight freya",
+			"graceful champion fang",
+			"cloud (ffvii: ac)",
+			"flame of rebirth jake",
+			"zenaida"
 		],
 		"magical_chainer": [
-			"white lily dark fina",
-			"palom & porom",
-			"wizardess shantotto",
-			"yunalesca",
-			"dark spirit sol",
-			"draconian princess fina"
+			"wild card ace",
+			"benevolent beauty rem",
+			"umbral dragon dark fina",
+			"angel of death kuja",
+			"dethroned heroine ashe"
 		],
 		"magical_finisher": [
-			"black mage vivi",
-			"sakura of the delta star"
+			"black mage vivi"
 		],
 		"hybrid_chainer": [
-			"kurasame",
-			"aurora fryevia",
-			"nagi"
+			"elena"
 		],
 		"physical_tank": [
 			"sieghard",
 			"dawn warrior galuf",
-			"awakened warrior of light"
+			"awakened warrior of light",
+			"hallowed aegis charlotte"
 		],
 		"magical_tank": [
-			"awakened rain",
 			"sacred shield charlotte",
-			"paladin cecil"
+			"paladin cecil",
+			"hallowed aegis charlotte",
+			"vossler"
 		],
 		"healer": [
 			"folka",
@@ -61,17 +60,17 @@
 		],
 		"breaker": [
 			"fid",
-			"king edgar of figaro",
-			"adventurer locke",
 			"rikku (ffx-2)",
-			"elephim"
+			"daughter of destiny vanille",
+			"healing avatar lid",
+			"seeker of freedom vaan"
 		],
 		"buffer": [
-			"ignis",
 			"lunafreya",
-			"regis",
 			"nichol of the epsilon star",
-			"sylvie"
+			"sylvie",
+			"yuraisha",
+			"ignis"
 		]
 	},
 	"physical_chainer": [

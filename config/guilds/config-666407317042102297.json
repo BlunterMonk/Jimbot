@@ -1,5 +1,4 @@
 {
-	"name": "Zodiac Age - FFBE y WOTV Español",
 	"prefix": "?",
 	"successEmote": "✅",
 	"failureEmote": "❌",
@@ -17,5 +16,6 @@
 		"emote"
 	],
 	"shortcuts": {},
-	"response": {}
+	"response": {},
+	"name": "Zodiac Age"
 }

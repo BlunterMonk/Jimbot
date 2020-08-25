@@ -30,8 +30,9 @@
 	"97837550491664384": {
 		"autobuild": false,
 		"nickname": "",
-		"friendcode": "",
-		"builds": {}
+		"friendcode": "424968701",
+		"builds": {},
+		"status": "Sol is best mage"
 	},
 	"48410351376531456": {
 		"autobuild": false,
@@ -215,14 +216,15 @@
 		"autobuild": true,
 		"friendcode": "666101275",
 		"nickname": "neo",
-		"status": "get ready, the show is about to begin!!",
+		"status": "I am the King. KBYM.",
 		"lead": null,
 		"builds": {
 			"super_char": "https://ffbeequip.com/builder.html?server=gl#e27fae10-ef63-11e9-8f21-29aab363c1db",
 			"call_animal_control": "https://ffbeequip.com/builder.html?server=gl#3b0fe1b0-ef66-11e9-8f21-29aab363c1db",
 			"the_big_kahuna": "https://ffbeequip.com/builder.html?server=gl#cf337fa0-f5e7-11e9-8f21-29aab363c1db",
 			"baelena": "https://ffbeequip.com/builder.html?server=gl#5c005a10-15f1-11ea-9f71-fbb311f0fb55",
-			"wkn_mystic_mag_strats": "https://ffbeequip.com/builder.html?server=gl#79e90590-23a2-11ea-9f71-fbb311f0fb55"
+			"wkn_mystic_mag_strats": "https://ffbeequip.com/builder.html?server=gl#79e90590-23a2-11ea-9f71-fbb311f0fb55",
+			"baelena_2": "https://ffbeequip.com/builder.html?server=gl#fa920650-d1ae-11ea-8219-c768f320c4e6"
 		}
 	},
 	"468997735090225163": {
@@ -1024,7 +1026,7 @@
 	"346505524763820035": {
 		"autobuild": true,
 		"compact": false,
-		"friendcode": "408743981",
+		"friendcode": "408743891",
 		"nickname": "el_verga_larga",
 		"status": "",
 		"lead": null,
@@ -1135,7 +1137,7 @@
 		"autobuild": true,
 		"compact": false,
 		"friendcode": "837900718",
-		"nickname": "Night",
+		"nickname": "nightfire",
 		"status": "",
 		"lead": null,
 		"builds": {}
@@ -1190,6 +1192,429 @@
 		"compact": false,
 		"friendcode": "061564537",
 		"nickname": "Hyouru",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"395494552636751893": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "298614880",
+		"nickname": "* Dimitri *",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"378748356853366791": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "280713504",
+		"nickname": "Garrsith",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"225016417177698305": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "619606915",
+		"nickname": "고독한 늑대",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"281577553771364354": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "556497269",
+		"nickname": "AlejandroSR",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"300305401226723329": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "808820214",
+		"nickname": "*Riestra97",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"254733622882336768": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "370904378",
+		"nickname": "Senmen ( ͡° ͜ʖ ͡°)",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"382610296922963968": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "065077467",
+		"nickname": "Tecno El Meco",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"281679307904909313": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "Ruysu",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"716466839923851357": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "100188607",
+		"nickname": "MasterJavier",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"339150746886995970": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "418535919",
+		"nickname": "jeyeight",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"410516245516124170": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "540065201",
+		"nickname": "MrCovy",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"575115653002952777": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "540257239",
+		"nickname": "LinenGhost",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"550093319653556236": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "425054891",
+		"nickname": "Blaine",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"503336904377499670": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "315288104",
+		"nickname": "as789j",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"609591181520928789": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "874095091",
+		"nickname": "El Kuck",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"659578312334508033": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "elsnupi",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"315631778851323907": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "Kaizer",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"213650230921527296": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "921744490",
+		"nickname": "ED",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"119170806516416513": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "899691169",
+		"nickname": "FallenXI",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"325483982613381132": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "583743905",
+		"nickname": "ShadowGenesisRM(Xbox I)",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"403777123879485471": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "519995857",
+		"nickname": "Emilianox23",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"108412221310107648": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "382452573",
+		"nickname": "Frostzone",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"411342474112663552": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "525241593",
+		"nickname": "DivineFireGod",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"537525319696121867": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "077250716",
+		"nickname": "Adrik",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"549286730478518302": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "",
+		"nickname": "Escanor",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"667848750139703336": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "909982949",
+		"nickname": "matajoto",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"736228714911629363": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "811393485",
+		"nickname": "René Rodríguez",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"705653654643802122": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "868774063",
+		"nickname": "dsteven",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"708212529309941801": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "811358747",
+		"nickname": "『　』",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"682528080891609089": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "573819026",
+		"nickname": "Yiazmat",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"375745396774928384": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "508387737",
+		"nickname": "Nero",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"320717777264705548": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "169936684",
+		"nickname": "ziggy",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"246383590546341890": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "566328011",
+		"nickname": "Cyssel",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"388510218683940866": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "059944390",
+		"nickname": "Nugget",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"709519877555355740": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "124932403",
+		"nickname": "♎Sebastian♎",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"565958244682694666": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "671607194",
+		"nickname": "2weeb4u",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"407782949044617227": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "137030422",
+		"nickname": "Jorge90000000",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"413683530153852939": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "519713918",
+		"nickname": "SashaElGuerreroDefinitivo",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"713245699369861231": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "616083340",
+		"nickname": "Xpctro29",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"734994152286060584": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "211382931",
+		"nickname": "Isaac_El_Valaraukar",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"466802822067912717": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "837618817",
+		"nickname": "MatiuxXD🍁🌧🈲",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"202635612728066048": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "681787011",
+		"nickname": "Geko D Molto",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"511919696879157258": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "707559932",
+		"nickname": "Luneth",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"699699355111784480": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "552034890",
+		"nickname": "Facu-kun92",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"384191637682782208": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "463326021",
+		"nickname": "maxximal",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"567068076600721426": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "548972425",
+		"nickname": "Pipog",
+		"status": "",
+		"lead": null,
+		"builds": {}
+	},
+	"691675230715904080": {
+		"autobuild": true,
+		"compact": false,
+		"friendcode": "911031223",
+		"nickname": "ElOso",
 		"status": "",
 		"lead": null,
 		"builds": {}

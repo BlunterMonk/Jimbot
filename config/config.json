@@ -223,7 +223,7 @@
 		"king_lasswell": "hess king lasswell",
 		"bharos": "qin",
 		"75k": "magitek warrior terra",
-		"teefer": "tifa",
+		"teefer": "tifa (ffvii: ac)",
 		"sabin_v2": "monk sabin of kolts",
 		"lotus_mage_feener": "lotus mage fina",
 		"sexdeath": "dark mage exdeath",
@@ -272,7 +272,60 @@
 		"mrducky": "sylvie",
 		"bmvivi": "black mage vivi",
 		"bm_vivi": "black mage vivi",
-		"cg_zidane": "rakish thief zidane"
+		"cg_zidane": "rakish thief zidane",
+		"shadowlord_of_shadows": "shadow lord",
+		"lord_of_shadows": "the lord of shadows",
+		"infernal_rain": "infernal fire rain",
+		"lord_of_shadowlords": "the lord of shadows",
+		"odin_raegen": "war hero raegen",
+		"tetra_syphalis": "four winds physalis",
+		"tetra_physalis": "four winds physalis",
+		"odinraegen": "war hero raegen",
+		"alex_charlotte": "hallowed aegis charlotte",
+		"free_edel": "untamed wolf edel",
+		"fenrir_edel": "untamed wolf edel",
+		"kdelita": "knight delita",
+		"mramza": "mercenary ramza",
+		"dfina": "dark fina",
+		"sbdf": "seabreeze dark fina",
+		"tterra": "trance terra",
+		"ok": "onion knight",
+		"dook": "duke",
+		"pglass": "pyro glacial lasswell",
+		"bss": "blossom sage sakura",
+		"lmf": "lotus mage fina",
+		"lm_fina": "lotus mage fina",
+		"ng_jake": "nameless gunner jake",
+		"dakaran": "pure summoner rydia",
+		"adkain": "atoning dragoon kain",
+		"ht_lid": "heavenly technician lid",
+		"ms_nichol": "maritime strategist nichol",
+		"arain": "awakened rain",
+		"ok_refia": "onion knight refia",
+		"dk_luneth": "dark knight luneth",
+		"ss_charlotte": "sacred shield charlotte",
+		"ssc": "sacred shield charlotte",
+		"cp_noctis": "crown prince noctis",
+		"edel": "madam edel",
+		"sp_tidus": "star player tidus",
+		"alexander_charlotte": "hallowed aegis charlotte",
+		"afry": "aurora fryevia",
+		"zeno_of_the_beno_star": "zeno of the beta star",
+		"mmxon": "mastermind xon",
+		"mm_xon": "mastermind xon",
+		"op_zyrus": "operative zyrus",
+		"pencil": "paladin cecil",
+		"dd_vanille": "daughter of destiny vanille",
+		"lightning_2": "radiant lightning",
+		"_xuan_wu_&_jdogiab": "xuan wu & qing long",
+		"_🦎": "lezard valeth",
+		"claude": "cloud",
+		"facelift": "physalis",
+		"tetra_facelift": "four winds physalis",
+		"vivivivi": "black mage vivi",
+		"jims_wife": "sakura of the delta star",
+		"feeners": "fina & dark fina",
+		"dm_exdeath": "dark mage exdeath"
 	},
 	"filetypes": [
 		".jpg",
@@ -320,6 +373,13 @@
 		"jptopdps": "whatahtopdps"
 	},
 	"shortcuts": {
+		"nalucopter": {
+			"command": "gif",
+			"search": "nalu",
+			"parameters": [
+				"spin"
+			]
+		},
 		"tips": {
 			"command": "whatis",
 			"search": "new player"
@@ -376,6 +436,13 @@
 			"search": "blue mage fina",
 			"parameters": [
 				"spin"
+			]
+		},
+		"ducklord": {
+			"command": "gif",
+			"search": "gilgamesh (WOTV)",
+			"parameters": [
+				"duck"
 			]
 		},
 		"tierlist": {

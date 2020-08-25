@@ -1,5 +1,4 @@
 {
-	"name": "Final Fantasy",
 	"prefix": "?",
 	"successEmote": "✅",
 	"failureEmote": "❌",
@@ -17,5 +16,6 @@
 		"emote"
 	],
 	"shortcuts": {},
-	"response": {}
+	"response": {},
+	"name": "Final Fantasy"
 }
