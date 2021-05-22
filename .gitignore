@@ -12,7 +12,7 @@ ffbeequip-wip/
 icons/items/
 log/
 cg/
-credentials/
+credentials/*.json
 data/damagetable.txt
 data/eventsdump.txt
 test/

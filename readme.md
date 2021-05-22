@@ -1,64 +1,17 @@
-## Bot Commands ##
-(replace ? with your servers prefix)
+### Configuration ###
 
-Search
-    - **?search** *[term]*
+In order to get Jimbot to run, please configure the files within the directory titled "credentials". This should contain the following files:
 
-Get Unit Information
-    - **?unit** *[name] [optional | parameter]*
-    - optional: Add parameters to shorten the results for only desired information 
-                **contained in quotes**
-    - example: **?unit Malphasie "STMR"**  | this will only return malphasie's STMR
-    - parameters: "Name", "Limited", "Exclusive", 
-                  "Job", "Role", "Origin", 
-                  "Gender", "STMR", "Trust", 
-                  "Race", "Number", "Chain", "Rarity"
+'discord.json': contains information for the discord bot to run
+'google.json': tokens to allow access to Google API's
+'wiki.json': credentials to access the FFBE Wiki
 
-Get Unit Skill Information
-    - **?unitname** *search*
-    - **?kit** [unit name] "[search terms]* (will return both passives and actives)
-    - **?ability** [unit name] "[search terms]" (will return only active abilities)
-    - **?passive** [unit name] "[search terms]" (will return only passive abilities)
-    - Search a units skill set for any keywords to return the skills that match.
-    - example: **?noctis** fire
-    - parameters: keywords can be separated by the pipe character (|).
-        Or separated into quotes for each, "one" "two" "three"
+All expected values for these credentials files can be found in the correlating ".dist" files.
 
-Get Skill Information
-    - **?skill** *[name]*
-    - example: **?skill Bolting Strike**
+The Google API token information can be obtained by visiting the Google API Console: https://console.developers.google.com/
 
-Get Equipment Information
-    - **?equip** *[name]*
-    - example: **?equip Asterisk**
-
-Get Unit Sprite
-    - **?sprite** *[name]*
-    - example: **?sprite Esther**
-
-Get Unit GIFs, quotations are required
-    - **?gif** *[name]* "[parameter]"
-    - parameters: 'attack',  'dead',  
-                  'dying', 'idle',  'jump',  'limit',
-                  'magic attack',  'magic standby',  'move',  
-                  'standby',  'win',  'win before'
-    - example: **?gif Esther "attack"**
-
-Get Unit Calculations
-    - **?dpt** *[unit name -or- category]* "[limit]"
-    - **?burst** *[unit name -or- category]* "[limit]"
-    - optional: the amount of results to return, default is 5.
-    - categories: "physical", "magical", "hybrid"
-    - example: **?dpt Esther**
-    - example: **?burst hybrid "10"**
-
-Get Best Units
-    - **?glbestunits**
-
-Get Information
-    - **?whatis** *[search]*
-    - example: **?whatis elemental tetris**
-
+Create a project for "Google Sheets API" and create the OAuth 2.0 credentials file.
+Download this file and rename it to "google.json". Place this file into the "credentials" directory.
 
 ### Build Notes ###
 
